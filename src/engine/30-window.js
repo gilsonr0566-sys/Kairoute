@@ -148,7 +148,13 @@
       // 9:00 is this morning's, and the day starts earlier to reach it (leaveEarly below), with no sights (first-timer walk,
       // Nov 22: it was taken as the next morning's, planned sights all day and left "free time 16 h 10 min").
       const depAt = ship ? (isFinite(d.boardAt) ? d.boardAt : d.allAboard) : E.toMin(d.time);
-      if (isFinite(w.start) && isFinite(w.endBy) && w.endBy + (ship ? E.BOARD_BEFORE : m.need) < w.start && isFinite(depAt) && depAt < E.NIGHT_DEP) {
+      // A flight or train typed in the small hours could be this very morning or late tonight: the traveler is asked once,
+      // and the day is planned on the answer (d.nightDep: "morning" | "night"), never on a guess (Nov 23 oracle: 00:20 and
+      // 3:10 departures were taken as tonight's and the day filled with sights). Ships keep their all-aboard rule.
+      const small = isFinite(w.start) && isFinite(w.endBy) && w.endBy + (ship ? E.BOARD_BEFORE : m.need) < w.start && isFinite(depAt) && depAt < E.NIGHT_DEP;
+      if (small && !ship && d.nightDep !== "night" && d.nightDep !== "morning") { const lbl = (E.MODES[d.mode] || E.MODES.flight).label.toLowerCase();
+        return E.fail(`Your ${lbl} leaves at ${E.clock(depAt)}. Is that early this morning, or late tonight after midnight? Choose below and the day is planned around it: nothing is planned on a guess.`, { unsure: true, askNight: true, depAt }); }
+      if (small && (ship || d.nightDep === "night")) {
         w.endBy += 24 * 60; if (ship) { w.latest += 24 * 60; if (w.boardAt != null && w.boardAt < w.start) w.boardAt += 24 * 60; } }
       // Flying in the day the ship sails: under 3 hours left for sightseeing means none, straight to the ship.
       if (ship && d.thru && d.thru.mode === "flight") {

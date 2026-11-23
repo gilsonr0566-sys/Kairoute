@@ -681,6 +681,27 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
       const toBags = its.slice(lastK + 1, pick).reduce((m, x) => m + (x.min || 0) + (x.wait || 0), 0);
       ok(Number.isFinite(la.last) && Number.isFinite(la.bags) && la.last + toBags <= la.bags + 1 && la.bags + (its[pick].min || 0) <= la.out + 1, `${tag}: leaving ${its[lastK] && its[lastK].name} by ${E.clock(la.last)} reaches the bags by ${E.clock(la.bags)}, then the airport ride at ${E.clock(la.out)}`);
       ok(!(p.explain || []).some(t => /^Leave .* by /.test(t)) || (p.explain || []).some(t => t.includes(E.clock(la.last))), `${tag}: the note names the same time to leave the last place`); } } }
+// Nov 23 (testing thread's oracle): a flight or train typed in the small hours (before E.NIGHT_DEP) may be this very
+// morning or late tonight. Asked once, never guessed; answered "night", the day runs to it after midnight; answered
+// "morning", the day is only the way there, setting out the evening before. Ships keep their all-aboard rule.
+{ const tb = E.makeTravel({ walk: 'medium' }, {});
+  for (const [mode, t] of [['flight', '00:20'], ['flight', '03:10'], ['train', '04:45']]) {
+    const ask = E.dayWindow(day({ type: 'departure', mode, time: t, point: air }), tb);
+    ok(ask.error && ask.askNight && /early this morning, or late tonight/.test(ask.error), `a ${t} ${mode}, not yet answered: asked this morning or tonight (${ask.error || 'planned'})`);
+    const night = E.dayWindow(day({ type: 'departure', mode, time: t, point: air, nightDep: 'night' }), tb);
+    ok(!night.error && night.endBy > 24 * 60 - 200 && night.endBy > night.start, `a ${t} ${mode} tonight: be there by ${E.clock(night.endBy)} after midnight`);
+    const morn = E.dayWindow(day({ type: 'departure', mode, time: t, point: air, nightDep: 'morning' }), tb), r = !morn.error && E.walkDay([], morn, tb.estimate, null);
+    ok(!morn.error && morn.endBy < E.toMin(t) && r && r.end <= morn.endBy + 1 && morn.start < morn.endBy, `a ${t} ${mode} this morning: set out ${morn.error || E.clock(morn.start)}, there by ${E.clock(morn.endBy)}`); }
+  const late = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '06:30', point: air }), tb);
+  ok(!late.error || !late.askNight, 'a 6:30 am flight is this morning\'s, never asked');
+  const ship = E.dayWindow(day({ type: 'embark', allAboard: 30, boardAt: null }), tb);
+  ok(!ship.askNight, 'all aboard at 0:30 is the ship\'s own night, never asked');
+  // On a whole trip: the question stops the day (no sights); answered "morning", still no sights; "night", a day is planned.
+  const s0 = fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'departure' && d.lodging));
+  if (s0) { const li = s0.days.findIndex(d => d.type === 'departure' && d.lodging);
+    for (const nd of ['', 'morning', 'night']) { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[li], { mode: 'flight', time: '03:10', startTime: '09:00', nightDep: nd });
+      const p = E.planTrip(s)[li], stops = (p.items || []).filter(x => x.t === 'stop');
+      ok(nd === '' ? p.error && p.askNight : nd === 'morning' ? !p.error && !stops.length && p.end <= p.endBy : !p.error && p.endBy > 24 * 60, `a 3:10 am flight on a trip, ${nd || 'unanswered'}: ${p.error ? 'asked' : stops.length + ' sights, there by ' + E.clock(p.endBy)}`); } } }
 // Nov 23: a late arrival's day ends no sooner than the traveler reaches the hotel (a 9:30 pm flight gave a day of 10:45 to
 // 11:00 pm and a plan reaching the hotel at 12:14 am, past its own end).
 { const tb = E.makeTravel({ walk: 'medium' }, {});
@@ -707,7 +728,8 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 // Nov 20 review (finding 8): a flight or all aboard after midnight is the next morning's; the day stays readable and no
 // clock prints a minus sign.
 { const tb = E.makeTravel({ walk: 'medium' }, {});
-  for (const t of ['00:40', '05:30']) { const w = E.dayWindow(day({ type: 'departure', mode: 'flight', time: t, point: air }), tb);
+  // (Nov 23: a small-hours departure is asked first; answered "tonight" it is the next morning's.)
+  for (const t of ['00:40', '05:30']) { const w = E.dayWindow(day({ type: 'departure', mode: 'flight', time: t, point: air, nightDep: 'night' }), tb);
     ok(!w.error && w.endBy > w.start && !/-/.test(E.clock(w.endBy)), `a flight at ${t}: the day runs to ${E.clock(w.endBy)} (start ${E.clock(w.start)})`); }
   const wp = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 60 }), tb);
   ok(!wp.error && wp.endBy > wp.start && wp.endBy === 60 + 1440 - wp.buffer, `all aboard at 1:00 am: ashore until ${E.clock(wp.endBy)}`);
