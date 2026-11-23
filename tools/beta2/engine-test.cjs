@@ -669,7 +669,7 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   // the departure. On a whole leaving day: no sights, the day never starts after the time to leave, and no free time.
   const s0 = fs.existsSync(dir) && fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'departure'));
   if (s0) { const li = s0.days.findIndex(d => d.type === 'departure');
-    for (const [mode, t] of [['flight', '06:30'], ['flight', '08:00'], ['train', '09:10']]) { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[li], { mode, time: t, startTime: '09:00' });
+    for (const [mode, t] of [['flight', '05:00'], ['flight', '05:45'], ['flight', '06:30'], ['flight', '08:00'], ['train', '09:10']]) { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[li], { mode, time: t, startTime: '09:00' });
       const p = E.planTrip(s)[li], stops = (p.items || []).filter(x => x.t === 'stop');
       ok(!stops.length && p.end <= p.endBy && p.end <= E.toMin(t) && !(p.explain || []).some(x => /^Free time/.test(x)), `a ${t} ${mode} on the leaving day: no sights, straight there (${stops.length} sights, ends ${E.clock(p.end)}, be there by ${E.clock(p.endBy)})`); } } }
 // Outside test round 5 (Nov 22): a late arrival never gets a dinner the app picked at 11:30 pm or after midnight.
