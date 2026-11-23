@@ -615,5 +615,63 @@
    },
    "osm": "way/971793408"
   }
+ ],
+ "eatHours": [
+  [
+   "Popolo",
+   37.44681,
+   25.3276,
+   "Mo-Su 11:00-23:00",
+   "cafe"
+  ],
+  [
+   "Nautilus",
+   37.44392,
+   25.32888,
+   "Mo-Sa 19:00-02:00; Su 19:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Nice n Easy",
+   37.44553,
+   25.32624,
+   "Mo-Su 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Roca Restaurant Mykonos",
+   37.45032,
+   25.32936,
+   "Mo-Su 07:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Kalita",
+   37.44587,
+   25.32818,
+   "19:00-02:00",
+   "restaurant"
+  ],
+  [
+   "SiaMo Café",
+   37.44549,
+   25.32915,
+   "Mo-Su 08:00-02:00",
+   "cafe"
+  ],
+  [
+   "Appaloosa",
+   37.44651,
+   25.32963,
+   "We-Su 19:00+; Jan 05-18 off",
+   "restaurant"
+  ],
+  [
+   "La Familia",
+   37.44649,
+   25.32947,
+   "Mo-Su 12:00-01:00",
+   "restaurant"
+  ]
  ]
 }

@@ -4122,5 +4122,2156 @@
    },
    "osm": "way/986219635"
   }
+ ],
+ "eatHours": [
+  [
+   "Sofia",
+   41.00979,
+   28.97945,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Giritli",
+   41.00366,
+   28.98073,
+   "13:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Husnu Ala Cafe",
+   41.01792,
+   28.96511,
+   "Mo-Su 10:00-24:00",
+   "cafe"
+  ],
+  [
+   "Kücük",
+   41.02987,
+   28.9738,
+   "Mo-Sa 22:00-02:00",
+   "bar"
+  ],
+  [
+   "Seven Hills Restaurant",
+   41.00637,
+   28.97971,
+   "Mo-Su 07:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Mivan Restaurant Cafe",
+   41.00621,
+   28.96908,
+   "Mo-Su 08:00-01:30",
+   "restaurant"
+  ],
+  [
+   "Güney",
+   41.02601,
+   28.97456,
+   "08:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Mado",
+   41.02992,
+   28.97536,
+   "Mo-Su 07:30-01:00",
+   "cafe"
+  ],
+  [
+   "Yeni Lokanta",
+   41.02953,
+   28.97545,
+   "Tu-Sa 12:00-16:00, 17:00-00:30",
+   "restaurant"
+  ],
+  [
+   "Turkish German Bookstore & Cafe",
+   41.02911,
+   28.97525,
+   "Mo-Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "AGORA Meyhanesi 1890",
+   41.03354,
+   28.94677,
+   "12:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Coffee Department",
+   41.03291,
+   28.9458,
+   "08:00-19:00",
+   "cafe"
+  ],
+  [
+   "Balıkçı Sabahattin",
+   41.0047,
+   28.98057,
+   "Mo-Su 12:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Sinop Mantı",
+   41.04323,
+   29.00379,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Antiochia",
+   41.02898,
+   28.97394,
+   "Mo-Sa 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Karabatak",
+   41.0253,
+   28.97927,
+   "Mo-Fr 08:30-22:30; Sa-Su 09:30-22:30",
+   "cafe"
+  ],
+  [
+   "Sushi & Spice",
+   41.04257,
+   29.00285,
+   "Mo-Su 11:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Konak Cafe",
+   41.02483,
+   28.9745,
+   "09:00-24:00",
+   "cafe"
+  ],
+  [
+   "Nabu Karakoy",
+   41.02526,
+   28.97993,
+   "07:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Tarihi Sultanahmet Köftecisi Selim Usta",
+   41.008,
+   28.97697,
+   "Mo-Su 10:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Varuna Gezgin",
+   41.02933,
+   28.97559,
+   "08:15-01:00",
+   "restaurant"
+  ],
+  [
+   "Old Ottoman Cafe & Restaurant",
+   41.01073,
+   28.97541,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Bilice Kebap",
+   41.03,
+   28.97487,
+   "Mo-Su 10:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Massa Bistro",
+   41.00859,
+   28.97516,
+   "Mo-Su 09:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Vefakar Cafe & Bistro",
+   41.01352,
+   28.96054,
+   "Mo-Su 08:00-01:00",
+   "cafe"
+  ],
+  [
+   "Harabbe Cafe",
+   41.00844,
+   28.97619,
+   "Mo-Su 11:00-03:00",
+   "cafe"
+  ],
+  [
+   "Khorasani Restaurant",
+   41.00855,
+   28.97607,
+   "Mo-Su 12:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Sedef Buffet",
+   41.00813,
+   28.97383,
+   "Mo-Sa 08:00-20:30",
+   "cafe"
+  ],
+  [
+   "Vefa Bozacısı 1876",
+   41.01532,
+   28.95842,
+   "Mo-Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Roofstar Bosphorus",
+   41.01258,
+   28.96616,
+   "Mo-Su 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Burger King",
+   41.00824,
+   28.9723,
+   "Mo-Su 10:30-23:00",
+   "fast_food"
+  ],
+  [
+   "Hidden Garden Sultanat",
+   41.0068,
+   28.9724,
+   "Mo-Su 11:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Asitane",
+   41.03087,
+   28.939,
+   "12:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Ortaklar Kebab Lahmacun",
+   41.00727,
+   28.9722,
+   "Mo-Su 10:30-01:00",
+   "restaurant"
+  ],
+  [
+   "TRIA ELEGANCE TERRACE RESTAURANT",
+   41.00568,
+   28.98102,
+   "Tu-Su 13:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Gulhane Sark Sofrasi",
+   41.01072,
+   28.97765,
+   "Mo-Su 11:00-01:30",
+   "restaurant"
+  ],
+  [
+   "Çatladıkapı Sosyal Tesisleri",
+   41.0018,
+   28.97351,
+   "Mo-Su 08:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Myterrace Cafe & Restaurant",
+   41.00485,
+   28.97303,
+   "Mo-Su 09:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Hanegah",
+   41.01821,
+   28.95282,
+   "Mo-Su 08:30-02:00",
+   "cafe"
+  ],
+  [
+   "ArtSmyrna Cafe & Gallery",
+   41.02555,
+   28.9753,
+   "Mo-Su 09:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Privato Cafe",
+   41.02686,
+   28.97408,
+   "09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Papadopoulos Coffee & Cake",
+   41.0261,
+   28.97722,
+   "Mo-Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Beso Restaurant Bistro",
+   41.00868,
+   28.97408,
+   "Mo-Su 11:00-00:55",
+   "restaurant"
+  ],
+  [
+   "Old Istanbul Cuisine",
+   41.01025,
+   28.97563,
+   "Mo-Su 10:30-23:55",
+   "restaurant"
+  ],
+  [
+   "Beer Hall",
+   41.04253,
+   29.00104,
+   "12:00-02:00",
+   "bar"
+  ],
+  [
+   "Galata Kitchen",
+   41.02574,
+   28.97537,
+   "Mo-Sa 11:30-22:00",
+   "cafe"
+  ],
+  [
+   "Şimdi",
+   41.0296,
+   28.97512,
+   "Mo-Sa 07:00-00:00",
+   "cafe"
+  ],
+  [
+   "Mahmiye Restaurant",
+   41.00855,
+   28.97616,
+   "Mo-Su 10:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Drip Coffee Istanbul",
+   41.02875,
+   28.97391,
+   "Mo-Sa 08:30-22:00; Su 09:30-22:00",
+   "cafe"
+  ],
+  [
+   "Balkon Cafe & Bar",
+   41.0298,
+   28.97396,
+   "Mo-Su 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Noir Pit",
+   41.02901,
+   28.97317,
+   "Mo-Su 07:00-22:00",
+   "cafe"
+  ],
+  [
+   "Mivan",
+   41.00627,
+   28.96943,
+   "Mo-Su 08:00-23:00",
+   "cafe"
+  ],
+  [
+   "KAVACOFFEE",
+   41.02477,
+   28.97789,
+   "Mo-Fr 08:00-22:00; Sa-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Summit Bar & Terrace",
+   41.04729,
+   29.00973,
+   "12:00-01:30",
+   "bar"
+  ],
+  [
+   "Leb-i derya",
+   41.02863,
+   28.97648,
+   "16:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Antakya Kebap Asmalı",
+   41.02999,
+   28.97472,
+   "Mo-Su 09:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Karaköy Gümrük",
+   41.02287,
+   28.97584,
+   "Mo-Th 09:00-24:00; Fr-Sa 09:00-24:30; Su 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Velvet Cafe",
+   41.02555,
+   28.97376,
+   "Su, Tu-Th 10:00-20:30; Fr-Sa 10:00-21:00",
+   "cafe"
+  ],
+  [
+   "Poika Coffee",
+   41.00834,
+   28.97502,
+   "Mo-Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Bloom Cafe",
+   41.02653,
+   28.97805,
+   "Mo-Su 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Tahin",
+   41.02468,
+   28.97894,
+   "Mo-Su 12:00-21:45",
+   "restaurant"
+  ],
+  [
+   "Pak Pide Pizza Salonu",
+   41.01459,
+   28.96799,
+   "Mo-Sa 11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Hanzade Terrace Restaurant",
+   41.00645,
+   28.97005,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Divella Bistro Restaurant",
+   41.00643,
+   28.98082,
+   "Mo-Su 10:00-00:55",
+   "restaurant"
+  ],
+  [
+   "Lock",
+   41.0464,
+   29.00714,
+   "Mo-Su 14:00-02:00",
+   "bar"
+  ],
+  [
+   "Karadeniz Pide Vefa",
+   41.01728,
+   28.95832,
+   "Mo-Sa 07:30-19:00",
+   "restaurant"
+  ],
+  [
+   "Books&Coffee",
+   41.02291,
+   28.97427,
+   "Mo-Su 07:00-23:00",
+   "cafe"
+  ],
+  [
+   "Tarihi Cemberlitas Muhallebicisi",
+   41.00796,
+   28.97149,
+   "Mo-Su 07:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Derbunker",
+   41.04827,
+   29.00603,
+   "Mo-Su 10:00-23:00",
+   "cafe"
+  ],
+  [
+   "SARIKAYA KEBAP (KEBAPCI)",
+   41.02624,
+   28.97339,
+   "Mo-Su 08:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Otantik",
+   41.00972,
+   28.97622,
+   "08:00-23:30",
+   "restaurant"
+  ],
+  [
+   "d'Orient Beyoğlu",
+   41.02763,
+   28.97425,
+   "Mo-Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Espressolab",
+   41.0219,
+   28.97595,
+   "Mo-Su 07:00-23:00",
+   "cafe"
+  ],
+  [
+   "Grace Rooftop Restaurant",
+   41.00626,
+   28.97367,
+   "Mo-Su 08:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Ist Too",
+   41.0404,
+   29.00542,
+   "Mo-Su 07:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Shang Palace",
+   41.04038,
+   29.00532,
+   "Mo-Su 12:00-15:00, 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Le Bar",
+   41.04042,
+   29.00522,
+   "Mo-Su 17:00-01:00",
+   "bar"
+  ],
+  [
+   "Lobby Lounge",
+   41.0405,
+   29.00513,
+   "Mo-Su 11:00-23:00",
+   "bar"
+  ],
+  [
+   "Route Burger House Karaköy",
+   41.02517,
+   28.97787,
+   "Mo-Fr 11:30-00:00; Sa-Su 12:30-00:00",
+   "fast_food"
+  ],
+  [
+   "Dukkan Galata",
+   41.02598,
+   28.97544,
+   "Mo-Fr 08:30-19:00; Sa-Su 09:00-18:30",
+   "cafe"
+  ],
+  [
+   "Durumcu mustafa",
+   41.01067,
+   28.97101,
+   "Mo-Sa 11:00-20:00",
+   "cafe"
+  ],
+  [
+   "Queb Lounge",
+   41.00552,
+   28.98044,
+   "Mo-Su 09:00-03:00",
+   "restaurant"
+  ],
+  [
+   "16Roof",
+   41.04031,
+   28.99749,
+   "Mo-Su 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Alemdar Restaurant",
+   41.00953,
+   28.97853,
+   "Mo-Su 09:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Dora",
+   41.03154,
+   28.94866,
+   "Mo-Su 08:00-02:00",
+   "cafe"
+  ],
+  [
+   "Frida Coffee",
+   41.00902,
+   28.97562,
+   "07:00-00:30",
+   "cafe"
+  ],
+  [
+   "Asmali Durumcu",
+   41.02874,
+   28.97373,
+   "Mo-Su 12:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Limonluk Cafe - Dolmabahçe Sarayı/Palace",
+   41.04045,
+   29.00157,
+   "Tu-Su 09:00-17:30",
+   "bar"
+  ],
+  [
+   "Sofyalı 9 Restoran",
+   41.02912,
+   28.97432,
+   "Tu-Su 14:30-01:30",
+   "restaurant"
+  ],
+  [
+   "Velvet Cafe Balat",
+   41.03113,
+   28.94874,
+   "Su-Sa 09:30-19:00",
+   "cafe"
+  ],
+  [
+   "Maison Balat",
+   41.03083,
+   28.94964,
+   "Su-Sa 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "Blum Coffee House",
+   41.04282,
+   28.99931,
+   "Sa 09:00-20:00; Su-Fr 08:00-19:00",
+   "cafe"
+  ],
+  [
+   "Nata Lisboa Galata",
+   41.02646,
+   28.97329,
+   "Mo-Sa 08:00-23:00",
+   "cafe"
+  ],
+  [
+   "Balıkçı Murat Abi",
+   41.00546,
+   28.96861,
+   "Mo-Su 12:00-24:00",
+   "cafe"
+  ],
+  [
+   "Amelie Galata",
+   41.02419,
+   28.9747,
+   "Mo-Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Forno",
+   41.02968,
+   28.95047,
+   "Su-Sa 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Meşhur Beşiktaş Köftecisi",
+   41.04333,
+   29.00451,
+   "Mo-Sa 11:30-20:15; Su 11:30-18:00",
+   "fast_food"
+  ],
+  [
+   "Roofstar Bosphorus",
+   41.01258,
+   28.96614,
+   "Mo-Su 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Galapera",
+   41.02122,
+   28.9742,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Octo",
+   41.02412,
+   28.97919,
+   "Mo-Su 06:30-11:00, 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "İBB Sultanahmet Kent Lokantası",
+   41.0096,
+   28.97753,
+   "Mo-Fr 08:00-20:00; Sa 12:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Fatih Belediyesi Sultanahmet Sosyal Tesisleri",
+   41.00695,
+   28.97544,
+   "Mo-Su 08:30-22:00",
+   "cafe"
+  ],
+  [
+   "Resto Han",
+   41.01344,
+   28.97854,
+   "Mo-Su 08:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Via Romana Pizza",
+   41.02893,
+   28.97407,
+   "Mo-Su 12:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Ays Lab Bakery",
+   41.03478,
+   28.93647,
+   "Mo-Sa 08:00-18:00; Su 12:00-18:00",
+   "cafe"
+  ],
+  [
+   "Balat Atik Cafe",
+   41.03174,
+   28.94847,
+   "Mo-Su 09:30-23:00",
+   "cafe"
+  ],
+  [
+   "Coffee 4",
+   41.00912,
+   28.97523,
+   "Su-Fr 07:00-24:00",
+   "cafe"
+  ],
+  [
+   "Semaver",
+   41.0023,
+   28.97825,
+   "Mo-Su 12:00-02:00",
+   "cafe"
+  ],
+  [
+   "Müzenin Kahvesi",
+   41.01161,
+   28.98073,
+   "Mo-Fr 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Postane Cafe",
+   41.02493,
+   28.97438,
+   "Mo-Su 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "Artlocalist",
+   41.0301,
+   28.95052,
+   "Mo-Su 09:00-23:30",
+   "cafe"
+  ],
+  [
+   "Arc Co Coffee Roastery",
+   41.033,
+   28.9467,
+   "Mo-Su 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "Asırlık Tencere Köftecisi - Balat",
+   41.03271,
+   28.94639,
+   "Mo-Su 10:30-21:00",
+   "fast_food"
+  ],
+  [
+   "Galata Balık Dürüm",
+   41.02394,
+   28.97726,
+   "Mo-Sa 10:00-03:00; Su 10:00-02:30",
+   "fast_food"
+  ],
+  [
+   "Kaffa Miro",
+   41.03049,
+   28.94981,
+   "Tu-Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "My Home Döner",
+   41.00648,
+   28.97019,
+   "Mo-Sa 12:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Minder 1871 Cafe Nargile",
+   41.00254,
+   28.97024,
+   "Mo-Su 08:00-23:00",
+   "cafe"
+  ],
+  [
+   "Cafe Sabor Cağaloğlu",
+   41.01322,
+   28.97468,
+   "07:30-22:30",
+   "cafe"
+  ],
+  [
+   "Last Ottoman Cafe & Restaurant",
+   41.01388,
+   28.97838,
+   "Mo-Su 10:00-23:45",
+   "restaurant"
+  ],
+  [
+   "Filizler Köftecisi",
+   41.02247,
+   29.00699,
+   "Mo-Su 08:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Shyra Rooftop Restaurant",
+   41.00729,
+   28.9734,
+   "Mo-Su 09:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Işıl Garden Rooftop Restaurant & Turkish Cuisine",
+   41.00324,
+   28.96828,
+   "Mo-Su 08:00-01:30",
+   "restaurant"
+  ],
+  [
+   "Muhayyel Cafe",
+   41.02792,
+   28.97595,
+   "09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Gallant Galata",
+   41.0259,
+   28.97371,
+   "08:00-01:00",
+   "cafe"
+  ],
+  [
+   "Çok Çok Thai Restaurant",
+   41.03271,
+   28.97518,
+   "Mo 18:00-23:45; Tu-Su 12:00-23:45",
+   "restaurant"
+  ],
+  [
+   "Kasette",
+   41.03133,
+   28.97563,
+   "Mo-Su 22:00-04:00",
+   "bar"
+  ],
+  [
+   "Dogaciyiz.com gourmet şarküteri",
+   41.03006,
+   28.98241,
+   "08:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Well Breakfast & Coffee",
+   41.0331,
+   28.98241,
+   "Mo-Su 09:00-21:00",
+   "restaurant"
+  ],
+  [
+   "The House Cafe İstiklal",
+   41.03283,
+   28.97667,
+   "Mo-Th 08:00-02:00; Fr-Sa 08:00-04:00; Su 08:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Kronotrop Cihangir",
+   41.03142,
+   28.98239,
+   "Mo-Su 07:00-23:00",
+   "cafe"
+  ],
+  [
+   "1 Coffee",
+   41.03162,
+   28.98421,
+   "Mo-Su 09:00-22:30",
+   "cafe"
+  ],
+  [
+   "Kumrucu Doyum",
+   41.04907,
+   29.02625,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Constantine's Ark",
+   41.01296,
+   28.97706,
+   "Mo-Su 10:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Pera",
+   41.03046,
+   28.97466,
+   "10:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Pendor",
+   41.03516,
+   28.97883,
+   "Mo-Su 13:30-04:00",
+   "bar"
+  ],
+  [
+   "Piknik kofte",
+   41.03235,
+   28.97646,
+   "Mo-Su 08:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Mezopotamya",
+   41.01391,
+   28.97766,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Coffetopia",
+   41.01649,
+   28.97339,
+   "Mo-Su 07:00-22:00",
+   "cafe"
+  ],
+  [
+   "Corner Irish Pub İstanbul",
+   41.03384,
+   28.97671,
+   "10:00-04:00",
+   "pub"
+  ],
+  [
+   "Swedish Coffee Point",
+   41.03152,
+   28.98226,
+   "Su-Th 08:30-22:30; Fr-Sa 08:30-23:00",
+   "cafe"
+  ],
+  [
+   "LOL Coffee Roasters",
+   41.02596,
+   28.98126,
+   "Mo-Su 08:00-02:00",
+   "cafe"
+  ],
+  [
+   "Imren",
+   40.99618,
+   28.92711,
+   "Mo-Su 09:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Cafe 8 Istanbul",
+   41.03436,
+   28.981,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "LaViola",
+   41.03437,
+   28.98077,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Şampiyon Kokoreç",
+   41.03387,
+   28.97784,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Irish Pub The James Joyce",
+   41.03507,
+   28.97843,
+   "Mo-Su 12:00-02:00",
+   "pub"
+  ],
+  [
+   "Asmaaltı Beyoğlu",
+   41.03501,
+   28.97693,
+   "Mo-Su 12:00-02:00",
+   "bar"
+  ],
+  [
+   "çikolata cafe",
+   41.02124,
+   28.94561,
+   "Mo-Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Lades Menemen",
+   41.0346,
+   28.98084,
+   "Mo-Su 07:00-22:00",
+   "fast_food"
+  ],
+  [
+   "21",
+   41.03001,
+   28.98376,
+   "Mo-Su 09:00-04:00",
+   "restaurant"
+  ],
+  [
+   "İzmirli Kumrucu Mehmet",
+   41.04915,
+   29.02618,
+   "Mo-Su 09:00-04:00",
+   "fast_food"
+  ],
+  [
+   "Ehlitat Lokantasi",
+   41.03529,
+   28.97829,
+   "Mo-Su 08:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Coffee Sapiens",
+   41.02594,
+   28.98124,
+   "Mo-Su 08:00-23:00",
+   "cafe"
+  ],
+  [
+   "Önder Babat Kültür Merkezi",
+   41.03036,
+   28.97477,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Probador Colectiva",
+   41.02901,
+   28.97998,
+   "Tu-Sa 09:30-18:00",
+   "cafe"
+  ],
+  [
+   "Tramvay",
+   41.03019,
+   28.97532,
+   "Mo-Su 12:00-00:00",
+   "cafe"
+  ],
+  [
+   "Geyik",
+   41.03035,
+   28.98384,
+   "Mo-Su 16:00-02:00",
+   "bar"
+  ],
+  [
+   "cukur meyhane",
+   41.03371,
+   28.979,
+   "Mo-Su 10:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Astra Balik Fish House",
+   41.03397,
+   28.97875,
+   "Mo-Su 10:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Yolsanat",
+   40.99441,
+   28.92737,
+   "Mo-Sa 09:30-18:00",
+   "cafe"
+  ],
+  [
+   "1924 İstanbul",
+   41.03286,
+   28.97613,
+   "16:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Artists",
+   41.03388,
+   28.98001,
+   "Mo-Su 11:00-03:00",
+   "bar"
+  ],
+  [
+   "Hafız Mustafa 1864",
+   41.01601,
+   28.97336,
+   "Mo-Su 06:00-22:30",
+   "cafe"
+  ],
+  [
+   "Relax Mode Laleli",
+   41.0089,
+   28.95952,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Reyhun Iranian Restaurant",
+   41.03267,
+   28.97783,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Behzadem Cafe Restaurant",
+   41.01158,
+   28.95922,
+   "Mo-Su 09:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Lambo",
+   41.03474,
+   28.97745,
+   "Mo-Su 10:00-03:00",
+   "bar"
+  ],
+  [
+   "Cihangir sosyal tesisleri",
+   41.02832,
+   28.98244,
+   "08:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Cihangir Ulaş Balıkçılık",
+   41.03019,
+   28.98155,
+   "We, Fr-Mo 11:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Viva Restaurant",
+   41.01322,
+   28.97671,
+   "Mo-Su 12:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Cico",
+   41.03376,
+   28.97911,
+   "Mo-Su 10:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Berry",
+   41.03628,
+   28.97531,
+   "Mo-Su 08:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Tekin Kebap Dürüm Evi",
+   41.03511,
+   28.9737,
+   "Mo-Su 12:00-00:00",
+   "cafe"
+  ],
+  [
+   "Kus Yuvasi Pera",
+   41.03363,
+   28.9785,
+   "Mo-Su 09:00-01:00",
+   "cafe"
+  ],
+  [
+   "Lezizâne Lokantası",
+   41.03361,
+   28.97924,
+   "Mo-Su 07:00-00:00",
+   "cafe"
+  ],
+  [
+   "Hafiz Mustafa 1864",
+   41.03444,
+   28.97981,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Rice House",
+   41.04442,
+   29.04501,
+   "08:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Avam Kahvesi",
+   41.03432,
+   28.98325,
+   "Mo-Su 09:00-00:00",
+   "cafe"
+  ],
+  [
+   "Amelie",
+   41.02553,
+   28.98085,
+   "Mo-Su 08:00-02:00",
+   "cafe"
+  ],
+  [
+   "Organic Me - Vegan Cafe & Shop",
+   41.03283,
+   28.9776,
+   "Mo-Su 11:00-23:00",
+   "cafe"
+  ],
+  [
+   "Limon Kahvaltı Evi Breakfast house",
+   41.03109,
+   28.98224,
+   "Mo-Su 07:30-17:00",
+   "restaurant"
+  ],
+  [
+   "Kebab House",
+   41.01586,
+   28.97278,
+   "Mo-Su 09:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Traditional Turkish Coffee",
+   41.01589,
+   28.97271,
+   "Mo-Su 07:00-00:00",
+   "cafe"
+  ],
+  [
+   "Tavuk Dünyası",
+   41.03036,
+   28.97572,
+   "Su-Sa 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Yiğit Sofram",
+   41.03141,
+   28.98329,
+   "Tu-Fr 07:00-17:00; Sa-Su 07:00-18:00; Mo,PH off",
+   "cafe"
+  ],
+  [
+   "Hookah Place",
+   41.03275,
+   28.97731,
+   "Su-Th 13:00-02:00; Fr 13:00-04:00; Sa 13:00-04:00",
+   "bar"
+  ],
+  [
+   "Zeytuna Cezayir'de",
+   41.03181,
+   28.97946,
+   "Tu-Th 17:00-00:00; Fr-Su 14:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Afil Cihangir",
+   41.03042,
+   28.98312,
+   "Mo-Th 11:00-02:00; Fr-Sa 11:00-03:00; Su 11:00-01:00",
+   "cafe"
+  ],
+  [
+   "Cafe da Giovanni",
+   41.03177,
+   28.97866,
+   "Mo-Su 07:30-20:00",
+   "cafe"
+  ],
+  [
+   "Vegan Store & Cafe",
+   41.03264,
+   28.98405,
+   "Mo-Su 10:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Lokal Kokoreç",
+   41.03184,
+   28.98402,
+   "Tu-Th 16:00-01:00; Fr-Sa 16:00-02:00; Su 16:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Garden mezze",
+   41.01452,
+   28.97734,
+   "Mo-Su 11:00-00:30",
+   "restaurant"
+  ],
+  [
+   "Kevok Ocakbaş",
+   41.03367,
+   28.97564,
+   "Mo-Su 11:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Pera 77",
+   41.03111,
+   28.97399,
+   "Mo-Su 07:00-02:00",
+   "bar"
+  ],
+  [
+   "Mornings in Pera",
+   41.03239,
+   28.97605,
+   "Mo-Su 07:30-00:00",
+   "cafe"
+  ],
+  [
+   "Juicery",
+   41.03248,
+   28.98424,
+   "Mo-Sa 09:30-19:00",
+   "cafe"
+  ],
+  [
+   "Ziyafet kuzu çevirme İstanbul",
+   41.01369,
+   28.97704,
+   "Mo-Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Adana Kebab House",
+   41.03518,
+   28.97829,
+   "Mo-Su 11:00-01:00",
+   "fast_food"
+  ],
+  [
+   "Cafe Ma",
+   41.03773,
+   28.94128,
+   "Tu-Su 10:30-22:30",
+   "cafe"
+  ],
+  [
+   "Paper Ship Coffee & Roasters",
+   41.02554,
+   28.98145,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Murat Çetin",
+   41.03517,
+   28.98113,
+   "Mo-Su 09:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Lookanta",
+   41.03517,
+   28.98117,
+   "Mo-Su,PH 08:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Elise Pide Lahmacun",
+   41.04911,
+   29.02531,
+   "Mo-Fr 10:30-23:30",
+   "restaurant"
+  ],
+  [
+   "MUUS Coffee",
+   41.03237,
+   28.98432,
+   "Mo-Su 09:00-24:00",
+   "cafe"
+  ],
+  [
+   "KASTAMONU SULTAN LOKANTASI",
+   41.03471,
+   28.946,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Köroğlu Fatih Kıztaşı Lokantası",
+   41.01542,
+   28.95015,
+   "Mo-Su 09:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Adile Hanım Konağı",
+   41.03246,
+   28.98278,
+   "08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Baran Lahmacun",
+   41.03332,
+   28.98073,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Ortakoy Manticisi",
+   41.04903,
+   29.02537,
+   "Mo-Su 08:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Hayvore",
+   41.03392,
+   28.97881,
+   "Mo-Su 10:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Galata Breakfast",
+   41.02873,
+   28.97965,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Nørre İstanbul",
+   41.03139,
+   28.9799,
+   "Tu-Su 10:00-20:00",
+   "cafe"
+  ],
+  [
+   "Türkistan Kültür Evi - Kitap & Kahve",
+   41.01309,
+   28.95826,
+   "11:00-21:00",
+   "cafe"
+  ],
+  [
+   "Solera Winery",
+   41.03203,
+   28.9782,
+   "11:00-02:00",
+   "bar"
+  ],
+  [
+   "Historic Eminönü Fish Sandwich",
+   41.01836,
+   28.97121,
+   "09:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Yunus Emre Teras Cafe",
+   41.03221,
+   28.97416,
+   "Mo-Sa 08:00-02:00",
+   "cafe"
+  ],
+  [
+   "Feriye",
+   41.04713,
+   29.02446,
+   "Mo-Su 09:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Bira Fabrikası",
+   40.98757,
+   29.02628,
+   "Mo-Su 09:00-03:00",
+   "pub"
+  ],
+  [
+   "Viktor Levi Wine House",
+   40.98735,
+   29.02605,
+   "Mo-Su 11:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Pidepark",
+   41.04949,
+   29.0022,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Kot Sıfır Mekan",
+   41.05059,
+   28.98585,
+   "Mo-Su 10:00-23:00",
+   "cafe"
+  ],
+  [
+   "Montag Coffee & Roasters",
+   40.99007,
+   29.02418,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Collective 26A",
+   40.9882,
+   29.02566,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Hayalperest",
+   40.98979,
+   29.02775,
+   "PH,Mo-Su 10:00-02:00",
+   "bar"
+  ],
+  [
+   "Fil",
+   40.98756,
+   29.02601,
+   "Mo-Su 10:00-04:00",
+   "pub"
+  ],
+  [
+   "Kulübe Moda",
+   40.98623,
+   29.03039,
+   "Mo-Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Zapata",
+   40.98783,
+   29.02621,
+   "Mo-Th, Su 12:00-22:00; Fr, Sa 12:00-23:00",
+   "cafe"
+  ],
+  [
+   "Emri Cafe",
+   41.01155,
+   28.94739,
+   "10:00-01:00",
+   "cafe"
+  ],
+  [
+   "Sallora Restaurant",
+   41.01168,
+   28.94723,
+   "10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Vatan Cafe",
+   41.01218,
+   28.94633,
+   "08:00-24:00",
+   "cafe"
+  ],
+  [
+   "Kadim Traditional Rest",
+   40.98974,
+   29.02644,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Vi Coffee & HealthyLiving",
+   41.04864,
+   28.9959,
+   "Mo-Sa 07:30-23:00; Su 08:30-20:30",
+   "cafe"
+  ],
+  [
+   "Coffee Manifesto",
+   40.9892,
+   29.02417,
+   "Su-Th 08:00-21:00; Fr-Sa 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Rafine Espresso Bar",
+   40.98646,
+   29.02576,
+   "Mo-Su 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "ÇATÇAT Nişantaşı",
+   41.05242,
+   28.99298,
+   "Mo-Su 12:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Raki & Balik Evi",
+   40.98947,
+   29.02454,
+   "Su-Th 11:00-00:30; Fr-Sa 09:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Bina",
+   40.98642,
+   29.02647,
+   "Mo-Su 10:00-02:00",
+   "cafe"
+  ],
+  [
+   "Story Coffee & Food",
+   40.98535,
+   29.02574,
+   "Mo-Su 09:00-23:00",
+   "cafe"
+  ],
+  [
+   "Oblomov",
+   40.9888,
+   29.02579,
+   "Mo-Su 11:00-02:00",
+   "pub"
+  ],
+  [
+   "Kronotrop Topağacı",
+   41.051,
+   28.995,
+   "Mo-Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Güneşin Sofrası",
+   40.98945,
+   29.02987,
+   "Mo-Su 15:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Urban Roastery",
+   40.98532,
+   29.02948,
+   "Mo-Su 10:00-21:00",
+   "cafe"
+  ],
+  [
+   "Neva",
+   40.98922,
+   29.02397,
+   "Sa-Su 11:00-03:00; Mo-Fr 11:00-02:00",
+   "bar"
+  ],
+  [
+   "Kronotrop",
+   40.986,
+   29.02583,
+   "07:00 - 23:30",
+   "cafe"
+  ],
+  [
+   "URFALİMSAVAKUSTA",
+   41.0129,
+   28.94843,
+   "Mo-Su 10:00-02:00",
+   "restaurant"
+  ],
+  [
+   "lil Bake",
+   40.98469,
+   29.02604,
+   "Mo-Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Ağaç Ev",
+   40.9902,
+   29.0278,
+   "PH,Mo-Su 11:00-04:00",
+   "bar"
+  ],
+  [
+   "Bubble Istanbul",
+   41.0492,
+   28.99551,
+   "Mo-Su 10:00-20:30",
+   "cafe"
+  ],
+  [
+   "Chef Coffee",
+   41.04643,
+   29.0025,
+   "Mo-Fr 08:00-20:00; Sa,Su 08:00-02:00",
+   "cafe"
+  ],
+  [
+   "Tahin Restoran Nişantaşı",
+   41.05297,
+   28.99262,
+   "Mo-Su 11:30-22:00",
+   "food_court"
+  ],
+  [
+   "Thales Cafe",
+   40.98688,
+   29.02756,
+   "09:00-02:00",
+   "cafe"
+  ],
+  [
+   "Mado",
+   41.05135,
+   28.9907,
+   "Mo-Su 08:00-24:00",
+   "cafe"
+  ],
+  [
+   "Etiler Marmaris",
+   41.05226,
+   28.99229,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Noodle House",
+   41.05,
+   28.98805,
+   "Mo-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Carmelo",
+   40.98919,
+   29.02375,
+   "Mo-Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Gergedan cafe & bistro",
+   40.9903,
+   29.02656,
+   "Mo-Su 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Mamabowl",
+   40.98401,
+   29.03009,
+   "Mo-Sa 11:00-18:00",
+   "fast_food"
+  ],
+  [
+   "Müsaade Meyhane",
+   40.98892,
+   29.02436,
+   "Mo-Su 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Livane",
+   40.99009,
+   29.02779,
+   "PH,Mo-Su 11:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Ayvalik Ekspress",
+   40.98602,
+   29.02714,
+   "Mo-Su 11:00-20:00",
+   "cafe"
+  ],
+  [
+   "Peripeteia",
+   40.9901,
+   29.0285,
+   "Mo, We-Fr 10:00-02:00; Sa, Su 10:00-04:00",
+   "cafe"
+  ],
+  [
+   "Hane",
+   40.98972,
+   29.02832,
+   "Su-Th 14:30-00:30; Fr-Sa 15:00-01:30",
+   "restaurant"
+  ],
+  [
+   "Çiya Sofrası",
+   40.98935,
+   29.02443,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Pilav House",
+   40.98836,
+   29.02365,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Bizim Dürüm ve Kanat Evi",
+   40.99014,
+   29.0268,
+   "Mo-Su 11:30-02:00",
+   "fast_food"
+  ],
+  [
+   "Healty & Happt Ekolojik Kitchen",
+   40.98591,
+   29.02743,
+   "Mo-Su 12:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Kadıköy Simit",
+   40.9896,
+   29.02768,
+   "PH,Mo-Su 00:00-23:59",
+   "fast_food"
+  ],
+  [
+   "Piși Mutfak",
+   40.98466,
+   29.02496,
+   "Tu-Su 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Yeni Meyhane",
+   40.98986,
+   29.02776,
+   "Mo-Su 15:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Zoya’s House",
+   41.04961,
+   28.99243,
+   "Mo-Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Goblin Club",
+   40.98883,
+   29.02552,
+   "Mo-Su 11:30-22:30",
+   "cafe"
+  ],
+  [
+   "Espressolab",
+   41.04955,
+   28.99114,
+   "Mo-Su 07:00-22:00",
+   "cafe"
+  ],
+  [
+   "ayık çorba kebap",
+   40.98909,
+   29.02449,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Bütme Evi",
+   40.98789,
+   29.02445,
+   "Tu-Su 10:00-09:00",
+   "fast_food"
+  ],
+  [
+   "Hadika Kahvaltı Evi",
+   41.05582,
+   28.98988,
+   "Mo-Su 08:30-17:00",
+   "restaurant"
+  ],
+  [
+   "Lochness Scotish Pub",
+   40.98746,
+   29.02617,
+   "Mo-Su 10:00-02:00",
+   "pub"
+  ],
+  [
+   "Tatar Salim",
+   40.98955,
+   29.02445,
+   "Mo-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Whispers Coffee",
+   40.98763,
+   29.02578,
+   "Mo-Th 09:00-23:00; Fr-Sa 09:00-00:00; Su 10:00-23:00",
+   "cafe"
+  ],
+  [
+   "Yanyalı Fehmi Lokantası",
+   40.99077,
+   29.02551,
+   "Mo-Su 09:00-21:00",
+   "restaurant"
+  ],
+  [
+   "House Of SOFA",
+   40.98434,
+   29.02815,
+   "Mo-Su 10:00-23:00",
+   "cafe"
+  ],
+  [
+   "TAS",
+   41.04999,
+   28.9954,
+   "Mo-Fr 12:00-22:00",
+   "cafe"
+  ],
+  [
+   "700 GRAM",
+   40.98483,
+   29.02649,
+   "Mo-Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Sofa",
+   40.98426,
+   29.02898,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Little Caesars",
+   40.98819,
+   29.03366,
+   "11:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Ferick Fried Chicken",
+   40.98742,
+   29.02756,
+   "Mo-Su 11:00-01:00",
+   "fast_food"
+  ],
+  [
+   "Vegan Masa",
+   40.99139,
+   29.02768,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Rabbit.cocktailbar",
+   41.05271,
+   28.99513,
+   "Mo-Sa 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Piya Thai",
+   40.98405,
+   29.02761,
+   "Mo,We-Su 12:00-22:00; Tu off",
+   "restaurant"
+  ],
+  [
+   "Subuco By Mosquito",
+   40.9878,
+   29.02703,
+   "Mo-Su 10:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Ihlamur Kasrı Kafeterya",
+   41.0513,
+   29.00188,
+   "Tu-Sa 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Gasto Nişantaşı",
+   41.0492,
+   28.99612,
+   "Tu-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Fazıl Bey'in Türk Kahvesi",
+   40.99039,
+   29.02476,
+   "Mo-Su 08:00-24:00",
+   "cafe"
+  ],
+  [
+   "Mantı Point",
+   40.99026,
+   29.03138,
+   "Mo-Su 09:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Muhit Kadıköy",
+   40.9882,
+   29.02391,
+   "Mo-Su 12:00-01:00",
+   "bar"
+  ],
+  [
+   "Cafe Pont",
+   41.05137,
+   28.99017,
+   "Mo-Su 09:00-21:30",
+   "cafe"
+  ],
+  [
+   "Tas lokanta",
+   41.05249,
+   28.99589,
+   "Mo-Fr 11:30-19:00; Sa, Su 12:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Marul Handmade Çiğköfte",
+   40.98624,
+   29.02696,
+   "Mo-Th 12:00-22:00; Fr-Su 12:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Melidya Çiğköfte",
+   41.05198,
+   28.98601,
+   "Mo-Su 12:00-03:00",
+   "fast_food"
+  ],
+  [
+   "Meet Lab Coffee",
+   40.98423,
+   29.02612,
+   "Mo-Fr 08:00-24:00; Sa-Su 09:00-24:00",
+   "cafe"
+  ],
+  [
+   "Meet Lab Coffee",
+   40.98427,
+   29.02617,
+   "Mo-Fr 08:00-00:00; Sa-Su 09:00-00:00",
+   "cafe"
+  ],
+  [
+   "Kahve Bahane Kültür Cafe",
+   40.98648,
+   29.02681,
+   "Mo-Sa 09:00-02:30; Su 09:00-00:00",
+   "cafe"
+  ],
+  [
+   "Ferick Fried Chicken",
+   40.9875,
+   29.02756,
+   "Mo-Su 11:00-01:00",
+   "cafe"
+  ],
+  [
+   "d'Orient | Kadıköy",
+   40.98944,
+   29.02402,
+   "Mo-Su 07:00-23:00",
+   "cafe"
+  ],
+  [
+   "Olimpiyat Kokoreç",
+   40.99077,
+   29.02538,
+   "Mo-We 12:00-22:30; Th 12:00-22:30; Fr 12:00-24:00; Sa 12:00-26:00; Su 12:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Taunt Potato Club",
+   40.98634,
+   29.02687,
+   "13:00 - 23:00",
+   "restaurant"
+  ],
+  [
+   "Garni",
+   40.98415,
+   29.02933,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "İBB Altınboynuz Sosyal Tesisi",
+   41.05756,
+   28.94576,
+   "Mo-Su 08:30-23:00",
+   "restaurant"
+  ]
  ]
 }

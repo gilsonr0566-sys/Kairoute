@@ -714,5 +714,21 @@
    "hours": "",
    "osm": "node/9943156699"
   }
+ ],
+ "eatHours": [
+  [
+   "Kule Seafood Restaurant",
+   37.86059,
+   27.2537,
+   "Mo-Su 09:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Pizza Tomato Selçuk",
+   37.95049,
+   27.3714,
+   "10:00-22:00",
+   "fast_food"
+  ]
  ]
 }
