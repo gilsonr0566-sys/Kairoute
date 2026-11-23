@@ -120,7 +120,8 @@
      "wikidata": "Q636928",
      "content": "Delphi is all about the hellenic culture and the remaining ruins. The downside are the opening hours of the Sanctuaries. Only during the summer heat, the place is open until 20:00. Better arrive early or stay the night before in a place nea",
      "editions": 15,
-     "unesco": false
+     "unesco": false,
+     "en": "Delphi Archaeological Museum"
     },
     {
      "kind": "see",
@@ -132,7 +133,8 @@
      "wikidata": "Q10378966",
      "content": "",
      "editions": 9,
-     "unesco": false
+     "unesco": false,
+     "en": "Delphi Theater"
     },
     {
      "kind": "see",
@@ -144,7 +146,8 @@
      "wikidata": "Q10751359",
      "content": "",
      "editions": 25,
-     "unesco": false
+     "unesco": false,
+     "en": "Temple of Apollo in Delphi"
     },
     {
      "kind": "see",
@@ -156,7 +159,8 @@
      "wikidata": "Q21705214",
      "content": "",
      "editions": 8,
-     "unesco": false
+     "unesco": false,
+     "en": "stadium of Delphi"
     },
     {
      "kind": "see",
@@ -168,7 +172,8 @@
      "wikidata": "Q19753400",
      "content": "",
      "editions": 9,
-     "unesco": false
+     "unesco": false,
+     "noEn": true
     }
    ],
    "foodDrink": [
@@ -359,7 +364,8 @@
    "wikidata": "Q395367",
    "note": "The site of the ancient city centre is a green space with a beautiful view of the Acropolis.  It was built as a multipurpose area, then evolved into a religious area over time.  The Ancient Agora was eventually abandoned and then large part",
    "editions": 34,
-   "unesco": false
+   "unesco": false,
+   "en": "Ancient Agora of Athens"
   },
   {
    "name": "Temple of Hephaestus",
@@ -377,7 +383,8 @@
    "wikidata": "Q1263335",
    "note": "This building was reconstructed in the 1950s from its original foundations, incorporating as much of the original structure and materials as possible, with limestone quarried from Piraeus and roof tiles made of clay from Attica. It is used ",
    "editions": 27,
-   "unesco": false
+   "unesco": false,
+   "en": "Stoa of Attalos"
   },
   {
    "name": "Church of the Holy Apostles",
@@ -396,7 +403,8 @@
    "wikidata": "Q1435551",
    "note": "This area became the main marketplace of the city after the Ancient Agora to the west became primarily a religious facility under Roman rule.  It houses the Tower of the Winds, an eight-sided tower with a different wind deity on each side, ",
    "editions": 19,
-   "unesco": false
+   "unesco": false,
+   "en": "Roman Agora of Athens"
   },
   {
    "name": "Kerameikos",
@@ -426,7 +434,8 @@
    "editions": 43,
    "unesco": false,
    "closedForGood": true,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Lyceum"
   },
   {
    "name": "Plato's Academy",
@@ -437,7 +446,8 @@
    "editions": 69,
    "unesco": false,
    "closedForGood": true,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Platonic Academy"
   },
   {
    "name": "Hadrian's Reservoir",
@@ -455,7 +465,8 @@
    "editions": 47,
    "unesco": false,
    "web": "http://www.panathenaicstadium.gr/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Panathenaic Stadium"
   },
   {
    "name": "Lycabettus Hill",
@@ -466,7 +477,8 @@
    "editions": 38,
    "unesco": false,
    "web": "http://www.lycabettushill.com",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Mount Lycabettus"
   },
   {
    "name": "Olympic Stadium",
@@ -476,7 +488,8 @@
    "note": "",
    "editions": 52,
    "unesco": false,
-   "web": "http://www.oaka.com.gr"
+   "web": "http://www.oaka.com.gr",
+   "en": "Olympic Stadium in Athens"
   },
   {
    "name": "National Theatre",
@@ -485,7 +498,8 @@
    "wikidata": "Q583039",
    "note": "A low but imposing building erected between 1882 and 1890 by architect Ernst Ziller in the eclectic style of that age, commissioned by King George I.",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "en": "National Theatre of Greece - Ziller Building"
   },
   {
    "name": "Syntagma Square",
@@ -510,7 +524,8 @@
    "wikidata": "Q3531128",
    "note": "Catch the changing of the guards in front of the Tomb of the Unknown Soldier in front of Parliament every hour on the hour.  The guards are a fascinating sight; they wear distinctive uniforms with pleated kilts and leather clogs with pom-po",
    "editions": 8,
-   "unesco": false
+   "unesco": false,
+   "en": "Tomb of the Unknown Soldier, Athens"
   },
   {
    "name": "Daphni Monastery",
@@ -529,7 +544,8 @@
    "wikidata": "Q1168003",
    "note": "A nice escape from the city in the foothills of Mount Hymettus. Walking trails. There's a functional monastery one can walk in, and several ruined chapels or basilicas up on the walks.",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "en": "Kaisariani monastery"
   },
   {
    "name": "National Archaeological Museum of Athens",
@@ -550,7 +566,8 @@
    "note": "A small but excellent museum displays artifacts from Mycenean Greece on, and includes some wonderful Persian artifacts.",
    "editions": 9,
    "unesco": false,
-   "web": "https://pacf.gr/en/"
+   "web": "https://pacf.gr/en/",
+   "en": "Paul and Alexandra Canellopoulos Museum"
   },
   {
    "name": "Benaki Museum of Greek Culture",
@@ -560,7 +577,8 @@
    "note": "Visit the beautiful Neoclassical main building which houses collections of Greek art, from ancient times through the Byzantine period and the modern state. Open late and for free on Thursday evenings. The museum shop is a good place to buy ",
    "editions": 27,
    "unesco": false,
-   "web": "https://www.benaki.org/index.php?lang=en"
+   "web": "https://www.benaki.org/index.php?lang=en",
+   "en": "Benaki Museum"
   },
   {
    "name": "Museum of Cycladic Art",
@@ -581,7 +599,8 @@
    "editions": 19,
    "unesco": false,
    "web": "http://www.nationalgallery.gr",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "National Gallery of Athens"
   },
   {
    "name": "Benaki Museum of Islamic Art",
@@ -607,7 +626,8 @@
    "wikidata": "Q1576793",
    "note": "Paintings of Greek painters of the first half of the 20th century are displayed.",
    "editions": 6,
-   "unesco": false
+   "unesco": false,
+   "en": "Municipal Gallery of Athens"
   },
   {
    "name": "Vorres Museum",
@@ -637,7 +657,8 @@
    "note": "The building of the museum is one of the most beautiful in Athens, and was built by Ernst Ziller and was used as the residence in Athens of Schliemann. The collection contains thousands of ancient coins and ancient Greek, Roman, Byzantine, ",
    "editions": 20,
    "unesco": false,
-   "web": "http://www.nummus.gr/"
+   "web": "http://www.nummus.gr/",
+   "en": "Numismatic Museum of Athens"
   },
   {
    "name": "Museum of Greek Popular Musical Instruments",
@@ -646,7 +667,8 @@
    "wikidata": "Q4306254",
    "note": "Includes exhibits of traditional Greek musical instruments, with recordings of most of them.",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "en": "Museum of Greek Folk Musical Instruments"
   },
   {
    "name": "National War Museum",
@@ -656,7 +678,8 @@
    "note": "The National War Museum is the only significant surviving public project of the military dictatorship which ruled Greece 1967 - 1974. The museum's displays are old fashioned and biased towards the more successful periods of Greek military h",
    "editions": 19,
    "unesco": false,
-   "web": "http://www.warmuseum.gr/"
+   "web": "http://www.warmuseum.gr/",
+   "en": "Athens War Museum"
   },
   {
    "name": "Park of Maritime Tradition",
@@ -673,7 +696,8 @@
    "note": "An industrial museum of incomparable architecture. The centre has assisted in the upgrading of a historic Athens district.",
    "editions": 6,
    "unesco": false,
-   "web": "https://www.athens-technopolis.gr/"
+   "web": "https://www.athens-technopolis.gr/",
+   "en": "Technopolis City of Athens"
   },
   {
    "name": "Spathario Museum",

@@ -74,7 +74,8 @@
      "wikidata": "Q7126984",
      "content": "Medieval palace, dating from the 10th century, that was built by the Arabs when they ruled over Taormina. The main body is an Arabic tower. It has also an inner courtyard where the Arabic influence can be seen in the architecture.",
      "editions": 6,
-     "unesco": false
+     "unesco": false,
+     "noEn": true
     },
     {
      "kind": "see",
@@ -231,7 +232,8 @@
      "wikidata": "Q519204",
      "content": "From the 8th century BCE, many Greeks fled their homeland to settle in south Italy and Sicily. This \"Magna Grecia\" influenced Roman culture, and founded cities such as Naples and Syracuse, before eventually being absorbed into the Roman Rep",
      "editions": 11,
-     "unesco": false
+     "unesco": false,
+     "en": "National Museum of Magna Græcia"
     },
     {
      "kind": "see",
@@ -243,7 +245,8 @@
      "wikidata": "Q1736209",
      "content": "Rebuilt in modern Romanesque after its predecessor was wrecked in the earthquake of 1908.",
      "editions": 11,
-     "unesco": false
+     "unesco": false,
+     "en": "Reggio Calabria Cathedral"
     },
     {
      "kind": "see",
@@ -255,7 +258,8 @@
      "wikidata": "Q3662304",
      "content": "Just a masonry shell, sometimes used for concerts, you come for the panorama of the city. It's named for the Kings of Aragon who re-built it in the 14th century.",
      "editions": 7,
-     "unesco": false
+     "unesco": false,
+     "en": "Aragonese Castle"
     },
     {
      "kind": "see",
@@ -301,7 +305,8 @@
      "wikidata": "Q3635667",
      "content": "Rebuilt in modern style in 1965, this is where the Madonna sets off on her annual procession.",
      "editions": 5,
-     "unesco": false
+     "unesco": false,
+     "en": "basilica dell'Eremo"
     }
    ],
    "foodDrink": [],
@@ -523,7 +528,8 @@
    "note": "A Gothic cathedral which dates to the 12th century. The cathedral suffered serious damage in the 1908 earthquake and was restored between 1919 and 1920. During the Second World War, Allied bombings destroyed part of the Cathedral, which was",
    "editions": 14,
    "unesco": false,
-   "web": "http://www.diocesimessina.it/duomo/index.htm"
+   "web": "http://www.diocesimessina.it/duomo/index.htm",
+   "en": "Messina Cathedral"
   },
   {
    "name": "Palazzo Calapaj-d'Alcontres",
@@ -533,7 +539,8 @@
    "note": "An 18th-century building, perhaps of a relatively modest exterior, but it's one of a few ones survived the earthquake of 1908.",
    "editions": 2,
    "unesco": false,
-   "web": "http://www.comune.messina.it/turismo/itinerari-turistici/palazzi/palazzo-calapaj-d-alcontres.aspx"
+   "web": "http://www.comune.messina.it/turismo/itinerari-turistici/palazzi/palazzo-calapaj-d-alcontres.aspx",
+   "en": "Palazzo Calapaj - d'Alcontres"
   },
   {
    "name": "Palazzo Zanca",
@@ -553,7 +560,8 @@
    "note": "Collections of medieval art and modern works. Note especially the altarpiece of San Gregorio by Antonello da Messina, and the ''Resurrezione di Lazzaro'' (Raising of Lazarus) and ''Adorazione dei pastori'' (Adoration of the Shepherds) both ",
    "editions": 5,
    "unesco": false,
-   "web": "https://museo.messina.it"
+   "web": "https://museo.messina.it",
+   "en": "Regional museum of Messina"
   },
   {
    "name": "Chiesa dei Catalani",
@@ -562,7 +570,8 @@
    "wikidata": "Q3669197",
    "note": "One of a few survivors of the earthquake in 1908. Its origin dates to the 12th century in later Norman style with Arabic-influenced elements.",
    "editions": 8,
-   "unesco": false
+   "unesco": false,
+   "en": "Church of the Santissima Annunziata dei Catalani"
   },
   {
    "name": "Quattro Fontane",
@@ -581,7 +590,8 @@
    "note": "This former church built early 13th century is a rare example of a Gothic style in the city. The church was badly damaged in 1908 and was open back to the public in 2001. It hosts various exhibitions.",
    "editions": 3,
    "unesco": false,
-   "web": "http://www.torrese.it/Santa_Maria_Alemanna.htm"
+   "web": "http://www.torrese.it/Santa_Maria_Alemanna.htm",
+   "en": "Santa Maria Alemanna"
   },
   {
    "name": "Chiesa del Carmine",
@@ -617,7 +627,8 @@
    "note": "Sanctuary is a building made in an eclectic style with Gothic and Romanesque elements, located high above the Piazza del Duomo. From its lookout point, with a statue of the Pope admiring the view, you can enjoy a panorama of the Messina har",
    "editions": 2,
    "unesco": false,
-   "web": "http://www.santuariomontalto.it/"
+   "web": "http://www.santuariomontalto.it/",
+   "en": "Santa Maria di Montalto"
   },
   {
    "name": "Fontana Falconieri",
@@ -634,7 +645,8 @@
    "note": "Built at the remains of the medieval castle of Matagrifone, ''Christ the King'' is a majestic domed memorial chapel, located on a hilltop north of the Sanctuary of the Madonna of Montalto. also with a beautiful panoramic view of the harbour",
    "editions": 1,
    "unesco": false,
-   "web": "http://www.sicilie.it/sicilia/Messina_-_Sacrario_di_Cristo_Re"
+   "web": "http://www.sicilie.it/sicilia/Messina_-_Sacrario_di_Cristo_Re",
+   "noEn": true
   },
   {
    "name": "Chiesa di Montevergine",
@@ -644,7 +656,8 @@
    "note": "The church hosts remains of the Catholic saint Eustochia Smeralda Calafato.",
    "editions": 2,
    "unesco": false,
-   "web": "https://eustochia.jimdo.com/orari-e-contatti/"
+   "web": "https://eustochia.jimdo.com/orari-e-contatti/",
+   "en": "Sant'Eustochia"
   },
   {
    "name": "Fontana del Nettuno",
@@ -654,7 +667,8 @@
    "note": "Another monumental fountain by Montorsoli featuring Neptune accompanied with Scylla and Charybdis.",
    "editions": 3,
    "unesco": false,
-   "web": "http://www.comune.messina.it/turismo/itinerari-turistici/fontane/nettuno.aspx"
+   "web": "http://www.comune.messina.it/turismo/itinerari-turistici/fontane/nettuno.aspx",
+   "en": "Fountain of Neptune"
   },
   {
    "name": "Porta Grazia di Messina",
@@ -664,7 +678,8 @@
    "note": "The former main gate of the Messina's citadel. These days it stays at the Piazza Casa Pia dei Poveri. A few other surviving parts of the citadel still can be seen at the original location of the citadel at the SE corner of the port albeit i",
    "editions": 3,
    "unesco": false,
-   "posFrom": "wikidata"
+   "posFrom": "wikidata",
+   "en": "Real Cittadella"
   },
   {
    "name": "Villa de Pasquale",

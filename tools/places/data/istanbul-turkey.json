@@ -2737,7 +2737,8 @@
    "wikidata": "Q80541",
    "note": "The defining image of Istanbul, dominating the skyline with its great dome and six minarets. Completed in 1617 for Sultan Ahmed I, it's still a working mosque, so dress appropriately and avoid prayer times. Enter via the courtyard on the SW",
    "editions": 89,
-   "unesco": true
+   "unesco": true,
+   "en": "Sultan Ahmed Mosque"
   },
   {
    "name": "Hagia Sophia",
@@ -2776,7 +2777,8 @@
    "note": "Turkey was slow to protect its antiquities and to display them properly, but in 1867 Sultan Abdülaziz toured the museums of Paris, London and Vienna and saw what was needed. The main collection is in a grand neo-classical building of 1891, ",
    "editions": 37,
    "unesco": false,
-   "web": "https://muze.gov.tr/muze-detay?SectionId=IAR01&DistId=IAR"
+   "web": "https://muze.gov.tr/muze-detay?SectionId=IAR01&DistId=IAR",
+   "en": "Istanbul Archaeology Museums"
   },
   {
    "name": "Museum of the History of Science and Technology in Islam",
@@ -2785,7 +2787,8 @@
    "wikidata": "Q16850295",
    "note": "Museum in a restored building that was the stables for Topkapı Palace. It exhibits various instruments for astronomy, clocks, pumps, weaponry, a steam-powered döner spit, and so on developed in Islamic realms down the centuries, but these a",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "en": "Istanbul Museum of the History of Science and Technology in Islam"
   },
   {
    "name": "Istanbul Railway Museum",
@@ -2820,7 +2823,8 @@
    "wikidata": "Q1572472",
    "note": "Sokollu Mehmet Pasha was the grand vizier and ''de facto'' ruler of the Ottoman Empire during its 16th century golden age. He commissioned this mosque, one of three in the city to bear his name, but the sloping site was a challenge. He hire",
    "editions": 33,
-   "unesco": false
+   "unesco": false,
+   "en": "Sokollu Mehmed Pasha I Mosque"
   },
   {
    "name": "Little Hagia Sophia",
@@ -2849,7 +2853,8 @@
    "note": "This is a triple structure: the church of the Monastery of Pantokrator built 1118, then a public church circa 1136 plus a chapel that served as a royal mausoleum. It became a mosque and medresse in Ottoman times, but without massive alterat",
    "editions": 31,
    "unesco": true,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Zeyrek Mosque"
   },
   {
    "name": "Süleymaniye Mosque",
@@ -2868,7 +2873,8 @@
    "wikidata": "Q756189",
    "note": "The original mosque was built between 1463-1470 by the Greek architect Atik Sinan, by order of Sultan Mehmet II the Conqueror, on the site of the former Church of the Holy Apostles, which had served as Byzantine Imperial burial place for a ",
    "editions": 38,
-   "unesco": false
+   "unesco": false,
+   "en": "Fatih Istanbul Mosque"
   },
   {
    "name": "St George's Cathedral",
@@ -2878,7 +2884,8 @@
    "note": "This is modest from the outside, as the Ottomans would not permit non-Muslim religious buildings to rival the mosques. The interior is lavish but its chief importance is as the senior Eastern Orthodox church. Their Patriarchate has been hou",
    "editions": 70,
    "unesco": false,
-   "web": "https://ec-patr.org"
+   "web": "https://ec-patr.org",
+   "en": "Ecumenical Patriarchate of Constantinople"
   },
   {
    "name": "Phanar Greek Orthodox College",
@@ -2894,7 +2901,8 @@
    "wikidata": "Q1420984",
    "note": "The Church of Theotokos Pammakaristos (\"All-Blessed Mother of God\") was built between the 11th and 12th centuries. The ''parekklesion'' or side-chapel was added maybe 1300, with rich mosaics. The main building became a mosque in 1591, named",
    "editions": 31,
-   "unesco": false
+   "unesco": false,
+   "en": "Pammakaristos Church"
   },
   {
    "name": "St Stephen Church",
@@ -2904,7 +2912,8 @@
    "note": "A remarkable Bulgarian Orthodox church better known as ''Demir Kilise'', \"Iron Church\", as it's a cast iron prefab. The Bulgarians split from the Greek Orthodox and established their own wooden church in 1870, which burned down. The ground ",
    "editions": 17,
    "unesco": false,
-   "web": "http://www.svetistephan.com/"
+   "web": "http://www.svetistephan.com/",
+   "en": "Bulgarian St. Stephen Church"
   },
   {
    "name": "Ahrida Synagogue",
@@ -2913,7 +2922,8 @@
    "wikidata": "Q3393562",
    "note": "This was built in the 1430s by Grecian Jews (\"Romaniotes\") from the city of Ohrid, now in North Macedonia. The district of Balat was a Jewish quarter, swelled from 1492 by those expelled from Spain. The synagogue is only open for pre-arrang",
    "editions": 14,
-   "unesco": false
+   "unesco": false,
+   "en": "Ahrida Synagogue of Istanbul"
   },
   {
    "name": "Panorama 1453 History Museum",
@@ -2932,7 +2942,8 @@
    "wikidata": "Q608787",
    "note": "Built in the early 5th century as a monastery dedicated to Saint Andrew the Apostle, in 766 it was the burial place of Saint Andrew of Crete and was later re-dedicated to him. It was rebuilt in the late 9th century and again in the 13th, th",
    "editions": 22,
-   "unesco": false
+   "unesco": false,
+   "en": "Koça Mustafa Pasha Mosque"
   },
   {
    "name": "Yedikule Fortress",
@@ -2961,7 +2972,8 @@
    "note": "A ritual dancing hall of the mystical Mevlevi order, the followers of the teachings of Mewlānā Rumi. The quiet and peaceful garden is a welcome escape from the hustle and bustle of Beyoğlu. The oldest Mevlevi lodge in Istanbul, the convent ",
    "editions": 4,
    "unesco": false,
-   "web": "https://muze.gov.tr/muze-detay?sectionId=GLT01&distId=MRK"
+   "web": "https://muze.gov.tr/muze-detay?sectionId=GLT01&distId=MRK",
+   "en": "Galata Mevlevihanesi"
   },
   {
    "name": "Kasimpaşa Mevlevihanesi",
@@ -2978,7 +2990,8 @@
    "note": "A neo-gothic Anglican cathedral which would not be out of place in northwestern Europe, the Crimean Memorial Church was built for the Protestant community of the city by [[United Kingdom",
    "editions": 9,
    "unesco": false,
-   "web": "http://anglicansistanbul.blogspot.com"
+   "web": "http://anglicansistanbul.blogspot.com",
+   "en": "Crimea Memorial Church"
   },
   {
    "name": "Arap Camii",
@@ -2987,7 +3000,8 @@
    "wikidata": "Q642478",
    "note": "The building was erected as a Roman Catholic church in 1325 by the friars of the Dominican Order, near or above an earlier chapel dedicated to Saint Paul (Italian: San Paolo) in 1233. In 1299, the Dominican Friar Guillaume Bernard de Sévéra",
    "editions": 25,
-   "unesco": false
+   "unesco": false,
+   "en": "Arab Istanbul Mosque"
   },
   {
    "name": "Neve Shalom Synagogue",
@@ -3007,7 +3021,8 @@
    "note": "A former synagogue, the museum's exhibit details how the cultures mixed with and influenced each other in the past 500+ years since the Spanish expulsion.",
    "editions": 17,
    "unesco": false,
-   "web": "http://www.muze500.com/"
+   "web": "http://www.muze500.com/",
+   "en": "Jewish Museum of Turkey"
   },
   {
    "name": "Camondo Stairs",
@@ -3016,7 +3031,8 @@
    "wikidata": "Q6027749",
    "note": "An attractive stairway mixing the Neo-Baroque and early Art Nouveau styles, climbing up from Bankalar St towards the Galata Tower. It was built in the 1870s by Abraham Salomon Camondo, who belonged to a prominent Ottoman-Venetian Jewish fam",
    "editions": 8,
-   "unesco": false
+   "unesco": false,
+   "en": "Camondo stairs"
   },
   {
    "name": "Schneidertempel",
@@ -3059,7 +3075,8 @@
    "note": "Although not at the size of [[Istanbul/Sultanahmet-Old_City#See",
    "editions": 25,
    "unesco": false,
-   "web": "https://www.sentantuan.com"
+   "web": "https://www.sentantuan.com",
+   "en": "Church of St. Anthony of Padua"
   },
   {
    "name": "Cezayir Street",
@@ -3068,7 +3085,8 @@
    "wikidata": "Q6061491",
    "note": "Better known as '''Fransız Sokağı''' or ''La Rue Française'', i.e. \"French Street\", is an alley of statues and geraniums hanging from windows, featuring France-themed restaurants, cafes, and pubs housed in renovated and brightly-painted neo",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "en": "Cezayir Sokağı"
   },
   {
    "name": "Museum of Innocence",
@@ -3078,7 +3096,8 @@
    "note": "Opened in 2012, this museum is unique and a must-see when you are in the Beyoğlu area. It was created by Turkish Nobel laureate Orhan Pamuk alongside a novel of the same name. It tells the love story of the two main characters from the nove",
    "editions": 27,
    "unesco": false,
-   "web": "https://www.masumiyetmuzesi.org/en"
+   "web": "https://www.masumiyetmuzesi.org/en",
+   "en": "The Museum of Innocence"
   },
   {
    "name": "Orhan Kemal Museum",
@@ -3088,7 +3107,8 @@
    "note": "Tiny house museum on the life of Turkish novelist Orhan Kemal (1914–1970).",
    "editions": 5,
    "unesco": false,
-   "web": "http://www.orhankemal.org/"
+   "web": "http://www.orhankemal.org/",
+   "en": "Orhan Kemal Literature Museum"
   },
   {
    "name": "Adam Mickiewicz Museum",
@@ -3108,7 +3128,8 @@
    "note": "It was built in 2001 and is the first miniature park in Istanbul (the world's largest miniature park in respect to its model area). The park hosts icons of many cultures and civilizations. Models vary from the Hagia Sophia to Galata Tower, ",
    "editions": 21,
    "unesco": false,
-   "web": "http://www.miniaturk.com.tr/"
+   "web": "http://www.miniaturk.com.tr/",
+   "en": "Miniatürk"
   },
   {
    "name": "Aynalıkavak Pavilion",
@@ -3117,7 +3138,8 @@
    "wikidata": "Q793169",
    "note": "Started in 1613 by the Ottoman sultan Ahmet I (r. 1603–1617, who also had the Blue Mosque in the [[Istanbul/Sultanahmet-Old City",
    "editions": 14,
-   "unesco": false
+   "unesco": false,
+   "en": "Aynalıkavak Palace"
   },
   {
    "name": "Rahmi M. Koç Industrial Museum",
@@ -3127,7 +3149,8 @@
    "note": "This is an industry museum showcasing the evolution of machines. Many transport related items including a submarine, classic cars, railway carriages, an out-of-service Bosphorus ferry and a Douglas DC-3 aircraft (possible to board) are on d",
    "editions": 14,
    "unesco": false,
-   "web": "http://www.rmk-museum.org.tr/english/index.html"
+   "web": "http://www.rmk-museum.org.tr/english/index.html",
+   "en": "Rahmi M. Koç Museum"
   },
   {
    "name": "Dolmabahce Palace",
@@ -3138,7 +3161,8 @@
    "editions": 54,
    "unesco": false,
    "web": "https://www.millisaraylar.gov.tr/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Dolmabahçe Palace"
   },
   {
    "name": "Akaretler Street",
@@ -3183,7 +3207,8 @@
    "wikidata": "Q90801",
    "note": "Built in first half of the 15th century, this is the large medieval castle under the Second Bosphorus Bridge. Its former name ''Boğazkesen'' (Turkish)/''Laimokopia'' (Greek) means both \"strait-blocker\" and \"throat-cutter\" in both languages ",
    "editions": 35,
-   "unesco": false
+   "unesco": false,
+   "en": "Rumeli Hisarı"
   },
   {
    "name": "Baltalimanı Japanese Garden",
@@ -3222,7 +3247,8 @@
    "note": "It houses the headquarters of Borusan Holding and the Borusan Contemporary art museum. The popular nickname of the mansion, ''Perili Köşk'' (meaning the \"Haunted Mansion\") refers to its construction remaining partially unfinished for a long",
    "editions": 6,
    "unesco": false,
-   "web": "https://www.borusancontemporary.com/"
+   "web": "https://www.borusancontemporary.com/",
+   "en": "Perili Köşk"
   },
   {
    "name": "Eyüp Mosque Complex",
@@ -3231,7 +3257,8 @@
    "wikidata": "Q956677",
    "note": "This is the main attraction around this part of the city. The holiest Islamic shrine in the city, the complex includes, right next to the mosque, the tomb of Abu Ayyub al-Ansari (''Eyüp Ensari Türbesi''), the standard bearer of Prophet Moha",
    "editions": 29,
-   "unesco": false
+   "unesco": false,
+   "en": "Eyüp Sultan Mosque"
   },
   {
    "name": "Artistanbul Feshane",
@@ -3240,7 +3267,8 @@
    "wikidata": "Q6059242",
    "note": "Feshane began as a factory producing '''fezzes''' (''fes''), the red hats made of felt adopted by the Ottomans in the early 19th century as a part of westernizing efforts in lieu of much more traditional turbans. However, the fez was scrapp",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Feshane"
   },
   {
    "name": "Santral İstanbul",
@@ -3250,7 +3278,8 @@
    "note": "A contemporary art museum in a building converted from an old power plant: 1914-built and coal-fired, this was the oldest in Istanbul and the Ottoman Empire. Part of the plant was kept in almost exact original condition and now serves as th",
    "editions": 13,
    "unesco": false,
-   "web": "http://www.santralistanbul.org/"
+   "web": "http://www.santralistanbul.org/",
+   "en": "santralistanbul"
   },
   {
    "name": "Bahariye Mevlevihanesi",
@@ -3276,7 +3305,8 @@
    "note": "Among the exhibition of this museum are five thousand pieces from the Ottoman era through WWII, with the most prominent piece possibly being the huge chain that the Byzantines stretched across the mouth of the Golden Horn to keep out the Su",
    "editions": 13,
    "unesco": false,
-   "web": "https://askerimuze.msb.gov.tr/ing/index.html"
+   "web": "https://askerimuze.msb.gov.tr/ing/index.html",
+   "en": "Istanbul Military Museum"
   },
   {
    "name": "Radio Building",
@@ -3285,7 +3315,8 @@
    "wikidata": "Q6024559",
    "note": "This building dating back to 1945 houses the local radio branch of the state radio and television corporation of Turkey (''TRT''). Not exactly an architectural pearl (although fans of the 1940s' totalitarian architecture will likely find it",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Istanbul Radio House"
   },
   {
    "name": "Nişantaşı",
@@ -3333,7 +3364,8 @@
    "editions": 8,
    "unesco": false,
    "closedForGood": true,
-   "web": "https://www.visitsealife.com/istanbul/"
+   "web": "https://www.visitsealife.com/istanbul/",
+   "en": "Sea Life İstanbul"
   },
   {
    "name": "Maiden's Tower",
@@ -3393,7 +3425,8 @@
    "wikidata": "Q2414579",
    "note": "One of the highest hills of Istanbul, at 288 m asl. Since it dominates a great part of the city, it is the site of [https://camlicakule.istanbul/ Çamlıca Tower], a 2021-built telecommunications tower and the highest structure of Istanbul, w",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "en": "Büyük Çamlıca Hill"
   },
   {
    "name": "Anadolu Citadel",
@@ -3402,7 +3435,8 @@
    "wikidata": "Q81650",
    "note": "A medieval citadel on the Bosphorus at the mouth of the Göksu creek. It was built in the late 14th century to control (polite word for \"choke off\") shipping along the Bosphorus, which narrows to 660 m at this point. It worked in tandem with",
    "editions": 33,
-   "unesco": false
+   "unesco": false,
+   "en": "Anadoluhisarı"
   },
   {
    "name": "IMOGA Graphic Arts Museum",

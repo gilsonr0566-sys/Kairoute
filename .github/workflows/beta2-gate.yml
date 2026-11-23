@@ -42,7 +42,7 @@ jobs:
         run: (node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs && node tools/beta2/sight-rules-check.cjs beta2-site/index.html && node tools/beta2/lunch-during-screen.cjs beta2-site/index.html && node tools/beta2/ticks-match-check.cjs beta2-site/index.html && node tools/truth/sight-mutants.cjs beta2-site/index.html && node tools/truth/no-warn-check.cjs && node tools/truth/spec-check.cjs && node tools/truth/report-check.cjs && node tools/truth/screen-rule-proof.cjs && node tools/truth/rules-check.cjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Helper (AI switch, one AI gate, spend caps, other websites)
         if: always()
-        run: (node tools/worker-check.mjs && node tools/worker-ai-gate.mjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+        run: (node tools/worker-check.mjs && node tools/worker-ai-gate.mjs && node tools/worker-cache-check.mjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Keep this part's failing lines for the release report
         if: always()
         run: |
@@ -111,6 +111,9 @@ jobs:
       - name: Everything on screen in the traveler's language, from every source (rules registry R-11)
         if: always()
         run: PLACES_DIR=tools/places/data node tools/truth/language-check.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Every sight shown under its English name, never one of its other-language names, and planted names in six scripts all caught (R-11)
+        if: always()
+        run: node tools/beta2/names-check.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Keep this part's failing lines for the release report
         if: always()
         run: |
@@ -165,6 +168,8 @@ jobs:
       - run: VERBOSE=1 node tools/beta2/flow-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
         run: node tools/ui/steady-sights-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: TRIPS=g09-kotor,g02-vienna,noai-port SIZES=phone DAYS=all node tools/ui/steady-sights-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Keep this part's failing lines for the release report
         if: always()
         run: |

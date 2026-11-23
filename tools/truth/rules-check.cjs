@@ -13,7 +13,9 @@ const ROOT = path.join(__dirname, '..', '..'), rd = f => fs.readFileSync(path.jo
 const START = '2026-11-23T23:30:00Z';
 // Checks that plant their own bad input on every run (so naming one counts as a proof).
 const PLANTING = new Set(['tools/truth/language-check.cjs', 'tools/truth/screen-rule-proof.cjs', 'tools/truth/no-warn-check.cjs',
-  'tools/truth/report-check.cjs', 'tools/truth/rules-check.cjs', 'tools/truth/mutants.cjs', 'tools/truth/sight-mutants.cjs']);
+  'tools/truth/report-check.cjs', 'tools/truth/rules-check.cjs', 'tools/truth/mutants.cjs', 'tools/truth/sight-mutants.cjs',
+  'tools/ui/steady-sights-check.cjs' /* plants a re-sort after a tap on every run (R-28) */,
+  'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */]);
 const GATE = rd('.github/workflows/beta2-gate.yml');
 const DEFECTS = new Set(['mutants.cjs', 'sight-mutants.cjs'].flatMap(f => (fs.readFileSync(path.join(__dirname, f), 'utf8').match(/id: '([a-z-]+)'/g) || []).map(s => s.slice(5, -1))));
 const SCREEN = (() => { const s = fs.readFileSync(path.join(__dirname, 'screen-rule-proof.cjs'), 'utf8'); return new Set([...s.matchAll(/^  '([^']+)': \[/gm)].map(m => m[1])); })();
@@ -51,7 +53,10 @@ function checkRules(rules, gate = GATE) {
 }
 function checkEscapes(rules, esc) {
   const listed = new Set(rules.flatMap(r => r.bugs.match(/\bE\d+\b/g) || [])), bad = [];
-  for (const l of esc.split('\n')) { const m = /^\| (E\d+) \|/.exec(l); if (m && !listed.has(m[1])) bad.push(`${m[1]}: in the escaped-bug log but under no rule in docs/qa/RULES.md`); }
+  const seen = new Set();
+  for (const l of esc.split('\n')) { const m = /^\| (E\d+) \|/.exec(l); if (!m) continue;
+    if (seen.has(m[1])) bad.push(`${m[1]}: two rows in the escaped-bug log share this number`); seen.add(m[1]);
+    if (!listed.has(m[1])) bad.push(`${m[1]}: in the escaped-bug log but under no rule in docs/qa/RULES.md`); }
   return bad;
 }
 function checkCommits(rules, commits, links) {
@@ -79,6 +84,7 @@ else fails.push(...checkCommits(rules, commits, rd('docs/qa/rule-links.md')));
 // The check proves itself on planted input: each of these must be caught.
 const self = [
   ['an escaped bug under no rule', checkEscapes(rules, '| E999 | Nov 23 | planted | x | S2 | x | x | Open |').length === 1],
+  ['two escaped bugs with one number', checkEscapes(rules, '| E1 | a |\n| E1 | b |').length === 1],
   ['a fix with no rule line', checkCommits(rules, [{ sha: 'f'.repeat(40), msg: 'Lunch: fix\n\nCo-Authored-By: x' }], '').length === 1],
   ['a fix naming a rule that does not exist', checkCommits(rules, [{ sha: 'f'.repeat(40), msg: 'x\n\nRule: R-999' }], '').length === 1],
   ['a fix with its rule passes', checkCommits(rules, [{ sha: 'f'.repeat(40), msg: 'x\n\nRule: R-11, R-12' }], '').length === 0],

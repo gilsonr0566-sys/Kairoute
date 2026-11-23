@@ -7,6 +7,23 @@
  },
  "findings": [
   {
+   "k": "POS",
+   "t": "Cavtat [day trip]: app is 0.55 km from Wikidata's point (not on the map by id)",
+   "x": {
+    "d": 0.5461907969503128,
+    "id": "cavtat-far",
+    "wd": "Q221350",
+    "app": [
+     42.5833,
+     18.2167
+    ],
+    "wdpt": [
+     42.579444444444,
+     18.220833333333
+    ]
+   }
+  },
+  {
    "k": "NOID",
    "t": "Bukovac House Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
    "x": {

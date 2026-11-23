@@ -26,6 +26,9 @@
 //                as the NEXT night, a ticket dated that day means THIS morning. Never assumed: it must be asked.
 //   S1 unverified the way back to the flight, train or ship rests on a ride with no timetable behind it, and the plan marks
 //                it as resting on timetables, or a train, bus or boat on it says nothing of the missing timetable
+//   S1 water     a stop across the water (an island, a place the guide says is reached by boat, a place the map puts
+//                across the water) reached with no boat since the town's side, or a town stop reached from it without a
+//                boat back: a walk or taxi to an island (Nov 18 "ferries that drive on land"; Lokrum as a 16 min taxi)
 //   S2 about     the same for a city metro, tram or bus on the way back (it runs often; its time must still read "about")
 //   S2 physics   a ride faster than its kind can move in a straight line (walk 6.5 km/h, taxi, bus 90, metro 90, train
 //                300, ferry 80), or no time at all between two places apart
@@ -119,6 +122,15 @@ function checkDay(d, p, ctx) {
     if (t != null && x.at < t - 1) add('clock', 'S2', `${x.name || x.t} at ${clk(x.at)}, before the item above it ends (${clk(t)})`);
     t = x.at + (x.min || 0) + (x.t === 'ride' ? (x.wait || 0) : 0);
   });
+  // ---- water: the day starts on the town's side of the water; a run of rides with a boat (ferry, tender, cable car) in it
+  // crosses to the other side and back. A stop the place's own facts put across the water (ctx.wet) must be on the far
+  // side when it is reached, and a stop that is not must be on the town's side: a walk or taxi to an island fails.
+  if (ctx && ctx.wet) { let away = false, run = [];
+    const BOAT = /ferry|boat|water ?taxi|sea ?bus|hydrofoil|catamaran/i; // a tender (ship to shore) and a cable car land on the town's side
+    for (const x of its) { if (x.t === 'ride') { run.push(x); continue; }
+      if (run.some(q => BOAT.test(kindOf(q) + ' ' + (q.how || '') + ' ' + (q.name || '')))) away = !away;
+      if (x.t === 'stop' && x.id) { const w = ctx.wet(x); if (w !== away) add('water', 'S1', `${x.name} is ${w ? 'across the water' : 'on the town\'s side'}, but the plan reaches it by ${run.length ? run.map(q => kindOf(q) + ' ' + (q.min || 0) + ' min').join(' + ') : 'no ride'}${w ? ' with no boat' : ' without crossing back'}`); away = w; }
+      run = []; } }
   // ---- physics + drift + absurd rides: a run of ride items between two places is one journey (walk to the pier, the
   // boat, the walk from the pier), so the speeds are judged on the whole run, the ends on its first and last leg.
   for (let k = 0; k < its.length; k++) {
@@ -227,7 +239,7 @@ if (require.main === module) {
   // --warn rule,rule lists a known finding without failing the run. It is allowed ONLY for S2 rules (wrong on screen).
   // An S1 rule (could miss a flight, train or ship) can never be warned: asking for it is refused and the rule still
   // fails (Richard, Nov 23: "the S1 warning exception is a serious design flaw"). A safety finding always blocks.
-  const S1 = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait'];
+  const S1 = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water'];
   const asked = String(arg('warn', '') || '').split(',').filter(Boolean), refused = asked.filter(k => S1.includes(k)), WARN = asked.filter(k => !S1.includes(k));
   if (refused.length) console.log(`REFUSED --warn ${refused.join(',')}: S1 safety rules always fail the run; no warn-only path`);
   const found = {}, ex = {}, SHOW = +arg('show', 6);
@@ -236,14 +248,19 @@ if (require.main === module) {
   // offline (the saved trips hold few of them).
   const NOTT = arg('no-timetable') ? (a, z) => { const km = hav(a, z); if (!(km >= 1.5)) return []; const ride = Math.round(km / 40 * 60) + 5, wait = 63;
     return [{ id: 'rail|T', label: 'Train T', mode: 'train', kind: 'Train', steps: ['T'], ride, wait, every: 60, everySrc: 'usual', noTimetable: true, min: 5 + wait + ride + 8, access: { how: 'walk', min: 5, km: 0.4 }, egress: { how: 'walk', min: 8, km: 0.6 } }]; } : null;
+  // Which stops are across the water, from the place's own facts (the guide's "by boat" note, a place reachable only by
+  // water, the map's island check), never from the ride the planner chose. A stop with no id (the ship, the hotel) is
+  // where the day starts, so it counts as on the same side as the town.
+  const wetOf = (bb, d) => { const c = (bb.cities || {})[d.city] || {}, ids = {}; [].concat(c.sites || [], c.farther || []).forEach(s => { ids[s.id] = !!(s.acrossWater || E.byBoat(s.travelNote) || E.waterOnly(s)); });
+    return x => !!(x && x.id && ids[x.id]); };
   let days = 0, planned = 0;
   for (const { name, b } of trips) {
-    let plans; try { const bb = E.applyPlaces(b, places); if (NOTT) bb.answers = NOTT; plans = E.planTrip(bb); } catch (e) { (found.error = (found.error || 0) + 1); (ex.error = ex.error || []).push(name + ': ' + e.message); continue; }
+    let plans, bb; try { bb = E.applyPlaces(b, places); if (NOTT) bb.answers = NOTT; plans = E.planTrip(bb); } catch (e) { (found.error = (found.error || 0) + 1); (ex.error = ex.error || []).push(name + ': ' + e.message); continue; }
     b.days.forEach((d, i) => { days++; const p = plans[i]; if (p && p.items) planned++;
-      for (const f of checkDay(d, p, { places: places[d.city] })) { const k = f.rule; found[k] = (found[k] || 0) + 1; (ex[k] = ex[k] || []).push(`${f.sev} ${name} day ${i + 1} ${d.type}${d.mode && /arrival|departure/.test(d.type) ? '/' + d.mode : ''} ${d.city || ''}: ${f.msg}`); } });
+      for (const f of checkDay(d, p, { places: places[d.city], wet: wetOf(bb, d) })) { const k = f.rule; found[k] = (found[k] || 0) + 1; (ex[k] = ex[k] || []).push(`${f.sev} ${name} day ${i + 1} ${d.type}${d.mode && /arrival|departure/.test(d.type) ? '/' + d.mode : ''} ${d.city || ''}: ${f.msg}`); } });
   }
   console.log(`Independent safety check: ${trips.length} trips, ${days} days, ${planned} planned`);
-  const order = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'about', 'physics', 'clock', 'drift', 'slowride', 'lunchshut', 'lunchlate'];
+  const order = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water', 'about', 'physics', 'clock', 'drift', 'slowride', 'lunchshut', 'lunchlate'];
   for (const k of order) { const n = found[k] || 0; console.log(`${n ? (WARN.includes(k) ? 'WARN' : 'FAIL') : 'ok  '} ${k.padEnd(9)} ${n}`); (ex[k] || []).slice(0, SHOW).forEach(e => console.log('       ' + e)); }
   if (lunchUntested.n) { console.log(`NOT TESTED lunchshut: ${lunchUntested.n} lunches with map hours not judged (the opening_hours library is not installed: npm i --no-save opening_hours@3.16.0)`); }
   if (process.env.ALL) fs.writeFileSync(process.env.ALL, JSON.stringify(ex, null, 1));

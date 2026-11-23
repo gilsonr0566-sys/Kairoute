@@ -456,7 +456,8 @@
    "wikidata": "Q3669454",
    "note": "Of all the churches on Mykonos, the most impressive is Panagia Paraportianí, a true Byzantine jewel. This whitewashed church, which building dates back to 1425 and was not completed until the 17th century, is the most popular and most photo",
    "editions": 8,
-   "unesco": false
+   "unesco": false,
+   "en": "Paraportiani"
   },
   {
    "name": "Archaeological Museum of Mykonos",
@@ -475,7 +476,8 @@
    "wikidata": "Q16895581",
    "note": "The Folklore Museum, housed in an 18th-century sea captain's house, brings together a number of collections of furniture, icons, pieces of sculpture, folk musical instruments, costumes and textiles.",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Mykonos Folklore Museum"
   },
   {
    "name": "Lena's House Museum",
@@ -484,7 +486,8 @@
    "wikidata": "Q108650605",
    "note": "Lena's House Museum, a branch of the Folklore Museum, is an authentic 19th-century middle class Mykonian house, completely restored with furnishings.",
    "editions": 1,
-   "unesco": false
+   "unesco": false,
+   "en": "House of Lena"
   },
   {
    "name": "Aegean Maritime Museum",

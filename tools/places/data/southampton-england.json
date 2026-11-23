@@ -65,7 +65,8 @@
      "wikidata": "Q6780641",
      "content": "The Mary Rose Museum houses the remains of Henry VIII’s flagship, which sank in 1545 and was raised in 1982 after more than 400 years underwater. The museum is built around the preserved hull, displayed in a climate-controlled environment a",
      "editions": 6,
-     "unesco": false
+     "unesco": false,
+     "en": "Mary Rose Ship Hall and Museum"
     },
     {
      "kind": "see",
@@ -111,7 +112,8 @@
      "wikidata": "Q15243099",
      "content": "Inside the 19th-century Lumps Fort.",
      "editions": 1,
-     "unesco": false
+     "unesco": false,
+     "en": "Lumps Fort"
     },
     {
      "kind": "see",
@@ -155,7 +157,8 @@
      "wikidata": "Q17650348",
      "content": "A partly roofless English Heritage property. Only occasionally open to the public.",
      "editions": 4,
-     "unesco": false
+     "unesco": false,
+     "en": "Portsmouth Garrison church"
     },
     {
      "kind": "see",
@@ -237,7 +240,8 @@
      "wikidata": "Q19568980",
      "content": "The Arthur Conan Doyle and Sherlock Holmes exhibition \"A Study in Sherlock\" is temporarily closed.",
      "editions": 2,
-     "unesco": false
+     "unesco": false,
+     "en": "Portsmouth Museum And Art Gallery"
     },
     {
      "kind": "see",
@@ -273,7 +277,8 @@
      "wikidata": "Q5471742",
      "content": "Sits just on Portsdown Hill and is free of charge to visit.",
      "editions": 2,
-     "unesco": false
+     "unesco": false,
+     "en": "Fort Nelson"
     }
    ],
    "foodDrink": [
@@ -1672,7 +1677,8 @@
    "note": "Built in 1495 for Sir John Dawtry, the Controller of Customs in Southampton.",
    "editions": 4,
    "unesco": false,
-   "web": "https://tudorhouseandgarden.com/"
+   "web": "https://tudorhouseandgarden.com/",
+   "en": "Southampton Tudor House and Garden"
   },
   {
    "name": "Solent Sky (Hall of Aviation)",
@@ -1682,7 +1688,8 @@
    "note": "The museum is dedicated to telling the incredible story of aviation in the Solent area. Exhibits include a Sandringham flying boat (which visitors can enter), a Spitfire, and Schneider Trophy racing seaplanes.",
    "editions": 3,
    "unesco": false,
-   "web": "https://www.solentskymuseum.org/"
+   "web": "https://www.solentskymuseum.org/",
+   "en": "Solent Sky"
   }
  ],
  "ferryLinks": [

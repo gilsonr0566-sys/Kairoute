@@ -72,7 +72,10 @@
       if (x.packed) it.packed = true; if (x.during != null) it.during = x.during; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       // What is known about a place to eat travels with it to the screen: found only on the map (no guide or review behind
       // it), and whether its hours that day are known (Nov 22: never say more than the data says).
-      if (x.t === "meal" || x.t === "evening") { if (x.fromMap) it.fromMap = true; const fx = (fit.eatFacts || {})[E.eatKey(x.name || "")]; if (fx && (fx.closed || (fx.oh && fx.oh.spans && fx.oh.spans.length))) it.hoursKnown = true; }
+      if (x.t === "meal" || x.t === "evening") { if (x.fromMap) it.fromMap = true; const fx = (fit.eatFacts || {})[E.eatKey(x.name || "")]; if (fx && (fx.closed || (fx.oh && fx.oh.spans && fx.oh.spans.length))) it.hoursKnown = true;
+        // ...and its opening hours that day, shown on its card so the time beside them can be checked on the screen (class rule
+        // "no meal while the place is shut", Nov 23).
+        if (fx && fx.oh && fx.oh.spans && fx.oh.spans.length && !fx.closed) it.openSpans = fx.oh.spans.map(s => s.slice(0, 2)); }
       Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
@@ -355,7 +358,9 @@
         // A day the traveler has made their own (they ticked or unticked its sights) is planned from their list only:
         // the app never picks in their place there, and a list they emptied is a free day. Spare time may still take an
         // optional stop (marked optional, never in the way of a pick), unless they cleared the day.
-        if (d.own) { picks = wishes; if (!wishes.length) explain.push(d.cleared ? "You cleared this day: nothing is planned. Pick any sight to plan it." : "Pick the sights you want and they're planned here."); }
+        // Picks that all can't be visited (shut in an evening port call, Nov 23 recheck) are not "nothing picked": the notes
+        // above say why for each, and this says what to do.
+        if (d.own) { picks = wishes; if (!wishes.length) explain.push(d.cleared ? "You cleared this day: nothing is planned. Pick any sight to plan it." : (sel[i] || []).length ? "None of your picks can be visited in today's time (the reasons are above), so nothing is planned. Pick another sight to plan it." : "Pick the sights you want and they're planned here."); }
         const tripIds = !d.own && !wishes.length && dayTrip.get(i);
         if (tripIds) {
           picks = tripIds.map(id => pool.find(s => String(s.id) === id)).filter(Boolean);
@@ -731,6 +736,25 @@
       }
       idx.forEach((i, k) => { out[i] = got.plans[k]; });
     }
-    return out;
+    return out.map(shownWords);
   };
+  // One last layer every shown word goes through, whatever source it came from (rule R-11, Nov 23: "the app is presented
+  // in the language that is selected"): Greek, Cyrillic and kana put into Latin letters; a name still in another script
+  // gives way to a plain word ("a local restaurant", "the stop"), never local script on screen.
+  const PLAIN = { meal: "a local restaurant", stop: "the sight", travel: "the stop" };
+  const WORDS = ["how", "label", "note", "why", "title", "travelNote", "where", "line", "say", "needs", "lunchNote"];
+  const NAMES = ["from", "to", "townName", "station", "at"];
+  const shownWords = p => {
+    if (!p || typeof p !== "object") return p;
+    const one = x => { if (!x || typeof x !== "object") return;
+      if (typeof x.name === "string") x.name = E.say(x.name, PLAIN[x.t] || "the stop");
+      if (typeof x.meal === "string") x.meal = E.say(x.meal, "Lunch");
+      WORDS.forEach(f => { if (typeof x[f] === "string") x[f] = E.say(x[f]); });
+      NAMES.forEach(f => { if (typeof x[f] === "string") x[f] = E.say(x[f], "the stop"); });
+      if (Array.isArray(x.steps)) x.steps = x.steps.map(t => typeof t === "string" ? E.say(t) : (one(t), t));
+      ["leg", "ride", "back"].forEach(f => one(x[f])); };
+    (p.items || []).forEach(one);
+    ["explain", "notes"].forEach(f => { if (Array.isArray(p[f])) p[f] = p[f].map(t => typeof t === "string" ? E.say(t) : t); });
+    if (Array.isArray(p.lunchOptions)) p.lunchOptions.forEach(one);
+    return p; };
 })(KEngine);

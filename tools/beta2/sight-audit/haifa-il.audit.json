@@ -1,0 +1,343 @@
+{
+ "name": "haifa-il",
+ "label": "Haifa, Israel",
+ "centre": {
+  "lat": 32.81637,
+  "lng": 34.98655
+ },
+ "findings": [
+  {
+   "k": "NAME",
+   "t": "Akko [day trip]: shown under its local name; English name \"Acre\"",
+   "x": {
+    "id": "akko-far"
+   }
+  },
+  {
+   "k": "POS",
+   "t": "Nahariyya [day trip]: app is 0.64 km from Wikidata's point (not on the map by id)",
+   "x": {
+    "d": 0.6449344101027495,
+    "id": "nahariyya-far",
+    "wd": "Q167749",
+    "app": [
+     33.00583,
+     35.09889
+    ],
+    "wdpt": [
+     33.003611111111,
+     35.0925
+    ]
+   }
+  },
+  {
+   "k": "NAME",
+   "t": "Nahariyya [day trip]: shown under its local name; English name \"Nahariya\"",
+   "x": {
+    "id": "nahariyya-far"
+   }
+  },
+  {
+   "k": "POS",
+   "t": "Nazareth [day trip]: app is 0.51 km from Wikidata's point (not on the map by id)",
+   "x": {
+    "d": 0.5130808235735996,
+    "id": "nazareth-far",
+    "wd": "Q430776",
+    "app": [
+     32.70194,
+     35.30333
+    ],
+    "wdpt": [
+     32.702102777778,
+     35.29785
+    ]
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#1 best known nearby, \"Carmelit\" (28 Wikipedia languages, Q715213), is not offered",
+   "x": {
+    "wd": "Q715213",
+    "sl": 28
+   }
+  },
+  {
+   "k": "INFO",
+   "t": "6 sights, 3 day trips/towns; must-see: Stella Maris Monastery, Tikotin Museum of Japanese Art, Sail Tower, Israel National Museum of Science, Technology, and Space, Tel Shikmona; top by fame: Stella Maris Monastery 18, Bahá'í World Centre buildings 18, Tikotin Museum of Japanese Art 15, Sail Tower 12, Israel National Museum of Science, Technology, and Space 11, Tel Shikmona 11",
+   "x": {}
+  },
+  {
+   "k": "INFO",
+   "t": "day trips: Akko, Nahariyya, Nazareth",
+   "x": {}
+  }
+ ],
+ "sights": [
+  {
+   "id": "src-q1606585",
+   "name": "Stella Maris Monastery",
+   "local": "מנזר סטלה מאריס",
+   "lat": 32.82667,
+   "lng": 34.97028,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 18,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1606585",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Hebrew"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": true,
+   "summary": "A French Carmelite church, monastery and hospice. This is the founding place of the Carmelite Order, a religious order of the Roman Catholic Church."
+  },
+  {
+   "id": "src-q2623739",
+   "name": "Tikotin Museum of Japanese Art",
+   "local": "מוזיאון טיקוטין לאמנות יפנית",
+   "lat": 32.8093,
+   "lng": 34.9854,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 15,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q2623739",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Hebrew"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [
+    "Haifa Museum of Art"
+   ],
+   "posDoubt": false,
+   "summary": "The museum was founded in the year 1959, at the joint initiative of Felix Tikotin, a known collector of Japanese art. The museum present rotating exhibitions of"
+  },
+  {
+   "id": "src-q2877453",
+   "name": "Sail Tower",
+   "local": "מגדל המפרש",
+   "lat": 32.81637,
+   "lng": 35.00272,
+   "minutes": 40,
+   "category": "Tower",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 12,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q2877453",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Hebrew"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A office tower in downtown, designed to look like the sailing ships which historically plied Haifa's port. You can't go in or to the top unless you have busines"
+  },
+  {
+   "id": "src-q2904377",
+   "name": "Israel National Museum of Science, Technology, and Space",
+   "local": "מדעטק",
+   "lat": 32.81014,
+   "lng": 34.99627,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 11,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q2904377",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Hebrew"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Established in 1984, MadaTech - the Israel National Museum of Science, Technology and Space is housed in two historic landmark buildings in mid-town Haifa."
+  },
+  {
+   "id": "src-q2919810",
+   "name": "Tel Shikmona",
+   "local": "תל שקמונה",
+   "lat": 32.82493,
+   "lng": 34.95557,
+   "minutes": 60,
+   "category": "Ancient site",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 11,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q2919810",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Hebrew"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "An important coastal city from the 15th century BCE until the Byzantine period; some of the ruins can be observed now."
+  },
+  {
+   "id": "src-q2149036",
+   "name": "Bahá'í World Centre buildings",
+   "local": "",
+   "lat": 32.81378,
+   "lng": 34.98655,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 18,
+   "unesco": true,
+   "heritage": true,
+   "wd": "Q2149036",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "UNESCO World Heritage"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A World Heritage sight in Haifa, Israel, named by 2 independent sources."
+  },
+  {
+   "id": "akko-far",
+   "name": "Akko",
+   "local": "",
+   "lat": 32.926,
+   "lng": 35.084,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 103,
+   "unesco": true,
+   "heritage": true,
+   "wd": "Q126084",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Train from עבאס/עבאסי, about 80 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "&ndash; The Shrine of Baha'u'llah, the holiest place for the Baha'is can be found here."
+  },
+  {
+   "id": "nahariyya-far",
+   "name": "Nahariyya",
+   "local": "",
+   "lat": 33.00583,
+   "lng": 35.09889,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 58,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q167749",
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Train from עבאס/עבאסי, about 80 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "&ndash; Founded in 1934 by German Jews fleeing Nazi oppression, which boasts the crusader Montfort Castle. Do not miss Rosh Haniqra, a short drive further."
+  },
+  {
+   "id": "nazareth-far",
+   "name": "Nazareth",
+   "local": "",
+   "lat": 32.70194,
+   "lng": 35.30333,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 135,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q430776",
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Bus from הגפן/בן גוריון, about 95 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "&ndash; The largest Arab city in Israel and best known as the home of Joseph and Mary."
+  }
+ ]
+}
