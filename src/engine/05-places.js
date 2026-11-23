@@ -54,6 +54,12 @@
       // whether or not the traveler's phone can reach the map's server for its own water check (Nov 23: an island off the
       // old town planned as a taxi ride). The on-device check can still add more; it never removes what the file says.
       for (const s of city.sites || []) { const isl = P.islands && P.islands.sites && P.islands.sites[s.id]; if (isl && isl.across && !s.acrossWater) s.acrossWater = (isl.island && isl.island.name) || true; }
+      // The class rule (R-06): ANY stop that stands on a mapped island the place's centre isn't on, and that the map's
+      // paths don't reach on foot from the centre, is across the water: a sight of the guide, one the travel guide or
+      // the helper brings in, a stop the traveler adds, a town a day away and its own sights. From the island outlines in
+      // the place file, so it holds offline (Nov 23: Lokrum wasn't one of the file's sights and was planned as a taxi).
+      const across = s => { if (!s || s.acrossWater || !P.islands || !Array.isArray(P.islands.shapes)) return;
+        const sh = E.islandAt(P.islands.shapes, s); if (sh && sh.id !== P.islands.centreShape && sh.walk === false) s.acrossWater = sh.name || true; };
       // A thin guide (under 8 sights): the travel guide's own best-known sights for the place join it, unless already there (same
       // name, or within 150 m) or closed for good.
       if ((city.sites || []).length < 8 && (P.guideSights || []).length) {
@@ -117,6 +123,7 @@
         if ((P.eatHours || []).length) for (const x of s.foodDrink) if (x.kind === "eat") mapHours(x);
       }
       if (added.length) city.farther = (city.farther || []).concat(added);
+      for (const s of (city.sites || []).concat(city.farther || [])) across(s);
       // Hours per day: a mapped opening time read for that day's date, where the day has no hours for the sight yet.
       for (const d of b.days || []) {
         if (d.city !== key || !d.date) continue;

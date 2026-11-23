@@ -23,6 +23,24 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
     for (let i = la - dLat; i <= la + dLat; i++) for (let j = lo - dLng; j <= lo + dLng; j++) { const c = ix.cells.get(i + "," + j); if (c) hits.push(...c); }
     const bLat = km / 110, bLng = km / (110 * Math.max(0.05, Math.cos(pt.lat * Math.PI / 180))); // a box a little larger than the circle
     return hits.sort((a, b) => a - b).map(i => list[i]).filter(x => { const p = pos(x); return Math.abs(p.lat - pt.lat) <= bLat && Math.abs(p.lng - pt.lng) <= bLng && E.hav(pt, p) <= km; }); };
+  // The island a point stands on, from a place file's island outlines (R-06, Nov 23): the smallest outline that holds it
+  // (an islet inside a bigger island's outline is the islet), or null on no mapped island. Outlines are flat
+  // [lat, lng, lat, lng, ...] rings; each ring's box is worked out once and kept with the ring.
+  const ringBox = new WeakMap();
+  const boxOf = f => { let b = ringBox.get(f); if (b) return b; b = { s: Infinity, n: -Infinity, w: Infinity, e: -Infinity, a: 0 };
+    for (let i = 0, j = f.length - 2; i < f.length; j = i, i += 2) { b.s = Math.min(b.s, f[i]); b.n = Math.max(b.n, f[i]); b.w = Math.min(b.w, f[i + 1]); b.e = Math.max(b.e, f[i + 1]); b.a += (f[j + 1] + f[i + 1]) * (f[j] - f[i]); }
+    b.a = Math.abs(b.a / 2); ringBox.set(f, b); return b; };
+  E.inRing = (f, lat, lng) => { let inside = false;
+    for (let i = 0, j = f.length - 2; i < f.length; j = i, i += 2) { const yi = f[i], xi = f[i + 1], yj = f[j], xj = f[j + 1];
+      if ((yi > lat) !== (yj > lat) && lng < (xj - xi) * (lat - yi) / (yj - yi) + xi) inside = !inside; }
+    return inside; };
+  E.islandAt = (shapes, pt) => {
+    if (!Array.isArray(shapes) || !pt || !isFinite(+pt.lat) || !isFinite(+pt.lng)) return null;
+    const lat = +pt.lat, lng = +pt.lng; let best = null, ba = Infinity;
+    for (const s of shapes) for (const f of (s && s.rings) || []) { if (!Array.isArray(f) || f.length < 8) continue; const b = boxOf(f);
+      if (lat < b.s || lat > b.n || lng < b.w || lng > b.e || b.a >= ba) continue;
+      if (E.inRing(f, lat, lng)) { ba = b.a; best = s; } }
+    return best; };
   // "09:30" -> 570. Anything else is NaN, never a guess.
   // A clock time, never with a minus sign: past midnight reads as the next morning's time (Nov 20 review).
   // The app may set its own clock format (24-hour or am/pm, from the traveler's setting); the engine's own text is am/pm.
