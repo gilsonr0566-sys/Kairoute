@@ -48,8 +48,10 @@ jobs:
         run: |
           # The two newest published Beta 2 builds (public repo) are opened first and their saved trip is then opened
           # by this build, as a traveler's phone does after an update.
-          git clone -q --depth 6 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/b2pub
-          OLD=""; for c in $(git -C /tmp/b2pub log --format=%h -n 6 -- index.html | sed -n '1p;3p'); do git -C /tmp/b2pub show $c:index.html > /tmp/old-$c.html; OLD="$OLD /tmp/old-$c.html"; done
+          git clone -q --depth 12 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/b2pub
+          # One file per published build: a build fixed by a second commit minutes later (its wrong app file was never what
+          # travelers ran) counts once, by its newest commit. The newest build and the one before it.
+          OLD=""; for c in $(git -C /tmp/b2pub log --format='%h %s' -n 12 -- index.html | awk '{ id=$5; if (!(id in seen)) { seen[id]=1; print $1 } }' | sed -n '1p;2p'); do git -C /tmp/b2pub show $c:index.html > /tmp/old-$c.html; OLD="$OLD /tmp/old-$c.html"; done
           node tools/beta2/screen-gate.cjs beta2-site/index.html $OLD
       - name: Odd trips (hundreds of unusual cruises, multi-city trips, midnight flights and bag days, every day checked)
         if: always()

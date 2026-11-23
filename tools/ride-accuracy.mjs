@@ -2,11 +2,15 @@
 // from the published timetables (Transitous, built on the operators' GTFS feeds), for the same kind of ride between the
 // same two places. Places: every test trip in tools/beta2/snapshots (the 20-city list, the Greece and Bahamas trips):
 // from where each day starts to its best-known sights farther than 2 km, and to its day trips.
-// Usage: node tools/ride-accuracy.mjs [--transit path/to/transit.js] [--max N] [--out file.json]
+// Usage: node tools/ride-accuracy.mjs [--transit live.js[,candidate.js]] [--names live,candidate] [--max N] [--minutes M] [--out file.json]
 // No AI. Always exits 0 unless the check itself breaks: it reports, the summary says how close each kind is.
 import fs from "fs"; import path from "path"; import { createRequire } from "module";
 const require = createRequire(import.meta.url), arg = k => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : null; };
-const T = await import(path.resolve(arg("--transit") || new URL("../worker/transit.js", import.meta.url).pathname));
+// One or more helper versions (comma-separated): the timetable is asked once, each version's map estimate is compared.
+const SRCS = (arg("--transit") || new URL("../worker/transit.js", import.meta.url).pathname).split(","), NAMES = (arg("--names") || SRCS.map((x, i) => i ? "v" + i : "live").join(",")).split(",");
+const MODS = []; for (const f of SRCS) MODS.push(await import(path.resolve(f))); const T = MODS[0];
+for (const M of MODS) if (M.setMapWait) M.setMapWait(45000); // a runner gets a long wait on each map server
+const BUDGET = +(arg("--minutes") || 150) * 60000, T0 = Date.now(); // stop asking in time to write the summary
 const MAX = +(arg("--max") || 4), OUT = arg("--out"), ONLY = process.env.ONLY ? new RegExp(process.env.ONLY, "i") : null;
 const hav = (a, b) => { const R = 6371, r = x => x * Math.PI / 180, dl = r(b.lat - a.lat), dg = r(b.lng - a.lng); const h = Math.sin(dl / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(dg / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
 const ok = p => p && isFinite(p.lat) && isFinite(p.lng);
@@ -36,29 +40,48 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith(".json")).sort()) {
 console.log(`Ride accuracy: ${pairs.length} rides from ${new Set(pairs.map(p => p.trip)).size} test trips`);
 
 // ---- Ask both sources for each ride ----
-const sleep = ms => new Promise(r => setTimeout(r, ms)), rows = [];
-for (const [i, p] of pairs.entries()) {
-  let tt = [], map = [], why = [];
+// Two rides at a time; the results are written after each ride, so a run cut short still has its numbers.
+const sleep = ms => new Promise(r => setTimeout(r, ms)), byVer = NAMES.map(() => []), busyRows = [];
+const best = (list, k, one) => list.filter(o => kindOf(o) === k && (!one || !/change/.test(o.label || ""))).sort((x, y) => x.min - y.min)[0];
+let done = 0, next = 0, stopped = false;
+async function one(p) {
+  let tt = [], why = [];
   try { tt = await T.timetableOptions(p.a, p.b, p.dow); } catch (e) { why.push("timetable: " + e.message); }
-  try { const m = await T.transitOptions(p.a, p.b); map = Array.isArray(m) ? m : []; if (m && m.why) why.push("map: " + m.why.join("; ")); } catch (e) { why.push("map: " + e.message); }
-  const best = (list, k, one) => list.filter(o => kindOf(o) === k && (!one || !/change/.test(o.label || ""))).sort((x, y) => x.min - y.min)[0];
-  for (const k of new Set(map.map(kindOf))) {
-    const est = best(map, k), real = best(tt, k, true) || best(tt, k);
-    if (!est || !real) { rows.push({ ...p, kind: k, est: est && pick(est), real: null }); continue; }
-    rows.push({ ...p, kind: k, est: pick(est), real: pick(real), oneLeg: !/change/.test(real.label || "") });
+  for (const [v, M] of MODS.entries()) {
+    let map = [];
+    // The free map servers turn busy runners away: one try, then one more after a pause, each with a long wait.
+    for (let t = 0; t < 2; t++) {
+      try { const m = await M.transitOptions(p.a, p.b); map = Array.isArray(m) ? m : []; if (m && m.why) why.push(NAMES[v] + " map: " + m.why.join("; ")); break; }
+      catch (e) { if (t) why.push(NAMES[v] + " map: " + e.message + (e.why ? " (" + e.why.join("; ") + ")" : "")); else await sleep(20000); }
+    }
+    const rows = byVer[v];
+    for (const k of new Set(map.map(kindOf))) {
+      const est = best(map, k), real = best(tt, k, true) || best(tt, k);
+      rows.push(!est || !real ? { ...p, kind: k, est: est && pick(est), real: null } : { ...p, kind: k, est: pick(est), real: pick(real), oneLeg: !/change/.test(real.label || "") });
+    }
+    // A ride kind the timetable knows and the map doesn't: the map would offer nothing (or a taxi) where a line runs.
+    for (const k of new Set(tt.map(kindOf))) if (!map.some(o => kindOf(o) === k)) rows.push({ ...p, kind: k, est: null, real: pick(best(tt, k, true) || best(tt, k)) });
   }
-  // A ride kind the timetable knows and the map doesn't: the map would offer nothing (or a taxi) where a line runs.
-  for (const k of new Set(tt.map(kindOf))) if (!map.some(o => kindOf(o) === k)) rows.push({ ...p, kind: k, est: null, real: pick(best(tt, k, true) || best(tt, k)) });
-  if (why.length) rows.push({ ...p, kind: "-", why });
-  process.stdout.write(`\r  ${i + 1}/${pairs.length}`);
-  await sleep(1500);
+  if (why.length) busyRows.push({ ...p, kind: "-", why });
 }
+async function lane() {
+  while (next < pairs.length) {
+    if (Date.now() - T0 > BUDGET) { stopped = true; return; }
+    const p = pairs[next++]; await one(p); done++;
+    process.stdout.write(`\r  ${done}/${pairs.length}`);
+    if (OUT) for (const [v] of MODS.entries()) fs.writeFileSync(outOf(v), JSON.stringify({ at: new Date().toISOString(), partial: true, done, rows: byVer[v] }, null, 1));
+    await sleep(1000);
+  }
+}
+const outOf = v => MODS.length === 1 ? OUT : OUT.replace(/(\.json)?$/, "-" + NAMES[v] + ".json");
+await Promise.all(Array.from({ length: +(arg("--lanes") || 1) }, lane)); // one at a time by default: the map servers allow few at once
+console.log(stopped ? `\nStopped at the time limit after ${done} of ${pairs.length} rides.` : "");
 function pick(o) { return { label: o.label, min: o.min, ride: o.ride, wait: o.wait, every: o.every, everySrc: o.everySrc, access: o.access && o.access.min, egress: o.egress && o.egress.min, km: o.km, src: o.src }; }
-console.log("");
 
 // ---- How close: per kind, the in-vehicle time, the wait, the walks and the whole ride ----
 const med = a => { const s = a.slice().sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : null; };
 const within = (e, r) => Math.abs(e - r) <= Math.max(5, r * 0.2); // 5 min or 20%, whichever is more
+function report(rows, name) {
 const summary = {};
 for (const k of [...new Set(rows.filter(r => r.kind !== "-").map(r => r.kind))].sort()) {
   const R = rows.filter(r => r.kind === k), both = R.filter(r => r.est && r.real), one = both.filter(r => r.oneLeg);
@@ -68,7 +91,7 @@ for (const k of [...new Set(rows.filter(r => r.kind !== "-").map(r => r.kind))].
     const ev = both.filter(r => r.real.everySrc === "timetable"); if (ev.length) { const d2 = ev.map(r => r.est.every - r.real.every); S.every = { n: ev.length, medianError: med(d2.map(Math.abs)), medianBias: med(d2) }; }
     const w = both.map(r => (r.est.access + r.est.egress) - (r.real.access + r.real.egress)); S.walks = { n: both.length, medianError: med(w.map(Math.abs)), medianBias: med(w) }; }
 }
-console.log("\nPer kind (estimate minus timetable, minutes; 'within' = within 5 min or 20%):");
+console.log(`\n[${name}] Per kind (estimate minus timetable, minutes; 'within' = within 5 min or 20%):`);
 for (const [k, S] of Object.entries(summary)) {
   console.log(`  ${k}: ${S.rides} rides, ${S.compared} with both, ${S.mapOnly} map only, ${S.timetableOnly} timetable only`);
   if (S.ride) console.log(`    in the vehicle (one line): ${S.ride.within}% within, median off ${S.ride.medianError}, bias ${S.ride.medianBias > 0 ? "+" : ""}${S.ride.medianBias} (${S.ride.n})`);
@@ -77,7 +100,9 @@ for (const [k, S] of Object.entries(summary)) {
   if (S.walks) console.log(`    walks at both ends:        median off ${S.walks.medianError}, bias ${S.walks.medianBias > 0 ? "+" : ""}${S.walks.medianBias} (${S.walks.n})`);
 }
 const worst = rows.filter(r => r.est && r.real).map(r => ({ r, off: r.est.min - r.real.min })).sort((x, y) => Math.abs(y.off) - Math.abs(x.off)).slice(0, 25);
-console.log("\nFurthest off (whole ride):");
+console.log(`\n[${name}] Furthest off (whole ride):`);
 for (const { r, off } of worst) console.log(`  ${off > 0 ? "+" : ""}${off} min  ${r.kind}  ${r.trip}: ${r.from} > ${r.to} (${r.km} km)  map "${r.est.label}" ${r.est.min} (ride ${r.est.ride}, wait ${r.est.wait}, walks ${r.est.access}+${r.est.egress})  vs timetable "${r.real.label}" ${r.real.min} (ride ${r.real.ride}, wait ${r.real.wait}, every ${r.real.every}, walks ${r.real.access}+${r.real.egress})`);
-const busy = rows.filter(r => r.why); if (busy.length) console.log(`\n${busy.length} rides with a busy source (not counted): ${busy.slice(0, 5).map(r => r.why.join(" / ")).join(" | ")}`);
-if (OUT) fs.writeFileSync(OUT, JSON.stringify({ at: new Date().toISOString(), summary, rows }, null, 1));
+return summary;
+}
+for (const [v] of MODS.entries()) { const summary = report(byVer[v], NAMES[v]); if (OUT) fs.writeFileSync(outOf(v), JSON.stringify({ at: new Date().toISOString(), done, of: pairs.length, summary, rows: byVer[v] }, null, 1)); }
+if (busyRows.length) console.log(`\n${busyRows.length} rides with a busy source (not counted): ${busyRows.slice(0, 5).map(r => r.why.join(" / ")).join(" | ")}`);

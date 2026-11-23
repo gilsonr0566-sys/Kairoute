@@ -645,7 +645,14 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 // reach it, with no time for sights (it was taken as the next morning's: sights all day, "free time 16 h 10 min").
 { const tb = E.makeTravel({ walk: 'medium' }, {}), w = E.dayWindow(day({ type: 'departure', mode: 'train', time: '09:00', startTime: '09:00', point: air }), tb);
   ok(!w.error && w.endBy < 9 * 60 && w.start < w.endBy && w.leaveEarly > 0, `a 9:00 am train: be at the station by ${E.clock(w.endBy)}, the day starts ${E.clock(w.start)} (${w.leaveEarly} min early)`);
-  ok(w.sightTo <= (w.sightFrom != null ? w.sightFrom : w.start) + 1 || w.sightTo - w.start < 30, `no sightseeing before a 9:00 am train (sights until ${E.clock(w.sightTo)})`); }
+  ok(w.sightTo <= (w.sightFrom != null ? w.sightFrom : w.start) + 1 || w.sightTo - w.start < 30, `no sightseeing before a 9:00 am train (sights until ${E.clock(w.sightTo)})`);
+  // Outside test round 5 (Nov 22): a 6:30 am or 8:00 am flight and a 9:10 am train planned a full day of sights after
+  // the departure. On a whole leaving day: no sights, the day never starts after the time to leave, and no free time.
+  const s0 = fs.existsSync(dir) && fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'departure'));
+  if (s0) { const li = s0.days.findIndex(d => d.type === 'departure');
+    for (const [mode, t] of [['flight', '06:30'], ['flight', '08:00'], ['train', '09:10']]) { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[li], { mode, time: t, startTime: '09:00' });
+      const p = E.planTrip(s)[li], stops = (p.items || []).filter(x => x.t === 'stop');
+      ok(!stops.length && p.end <= p.endBy && p.end <= E.toMin(t) && !(p.explain || []).some(x => /^Free time/.test(x)), `a ${t} ${mode} on the leaving day: no sights, straight there (${stops.length} sights, ends ${E.clock(p.end)}, be there by ${E.clock(p.endBy)})`); } } }
 // Nov 20 review (finding 8): a flight or all aboard after midnight is the next morning's; the day stays readable and no
 // clock prints a minus sign.
 { const tb = E.makeTravel({ walk: 'medium' }, {});
