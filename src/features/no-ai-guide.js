@@ -79,7 +79,7 @@ async function srcStarts(label, area, port, centre, d) {
     // A port named apart from its city can be a long way out (a port 180 km from the capital it serves).
     const K = SG_KIND[k], lim = k === "cruise" && gate ? 300 : K.km, cands = [];
     N.forEach((n, i) => { if (!ask[k].includes(n)) return; const x = (R && R[i]) || {};
-      (x.wiki || []).forEach(w => { if (w.lat != null && K.re.test(w.title || "")) cands.push({ name: w.title, lat: +w.lat, lng: +w.lng, any: n === "Cruise pier", wiki: true }); });
+      (x.wiki || []).forEach(w => { if (w.lat != null && K.re.test(w.title || "")) cands.push({ name: w.title, lat: +w.lat, lng: +w.lng, any: n === "Cruise pier", wiki: true, about: String(w.extract || "") }); });
       (x.map || []).forEach(m => { if (isFinite(m.lat) && (K.re.test(m.name || "") || K.map.test(m.kind || ""))) cands.push({ name: m.name || n, lat: +m.lat, lng: +m.lng, kind: m.kind || "", any: n === "Cruise pier", fit: (K.map.test(m.kind || "") ? 2 : 0) + (k === "cruise" && /cruise|terminal|wharf|pier/i.test(m.name || "") ? 2 : 0) }); }); });
     // The plain "Cruise pier" search (asked last) only counts a place that names itself a cruise pier: a private island
     // or small port whose pier has no "Port of ..." name (Nov 18: CocoCay's pier is mapped as "Royal Caribbean Cruise
