@@ -31,9 +31,15 @@ const stops = [
   stop('Bell Campanile', ['structure', 'tower'], 36, 3.05, -2.03, { partOf: ['Q120'] }),
   stop('Basilica Cistern', ['structure'], 34, 1, -0.3),
   stop('Fort Testa', ['fortification', 'structure'], 30, -0.8, 1.6),
+  stop('Holy Testland', ['feature', 'term'], 91, 0.4, 2.5, { heritage: false }),
+  stop('Via Testarosa', ['feature', 'street'], 48, 0.6, 0.3, { heritage: false, src: SRC.slice(1, 2) }),
+  stop('Bethtest', ['feature'], 40, 2.2, 1.4, { heritage: false, src: SRC.slice(1, 3) }),
+  stop('Old City of Testopolis', ['admin-area', 'feature', 'old-town', 'region', 'settlement'], 84, -0.6, 0.1, { unesco: true }),
+  stop('Testland Peninsula', ['feature', 'region'], 160, 1.1, -2.2, { heritage: false }),
+  stop('Testshire', ['feature'], 60, -2.6, -1.1, { heritage: false, area: true }),
   stop('Musei Testolini', ['art-museum', 'building', 'museum', 'structure'], 46, -0.3, -0.6),
 ];
-const guideSite = Object.assign({ id: 'wv~Q124', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
+const guideSite = Object.assign({ id: 'wv~Q130', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
 const fails = []; let n = 0;
 const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== undefined ? ' (got ' + JSON.stringify(got) + ')' : '')); };
 (async () => {
@@ -63,6 +69,11 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok("a travel-guide listing's museum takes its kind and a museum's visit length from the facts", (get('Musei Testolini') || {}).cat === 'Museum' && (get('Musei Testolini') || {}).min >= 90, get('Musei Testolini'));
   ok('a cistern named "Basilica" is no church: facts known but no kind of ours makes it a plain Sight', (get('Basilica Cistern') || {}).cat === 'Sight', get('Basilica Cistern'));
   ok('a fort is called a castle or fort, never a palace', (get('Fort Testa') || {}).cat === 'Castle or fort', get('Fort Testa'));
+  ok('a word the encyclopedia calls a term, not a place, is no stop (the Holy Land)', !get('Holy Testland'));
+  ok('a peninsula or region is no stop', !get('Testland Peninsula'));
+  ok('what the map calls a county, state or region is no stop', !get('Testshire'));
+  ok('an old town that is also a region stays (the Old City of Jerusalem)', !!get('Old City of Testopolis'));
+  ok('a holy place with thin data (Bethany) stays', !!get('Bethtest'));
   ok('no source sight is called "Church" unless it is one', !sites.some(s => s.cat === 'Church' && /mosque|synagogue|shrine|-ji|-taisha/i.test(s.name)));
   await b.close();
   console.log(fails.length ? 'FAILED:\n- ' + fails.join('\n- ') : '');
