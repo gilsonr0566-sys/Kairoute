@@ -110,6 +110,7 @@ planted defect that does not exist. A row cannot claim ENFORCED unless that hold
 | SAFE-014 / PLAN-016 | Phone in another time zone gives the same local plan | `tools/beta2/screen-gate.cjs` part B (Chicago, Tokyo, Athens) | TO BUILD: planted defect that uses the phone's zone (T1) | Test ENFORCED; mutant TO BUILD |
 | SAFE-015 | Uncertain ride time shows "about" | rule `about` (S2) | TO BUILD (T1) | Test ENFORCED |
 | PORT-001..015 | Ship days: arrival, all aboard, tender, overnight, after midnight, own boat picks | `tools/truth/oracle.cjs`, `tools/beta2/odd-trips.cjs`, `tools/beta2/odd-screen.cjs` | `back-after-all-aboard`, `ashore-before-docking` | ENFORCED |
+| BACKWAIT | On a day with a time to be back, every ride after the last visit (to the bags, the cable car, the gate) on a line with no timetable allows the full gap between departures | rule `backwait` in `tools/truth/oracle.cjs` (saved trips, also with every ride answered as a no-timetable train) | `back-ride-half-gap` | ENFORCED (Nov 23) |
 | NIGHT | Small-hours departure never read as the next night without asking | rule `night` | `train-as-tomorrow` | ENFORCED (blocks until the fix is merged) |
 
 ### 5.2 Rides and timetables (P1)

@@ -16,6 +16,10 @@ const ROOT = path.join(__dirname, '..', '..'), N = +arg('n', 150), ONLY = (arg('
 
 // Each: the file, the exact text, what it becomes, and the real bug it stands for.
 const MUTANTS = [
+  // Nov 23 (rides thread review): a line with no timetable planned with half the gap between departures on the way back to
+  // the ship, a train or a plane (and to the bags or the cable car on the way). Caught by the independent check's backwait.
+  { id: 'back-ride-half-gap', nott: true, file: '10-travel.js', from: '.filter(o => o && isFinite(o.min))', to: '.filter(o => o && isFinite(o.min)).map(o => o.noTimetable && +o.every > 0 && isFinite(+o.wait) ? Object.assign({}, o, { wait: Math.round(Math.min(+o.every, 60) / 2) + 3, min: o.min - (+o.wait - Math.round(Math.min(+o.every, 60) / 2) - 3) }) : o)',
+    was: 'Nov 23 review of the no-timetable wait change: 40 ways back planned on half the gap (bags, cable car)' },
   { id: 'lunch-ignores-hours', file: '70-day.js', from: '      oh: ((ctx.eatFacts || {})[e.k] || {}).oh || null }', to: '      oh: null }',
     was: 'Lunch planned before the place opens (Sorbillo at 11:45, opening at noon; Han Gang at 12:03, opening at 1 pm): the map hours never reached lunch (real-map check, Nov 23)' },
   { id: 'train-as-tomorrow', file: '30-window.js', from: 'if (small && (ship || d.nightDep === "night")) {', to: 'if (isFinite(depAt) && depAt < 12 * 60 && w.endBy < w.start) {',
@@ -51,7 +55,11 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
   // a check that already fails on the real engine can't tell us whether it caught the mutant.
   const base = await run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7', '--out', trips], { NOZIG: '1', SLOW_MS: '60000' });
   const baseOracle = await run('node', ['tools/truth/oracle.cjs', '--trips', trips]);
-  const baseOld = counts(base.out), baseOra = counts(baseOracle.out);
+  // Mutants marked nott: true are about rides on lines with no timetable, which the saved and odd trips hardly hold; the
+  // independent check then answers every ride of 1.5 km or more as such a train too (oracle --no-timetable).
+  const anyNT = MUTANTS.some(m => m.nott && (!ONLY.length || ONLY.includes(m.id)));
+  const baseOracleNT = anyNT ? await run('node', ['tools/truth/oracle.cjs', '--trips', trips, '--no-timetable']) : null;
+  const baseOld = counts(base.out), baseOra = counts(baseOracle.out), baseOraNT = baseOracleNT ? counts(baseOracleNT.out) : {};
   if (!Object.keys(baseOld).length || !Object.keys(baseOra).length) { console.log('NOT TESTED: the checks did not run on the real engine\n' + base.out.slice(-2000) + baseOracle.out.slice(-2000)); process.exit(1); }
   const already = [...Object.keys(baseOld).filter(k => baseOld[k]), ...Object.keys(baseOra).filter(k => baseOra[k])];
   const list = MUTANTS.filter(m => !ONLY.length || ONLY.includes(m.id)), rows = [];
@@ -64,8 +72,8 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
     if (txt.split(m.from).length !== 2) { rows.push({ m, planted: false }); continue; }
     fs.writeFileSync(f, txt.replace(m.from, m.to));
     const env = { ENGINE_SRC: src, NOZIG: '1', SLOW_MS: '60000' };
-    const [old, ora] = await Promise.all([run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7'], env), run('node', ['tools/truth/oracle.cjs', '--trips', trips], env)]);
-    const o = more(counts(old.out), baseOld), n = more(counts(ora.out), baseOra);
+    const [old, ora] = await Promise.all([run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7'], env), run('node', ['tools/truth/oracle.cjs', '--trips', trips].concat(m.nott ? ['--no-timetable'] : []), env)]);
+    const o = more(counts(old.out), baseOld), n = more(counts(ora.out), m.nott ? baseOraNT : baseOra);
     rows.push({ m, planted: true, old: o, oracle: n });
   } };
   await Promise.all(Array.from({ length: LANES }, lane));

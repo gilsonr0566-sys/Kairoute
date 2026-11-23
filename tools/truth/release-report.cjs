@@ -36,7 +36,7 @@ const notRun = parts.filter(k => !ran(k)).length + (all.match(/^NOT TESTED/mg) |
 // A fourth target (Richard, Nov 23): safety findings. Every S1 finding (a flight, train or ship that could be missed) and
 // every safety rule of the day checks counts, whether printed FAIL or WARN, and any refused attempt to warn one. There is
 // no warn-only path for safety: a trip the run cannot show is safe stops the release.
-const SAFETY_RULES = /^(FAIL|WARN)\s+(gone|reach|leaveby|before|night|unverified|back|start|order|nan)\s+(\d+)\s*$/;
+const SAFETY_RULES = /^(FAIL|WARN)\s+(gone|reach|leaveby|before|night|unverified|backwait|back|start|order|nan)\s+(\d+)\s*$/;
 const s1Count = parts.some(ran) ? all.split('\n').reduce((a, l) => { const m = SAFETY_RULES.exec(l); return a + (m ? +m[3] : 0); }, 0) + (all.match(/^REFUSED --warn/mg) || []).length : null;
 const T = (n, what) => `| ${what} | ${n == null ? 'NOT TESTED' : n} | ${n === 0 ? 'met' : n == null ? 'NOT MET (not tested)' : 'NOT MET'} |`;
 const targetsMet = unverified === 0 && crit === 0 && notRun === 0 && s1Count === 0;
