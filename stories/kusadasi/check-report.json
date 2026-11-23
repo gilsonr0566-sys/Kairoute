@@ -70,15 +70,15 @@
   {
    "id": "stjohn",
    "title": "Basilica of Saint John",
-   "claims": 29,
+   "claims": 30,
    "minutes": {
     "1": 2,
-    "2": 4,
-    "3": 5.4
+    "2": 4.2,
+    "3": 5.6
    },
    "labels": {
     "supported": 18,
-    "disputed": 5,
+    "disputed": 6,
     "scripture": 1,
     "tradition": 2,
     "legend": 1,

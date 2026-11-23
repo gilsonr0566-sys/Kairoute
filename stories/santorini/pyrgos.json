@@ -204,12 +204,12 @@
   },
   "sun": {
    "label": "supported",
-   "says": "The UV index is extreme all year; dehydration and sunburn are the most common health problems.",
+   "says": "The sun burns even when the breeze feels cool; dehydration and sunburn are the most common health problems.",
    "src": [
     "wv-santorini"
    ],
    "quote": [
-    "which is considered extreme",
+    "the sun burns regardless",
     "Dehydration is, together with sunburns, the most common health issue encountered on Santorini."
    ]
   }

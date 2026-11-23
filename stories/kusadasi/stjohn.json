@@ -169,13 +169,13 @@
   },
   "size": {
    "label": "supported",
-   "says": "It measured 428 by 213 feet, a cross plan with five domes.",
+   "says": "It measured 428 by 213 feet, a domed cross plan.",
    "src": [
     "wp-st-john"
    ],
    "quote": [
     "Justinian's Basilica measured at 428 x 213 feet",
-    "Five domes rested on solid piers in the corners of the cross"
+    "The basilica was a domed basilica where the domes were placed over the central crossing, choir, transepts and the nave."
    ]
   },
   "holy": {
@@ -253,14 +253,30 @@
     "The Byzantine fortress was later restored by both Seljuk and Ottoman rulers of the area."
    ]
   },
-  "mosque-1402": {
-   "label": "supported",
-   "says": "In 1304 the basilica was made a mosque; in 1402 Timur's invasion destroyed it.",
+  "mosque": {
+   "label": "disputed",
+   "says": "In the early fourteenth century Turkish rulers took the area and the basilica became a mosque; one source says the Seljuqs in 1304, others the Menteshe and Aydinids in 1308.",
    "src": [
-    "wp-ayasuluk"
+    "wp-ayasuluk",
+    "wp-selcuk",
+    "wp-st-john"
    ],
    "quote": [
-    "In 1304 the Seljuq dynasty captured the area and transformed the basilica into a mosque. In 1402 the basilica was destroyed by an invasion under the command of Timur."
+    "In 1304 the Seljuq dynasty captured the area and transformed the basilica into a mosque.",
+    "by the Aydinids and Menteshe in 1308",
+    "as the structure had been turned into a mosque"
+   ]
+  },
+  "timur": {
+   "label": "supported",
+   "says": "Sources say an invasion under Timur destroyed the basilica in 1402.",
+   "src": [
+    "wp-ayasuluk",
+    "wv-selcuk"
+   ],
+   "quote": [
+    "In 1402 the basilica was destroyed by an invasion under the command of Timur.",
+    "wrecked by the Mongols under Tamerlane in 1402 AD"
    ]
   },
   "rebuilt": {
@@ -379,10 +395,10 @@
   },
   {
    "name": "John and Mary",
-   "stand": "Walk along the nave toward the far end, to the marked tomb where the altar once stood.",
+   "stand": "Walk on through the church to the place of the altar, where the tomb is.",
    "paras": [
     {
-     "t": "Here is the tomb. First, what the Bible says. The Gospel of John tells how there stood by the cross of Jesus his mother, and the disciple standing by, whom he loved. Jesus saith unto his mother, Woman, behold thy son! Then saith he to the disciple, Behold thy mother! And from that hour that disciple took her unto his own home.",
+     "t": "Here is the tomb. First, what the Bible says. The Gospel of John tells how there stood by the cross of Jesus his mother. When Jesus therefore saw his mother, and the disciple standing by, whom he loved, he saith unto his mother, Woman, behold thy son! Then saith he to the disciple, Behold thy mother! And from that hour that disciple took her unto his own home.",
      "c": [
       "j19"
      ],
@@ -418,7 +434,7 @@
    "stand": "Turn back to face down the length of the church, toward the way you came in.",
    "paras": [
     {
-     "t": "Picture this whole space roofed over. Over the grave that tradition gives to John, the emperor Justinian built this church in the 6th century, finished by 565, modeled on the Church of the Holy Apostles in Constantinople. It was 428 feet long and 213 wide, laid out as a cross, with five domes.",
+     "t": "Picture this whole space roofed over. Over the grave that tradition gives to John, the emperor Justinian built this church in the 6th century, finished by 565, modeled on the Church of the Holy Apostles in Constantinople. It measured 428 by 213 feet, laid out as a cross and roofed with domes.",
      "c": [
       "tomb",
       "justinian",
@@ -442,7 +458,7 @@
      "level": 2
     },
     {
-     "t": "Look for the baptistery on the north side of the church. It's octagonal, and large.",
+     "t": "Look for the baptistery, a large eight-sided room on the north side of the church. If you can't spot it, ask the staff.",
      "c": [
       "baptistery"
      ],
@@ -489,9 +505,10 @@
      "level": 1
     },
     {
-     "t": "In 1304 the Seljuks took the area and turned the church into a mosque. In 1402 an invasion led by Timur destroyed it. Parts of the church were rebuilt after 1923, with money from religious foundations in the United States. Pope Paul VI came here, and prayed.",
+     "t": "In the early fourteenth century Turkish rulers took the area, and the church was turned into a mosque; accounts differ on exactly who and when. Then, sources say, an invasion led by Timur destroyed it in 1402. Parts of the church were rebuilt after 1923, with money from religious foundations in the United States. Pope Paul VI came here, and prayed.",
      "c": [
-      "mosque-1402",
+      "mosque",
+      "timur",
       "rebuilt",
       "paul6"
      ],
@@ -508,7 +525,7 @@
   },
   {
    "name": "The İsa Bey Mosque",
-   "stand": "Walk down past the basilica to the mosque next door, and stand facing its western wall.",
+   "stand": "Walk to the mosque next door, and stand facing its western wall.",
    "paras": [
     {
      "t": "Right next to the basilica is the İsa Bey Mosque, built in 1374 and 1375 for Isa Bey, a ruler of the Aydinid family. Its plan is based on the Great Mosque of Damascus.",
