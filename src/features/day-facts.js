@@ -88,3 +88,12 @@ const tripDaysText = t => { const n = tripFacts(t).days; return n + (n === 1 ? "
 function dayNo(d, t) { t = t || trip; const ds = tripFacts(t).dates, k = ds.indexOf(d && d.date); return k >= 0 ? Math.round((new Date(d.date + "T12:00:00Z") - new Date(ds[0] + "T12:00:00Z")) / 864e5) + 1 : (t.days || []).indexOf(d) + 1; }
 
 if (typeof window !== "undefined") window.__kairouteFacts = { day: i => { const d = trip.days[i == null ? trip.active : i], p = d && cityFor(d) && !noShore(d) ? buildPlan(d) : null; return dayFacts(d, p); }, trip: () => tripFacts() };
+
+// The one "back by" time every screen says for a day: with free time on, the time the day is planned back by (the free
+// time runs up to the leave-by); else when the plan's last step ends (first-timer walk, Nov 22: the sea day's preview
+// said "back by 3:49 pm" for a port day whose own page said 5:45 pm).
+function backByOf(d, plan) {
+  if (!plan || plan.error) return null;
+  const F = dayFacts(d, plan), freeOn = F && F.left >= 30 && !(plan.dropped || []).length && !(plan.w && plan.w.straight);
+  return freeOn ? F.endBy : Math.min(plan.end, plan.endBy);
+}

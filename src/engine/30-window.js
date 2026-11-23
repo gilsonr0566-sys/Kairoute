@@ -8,6 +8,7 @@
     ship: { label: "Ship", clear: 60, need: 60, word: "port" }, ferry: { label: "Ferry", clear: 20, need: 40, word: "ferry terminal" },
     car: { label: "Car or bus", clear: 10, need: 20, word: "starting point" } });
   E.PORT_BUFFER = 45;        // back at the ship this long before all aboard
+  E.NIGHT_DEP = 5 * 60;       // a departure before 5 am on a day that starts later is the next morning's (after midnight)
   E.BAGS_STORE_MIN = 60;     // off a ship, plane or train and leaving the same day: bags are stored only for an hour or more free
   E.STRAIGHT_MIN = 180;      // flying in the day the ship sails: under 3 h free means straight to the ship
   E.TENDER_ASHORE = 60;      // getting ashore by tender boat; 30 by gangway
@@ -126,7 +127,11 @@
       }
       // A time to leave earlier than the day's start is after midnight, the next morning (Nov 20 review: a 00:40 flight gave
       // "Leave by -4:-43 am"): the day's window runs through midnight.
-      if (isFinite(w.start) && isFinite(w.endBy) && w.endBy + (ship ? E.BOARD_BEFORE : m.need) < w.start) {
+      // Only a departure in the small hours is the next morning's (E.NIGHT_DEP): a 9:00 am train on a day set to start at
+      // 9:00 is this morning's, and the day starts earlier to reach it (leaveEarly below), with no sights (first-timer walk,
+      // Nov 22: it was taken as the next morning's, planned sights all day and left "free time 16 h 10 min").
+      const depAt = ship ? (isFinite(d.boardAt) ? d.boardAt : d.allAboard) : E.toMin(d.time);
+      if (isFinite(w.start) && isFinite(w.endBy) && w.endBy + (ship ? E.BOARD_BEFORE : m.need) < w.start && isFinite(depAt) && depAt < E.NIGHT_DEP) {
         w.endBy += 24 * 60; if (ship) { w.latest += 24 * 60; if (w.boardAt != null && w.boardAt < w.start) w.boardAt += 24 * 60; } }
       // Flying in the day the ship sails: under 3 hours left for sightseeing means none, straight to the ship.
       if (ship && d.thru && d.thru.mode === "flight") {

@@ -948,7 +948,8 @@ function rideDetail(leg, start, endBy) {
   const fall = depLine(o, start, endBy, leg.lastMile, leg.slack) + (leg.slack ? ` Includes ${dur(leg.slack)} spare before ${deadlineWord(day())}.` : "") + (leg.lastMile && o ? ` <b>If you miss it:</b> a taxi takes about ${dur(leg.road)}.` : "");
   const note = rideNotice && rideNotice.key === leg.key ? `<span class="ridenote">${rideNotice.text}${rideNotice.undo != null ? ` <button class="linkbtn" data-act="rideundo">Undo</button>` : ""}${rideNotice.force ? ` <button class="linkbtn" data-act="rideforce">${esc(rideNotice.forceText)}</button>` : ""}</span>` : "";
   // One tap per way to go, in the transport colors, each with its time (and fare when the timetable gives one).
-  const chip = c => `${esc(c.label)} · ${dur(c.min)}${c.fare ? " · " + esc(c.fare) : ""}`;
+  // A time no timetable confirms reads as one ("about"), never as a fact (Richard, Nov 22: a ferry shown at "2 h 4 min").
+  const chip = c => `${esc(c.label)} · ${c.est ? "about " : ""}${dur(c.min)}${c.fare ? " · " + esc(c.fare) : ""}`;
   const pick = !leg.choices ? "" : leg.choices.length > 1 ? `<div class="ridechips" role="group" aria-label="How to go">${leg.choices.map(c => `<button type="button" class="ridechip k-${c.kind}${c.id === leg.choice ? " on" : ""}" aria-pressed="${c.id === leg.choice}" data-ridekey="${esc(leg.key)}" data-rideval="${esc(c.id)}">${chip(c)}</button>`).join("")}</div>`
     : `<div class="ridechips"><span class="ridechip k-${leg.choices[0].kind} on">${chip(leg.choices[0])}</span></div>`;
   return `${how || fall ? `<span class="sub ridesub">${how}${fall}</span>` : ""}${rideExtra(leg)}${note}${pick}`;
@@ -1802,7 +1803,7 @@ function checksCard(d, city, plan) {
     const lab = x => (x.meal && x.meal.label) || "Dinner", known = meals.filter(x => hoursOf(x.place)), open = known.filter(x => MEAL_CHECK[lab(x)].some(m => ohState(hoursOf(x.place), d.date, m) === "open"));
     add(known.length === meals.length && open.length === meals.length ? "ok" : "warn", known.length ? `${open.length} of ${meals.length} meal stops list hours that say they're open on this day.${known.length < meals.length ? " The others list no hours: check before you go." : ""}` : "No restaurant here lists its hours on the map. Check they're open on the day.");
   }
-  if (d.type === "port" && d.allAboard) add(plan.over ? "warn" : "ok", `Back at the ship by ${fmt(Math.min(plan.end, plan.endBy))}, ${dur(shipToPort(d, d.allAboard) - Math.min(plan.end, plan.endBy))} before all aboard (${esc(d.allAboard)}). Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day, as it can change.`);
+  if (d.type === "port" && d.allAboard) add(plan.over ? "warn" : "ok", `Back at the ship by ${fmt(backByOf(d, plan))}, ${dur(shipToPort(d, d.allAboard) - backByOf(d, plan))} before all aboard (${esc(d.allAboard)}). Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day, as it can change.`);
   // With free time the leave-by is the one the free time card and the banner give, never the earlier finish without it
   // (failure map, Nov 22: one boarding day showed four different leave times).
   const F = !plan.over ? dayFacts(d, plan) : null, freeOn = F && F.left >= 30 && F.leaveBy != null && !(plan.dropped || []).length && !(plan.w && plan.w.straight);
