@@ -35,10 +35,10 @@
     {
       "rule": "SLOW",
       "tool": "feel",
-      "where": "choose-sights",
+      "where": "choose-sights|fit-box",
       "owner": "Use the live app like a real client",
       "until": "2026-11-30",
-      "why": "opening a sight from Choose sights takes 550-650 ms to show anything; being looked at"
+      "why": "the \"Needs ...\" badge on Choose sights plans the day twice (about 1.7 s of work on a fast computer) before its box shows; the box should show at once and fill in"
     }
   ]
 }

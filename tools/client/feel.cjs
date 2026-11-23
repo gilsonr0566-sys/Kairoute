@@ -203,9 +203,9 @@ async function runSize(browser, size, base) {
       await tap(target, `${t.on ? 'tick back' : 'untick'} ${t.id}`, { stay: true }); }
     const fold = p.locator('[data-act=picksfold]'); if (await fold.count()) { await tap(fold, 'Your sights Hide', { stay: true }); await tap(fold, 'Your sights Show', { stay: true }); }
     await screen(`choose-sights-day${di}-after`, { stillMs: 3000 });
-    // Open a sight from the list.
-    const nameBtn = p.locator('.site button, .sitecard button, [data-act=siteopen], [data-act=sight]').first();
-    if (await nameBtn.isVisible().catch(() => false)) { await tap(nameBtn, 'open a sight', { nav: true }); await screen(`sight-open-day${di}`); const cl = p.locator('[data-act=close], [aria-label=Close], button').filter({ hasText: /^(×|✕|Close|Done|‹ Back|Back)$/ }); if (await cl.first().isVisible().catch(() => false)) await tap(cl, 'close the sight', { nav: true }); await screen(`after-close-sight-day${di}`); }
+    // A sight that doesn't fit: its "Needs 25 min" badge opens the ways to fit it in.
+    const nameBtn = p.locator('[data-act=fitask]').first();
+    if (await nameBtn.isVisible().catch(() => false)) { await tap(nameBtn, '"Needs ..." (ways to fit it in)', { nav: true }); await screen(`fit-box-day${di}`); const cl = p.locator('[data-act=close], [aria-label=Close], button').filter({ hasText: /^(×|✕|Close|Done|‹ Back|Back)$/ }); if (await cl.first().isVisible().catch(() => false)) await tap(cl, 'close the box', { nav: true }); await screen(`after-close-fit-box-day${di}`); }
     await tap(p.locator('button, a').filter({ hasText: /Day plan/ }).filter({ hasNotText: /Lock/ }), 'Back to my day plan', { nav: true }); await screen(`day${di}-after-choose`);
     // A sight on the day plan opened and closed.
     const stop = p.locator('main button').filter({ hasNotText: /Walk|Taxi|bus|Change|See what|Choose|Lock|Rename|Start|Zoom|Show where|What's this|‹|:/ });
