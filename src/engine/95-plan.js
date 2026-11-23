@@ -62,7 +62,7 @@
       // Every stop on a plan is a pick: the traveler's, or the app's starting picks on a day they haven't touched (shown
       // ticked). Nothing is optional (Nov 18, Richard).
       const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: false, along: false, meal: x.meal || null, late: x.late || 0 };
-      if (x.wait) it.wait = x.wait; if (x.freeBefore) it.freeBefore = x.freeBefore; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true; if (x.booked) it.booked = true;
+      if (x.wait) it.wait = x.wait; if (x.freeBefore) it.freeBefore = x.freeBefore; if (x.early) it.early = x.early; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true; if (x.booked) it.booked = true;
       if (x.packed) it.packed = true; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       // What is known about a place to eat travels with it to the screen: found only on the map (no guide or review behind
       // it), and whether its hours that day are known (Nov 22: never say more than the data says).

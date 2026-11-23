@@ -74,14 +74,14 @@
       // 1.7 km out of the way, to save five minutes before the kitchen opened). Longer is still a wait.
       // Twenty minutes or more before lunch starts is free time, named on the meal (Nov 20 review: the day jumped to lunch with
       // nothing said).
-      if (type === "meal") { const m = p.mealOf; if (clock < m.from) { if (m.from - clock > 20) it.freeBefore = m.from - clock; waits += Math.max(0, m.from - clock - E.MEAL_SEATED); clock = m.from; }
+      if (type === "meal") { const m = p.mealOf; if (clock < m.from) { it.early = m.from - clock; if (m.from - clock > 20) it.freeBefore = m.from - clock; waits += Math.max(0, m.from - clock - E.MEAL_SEATED); clock = m.from; }
         // The place's own hours that day, read and checked exactly as a sight's (E.hoursFit): wait for it to open (the first
         // quarter hour seated is no idle wait), and a meal that can't finish before closing is late by the minutes it runs
         // over (Nov 19 review: lunch was planned when the restaurant was shut).
         // A wait for the place to open counts with the wait for lunchtime: twenty minutes or more of it is free time, named
         // (Nov 21, Bahamas test trip: 1.5 h before a lunch place opened, with nothing said).
         if (p.oh) { const len = p.len || m.len, f = E.hoursFit(p.oh, clock, len);
-          if (f.wait) { waits += Math.max(0, f.wait - E.MEAL_SEATED); clock += f.wait; const idle = (it.freeBefore || 0) + f.wait; if (idle > 20) it.freeBefore = idle; } if (f.late > 0) { it.shut = true; it.lateMeal = (it.lateMeal || 0) + f.late; } } it.meal = m.label; it.min = p.len || m.len; if (m.booked) it.booked = true; if (m.pinned) it.pinned = true; if (p.chosen) it.chosen = true; if (p.toGo) it.toGo = true; if (p.fromMap) it.fromMap = true; if (p.packed) it.packed = true; if (clock > m.to) it.lateMeal = (it.lateMeal || 0) + clock - m.to; }
+          if (f.wait) { it.early = (it.early || 0) + f.wait; waits += Math.max(0, f.wait - E.MEAL_SEATED); clock += f.wait; const idle = (it.freeBefore || 0) + f.wait; if (idle > 20) it.freeBefore = idle; } if (f.late > 0) { it.shut = true; it.lateMeal = (it.lateMeal || 0) + f.late; } } it.meal = m.label; it.min = p.len || m.len; if (m.booked) it.booked = true; if (m.pinned) it.pinned = true; if (p.chosen) it.chosen = true; if (p.toGo) it.toGo = true; if (p.fromMap) it.fromMap = true; if (p.packed) it.packed = true; if (clock > m.to) it.lateMeal = (it.lateMeal || 0) + clock - m.to; }
       it.at = clock; items.push(it); clock += it.min; prev = p;
     };
     const keep = () => states.push({ clock, prev, late, waits, rideMin, n: items.length });

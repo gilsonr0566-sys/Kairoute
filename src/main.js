@@ -6782,7 +6782,10 @@ if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltin
 // The schedule says plainly when you get to each place and when you leave it.
 function tcell(it) {
   const len = it.type === "meal" || it.type === "evening" ? (it.meal && it.meal.len) || 0 : it.type === "stop" || it.type === "fixed" ? (it.place && it.place.minutes) || 0 : 0;
-  const arr = it.type === "start" ? null : it.time, lv = it.type === "end" || it.type === "evening" ? null : it.type === "start" ? it.time : it.time + len;
+  // A meal reached early shows the real arrival (leave + ride = arrive), and its card says the time to spare (card review,
+  // Nov 22: lunch looked pinned to 11:45 am with the wait hidden). A dinner idea after the day is a time to go from, not a stop.
+  const arr = it.type === "start" ? null : it.type === "meal" && it.early > 0 ? it.time - it.early : it.time, lv = it.type === "end" || it.type === "evening" ? null : it.type === "start" ? it.time : it.time + len;
+  if (it.type === "evening") return `<div class="time"><span class="ta">From</span><span class="tt">${fmt(Math.ceil(it.time / 15) * 15)}</span></div>`;
   return `<div class="time">${arr != null ? `<span class="ta">Arrive</span><span class="tt ar">${fmt(arr)}</span>` : ""}${lv != null && (arr == null || len >= 5) ? `<span class="ta">Leave</span><span class="tt lv">${fmt(lv)}</span>` : ""}</div>`;
 }
 function renderPlan(d) {
@@ -6809,7 +6812,7 @@ function renderPlan(d) {
   // After the free time the way back follows on the clock: its rides and fixed steps start when the free time ends.
   const freeShift = freeOn && plan.items[freeAt] && isFinite(plan.items[freeAt].time) && F.leaveBy > plan.items[freeAt].time ? F.leaveBy - plan.items[freeAt].time : 0;
   const rows = plan.items.map((it0, idx) => {
-    const it = freeShift && idx >= freeAt && it0.type !== "end" ? Object.assign({}, it0, { time: it0.time + freeShift }) : it0;
+    const it = freeShift && idx >= freeAt && it0.type !== "end" && it0.type !== "evening" ? Object.assign({}, it0, { time: it0.time + freeShift }) : it0;
     const pv = plan.items[idx - 1], nx = plan.items[idx + 1], rideIn = pv && pv.type === "travel" && pv.leg.mode !== "walk" && legKind(pv.leg), rideOut = nx && nx.type === "travel" && nx.leg.mode !== "walk" && legKind(nx.leg);
     const cls = `tl ${idx === 0 ? "first" : ""} ${idx === plan.items.length - 1 || it.type === "end" ? "last" : ""} ${rideIn ? "rin rin-" + rideIn : ""} ${rideOut ? "rout rout-" + rideOut : ""}`;
     if (it.type === "start") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}${plan.w.notes.map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
@@ -6823,9 +6826,10 @@ function renderPlan(d) {
       // Lunch back on board: the picks fill the time ashore, so lunch is a timed stop on the ship (no place to change).
       if (r.packed) return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what"><div class="nm">${lbl}: ${esc(r.name)}</div><div class="sub">${esc(packedWords(r) + " · " + dur(it.meal.len))}</div></div></div>`;
       if (r.onBoard) return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what"><div class="nm">${lbl}: ${esc(r.name)}</div><div class="sub">${esc("On the ship, once you're back · " + dur(it.meal.len))}</div></div></div>`;
+      const toGo = !r.booked && it.meal.len <= 20, whyR = Object.assign({}, r, { why: mealWhy(r, plan.items, idx) });
       return `<div class="${cls}"${mv ? ` data-meal="${esc(lbl)}"` : ""}>${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">${mv ? dragHandle({ id: "meal:" + lbl, name: lbl }) : ""}
-        <div class="nm">${it.meal.quick && !r.booked ? "Quick " + lbl.toLowerCase() : lbl}: ${esc(r.name)}</div><div class="sub">${[r.booked ? "Your reservation" : "", r.cuisine, r.price, mealTag(r), dur(it.meal.len), r.generic || r.booked || r.hoursKnown !== false ? "" : "Hours not confirmed", lbl === "Lunch" && !r.booked && it.time > MEALS[0].to ? "Late lunch: check they still serve" : ""].filter(Boolean).map(esc).join(" · ")}</div>
-        ${mealFacts(r)}${r.booked ? bookedLinks(lbl) : mealChangeLink(lbl, r) + mealMore(r, city, lbl)}</div></div>`;
+        <div class="nm">${toGo ? lbl + " to go" : it.meal.quick && !r.booked ? "Quick " + lbl.toLowerCase() : lbl}: ${esc(r.name)}</div>${it.early >= 5 ? `<div class="sub">${esc(dur(it.early))} to spare before ${lbl.toLowerCase()} at ${fmt(it.time)}</div>` : ""}${toGo ? `<div class="sub">The day is full: buy something to take away and eat on the way (about 20 min).</div>` : ""}<div class="sub">${[r.booked ? "Your reservation" : "", r.cuisine, r.price, mealTag(r), dur(it.meal.len), r.generic || r.booked || r.hoursKnown !== false ? "" : "Hours not confirmed", lbl === "Lunch" && !r.booked && it.time > MEALS[0].to ? "Late lunch: check they still serve" : ""].filter(Boolean).map(esc).join(" · ")}</div>
+        ${mealFacts(r)}${r.booked ? bookedLinks(lbl) : mealChangeLink(lbl, r) + mealMore(whyR, city, lbl)}</div></div>`;
     }
     if (it.type === "stop") {
       const s = it.place;
@@ -6933,6 +6937,16 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
   </details>
   </details>
   </div><div class="right pane" data-pane="sched">${heads ? `<div class="heads" role="region" aria-label="Heads-up for today">${heads}</div>` : ""}${bookFormHTML(d)}${mealFormHTML(d, plan)}<div class="card">${zoneNote(d)}${canDrag ? orderLine(d, plan) : ""}<div class="timeline${canDrag && tlCompact() ? " compact" : ""}">${rows}</div></div></div></div>`;
+}
+// "Why here" says only what is true of today (card review, Nov 22: "a short walk from Design Museum" on a day without the
+// Design Museum; the line was written once for the whole city). A guide's own words stay; the city-wide line is replaced by
+// the walk from the stop before on today's plan, or left out.
+function mealWhy(r, items, idx) {
+  const why = String(r.why || ""); if (!/^A real (place to eat|café|pub) a short walk from /.test(why)) return why;
+  const ride = items[idx - 1], before = items[idx - 2];
+  if (ride && ride.type === "travel" && ride.leg && ride.leg.mode === "walk" && before && before.type === "stop" && before.place && before.place.name)
+    return ride.leg.km < 0.1 ? "Next door to " + before.place.name + ", your stop before." : "On your way: " + dur(ride.leg.min) + " walk from " + before.place.name + ", your stop before.";
+  return "";
 }
 // A place to eat is called a local spot or popular with visitors only when a source says so (Nov 22 lunch audit: every place
 // found on the map was labelled "Popular with visitors", with nothing behind it). A place found only on the map says that.

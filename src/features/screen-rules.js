@@ -85,6 +85,13 @@ function rules(text, info = {}) {
   lunch.forEach(s => { const nm = s.name.replace(/^(Quick )?lunch:\s*/i, '');
     if (/\b(coffee|espresso|tabacchi|sherry|wine ?bar|cocktails?|lounge|events|tea ?room|juice|gelateria|pasticceria|bakery|patisserie|ice ?cream|donuts?)\b/i.test(nm) && !/\b(taverna|restaurant|trattoria|osteria|bistro|brasserie|grill|meze|kitchen|dining|seafood|steak|pizza|pasta|tapas|lunch)\b/i.test(nm + ' ' + s.meta)) add('S2', 'lunch is a meal', `"${nm}" is a place for coffee, drinks or a treat, not lunch`);
     const at = s.arrive != null ? s.arrive : s.leave; if (at != null && at > 14 * 60 + 30 && !/bring|late lunch|reservation|your pick|on board/i.test(t(s))) add('S2', 'lunch at a lunch hour', `lunch at ${nm} starts ${clock(at)}, after the kitchen's last orders (2:30 pm)`); });
+  // Into a meal the clock adds up: leave + ride = arrive (card review, Nov 22: lunch looked pinned to 11:45 am, up to 47 min
+  // missing). Time to spare before lunch shows on the card, never in the gap.
+  P.rides.forEach(r => { const k = P.rows.indexOf(r.from), nx = P.rows[k + 1]; if (!nx || nx.key !== 'L' || r.from.leave == null || nx.arrive == null || r.choices.length) return;
+    if (P.rides.filter(q => q.from === r.from).length > 1) return;
+    const gap = nx.arrive - (r.from.leave + r.min); if (Math.abs(gap) > 2 && !/spare|wait|includes/i.test(r.notes.join(' '))) add('S2', 'leave + ride = arrive at lunch', `${r.from.name} leave ${clock(r.from.leave)} + ${r.head} gives ${clock(r.from.leave + r.min)}, lunch says arrive ${clock(nx.arrive)}`); });
+  // Dinner at a dinner hour (card review: "ARRIVE 11:43 pm Suggested dinner").
+  all.forEach((l, k) => { if (/^(From|ARRIVE)$/.test(l) && T(all[k + 1]) != null && T(all[k + 1]) > 21 * 60 + 30 && /dinner/i.test(all.slice(k + 2, k + 5).join(' '))) add('S2', 'dinner at a dinner hour', `dinner at ${all[k + 1]}`); });
   const firstT = (P.rows[0] || {}).leave, lastT = end ? end.arrive : (P.rows[P.rows.length - 1] || {}).leave;
   if (stops.length >= 2 && firstT != null && lastT != null && firstT <= 12 * 60 && lastT >= 14 * 60 + 30 && !lunch.length && !P.lunchSaid) add('S2', 'lunch on a day out', `out ${clock(firstT)} to ${clock(lastT)} with no lunch and nothing said about it`);
   /* Bags: stored and collected with nothing between is storage for nothing; time out after collecting means carrying the bags. */
