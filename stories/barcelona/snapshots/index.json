@@ -538,5 +538,25 @@
   "retrieved": "2026-11-22T20:39:10.921Z",
   "chars": 10505,
   "status": 200
+ },
+ {
+  "key": "kjv-matthew4",
+  "url": "https://bible-api.com/matthew%204%3A8-10?translation=kjv",
+  "publisher": "King James Version (public domain), via bible-api.com",
+  "type": "primary",
+  "title": "",
+  "retrieved": "2026-11-23T06:11:24.374Z",
+  "chars": 1094,
+  "status": 200
+ },
+ {
+  "key": "kjv-luke4",
+  "url": "https://bible-api.com/luke%204%3A5-8?translation=kjv",
+  "publisher": "King James Version (public domain), via bible-api.com",
+  "type": "primary",
+  "title": "",
+  "retrieved": "2026-11-23T06:11:25.940Z",
+  "chars": 1374,
+  "status": 200
  }
 ]
