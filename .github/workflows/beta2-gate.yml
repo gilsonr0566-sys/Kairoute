@@ -269,9 +269,36 @@ jobs:
           path: part
           if-no-files-found: ignore
 
+  feel:
+    name: "9 What the traveler feels: real finger taps and swipes on phone and tablets (jumps, self-scroll, layout shift, slow and dead taps, Back button)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - run: node tools/ui/back-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always()
+        run: OUT=client-out node tools/client/feel.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
+        if: always()
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+          cp -r client-out part/ 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-feel
+          path: part
+          if-no-files-found: ignore
+
   report:
     name: "Release report"
-    needs: [code, safety, engine, leaks, phone, screen, odd-screen, words]
+    needs: [code, safety, engine, leaks, phone, screen, odd-screen, words, feel]
     if: always()
     runs-on: ubuntu-latest
     steps:
