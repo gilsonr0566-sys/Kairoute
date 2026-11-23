@@ -53,11 +53,11 @@
   "trip": "sample-cruise.json",
   "city": "athens",
   "date": "2027-07-02",
-  "name": "Orizondes Lycabettus",
-  "at": 741,
+  "name": "Microulee",
+  "at": 780,
   "min": 60,
-  "lat": 37.9817643,
-  "lng": 23.7434085
+  "lat": 37.9870405,
+  "lng": 23.7342816
  },
  {
   "trip": "sample-cruise.json",
@@ -233,11 +233,11 @@
   "trip": "sample-cruise.json",
   "city": "mykonos",
   "date": "2027-07-08",
-  "name": "Niko's Taverna",
-  "at": 846,
+  "name": "Sea Satin by Gryparis",
+  "at": 738,
   "min": 60,
-  "lat": 37.446,
-  "lng": 25.3265
+  "lat": 37.445172,
+  "lng": 25.3257267
  },
  {
   "trip": "sample-cruise.json",
@@ -248,6 +248,16 @@
   "min": 60,
   "lat": 37.447,
   "lng": 25.3285
+ },
+ {
+  "trip": "sample-cruise.json",
+  "city": "mykonos",
+  "date": "2027-07-08",
+  "name": "Kostas",
+  "at": 846,
+  "min": 60,
+  "lat": 37.4456311,
+  "lng": 25.3270135
  },
  {
   "trip": "sample-cruise.json",
@@ -283,11 +293,11 @@
   "trip": "sample-cruise.json",
   "city": "messina",
   "date": "2027-07-11",
-  "name": "La Piazzetta",
-  "at": 705,
+  "name": "Piccolino Pasta Bar",
+  "at": 834,
   "min": 60,
-  "lat": 38.191391,
-  "lng": 15.5555365
+  "lat": 38.1925952,
+  "lng": 15.5561798
  },
  {
   "trip": "sample-cruise.json",
@@ -303,18 +313,8 @@
   "trip": "sample-cruise.json",
   "city": "messina",
   "date": "2027-07-11",
-  "name": "Piccolino Pasta Bar",
-  "at": 834,
-  "min": 60,
-  "lat": 38.1925952,
-  "lng": 15.5561798
- },
- {
-  "trip": "sample-cruise.json",
-  "city": "messina",
-  "date": "2027-07-11",
   "name": "Cordon Bleu",
-  "at": 713,
+  "at": 765,
   "min": 60,
   "lat": 38.1110944,
   "lng": 15.6475215
@@ -323,11 +323,11 @@
   "trip": "sample-cruise.json",
   "city": "messina",
   "date": "2027-07-11",
-  "name": "Osteria del Campanile",
-  "at": 714,
+  "name": "A Cucchiara",
+  "at": 705,
   "min": 60,
-  "lat": 38.1929658,
-  "lng": 15.5543135
+  "lat": 38.1918758,
+  "lng": 15.5555993
  },
  {
   "trip": "sample-cruise.json",
@@ -424,7 +424,7 @@
   "city": "naples",
   "date": "2027-07-12",
   "name": "Sorbillo",
-  "at": 705,
+  "at": 720,
   "min": 60,
   "lat": 40.8504,
   "lng": 14.256
@@ -433,11 +433,11 @@
   "trip": "sample-cruise.json",
   "city": "rome from civitavecchia",
   "date": "2027-07-13",
-  "name": "Miscellanea",
-  "at": 768,
-  "min": 60,
-  "lat": 41.8982577,
-  "lng": 12.4762516
+  "name": "La Pilotta",
+  "at": 847,
+  "min": 20,
+  "lat": 41.9001014,
+  "lng": 12.4555046
  },
  {
   "trip": "sample-cruise.json",
@@ -494,7 +494,7 @@
   "city": "barcelona",
   "date": "2027-07-15",
   "name": "El Nacional",
-  "at": 840,
+  "at": 818,
   "min": 60,
   "lat": 41.3896,
   "lng": 2.1683
@@ -532,12 +532,12 @@
  {
   "trip": "sample-cruise.json",
   "city": "barcelona",
-  "date": "2027-07-17",
-  "name": "Mercedes",
-  "at": 705,
+  "date": "2027-07-16",
+  "name": "Trobadour",
+  "at": 837,
   "min": 60,
-  "lat": 41.4127848,
-  "lng": 2.1531955
+  "lat": 41.387684,
+  "lng": 2.1683456
  },
  {
   "trip": "sample-cruise.json",
@@ -548,6 +548,16 @@
   "min": 60,
   "lat": 41.403166,
   "lng": 2.1509895
+ },
+ {
+  "trip": "sample-cruise.json",
+  "city": "barcelona",
+  "date": "2027-07-17",
+  "name": "Mercedes",
+  "at": 705,
+  "min": 60,
+  "lat": 41.4127848,
+  "lng": 2.1531955
  },
  {
   "trip": "sample-cruise.json",
@@ -603,11 +613,11 @@
   "trip": "athens-short.json",
   "city": "athens",
   "date": "2027-07-01",
-  "name": "F",
-  "at": 793,
+  "name": "Orizondes Lycabettus",
+  "at": 734,
   "min": 60,
-  "lat": 37.9790793,
-  "lng": 23.7445244
+  "lat": 37.9817643,
+  "lng": 23.7434085
  },
  {
   "trip": "athens-short.json",
@@ -713,11 +723,11 @@
   "trip": "g02-vienna.json",
   "city": "vienna austria",
   "date": "2027-05-10",
-  "name": "Stöckl im Park",
-  "at": 752,
+  "name": "Green Door Bistro Vienna",
+  "at": 811,
   "min": 60,
-  "lat": 48.19246,
-  "lng": 16.37898
+  "lat": 48.20577,
+  "lng": 16.3658
  },
  {
   "trip": "g02-vienna.json",
@@ -773,16 +783,6 @@
   "trip": "g02-vienna.json",
   "city": "vienna austria",
   "date": "2027-05-11",
-  "name": "Apapika",
-  "at": 755,
-  "min": 60,
-  "lat": 48.2024,
-  "lng": 16.37062
- },
- {
-  "trip": "g02-vienna.json",
-  "city": "vienna austria",
-  "date": "2027-05-11",
   "name": "Aida",
   "at": 850,
   "min": 60,
@@ -793,18 +793,8 @@
   "trip": "g03-lisbon.json",
   "city": "lisbon portugal",
   "date": "2027-05-10",
-  "name": "Nikkei",
-  "at": 709,
-  "min": 20,
-  "lat": 38.69307,
-  "lng": -9.21368
- },
- {
-  "trip": "g03-lisbon.json",
-  "city": "lisbon portugal",
-  "date": "2027-05-10",
   "name": "Restaurantes Olaza Real",
-  "at": 840,
+  "at": 777,
   "min": 35,
   "lat": 38.93698,
   "lng": -9.33281
@@ -814,8 +804,8 @@
   "city": "lisbon portugal",
   "date": "2027-05-11",
   "name": "Tasca da Boa Viagem",
-  "at": 780,
-  "min": 35,
+  "at": 825,
+  "min": 60,
   "lat": 38.962,
   "lng": -9.4189
  },
@@ -833,18 +823,18 @@
   "trip": "g03-lisbon.json",
   "city": "lisbon portugal",
   "date": "2027-05-10",
-  "name": "Vela Latina",
-  "at": 708,
+  "name": "RIB - Beef & Wine Lisboa",
+  "at": 705,
   "min": 60,
-  "lat": 38.69286,
-  "lng": -9.21332
+  "lat": 38.70823,
+  "lng": -9.13777
  },
  {
   "trip": "g03-lisbon.json",
   "city": "lisbon portugal",
   "date": "2027-05-11",
   "name": "Da Prata 52",
-  "at": 705,
+  "at": 794,
   "min": 60,
   "lat": 38.70955,
   "lng": -9.13628
@@ -853,28 +843,38 @@
   "trip": "g03-lisbon.json",
   "city": "lisbon portugal",
   "date": "2027-05-11",
-  "name": "Derviche - Restaurante Turco",
+  "name": "Restaurante do Museu Nacional de Arte Antiga",
   "at": 705,
   "min": 60,
-  "lat": 38.70496,
-  "lng": -9.15955
+  "lat": 38.70491,
+  "lng": -9.16109
+ },
+ {
+  "trip": "g03-lisbon.json",
+  "city": "lisbon portugal",
+  "date": "2027-05-11",
+  "name": "Vela Latina",
+  "at": 708,
+  "min": 60,
+  "lat": 38.69286,
+  "lng": -9.21332
  },
  {
   "trip": "g04-barcelona.json",
   "city": "barcelona",
   "date": "2027-05-16",
-  "name": "Piazzolla",
-  "at": 795,
-  "min": 35,
-  "lat": 41.40196,
-  "lng": 2.1705
+  "name": "La Torreta del Parc Güell",
+  "at": 814,
+  "min": 20,
+  "lat": 41.4137748,
+  "lng": 2.1538975
  },
  {
   "trip": "g04-barcelona.json",
   "city": "barcelona",
   "date": "2027-05-16",
   "name": "Tapas 24",
-  "at": 838,
+  "at": 816,
   "min": 60,
   "lat": 41.3907,
   "lng": 2.168
@@ -942,12 +942,12 @@
  {
   "trip": "g05-edinburgh.json",
   "city": "edinburgh scotland",
-  "date": "2027-08-11",
-  "name": "Luckenbooths",
+  "date": "2027-08-10",
+  "name": "Amber",
   "at": 705,
   "min": 60,
-  "lat": 55.94988,
-  "lng": -3.19081
+  "lat": 55.94867,
+  "lng": -3.1957
  },
  {
   "trip": "g05-edinburgh.json",
@@ -968,6 +968,16 @@
   "min": 60,
   "lat": 55.95327,
   "lng": -3.19187
+ },
+ {
+  "trip": "g05-edinburgh.json",
+  "city": "edinburgh scotland",
+  "date": "2027-08-11",
+  "name": "Luckenbooths",
+  "at": 705,
+  "min": 60,
+  "lat": 55.94988,
+  "lng": -3.19081
  },
  {
   "trip": "g06-kyoto.json",
@@ -1124,8 +1134,8 @@
   "city": "jerusalem from haifa israel",
   "date": "2027-05-15",
   "name": "HaIvrit",
-  "at": 763,
-  "min": 20,
+  "at": 829,
+  "min": 60,
   "lat": 31.77718,
   "lng": 35.19856
  },
@@ -1133,41 +1143,11 @@
   "trip": "g17-haifa.json",
   "city": "jerusalem from haifa israel",
   "date": "2027-05-15",
-  "name": "The Message Café",
-  "at": 777,
-  "min": 60,
-  "lat": 31.78057,
-  "lng": 35.23545
- },
- {
-  "trip": "g17-haifa.json",
-  "city": "jerusalem from haifa israel",
-  "date": "2027-05-15",
   "name": "Abu Shukri",
-  "at": 741,
+  "at": 705,
   "min": 60,
   "lat": 31.7796,
   "lng": 35.23251
- },
- {
-  "trip": "g17-haifa.json",
-  "city": "jerusalem from haifa israel",
-  "date": "2027-05-15",
-  "name": "Tokyo",
-  "at": 705,
-  "min": 60,
-  "lat": 31.7754,
-  "lng": 35.23245
- },
- {
-  "trip": "g18-reykjavik.json",
-  "city": "reykjavik iceland",
-  "date": "2027-01-19",
-  "name": "Osushi Train",
-  "at": 724,
-  "min": 35,
-  "lat": 64.06722,
-  "lng": -21.95549
  },
  {
   "trip": "g18-reykjavik.json",
@@ -1198,6 +1178,16 @@
   "min": 60,
   "lat": 64.14227,
   "lng": -21.90524
+ },
+ {
+  "trip": "g18-reykjavik.json",
+  "city": "reykjavik iceland",
+  "date": "2027-01-20",
+  "name": "Fine Chinese",
+  "at": 705,
+  "min": 60,
+  "lat": 64.1407,
+  "lng": -21.91468
  },
  {
   "trip": "g19-venice.json",
@@ -1283,21 +1273,21 @@
   "trip": "g20-dubai.json",
   "city": "dubai uae",
   "date": "2027-07-20",
-  "name": "Arabian Tea House",
-  "at": 721,
+  "name": "Alfie's",
+  "at": 755,
   "min": 60,
-  "lat": 25.26336,
-  "lng": 55.29972
+  "lat": 25.21749,
+  "lng": 55.28323
  },
  {
   "trip": "g20-dubai.json",
   "city": "dubai uae",
   "date": "2027-07-20",
-  "name": "Puranmal",
-  "at": 770,
+  "name": "Indiawale Al fahidi",
+  "at": 724,
   "min": 60,
-  "lat": 25.26204,
-  "lng": 55.29722
+  "lat": 25.26113,
+  "lng": 55.2984
  },
  {
   "trip": "g20-dubai.json",
@@ -1394,7 +1384,7 @@
   "city": "hamburg germany",
   "date": "2027-05-16",
   "name": "Hidden Kitchen Hamburg",
-  "at": 707,
+  "at": 717,
   "min": 60,
   "lat": 53.54846,
   "lng": 9.96244
@@ -1403,11 +1393,11 @@
   "trip": "live-hamburg-stay.json",
   "city": "hamburg germany",
   "date": "2027-05-11",
-  "name": "Cantinetta Ristorante & Bar",
-  "at": 804,
-  "min": 35,
-  "lat": 53.54414,
-  "lng": 9.9945
+  "name": "Vecchio Amore",
+  "at": 798,
+  "min": 60,
+  "lat": 53.54326,
+  "lng": 9.98977
  },
  {
   "trip": "live-hamburg-stay.json",
@@ -1434,8 +1424,8 @@
   "city": "nassau bahamas",
   "date": "2027-01-12",
   "name": "Wok N Roll Chinese Resturant &Bar",
-  "at": 739,
-  "min": 20,
+  "at": 721,
+  "min": 35,
   "lat": 25.07608,
   "lng": -77.40671
  },
@@ -1453,18 +1443,18 @@
   "trip": "noai-city.json",
   "city": "paris",
   "date": "2027-05-04",
-  "name": "Test Eatery 1-0",
-  "at": 767,
+  "name": "Test Eatery 0-0",
+  "at": 830,
   "min": 60,
-  "lat": 48.8595,
-  "lng": 2.29548
+  "lat": 48.85092,
+  "lng": 2.30711
  },
  {
   "trip": "noai-city.json",
   "city": "paris",
   "date": "2027-05-04",
   "name": "Test Eatery 3-1",
-  "at": 797,
+  "at": 789,
   "min": 60,
   "lat": 48.8554,
   "lng": 2.3508
@@ -1473,21 +1463,31 @@
   "trip": "noai-city.json",
   "city": "paris",
   "date": "2027-05-05",
-  "name": "Bistrot Marguerite",
-  "at": 705,
+  "name": "Test Eatery 4-0",
+  "at": 838,
+  "min": 35,
+  "lat": 48.86117,
+  "lng": 2.32753
+ },
+ {
+  "trip": "noai-city.json",
+  "city": "paris",
+  "date": "2027-05-05",
+  "name": "Hakuba",
+  "at": 751,
   "min": 60,
-  "lat": 48.8562818,
-  "lng": 2.350543
+  "lat": 48.8588963,
+  "lng": 2.3421858
  },
  {
   "trip": "noai-city.json",
   "city": "paris",
   "date": "2027-05-06",
-  "name": "Test Eatery 11-0",
-  "at": 705,
+  "name": "Test Eatery 8-0",
+  "at": 759,
   "min": 60,
-  "lat": 48.87314,
-  "lng": 2.33267
+  "lat": 48.86231,
+  "lng": 2.39517
  },
  {
   "trip": "noai-island.json",
@@ -1533,18 +1533,8 @@
   "trip": "noai-prague.json",
   "city": "prague",
   "date": "2027-05-11",
-  "name": "Test Eatery 4-1",
-  "at": 790,
-  "min": 60,
-  "lat": 50.06683,
-  "lng": 14.41864
- },
- {
-  "trip": "noai-prague.json",
-  "city": "prague",
-  "date": "2027-05-11",
   "name": "Test Eatery 0-0",
-  "at": 705,
+  "at": 741,
   "min": 60,
   "lat": 50.0912,
   "lng": 14.401
@@ -1552,8 +1542,18 @@
  {
   "trip": "noai-prague.json",
   "city": "prague",
+  "date": "2027-05-11",
+  "name": "Test Eatery 1-0",
+  "at": 737,
+  "min": 60,
+  "lat": 50.08759,
+  "lng": 14.41294
+ },
+ {
+  "trip": "noai-prague.json",
+  "city": "prague",
   "date": "2027-05-12",
-  "name": "Test Eatery 3-0",
+  "name": "Test Eatery 4-0",
   "at": 705,
   "min": 60,
   "lat": 50.08819,

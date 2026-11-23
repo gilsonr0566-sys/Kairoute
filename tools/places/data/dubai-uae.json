@@ -756,5 +756,203 @@
    },
    "osm": "way/990683133"
   }
+ ],
+ "eatHours": [
+  [
+   "Bhavna",
+   25.26169,
+   55.29489,
+   "Mo-Su 07:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Puranmal",
+   25.26204,
+   55.29722,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Lassi King",
+   25.26243,
+   55.29705,
+   "Sa-Th 08:00-02:00; Fr 16:00-02:00",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   25.22119,
+   55.28096,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "The Lime Tree Cafe",
+   25.23214,
+   55.26414,
+   "Mo-Su 7:30-18:00",
+   "cafe"
+  ],
+  [
+   "Alfie's",
+   25.21749,
+   55.28323,
+   "09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Al Fresco Italian",
+   25.22034,
+   55.28026,
+   "12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Tresind",
+   25.22334,
+   55.28242,
+   "12:00-15:30; 19:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Saladicious",
+   25.23254,
+   55.26634,
+   "Mo-Su 08:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Costa coffee",
+   25.23113,
+   55.26308,
+   "Mo-Su 07:00-00:00",
+   "cafe"
+  ],
+  [
+   "Starbucks",
+   25.21519,
+   55.27903,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Mumbai Masti Juice Centre",
+   25.26225,
+   55.29703,
+   "Sa-Th 08:00-02:00; Fr 16:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Kamat Restaurant",
+   25.25982,
+   55.29473,
+   "Mo-Th, Sa, Su 06:30-00:00; Fr 06:30-11:30, 13:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Gifts Depot",
+   25.25898,
+   55.29655,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "DED Cafe",
+   25.23438,
+   55.26489,
+   "Mo-Su 07:00-12:00",
+   "cafe"
+  ],
+  [
+   "Sallet Al Sayad Restaurant",
+   25.23599,
+   55.30353,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Pak Darbar",
+   25.26126,
+   55.29935,
+   "Mo-Su 04:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Osh",
+   25.2336,
+   55.26061,
+   "Mo-Su 13:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Burnout",
+   25.23651,
+   55.30251,
+   "Mo-Su 10:00-01:00",
+   "cafe"
+  ],
+  [
+   "Seva table",
+   25.23067,
+   55.26339,
+   "Mo, We-Su 10:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Veg World Restaurant",
+   25.26078,
+   55.29529,
+   "Mo-Th, Sa, Su 09:00-00:00; Fr 09:00-11:30, 13:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Veganesha",
+   25.26198,
+   55.29724,
+   "Mo-Th, Su 11:00-00:00; Fr, Sa 09:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Rajwadi Vegetarian Restaurant",
+   25.26177,
+   55.29304,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Ghantoot Star",
+   25.26408,
+   55.29366,
+   "Mo-Su 10:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Wokyo Noodle Bar",
+   25.26522,
+   55.30131,
+   "Mo-Su 11:00-21:45",
+   "restaurant"
+  ],
+  [
+   "Foodie Express",
+   25.26185,
+   55.2939,
+   "Mo-Su 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Jones the Grocer Express - DIFC",
+   25.21464,
+   55.28035,
+   "Mo-Fr 08:00-22:00; Sa-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Al Khayma Heritage Restaurant",
+   25.2637,
+   55.30067,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ]
  ]
 }
