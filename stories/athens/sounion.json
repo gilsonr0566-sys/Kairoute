@@ -1,0 +1,375 @@
+{
+ "id": "sounion",
+ "v": 1,
+ "city": "athens",
+ "title": "Temple of Poseidon at Sounion",
+ "match": {
+  "ids": [
+   "sounion"
+  ],
+  "names": [
+   "sounion",
+   "sounio",
+   "sunium"
+  ],
+  "wikidata": [
+   "Q21705206",
+   "Q1136637"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "cape": {
+   "label": "supported",
+   "says": "Cape Sounion is the promontory at the southernmost tip of Attica, 69.5 km southeast of Athens; the temple's remains sit on the headland with sea on three sides.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "is the promontory at the southernmost tip of the Attica peninsula",
+    "69.5 km (43.1 miles) southeast of Athens",
+    "Its remains are perched on the headland, surrounded on three sides by the Aegean Sea."
+   ]
+  },
+  "height": {
+   "label": "estimate",
+   "says": "The temple stands almost 60 m (200 ft) above the sea.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "It is perched above the sea at a height of almost 60 metres (200 ft)."
+   ]
+  },
+  "dates": {
+   "label": "supported",
+   "says": "The temple was built in 444-440 BC, in the time of Pericles, who also rebuilt the Parthenon.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "The temple of Poseidon at Sounion was constructed in 444–440 BC.  This was during the ascendancy of the Athenian statesman Pericles, who also rebuilt the Parthenon in Athens."
+   ]
+  },
+  "master": {
+   "label": "supported",
+   "says": "The Greeks saw Poseidon as master of the sea, and with Athens' sea trade and navy he mattered greatly to Athenians.",
+   "src": [
+    "wp-temple-poseidon"
+   ],
+   "quote": [
+    "The Greeks considered Poseidon to be the \"master of the sea\". Given the importance to Athens of trade by sea and the significance of its navy in its creation and survival during the 5th century, Poseidon was of a particular relevance and value to the Athenians."
+   ]
+  },
+  "columns": {
+   "label": "supported",
+   "says": "There were 34 Doric columns originally; 15 still stand, of local white marble, 6.10 m tall.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "The total number of original columns was 34, of which 15 still stand today. The columns are of the Doric Order. They were made of locally quarried white marble. They were 6.10 m (20 ft) high"
+   ]
+  },
+  "statue": {
+   "label": "supported",
+   "says": "The windowless inner hall would have held a colossal bronze statue of Poseidon, 6 m tall, reaching the ceiling.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "a windowless rectangular room",
+    "It would have contained, at one end facing the entrance, the cult image, a colossal, ceiling-height (6 metres (20 ft)) bronze statue of Poseidon."
+   ]
+  },
+  "hephaestus": {
+   "label": "disputed",
+   "says": "Whole, it would have looked much like the Temple of Hephaestus in Athens, which may have had the same architect.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "when intact it would have closely resembled the contemporary and well-preserved Temple of Hephaestus beneath the Acropolis, which may have been designed by the same architect."
+   ]
+  },
+  "persians": {
+   "label": "disputed",
+   "says": "An older temple here was probably destroyed by the Persians in 480 BC; after Salamis the Athenians dedicated a whole captured warship here to Poseidon.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "The Archaic temple was probably destroyed in 480 BC by Persian troops during Xerxes I's invasion of Greece. After they defeated Xerxes in the naval Battle of Salamis, the Athenians placed an entire captured enemy trireme (warship with three banks of oars) at Sounion as a trophy dedicated to Poseidon."
+   ]
+  },
+  "older": {
+   "label": "supported",
+   "says": "The present temple was built on the ruins of the older one.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "It was built on the ruins of a temple dating from the Archaic period."
+   ]
+  },
+  "lookout": {
+   "label": "supported",
+   "says": "The site was chosen for its view of the sea lanes to and from Piraeus, the first and last place ships could be seen. It could easily be seen by ships nearing Attica.",
+   "src": [
+    "wp-temple-poseidon"
+   ],
+   "quote": [
+    "the decision to build the temple at Sounion is clearly related to the visibility of the sea lanes to and from Piraeus, which provided the first and final vantage points from which incoming and exiting ships could be seen.",
+    "it could easily be seen by ships nearing Attica"
+   ]
+  },
+  "homer": {
+   "label": "supported",
+   "says": "The earliest mention of Sounion is in Homer's Odyssey: Menelaus' helmsman died rounding 'Holy Sounion, Cape of Athens' and was given funeral honors here.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "The earliest literary reference to Sounion is in Homer's  Odyssey",
+    "the helmsman of the ship of King Menelaus of Sparta died at his post while rounding \"Holy Sounion, Cape of Athens.\" Menelaus landed at Sounion to give his companion full funeral honours"
+   ]
+  },
+  "athena": {
+   "label": "supported",
+   "says": "The temple of Athena stood on a low hill about 300 m northeast of Poseidon's temple, next to a shrine identified as that of the helmsman Phrontis.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "was located on a low hill some 300 m northeast of the temple of Poseidon",
+    "It was built adjacent to a peribolos identified as the burial mound and shrine to Phrontis, the helmsman of Menelaus whose burial at Sounion is mentioned in the Odyssey."
+   ]
+  },
+  "festival": {
+   "label": "supported",
+   "says": "Herodotus says that in the 6th century BC Athenians held a festival here every four years, with their leaders sailing to the cape in a sacred boat.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "mentions that in 6th century BC, the Athenians celebrated a quadrennial festival at Sounion, which involved Athens' leaders sailing to the cape in a sacred boat."
+   ]
+  },
+  "fortress": {
+   "label": "supported",
+   "says": "In 413 BC the Athenians walled the site to protect grain ships; rebel slaves from the Laurium silver mines later seized it.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "In 413 BC, during the Peloponnesian War against the Spartans, the Athenians fortified the site with a wall and towers",
+    "The Sounion fortress was later seized from the Athenians by a force of rebel slaves from the nearby silver mines of Laurium."
+   ]
+  },
+  "colonne": {
+   "label": "supported",
+   "says": "From the 17th century sailors called it Capo Colonne, Cape of Columns, because columns had stayed standing since antiquity.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "Capo Colonne \"Cape of Columns\"",
+    "is reported from the 17th century, for the reason that, unusually, several columns of the temple of Poseidon had remained standing since antiquity."
+   ]
+  },
+  "byron": {
+   "label": "disputed",
+   "says": "Lord Byron's name is carved into the base of one column, but there is no direct evidence he carved it himself.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "The inscribed name of Lord Byron, carved into the base of one of the columns of the Temple of Poseidon",
+    "There is, however, no direct evidence that the inscription was made by Byron himself."
+   ]
+  },
+  "scattered": {
+   "label": "supported",
+   "says": "In 1825 two columns collapsed; one was taken to Venice, and drums of a column are in England, at Chatsworth and the British Museum.",
+   "src": [
+    "wp-temple-poseidon"
+   ],
+   "quote": [
+    "In 1825, two columns of the temple collapsed.",
+    "taken to the Venetian Arsenal in 1826",
+    "Four drums are displayed in the garden of Chatsworth House",
+    "The British Museum preserves another one"
+   ]
+  },
+  "heidegger": {
+   "label": "supported",
+   "says": "The philosopher Martin Heidegger, visiting in 1962, wrote that in the sea breeze the columns were the strings of an invisible lyre.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "Martin Heidegger visited Sounion during his journey to Greece in 1962",
+    "In the strong sea breeze \"these few standing columns were the strings of an invisible lyre"
+   ]
+  },
+  "sunset": {
+   "label": "supported",
+   "says": "The sunset over the Aegean, seen from the ruins, has been a sought-after sight since modern tourism began in the early 19th century.",
+   "src": [
+    "wp-sounion"
+   ],
+   "quote": [
+    "with the sunset over the Aegean Sea, as viewed from the ruins, a sought-after sight since the first development of modern tourism in the early 19th century."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "On the path up to the temple, where you first see the columns against the sky.",
+   "paras": [
+    {
+     "t": "This is Cape Sounion, the southernmost tip of Attica, and that's the Temple of Poseidon on the headland, with the Aegean on three sides. It was built from 444 to 440 BC, in the time of Pericles, the same man behind the Parthenon.",
+     "c": [
+      "cape",
+      "dates"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Two things to keep in mind here. Stay well back from the cliff edges. And there's almost no shade, so a hat and water are a good idea.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "Why Poseidon? The Greeks called him master of the sea, and Athens lived by the sea: by its trade and by its navy. A god of the sea mattered here.",
+     "c": [
+      "master"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The temple",
+   "stand": "Walk up close to the temple and face its columns.",
+   "paras": [
+    {
+     "t": "Originally there were 34 columns. Fifteen still stand. They're Doric, of local white marble, and each was 6.10 metres tall.",
+     "c": [
+      "columns"
+     ],
+     "level": 1
+    },
+    {
+     "t": "In the middle was a windowless hall, and it would have held a colossal bronze Poseidon, 6 metres tall, right up to the ceiling. If you've seen the Temple of Hephaestus in Athens, picture this one looking much like it. They may even have had the same architect, though nobody knows for sure.",
+     "c": [
+      "statue",
+      "hephaestus"
+     ],
+     "level": 2
+    },
+    {
+     "t": "This wasn't the first temple here. An older one stood on this spot, probably destroyed by the Persians in 480 BC. When the Athenians beat the Persians at sea at Salamis, they brought a whole captured enemy warship here, as a trophy for Poseidon. The temple you see was built on the old one's ruins.",
+     "c": [
+      "persians",
+      "older"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Watching the sea",
+   "stand": "Go to the seaward side of the temple, staying well back from the edge, and look out over the water.",
+   "paras": [
+    {
+     "t": "You're standing almost 60 metres above the sea. From here you could see ships sailing to and from Piraeus, first as they came in and last as they went out. That view is a big reason the temple is here.",
+     "c": [
+      "height",
+      "lookout"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Sounion is old in story, too. The earliest mention is in Homer's Odyssey. Sailing home from Troy, King Menelaus lost his helmsman as they rounded \"Holy Sounion, Cape of Athens,\" and he landed here to give him a proper funeral.",
+     "c": [
+      "homer"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Look northeast for a low hill about 300 metres away. That's where the temple of Athena stood, next to a shrine identified as the tomb of that same helmsman, Phrontis.",
+     "c": [
+      "athena"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Athens took this place seriously. Herodotus says that in the 6th century BC, Athenians held a festival here every four years, and their leaders sailed down to the cape in a sacred boat. Later, in 413 BC, during the war with Sparta, they walled the whole headland to protect the grain ships. And then, in a twist, rebel slaves from the nearby silver mines of Laurium seized the fortress.",
+     "c": [
+      "festival",
+      "fortress"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Names on the stone",
+   "stand": "Walk slowly around the outside of the temple and look at the bases of the columns.",
+   "paras": [
+    {
+     "t": "From the 1600s, this cape was known as Capo Colonne, the Cape of Columns, because, unusually, several of these columns had stayed standing since ancient times.",
+     "c": [
+      "colonne"
+     ],
+     "level": 2
+    },
+    {
+     "t": "On the base of one of these columns is the name of Lord Byron, carved into the stone. Did he carve it himself? There's no direct evidence, so nobody knows.",
+     "c": [
+      "byron"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Pieces of this temple are scattered far away. In 1825 two columns collapsed. One was taken to Venice, and drums from a column ended up in England, in the garden at Chatsworth House and in the British Museum.",
+     "c": [
+      "scattered"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Sunset",
+   "stand": "Find a safe spot with a view of the temple and the western sky.",
+   "paras": [
+    {
+     "t": "People have come here for the sunset over the Aegean, seen from these ruins, ever since modern tourism began in the early 1800s.",
+     "c": [
+      "sunset"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The philosopher Martin Heidegger came here in 1962. In the strong sea breeze, he wrote, \"these few standing columns were the strings of an invisible lyre.\"",
+     "c": [
+      "heidegger"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And for ships nearing Attica, this headland was easy to see. Stand still a moment, and imagine being out on that water, watching these columns catch the last of the light.",
+     "c": [
+      "lookout"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

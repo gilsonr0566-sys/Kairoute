@@ -1,0 +1,743 @@
+{
+ "id": "corinth",
+ "v": 1,
+ "city": "athens",
+ "title": "Ancient Corinth",
+ "match": {
+  "ids": [
+   "corinth",
+   "acrocorinth"
+  ],
+  "names": [
+   "ancient corinth",
+   "archaia korinthos",
+   "acrocorinth",
+   "akrokorinthos"
+  ],
+  "wikidata": [
+   "Q1363688",
+   "Q420810"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "isthmus": {
+   "label": "supported",
+   "says": "Corinth was a city-state on the Isthmus of Corinth, the narrow neck of land joining the Peloponnese to mainland Greece.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "was a city-state (polis) on the Isthmus of Corinth, the narrow stretch of land that joins the Peloponnese peninsula to mainland Greece"
+   ]
+  },
+  "big": {
+   "label": "supported",
+   "says": "Ancient Corinth was one of the largest and most important cities of Greece, with 90,000 people in 400 BC.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "Ancient Corinth was one of the largest and most important cities of Greece, with a population of 90,000 in 400 BC."
+   ]
+  },
+  "wealth": {
+   "label": "supported",
+   "says": "Corinthians were wealthy because all land traffic to the Peloponnese passed through the isthmus.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "The Corinthians were also known for their wealth due to their strategic location on the isthmus, through which all land traffic had to pass en route to the Peloponnese"
+   ]
+  },
+  "roman": {
+   "label": "supported",
+   "says": "Rome demolished Corinth in 146 BC, built a new city in 44 BC, and later made it the capital of the province of Achaea.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "The Romans demolished Corinth in 146 BC after they captured it as result of the Battle of Corinth, built a new city in its place in 44 BC, and later made it the provincial capital of Achaea."
+   ]
+  },
+  "caesar": {
+   "label": "supported",
+   "says": "Julius Caesar refounded the city as a Roman colony.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "Corinth remained largely deserted until Julius Caesar refounded the city as Colonia Laus Iulia Corinthiensis"
+   ]
+  },
+  "mixed": {
+   "label": "supported",
+   "says": "Roman Corinth had a large mixed population of Romans, Greeks and Jews.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "It had a large mixed population of Romans, Greeks, and Jews."
+   ]
+  },
+  "excavations": {
+   "label": "supported",
+   "says": "The American School has excavated here since 1896; the modern village sits right on top of the ancient city.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "The Corinth Excavations by the American School of Classical Studies at Athens began in 1896 and have continued with little interruption until today.",
+    "Restricted by the modern village of Ancient Corinth, which directly overlies the ancient city"
+   ]
+  },
+  "apollo": {
+   "label": "supported",
+   "says": "The Temple of Apollo dates from the middle of the 6th century BC and is one of the only features visible since antiquity.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "the mid-6th century B.C. Temple of Apollo.  This dominating monument has been one of the only features of the site visible since antiquity."
+   ]
+  },
+  "apollo-wv": {
+   "label": "supported",
+   "says": "It stands on a rocky hill, is one of the earliest Doric temples in Greece, and seven columns still stand.",
+   "src": [
+    "wv-corinth"
+   ],
+   "quote": [
+    "atop a rocky hill, the Temple of Apollo is one of the earliest Doric temples in Greece.",
+    "Today only seven standing columns are preserved."
+   ]
+  },
+  "apollo-lives": {
+   "label": "supported",
+   "says": "The Romans restored it for the cult of the emperor; in Byzantine times it became a basilica; under the Ottomans it was partly demolished and a Bey's house was built on it.",
+   "src": [
+    "wv-corinth"
+   ],
+   "quote": [
+    "It was restored In the Roman period and dedicated to the cult of the Emperor. In the Byzantine era was turned into a basilica, whereas in the Ottoman period was partly demolished and a new residence of the local Turkish Bey was built on top of its crepis."
+   ]
+  },
+  "glauke": {
+   "label": "legend",
+   "says": "The Glauke Fountain, built near the temple in Roman times, is named for Glauke, who by tradition was poisoned by Medea's gift and fell into the fountain.",
+   "src": [
+    "wv-corinth"
+   ],
+   "quote": [
+    "The Glauke Fountain was built near the Temple of Apollo in Roman times. According to tradition, Glauke, daughter of king Kreon, was about to marry the hero of the Argonauts Jason.",
+    "Glauke received a poisoned peplos by Medea",
+    "the girl fell in the fountain, which was named after her."
+   ]
+  },
+  "acts-1": {
+   "label": "scripture",
+   "says": "Acts 18:1: Paul departed from Athens and came to Corinth.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "After these things Paul departed from Athens, and came to Corinth;",
+    "\"chapter\":18,\"verse\":1,\"text\":\"After these things Paul d"
+   ]
+  },
+  "acts-2": {
+   "label": "scripture",
+   "says": "Acts 18:2: he found Aquila, born in Pontus, lately come from Italy with his wife Priscilla, because Claudius had expelled the Jews from Rome.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "And found a certain Jew named Aquila, born in Pontus, lately come from Italy, with his wife Priscilla; (because that Claudius had commanded all Jews to depart from Rome:) and came unto them.",
+    "\"chapter\":18,\"verse\":2,\"text\":\"And found a certain Jew n"
+   ]
+  },
+  "acts-3": {
+   "label": "scripture",
+   "says": "Acts 18:3: same craft; he lived and worked with them; they were tentmakers.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "And because he was of the same craft, he abode with them, and wrought: for by their occupation they were tentmakers.",
+    "\"chapter\":18,\"verse\":3,\"text\":\"And because he was of the"
+   ]
+  },
+  "acts-4": {
+   "label": "scripture",
+   "says": "Acts 18:4: he reasoned in the synagogue every sabbath.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "And he reasoned in the synagogue every sabbath, and persuaded the Jews and the Greeks.",
+    "\"chapter\":18,\"verse\":4,\"text\":\"And he reasoned in the sy"
+   ]
+  },
+  "acts-5-6": {
+   "label": "scripture",
+   "says": "Acts 18:5-6: Silas and Timotheus came from Macedonia; when opposed, Paul said he would go to the Gentiles.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "And when Silas and Timotheus were come from Macedonia, Paul was pressed in the spirit, and testified to the Jews",
+    "from henceforth I will go unto the Gentiles.",
+    "\"chapter\":18,\"verse\":5,\"text\":\"And when Silas and Timoth",
+    "\"chapter\":18,\"verse\":6,\"text\":\"And when they opposed the"
+   ]
+  },
+  "acts-7-8": {
+   "label": "scripture",
+   "says": "Acts 18:7-8: he moved to the house of Justus next to the synagogue; Crispus, the chief ruler of the synagogue, believed with all his house.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "And he departed thence, and entered into a certain",
+    "one that worshipped God, whose house joined hard to the synagogue.",
+    "And Crispus, the chief ruler of the synagogue, believed on the Lord with all his house; and many of the Corinthians hearing believed, and were baptized.",
+    "\"chapter\":18,\"verse\":7,\"text\":\"And he departed thence, a",
+    "\"chapter\":18,\"verse\":8,\"text\":\"And Crispus, the chief ru"
+   ]
+  },
+  "acts-9-10": {
+   "label": "scripture",
+   "says": "Acts 18:9-10: the Lord spoke to Paul in a vision: be not afraid, I have much people in this city.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "Then spake the Lord to Paul in the night by a vision,",
+    "Be not afraid, but speak, and hold not thy peace:",
+    "For I am with thee, and no man shall set on thee to hurt thee: for I have much people in this city.",
+    "\"chapter\":18,\"verse\":9,\"text\":\"Then spake the Lord to Pa",
+    "\"chapter\":18,\"verse\":10,\"text\":\"For I am with thee, and n"
+   ]
+  },
+  "acts-11": {
+   "label": "scripture",
+   "says": "Acts 18:11: he continued there a year and six months.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "there a year and six months, teaching the word of God among them.",
+    "\"chapter\":18,\"verse\":11,\"text\":\"And he continued"
+   ]
+  },
+  "paul-dates": {
+   "label": "supported",
+   "says": "Paul first visited Corinth in AD 49 or 50 and stayed eighteen months; here he met Priscilla and Aquila and worked with them as a tentmaker.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "The apostle Paul first visited the city in AD 49 or 50",
+    "Paul resided here for eighteen months (see Acts 18:11). Here he first became acquainted with Priscilla and Aquila, with whom he later traveled. They worked here together as tentmakers (from which is derived the modern Christian concept of tentmaking)"
+   ]
+  },
+  "church-trad": {
+   "label": "tradition",
+   "says": "Traditionally the Church of Corinth is believed to have been founded by Paul.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "Traditionally, the Church of Corinth is believed to have been founded by Paul, making it an Apostolic See."
+   ]
+  },
+  "acts-12-13": {
+   "label": "scripture",
+   "says": "Acts 18:12-13: when Gallio was deputy of Achaia, Paul was brought to the judgment seat, accused of persuading men to worship contrary to the law.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "And when Gallio was the deputy of Achaia, the Jews made insurrection with one accord against Paul, and brought him to the judgment seat,",
+    "fellow persuadeth men to worship God contrary to the law.",
+    "\"chapter\":18,\"verse\":12,\"text\":\"And when Gallio was the d",
+    "\"chapter\":18,\"verse\":13,\"text\":\"Saying, This"
+   ]
+  },
+  "acts-14-15": {
+   "label": "scripture",
+   "says": "Acts 18:14-15: before Paul could speak, Gallio said it was a question of words and names and of their law, and he would be no judge of such matters.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "And when Paul was now about to open",
+    "But if it be a question of words and names, and",
+    "of your law, look ye",
+    "to it; for I will be no judge of such",
+    "\"chapter\":18,\"verse\":14,\"text\":\"And when Paul was now abo",
+    "\"chapter\":18,\"verse\":15,\"text\":\"But if it be a question o"
+   ]
+  },
+  "acts-16-17": {
+   "label": "scripture",
+   "says": "Acts 18:16-17: he drove them from the judgment seat; Sosthenes was beaten before it; and Gallio cared for none of those things.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "And he drave them from the judgment seat.",
+    "Then all the Greeks took Sosthenes, the chief ruler of the synagogue, and beat",
+    "him before the judgment seat. And Gallio cared for none of those things.",
+    "\"chapter\":18,\"verse\":16,\"text\":\"And he drave them from th",
+    "\"chapter\":18,\"verse\":17,\"text\":\"Then all the Greeks took "
+   ]
+  },
+  "gallio": {
+   "label": "supported",
+   "says": "Gallio, brother of Seneca, was proconsul of Achaia; in AD 51/52 he presided over Paul's trial in Corinth.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "Gallio, the brother of Seneca, was proconsul of Achaia",
+    "In AD 51/52, Gallio presided over the trial of the Apostle Paul in Corinth."
+   ]
+  },
+  "gallio-delphi": {
+   "label": "supported",
+   "says": "An inscription mentioning the Roman proconsul Gallio is shown at the Delphi museum.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "Immediately adjacent to the exit is the inscription that mentions the Roman proconsul Gallio."
+   ]
+  },
+  "bema": {
+   "label": "supported",
+   "says": "The site's list of important monuments includes the Bema, later a Church of the Apostle Paul.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "Bema (Ancient Corinth) (later Church of Apostle Paul)"
+   ]
+  },
+  "acts-18": {
+   "label": "scripture",
+   "says": "Acts 18:18: Paul stayed a good while, then sailed for Syria with Priscilla and Aquila, having shorn his head in Cenchrea for a vow.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "took his leave of the brethren, and sailed thence into Syria, and with him Priscilla and Aquila; having shorn",
+    "head in Cenchrea: for he had a vow.",
+    "\"chapter\":18,\"verse\":18,\"text\":\"And Paul"
+   ]
+  },
+  "ports": {
+   "label": "supported",
+   "says": "Corinth had two harbors: Lechaeum on the Corinthian Gulf and Cenchreae on the Saronic Gulf.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "Corinth had two harbours: Lechaeum on the Corinthian Gulf and Cenchreae on the Saronic Gulf.",
+    "while to the east on the Saronic Gulf the port of Kenchreai"
+   ]
+  },
+  "letters": {
+   "label": "supported",
+   "says": "Paul wrote at least two letters to the church here: First Corinthians from Ephesus and Second Corinthians from Macedonia.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "Paul wrote at least two epistles to the Christian church, the First Epistle to the Corinthians (written from Ephesus) and the Second Epistle to the Corinthians (written from Macedonia)."
+   ]
+  },
+  "romans": {
+   "label": "supported",
+   "says": "Later he stayed in Corinth about three months in late winter and wrote his Epistle to the Romans here.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "After writing the second epistle, he stayed in Corinth for about three months in the late winter, and there wrote his Epistle to the Romans."
+   ]
+  },
+  "cor13": {
+   "label": "scripture",
+   "says": "1 Corinthians 13:4 and 13: Charity suffereth long, and is kind... the greatest of these is charity.",
+   "src": [
+    "kjv-1cor13"
+   ],
+   "quote": [
+    "Charity suffereth long,",
+    "and is kind; charity envieth not; charity vaunteth not itself, is not puffed up,",
+    "And now abideth faith, hope, charity, these three; but the greatest of these",
+    "is charity.",
+    "\"reference\":\"1 Corinthians 13:1-13\"",
+    "\"chapter\":13,\"verse\":4,\"text\":\"Charity suffereth long,",
+    "\"chapter\":13,\"verse\":13,\"text\":\"And now abideth faith, ho"
+   ]
+  },
+  "acro": {
+   "label": "supported",
+   "says": "Acrocorinth, 'Upper Corinth', is a monolithic rock overlooking the ancient city.",
+   "src": [
+    "wp-acrocorinth"
+   ],
+   "quote": [
+    "lit. 'Upper Corinth' or 'the acropolis of ancient Corinth') is a monolithic rock overlooking the ancient city of Corinth, Greece."
+   ]
+  },
+  "forrest": {
+   "label": "supported",
+   "says": "The historian George Forrest called it the most impressive acropolis of mainland Greece.",
+   "src": [
+    "wp-acrocorinth"
+   ],
+   "quote": [
+    "In the estimation of George Forrest, \"It is the most impressive of the acropolis of mainland Greece.\""
+   ]
+  },
+  "defense": {
+   "label": "supported",
+   "says": "With its secure water supply, the fortress was used as a last line of defense in southern Greece because it commanded the isthmus.",
+   "src": [
+    "wp-acrocorinth"
+   ],
+   "quote": [
+    "With its secure water supply, Acrocorinth's fortress was repeatedly used as a last line of defense in southern Greece because it commanded the Isthmus of Corinth"
+   ]
+  },
+  "acro-history": {
+   "label": "supported",
+   "says": "It was occupied from archaic times to the early 19th century, and later held by Franks, Venetians and Ottomans; three circuit walls defended it.",
+   "src": [
+    "wp-acrocorinth"
+   ],
+   "quote": [
+    "The Acrocorinth was continuously occupied from archaic times to the early 19th Century.",
+    "Afterwards it became a fortress of the Frankish Principality of Achaea, the Venetians, and the Ottoman Turks.",
+    "Three circuit walls formed the man-made defense of the hill.",
+    "it was further heavily fortified during the Byzantine Empire"
+   ]
+  },
+  "sgouros": {
+   "label": "supported",
+   "says": "Corinthians under Leo Sgouros held out on Acrocorinth against the crusaders from 1205 until 1210.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "The Corinthians resisted the Frankish conquest from their stronghold in Acrocorinth, under the command of Leo Sgouros, from 1205 until 1210."
+   ]
+  },
+  "aphrodite": {
+   "label": "supported",
+   "says": "The highest peak had a temple to Aphrodite, converted to a church and then a mosque.",
+   "src": [
+    "wp-acrocorinth"
+   ],
+   "quote": [
+    "The highest peak on the site was home to a temple to Aphrodite. The temple was converted to a church, which in turn was converted to a mosque."
+   ]
+  },
+  "helios": {
+   "label": "legend",
+   "says": "In a Corinthian myth, Briareus judged that the isthmus belonged to Poseidon and Acrocorinth to Helios, the sun.",
+   "src": [
+    "wp-acrocorinth"
+   ],
+   "quote": [
+    "Briareus, one of the Hecatoncheires, was the arbitrator in a dispute between Poseidon (the sea) and Helios (the sun): His verdict was that the Isthmus of Corinth belonged to Poseidon and the acropolis of Corinth (Acrocorinth) to Helios."
+   ]
+  },
+  "pegasus": {
+   "label": "legend",
+   "says": "The Upper Peirene spring is inside the walls; legend says Pegasus drank there and was tamed by Bellerophon.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "The Upper Peirene spring is located within the walls of the acropolis.",
+    "According to legend, the winged horse Pegasus drank at the spring, and was captured and tamed by the Corinthian hero Bellerophon."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Inside the site, at a spot where you can see the old columns of the Temple of Apollo on their rocky rise.",
+   "paras": [
+    {
+     "t": "Welcome to Ancient Corinth. It grew rich on the Isthmus, the narrow neck of land joining southern Greece to the mainland, where all land traffic had to pass.",
+     "c": [
+      "isthmus",
+      "wealth"
+     ],
+     "level": 1
+    },
+    {
+     "t": "There's little shade here. Keep your hat on, drink often, and watch your step on the old paving.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "In its prime it was one of the largest cities in Greece, with 90,000 people in 400 BC. Then, in 146 BC, the Romans destroyed it. It lay largely deserted until Julius Caesar refounded it as a Roman colony in 44 BC, and Rome later made it the capital of the province of Achaea.",
+     "c": [
+      "big",
+      "roman",
+      "caesar"
+     ],
+     "level": 2
+    },
+    {
+     "t": "So the city Paul walked into was a Roman one, and a crowded one. Romans, Greeks and Jews lived side by side.",
+     "c": [
+      "mixed"
+     ],
+     "level": 3
+    },
+    {
+     "t": "American archaeologists have been digging here since 1896. They can't dig everywhere, though: the modern village of Ancient Corinth sits right on top of the old city.",
+     "c": [
+      "excavations"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Temple of Apollo",
+   "stand": "Walk toward the temple and stop where you can see all of its standing columns.",
+   "paras": [
+    {
+     "t": "Up on the rocky hill stand seven columns of the Temple of Apollo, built in the middle of the 500s BC. It's one of the earliest Doric temples in Greece.",
+     "c": [
+      "apollo",
+      "apollo-wv"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It's also one of the few things here that never disappeared from view. And it had several lives. The Romans restored it for the worship of the emperor. In Byzantine times it became a church. Under the Ottomans part of it was pulled down, and the local Bey built a house on top of its base.",
+     "c": [
+      "apollo",
+      "apollo-lives"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Somewhere near the temple is the Glauke Fountain, built in Roman times. As the story goes, Glauke was about to marry Jason, the hero of the Argonauts, when Medea sent her a poisoned robe. It burst into flames, and she threw herself into the fountain that now carries her name.",
+     "c": [
+      "glauke"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Paul comes to Corinth",
+   "stand": "Head down into the wide open space of the old Roman city center and find a spot to stop.",
+   "paras": [
+    {
+     "t": "Now to the reason many people come here. The book of Acts, chapter eighteen, begins: \"After these things Paul departed from Athens, and came to Corinth.\"",
+     "c": [
+      "acts-1"
+     ],
+     "level": 1
+    },
+    {
+     "t": "He moved in with a couple, Aquila and Priscilla, and Acts says why: \"for by their occupation they were tentmakers.\" So was he.",
+     "c": [
+      "acts-2",
+      "acts-3"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Aquila and Priscilla were Jews lately come from Italy, because the emperor Claudius had ordered all Jews to leave Rome. In the words of Acts: \"because he was of the same craft, he abode with them, and wrought.\"",
+     "c": [
+      "acts-2",
+      "acts-3"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Think about that for a moment. The apostle earned his keep with his hands, working alongside new friends. That's where the modern Christian idea of \"tentmaking\" gets its name.",
+     "c": [
+      "acts-3",
+      "paul-dates"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Every sabbath he reasoned in the synagogue. When Silas and Timotheus came down from Macedonia, Paul was pressed in the spirit, and when he was opposed, he said: \"from henceforth I will go unto the Gentiles.\" He moved next door, into the house of a man named Justus, \"whose house joined hard to the synagogue.\" And Crispus, the chief ruler of the synagogue, believed, with all his house.",
+     "c": [
+      "acts-4",
+      "acts-5-6",
+      "acts-7-8"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Then, Acts says, the Lord spoke to Paul in the night by a vision: \"Be not afraid, but speak, and hold not thy peace: For I am with thee, and no man shall set on thee to hurt thee: for I have much people in this city.\"",
+     "c": [
+      "acts-9-10"
+     ],
+     "level": 3
+    },
+    {
+     "t": "So he stayed, Acts says, \"a year and six months, teaching the word of God among them.\" Historians place that first visit around AD 49 or 50. Tradition holds that Paul founded the church of Corinth, and it is believed to be an apostolic church.",
+     "c": [
+      "acts-11",
+      "paul-dates",
+      "church-trad"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Before Gallio",
+   "stand": "Stay in the open center of the old city.",
+   "paras": [
+    {
+     "t": "Acts tells of one dramatic day here. \"When Gallio was the deputy of Achaia,\" Paul's opponents \"brought him to the judgment seat.\"",
+     "c": [
+      "acts-12-13"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Gallio was the Roman governor, the brother of the philosopher Seneca. The charge was that Paul persuaded men to worship God contrary to the law. When Paul was now about to open his mouth, Gallio cut in: \"But if it be a question of words and names, and of your law, look ye to it; for I will be no judge of such matters.\" And he drove them from the judgment seat.",
+     "c": [
+      "gallio",
+      "acts-12-13",
+      "acts-14-15",
+      "acts-16-17"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It got ugly. The Greeks took Sosthenes, the chief ruler of the synagogue, and beat him right in front of the judgment seat. And Acts adds, dryly: \"Gallio cared for none of those things.\"",
+     "c": [
+      "acts-16-17"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Where was that judgment seat? Among the important monuments of this site is one called the Bema, which later became a church of the Apostle Paul. My sources don't say whether Paul stood on this very spot, so I'll leave that question with you.",
+     "c": [
+      "bema"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Gallio isn't only a name in the Bible. The trial is dated to AD 51 or 52, and an inscription that mentions the Roman proconsul Gallio is on display in the museum at Delphi.",
+     "c": [
+      "gallio",
+      "gallio-delphi"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Letters to Corinth",
+   "stand": "Find a bit of shade nearby and take a breather.",
+   "paras": [
+    {
+     "t": "Paul stayed a good while longer. Then he sailed for Syria, and Priscilla and Aquila went with him. Acts adds a small detail: \"having shorn his head in Cenchrea: for he had a vow.\" Cenchreae was Corinth's harbor on the Saronic Gulf, to the east.",
+     "c": [
+      "acts-18",
+      "ports"
+     ],
+     "level": 3
+    },
+    {
+     "t": "He didn't forget this city. He wrote at least two letters to the church here, First and Second Corinthians, and he came back. On a later stay of about three months, he wrote his letter to the Romans from Corinth.",
+     "c": [
+      "letters",
+      "romans"
+     ],
+     "level": 2
+    },
+    {
+     "t": "From his first letter to the Christians of this city, in the King James Version: \"And now abideth faith, hope, charity, these three; but the greatest of these is charity.\"",
+     "c": [
+      "cor13"
+     ],
+     "level": 1
+    },
+    {
+     "t": "A few lines earlier in the same chapter: \"Charity suffereth long, and is kind; charity envieth not; charity vaunteth not itself, is not puffed up.\"",
+     "c": [
+      "cor13"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Acrocorinth, the hill above",
+   "stand": "Look up at the great rock that towers over the site.",
+   "paras": [
+    {
+     "t": "That huge rock above us is Acrocorinth, Upper Corinth, the city's acropolis. The historian George Forrest called it the most impressive acropolis of mainland Greece.",
+     "c": [
+      "acro",
+      "forrest"
+     ],
+     "level": 1
+    },
+    {
+     "t": "If you go up, the climb is steep and shadeless. Go early or late on a hot day, wear good shoes, and carry water.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "It had its own water supply and it commanded the Isthmus, so it became a last line of defense for southern Greece. People lived up there from archaic times into the early 1800s. Three rings of walls defended it. The Byzantines fortified it heavily, and later Franks, Venetians and Ottomans all held it. From 1205 to 1210, Corinthians under Leo Sgouros held out up there against the crusaders.",
+     "c": [
+      "defense",
+      "acro-history",
+      "sgouros"
+     ],
+     "level": 3
+    },
+    {
+     "t": "On the highest peak stood a temple to Aphrodite. It became a church, and later a mosque.",
+     "c": [
+      "aphrodite"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The Corinthians had myths for this rock too. In one, a being called Briareus settled a quarrel between the gods: the Isthmus went to Poseidon, god of the sea, and this rock to Helios, the sun. And legend says the winged horse Pegasus drank at the Upper Peirene spring, inside the walls, where the hero Bellerophon caught and tamed him.",
+     "c": [
+      "helios",
+      "pegasus"
+     ],
+     "level": 3
+    },
+    {
+     "t": "One last thought. Acts tells of two refugees, a tentmaker, and a small group meeting in a house next to the synagogue. Not much, next to a fortress like that. Yet the words written to them are still read today, far beyond this city.",
+     "c": [
+      "acts-2",
+      "acts-3",
+      "acts-7-8"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

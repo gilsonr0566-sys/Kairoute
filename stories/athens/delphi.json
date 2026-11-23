@@ -1,0 +1,722 @@
+{
+ "id": "delphi",
+ "v": 1,
+ "city": "athens",
+ "title": "Delphi",
+ "match": {
+  "ids": [
+   "delphi"
+  ],
+  "names": [
+   "delphi",
+   "delfi",
+   "delphoi",
+   "charioteer"
+  ],
+  "wikidata": [
+   "Q75459"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "setting": {
+   "label": "verified",
+   "says": "Delphi lies between two towering rocks of Mount Parnassus, the Phaidriades, the Shining Rocks.",
+   "src": [
+    "unesco-delphi"
+   ],
+   "quote": [
+    "Delphi lies between two towering rocks of Mt. Parnassus, known as the Phaidriades (Shining) Rocks"
+   ]
+  },
+  "oracle": {
+   "label": "supported",
+   "says": "Delphi was the seat of the Pythia, consulted as a major oracle for important decisions across the ancient world.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "It was the seat of Pythia, the high priestess role which was consulted as a major oracle for important decisions throughout the ancient classical world."
+   ]
+  },
+  "unity": {
+   "label": "verified",
+   "says": "In the 6th century BC Delphi was the religious center and symbol of unity of the Greek world.",
+   "src": [
+    "unesco-delphi"
+   ],
+   "quote": [
+    "Delphi in the 6th century B.C. was indeed the religious centre and symbol of unity of the ancient Greek world."
+   ]
+  },
+  "navel": {
+   "label": "legend",
+   "says": "The Greeks saw Delphi as the center of the world, the omphalos or navel; by myth, two eagles released by Zeus met here.",
+   "src": [
+    "unesco-delphi",
+    "wp-delphi"
+   ],
+   "quote": [
+    "Delphi was the centre of the world ( omphalos ) in the eyes of the ancient Greeks: according to myth, it was the meeting point of two eagles released by Zeus, one to the East and one in the West.",
+    "The term omphalos was the Greek word for \"navel.\""
+   ]
+  },
+  "agora": {
+   "label": "supported",
+   "says": "The first remains visitors see on entering are the Roman Agora, a paved square that also gathered processions.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "The first set of remains that the visitor sees upon entering the archaeological site of Delphi is the Roman Agora",
+    "This large rectangular paved square used to be surrounded by Ionic porticos on its three sides.",
+    "It also served as an assembly area for processions during sacred festivals."
+   ]
+  },
+  "agora-market": {
+   "label": "disputed",
+   "says": "There was probably an open market where visitors bought small offerings such as statuettes and tripods.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "An open market was probably established, where the visitors would buy ex-votos, such as statuettes and small tripods, to leave as offerings to the gods."
+   ]
+  },
+  "walk": {
+   "label": "verified",
+   "says": "Visitors walk the Holy Road from the Roman Market up to the Stadium, much as ancient visitors did.",
+   "src": [
+    "unesco-delphi"
+   ],
+   "quote": [
+    "Modern visitors arriving along the Holy Road from the Roman Market up to the Stadium can perceive the same feeling as the person who visited the area in the antiquity."
+   ]
+  },
+  "treasuries": {
+   "label": "supported",
+   "says": "Up the Sacred Way almost to the temple stood votive statues and treasuries, built by city-states to mark victories and thank the oracle; offerings were often a tenth of the spoils.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "From the entrance of the upper site, continuing up the slope on the Sacred Way almost to the Temple of Apollo, are a large number of votive statues, and numerous so-called treasuries. These were built by many of the Greek city-states to commemorate victories and to thank the oracle for her advice",
+    "these were frequently a \"tithe\" or tenth of the spoils of a battle."
+   ]
+  },
+  "athenian": {
+   "label": "supported",
+   "says": "The most impressive is the restored Athenian Treasury, built for the victory at Marathon in 490 BC.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "The most impressive is the now-restored Athenian Treasury, built to commemorate their victory at the Battle of Marathon in 490 BC."
+   ]
+  },
+  "siphnos": {
+   "label": "supported",
+   "says": "The Siphnians gave a tenth of the yield of their silver mines until the sea flooded the mines.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "The Siphnian Treasury was dedicated by the city of Siphnos, whose citizens gave a tithe of the yield from their silver mines until the mines came to an abrupt end when the sea flooded the workings."
+   ]
+  },
+  "sibyl": {
+   "label": "legend",
+   "says": "The Sibyl rock, between the Athenian Treasury and the Stoa of the Athenians, is claimed to be where a Sibyl older than the Pythia gave prophecies.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "The Sibyl rock is a pulpit-like outcrop of rock between the Athenian Treasury and the Stoa of the Athenians upon the Sacred Way",
+    "The rock is claimed to be the location from which a prehistoric Sibyl pre-dating the Pythia of Apollo sat to deliver her prophecies."
+   ]
+  },
+  "stoa": {
+   "label": "supported",
+   "says": "The Stoa of the Athenians runs along the base of the polygonal wall below the temple terrace; its inscription says the Athenians built it after a naval victory over the Persians in 478 BC to house war trophies; its columns are cut from single stones.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "along the base of the polygonal wall retaining the terrace on which the Temple of Apollo sits",
+    "The inscription on the stylobate indicates that it was built by the Athenians after their naval victory over the Persians in 478 BC, to house their war trophies.",
+    "The remaining porch structure contains seven fluted columns, unusually carved from single pieces of stone"
+   ]
+  },
+  "wall": {
+   "label": "estimate",
+   "says": "From 200 BC the stones of the polygonal wall were inscribed with contracts freeing slaves; about a thousand are recorded.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "from 200 BC onwards, the stones were inscribed with the manumission (liberation) contracts of slaves who were consecrated to Apollo. Approximately a thousand manumissions are recorded on the wall."
+   ]
+  },
+  "altar": {
+   "label": "supported",
+   "says": "In front of the temple is the main altar, paid for by the people of Chios, dated to the 5th century BC, almost all black marble, restored in 1920.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "Located in front of the Temple of Apollo, the main altar of the sanctuary was paid for and built by the people of Chios. It is dated to the 5th century BC by the inscription on its cornice. Made entirely of black marble, except for the base and cornice",
+    "It was restored in 1920."
+   ]
+  },
+  "temple": {
+   "label": "supported",
+   "says": "The visible temple ruins date from the fourth century BC; an earlier temple burnt in 548/7 BC, and its successor burnt in the fourth century BC.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "The ruins of the Temple of Apollo that are visible today date from the fourth century BC, and are of a peripteral Doric building.",
+    "It burnt down in 548/7 BC and the Alcmaeonids built a new structure which itself burnt down in the fourth century BC."
+   ]
+  },
+  "mythic-temples": {
+   "label": "tradition",
+   "says": "Ancient tradition told of mythical temples: one of laurel branches, one of beeswax and wings built by bees, one built by Hephaestus and Athena.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "Ancient tradition refers to a succession of mythical temples on the site: first one built of olive branches from Tempe, then one built of beeswax and wings by bees, and thirdly one built by Hephaestus and Athena."
+   ]
+  },
+  "pythia": {
+   "label": "supported",
+   "says": "The Pythia prophesied from a tripod in the sunken inner room of the temple; she was a woman of blameless life chosen from the local peasants.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "the priestess prophesying from the tripod in the sunken adyton of the Temple of Apollo",
+    "She was a woman of blameless life chosen from the peasants of the area."
+   ]
+  },
+  "pythia-power": {
+   "label": "supported",
+   "says": "The Delphic oracle was the most prestigious among the Greeks, and the Pythia among the most powerful women of the classical world; she was consulted before wars and the founding of colonies.",
+   "src": [
+    "wp-pythia",
+    "wp-delphi"
+   ],
+   "quote": [
+    "the Delphic Oracle was the most prestigious and authoritative oracle among the Greeks, and she was among the most powerful women of the classical world.",
+    "she was frequently consulted before major undertakings including wars and the founding of colonies."
+   ]
+  },
+  "fumes-legend": {
+   "label": "legend",
+   "says": "By legend, Python's body fell into a fissure and its fumes put the priestess into a trance in which Apollo spoke through her.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "According to legend, when Apollo slew Python its body fell into this fissure and fumes arose from its decomposing body. Intoxicated by the vapors, the sibyl would fall into a trance, allowing Apollo to possess her spirit."
+   ]
+  },
+  "python": {
+   "label": "legend",
+   "says": "Delphi is the legendary site where Apollo slew the serpent Python.",
+   "src": [
+    "unesco-delphi"
+   ],
+   "quote": [
+    "At the legendary site where Apollo slew the serpent Python"
+   ]
+  },
+  "scarce": {
+   "label": "disputed",
+   "says": "Details of how the Pythia worked are scarce; later writers give conflicting stories; some scholars argue she spoke clearly in her own voice.",
+   "src": [
+    "wp-pythia"
+   ],
+   "quote": [
+    "details of how the Pythia operated are scarce, missing, or non-existent",
+    "Those who discussed the oracle in any detail are from 1st century BC to 4th century AD and give conflicting stories.",
+    "This idea, however, has been challenged by scholars such as Joseph Fontenrose and Lisa Maurizio, who argue that the ancient sources uniformly represent the Pythia speaking intelligibly, and giving prophecies in her own voice."
+   ]
+  },
+  "ethylene": {
+   "label": "disputed",
+   "says": "A geologist found a fault line under the temple, and some researchers suggest ethylene gas; the theory remains debatable.",
+   "src": [
+    "wp-pythia",
+    "wp-delphi"
+   ],
+   "quote": [
+    "Jelle Zeilinga de Boer saw evidence of a fault line in Delphi that lay under the ruined temple.",
+    "Some researchers suggest the possibility that ethylene gas caused the Pythia's state of inspiration",
+    "this theory remains debatable"
+   ]
+  },
+  "maxims": {
+   "label": "supported",
+   "says": "Inscribed at the temple were maxims including 'Know thyself' and 'Nothing to excess'.",
+   "src": [
+    "wp-pythia"
+   ],
+   "quote": [
+    "Inscribed on a column in the pronaos (forecourt) of the temple were an enigmatic \"E\" and three maxims:",
+    "Know thyself",
+    "Nothing to excess"
+   ]
+  },
+  "maxims-doubt": {
+   "label": "disputed",
+   "says": "Ancient and modern scholars have doubted these inscriptions; the maxims were most likely popular proverbs.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "However, ancient as well as modern scholars have doubted the legitimacy of such inscriptions.",
+    "Most likely they were popular proverbs, which tended later to be attributed to particular sages."
+   ]
+  },
+  "end": {
+   "label": "supported",
+   "says": "When the doctor Oreibasius consulted the oracle on the fate of paganism, he received the answer that the god no longer had a home and the talking water had dried out; Theodosius I shut the oracle down.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "When the doctor Oreibasius visited the oracle of Delphi, in order to question the fate of paganism, he received a pessimistic answer:",
+    "Tell the king that the flute has fallen to the ground. Phoebus does not have a home any more, neither an oracular laurel, nor a speaking fountain, because the talking water has dried out",
+    "It was shut down during the persecution of pagans in the late Roman Empire by Theodosius I"
+   ]
+  },
+  "theatre": {
+   "label": "estimate",
+   "says": "The theatre, built farther up the hill in the fourth century BC, looks over the whole sanctuary and valley and held about 4,500 people.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "The ancient theatre at Delphi was built farther up the hill from the Temple of Apollo giving spectators a view of the entire sanctuary and the valley below. It was originally built in the fourth century BC",
+    "The theatre could accommodate approximately 4,500 spectators."
+   ]
+  },
+  "music": {
+   "label": "supported",
+   "says": "The theatre hosted the singing and music contests of the Pythian Games; Delphi stood apart from other games for its musical competitions.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "the theatre was used for the vocal and musical contests that formed part of the programme of the Pythian Games",
+    "Delphi was set apart from the other games sites because it hosted the mousikos agon, musical competitions."
+   ]
+  },
+  "stadium": {
+   "label": "supported",
+   "says": "The stadium lies farther up, beyond the theatre; built in the fifth century BC, it seated 6500 with a 177 m track.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "The stadium is located farther up the hill, beyond the via sacra and the theatre. It was built in the fifth century BC",
+    "It could seat 6500 spectators and the track was 177 m (581 ft) long"
+   ]
+  },
+  "games": {
+   "label": "supported",
+   "says": "From 586 BC the Pythian Games were held every four years; winners received a laurel crown cut by a boy who re-enacted the slaying of the Python.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "where every four years, starting in 586 BC athletes from all over the Greek world competed in the Pythian Games",
+    "The victors at Delphi were presented with a laurel crown (stephanos) that was ceremonially cut from a tree by a boy who re-enacted the slaying of the Python."
+   ]
+  },
+  "museum": {
+   "label": "supported",
+   "says": "The museum, founded in 1903, is one of the most visited in Greece and has fourteen rooms on two levels.",
+   "src": [
+    "wp-delphi-museum"
+   ],
+   "quote": [
+    "is one of the principal museums of Greece and one of the most visited.",
+    "Founded in 1903",
+    "Organised in fourteen rooms on two levels"
+   ]
+  },
+  "kleobis": {
+   "label": "legend",
+   "says": "Two early statues show Kleobis and Biton, brothers who pulled their mother's cart to Hera's sanctuary, fell asleep in the temple and never woke.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "Kleobis and Biton, two brothers renowned for their strength, are modeled in two of the earliest known athletic statues at Delphi. The statues commemorate their feat of pulling their mother's cart several miles to the Sanctuary of Hera in the absence of oxen.",
+    "When they entered Hera's temple, they fell into a slumber and never woke"
+   ]
+  },
+  "sphinx": {
+   "label": "supported",
+   "says": "The Sphinx of Naxos crowned an Ionic column; together they stood 12 m high.",
+   "src": [
+    "wp-delphi-museum"
+   ],
+   "quote": [
+    "It is an enormous statue which crowned an ionic column and capital, totaling 12 meters in height.",
+    "The sphinx was dedicated by the city of Naxos"
+   ]
+  },
+  "charioteer": {
+   "label": "estimate",
+   "says": "The Charioteer is a bronze from around 470 BC, 1.8 m tall, once part of a group with chariot and horses, honoring a Pythian Games victory.",
+   "src": [
+    "wp-charioteer"
+   ],
+   "quote": [
+    "is an ancient Greek bronze statue dating to around 470 BC. Standing 1.8 meters tall, the life-size figure of a chariot driver was originally part of a larger sculptural group that included a chariot, horses, and child attendants",
+    "to commemorate a victory in the panhellenic Pythian Games"
+   ]
+  },
+  "charioteer-pose": {
+   "label": "supported",
+   "says": "He is shown after the race in the victory parade, wearing the winner's headband, fingers still curved around the reins; he keeps inlaid glass eyes.",
+   "src": [
+    "wp-charioteer"
+   ],
+   "quote": [
+    "He is shown after the race has ended, during the victory parade, wearing the champion's headband.",
+    "his hands are modeled with great detail, with the fingers still curved around the reins.",
+    "The statue is one of the few Greek bronze statues to be preserved with inlaid glass eyes."
+   ]
+  },
+  "charioteer-survival": {
+   "label": "supported",
+   "says": "He survived because he was buried in the debris of the earthquake of 373 BC, and was found in 1896.",
+   "src": [
+    "wp-charioteer"
+   ],
+   "quote": [
+    "it survived because it had been buried in the debris of the great earthquake of 373 BC.",
+    "The statue was discovered in 1896 during excavations at Delphi."
+   ]
+  },
+  "polyzalus": {
+   "label": "supported",
+   "says": "The base inscription says Polyzalus, tyrant of Gela in Sicily, dedicated it: 'Polyzalus dedicated me... Make him prosper, honoured Apollo.'",
+   "src": [
+    "wp-charioteer"
+   ],
+   "quote": [
+    "An inscription on the limestone base of the statue indicates that it was dedicated by Polyzalus, the tyrant of Gela, a Greek colony in Sicily, as a tribute to Apollo for helping him to win the chariot race.",
+    "\"Polyzalus dedicated me. ... Make him prosper, honoured Apollo.\""
+   ]
+  },
+  "sculptor": {
+   "label": "disputed",
+   "says": "The sculptor's name is unknown.",
+   "src": [
+    "wp-charioteer"
+   ],
+   "quote": [
+    "Though the name of the sculptor is unknown"
+   ]
+  },
+  "war": {
+   "label": "supported",
+   "says": "In the Second World War the Charioteer was sent to Athens and stored in the vaults of the Bank of Greece.",
+   "src": [
+    "wp-delphi-museum"
+   ],
+   "quote": [
+    "the Charioteer were sent to Athens in order to be stored in the vaults of the Bank of Greece."
+   ]
+  },
+  "gallio-stone": {
+   "label": "supported",
+   "says": "Right next to the museum exit is the inscription that mentions the Roman proconsul Gallio.",
+   "src": [
+    "wp-delphi"
+   ],
+   "quote": [
+    "Immediately adjacent to the exit is the inscription that mentions the Roman proconsul Gallio."
+   ]
+  },
+  "gallio-acts": {
+   "label": "scripture",
+   "says": "Acts 18:12: when Gallio was the deputy of Achaia, Paul was brought to the judgment seat.",
+   "src": [
+    "kjv-acts18"
+   ],
+   "quote": [
+    "\"chapter\":18,\"verse\":12,\"text\":\"And when Gallio was the deputy of Achaia, the Jews made insurrection with one accord against Paul, and brought him to the judgment seat,"
+   ]
+  },
+  "gallio-corinth": {
+   "label": "supported",
+   "says": "Gallio was proconsul of Achaia when Paul was in Corinth and presided over his trial in AD 51/52.",
+   "src": [
+    "wp-corinth"
+   ],
+   "quote": [
+    "Gallio, the brother of Seneca, was proconsul of Achaia",
+    "In AD 51/52, Gallio presided over the trial of the Apostle Paul in Corinth."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Near the entrance to the site, by the old paved square, looking up the slope toward the cliffs.",
+   "paras": [
+    {
+     "t": "Welcome to Delphi. Look up: the sanctuary climbs Mount Parnassus, between two towering cliffs called the Shining Rocks. This was the home of the oracle, the Pythia, consulted on the biggest decisions in the Greek world.",
+     "c": [
+      "setting",
+      "oracle"
+     ],
+     "level": 1
+    },
+    {
+     "t": "A word before we climb. The path goes steadily uphill on uneven stone, and the sun can be fierce. Wear a hat, carry water, and take your time.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "For the Greeks, this was the center of the world, the omphalos, the navel. According to myth, Zeus released two eagles, one to the east and one to the west, and they met right here. By the 6th century BC, Delphi was the religious heart of the whole Greek world.",
+     "c": [
+      "navel",
+      "unity"
+     ],
+     "level": 3
+    },
+    {
+     "t": "This paved square is the first thing you see as you come in: the Roman Agora. It was once lined with porches, and processions gathered here before festivals. There was probably a market too, where pilgrims bought little statuettes and tripods to leave for the gods.",
+     "c": [
+      "agora",
+      "agora-market"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Up the Sacred Way",
+   "stand": "Walk up the Sacred Way and stop at the restored Athenian Treasury.",
+   "paras": [
+    {
+     "t": "You're walking the Sacred Way, the same road pilgrims climbed. All along it stood statues and little temple-like buildings called treasuries. Cities built them to celebrate victories and to thank the oracle for her advice.",
+     "c": [
+      "walk",
+      "treasuries"
+     ],
+     "level": 1
+    },
+    {
+     "t": "This one is the Athenian Treasury, restored, and built to celebrate the victory at Marathon in 490 BC. What went inside? Very often a tithe: a tenth of the spoils of a battle.",
+     "c": [
+      "athenian",
+      "treasuries"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The island of Siphnos also had a treasury here. The Siphnians gave a tenth of what their silver mines produced, until the day the sea flooded the mines.",
+     "c": [
+      "siphnos"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Just beyond, between this treasury and the colonnade ahead, look for a rough outcrop of rock like a pulpit. It's called the Sibyl rock. The story goes that a prophetess, older even than the Pythia, sat here to give her prophecies.",
+     "c": [
+      "sibyl"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The wall of freedom",
+   "stand": "Continue a little way up to the long colonnade set against a wall of big, many-sided stones.",
+   "paras": [
+    {
+     "t": "This wall of many-sided stones is the polygonal wall, and it's covered in writing. From 200 BC on, contracts freeing slaves were carved into it, about a thousand of them.",
+     "c": [
+      "wall"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Along its base is the Stoa of the Athenians. Its inscription says the Athenians built it after a naval victory over the Persians in 478 BC, to show off their war trophies. Notice the columns: unusually, each one is cut from a single piece of stone.",
+     "c": [
+      "stoa"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Temple of Apollo and the Pythia",
+   "stand": "Climb up to the temple terrace and stand in front of the temple, near the big altar.",
+   "paras": [
+    {
+     "t": "This is the heart of Delphi, the Temple of Apollo. Inside, in a sunken inner room, the Pythia sat on a tripod and gave her answers. Cities asked her before going to war or founding colonies.",
+     "c": [
+      "pythia",
+      "pythia-power"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The ruins you see date from the 300s BC; earlier temples on this spot burned down. The big altar in front was paid for by the people of the island of Chios, in the 5th century BC. And the Pythia herself was a local woman of blameless life, yet among the most powerful women of the ancient world.",
+     "c": [
+      "temple",
+      "altar",
+      "pythia",
+      "pythia-power"
+     ],
+     "level": 2
+    },
+    {
+     "t": "How did she prophesy? Here's the legend. Apollo killed the great serpent Python on this spot. Its body fell into a crack in the earth, and fumes rose from it, and the priestess, breathing them, fell into a trance in which Apollo spoke through her.",
+     "c": [
+      "python",
+      "fumes-legend"
+     ],
+     "level": 2
+    },
+    {
+     "t": "What really happened? Honestly, nobody knows. The details are scarce, and the ancient writers who describe it in any detail came late, and contradict each other. Some scholars argue she spoke plainly in her own voice. A geologist found a fault line running under the temple, and some researchers suggest a gas, ethylene, seeping up from below. That theory is still debated.",
+     "c": [
+      "scarce",
+      "ethylene"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Carved in the temple's forecourt, ancient writers say, were sayings such as \"Know thyself\" and \"Nothing to excess.\" Even in antiquity, scholars doubted those inscriptions; most likely they were popular proverbs.",
+     "c": [
+      "maxims",
+      "maxims-doubt"
+     ],
+     "level": 3
+    },
+    {
+     "t": "There was an older tradition, too, of mythical temples here before any of these: one of laurel branches, one made of beeswax and wings by bees, and one built by the gods Hephaestus and Athena.",
+     "c": [
+      "mythic-temples"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And the end? As the story is told, a doctor named Oreibasius came to ask the oracle about the future of the old religion. The answer: \"Tell the king that the flute has fallen to the ground. Phoebus does not have a home any more, neither an oracular laurel, nor a speaking fountain, because the talking water has dried out.\" Not long after, the emperor Theodosius shut the oracle down.",
+     "c": [
+      "end"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Theatre and stadium",
+   "stand": "Take the path farther up the hill to the theatre, climb to a row near the top, and turn around.",
+   "paras": [
+    {
+     "t": "From up here, spectators could see the whole sanctuary and the valley below. This theatre dates from the 300s BC and held about 4,500 people.",
+     "c": [
+      "theatre"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The path keeps climbing, and it's steep and stony. If it's hot, rest in any shade you find, and don't push on to the stadium unless you feel up to it.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    },
+    {
+     "t": "Delphi's games were different. Every four years, from 586 BC, athletes came for the Pythian Games, but there were singing and music contests too, held right here in this theatre. Winners got a crown of laurel, cut by a boy who acted out Apollo's slaying of the Python.",
+     "c": [
+      "games",
+      "music"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Higher still, beyond the theatre, is the stadium. Its track is 177 metres long and it could seat 6500 spectators.",
+     "c": [
+      "stadium"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The museum and the Charioteer",
+   "stand": "In the museum, in the room of the Charioteer, standing in front of him.",
+   "paras": [
+    {
+     "t": "And here he is: the Charioteer of Delphi. He's bronze, about 470 BC, and life-size at 1.8 metres. He once stood in a chariot with horses, celebrating a win at the Pythian Games.",
+     "c": [
+      "charioteer"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Look at his hands. The fingers are still curved around the reins. He's shown after the race, in the victory parade, wearing the winner's headband. And look at his eyes: he's one of the few Greek bronzes that still has his inlaid glass eyes.",
+     "c": [
+      "charioteer-pose"
+     ],
+     "level": 2
+    },
+    {
+     "t": "He survived because an earthquake buried him in 373 BC, and he was found in 1896. The base tells us who paid for him: \"Polyzalus dedicated me. ... Make him prosper, honoured Apollo.\" Polyzalus was the ruler of Gela in Sicily. Who made the statue, nobody knows.",
+     "c": [
+      "charioteer-survival",
+      "polyzalus",
+      "sculptor"
+     ],
+     "level": 3
+    },
+    {
+     "t": "During the Second World War, he was sent to Athens and hidden in the vaults of the Bank of Greece.",
+     "c": [
+      "war"
+     ],
+     "level": 3
+    },
+    {
+     "t": "On your way back through the museum's fourteen rooms, on two levels, look for two early statues of young men. They're believed to be Kleobis and Biton, and the story goes that the brothers pulled their mother's cart all the way to Hera's sanctuary, then fell asleep in the temple and never woke. And look for the Sphinx of Naxos, which once crowned a column 12 metres high.",
+     "c": [
+      "museum",
+      "kleobis",
+      "sphinx"
+     ],
+     "level": 3
+    },
+    {
+     "t": "One more thing for Bible readers, right by the museum exit: an inscription that mentions the Roman proconsul Gallio. Acts chapter eighteen names Gallio as the governor Paul was brought before in Corinth: \"when Gallio was the deputy of Achaia.\"",
+     "c": [
+      "gallio-stone",
+      "gallio-acts",
+      "gallio-corinth"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Before you leave, look at his face once more. Calm, a little shy, the race already won. All those cities came here to ask about the future. He just holds the reins, and waits.",
+     "c": [
+      "charioteer-pose"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}
