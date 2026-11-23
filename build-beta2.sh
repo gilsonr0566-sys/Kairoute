@@ -17,10 +17,36 @@ var ENGINE2 = true;
   // Separate storage for the Beta 2 copy (same origin as the main app): keys live under "b2:".
   var ls; try { ls = window.localStorage; } catch (e) { return; }
   var P = "b2:", NEVER = /^kairoute\.(sync|group|devid2|deleted)/;
+  // The main app keeps its trips under "wayside." (wayside.trip2, wayside.library) and its settings under "kairoute.":
+  // both are copied (Nov 22 review: only "kairoute." keys were, so a trip planned in the demo never came over). One key
+  // at a time, the trips first and the large saved guides last, so a full device still brings the trips.
   try {
     if (!ls.getItem(P + "__copied")) {
-      for (var i = 0; i < ls.length; i++) { var k = ls.key(i); if (k && k.indexOf(P) !== 0 && /^kairoute/.test(k) && !NEVER.test(k)) ls.setItem(P + k, ls.getItem(k)); }
+      var ks = []; for (var i = 0; i < ls.length; i++) { var k = ls.key(i); if (k && k.indexOf(P) !== 0 && /^(kairoute|wayside)\./.test(k) && !NEVER.test(k)) ks.push(k); }
+      ks.sort(function (a, b) { return (a === "wayside.cities") - (b === "wayside.cities"); });
+      ks.forEach(function (k) { try { ls.setItem(P + k, ls.getItem(k)); } catch (e) {} });
       ls.setItem(P + "__copied", String(Date.now()));
+      ls.setItem(P + "__merged2", "first copy");
+    }
+  } catch (e) {}
+  // A device that opened Beta 2 before the first app's trips were copied (Richard, Nov 23: "yes", copy them in): once,
+  // each trip in the first app that Beta 2 doesn't have is ADDED to Beta 2's trip list, never over a Beta 2 trip, and
+  // the open trip stays the one Beta 2 had. The example trip is never copied. The first app's own copy is untouched.
+  try {
+    if (!ls.getItem(P + "__merged2")) {
+      var J = function (k, d) { try { var v = JSON.parse(ls.getItem(k) || "null"); return v == null ? d : v; } catch (e) { return d; } };
+      var mine = J(P + "wayside.library", []), have = {}, cur = J(P + "wayside.trip2", null), added = 0;
+      if (!Array.isArray(mine)) mine = [];
+      mine.forEach(function (x) { if (x && x.id) have[x.id] = 1; }); if (cur && cur.id) have[cur.id] = 1;
+      var theirs = J("wayside.library", []), t2 = J("wayside.trip2", null); if (!Array.isArray(theirs)) theirs = [];
+      if (t2 && t2.id && !theirs.some(function (x) { return x && x.id === t2.id; })) theirs.unshift({ id: t2.id, name: t2.name || "", updated: Date.now(), trip: t2 });
+      theirs.forEach(function (x) { if (!x || !x.id || !x.trip || have[x.id] || x.id === "sample" || x.id === "sample-sunprincess-2027" || x.trip.sample) return; mine.push(x); have[x.id] = 1; added++; });
+      if (added) {
+        ls.setItem(P + "wayside.library", JSON.stringify(mine));
+        // Their saved guides come too, for places Beta 2 has none of (a full device still keeps the trips).
+        try { var gc = J(P + "wayside.cities", {}), oc = J("wayside.cities", {}); for (var ck in oc) if (!(ck in gc)) gc[ck] = oc[ck]; ls.setItem(P + "wayside.cities", JSON.stringify(gc)); } catch (e) {}
+      }
+      ls.setItem(P + "__merged2", String(added));
     }
   } catch (e) {}
   var shim = {
@@ -28,8 +54,8 @@ var ENGINE2 = true;
     setItem: function (k, v) { ls.setItem(P + k, v); },
     removeItem: function (k) { ls.removeItem(P + k); },
     clear: function () { var ks = []; for (var i = 0; i < ls.length; i++) { var k = ls.key(i); if (k && k.indexOf(P) === 0) ks.push(k); } ks.forEach(function (k) { ls.removeItem(k); }); },
-    key: function (n) { var ks = []; for (var i = 0; i < ls.length; i++) { var k = ls.key(i); if (k && k.indexOf(P) === 0 && k !== P + "__copied") ks.push(k.slice(P.length)); } return ks[n] == null ? null : ks[n]; },
-    get length() { var c = 0; for (var i = 0; i < ls.length; i++) { var k = ls.key(i); if (k && k.indexOf(P) === 0 && k !== P + "__copied") c++; } return c; }
+    key: function (n) { var ks = []; for (var i = 0; i < ls.length; i++) { var k = ls.key(i); if (k && k.indexOf(P) === 0 && k !== P + "__copied" && k !== P + "__merged2") ks.push(k.slice(P.length)); } return ks[n] == null ? null : ks[n]; },
+    get length() { var c = 0; for (var i = 0; i < ls.length; i++) { var k = ls.key(i); if (k && k.indexOf(P) === 0 && k !== P + "__copied" && k !== P + "__merged2") c++; } return c; }
   };
   try { Object.defineProperty(window, "localStorage", { configurable: true, get: function () { return shim; } }); } catch (e) {}
   addEventListener("DOMContentLoaded", function () {

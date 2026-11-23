@@ -84,6 +84,9 @@ jobs:
       - name: No paid AI is offered in Settings
         if: always()
         run: node tools/ui/no-paid-ai-check.cjs beta2-site/index.html
+      - name: Trips planned in the first app come over to Beta 2, added and never over a Beta 2 trip
+        if: always()
+        run: node tools/ui/trip-copy-check.cjs beta2-site/index.html
       - name: The app says only what the AI can really do
         if: always()
         run: node tools/ai-honesty-check.cjs

@@ -5446,7 +5446,7 @@ function privacyBody() { return `${DRAFT}<div class="card legal">
   <h3>Children</h3>
   <p>Kairoute is not directed to children under 13, and we do not knowingly collect their information.</p>
   <h3>Changes and contact</h3>
-  <p>If this policy changes, we will update the date above and tell you in the app. Questions: privacy@[your domain].</p>
+  <p>If this policy changes, we will update the date above and tell you in the app. Questions: <a href="mailto:wovenleafapps@gmail.com">wovenleafapps@gmail.com</a>.</p>
   </div>`; }
 function renderPrivacy() { return renderSettings("privacy"); }
 function termsBody() { return `${DRAFT}<div class="card legal">
