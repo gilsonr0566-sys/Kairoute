@@ -9,7 +9,7 @@ on:
         required: false
   push:
     branches: [claude/project-thread-m88qb4]
-    paths: [src/**, "!src/engine/**", tools/freeze-probe.cjs, .github/workflows/freeze-probe.yml]
+    paths: [src/**, "!src/engine/**", "!src/engine-data/**", tools/freeze-probe.cjs, .github/workflows/freeze-probe.yml]
 permissions:
   contents: read
 jobs:

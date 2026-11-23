@@ -1,4 +1,4 @@
-// Builds src/engine/19-holidays.js: every country's public holidays (and its regions' own) for the years the app plans,
+// Builds src/engine-data/holidays.js (data, not engine code): every country's public holidays (and its regions' own) for the years the app plans,
 // from the open "date-holidays" rule set (MIT; https://github.com/commenthol/date-holidays), worked out here once and
 // shipped as plain data: the app never fetches holidays, works offline, and plans the same on every phone.
 // Usage: npm i --no-save date-holidays@3 && node tools/places/holidays.cjs [firstYear] [lastYear]
@@ -51,5 +51,5 @@ const body = `// Beta 2 engine, part 1b: public holidays, as data (made by tools
 // years ${Y0}-${Y1}; do not edit by hand). KEngine.HOLIDAYS[country code] = { name, d: ["YYMMDD [flag] Name"], r: { region: { name, d, x: [dates not kept] } } }.
 (function (E) { E.HOLIDAYS_YEARS = [${Y0}, ${Y1}]; E.HOLIDAYS = ${JSON.stringify(all)}; })(KEngine);
 `;
-fs.writeFileSync(path.join(__dirname, '..', '..', 'src', 'engine', '19-holidays.js'), body);
+fs.writeFileSync(path.join(__dirname, '..', '..', 'src', 'engine-data', 'holidays.js'), body);
 console.log('holidays:', Object.keys(all).length, 'countries,', body.length, 'bytes, years', Y0 + '-' + Y1);

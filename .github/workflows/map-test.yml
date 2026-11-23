@@ -1,7 +1,7 @@
 name: Street map test
 on:
   push:
-    paths: ["src/**", "!src/engine/**", "lib/**", "worker/**", "tools/map-e2e.cjs", ".github/workflows/map-test.yml"]
+    paths: ["src/**", "!src/engine/**", "!src/engine-data/**", "lib/**", "worker/**", "tools/map-e2e.cjs", ".github/workflows/map-test.yml"]
   workflow_dispatch:
     inputs:
       streets:
