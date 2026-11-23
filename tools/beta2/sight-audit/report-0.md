@@ -15,17 +15,14 @@
 - FAME must-see "Grand Bazaar" is offered (Grand Bazaar) but not marked must-see
 - FAME must-see "Basilica Cistern" is offered (Basilica Cistern) but not marked must-see
 - FAME must-see "Galata Tower" is offered (Galata Tower) but not marked must-see
-- INFO 35 sights, 0 day trips/towns; must-see: Hagia Sophia, Sultan Ahmed Mosque, Süleymaniye Mosque, Topkapı Palace; top by fame: Sultan Ahmed Mosque 89, Topkapı Palace 79, Süleymaniye Mosque 69, Galata Tower 58, Dolmabahçe Palace 54, Taksim Square 50, Sublime Porte 50, Grand Bazaar 46
+- INFO 44 sights, 0 day trips/towns; must-see: Hagia Sophia, Sultan Ahmed Mosque, Süleymaniye Mosque, Topkapı Palace; top by fame: Sultan Ahmed Mosque 89, Topkapı Palace 79, Süleymaniye Mosque 69, Galata Tower 58, Dolmabahçe Palace 54, Taksim Square 50, Sublime Porte 50, Grand Bazaar 46
 
 ## Kotor, Montenegro (Kotor, Montenegro, guide from sources)
 - POS Lovćen National Park: app is 5.82 km from Wikidata's point (not on the map by id)
-- POS Church of Our Lady of Remedy: app is 0.69 km from Wikidata's point (not on the map by id)
-- NOID Castle of San Giovanni: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English))
-- INFO 8 sights, 0 day trips/towns; must-see: Kotor Cathedral, Fortifications of Kotor; top by fame: Kotor Cathedral 23, Fortifications of Kotor 21, Lovćen National Park 17, Church of Our Lady of Remedy 7, Serbian Orthodox church of St Nicolas in Kotor 6, Maritime Museum of Montenegro in Kotor 4, Castle of San Giovanni 0, Aquarium Boka 0
+- NOID Castle of San Giovanni: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- INFO 5 sights, 0 day trips/towns; must-see: Kotor Cathedral, Fortifications of Kotor; top by fame: Kotor Cathedral 23, Fortifications of Kotor 21, Lovćen National Park 17, Aquarium Boka 0, Castle of San Giovanni 0
 
 ## Haifa (Jerusalem), Israel (Jerusalem (from Haifa, Israel), guide from sources)
-- NOID Church of Our Lady of the Covenant [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
-- NOID The Benedictine monastery in Abu Ghosh [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - FOLD Yad Vashem is part of Mount Herzl (Wikidata) but is a separate stop
 - FAME #1 best known nearby, "Pentecost" (119 Wikipedia languages, Q39864), is not offered
 - FAME #2 best known nearby, "crucifixion of Jesus" (69 Wikipedia languages, Q51636), is not offered
@@ -42,8 +39,7 @@
 - FAME #13 best known nearby, "Kiss of Judas" (32 Wikipedia languages, Q10289604), is not offered
 - FAME #14 best known nearby, "Siege of Jerusalem" (31 Wikipedia languages, Q815154), is not offered
 - FAME #15 best known nearby, "King David Hotel bombing" (31 Wikipedia languages, Q1814446), is not offered
-- INFO 19 sights, 3 day trips/towns; must-see: Dome of the Rock, Al-Aqsa Mosque, Western Wall, Israel Museum, Church of the Holy Sepulchre, The Temple Institute, Holy Land, Calvary; top by fame: Al-Aqsa Mosque 103, Holy Land 91, Israel Museum 90, Dome of the Rock 87, Western Wall 84, Calvary 81, Church of the Holy Sepulchre 76, The Temple Institute 76
-- INFO day trips: Abu Ghosh, Church of Our Lady of the Covenant, The Benedictine monastery in Abu Ghosh
+- INFO 18 sights, 0 day trips/towns; must-see: Dome of the Rock, Al-Aqsa Mosque, Western Wall, Israel Museum, Church of the Holy Sepulchre, The Temple Institute, Holy Land, Calvary; top by fame: Al-Aqsa Mosque 103, Holy Land 91, Israel Museum 90, Dome of the Rock 87, Western Wall 84, Calvary 81, Church of the Holy Sepulchre 76, The Temple Institute 76
 
 ## Kusadasi (Kusadasi, built-in guide)
 - NOID Ancient Ephesus: built-in sight with no Wikidata id and nothing of the name on the map nearby

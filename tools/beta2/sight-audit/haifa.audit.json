@@ -3,23 +3,9 @@
  "label": "Haifa (Jerusalem), Israel",
  "centre": {
   "lat": 31.77611,
-  "lng": 35.22972
+  "lng": 35.22975
  },
  "findings": [
-  {
-   "k": "NOID",
-   "t": "Church of Our Lady of the Covenant [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
-   "x": {
-    "id": "abu-ghosh-far~0"
-   }
-  },
-  {
-   "k": "NOID",
-   "t": "The Benedictine monastery in Abu Ghosh [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
-   "x": {
-    "id": "abu-ghosh-far~1"
-   }
-  },
   {
    "k": "FOLD",
    "t": "Yad Vashem is part of Mount Herzl (Wikidata) but is a separate stop",
@@ -150,12 +136,7 @@
   },
   {
    "k": "INFO",
-   "t": "19 sights, 3 day trips/towns; must-see: Dome of the Rock, Al-Aqsa Mosque, Western Wall, Israel Museum, Church of the Holy Sepulchre, The Temple Institute, Holy Land, Calvary; top by fame: Al-Aqsa Mosque 103, Holy Land 91, Israel Museum 90, Dome of the Rock 87, Western Wall 84, Calvary 81, Church of the Holy Sepulchre 76, The Temple Institute 76",
-   "x": {}
-  },
-  {
-   "k": "INFO",
-   "t": "day trips: Abu Ghosh, Church of Our Lady of the Covenant, The Benedictine monastery in Abu Ghosh",
+   "t": "18 sights, 0 day trips/towns; must-see: Dome of the Rock, Al-Aqsa Mosque, Western Wall, Israel Museum, Church of the Holy Sepulchre, The Temple Institute, Holy Land, Calvary; top by fame: Al-Aqsa Mosque 103, Holy Land 91, Israel Museum 90, Dome of the Rock 87, Western Wall 84, Calvary 81, Church of the Holy Sepulchre 76, The Temple Institute 76",
    "x": {}
   }
  ],
@@ -167,7 +148,7 @@
    "lat": 31.77806,
    "lng": 35.23528,
    "minutes": 60,
-   "category": "Church",
+   "category": "Mosque",
    "kind": "touristy",
    "quick": false,
    "mustSee": true,
@@ -197,7 +178,7 @@
    "lat": 31.77611,
    "lng": 35.23583,
    "minutes": 60,
-   "category": "Church",
+   "category": "Mosque",
    "kind": "touristy",
    "quick": false,
    "mustSee": true,
@@ -217,7 +198,7 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "A World Heritage church in Jerusalem, named by 2 independent sources."
+   "summary": "A World Heritage mosque in Jerusalem, named by 2 independent sources."
   },
   {
    "id": "src-q134821",
@@ -343,7 +324,7 @@
    "local": "",
    "lat": 31.77833,
    "lng": 35.22972,
-   "minutes": 40,
+   "minutes": 60,
    "category": "Sight",
    "kind": "touristy",
    "quick": false,
@@ -429,7 +410,7 @@
    "local": "",
    "lat": 31.77861,
    "lng": 35.22944,
-   "minutes": 40,
+   "minutes": 60,
    "category": "Sight",
    "kind": "touristy",
    "quick": false,
@@ -516,7 +497,7 @@
    "lat": 31.77611,
    "lng": 35.22778,
    "minutes": 50,
-   "category": "Palace",
+   "category": "Castle or fort",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -627,35 +608,6 @@
    "wdByName": true
   },
   {
-   "id": "src-q1245538",
-   "name": "Dormition Abbey",
-   "local": "",
-   "lat": 31.7722,
-   "lng": 35.2289,
-   "minutes": 30,
-   "category": "Church",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 18,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q1245538",
-   "src": [
-    "Wikivoyage (English)",
-    "national heritage register"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "Adorned by a conical dome and a tall bell tower, this Mount Zion church is the traditional site of the Virgin Mary's death. Several churches have been built on "
-  },
-  {
    "id": "src-q1861408",
    "name": "Church of St. Peter in Gallicantu",
    "local": "",
@@ -712,86 +664,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "A listed historic church in Jerusalem, named by 2 independent sources."
-  },
-  {
-   "id": "abu-ghosh-far",
-   "name": "Abu Ghosh",
-   "local": "",
-   "lat": 31.8048,
-   "lng": 35.1124,
-   "minutes": 180,
-   "category": "Day trip",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q335023",
-   "src": [
-    "Wikivoyage (English)"
-   ],
-   "srcOnly": false,
-   "builtin": false,
-   "famousFix": true,
-   "far": true,
-   "travel": "Bus from הדווידקה, about 55 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "A day out that travelers suggest from Jerusalem (from Haifa, Israel)."
-  },
-  {
-   "id": "abu-ghosh-far~0",
-   "name": "Church of Our Lady of the Covenant",
-   "local": "",
-   "lat": 31.80735,
-   "lng": 35.10247,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Bus from הדווידקה, about 55 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": ""
-  },
-  {
-   "id": "abu-ghosh-far~1",
-   "name": "The Benedictine monastery in Abu Ghosh",
-   "local": "",
-   "lat": 31.807428,
-   "lng": 35.107386,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": true,
-   "travel": "Bus from הדווידקה, about 55 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": ""
   }
  ]
 }
