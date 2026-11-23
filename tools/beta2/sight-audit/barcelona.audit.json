@@ -59,14 +59,18 @@
   },
   {
    "k": "POS",
-   "t": "Sitges [day trip] {Q15551 by name}: app is 0.38 km from Wikidata's point (not on the map by id)",
+   "t": "Sitges [day trip] {Q15551 by name}: app 41.23700,1.80590 is 0.50 km from the map's Sitges (node/1470839456, 41.23536,1.81141); Wikidata 0.63 km from the map",
    "x": {
-    "d": 0.37507600794870943,
+    "d": 0.4955460619676112,
     "id": "sitges",
     "wd": "Q15551",
     "app": [
      41.237,
      1.8059
+    ],
+    "map": [
+     41.2353596,
+     1.8114102
     ],
     "wdpt": [
      41.233888888889,

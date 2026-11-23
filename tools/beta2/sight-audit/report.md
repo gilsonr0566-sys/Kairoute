@@ -26,7 +26,7 @@
 - INFO day trips: Ancient Corinth, Temple of Poseidon at Sounion, Delphi, Corinth Canal, Acrocorinth, Museum, Ancient Theater, Temple of Apollo, Delphi Stadium, Sanctuary of Athena with the Tholos
 
 ## Barcelona, Spain (Barcelona)
-- POS Sitges [day trip] {Q15551 by name}: app is 0.38 km from Wikidata's point (not on the map by id)
+- POS Sitges [day trip] {Q15551 by name}: app 41.23700,1.80590 is 0.50 km from the map's Sitges (node/1470839456, 41.23536,1.81141); Wikidata 0.63 km from the map
 - NOID Santa Maria del Mar: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Sant Pau Recinte Modernista: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Bunkers del Carmel: built-in sight with no Wikidata id and nothing of the name on the map nearby
