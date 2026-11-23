@@ -29,6 +29,7 @@ jobs:
         with: { ref: claude/project-thread-xrdp7v }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
+      - run: npm i --no-save opening_hours@3.16.0
       - name: Trips
         run: |
           SEED="${{ github.event.inputs.seed }}"; [ -n "$SEED" ] || SEED=$(date -u +%Y%m%d)
@@ -38,10 +39,19 @@ jobs:
           ALL=out/independent.json node tools/truth/oracle.cjs --trips out/trips.json --show 8 | tee out/independent.txt || true
           node tools/truth/mutants.cjs --n 300 | tee out/mutants.txt || true
           cp seed.txt out/
+          # A safety finding holds the next release (spec v2, T2): this job turns red, and the release report reads it.
+          # Cleared by a later nightly with none, or by a line in docs/qa/nightly-cleared.txt naming this run as a proven false alarm.
+          grep -hE "^FAIL (gone|reach|leaveby|before|night|unverified|backwait|error|back|start|order|nan) " out/older-checks.txt out/independent.txt > out/hold.txt || true
+          grep -hE "^(MISSED|NOT TESTED)" out/mutants.txt >> out/hold.txt || true
           { echo "## Nightly truth check: new trips (seed $SEED)"; echo '```'; cat out/older-checks.txt out/independent.txt out/mutants.txt | grep -E "^(FAIL|WARN|MISSED|NOT TESTED|caught|Caught|Odd|Independent|Planted)|^       S" | head -120; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
         with: { name: truth-random, path: out }
+      - name: Safety findings hold the next release
+        run: |
+          if [ -s out/hold.txt ]; then echo "HOLD - safety findings tonight"; cat out/hold.txt; exit 1; fi
+          echo "No safety finding tonight"
+
 
   rides:
     name: Every planned ride against the published timetables
