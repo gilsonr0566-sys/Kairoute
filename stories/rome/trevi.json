@@ -19,7 +19,7 @@
  "claims": {
   "what": {
    "label": "supported",
-   "says": "The Trevi Fountain was designed by Nicola Salvi and completed by Giuseppe Pannini in 1762; at 26.3 metres high and 49.15 metres wide it is the largest Baroque fountain in the world.",
+   "says": "The Trevi Fountain was designed by Nicola Salvi and completed by Giuseppe Pannini in 1762; at 26.3 metres (86 ft) high and 49.15 metres (161.3 ft) wide it is the largest Baroque fountain in the world.",
    "src": [
     "wp-trevi"
    ],
@@ -45,6 +45,19 @@
    ],
    "quote": [
     "and the Trevi fountain are well known for pickpockets, so take extra care in these areas."
+   ]
+  },
+  "ticket": {
+   "label": "supported",
+   "says": "Non-residents now usually need a 2-euro ticket to approach the fountain and throw coins in during the day; after 10 p.m. the barriers open.",
+   "src": [
+    "wp-trevi",
+    "wv-rome"
+   ],
+   "quote": [
+    "On 2 February 2026, the City Council of Rome introduced a ticketing system where non-residents will need to buy a 2-euro ticket to approach the fountain and throw coins into its waters",
+    "After 10 p.m., the barriers are opened and access is free for all.",
+    "the Trevi fountain costs €2"
    ]
   },
   "name": {
@@ -176,7 +189,7 @@
   },
   "travertine": {
    "label": "supported",
-   "says": "Most of the fountain is travertine stone quarried near Tivoli, about 35 kilometres east of Rome.",
+   "says": "Most of the fountain is travertine stone quarried near Tivoli, about 35 kilometres (22 miles) east of Rome.",
    "src": [
     "wp-trevi"
    ],
@@ -230,10 +243,10 @@
  "parts": [
   {
    "name": "Arriving",
-   "stand": "Come into the little square and find a spot near the front, facing the fountain.",
+   "stand": "Come into the little square and find a spot with a clear view of the fountain.",
    "paras": [
     {
-     "t": "And suddenly, there it is: the Trevi Fountain, tucked into this small square among the side streets. It's the largest Baroque fountain in the world, 26.3 metres high and nearly 50 metres wide, finished in 1762.",
+     "t": "And suddenly, there it is: the Trevi Fountain, tucked into this small square among the side streets. It's the largest Baroque fountain in the world, 86 feet high and about 161 feet wide, finished in 1762.",
      "c": [
       "tucked",
       "what"
@@ -244,6 +257,13 @@
      "t": "Crowds gather here, and so do pickpockets. Keep your bag zipped and in front of you.",
      "c": [
       "pickpockets"
+     ],
+     "level": 1
+    },
+    {
+     "t": "To go down to the water's edge and throw a coin, visitors now usually need a 2-euro ticket during the day; late at night the barriers open. Check on the day.",
+     "c": [
+      "ticket"
      ],
      "level": 1
     },
@@ -269,21 +289,21 @@
      "level": 1
     },
     {
-     "t": "On either side of him are two women. One is Abundance, pouring water from her urn. The other is Salubrity, health, holding a cup that a snake drinks from.",
+     "t": "On either side of him are two figures. One is Abundance, pouring water from her urn. The other is Salubrity, health, holding a cup that a snake drinks from.",
      "c": [
       "flanking"
      ],
      "level": 2
     },
     {
-     "t": "This water has a long history. The fountain is the end of an aqueduct first opened in 19 BC, the Aqua Virgo, and it still brings water here today.",
+     "t": "This water has a long history. The fountain is the end of an aqueduct that goes back to 19 BC, the Aqua Virgo, and it is still in use today.",
      "c": [
       "aqueduct"
      ],
      "level": 2
     },
     {
-     "t": "Look up at the carved panels above. One tells the old story of how the spring was found: legend has it that a young girl, a virgin, helped Roman engineers find it.",
+     "t": "Look up at the carved panels above: they show how the aqueduct began. Legend has it that a virgin helped Roman engineers find the spring.",
      "c": [
       "virgin"
      ],
@@ -314,7 +334,7 @@
      "level": 3
     },
     {
-     "t": "Almost all of it is travertine, a pale stone quarried near Tivoli, about 35 kilometres east of Rome. Pannini changed the plan at the end: instead of statues of Agrippa and of Trivia, the Roman virgin, he put in the figures you see now. Pope Clement XIII opened it on 22 May 1762.",
+     "t": "Most of it is travertine, a pale stone quarried near Tivoli, about 22 miles east of Rome. Pannini changed the plan at the end: instead of statues of Agrippa and of Trivia, the Roman virgin, he put in the figures you see now. Pope Clement XIII opened it on May 22, 1762.",
      "c": [
       "travertine",
       "allegories",
@@ -323,7 +343,7 @@
      "level": 3
     },
     {
-     "t": "Salvi cared about every detail. A barber's ugly shop sign spoiled his view, so he hid it behind a big sculpted vase. Romans call it the Ace of Cups.",
+     "t": "A barber's ugly shop sign would have spoiled the effect, so Salvi hid it behind a big sculpted vase. Romans call it the Ace of Cups.",
      "c": [
       "ace"
      ],

@@ -233,14 +233,14 @@
    "stand": "Stand in the middle of the square and look along its length.",
    "paras": [
     {
-     "t": "Notice the shape of this square: long, with rounded ends. That's because you're standing in a Roman stadium. Piazza Navona sits on the Stadium of Domitian, begun in AD 80, and the square still follows its oval.",
+     "t": "Notice the shape of this square: long and narrow, like a racetrack. That's because you're standing in a Roman stadium. Piazza Navona sits on the Stadium of Domitian, begun in AD 80, and the square still follows its oval.",
      "c": [
       "stadium"
      ],
      "level": 1
     },
     {
-     "t": "It was Rome's first permanent stadium for athletics, and it seated approximately 30,000 people. Look at the houses around you: their lower walls take in the stadium's original arcades.",
+     "t": "It was Rome's first permanent stadium for athletics, and it seated approximately 30,000 people. The buildings around you are built on the stadium's original lower arcades.",
      "c": [
       "stadium-use",
       "arcades"
@@ -283,7 +283,7 @@
      "level": 2
     },
     {
-     "t": "Walk around and find them. The Nile has his head covered, because back then nobody knew where the Nile began. The Río de la Plata sits on a pile of coins. The Ganges holds a long oar. And the Danube reaches up to touch the pope's coat of arms.",
+     "t": "Walk around and find them. The Nile has his head covered, because back then nobody knew where the Nile began. The Río de la Plata sits on a pile of coins. The Ganges holds a long oar. And the Danube touches the pope's coat of arms.",
      "c": [
       "details"
      ],
@@ -297,7 +297,7 @@
      "level": 3
     },
     {
-     "t": "Not everyone loved it. It was built at public expense during a terrible famine, and protesters pinned notes on the stones: we don't want obelisks and fountains, we want bread.",
+     "t": "Not everyone loved it. It was built at public expense during a terrible famine, and protesters pinned notes on the obelisk's stone blocks: we don't want obelisks and fountains, we want bread.",
      "c": [
       "famine"
      ],
@@ -361,7 +361,7 @@
      "level": 2
     },
     {
-     "t": "This square has always been a stage. The city market moved here at the end of the 1400s and stayed until 1869. And from 1652 until 1866, the square was flooded every weekend in August for the pope's family festivities. Today there's still a Christmas market here each year.",
+     "t": "This square has always been a stage. The city market moved here at the end of the 1400s and stayed until 1869. And from 1652 until 1866, the square was flooded every weekend in August for the Pamphili family's festivities. Today there's still a Christmas market here each year.",
      "c": [
       "market",
       "flood"
@@ -375,7 +375,7 @@
    "stand": "Find a bench or a spot by the fountain and just watch the square for a moment.",
    "paras": [
     {
-     "t": "Long ago, athletes competed here in front of a packed stadium. Today they stroll, eat ice cream, and argue about Bernini. The stadium is gone, but the crowd never really left.",
+     "t": "Long ago, athletes competed here in front of a packed stadium. Today people stroll, eat ice cream, and argue about Bernini. The stadium is gone, but the crowd never really left.",
      "c": [
       "stadium",
       "stadium-use"

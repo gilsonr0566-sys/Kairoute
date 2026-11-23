@@ -53,7 +53,7 @@
   },
   "columns": {
    "label": "supported",
-   "says": "The granite porch columns were quarried in Egypt; each is 11.9 metres tall and weighs 60 tonnes, and they came by sledge, Nile barge, sea and the Tiber.",
+   "says": "The granite porch columns were quarried in Egypt; each is 39 feet, 11.9 metres, tall and weighs 60 tonnes, and they came by sledge, Nile barge, sea and the Tiber.",
    "src": [
     "wp-pantheon"
    ],
@@ -76,7 +76,7 @@
   },
   "dome": {
    "label": "supported",
-   "says": "Almost two thousand years on, it is still the world's largest unreinforced concrete dome; the height to the oculus equals the diameter, 43 metres, so a sphere would fit inside.",
+   "says": "Almost two thousand years on, it is still the world's largest unreinforced concrete dome; the height to the oculus equals the diameter, 43 metres or 142 feet, so a sphere would fit inside.",
    "src": [
     "wp-pantheon"
    ],
@@ -97,7 +97,7 @@
   },
   "rain": {
    "label": "supported",
-   "says": "The oculus was never covered; rain falls inside, and the floor slopes about 30 centimetres to drains.",
+   "says": "The oculus was never covered; rain falls inside, and the floor slopes about 30 centimetres, 12 inches, to drains.",
    "src": [
     "wp-pantheon"
    ],
@@ -117,7 +117,7 @@
   },
   "light-concrete": {
    "label": "supported",
-   "says": "The concrete gets lighter toward the top, ending in tufa and pumice, and the dome thins from 6.4 metres at the base to 1.2 metres at the oculus.",
+   "says": "The concrete gets lighter toward the top, ending in tufa and pumice, and the dome thins from 6.4 metres (21 ft) at the base to 1.2 metres (3.9 ft) at the oculus.",
    "src": [
     "wp-pantheon"
    ],
@@ -253,7 +253,7 @@
      "level": 2
     },
     {
-     "t": "Those granite columns came from Egypt. Each is 11.9 metres tall and weighs 60 tonnes. They were dragged on sledges to the Nile, floated down by barge, shipped across the sea, and pulled up the Tiber.",
+     "t": "Those granite columns came from Egypt. Each is 39 feet tall and weighs 60 tonnes. They were dragged on sledges to the Nile, floated down by barge, shipped across the sea, and pulled up the Tiber.",
      "c": [
       "columns"
      ],
@@ -273,21 +273,21 @@
    "stand": "Go in and stand in the middle of the floor, under the round opening, and look straight up.",
    "paras": [
     {
-     "t": "Look up. Almost two thousand years old, this is still the largest unreinforced concrete dome in the world. From the floor to the opening is 43 metres, exactly the width of the room, so a giant ball would fit inside perfectly.",
+     "t": "Look up. Almost two thousand years old, this is still the largest unreinforced concrete dome in the world. From the floor to the opening is about 142 feet, 43 meters, exactly the width of the room, so a giant ball would fit inside perfectly.",
      "c": [
       "dome"
      ],
      "level": 1
     },
     {
-     "t": "That opening, the oculus, has never had glass. It and the door are the only natural light. Watch the circle of sunlight on the walls; through the day it travels round the room like a sundial in reverse.",
+     "t": "That opening, the oculus, has never had glass. It and the door are the only natural light. Look for the circle of sunlight; through the day it travels round the room like a sundial in reverse.",
      "c": [
       "light"
      ],
      "level": 2
     },
     {
-     "t": "And when it rains, it rains inside. Look down: the floor slopes about 30 centimetres toward small drains. On Pentecost, firefighters on the roof pour red rose petals through the oculus.",
+     "t": "And when it rains, it rains inside. Look down: the floor slopes about 12 inches toward drains. On Pentecost, firefighters on the roof pour red rose petals through the oculus.",
      "c": [
       "rain",
       "petals"
@@ -295,7 +295,7 @@
      "level": 2
     },
     {
-     "t": "How does it stay up? The concrete gets lighter as it rises, ending in light volcanic stone near the top, and the shell thins from 6.4 metres at the base to 1.2 metres at the rim of the opening. Count the sunken squares, the coffers: five rings of 28. They may once have held bronze stars.",
+     "t": "How does it stay up? The concrete gets lighter as it rises, ending in light volcanic stone near the top, and the shell thins from 21 feet at the base to about 4 feet at the rim of the opening. Count the sunken squares, the coffers: five rings of 28. They may once have held bronze rosettes, like stars.",
      "c": [
       "light-concrete",
       "coffers"
@@ -309,7 +309,7 @@
    "stand": "Stay inside, under the dome.",
    "paras": [
     {
-     "t": "In 609 the emperor gave this building to Pope Boniface IV, who dedicated it on 13 May to Saint Mary and the Martyrs. Becoming a church saved it, when most of ancient Rome was being torn apart.",
+     "t": "In 609 the emperor gave this building to Pope Boniface IV, who dedicated it on May 13 to Saint Mary and the Martyrs. Becoming a church saved it, when most of ancient Rome was being torn apart.",
      "c": [
       "church"
      ],
@@ -340,7 +340,7 @@
   },
   {
    "name": "Raphael's tomb",
-   "stand": "From the entrance, walk round to your left, past the tomb of King Umberto, to the third niche on that side.",
+   "stand": "From the entrance, walk round to your left until you are just past the tomb of King Umberto; Raphael is in the next niche.",
    "paras": [
     {
      "t": "Here lies the great painter Raphael. Beside him, to the right, is Maria Bibbiena, his fiancée, who died before they could marry.",
@@ -364,7 +364,7 @@
      "level": 3
     },
     {
-     "t": "There's a legend about this dome. In 1536 the emperor Charles V, whose armies had sacked Rome, climbed up to look down through the oculus. His guide, the keeper's son, later said he felt a sudden urge to push him in.",
+     "t": "There's a legend about this dome. In 1536 the emperor Charles V, whose armies had sacked Rome, wanted to climb up and look down through the oculus. His guide, the keeper's son, later said he felt a sudden urge to push him in.",
      "c": [
       "charles"
      ],

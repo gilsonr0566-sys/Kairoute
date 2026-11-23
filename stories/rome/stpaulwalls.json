@@ -147,11 +147,13 @@
   },
   "caius": {
    "label": "supported",
-   "says": "Around 198 the Roman Christian Caius wrote that he could point out the trophies of the apostles at the Vatican and on the Ostian Way.",
+   "says": "Around the year 200 the Roman Christian Caius wrote that he could point out the trophies of the apostles at the Vatican and on the Ostian Way.",
    "src": [
-    "wp-paul"
+    "wp-paul",
+    "wp-peters-tomb"
    ],
    "quote": [
+    "There is evidence of the existence of the tomb (trophoea, i.e., trophies, as signs or memorials of victory) at the beginning of the 3rd century",
     "Caius in his Disputation Against Proclus (198 AD) mentions this of the places in which the remains of the apostles Peter and Paul were deposited: \"I can point out the trophies of the apostles. For if you are willing to go to the Vatican or to the Ostian Way, you will find the trophies of those who founded this Church\"."
    ]
   },
@@ -170,7 +172,7 @@
   },
   "fire": {
    "label": "supported",
-   "says": "On 15 July 1823 a workman repairing the roof gutters started a fire that almost totally destroyed the basilica.",
+   "says": "On July 15, 1823, a workman repairing the roof gutters started a fire that almost totally destroyed the basilica.",
    "src": [
     "wp-st-paul-walls"
    ],
@@ -192,7 +194,7 @@
   },
   "size": {
    "label": "supported",
-   "says": "It has one nave and four side aisles, is 131.66 metres long, and is the second largest church in Rome; the nave's 80 columns are from the 19th century.",
+   "says": "It has one nave and four side aisles, is 131.66 metres (432.0 ft) long, and is the second largest church in Rome; the nave's 80 columns are from the 19th century.",
    "src": [
     "wp-st-paul-walls"
    ],
@@ -319,7 +321,7 @@
      "level": 3
     },
     {
-     "t": "How did Paul come to Rome? As a prisoner. The book of Acts, in its very last chapter, tells how believers walked out along the road to meet him. And when Paul saw them, Acts says, he thanked God, and took courage.",
+     "t": "How did Paul come to Rome? As a prisoner. The book of Acts, in its very last chapter, tells how believers came out to meet him. And when Paul saw them, Acts says, he thanked God, and took courage.",
      "c": [
       "acts-15"
      ],
@@ -334,7 +336,7 @@
      "level": 3
     },
     {
-     "t": "And then the book closes with these words: Paul dwelt two whole years in his own hired house, preaching the kingdom of God with all confidence, no man forbidding him.",
+     "t": "And then the book closes with these words: And Paul dwelt two whole years in his own hired house, and received all that came in unto him, preaching the kingdom of God, and teaching those things which concern the Lord Jesus Christ, with all confidence, no man forbidding him.",
      "c": [
       "acts-30"
      ],
@@ -354,7 +356,7 @@
      "level": 1
     },
     {
-     "t": "And tradition is early and consistent. Writers like Eusebius say he was killed under the emperor Nero, and Jerome says he was beheaded in Rome and buried on the Ostian Way, the road this church stands on. It's believed to have happened sometime between the Great Fire of AD 64 and 68.",
+     "t": "Writers like Eusebius say he was killed under the emperor Nero, and Jerome says he was beheaded in Rome and buried on the Ostian Way, the road this church stands on. It's believed to have happened sometime between the Great Fire of AD 64 and 68.",
      "c": [
       "death",
       "burial"
@@ -362,14 +364,14 @@
      "level": 2
     },
     {
-     "t": "There's also a later legend that when Paul was beheaded his head bounced three times, and a spring rose at each spot. That's how a church in Rome got its name, Saint Paul at the Three Fountains.",
+     "t": "There's also a later legend that when Paul was beheaded his head bounced three times, and a spring rose at each spot. That's how the place got its name, Saint Paul at the Three Fountains.",
      "c": [
       "tre-fontane"
      ],
      "level": 3
     },
     {
-     "t": "There is a letter that speaks as if from Paul's last days, the second letter to Timothy. Many scholars think it was written in his name by later followers. But listen to its words: I am now ready to be offered, and the time of my departure is at hand. I have fought a good fight, I have finished my course, I have kept the faith.",
+     "t": "There is a letter that speaks as if from Paul's last days, the second letter to Timothy. Many scholars think it was written in Paul's name by someone else. But listen to its words: I am now ready to be offered, and the time of my departure is at hand. I have fought a good fight, I have finished my course, I have kept the faith.",
      "c": [
       "timothy-author",
       "timothy"
@@ -390,7 +392,7 @@
      "level": 1
     },
     {
-     "t": "What you see, though, is mostly new. On 15 July 1823 a workman repairing the roof gutters started a fire that nearly destroyed the whole basilica. It was rebuilt with gifts from all over: the Viceroy of Egypt sent alabaster columns, the Emperor of Russia malachite and lapis lazuli. It was reconsecrated in 1854, and it's only broadly like the original.",
+     "t": "What you see, though, is mostly new. On July 15, 1823, a workman repairing the roof gutters started a fire that nearly destroyed the whole basilica. It was rebuilt with gifts from all over: the Viceroy of Egypt sent alabaster columns, the Emperor of Russia malachite and lapis lazuli. It was reconsecrated in 1854, and it's only broadly like the original.",
      "c": [
       "fire",
       "rebuilt"
@@ -398,7 +400,7 @@
      "level": 2
     },
     {
-     "t": "It's 131.66 metres long, the second largest church in Rome, with 80 columns in the nave.",
+     "t": "It's about 432 feet long, the second largest church in Rome, with 80 columns in the nave.",
      "c": [
       "size"
      ],
@@ -412,7 +414,7 @@
      "level": 3
     },
     {
-     "t": "And look above the columns: a long row of round portraits, one for every pope. These are 19th-century mosaic versions of an old painted series.",
+     "t": "And look above the columns: a long row of portraits, one for every pope. These are 19th-century mosaic versions of an old painted series.",
      "c": [
       "popes"
      ],
@@ -473,7 +475,7 @@
      "level": 3
     },
     {
-     "t": "The memory of this grave is very old. Around 198, a Roman Christian named Caius wrote: go to the Vatican, or to the Ostian Way, and you will find the trophies of the apostles. Tradition says the burial ground belonged to a Christian woman named Lucina, and that a small memorial stood here and soon drew pilgrims.",
+     "t": "The memory of this grave is very old. Around the year 200, a Roman Christian named Caius wrote that he could point out the trophies of the apostles, at the Vatican and on the Ostian Way. Tradition says the burial ground belonged to a Christian woman named Lucina, and that a memorial, a trophy, stood here and quickly became a place of veneration.",
      "c": [
       "caius",
       "burial"
@@ -484,10 +486,10 @@
   },
   {
    "name": "The cloister and closing",
-   "stand": "If you have time, find the cloister, south of the transept, and stand among its columns.",
+   "stand": "If you have time, follow the signs to the cloister and stand among its columns.",
    "paras": [
     {
-     "t": "The cloister, built between 1205 and 1241, is often called one of the most beautiful of the Middle Ages. Look at the columns: twisted, paired, some inlaid with gold and colored glass.",
+     "t": "The cloister, built between 1205 and 1241, is often called one of the most beautiful of the Middle Ages. Look at the columns: paired, in different shapes, some inlaid with gold and colored glass.",
      "c": [
       "cloister"
      ],

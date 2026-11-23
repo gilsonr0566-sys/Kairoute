@@ -137,11 +137,12 @@
   },
   "holy-door": {
    "label": "tradition",
-   "says": "The northernmost door from the porch is the Holy Door, which by tradition is walled up and opened only for jubilees.",
+   "says": "The northernmost door from the porch is the Holy Door, which by tradition is walled up and opened only for jubilees. The church faces east, so the north end is on the right as you face the doors.",
    "src": [
     "wp-st-peters"
    ],
    "quote": [
+    "both this church and its successor had the entrance to the east and the apse at the west end of the building",
     "The northernmost door is the \"Holy Door\" which, by tradition, is walled-up with bricks, and opened only for holy years such as the Jubilee year by the Pope."
    ]
   },
@@ -211,11 +212,12 @@
   },
   "peter-foot": {
    "label": "disputed",
-   "says": "Against the north-east pier of the dome sits a bronze Saint Peter Enthroned, perhaps by the late 13th-century sculptor Arnolfo di Cambio, though some scholars date it to the 400s; one foot is worn away by pilgrims' kisses.",
+   "says": "The church faces east, so the north-east pier is the one on your right as you reach the dome from the nave. Against it sits a bronze Saint Peter Enthroned, perhaps by the late 13th-century sculptor Arnolfo di Cambio, though some scholars date it to the 400s; one foot is worn away by pilgrims' kisses.",
    "src": [
     "wp-st-peters"
    ],
    "quote": [
+    "both this church and its successor had the entrance to the east and the apse at the west end of the building",
     "Set against the north east pier of the dome is a statue of Saint Peter Enthroned, sometimes attributed to late 13th-century sculptor Arnolfo di Cambio, with some scholars dating it to the fifth century. One foot of the statue is largely worn away by pilgrims kissing it for centuries."
    ]
   },
@@ -234,12 +236,11 @@
   },
   "dome-words": {
    "label": "supported",
-   "says": "Around the inside of the dome, in letters 1.4 metres high, runs the Latin of Matthew 16:18-19: you are Peter, and on this rock I will build my church, and I will give you the keys of the kingdom of heaven.",
+   "says": "Around the inside of the dome, in big letters, runs the Latin of Matthew 16:18-19: you are Peter, and on this rock I will build my church, and I will give you the keys of the kingdom of heaven.",
    "src": [
     "wp-st-peters"
    ],
    "quote": [
-    "Around the inside of the dome is written, in letters 1.4 metres (4.6 ft) high:",
     "(\"... you are Peter, and on this rock I will build my church. ... and I will give you the keys of the kingdom of heaven ...\" Vulgate, Matthew 16:18–19.)"
    ]
   },
@@ -275,7 +276,7 @@
   },
   "baldachin-size": {
    "label": "supported",
-   "says": "The canopy is 28.74 metres tall and is claimed to be the largest piece of bronze in the world.",
+   "says": "The canopy is 28.74 metres (94.3 feet) tall and is claimed to be the largest piece of bronze in the world.",
    "src": [
     "wp-st-peters"
    ],
@@ -377,7 +378,7 @@
   },
   "caius": {
    "label": "supported",
-   "says": "Early in the 200s the Roman Christian Caius wrote that he could show the trophies, the memorials, of the apostles at the Vatican and on the Ostian Way.",
+   "says": "Around the year 200 the Roman Christian Caius wrote that he could show the trophies, the memorials, of the apostles at the Vatican and on the Ostian Way.",
    "src": [
     "wp-peters-tomb"
    ],
@@ -531,7 +532,7 @@
      "level": 2
     },
     {
-     "t": "Now the obelisk beside you. It's Egyptian red granite, with no writing on it, first raised in Heliopolis by a pharaoh nobody can name. The emperor Caligula brought it to Rome in AD 37 for the Circus of Nero, whose ruins lie under the basilica. It was moved to this spot in 1586.",
+     "t": "Now the obelisk beside you. It's Egyptian red granite, with no hieroglyphs on it, first raised in Heliopolis by a pharaoh nobody can name. The emperor Caligula brought it to Rome in AD 37 for the Circus of Nero, whose ruins lie under the basilica. It was moved to this spot in 1586.",
      "c": [
       "obelisk",
       "circus"
@@ -580,7 +581,7 @@
      "level": 2
     },
     {
-     "t": "Its main designers were Bramante, Michelangelo and Maderno, with Bernini doing the square and much of the furnishing. And before you came in, if you glanced at the last door on the right in the porch, that's the Holy Door. By tradition it stays walled up and opens only in a jubilee year.",
+     "t": "Its main designers were Bramante, Michelangelo and Maderno, with Bernini doing the square and much of the furnishing. And before you came in, if you glanced at the door at the northern end of the porch, the far right as you face the church, that's the Holy Door. By tradition it stays walled up and opens only in a jubilee year.",
      "c": [
       "architects",
       "holy-door"
@@ -588,7 +589,7 @@
      "level": 3
     },
     {
-     "t": "Building it cost a fortune, and part of the money came from selling indulgences. One preacher, Johann Tetzel, sold them so hard that it caused a scandal, and that scandal helped set off the Protestant Reformation.",
+     "t": "Part of the money came from indulgences granted in return for donations. One preacher, Johann Tetzel, pushed them so hard that his salesmanship caused a scandal, and that scandal helped set off the Protestant Reformation.",
      "c": [
       "indulgences"
      ],
@@ -618,7 +619,7 @@
      "level": 2
     },
     {
-     "t": "Now find the band across her chest. That's his signature, the only work he ever signed. According to the writer Vasari, he heard visitors credit it to another sculptor and carved his name into it. Vasari adds that he later regretted the pride, and never signed anything again.",
+     "t": "Now find the band across her chest. That's his signature, the only work he ever signed. According to the writer Vasari, he heard visitors credit it to another sculptor and carved his name into it. Vasari adds that he later regretted the pride, and swore never to sign another.",
      "c": [
       "pieta-signed"
      ],
@@ -638,7 +639,7 @@
    "stand": "Walk up the middle of the nave and stop in the open space under the dome, facing the bronze canopy.",
    "paras": [
     {
-     "t": "Near the end of the nave, against the pillar on your right before the dome, sits a bronze Saint Peter on a throne. Scholars disagree about its age; some say the late 1200s, some the 400s. Look at his foot, worn smooth by centuries of pilgrims' kisses.",
+     "t": "Near the end of the nave, against the great pillar on your right as you reach the dome, sits a bronze Saint Peter on a throne. Scholars disagree about its age; some say the late 1200s, some the 400s. Look at his foot, worn smooth by centuries of pilgrims' kisses.",
      "c": [
       "peter-foot"
      ],
@@ -652,7 +653,7 @@
      "level": 2
     },
     {
-     "t": "Around the inside of the dome runs a line in Latin, in letters 1.4 metres high, from Matthew 16:18-19: you are Peter, and on this rock I will build my church, and I will give you the keys of the kingdom of heaven. The name Peter itself means rock; it's the Greek for Kepa, the name Jesus gave to Simon.",
+     "t": "Around the inside of the dome runs a line in Latin from Matthew chapter 16. In English it says: you are Peter, and on this rock I will build my church, and I will give you the keys of the kingdom of heaven. The name Peter itself means rock; it's the Greek for Kepa, the name Jesus gave to Simon.",
      "c": [
       "dome-words",
       "rock"
@@ -667,7 +668,7 @@
      "level": 1
     },
     {
-     "t": "It's 28.74 metres tall and claimed to be the largest piece of bronze in the world. Look for bees and laurel leaves on it: the emblems of the pope's family, the Barberini.",
+     "t": "It's about 94 feet tall, nearly 29 meters, and claimed to be the largest piece of bronze in the world. Look for bees and laurel leaves on it: the emblems of the pope's family, the Barberini.",
      "c": [
       "baldachin-size",
       "bees"
@@ -682,7 +683,7 @@
      "level": 3
     },
     {
-     "t": "And the bronze? Romans long believed it was stripped from the Pantheon. But the pope's accounts say most of the Pantheon's bronze went into cannon, and the canopy's came from Venice. So the old story is probably wrong.",
+     "t": "And the bronze? People believed it was stripped from the Pantheon. But the pope's accounts say most of the Pantheon's bronze went into cannon, and the canopy's came from Venice. So the old story is probably wrong.",
      "c": [
       "bronze-source"
      ],
@@ -730,7 +731,7 @@
      "level": 3
     },
     {
-     "t": "The memory is old. Early in the 200s a Roman Christian named Caius wrote: I can show the trophies of the apostles. Go to the Vatican, or to the Ostian Way, and you will find them. The Ostian Way is where Saint Paul's church stands today.",
+     "t": "The memory is old. Around the year 200, a Roman Christian named Caius wrote that he could show the trophies, the memorials, of the apostles, at the Vatican and on the Ostian Way. The Ostian Way is where Saint Paul's church stands today.",
      "c": [
       "caius",
       "ostian"
@@ -799,10 +800,10 @@
   },
   {
    "name": "Closing",
-   "stand": "Step back out into the square and turn to look at the basilica once more.",
+   "stand": "Wherever you finish your visit, pause for a moment before you leave.",
    "paras": [
     {
-     "t": "The first Christians chose to be buried here because they believed Peter lay here, long before any dome or marble. Everything you've seen today grew from that remembering.",
+     "t": "Ancient Christians chose to bury their dead here because they believed Peter lay here, long before this dome. Everything you've seen today grew from that remembering.",
      "c": [
       "early-christians"
      ],

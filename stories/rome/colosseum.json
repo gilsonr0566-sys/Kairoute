@@ -272,7 +272,7 @@
   },
   "instinctu": {
    "label": "disputed",
-   "says": "The inscription credits the victory to inspiration by the divine, a vague phrase usually read as a sign of Constantine's shifting religion; Christian writers tell of a vision before the battle.",
+   "says": "The inscription credits the victory to inspiration by the divine, a vague phrase usually read as a sign of Constantine's shifting religion; Christian writers tell of a vision during the campaign.",
    "src": [
     "wp-arch-constantine"
    ],
@@ -366,7 +366,7 @@
   },
   "paving": {
    "label": "supported",
-   "says": "The last travertine paving, still visible, dates from Augustus.",
+   "says": "The last travertine paving of the Forum, still visible, dates from Augustus.",
    "src": [
     "wp-forum"
    ],
@@ -528,9 +528,10 @@
     },
     {
      "t": "A word before we start: expect lots of walking on uneven stone, often in full sun. Good shoes, slow steps, and water.",
-     "c": [],
-     "level": 1,
-     "cue": true
+     "c": [
+      "heat"
+     ],
+     "level": 1
     },
     {
      "t": "In summer especially, the heat makes long walks in the middle of the day hard going; early morning and evening are kinder. The old street fountains, the nasoni, give free spring water that's safe to drink, so fill a bottle.",
@@ -562,7 +563,7 @@
      "level": 2
     },
     {
-     "t": "The site itself made a point. Nero had taken this ground for a private lake beside his palace. Vespasian filled the lake in and gave the land back to the people. Even the name Colosseum is believed to come from a giant bronze statue of Nero that stood next to it.",
+     "t": "The site itself made a point. Nero had taken this ground for a private lake beside his palace. Vespasian filled the lake in, which can be seen as handing the land back to the people. Even the name Colosseum is believed to come from a giant bronze statue of Nero that stood next to it.",
      "c": [
       "nero-lake",
       "name"
@@ -628,7 +629,7 @@
      "level": 2
     },
     {
-     "t": "The games did end. The emperor Honorius banned gladiator fights in 399 and again in 404, and the last mention of them is around 435.",
+     "t": "The gladiator fights did end. The emperor Honorius banned gladiator fights in 399 and again in 404, and the last mention of them is around 435.",
      "c": [
       "end-games"
      ],
@@ -641,7 +642,7 @@
    "stand": "Come back out and walk to the great three-way arch that stands between the Colosseum and the Palatine Hill.",
    "paras": [
     {
-     "t": "This is the Arch of Constantine, the largest triumphal arch Rome ever built. The Senate put it up for Constantine's victory over his rival Maxentius at the Milvian Bridge in 312, and dedicated it in 315.",
+     "t": "This is the Arch of Constantine, the largest Roman triumphal arch. The Senate put it up for Constantine's victory over his rival Maxentius at the Milvian Bridge in 312, and dedicated it in 315.",
      "c": [
       "constantine"
      ],
@@ -655,7 +656,7 @@
      "level": 3
     },
     {
-     "t": "Up top, the inscription says he won inspired by the divine. Which divine? It doesn't say. Scholars read that vague phrase as a sign of his shifting faith, and it may have been worded to please every reader. Christian writers tell of a vision of God before the battle.",
+     "t": "Up top, the inscription says he won inspired by the divine. Which divine? It doesn't say. Scholars read that vague phrase as a sign of his shifting faith, and it may have been worded to please every reader. Christian writers tell of a vision of God during the campaign.",
      "c": [
       "instinctu"
      ],
@@ -665,7 +666,7 @@
   },
   {
    "name": "The Arch of Titus",
-   "stand": "Walk up the old paved road, the Via Sacra, to the single arch at the top of the slope, and step into its passage.",
+   "stand": "Walk up the Via Sacra to the single arch; if you can, step into its passage, otherwise look in from the side.",
    "paras": [
     {
      "t": "This is the Arch of Titus, built by his brother Domitian around AD 81, to honor Titus and the crushing of the Jewish revolt in Judaea.",
@@ -717,7 +718,7 @@
      "level": 1
     },
     {
-     "t": "The stone road under your feet is the Via Sacra, where victorious generals paraded into the Forum. The paving you see is from the time of Augustus. It's uneven, so watch your step.",
+     "t": "The stone road under your feet is the Via Sacra, where victorious generals paraded into the Forum. Out in the open square of the Forum, the last travertine paving, still visible, dates from Augustus. The ground is uneven everywhere here, so watch your step.",
      "c": [
       "triumph",
       "paving"
@@ -732,7 +733,7 @@
      "level": 3
     },
     {
-     "t": "Somewhere ahead of you is the most famous funeral in history. In 44 BC Mark Antony spoke over Julius Caesar's body from the speakers' platform, the Rostra, and Caesar was burned on a spot across from it. Augustus later built the Temple of the Deified Caesar there.",
+     "t": "Somewhere ahead of you, perhaps the most famous funeral in Rome's history took place. In 44 BC Mark Antony spoke over Julius Caesar's body from the speakers' platform, the Rostra, and Caesar was burned on a spot across from it. Augustus later built the Temple of the Deified Caesar there.",
      "c": [
       "caesar"
      ],
@@ -747,7 +748,7 @@
      "level": 3
     },
     {
-     "t": "Why is so little standing? Between 1540 and 1550 Pope Paul III mined the Forum for stone to build the new Saint Peter's.",
+     "t": "Why is so little standing? The worst of it came between 1540 and 1550, when Pope Paul III mined the Forum for stone to build the new Saint Peter's.",
      "c": [
       "stripped"
      ],
@@ -789,7 +790,7 @@
      "level": 1
     },
     {
-     "t": "Tradition says Peter was held here, and that a spring rose miraculously so he could baptize. But the spring was there long before, and there's little first-hand evidence for Peter's stay. Paul is said to have been held here too.",
+     "t": "Tradition says Peter was held here, and that a spring rose miraculously so he could baptize. But, as the Catholic Encyclopedia points out, the spring was there long before, and there's little first-hand evidence for Peter's stay. Paul is said to have been held here too.",
      "c": [
       "mamertine-peter",
       "mamertine-paul"
@@ -797,7 +798,7 @@
      "level": 2
     },
     {
-     "t": "The Bible itself remembers Paul's time in Rome differently. Acts says: Paul dwelt two whole years in his own hired house, and received all that came in unto him.",
+     "t": "The Bible tells only this of Paul's time in Rome. Acts says: Paul dwelt two whole years in his own hired house, and received all that came in unto him.",
      "c": [
       "acts-house"
      ],
