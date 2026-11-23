@@ -82,6 +82,7 @@ function engineBucket(withOld) {
       startTime: d.startTime || "", hours: n(d.hours), time: d.time || "", tender: !!d.tender, noBags: !!d.noBags, returnToStart: d.returnToStart !== false,
       meet: !!(trip && (trip.group || trip.groupShared)), // a group trip: every plan ends by the group's meeting time
       portArrive: sh(d.portArrive), allAboard: sh(d.allAboard), boardAt: typeof boardAt === "function" ? boardAt(d) : null,
+      nightDep: d.nightDep === "night" || d.nightDep === "morning" ? d.nightDep : "", // a small-hours departure: this morning or tonight, as the traveler said
       thru: thru ? { mode: thru.mode, time: thru.time || "", point: pt(A), guess: !!thru.estimated || !thru.time } : null,
       // An arrival time the traveler never gave (the trip builder fills one in): asked, never planned on (Round 1: "Flight in at 10:30 am" invented).
       timeGuess: d.type === "arrival" && (!!d.estimated || !d.time),

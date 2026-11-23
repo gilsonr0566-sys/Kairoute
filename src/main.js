@@ -581,7 +581,7 @@ const typeInfo = t => DAY_TYPES.find(x => x.key === t) || DAY_TYPES[0];
 // ---------- Helpers ----------
 const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const toMin = t => { if (!t) return NaN; const [h, m] = t.split(":").map(Number); return h * 60 + (m || 0); };
-const fmt = m => { m = Math.round(m); const h = Math.floor(m / 60) % 24, mm = ((m % 60) + 60) % 60; return String(h).padStart(2, "0") + ":" + String(mm).padStart(2, "0"); };
+const fmt = m => { m = Math.round(m); const h = ((Math.floor(m / 60) % 24) + 24) % 24, mm = ((m % 60) + 60) % 60; return String(h).padStart(2, "0") + ":" + String(mm).padStart(2, "0"); };
 const dur = m => { m = Math.round(m); if (m < 60) return m + " min"; const h = Math.floor(m / 60), r = m % 60; return h + " h" + (r ? " " + r + " min" : ""); };
 // Dates are formatted thousands of times a screen; the browser's formatter is slow, so each answer is kept.
 const dateFmt = (opts) => { const f = new Intl.DateTimeFormat("en-US", Object.assign({ timeZone: "UTC" }, opts)), memo = new Map();
@@ -917,7 +917,7 @@ function depLine(o, start, endBy, back, slack) {
   // Times from today's timetable when the operator hasn't published the one for the trip's date yet (a summer ferry).
   const later = !o.forDate && o.checked && typeof planDate !== "undefined" && planDate && Date.parse(planDate) - Date.now() > 45 * 86400e3 ? `; the timetable for ${fmtDate(planDate)} isn't published yet, so these are today's times` : "";
   const when = off && seen ? ` (no signal: timetable last checked ${fmtDate(seen)})` : o.checked ? ` (timetable checked ${fmtDate(o.checked)}${later}; Kairoute checks it again the day before and the morning of)` : "";
-  if (!o.deps || !o.deps.length) return o.noTimetable ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.` : "";
+  if (!o.deps || !o.deps.length) return o.noTimetable ? (o.waitMax > o.wait ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with about ${dur(o.wait)} of waiting and boarding (half the usual gap between departures); up to ${dur(o.waitMax)} if you just miss one. Check the ${o.kind.toLowerCase()} timetable before you go.` : ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.`) : "";
   // A departure is named only when it is the one this plan takes (within the hour): a sample's far-off departure reads
   // as "no train until then" (Round 2 re-check 5: "Next departure about 8:31 pm" on a 7:30 am train).
   const at = start + o.access.min, nx0 = isFinite(start) ? o.deps.find(d => d.t >= at) : null, nx = nx0 && nx0.t - at <= 60 ? nx0 : null;
@@ -1366,6 +1366,8 @@ function pointChoices(d, city) {
 }
 function planErrCard(d, plan) {
   const err = plan ? plan.error : "Set up your day first.", ch = plan ? pointChoices(d, cityFor(d)) : [];
+  // A flight or train in the small hours: this morning or tonight, one tap each (kept on the day as d.nightDep).
+  if (plan && plan.askNight) return `<div class="card empty nightask"><p>${esc(err)}</p><div class="actions"><button class="btn ghost" data-act="nightdep" data-v="morning">Early this morning</button><button class="btn ghost" data-act="nightdep" data-v="night">Late tonight, after midnight</button></div></div>`;
   if (!ch.length) return `<div class="card empty"><p>${esc(err)}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
   return `<div class="card empty pointask"><p>${esc(String(err).replace(/ Choose it in the day's settings[^:]*:/, " Choose yours:"))}</p><div class="actions">${ch.map(c => `<button class="btn ghost" data-act="pointpick" data-idx="${c.idx}">${esc(c.name)}</button>`).join("")}</div></div>`;
 }
@@ -4386,7 +4388,7 @@ if (typeof window !== "undefined") {
   window.__kairouteUnpickPoint = i => { const d = trip.days[i]; if (!d) return false; delete d.pointPicked; d.pointIdx = 0; edited(); render(); return true; }; // phone check: a day whose station isn't chosen
   window.__kairouteEdit = (i, patch) => { if (i === "all") trip.days.forEach(d => Object.assign(d, typeof patch === "function" ? patch(d) : patch)); else Object.assign(trip.days[i], patch); save(); render(); return true; };
   window.__kairouteSettled = () => !seedTimer && !fillPending && !seedNext(); // background seeding of other days is done
-  window.__kairouteDays = () => trip.days.map((d, i) => ({ i, date: d.date, type: d.type, dest: d.destination, city: cityFor(d) ? keyOf(cityFor(d).city) : "" }));
+  window.__kairouteDays = () => trip.days.map((d, i) => ({ i, date: d.date, type: d.type, dest: d.destination, city: cityFor(d) ? keyOf(cityFor(d).city) : "", mode: d.mode, time: d.time || "", nightDep: d.nightDep || "" }));
   window.__kairouteTruth = i => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const d = trip.days[i], city = cityFor(d); if (!city) return { none: true }; refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); const pl = buildPlan(d); if (!pl || pl.error) return { error: pl ? pl.error : "none" };
     const sites = new Map([...(city.sites || []), ...(city.farther || [])].map(x => [x.id, x])), eats = new Set((city.restaurants || []).map(r => keyOf(r.name)));
     const stops = pl.items.filter(x => x.type === "stop"), meals = pl.items.filter(x => x.type === "meal" || x.type === "evening");
@@ -7439,7 +7441,7 @@ function readForm() {
   d.date = v("f-date") || d.date;
   // Times the traveler types in are their real ones (from the booking): the day is no longer an estimate.
   const was = [d.time, d.portArrive, d.allAboard].join("|");
-  if (g("f-time")) d.time = v("f-time");
+  if (g("f-time")) { if (d.time !== v("f-time")) delete d.nightDep; d.time = v("f-time"); } // a new time: asked again if it's in the small hours
   if (g("f-parr")) d.portArrive = v("f-parr");
   if (g("f-aboard") && g("f-aboard").type === "time") d.allAboard = v("f-aboard");
   if (d.estimated && [d.time, d.portArrive, d.allAboard].join("|") !== was) delete d.estimated;
@@ -7666,6 +7668,7 @@ document.addEventListener("click", e => {
   if (act === "tourstart") { const d = day(); if (!trip.tour || trip.tour.dayId !== d.id) trip.tour = null; curTour(d); view = "tour"; save(); render(); toTop(); return; }
   if (act === "tourexit") { stopAudio(); view = "plan"; render(); toTop(); return; }
   if (act === "tourpart") { tourPart(); return; }
+  if (act === "nightdep") { const d = day(), v = t.dataset.v; if (d && (v === "morning" || v === "night")) { d.nightDep = v; edited(); save(); render(); } return; }
   if (act === "pointpick") { const d = day(), k = +t.dataset.idx; if (d && k >= 0) { d.pointIdx = k; d.pointPicked = true; delete d.pier; edited(); save(); render(); } return; }
   if (act === "tournext") {
     stopAudio(); const T = trip.tour; T.i++; T.phase = "walk"; T.found = []; T.nudged = 0; T.part = 0; save(); render(); toTop();

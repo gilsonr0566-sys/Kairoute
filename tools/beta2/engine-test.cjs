@@ -681,6 +681,27 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
       const toBags = its.slice(lastK + 1, pick).reduce((m, x) => m + (x.min || 0) + (x.wait || 0), 0);
       ok(Number.isFinite(la.last) && Number.isFinite(la.bags) && la.last + toBags <= la.bags + 1 && la.bags + (its[pick].min || 0) <= la.out + 1, `${tag}: leaving ${its[lastK] && its[lastK].name} by ${E.clock(la.last)} reaches the bags by ${E.clock(la.bags)}, then the airport ride at ${E.clock(la.out)}`);
       ok(!(p.explain || []).some(t => /^Leave .* by /.test(t)) || (p.explain || []).some(t => t.includes(E.clock(la.last))), `${tag}: the note names the same time to leave the last place`); } } }
+// Nov 23 (testing thread's oracle): a flight or train typed in the small hours (before E.NIGHT_DEP) may be this very
+// morning or late tonight. Asked once, never guessed; answered "night", the day runs to it after midnight; answered
+// "morning", the day is only the way there, setting out the evening before. Ships keep their all-aboard rule.
+{ const tb = E.makeTravel({ walk: 'medium' }, {});
+  for (const [mode, t] of [['flight', '00:20'], ['flight', '03:10'], ['train', '04:45']]) {
+    const ask = E.dayWindow(day({ type: 'departure', mode, time: t, point: air }), tb);
+    ok(ask.error && ask.askNight && /early this morning, or late tonight/.test(ask.error), `a ${t} ${mode}, not yet answered: asked this morning or tonight (${ask.error || 'planned'})`);
+    const night = E.dayWindow(day({ type: 'departure', mode, time: t, point: air, nightDep: 'night' }), tb);
+    ok(!night.error && night.endBy > 24 * 60 - 200 && night.endBy > night.start, `a ${t} ${mode} tonight: be there by ${E.clock(night.endBy)} after midnight`);
+    const morn = E.dayWindow(day({ type: 'departure', mode, time: t, point: air, nightDep: 'morning' }), tb), r = !morn.error && E.walkDay([], morn, tb.estimate, null);
+    ok(!morn.error && morn.endBy < E.toMin(t) && r && r.end <= morn.endBy + 1 && morn.start < morn.endBy, `a ${t} ${mode} this morning: set out ${morn.error || E.clock(morn.start)}, there by ${E.clock(morn.endBy)}`); }
+  const late = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '06:30', point: air }), tb);
+  ok(!late.error || !late.askNight, 'a 6:30 am flight is this morning\'s, never asked');
+  const ship = E.dayWindow(day({ type: 'embark', allAboard: 30, boardAt: null }), tb);
+  ok(!ship.askNight, 'all aboard at 0:30 is the ship\'s own night, never asked');
+  // On a whole trip: the question stops the day (no sights); answered "morning", still no sights; "night", a day is planned.
+  const s0 = fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'departure' && d.lodging));
+  if (s0) { const li = s0.days.findIndex(d => d.type === 'departure' && d.lodging);
+    for (const nd of ['', 'morning', 'night']) { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[li], { mode: 'flight', time: '03:10', startTime: '09:00', nightDep: nd });
+      const p = E.planTrip(s)[li], stops = (p.items || []).filter(x => x.t === 'stop');
+      ok(nd === '' ? p.error && p.askNight : nd === 'morning' ? !p.error && !stops.length && p.end <= p.endBy : !p.error && p.endBy > 24 * 60, `a 3:10 am flight on a trip, ${nd || 'unanswered'}: ${p.error ? 'asked' : stops.length + ' sights, there by ' + E.clock(p.endBy)}`); } } }
 // Nov 23: a late arrival's day ends no sooner than the traveler reaches the hotel (a 9:30 pm flight gave a day of 10:45 to
 // 11:00 pm and a plan reaching the hotel at 12:14 am, past its own end).
 { const tb = E.makeTravel({ walk: 'medium' }, {});
@@ -707,7 +728,8 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 // Nov 20 review (finding 8): a flight or all aboard after midnight is the next morning's; the day stays readable and no
 // clock prints a minus sign.
 { const tb = E.makeTravel({ walk: 'medium' }, {});
-  for (const t of ['00:40', '05:30']) { const w = E.dayWindow(day({ type: 'departure', mode: 'flight', time: t, point: air }), tb);
+  // (Nov 23: a small-hours departure is asked first; answered "tonight" it is the next morning's.)
+  for (const t of ['00:40', '05:30']) { const w = E.dayWindow(day({ type: 'departure', mode: 'flight', time: t, point: air, nightDep: 'night' }), tb);
     ok(!w.error && w.endBy > w.start && !/-/.test(E.clock(w.endBy)), `a flight at ${t}: the day runs to ${E.clock(w.endBy)} (start ${E.clock(w.start)})`); }
   const wp = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 60 }), tb);
   ok(!wp.error && wp.endBy > wp.start && wp.endBy === 60 + 1440 - wp.buffer, `all aboard at 1:00 am: ashore until ${E.clock(wp.endBy)}`);
@@ -1232,4 +1254,22 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   ok(Array.isArray(two.leaveTimes || lt) && (two.leaveTimes || lt).length === 3, `a kind's departures are read together (${JSON.stringify(two.leaveTimes || lt)})`);
   const kd = E.makeTravel({ walk: 'medium' }, null, null, null, (a, b) => [{ id: 'rail|A', min: 75, label: 'Train A', mode: 'rail', steps: ['A'], deps: [{ t: 1231 }], kindDeps: [{ t: 455, a: 5 }, { t: 515, a: 5 }, { t: 1231, a: 8 }] }], null).estimate({ lat: 41.9, lng: 12.5 }, { lat: 42.09, lng: 11.79 });
   ok(JSON.stringify(kd.leaveTimes) === '[450,510,1223]', `every departure of the kind the helper sends is read (${JSON.stringify(kd.leaveTimes)})`); }
+// Nov 23 ride check against real timetables: trains with no timetable (only how often they run) were planned with a
+// full gap of waiting, about 28 min longer than the real ride. Going out: half the gap plus boarding, the full gap kept
+// as "up to". On the way back to the ship (or a train or plane): the full gap, unchanged. With real departures: as sent.
+{ const ans = deps => [{ id: 'rail|N', min: 13 + 40 + 63, ride: 40, wait: 63, every: 60, everySrc: 'usual', label: 'Train N', mode: 'train', kind: 'Train', steps: ['N'], noTimetable: !deps, deps, access: { how: 'walk', min: 5, km: 0.4 }, egress: { how: 'walk', min: 8, km: 0.6 } }];
+  const A = { lat: 41.9, lng: 12.5 }, B = { lat: 42.09, lng: 11.79 }, train = e => (e.options || [e]).find(x => x.kind === 'train') || {};
+  const out = train(E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null).estimate(A, B));
+  const back = train(E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null).estimate(A, Object.assign({ backToShip: true }, B)));
+  const dl = train(E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null).estimate(A, Object.assign({ deadline: 1000 }, B)));
+  const tt = E.expectWait(ans([{ t: 600 }])[0], false);
+  // Testing thread review (Nov 23): the ride from the last stop to the day's own fixed steps (collect the bags, the cable
+  // car down) is part of the way back: the full gap, also when the same travel already answered the plain point.
+  const trS = E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null), plainB = train(trS.estimate(A, B)), fxB = train(trS.estimate(A, Object.assign({}, B, { fixed: true, name: 'Collect bags' })));
+  ok(plainB.ans && plainB.ans.wait === 33 && fxB.ans && fxB.ans.wait === 63, `the ride to a fixed step (collect the bags, the cable car down) keeps the full gap, even after the same place was answered plain (${plainB.ans && plainB.ans.wait} / ${fxB.ans && fxB.ans.wait})`);
+  ok(out.ans && out.ans.wait === 33 && out.ans.waitMax === 63 && out.ans.min === 86 && out.ans.minMax === 116, `a ride out on a line with no timetable plans half the gap plus boarding, keeps the full gap as "up to" (${out.ans && out.ans.wait}/${out.ans && out.ans.waitMax}, ${out.ans && out.ans.min})`);
+  ok(back.ans && back.ans.wait === 63 && back.ans.waitMax == null && dl.ans && dl.ans.wait === 63, `the ride back to the ship, a train or a plane keeps the full gap (${back.ans && back.ans.wait} / ${dl.ans && dl.ans.wait})`);
+  ok(back.min >= out.min + 30, `the way back to the ship is planned at least the half gap longer than the same ride out (${back.min} vs ${out.min})`);
+  ok(tt.wait === 63 && tt.waitMax == null, 'an answer with real departures keeps its own wait (the timeline waits for the real next one)');
+  ok(E.expectWait(Object.assign(ans()[0], { wait: 20 }), false).wait === 20, 'never a longer wait than the helper sent'); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

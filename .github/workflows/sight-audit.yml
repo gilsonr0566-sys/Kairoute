@@ -28,6 +28,9 @@ jobs:
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+        with:
+          # A scheduled run starts from main, which holds no app: it runs the Beta 2 branch.
+          ref: ${{ github.event_name == 'schedule' && 'claude/project-thread-xrdp7v' || '' }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -69,6 +72,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # A scheduled run starts from main, which holds no app: it runs the Beta 2 branch.
+          ref: ${{ github.event_name == 'schedule' && 'claude/project-thread-xrdp7v' || '' }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22
