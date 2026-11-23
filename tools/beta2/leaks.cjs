@@ -41,7 +41,11 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
             const r = walk(ss.slice(0, k).concat([lunch], ss.slice(k))), at = (r.items.find(x => x.t === 'stop' && x.id === '__lunch') || {}).at;
             if (at != null && at >= 690 && at <= 900) { const sc = score(r); if (bestR == null || sc < bestR) bestR = sc; } }
           return bestR == null ? score(walk(ss)) : bestR; } catch (e) { return 0; } };
-        if (extra > 20 && !st.some(x => x.far) && fits(best) <= fits(st)) add('cross', f, `day ${i}: ${extra} min more travel than the best order (${st.map(x => x.name).join(' > ')}; best: ${best.map(x => x.name).join(' > ')})`); } }
+        // Riding as the day really runs (the train or bus at that hour, the taxi where none runs): the straight estimate can
+        // make the other order look 26 min shorter when, walked at its own times, it rides 6 min less (Nov 23, a port day).
+        const rides = seq => { try { return walk(seq.map(bySite)).rideMin; } catch (e) { return null; } }, rs = rides(st), rb = rides(best);
+        const walkedExtra = rs != null && rb != null ? rs - rb : extra;
+        if (extra > 20 && walkedExtra > 20 && !st.some(x => x.far) && fits(best) <= fits(st)) add('cross', f, `day ${i}: ${extra} min more travel than the best order (${st.map(x => x.name).join(' > ')}; best: ${best.map(x => x.name).join(' > ')})`); } }
     // Restaurants: lunch between 11:30 and 15:00, dinner from 17:30; a meal stop near the way; a place not repeated.
     p.items.forEach((x, k) => { if (x.t !== 'meal' && x.t !== 'evening') return; const lunch = (x.meal || 'Lunch') === 'Lunch' && x.t === 'meal';
       if (lunch && (x.at < 690 || x.at > E.MEALS[0].to + E.MEAL_LATE)) add('mealTime', f, `day ${i}: lunch at ${E.clock(x.at)} (${x.name})`);
