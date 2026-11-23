@@ -3,18 +3,9 @@
  "label": "Lisbon, Portugal",
  "centre": {
   "lat": 38.71389,
-  "lng": -9.14057
+  "lng": -9.14895
  },
  "findings": [
-  {
-   "k": "LEN",
-   "t": "Belém Tower: 40 min, but a castle or fortress usually takes 45-180 min",
-   "x": {
-    "id": "src-q215003",
-    "min": 40,
-    "kind": "castle or fortress"
-   }
-  },
   {
    "k": "POS",
    "t": "25 de Abril Bridge: app is 0.50 km from Wikidata's point (not on the map by id)",
@@ -34,50 +25,6 @@
   },
   {
    "k": "LEN",
-   "t": "Praça do Comércio: 40 min, but a square usually takes 5-30 min",
-   "x": {
-    "id": "src-q999002",
-    "min": 40,
-    "kind": "square"
-   }
-  },
-  {
-   "k": "LEN",
-   "t": "Padrão dos Descobrimentos: 40 min, but a fountain, statue or monument usually takes 5-30 min",
-   "x": {
-    "id": "src-q1133712",
-    "min": 40,
-    "kind": "fountain, statue or monument"
-   }
-  },
-  {
-   "k": "POS",
-   "t": "Águas Livres Aqueduct: app is 0.82 km from Wikidata's point (not on the map by id)",
-   "x": {
-    "d": 0.8164768390817123,
-    "id": "src-q623228",
-    "wd": "Q623228",
-    "app": [
-     38.7223,
-     -9.1591
-    ],
-    "wdpt": [
-     38.72666667,
-     -9.16666667
-    ]
-   }
-  },
-  {
-   "k": "LEN",
-   "t": "Águas Livres Aqueduct: 40 min, but a fountain, statue or monument usually takes 5-30 min",
-   "x": {
-    "id": "src-q623228",
-    "min": 40,
-    "kind": "fountain, statue or monument"
-   }
-  },
-  {
-   "k": "LEN",
    "t": "Botânico Garden of Lisboa: 40 min, but a art museum or gallery usually takes 45-240 min",
    "x": {
     "id": "src-q943407",
@@ -86,10 +33,49 @@
    }
   },
   {
+   "k": "POS",
+   "t": "Ericeira [day trip]: app is 0.45 km from Wikidata's point (not on the map by id)",
+   "x": {
+    "d": 0.45313366251673415,
+    "id": "ericeira-far",
+    "wd": "Q1351868",
+    "app": [
+     38.9667,
+     -9.4167
+    ],
+    "wdpt": [
+     38.962777777778,
+     -9.4152777777778
+    ]
+   }
+  },
+  {
    "k": "NOID",
    "t": "Basilica of Our Lady and St. Anthony [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
    "x": {
     "id": "mafra-far~Q16268486"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Moorish Castle [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "sintra-far~Q1049008"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Quintinha de Monserrate [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "sintra-far~Q3175595"
+   }
+  },
+  {
+   "k": "DUP",
+   "t": "Sintra ~ Sintra National Palace (40 m apart, same words)",
+   "x": {
+    "a": "sintra-far",
+    "b": "sintra-far~Q532399"
    }
   },
   {
@@ -102,7 +88,7 @@
   },
   {
    "k": "FAME",
-   "t": "#3 best known nearby, \"Siege of Lisbon\" (31 Wikipedia languages, Q815177), is not offered",
+   "t": "#4 best known nearby, \"Siege of Lisbon\" (31 Wikipedia languages, Q815177), is not offered",
    "x": {
     "wd": "Q815177",
     "sl": 31
@@ -118,12 +104,12 @@
   },
   {
    "k": "INFO",
-   "t": "32 sights, 3 day trips/towns; must-see: Jerónimos Monastery, Belém Tower; top by fame: Belém Tower 57, Jerónimos Monastery 53, 25 de Abril Bridge 34, Alfama 34, Lisbon Cathedral 32, Praça do Comércio 32, Padrão dos Descobrimentos 32, Castle of Saint George 31",
+   "t": "29 sights, 11 day trips/towns; must-see: Jerónimos Monastery, Belém Tower; top by fame: Belém Tower 57, Jerónimos Monastery 53, 25 de Abril Bridge 34, Lisbon Cathedral 32, Praça do Comércio 32, Padrão dos Descobrimentos 32, Castle of Saint George 31, Santa Justa Lift 26",
    "x": {}
   },
   {
    "k": "INFO",
-   "t": "day trips: Mafra, Convento de Mafra, Basilica of Our Lady and St. Anthony",
+   "t": "day trips: Mafra, Ericeira, Sintra, Convento de Mafra, Basilica of Our Lady and St. Anthony, Parque de Santa Marta, Pena National Palace, Moorish Castle, Sintra National Palace, Quintinha de Monserrate, Quinta da Regaleira",
    "x": {}
   }
  ],
@@ -164,8 +150,8 @@
    "local": "Torre de Belém",
    "lat": 38.69139,
    "lng": -9.21583,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 90,
+   "category": "Castle or fort",
    "kind": "touristy",
    "quick": false,
    "mustSee": true,
@@ -256,8 +242,8 @@
    "local": "",
    "lat": 38.7075,
    "lng": -9.13639,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 15,
+   "category": "Square",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -318,8 +304,8 @@
    "local": "Elevador de Santa Justa",
    "lat": 38.71194,
    "lng": -9.13917,
-   "minutes": 30,
-   "category": "Church",
+   "minutes": 40,
+   "category": "Sight",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -380,8 +366,8 @@
    "local": "",
    "lat": 38.69361,
    "lng": -9.20556,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 30,
+   "category": "Landmark",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -441,8 +427,8 @@
    "local": "Palácio de São Bento",
    "lat": 38.7125,
    "lng": -9.15361,
-   "minutes": 50,
-   "category": "Palace",
+   "minutes": 30,
+   "category": "Church",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -470,12 +456,12 @@
    "id": "src-q623228",
    "name": "Águas Livres Aqueduct",
    "local": "Aqueduto das Águas Livres",
-   "lat": 38.7223,
-   "lng": -9.1591,
-   "minutes": 40,
-   "category": "Sight",
+   "lat": 38.72667,
+   "lng": -9.16667,
+   "minutes": 10,
+   "category": "Landmark",
    "kind": "local",
-   "quick": false,
+   "quick": true,
    "mustSee": false,
    "fame": 19,
    "unesco": false,
@@ -494,7 +480,7 @@
    "travel": "",
    "parts": [],
    "merged": [],
-   "posDoubt": true,
+   "posDoubt": false,
    "summary": "This is a historic aqueduct in the city of Lisbon, Portugal. It is one of the most remarkable examples of 18th-century Portuguese engineering, including the lar"
   },
   {
@@ -529,37 +515,6 @@
    "summary": "Started in 1582, this Mannerist monastery wasn't completed until 1629, following the reconstruction of a 1147 church under royal decree."
   },
   {
-   "id": "src-q1470414",
-   "name": "Carmo Convent",
-   "local": "Convento do Carmo (Lisboa)",
-   "lat": 38.712,
-   "lng": -9.14057,
-   "minutes": 30,
-   "category": "Church",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 18,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q1470414",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "national heritage register",
-    "Wikivoyage (English)",
-    "Wikipedia in Portuguese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "The hilltop church of the former convent of Carmo is a towering memorial of the 1755 earthquake, which made the roof of the church collapse, but the Gothic arch"
-  },
-  {
    "id": "src-q2657972",
    "name": "Estrela Basilica",
    "local": "Basílica da Estrela",
@@ -591,23 +546,24 @@
    "summary": "This Neoclassical and Baroque basilica, dedicated to the Sacred Heart of Jesus, was built in the late 1700s by Queen Maria I in fulfilment of a vow. The Queen i"
   },
   {
-   "id": "src-q985517",
-   "name": "Alfama",
-   "local": "",
-   "lat": 38.71066,
-   "lng": -9.13238,
-   "minutes": 40,
-   "category": "Sight",
-   "kind": "touristy",
+   "id": "src-q1470414",
+   "name": "Carmo Convent",
+   "local": "Convento do Carmo (Lisboa)",
+   "lat": 38.712,
+   "lng": -9.14057,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "local",
    "quick": false,
    "mustSee": false,
-   "fame": 34,
+   "fame": 18,
    "unesco": false,
    "heritage": true,
-   "wd": "Q985517",
+   "wd": "Q1470414",
    "src": [
     "Wikidata (Wikipedia in many languages)",
     "national heritage register",
+    "Wikivoyage (English)",
     "Wikipedia in Portuguese"
    ],
    "srcOnly": true,
@@ -618,7 +574,7 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "A listed historic sight in Lisbon, Portugal, named by 3 independent sources."
+   "summary": "The hilltop church of the former convent of Carmo is a towering memorial of the 1755 earthquake, which made the roof of the church collapse, but the Gothic arch"
   },
   {
    "id": "src-q211262",
@@ -651,43 +607,13 @@
    "summary": "One of the best museums in Lisbon. Created from the personal collection of the art and artifact collector Calouste Gulbenkian."
   },
   {
-   "id": "src-q804032",
-   "name": "Lisbon Baixa",
-   "local": "Baixa de Lisboa",
-   "lat": 38.71341,
-   "lng": -9.13876,
-   "minutes": 40,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 28,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q804032",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "national heritage register",
-    "Wikipedia in Portuguese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "A listed historic sight in Lisbon, Portugal, named by 3 independent sources."
-  },
-  {
    "id": "src-q652806",
    "name": "Lisbon Oceanarium",
    "local": "Oceanário de Lisboa",
    "lat": 38.76353,
    "lng": -9.09375,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 150,
+   "category": "Zoo or park",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -746,8 +672,8 @@
    "local": "Jardim Zoológico de Lisboa",
    "lat": 38.7437,
    "lng": -9.1703,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 150,
+   "category": "Zoo or park",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -867,7 +793,7 @@
    "lat": 38.7181,
    "lng": -9.14895,
    "minutes": 40,
-   "category": "Sight",
+   "category": "Park or garden",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -927,7 +853,7 @@
    "lat": 38.7146,
    "lng": -9.15927,
    "minutes": 40,
-   "category": "Sight",
+   "category": "Park or garden",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -986,8 +912,8 @@
    "local": "Palácio Alverca",
    "lat": 38.71588,
    "lng": -9.13986,
-   "minutes": 40,
-   "category": "Sight",
+   "minutes": 50,
+   "category": "Palace",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -1009,36 +935,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "Unassuming from the outside, the interior combines neo-Gothic, neo-Arab, neo-Renaissance, neo-Rococo, Art Nouveau, and baroque elements."
-  },
-  {
-   "id": "src-q10346955",
-   "name": "Pavilhão do Conhecimento - Ciência Viva Science Centre",
-   "local": "Pavilhão do Conhecimento",
-   "lat": 38.76223,
-   "lng": -9.09561,
-   "minutes": 40,
-   "category": "Sight",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 3,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q10346955",
-   "src": [
-    "Wikivoyage (English)",
-    "national heritage register",
-    "Wikipedia in Portuguese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "Ciência Viva is an interactive science and technology museum that aims to make science accessible to all, stimulating experimentation and exploration of the phy"
   },
   {
    "id": "src-q959567",
@@ -1127,6 +1023,62 @@
    "summary": "A charming town with a monastery."
   },
   {
+   "id": "ericeira-far",
+   "name": "Ericeira",
+   "local": "",
+   "lat": 38.9667,
+   "lng": -9.4167,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1351868",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Bus from Terreiro do Paço, about 110 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A gorgeous seaside resort near Mafra, well known to surfers worldwide."
+  },
+  {
+   "id": "sintra-far",
+   "name": "Sintra",
+   "local": "",
+   "lat": 38.79736,
+   "lng": -9.39042,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q190187",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A beautiful UNESCO World Heritage site town 40 minutes by car/train from Lisbon."
+  },
+  {
    "id": "mafra-far~Q599223",
    "name": "Convento de Mafra",
    "local": "",
@@ -1180,6 +1132,169 @@
    "merged": [],
    "posDoubt": false,
    "summary": ""
+  },
+  {
+   "id": "ericeira-far~0",
+   "name": "Parque de Santa Marta",
+   "local": "",
+   "lat": 38.9616,
+   "lng": -9.4189,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 65,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q136333486",
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Bus from Terreiro do Paço, about 110 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "",
+   "wdByName": true
+  },
+  {
+   "id": "sintra-far~Q69513",
+   "name": "Pena National Palace",
+   "local": "",
+   "lat": 38.7878,
+   "lng": -9.39055,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 41,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q69513",
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": ""
+  },
+  {
+   "id": "sintra-far~Q1049008",
+   "name": "Moorish Castle",
+   "local": "",
+   "lat": 38.79258,
+   "lng": -9.38934,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": true,
+   "heritage": false,
+   "wd": "",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": ""
+  },
+  {
+   "id": "sintra-far~Q532399",
+   "name": "Sintra National Palace",
+   "local": "",
+   "lat": 38.797667,
+   "lng": -9.390667,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": true,
+   "heritage": false,
+   "wd": "Q532399",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "",
+   "wdByName": true
+  },
+  {
+   "id": "sintra-far~Q3175595",
+   "name": "Quintinha de Monserrate",
+   "local": "",
+   "lat": 38.794206,
+   "lng": -9.420628,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": true,
+   "heritage": false,
+   "wd": "",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": ""
+  },
+  {
+   "id": "sintra-far~Q2630165",
+   "name": "Quinta da Regaleira",
+   "local": "",
+   "lat": 38.7964,
+   "lng": -9.396,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": true,
+   "heritage": false,
+   "wd": "Q2630165",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "",
+   "wdByName": true
   }
  ]
 }
