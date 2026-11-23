@@ -2359,5 +2359,84 @@
    "wikidata": "",
    "note": "In the heart of Jerusalem's most industrial district, one of the metalworkers has a hobby of making beautiful metal toy motorcycles which are displayed in his shop. Each model has a unique appearance and name, and if you speak Hebrew he'll "
   }
+ ],
+ "eatHours": [
+  [
+   "free cafe",
+   31.7772,
+   35.23883,
+   "10:00-17:00",
+   "cafe"
+  ],
+  [
+   "The Eucalyptus Restaurant",
+   31.77459,
+   35.22705,
+   "Su-Th 18:00-23:00; Sa 20:15-23:00",
+   "restaurant"
+  ],
+  [
+   "Generation Pub",
+   31.77971,
+   35.22365,
+   "Mo-Su 19:00-02:00",
+   "bar"
+  ],
+  [
+   "Fayruz Restaurant",
+   31.7769,
+   35.22774,
+   "Mo-Su 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Delicatessen Brassery",
+   32.0806,
+   34.78154,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Meat Bar",
+   32.07919,
+   34.78019,
+   "Fr-We 12:00-23:30; Th 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Abu Ghosh",
+   32.08432,
+   34.78136,
+   "Su-Th 11:00-21:30; Fr 10:00-14:00",
+   "fast_food"
+  ],
+  [
+   "Vitrina",
+   32.07612,
+   34.78173,
+   "Mo-We 12:00-23:00; Th 12:00-00:00; Su 12:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Kapara Mio",
+   32.07784,
+   34.77799,
+   "Su-Th 12:30-16:30, 17:00-23:30; Sa 18:00-23:30; ",
+   "restaurant"
+  ],
+  [
+   "Rainbow Burger",
+   32.0824,
+   34.78149,
+   "Mo-Th, Su 11:30-22:00; Sa 15:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Jera",
+   32.07812,
+   34.78149,
+   "Sa-Th 07:00-20:00; Fr 07:00-15:00",
+   "cafe"
+  ]
  ]
 }
