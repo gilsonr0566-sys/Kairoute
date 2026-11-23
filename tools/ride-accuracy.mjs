@@ -37,7 +37,28 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith(".json")).sort()) {
     }
   }
 }
-console.log(`Ride accuracy: ${pairs.length} rides from ${new Set(pairs.map(p => p.trip)).size} test trips`);
+// --legs: the rides the plans really hold (Nov 23, thread "Rebuild the testing and review process": ride times had been
+// measured only from where a day starts to its sights, so the rides to and from airports, stations and piers, the ones
+// a traveler can miss a flight or a ship on, were never compared with a timetable; the airport metro planned at 68 min
+// against a timetabled 39 was found by an outside tester). Every ride of 2 km or more between two places in the plan of
+// every day of every test trip, planned by the engine, the gate rides first.
+if (process.argv.includes("--legs")) {
+  pairs.length = 0; seen.clear();
+  const E = require("./beta2/engine.cjs"), PD = path.join(path.dirname(new URL(import.meta.url).pathname), "places", "data"), places = {};
+  if (fs.existsSync(PD)) for (const f of fs.readdirSync(PD).filter(f => f.endsWith(".json"))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
+  for (const f of fs.readdirSync(dir).filter(f => f.endsWith(".json")).sort()) {
+    const s = JSON.parse(fs.readFileSync(path.join(dir, f))); let plans; try { plans = E.planTrip(E.applyPlaces(s, places)); } catch (e) { continue; }
+    (s.days || []).forEach((d, i) => { const p = plans[i]; if (!p || !p.items || (ONLY && !ONLY.test(f + " " + d.city))) return;
+      const its = p.items.filter(x => x.t !== "ride" && ok(x));
+      for (let k = 1; k < its.length; k++) { const a = its[k - 1], b = its[k], km = hav(a, b); if (km < 2) continue;
+        const gate = b.t === "end" || a.t === "start", key = [a.lat, a.lng, b.lat, b.lng].map(v => (+v).toFixed(3)).join(",");
+        if (seen.has(key)) continue; seen.add(key);
+        pairs.push({ trip: f.replace(/\.json$/, ""), city: d.city, from: a.name || a.t, to: b.name || b.t, a: { lat: +a.lat, lng: +a.lng }, b: { lat: +b.lat, lng: +b.lng }, km: +km.toFixed(1), gate,
+          dow: new Date(Date.parse(d.date + "T12:00:00Z")).getUTCDay() }); } });
+  }
+  pairs.sort((x, y) => (y.gate ? 1 : 0) - (x.gate ? 1 : 0));
+}
+console.log(`Ride accuracy: ${pairs.length} rides from ${new Set(pairs.map(p => p.trip)).size} test trips${process.argv.includes("--legs") ? " (the rides the plans hold, " + pairs.filter(p => p.gate).length + " to or from an airport, station, pier or the day's start)" : ""}`);
 
 // ---- Ask both sources for each ride ----
 // Two rides at a time; the results are written after each ride, so a run cut short still has its numbers.
