@@ -5110,7 +5110,7 @@ function render() {
     paneMemo.same = paneMemo.key === pkey; paneMemo.key = pkey; }
   { const old = document.querySelector(".coach"); if (old) old.remove(); const ch = coachHTML(); if (ch) document.body.insertAdjacentHTML("beforeend", ch); }
   if (askNotice && !FULL_VIEWS[view]) { const v = document.getElementById("view"); if (v) v.insertAdjacentHTML("afterbegin", `<p class="banner ok" role="status">${esc(askNotice)} <button class="linkbtn" data-act="asknoticeok">OK</button></p>`); }
-  mountMaps(); youAfterRender(); liveAfterRender(); offAfterRender(); seenAfterRender();
+  mountMaps(); youAfterRender(); liveAfterRender(); offAfterRender(); seenAfterRender(); backAfterRender();
   if (openMenus.length && paneMemo.same) document.querySelectorAll("#view details.moremenu").forEach(el => { if (openMenus.includes(menuKey(el))) { el.open = true; try { placeMenu(el); } catch (e) {} } });
   if (openFolds.size) document.querySelectorAll("#view details").forEach(el => { const sm = el.querySelector("summary"); if (sm && openFolds.has(foldKey(sm))) el.open = true; });
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:

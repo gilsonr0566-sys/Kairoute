@@ -155,6 +155,7 @@ planted defect that does not exist. A row cannot claim ENFORCED unless that hold
 | ID | Requirement | Enforcing test | Status |
 |---|---|---|---|
 | UI-001..010, UI-013, UI-018 | Real screens at phone size, every control works, no page errors | `tools/beta2/flow-check.cjs`, `tools/ui/first-run-check.cjs`, `tools/ui/dayplan-check.cjs`, `tools/beta2/screen-gate.cjs` (5 sizes) | ENFORCED |
+| UI-FEEL | Real touch at phone and tablet sizes: no tapped thing jumps from under the finger, no screen moving on its own, no layout shift over 0.10, first change within 500 ms and settled within 2.5 s, no dead taps, swipes reach the end, no stuck spinner, Back stays in the app | gate part 9 "feel" (back-check.cjs, client/feel.cjs) and a daily live run at 5:15 am, from "Use the live app like a real client" | TO BUILD (on claude/project-thread-pe7pi0, to merge). Severity: Back leaving the app, dead tap, stuck spinner, page error and NOT TESTED are P1 and always fail; jump, shift and slow are P2 and may be listed in docs/qa/warns.json with an owner and a date |
 | UI-014..017 (P2) | Large text, keyboard, screen reader, contrast, touch size | TO BUILD (T18): axe-core in the screen gate (free), plus 200% text size | TO BUILD |
 | UI-019, browsers | Safari and Firefox engines | TO BUILD (T19): Playwright WebKit and Firefox on the phone flow (free) | TO BUILD |
 | DATA-001/004 | Saved trips survive the last two published versions | `tools/beta2/screen-gate.cjs` part D, `tools/ui/trip-copy-check.cjs` | ENFORCED |

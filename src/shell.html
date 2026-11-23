@@ -1552,7 +1552,7 @@ html.clock12 .tl { grid-template-columns: 70px 30px 1fr; }
 .engine2why > summary .cnt { color: var(--muted); font-weight: 500; margin-left: 6px; }
 </style>
 
-<header class="top">
+<header class="top" hidden><!-- shown by the first render when the screen needs it: opening on Home it stayed on screen for the 1-2 s the app takes to start, then vanished and Home jumped up 178px (client feel test, Nov 23 2026) -->
   <div class="wrap">
     <div class="brand">
       <h1 class="logo"><button class="homebtn" data-act="lobby" aria-label="Kairoute home"><svg viewBox="0 0 92 104" aria-hidden="true" width="30" height="34"><rect x="14" y="8" width="16" height="84" rx="8" fill="var(--ink)"/><path d="M36,50 L74,16" fill="none" stroke="var(--meal)" stroke-width="7" stroke-linecap="round" stroke-dasharray="0.1 13"/><circle cx="78" cy="14" r="10" fill="none" stroke="var(--meal)" stroke-width="5"/><path d="M36,50 L78,88" fill="none" stroke="var(--ink)" stroke-width="16" stroke-linecap="round"/></svg>kairoute</button></h1>
