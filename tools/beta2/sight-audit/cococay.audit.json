@@ -1,0 +1,122 @@
+{
+ "name": "cococay",
+ "label": "Perfect Day at CocoCay, Bahamas",
+ "centre": {
+  "lat": 25.81909,
+  "lng": -77.93602
+ },
+ "findings": [
+  {
+   "k": "NOID",
+   "t": "Harbour Beach: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)",
+   "x": {
+    "id": "src-harbour-beach"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Thrill Waterpark: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)",
+   "x": {
+    "id": "src-thrill-waterpark"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Harbor Lagoon: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)",
+   "x": {
+    "id": "src-harbor-lagoon"
+   }
+  },
+  {
+   "k": "INFO",
+   "t": "3 sights, 0 day trips/towns; must-see: none; top by fame: Harbour Beach 0, Thrill Waterpark 0, Harbor Lagoon 0",
+   "x": {}
+  }
+ ],
+ "sights": [
+  {
+   "id": "src-harbour-beach",
+   "name": "Harbour Beach",
+   "local": "",
+   "lat": 25.8186,
+   "lng": -77.93535,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "OpenStreetMap"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Perfect Day at CocoCay, Bahamas, named by 1 independent sources."
+  },
+  {
+   "id": "src-thrill-waterpark",
+   "name": "Thrill Waterpark",
+   "local": "",
+   "lat": 25.81909,
+   "lng": -77.93719,
+   "minutes": 40,
+   "category": "Park or garden",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "OpenStreetMap"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A park or garden in Perfect Day at CocoCay, Bahamas, named by 1 independent sources."
+  },
+  {
+   "id": "src-harbor-lagoon",
+   "name": "Harbor Lagoon",
+   "local": "",
+   "lat": 25.81926,
+   "lng": -77.93602,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "OpenStreetMap"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Perfect Day at CocoCay, Bahamas, named by 1 independent sources."
+  }
+ ]
+}
