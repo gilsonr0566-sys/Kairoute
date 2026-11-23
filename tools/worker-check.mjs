@@ -21,7 +21,7 @@ for (const p of PATHS) { const env = mk(); const r = await call(env, p, { origin
   const acao = r.headers && r.headers.get('access-control-allow-origin'); ok(acao !== EVIL, `${p}: CORS names another website`);
   ok(env.ai === 0, `${p}: another website reached the AI`);
   if (env.net || env.writes) open.push(`${p} (${env.net ? 'outside services' : ''}${env.net && env.writes ? ', ' : ''}${env.writes ? 'store writes' : ''}, status ${r.status})`); }
-if (open.length) console.log('NOTE paths that do free work for another website (no AI, no cost): ' + open.join('; '));
+ok(!open.length, 'paths that do work for another website (outside services or store writes): ' + open.join('; '));
 // Broken and empty requests: a clear answer, never a crash.
 for (const p of ['/sample', '/places', '/sync', '/speak', '/identify', '/guide', '/rate']) { const env = mk();
   const r = await call(env, p, { origin: 'https://gilsonr0566-sys.github.io', body: '{not json' }); ok(r.status !== 'crash' && r.status < 500, `${p}: a broken request gave ${r.status} ${r.err || ''}`); ok(env.ai === 0, `${p}: a broken request reached the AI`); }
