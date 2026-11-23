@@ -6,6 +6,23 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   // Straight-line km between two places.
   E.hav = (a, b) => { const dLa = (b.lat - a.lat) * Math.PI / 180, dLo = (b.lng - a.lng) * Math.PI / 180;
     const h = Math.sin(dLa / 2) ** 2 + Math.cos(a.lat * Math.PI / 180) * Math.cos(b.lat * Math.PI / 180) * Math.sin(dLo / 2) ** 2; return 2 * 6371 * Math.asin(Math.sqrt(h)); };
+  // Things near a point, from a list of positioned things (Nov 23 phone feel test: the "Needs" box took 2.5 s, most of
+  // it a scan of every mapped place to eat for every restaurant). One rule for every lookup by position in a data list:
+  // the list is put in a grid of cells once (kept with the list itself, so a list that never changes is indexed once
+  // while the app runs) and a lookup reads only the cells around the point. The answer is exactly the scan's: every
+  // thing within km, in list order. pos(x) gives the thing's { lat, lng } (or null).
+  const NEAR_CELL = 0.0025, nearIdx = new WeakMap(); // about 280 m of latitude per cell
+  E.nearby = (list, pos, pt, km) => {
+    if (!Array.isArray(list) || !pt || !isFinite(pt.lat) || !isFinite(pt.lng)) return [];
+    let ix = nearIdx.get(list); if (!ix || ix.pos !== pos || ix.n !== list.length) {
+      const cells = new Map(); list.forEach((x, i) => { const p = x && pos(x); if (!p || !isFinite(p.lat) || !isFinite(p.lng)) return;
+        const k = Math.floor(p.lat / NEAR_CELL) + "," + Math.floor(p.lng / NEAR_CELL); let c = cells.get(k); if (!c) cells.set(k, c = []); c.push(i); });
+      ix = { pos, n: list.length, cells }; nearIdx.set(list, ix); }
+    const dLat = Math.ceil(km / 111 / NEAR_CELL), dLng = Math.ceil(km / (111 * Math.max(0.05, Math.cos(pt.lat * Math.PI / 180))) / NEAR_CELL);
+    const la = Math.floor(pt.lat / NEAR_CELL), lo = Math.floor(pt.lng / NEAR_CELL), hits = [];
+    for (let i = la - dLat; i <= la + dLat; i++) for (let j = lo - dLng; j <= lo + dLng; j++) { const c = ix.cells.get(i + "," + j); if (c) hits.push(...c); }
+    const bLat = km / 110, bLng = km / (110 * Math.max(0.05, Math.cos(pt.lat * Math.PI / 180))); // a box a little larger than the circle
+    return hits.sort((a, b) => a - b).map(i => list[i]).filter(x => { const p = pos(x); return Math.abs(p.lat - pt.lat) <= bLat && Math.abs(p.lng - pt.lng) <= bLng && E.hav(pt, p) <= km; }); };
   // "09:30" -> 570. Anything else is NaN, never a guess.
   // A clock time, never with a minus sign: past midnight reads as the next morning's time (Nov 20 review).
   // The app may set its own clock format (24-hour or am/pm, from the traveler's setting); the engine's own text is am/pm.

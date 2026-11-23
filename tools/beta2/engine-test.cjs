@@ -1279,4 +1279,20 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   ok(back.min >= out.min + 30, `the way back to the ship is planned at least the half gap longer than the same ride out (${back.min} vs ${out.min})`);
   ok(tt.wait === 63 && tt.waitMax == null, 'an answer with real departures keeps its own wait (the timeline waits for the real next one)');
   ok(E.expectWait(Object.assign(ans()[0], { wait: 20 }), false).wait === 20, 'never a longer wait than the helper sent'); }
+// Nov 23 live recheck (outside tester, f01): an island sight off the old town planned as "Taxi or car 16 min" whenever the
+// phone's own water check couldn't reach the busy map server. The place file now says which sights are across the water.
+{ const b0 = { cities: { 'Test Harbour': { city: 'Test Harbour', sites: [{ id: 'isle1', name: 'Isle Garden', lat: 42.62, lng: 18.12 }, { id: 'town1', name: 'Town Gate', lat: 42.64, lng: 18.11 }], farther: [] } }, days: [] };
+  const P = { 'Test Harbour': { islands: { centre: null, towns: {}, sites: { isle1: { island: { id: '1', name: 'Isle' }, across: true }, town1: { island: null, across: false } } } } };
+  const out = E.applyPlaces(b0, P), ss = out.cities['Test Harbour'].sites;
+  ok(ss[0].acrossWater === 'Isle' && !ss[1].acrossWater && !b0.cities['Test Harbour'].sites[0].acrossWater, `a sight the place file puts across the water is reached by boat, offline (${ss[0].acrossWater} / ${ss[1].acrossWater})`); }
+// Nov 23 phone feel test: the "Needs" box took 2.5 s, most of it scanning every mapped place to eat for each restaurant.
+// One rule for lookups by position (E.nearby, a grid built once per list): its answer is exactly a full scan's, checked
+// on every places file at points across the place and at its edges, for short and long distances.
+{ const PD = path.join(__dirname, '..', 'places', 'data'); let n = 0, bad = 0;
+  const pos = x => x && isFinite(x[1]) && isFinite(x[2]) ? { lat: x[1], lng: x[2] } : null;
+  if (fs.existsSync(PD)) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const P = JSON.parse(fs.readFileSync(path.join(PD, f))), L = P.eatHours || []; if (!L.length) continue;
+    for (let i = 0; i < L.length; i += Math.max(1, Math.floor(L.length / 25))) for (const km of [0.05, 0.2, 1, 3]) { const p0 = pos(L[i]); if (!p0) continue;
+      const pt = { lat: p0.lat + (i % 3 - 1) * 0.0013, lng: p0.lng + (i % 5 - 2) * 0.0011 }, want = L.filter(x => pos(x) && E.hav(pt, pos(x)) <= km), got = E.nearby(L, pos, pt, km); n++;
+      if (want.length !== got.length || want.some((x, k) => x !== got[k])) bad++; } }
+  ok(n > 100 && bad === 0, `lookups by position give exactly a full scan's answer (${n} lookups on every places file, ${bad} different)`); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

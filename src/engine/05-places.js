@@ -21,6 +21,7 @@
   // A place to eat that isn't open to the public: a staff or officers' canteen, a members' club (Nov 20 tester: a city hall's
   // staff cafeteria planned as dinner).
   E.notPublicEat = x => /\b(cafeteria|canteen|mensa|staff|employees?|officers'?|members'?|private)\b/i.test(String((x && x.name) || (typeof x === "string" ? x : ""))) || /^(private|no|members)$/i.test(String((x && x.access) || ""));
+  const eatPos = x => x && isFinite(x[1]) && isFinite(x[2]) ? { lat: x[1], lng: x[2] } : null; // a map place to eat: [name, lat, lng, hours, kind]
   E.applyPlaces = (bucket, places) => {
     const b = copy(bucket), notes = b.placeNotes = [];
     const guides = b.cities || {};
@@ -49,6 +50,10 @@
         // The official website, where the sight's own tickets are sold (the Book tickets link starts from it).
         if (f.web && !s.web) s.web = f.web;
       }
+      // A sight of the place across the water from it, from the map (asked when the place file was built): reached by boat,
+      // whether or not the traveler's phone can reach the map's server for its own water check (Nov 23: an island off the
+      // old town planned as a taxi ride). The on-device check can still add more; it never removes what the file says.
+      for (const s of city.sites || []) { const isl = P.islands && P.islands.sites && P.islands.sites[s.id]; if (isl && isl.across && !s.acrossWater) s.acrossWater = (isl.island && isl.island.name) || true; }
       // A thin guide (under 8 sights): the travel guide's own best-known sights for the place join it, unless already there (same
       // name, or within 150 m) or closed for good.
       if ((city.sites || []).length < 8 && (P.guideSights || []).length) {
@@ -80,7 +85,7 @@
       // with no hours, while the map says it opens at 13:15).
       const mapHours = r => {
         if (r.hours || !r.name || !isFinite(r.lat) || !isFinite(r.lng)) return; const k = E.eatKey(r.name); if (k.length < 4) return;
-        const hit = P.eatHours.filter(x => x && x[0] && x[3] && E.hav(r, { lat: x[1], lng: x[2] }) <= 0.2).map(x => ({ x, mk: E.eatKey(E.latin(x[0]) || x[0]) }))
+        const hit = E.nearby(P.eatHours, eatPos, r, 0.2).filter(x => x && x[0] && x[3]).map(x => ({ x, mk: E.eatKey(E.latin(x[0]) || x[0]) }))
           .filter(o => o.mk && (o.mk === k || (o.mk.length >= 4 && (o.mk.includes(k) || k.includes(o.mk)))))
           .sort((a, b) => (b.mk === k) - (a.mk === k) || E.hav(r, { lat: a.x[1], lng: a.x[2] }) - E.hav(r, { lat: b.x[1], lng: b.x[2] }))[0];
         if (hit) { r.hours = hit.x[3]; if (hit.x[4]) r.mapKind = hit.x[4]; }
