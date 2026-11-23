@@ -67,8 +67,8 @@ are true:
 | R5 | **Safety findings = 0, whether printed as FAIL or WARN** (new) | Count of every safety rule line (gone, reach, leaveby, before, night, unverified, back, start, order, nan) + any refused attempt to warn one |
 | R6 | Every planted defect caught | `tools/truth/mutants.cjs`, `tools/truth/sight-mutants.cjs` exit 1 on any MISSED |
 | R7 | No safety finding can be silenced | `tools/truth/no-warn-check.cjs` (code part) |
-| R8 | No open S1/P1 row in the ledger without a blocking test (TO BUILD: T8) | Report reads `docs/qa/escapes.md` |
-| R9 | The latest nightly run has no unresolved safety finding (TO BUILD: T2) | Report reads the latest nightly result |
+| R8 | No open S1/P1 row in the ledger | `tools/truth/release-report.cjs` reads `docs/qa/escapes.md` (built Nov 23) |
+| R9 | The latest nightly run has no unresolved safety finding | The nightly's new-trips job turns red on one; `tools/truth/release-report.cjs` reads it (built Nov 23; needs the nightly workflow on main) |
 | R10 | Every ENFORCED row of this spec is really in the gate | `tools/truth/spec-check.cjs` (code part) |
 
 "These standards are gates, not claims that all possible failures have been eliminated." Every report says so.
@@ -171,13 +171,13 @@ runs in the gate (or nightly, where stated) and has been seen to fail on the bug
 | # | Test to build | Feeds in | Must come out | Owner | Due |
 |---|---|---|---|---|---|
 | T1 | **Planted-defect coverage**: every S1 rule and every fail-closed rule (FC-01..10) has at least one planted defect; a check fails when a rule has none | the mutant lists and the rule lists | a table rule → defects; 0 rules without one | testing thread | Nov 25 |
-| T2 | **Nightly holds the release**: the report reads the latest nightly result; an S1 finding or a ride off its timetable (25% or 15 min) holds until fixed or proven false | latest nightly artifacts | DO NOT RELEASE with the finding named | testing thread | Nov 24 |
+| T2 | **Nightly holds the release**: the report reads the latest nightly result; an S1 finding or a ride off its timetable (25% or 15 min) holds until fixed or proven false | latest nightly artifacts | DO NOT RELEASE with the finding named | testing thread | **Done Nov 23** (nightly workflow reaches main with the next PR) |
 | T3 | **Nightly finds become permanent**: every failing nightly trip is saved to the test trips with its seed | nightly failures | new corpus files on a branch, retested by every gate | testing thread | Nov 25 |
 | T4 | **Publish refuses** without a RELEASE OK report for the exact commit | commit sha, report artifact | publish stops with the reason | build thread with testing thread | Nov 24 |
-| T5 | S2 warnings in one file with owner and expiry; expired fails | `docs/qa/warns.json` | FAIL after 7 days | testing thread | Nov 24 |
+| T5 | S2 warnings in one file with owner and expiry; expired fails | `docs/qa/warns.json` | FAIL after 7 days | testing thread | **Done Nov 23** (`docs/qa/warns.json`) |
 | T6 | Gate health: part times and green rate over the last 10 runs, in every report | GitHub run history | a ledger row when a part is over 20 min or green rate under 50% | testing thread | Nov 26 |
 | T7 | Independent review of safety changes, recorded in the report | diff of leave-by, back-by, deadline, ride-back, guard files since the live build | "reviewed by" line per safety commit; none = NOT TESTED | testing thread | Nov 25 |
-| T8 | Open S1/P1 ledger rows block unless a blocking test exists | `docs/qa/escapes.md` | DO NOT RELEASE naming the row | testing thread | Nov 24 |
+| T8 | Open S1/P1 ledger rows block unless a blocking test exists | `docs/qa/escapes.md` | DO NOT RELEASE naming the row | testing thread | **Done Nov 23** |
 | T9 | **This spec is checked**: every ENFORCED row's tool is in the gate | this file, the gate workflow | FAIL naming the row | testing thread | **Done Nov 23** (`spec-check.cjs`) |
 | T10 | Missing deadline asks (FC-06) | odd trips with times blanked | no sights planned, a question shown | leaving-days thread | Nov 26 |
 | T11 | Malformed and contradictory form entries, malformed plans to the guard (FC-09, SAFE-010, PLAN-005/006) | fuzzed form values: empty, 25:99, negative, emoji, huge, ship leaving before arriving | a clear question; nothing planned on the clash; guard never "safe" | testing thread | Nov 27 |
