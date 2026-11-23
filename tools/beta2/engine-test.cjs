@@ -451,11 +451,15 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
   // Lunch on every day over lunchtime (Nov 18, Richard: "No lunch in Naples trip"): a day with stops whose time ashore
   // or in town spans lunch has a lunch stop, at a real place, unless the traveler skipped it; a long visit over midday
   // has it inside. Every trip, and the Naples picks that had none (Capri and Pompeii, Capri alone, the cathedral too).
-  { let days = 0, said = 0; const noLunch = [];
+  { let days = 0, said = 0; const noLunch = [], shutAt = [];
     const lunchCheck = (f, s, plans) => plans.forEach((p, i) => { if (!p || !p.items || p.error || p.safe) return; const d = s.days[i]; if (((d.mealPrefs || {}).Lunch || {}).skip) return;
       const w = E.dayWindow(d, E.makeTravel(s.prefs, s.legModes)); if (!w || w.error || !E.lunchWanted(w) || !p.items.some(x => x.t === 'stop')) return;
       const c = s.cities[d.city] || {}; if (!(c.restaurants || []).length && !(c.farther || []).some(t => (t.foodDrink || []).length)) return; // no place to eat known at all
       days++; const m = p.items.find(x => x.t === 'meal' && x.meal === 'Lunch');
+      // ...and open then: the day's facts, else the place's own map hours for that date (Nov 23 real-map check: Sorbillo at
+      // 11:45 when it opens at noon, Han Gang at 12:03 when it opens at 1 pm).
+      if (m && !m.packed && !m.onBoard && !m.booked && !m.chosen) { const fx = E.eatFactsFor(d, c.restaurants)[E.eatKey(m.name)];
+        if (fx && E.closedForDay(fx, { start: m.at, endBy: m.at + m.min }, m.min)) shutAt.push(`${f} day ${i + 1}: ${m.name} at ${E.clock(m.at)} (${fx.mapHours || 'day facts'})`); }
       // None only when the plan says why, plainly (no time left before the ship; no place to eat known out there).
       if (!m && !(p.explain || []).some(t => /no room for lunch|no time for a sit-down lunch|no place to eat|places to eat aren't in the guide/i.test(t))) noLunch.push(`${f} day ${i + 1}`); else if (!m) said++; else if (/^Lunch in /.test(m.name) && (c.farther || []).some(t => ('Lunch in ' + t.name) === m.name && (t.foodDrink || []).some(x => x.kind === 'eat' && isFinite(x.lat) && E.hav(x, t) <= 3))) noLunch.push(`${f} day ${i + 1}: "${m.name}" names no place`); });
     for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, f))), places); lunchCheck(f, s, E.planTrip(s)); }
@@ -464,6 +468,13 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
       s.days[ni].selected = picks; s.days[ni].own = true; const ps = E.planTrip(s); lunchCheck('Naples ' + picks.join('+'), s, ps.map((p, k) => k === ni ? p : null));
       check('Naples ' + picks.join('+'), s, ps.map((p, k) => k === ni ? p : null)); }
     for (const x of noLunch.slice(0, 8)) ok(false, `no lunch on a day over lunchtime: ${x}`);
+    for (const x of shutAt.slice(0, 8)) ok(false, `lunch at a place shut at that hour: ${x}`);
+    ok(!shutAt.length, `every planned lunch is at a place not known to be shut then (map hours read for the date)`);
+    { const fx = E.eatFactsFor({ date: '2026-11-23', eats: {} }, [{ name: 'Noon Place', hours: 'Mo-Sa 12:00-15:30; Su off' }, { name: 'Sunday Shut', hours: 'Mo-Sa 12:00-15:00' }, { name: 'Odd', hours: 'Jun-Sep 12:00-15:00' }]);
+      const sun = E.eatFactsFor({ date: '2026-11-22' }, [{ name: 'Noon Place', hours: 'Mo-Sa 12:00-15:30; Su off' }]);
+      ok(fx[E.eatKey('Noon Place')] && JSON.stringify(fx[E.eatKey('Noon Place')].oh.spans) === '[[720,930]]' && sun[E.eatKey('Noon Place')].closed && !fx[E.eatKey('Odd')]
+        && E.eatShut(sun[E.eatKey('Noon Place')], 'Lunch') && !E.eatShut(fx[E.eatKey('Noon Place')], 'Lunch'),
+        'a place to eat with map hours: open spans read for the date, shut on its day off, unreadable hours left unknown'); }
     if (!noLunch.length) oks++; console.log(`ok   lunch on ${days - said - noLunch.length} of ${days} days over lunchtime (${said} say plainly why not)${noLunch.length ? ', missing silently on ' + noLunch.length : ''}`); }
   console.log(`ok   every ride the kind it is drawn as: ${boats} boat rides, ${piered} rides to or from a pier`); }
 

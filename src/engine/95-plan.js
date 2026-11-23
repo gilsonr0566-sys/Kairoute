@@ -114,12 +114,25 @@
   // hours; a trip out of town is its own place.
   E.needsHours = s => !!s && !s.far && !E.has(s, "open-air");
   const ACT = /didn't fit|would arrive after|too late to see before|is closed on|Boats keep their own timetable|^Bring lunch|where you put it|lunch is back on board|no room for lunch|take a boat back/i, FREE = /^Free time|^Time left for|^Nothing left to plan/;
-  // A place to eat named only as a kind of place ("Harbor-front tavernas", "Seafood restaurants on the quay") is a tip, never
-  // a timed lunch at a real place (Fable review #13; Richard's lunch rule: a real place).
+  // What is known of each place to eat that day: the day's own facts first, else the hours the place has on the map, read
+  // for that date (Nov 23 real-map check: 10 of 140 lunches were planned at places shut at that hour, Sorbillo at 11:45 when
+  // it opens at noon, because the map hours never reached the planner). Hours this reader can't fully read stay unknown.
+  E.eatFactsFor = (d, eats) => {
+    const out = Object.assign({}, (d && d.eats) || {}); if (!d || !d.date) return out;
+    for (const r of eats || []) {
+      if (!r || !r.hours || !r.name) continue; const k = E.eatKey(r.name), f = out[k] || out[r.name.toLowerCase()];
+      if (f && (f.closed || (f.oh && f.oh.spans && f.oh.spans.length))) continue;
+      const oh = E.ohSpans(r.hours, d.date); if (!oh) continue;
+      out[k] = Object.assign({}, f || {}, oh.spans.length ? { oh, mapHours: r.hours } : { closed: true, mapHours: r.hours });
+    }
+    return out;
+  };
   // A town's real places to eat: listed as a place to eat (not a café for a treat, a bar, a school or an embassy the guide
   // lists elsewhere), named, readable, on the map within 3 km of the town (any distance when the town has no point).
   E.townEats = (t, any) => (t && t.foodDrink || []).filter(x => x && x.kind === "eat" && x.name && !E.genericEat(x.name) && E.mealPlace({ name: x.name, cuisine: x.note || "" })
     && (any ? true : isFinite(x.lat) && isFinite(x.lng) && (!isFinite(t.lat) || E.hav(x, t) <= 3)));
+  // A place to eat named only as a kind of place ("Harbor-front tavernas", "Seafood restaurants on the quay") is a tip, never
+  // a timed lunch at a real place (Fable review #13; Richard's lunch rule: a real place).
   E.genericEat = n => { const t = String(n || "").trim(); return !t || (/\b(tavernas|restaurants|cafes|cafés|bars|eateries|stalls|kiosks|trattorias|trattorie|osterie|ristoranti|bistros|pubs|food trucks|places to eat|spots|joints|street food|lokantas|tascas|tabernas|ouzeries|izakayas|chiringuitos|snack bars|beach bars|food stalls|food court|hawker)\b/i.test(t) && !/^[A-Z][\w'’.-]*\s*['’]s\b/.test(t) && !/\b(&|and)\b.*\b(bar|cafe|restaurant)\b$/i.test(t)); };
   E.explainKind = t => FREE.test(t) ? "free" : ACT.test(t) ? "act" : "info";
   E.ASSUME_OPEN = 9 * 60; E.ASSUME_CLOSE = 17 * 60; // hours assumed for a sight that needs them when none are known
@@ -276,7 +289,7 @@
         // the far sight's own time (Nov 19: back from a lagoon 1 h 30 min away, timed as a 55 min taxi to lunch by the port).
         const o = win.head[win.head.length - 1], tn = o && isFinite(o.lat) && E.hav(o, t) <= 5 ? "" : t.travelNote || "";
         return real.map(x => ({ name: x.name, lat: x.lat, lng: x.lng, kind: "restaurant", amenity: "restaurant", cuisine: x.note || "", fromMap: !!x.fromMap, inTown: t.id, travelNote: tn })); });
-      const ctx = { single: (byCity.get(d.city) || [i]).length === 1, tr, ledger, dayIdx: i, siteDay, eats: (city.restaurants || []).concat(townLunch).filter(r => !E.genericEat(r.name)).sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name))), eatFacts: d.eats || {}, mealPrefs: E.mealInput(d) };
+      const ctx = { single: (byCity.get(d.city) || [i]).length === 1, tr, ledger, dayIdx: i, siteDay, eats: (city.restaurants || []).concat(townLunch).filter(r => !E.genericEat(r.name)).sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name))), eatFacts: E.eatFactsFor(d, city.restaurants), mealPrefs: E.mealInput(d) };
       // May this day add a sight on its own? Not one used on another day, picked for another day, or in another
       // day's area, unless that day is already planned and left it over.
       const doneDay = j => j == null || j === i || out[j] != null;

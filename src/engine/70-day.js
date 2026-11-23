@@ -14,13 +14,20 @@
   // another order of the same picks had it before 1:30): each minute lunch starts after E.LUNCH_BY weighs a little less than a
   // minute riding, so the order and the gap for lunch keep it near midday unless that costs a lot of travel.
   E.LUNCH_BY = 14 * 60;
-  const penalty = E.dayCost = r => r.over * 1000 + r.late * 500 + (r.mealPen || 0) * 4 + r.waits * 0.5 + r.end * 0.01 + r.rideMin * 0.5 + (r.lunchLate || 0) * 0.4;
+  const penalty = E.dayCost = r => r.over * 1000 + r.late * 500 + (r.mealPen || 0) * 4 + r.waits * 0.5 + r.end * 0.01 + r.rideMin * 0.5 + (r.lunchLate || 0) * 0.4 + (r.lunchShort || 0) * 0.45 + (r.visitCut || 0);
   function walk(seq, win, ctx, from) {
     const r = E.walkDay(seq, win, ctx.tr.estimate, ctx.siteDay, from);
     r.lateMeal = r.items.reduce((a, x) => a + (x.lateMeal || 0), 0);
     // A meal at a time the traveler set is held like a booked table: being late for it costs ten times as much.
     r.mealPen = r.items.reduce((a, x) => a + (x.lateMeal || 0) * (x.pinned ? 10 : 1), 0);
     r.lunchLate = r.items.reduce((a, x) => a + (x.t === "meal" && x.meal === "Lunch" && !x.pinned && isFinite(x.at) ? Math.max(0, x.at - E.LUNCH_BY) : 0), 0);
+    // A lunch made shorter than a sit-down lunch is a real loss, not a few minutes saved (Nov 23: with an hour to spare at the
+    // end of the day, the order that squeezed lunch to 35 min to fit one more square won over the order that kept a full lunch
+    // and ended later, and a day with a short lunch and the time to spare now looks for an order that gives it back): each minute lunch loses weighs about as much as a minute riding.
+    r.lunchShort = r.items.reduce((a, x) => a + (x.t === "meal" && x.meal === "Lunch" && !x.booked && !x.chosen && !x.packed && x.min > 0 ? Math.max(0, E.MEALS[0].len - x.min) : 0), 0);
+    // ...and never at a visit's cost: minutes a visit gives up for lunch weigh more than minutes of lunch (a visit cut in half
+    // to keep a full lunch is worse than a quick lunch).
+    r.visitCut = seq.reduce((a, x) => a + (x && x.lunchCut ? x.lunchCut : 0), 0);
     return r;
   }
   // Lunch belongs in a day whose sightseeing runs at least four hours and through the middle of the day.
@@ -243,7 +250,7 @@
       order = cost(ca) <= cost(cb) ? a : b;
     }
     let cur = withLunch(order, win, ctx, quick), pen = cost(cur);
-    if (!quick && (cur.r.late || cur.r.over || cur.noLunch === "time")) {
+    if (!quick && (cur.r.late || cur.r.over || cur.noLunch === "time" || (cur.r.lunchShort > 0 && win.endBy - cur.r.end >= cur.r.lunchShort))) {
       // Each pass tries every single move from the same order and takes the best one (Nov 19: the first move that fixed a
       // late museum was taken, a sight beside the first stop sent across town and back, when swapping two museums was better).
       for (let pass = 0; pass < 3; pass++) {

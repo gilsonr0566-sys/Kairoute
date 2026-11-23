@@ -91,7 +91,8 @@ function rules(text, info = {}) {
     if (P.rides.filter(q => q.from === r.from).length > 1) return;
     const gap = nx.arrive - (r.from.leave + r.min); if (Math.abs(gap) > 2 && !/spare|wait|includes/i.test(r.notes.join(' '))) add('S2', 'leave + ride = arrive at lunch', `${r.from.name} leave ${clock(r.from.leave)} + ${r.head} gives ${clock(r.from.leave + r.min)}, lunch says arrive ${clock(nx.arrive)}`); });
   // Dinner at a dinner hour (card review: "ARRIVE 11:43 pm Suggested dinner").
-  all.forEach((l, k) => { if (/^(From|ARRIVE)$/.test(l) && T(all[k + 1]) != null && T(all[k + 1]) > 21 * 60 + 30 && /dinner/i.test(all.slice(k + 2, k + 5).join(' '))) add('S2', 'dinner at a dinner hour', `dinner at ${all[k + 1]}`); });
+  const lines = raw.split('\n').map(l => l.trim());
+  lines.forEach((l, k) => { if (/^(From|FROM|ARRIVE)$/.test(l) && T(lines[k + 1]) != null && T(lines[k + 1]) > 21 * 60 + 30 && /dinner/i.test(lines.slice(k + 2, k + 5).join(' '))) add('S2', 'dinner at a dinner hour', `dinner at ${lines[k + 1]}`); });
   const firstT = (P.rows[0] || {}).leave, lastT = end ? end.arrive : (P.rows[P.rows.length - 1] || {}).leave;
   if (stops.length >= 2 && firstT != null && lastT != null && firstT <= 12 * 60 && lastT >= 14 * 60 + 30 && !lunch.length && !P.lunchSaid) add('S2', 'lunch on a day out', `out ${clock(firstT)} to ${clock(lastT)} with no lunch and nothing said about it`);
   /* Bags: stored and collected with nothing between is storage for nothing; time out after collecting means carrying the bags. */

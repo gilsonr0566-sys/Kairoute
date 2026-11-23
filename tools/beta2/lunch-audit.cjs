@@ -4,7 +4,7 @@
 //   real      lunch is at a real, named place to eat (never "Lunch in <town>", "Lunch near X" or a made-up name), or it
 //             is a lunch the traveler brings
 //   meal      the place serves meals (not only a bar, café, bakery or ice cream)
-//   open      the place is not known to be shut when lunch is planned (its hours that weekday)
+//   open      the place is not known to be shut when lunch is planned (the day's facts, else its own map hours that date)
 //   time      lunch starts by 2:30 pm (the kitchen's last orders), and never before 11:30
 //   walk      lunch never adds more than a 15-minute walk (1.1 km) out of the way between the stop before and the next
 //   once      a place to eat is used on one day of the trip only
@@ -45,7 +45,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
         if (first <= 12 * 60 && last >= 14 * 60 + 30 && !/lunch/i.test(said)) add('out', `${tag}: out ${E.clock(first)} to ${E.clock(last)}, no lunch and nothing said`); }
       for (const m of meals) {
         const k = E.eatKey(m.name), r = (city.restaurants || []).find(y => E.eatKey(y.name) === k) || {};
-        const fact = (d.eats || {})[k] || (d.eats || {})[String(m.name).toLowerCase()];
+        const facts = E.eatFactsFor(d, city.restaurants), fact = facts[k] || facts[String(m.name).toLowerCase()]; // the day's facts, else the place's own map hours
         const known = !!(fact && (fact.closed || (fact.oh && fact.oh.spans && fact.oh.spans.length)));
         const pts = p.items.filter(y => isFinite(y.lat) && y.t !== 'ride'), j = pts.indexOf(m), before = pts[j - 1], after = pts[j + 1];
         const ix = p.items.indexOf(m), rideIn = p.items[ix - 1] && p.items[ix - 1].t === 'ride' ? p.items[ix - 1] : null, rideOut = p.items[ix + 1] && p.items[ix + 1].t === 'ride' ? p.items[ix + 1] : null;
