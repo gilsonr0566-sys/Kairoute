@@ -1,0 +1,228 @@
+{
+ "id": "national-garden",
+ "v": 1,
+ "city": "athens",
+ "title": "National Garden and Zappeion",
+ "match": {
+  "ids": ["national-garden"],
+  "names": ["national garden", "national gardens", "royal garden", "zappeion", "ethnikos kipos"],
+  "wikidata": ["Q646284", "Q147478"]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "ng-what": {
+   "label": "supported",
+   "says": "The National Garden, once the Royal Garden, is a public park of 15.5 hectares in central Athens, directly behind the Parliament building.",
+   "src": ["wp-national-garden"],
+   "quote": ["formerly known as the Royal Garden until 1974, is a public park of 15.5 hectares (38 acres) in the center of the Greek capital, Athens", "directly behind the Greek Parliament building (The Old Palace)"]
+  },
+  "ng-amalia": {
+   "label": "supported",
+   "says": "Queen Amalia commissioned it in 1838; it was completed by 1840.",
+   "src": ["wp-national-garden"],
+   "quote": ["The Royal Garden was commissioned by Queen Amalia in 1838 and completed by 1840."]
+  },
+  "ng-palms": {
+   "label": "supported",
+   "says": "In her honor the entrance was moved to the 12 palms she planted, and the street outside was renamed Queen Amalia Avenue.",
+   "src": ["wp-national-garden"],
+   "quote": ["In honour of Amalia of Greece, the entrance was moved to the 12 palms she planted and the street in front was renamed Queen Amalia Avenue."]
+  },
+  "ng-cool": {
+   "label": "supported",
+   "says": "Wikivoyage calls it easily the coolest place to hide from the summer sun.",
+   "src": ["wv-athens"],
+   "quote": ["easily the coolest place to hide from the summer sun"]
+  },
+  "ng-schmidt": {
+   "label": "supported",
+   "says": "The German agronomist Friedrich Schmidt designed it, importing over 500 plant species plus peacocks, ducks and turtles; many plants did not survive the dry climate.",
+   "src": ["wp-national-garden"],
+   "quote": ["It was designed by the German agronomist Friedrich Schmidt who imported over 500 species of plants and a variety of animals including peacocks, ducks, and turtles. Unfortunately for many of the plants, the dry Mediterranean climate proved too harsh and they did not survive."]
+  },
+  "ng-public": {
+   "label": "supported",
+   "says": "Part of the upper garden was the private refuge of the King and Queen; in the 1920s the park was opened to the public and renamed the National Garden.",
+   "src": ["wp-national-garden"],
+   "quote": ["A part of the upper garden, behind the Old Palace, was fenced off and was the private refuge of the King and Queen.", "In the 1920s the park was opened to the public and renamed \"National Garden\"."]
+  },
+  "ng-ruins": {
+   "label": "supported",
+   "says": "Inside are ancient ruins, mostly Roman, including a Roman villa with a mosaic and many columns.",
+   "src": ["wp-national-garden"],
+   "quote": ["Inside the garden can be spotted ancient ruins, the vast majority of them are Roman. A Roman villa with a mosaic, large numbers of columns of all orders and sizes"]
+  },
+  "ng-pond": {
+   "label": "supported",
+   "says": "There is a duck pond, a Botanical Museum, a small cafe and a children's library and playground.",
+   "src": ["wp-national-garden"],
+   "quote": ["In the National Garden there are a duck pond, a Botanical Museum, a small cafe and a Children's Library and playground."]
+  },
+  "ng-tortoise": {
+   "label": "supported",
+   "says": "Wikivoyage mentions turtle and duck ponds and resident tortoises.",
+   "src": ["wv-athens"],
+   "quote": ["marvel at the turtle and duck ponds", "spot one of the resident tortoises exploring"]
+  },
+  "ng-busts": {
+   "label": "supported",
+   "says": "On the southeast side are busts of Ioannis Kapodistrias, first governor of Greece, and Jean-Gabriel Eynard; on the south side, the poets Dionysios Solomos, author of the national anthem, and Aristotelis Valaoritis.",
+   "src": ["wp-national-garden"],
+   "quote": ["On the Southeast side are the busts of Ioannis Kapodistrias, the first governor of Greece, and of the Philhellene Jean-Gabriel Eynard. On the South side are the busts of the celebrated Greek poets Dionysios Solomos, author of the Greek National Anthem, and Aristotelis Valaoritis."]
+  },
+  "ng-monkey": {
+   "label": "supported",
+   "says": "On 30 September 1920, walking in the garden, King Alexander was bitten by a pet monkey and died of sepsis three weeks later.",
+   "src": ["wp-national-garden"],
+   "quote": ["While walking in the Garden on September 30, 1920, King Alexander was bitten by a pet monkey (whose pet it is not revealed) and he died of sepsis three weeks later."]
+  },
+  "ng-churchill": {
+   "label": "disputed",
+   "says": "His death brought back his deposed father Constantine I; it is argued this helped lead to the Asia Minor Catastrophe. Churchill wrote that perhaps a quarter of a million people died of this monkey's bite.",
+   "src": ["wp-national-garden"],
+   "quote": ["His death ushered the return of his deposed father, King Constantine I", "As a result of this change in political environment and it is argued", "the defeat of Greek troops in Turkey", "known collectively by the Greeks as the Asia Minor", "Winston Churchill wrote, \"it is perhaps no exaggeration to remark that a quarter of a million persons died of this monkey's bite.\""]
+  },
+  "ng-miller": {
+   "label": "supported",
+   "says": "Henry Miller wrote in 1939 that it remained in his memory like no other park, the quintessence of a park.",
+   "src": ["wp-national-garden"],
+   "quote": ["Henry Miller wrote in 1939", "It remains in my memory like no other park I have known. It is the quintessence of a park"]
+  },
+  "ng-gates": {
+   "label": "supported",
+   "says": "The main entrance is on Amalias Avenue; one of the other gates connects the garden with the Zappeion park.",
+   "src": ["wp-national-garden"],
+   "quote": ["The main entrance is on Leoforos Amalias", "the third gate connects the National Garden with the Zappeion park area"]
+  },
+  "zp-what": {
+   "label": "supported",
+   "says": "The Zappeion is a large palatial building next to the National Gardens, used for meetings and ceremonies.",
+   "src": ["wp-zappeion"],
+   "quote": ["is a large, palatial building next to the National Gardens of Athens in the heart of Athens, Greece. It is generally used for meetings and ceremonies, both official and private"]
+  },
+  "zp-olympic": {
+   "label": "supported",
+   "says": "It was the first building put up specifically for the revival of the Olympic Games; it opened on 20 October 1888, designed by Theophil Hansen.",
+   "src": ["wp-zappeion"],
+   "quote": ["the Zappeion was the first building to be erected specifically for the revival of the Olympic Games", "on 20 October 1888, the Zappeion opened", "this new building would be designed by Danish architect Theophil Hansen"]
+  },
+  "zp-zappas": {
+   "label": "supported",
+   "says": "Its benefactor Evangelis Zappas did not live to see it built; his head is 'buried' inside a wall of the building.",
+   "src": ["wp-zappeion"],
+   "quote": ["Unfortunately for its benefactor, Evangelis Zappas, he did not live long enough to see the Zappeion built.", "The head of Evangelos Zappas is 'buried' inside a wall in the Zappeion."]
+  },
+  "zp-zappian": {
+   "label": "supported",
+   "says": "Zappas had started the Zappian Olympic Games, a forerunner of the modern Olympics.",
+   "src": ["wp-national-garden"],
+   "quote": ["Zappas had started the Zappian Olympic Games, a precursor to the modern Olympic Games."]
+  },
+  "zp-fencing": {
+   "label": "supported",
+   "says": "In the 1896 Olympics it was the main fencing hall; in 1906 it was the Olympic Village.",
+   "src": ["wp-zappeion"],
+   "quote": ["The Zappeion was used during the 1896 Summer Olympics as the main fencing hall. A decade later, at the 1906 Intercalated Games, it was used as the Olympic Village."]
+  },
+  "zp-europe": {
+   "label": "supported",
+   "says": "In May 1979 the documents of Greece's accession to the European Community were signed in its marble-clad main atrium.",
+   "src": ["wp-zappeion"],
+   "quote": ["the signing of the documents formalizing Greece's accession to the European Community in May, 1979, which took place in the building's marble-clad, peristyle main atrium"]
+  },
+  "zp-radio": {
+   "label": "supported",
+   "says": "In 1938 Greece's first national broadcaster, the Athens Radio Station, began operating here.",
+   "src": ["wp-zappeion"],
+   "quote": ["In 1938, the Athens Radio Station, the country's first national broadcaster, began operating in the premises."]
+  }
+ },
+ "parts": [
+  {
+   "name": "Queen Amalia's garden",
+   "stand": "At the main entrance on Amalias Avenue, among the tall palms, facing into the garden.",
+   "paras": [
+    {
+     "t": "Welcome to the National Garden, right behind the Parliament building. It used to be the Royal Garden. Queen Amalia commissioned it in 1838, and it was finished by 1840. Those palms around the entrance? The entrance was moved here to the 12 palms she planted, in her honor.",
+     "c": ["ng-what", "ng-amalia", "ng-palms"],
+     "level": 1
+    },
+    {
+     "t": "If the city is hot today, you've come to the right place. Wikivoyage calls this easily the coolest place to hide from the summer sun.",
+     "c": ["ng-cool"],
+     "level": 1
+    },
+    {
+     "t": "It was laid out by a German agronomist, Friedrich Schmidt. He brought in over 500 kinds of plants, and peacocks, ducks and turtles too. Sadly a lot of the plants couldn't take the dry Mediterranean climate and died. For a long time part of it was the private refuge of the King and Queen. In the 1920s it was opened to the public and renamed the National Garden.",
+     "c": ["ng-schmidt", "ng-public"],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Inside the garden",
+   "stand": "Follow the paths into the garden, and stop wherever you find shade.",
+   "paras": [
+    {
+     "t": "Keep your eyes open as you wander. There are ancient ruins tucked in among the trees, mostly Roman: columns, and even a Roman villa with a mosaic. There's a duck pond, and look out for the turtles and the tortoises that live here.",
+     "c": ["ng-ruins", "ng-pond", "ng-tortoise"],
+     "level": 1
+    },
+    {
+     "t": "On the southeast side you'll find busts of Ioannis Kapodistrias, the first governor of Greece, and Jean-Gabriel Eynard, a friend of the Greek cause. On the south side are two poets, Aristotelis Valaoritis, and Dionysios Solomos, who wrote the words of the Greek national anthem.",
+     "c": ["ng-busts"],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The monkey's bite",
+   "stand": "Anywhere on the shaded paths.",
+   "paras": [
+    {
+     "t": "Now a very strange story, and a true one. On the 30th of September 1920, King Alexander was walking in this garden when he was bitten by a pet monkey. Three weeks later he died of the infection.",
+     "c": ["ng-monkey"],
+     "level": 2
+    },
+    {
+     "t": "His death brought back his deposed father, King Constantine. Historians have argued that the political change that followed helped lead to Greece's defeat in Asia Minor, the disaster Greeks call the Catastrophe. Winston Churchill wrote that perhaps a quarter of a million people died of this monkey's bite.",
+     "c": ["ng-churchill"],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Zappeion",
+   "stand": "Take the gate that leads from the garden into the Zappeion park, and face the large building.",
+   "paras": [
+    {
+     "t": "This grand building is the Zappeion. It was the first building ever put up specifically for the revival of the Olympic Games. It was designed by Theophil Hansen and opened on 20 October 1888.",
+     "c": ["ng-gates", "zp-what", "zp-olympic"],
+     "level": 1
+    },
+    {
+     "t": "It's named for Evangelis Zappas, who had started his own Zappian Olympic Games, a forerunner of the modern Olympics. He paid for this, but didn't live to see it built. And here's an odd detail: his head is said to be buried inside one of the building's walls.",
+     "c": ["zp-zappian", "zp-zappas"],
+     "level": 2
+    },
+    {
+     "t": "At the 1896 Olympics this was the main fencing hall, and in 1906 it housed the athletes. In 1938 Greece's first national radio station started broadcasting from here. And in May 1979, in its marble atrium, Greece signed the papers to join the European Community.",
+     "c": ["zp-fencing", "zp-radio", "zp-europe"],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Find a bench in the shade before you leave.",
+   "paras": [
+    {
+     "t": "The writer Henry Miller, writing in 1939, said this garden stayed in his memory like no other park he had known. He called it the quintessence of a park. Sit a minute before you go back into the traffic. That's what this garden has been for, ever since the gates opened to everyone.",
+     "c": ["ng-miller", "ng-public"],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

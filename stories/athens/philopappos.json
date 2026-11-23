@@ -1,0 +1,369 @@
+{
+ "id": "philopappos",
+ "v": 1,
+ "city": "athens",
+ "title": "Philopappos Hill",
+ "match": {
+  "ids": [
+   "philopappos"
+  ],
+  "names": [
+   "philopappos",
+   "philopappou",
+   "filopappou",
+   "pnyx",
+   "pnyka",
+   "muses hill",
+   "mouseion"
+  ],
+  "wikidata": [
+   "Q1760491"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "ph-hill": {
+   "label": "supported",
+   "says": "The tomb was built on Muses Hill near the Acropolis; the hill is today called Philopappou Hill after it.",
+   "src": [
+    "wp-philopappos-monument"
+   ],
+   "quote": [
+    "Balbilla with the citizens of Athens erected a tomb structure on Muses Hill (Λόφος Μουσών) near the Acropolis of Athens. His marble tomb monument is still known as the Philopappos (or Philopappou) Monument, and the hill is today known as Philopappou Hill"
+   ]
+  },
+  "ph-trees": {
+   "label": "supported",
+   "says": "Philopappos hill is planted with pines and other trees, more like a small forest than a city park.",
+   "src": [
+    "wv-athens"
+   ],
+   "quote": [
+    "Philopappos hill",
+    "are planted with pines and other trees, and are more like small forests than typical urban parks"
+   ]
+  },
+  "ph-safety": {
+   "label": "supported",
+   "says": "Wear shoes with good traction; marble underfoot is slippery; the Philopappou Hill area should be avoided at night.",
+   "src": [
+    "wv-athens"
+   ],
+   "quote": [
+    "Wear comfortable shoes with good traction",
+    "the soft, slippery marble that you're walking on",
+    "The Philopappou Hill area should be avoided at night."
+   ]
+  },
+  "ph-who": {
+   "label": "supported",
+   "says": "The monument is a Roman tomb for Gaius Julius Antiochus Epiphanes Philopappos (65 to 116 AD), a prince of the Kingdom of Commagene, southwest of the Acropolis.",
+   "src": [
+    "wp-philopappos-monument"
+   ],
+   "quote": [
+    "is an ancient Roman mausoleum and monument dedicated to Gaius Julius Antiochus Epiphanes Philopappos or Philopappus",
+    "65–116 AD), a prince from the Kingdom of Commagene. It is located on Mouseion Hill in Athens, Greece, southwest of the Acropolis."
+   ]
+  },
+  "ph-grief": {
+   "label": "supported",
+   "says": "He died in 116 AD; his death caused great grief to his sister Julia Balbilla and the citizens of Athens.",
+   "src": [
+    "wp-philopappos-monument"
+   ],
+   "quote": [
+    "Philopappos died in 116 AD, and his death caused great grief to his sister Julia Balbilla, citizens of Athens and possibly to the imperial family."
+   ]
+  },
+  "ph-place": {
+   "label": "supported",
+   "says": "Its place opposite the Acropolis, inside the city boundaries, shows his high standing in Athens.",
+   "src": [
+    "wp-philopappos-monument"
+   ],
+   "quote": [
+    "The location of this tomb, opposite the Acropolis and within formal boundaries of the city, shows the high position Philopappos had within Athenian society."
+   ]
+  },
+  "ph-musaeus": {
+   "label": "tradition",
+   "says": "It stands where the poet and seer Musaeus, of the 6th century BC, was held to have been buried.",
+   "src": [
+    "wp-philopappos-monument"
+   ],
+   "quote": [
+    "The monument was built on the same site where Mousaios or Musaeus, a 6th-century BC priestly poet and mystical seer, was held to have been buried."
+   ]
+  },
+  "ph-frieze": {
+   "label": "supported",
+   "says": "Lower level: a frieze of Philopappos as consul in a chariot led by lictors. Upper level: his grandfather Antiochus IV on the left, Philopappos in the center, Seleucus I (now lost), from whom the kings of Commagene claimed descent, on the right.",
+   "src": [
+    "wp-philopappos-monument"
+   ],
+   "quote": [
+    "On the lower level there is a frieze representing Philopappos as a consul, riding on a chariot and led by lictors. The upper level shows statues of three men: of Antiochus IV on the left, of Philopappos in the centre and of Seleucus I Nicator, now lost, on the right.",
+    "Below the statue of Antiochus IV, Philopappos' paternal grandfather",
+    "Seleucus I, the founder of the Seleucid Empire from whom the Commagene kings claimed descent"
+   ]
+  },
+  "ph-names": {
+   "label": "supported",
+   "says": "Below him a Greek inscription gives his Athenian citizen's name; to the left a Latin inscription lists his Roman career, including consul.",
+   "src": [
+    "wp-philopappos-monument"
+   ],
+   "quote": [
+    "In the niche below Philopappos is an inscription in Greek",
+    "This was the name Philopappos carried as an Athenian citizen. In the niche left of Philopappos, a Latin inscription records Philopappos' titles, honors and his career as a Roman magistrate"
+   ]
+  },
+  "ph-syrian": {
+   "label": "supported",
+   "says": "The geographer Pausanias described it as a monument built for a Syrian man.",
+   "src": [
+    "wp-philopappos-monument"
+   ],
+   "quote": [
+    "The Greek geographer Pausanias describes Philopappos' grand tomb as a monument built for a Syrian man."
+   ]
+  },
+  "ph-ruin": {
+   "label": "supported",
+   "says": "Only two-thirds of the front survives; it was still intact in 1436; parts were used to build the Ottoman minaret in the Parthenon.",
+   "src": [
+    "wp-philopappos-monument"
+   ],
+   "quote": [
+    "Only two-thirds of the façade remains.",
+    "The Philopappos Monument was apparently still intact in 1436",
+    "architectural parts of Philopappos' Monument were used for construction of the minaret in the Parthenon under the Ottomans"
+   ]
+  },
+  "px-what": {
+   "label": "supported",
+   "says": "From as early as 507 BC the Athenians gathered on the Pnyx for their popular assemblies, making it one of the earliest and most important sites in the creation of democracy.",
+   "src": [
+    "wp-pnyx"
+   ],
+   "quote": [
+    "Beginning as early as 507 BC (Fifth-century Athens), the Athenians gathered on the Pnyx to host their popular assemblies, making the hill one of the earliest and most important sites in the creation of democracy."
+   ]
+  },
+  "px-bema": {
+   "label": "supported",
+   "says": "The large flat stone platform set into the hillside was the bema, the speakers' platform of the assembly.",
+   "src": [
+    "wp-pnyx"
+   ],
+   "quote": [
+    "with a large flat platform of eroded stone set into its side",
+    "the flat stone platform was the bema, the \"stepping stone\" or speakers' platform"
+   ]
+  },
+  "px-agora": {
+   "label": "supported",
+   "says": "The Pnyx looks down on the ancient Agora.",
+   "src": [
+    "wp-pnyx"
+   ],
+   "quote": [
+    "It looks down on the ancient Agora"
+   ]
+  },
+  "px-speakers": {
+   "label": "supported",
+   "says": "Pericles, Aristides and Alcibiades spoke here, within sight of the Parthenon; Demosthenes attacked Philip II of Macedon here.",
+   "src": [
+    "wp-pnyx"
+   ],
+   "quote": [
+    "Pericles, Aristides and Alcibiades spoke here, within sight of the Parthenon, temple of Athena. Here Demosthenes delivered his vilifications of Philip II of Macedon."
+   ]
+  },
+  "px-who-speaks": {
+   "label": "supported",
+   "says": "Each debate opened with the invitation: Who wishes to speak? It stood for isegoria, the equal right of every citizen to debate.",
+   "src": [
+    "wp-pnyx"
+   ],
+   "quote": [
+    "the equal right of every citizen to debate matters of policy",
+    "formally opened each debate with the open invitation",
+    "\"Who wishes to speak to the Popular Assembly?\""
+   ]
+  },
+  "px-crowd": {
+   "label": "estimate",
+   "says": "About 6,000 men could stand on the area in front of the platform; some scholars think later expansions held 8,000 or as many as 13,000.",
+   "src": [
+    "wp-pnyx"
+   ],
+   "quote": [
+    "The grassy area in front of the bema was in ancient times an area of bare rock, on which about 6,000 men could stand.",
+    "Scholars such as Mogens Herman Hansen suggest the Pnyx was able to hold about 6,000 citizens, though later expansions may have accommodated 8,000 or as many as 13,000."
+   ]
+  },
+  "px-citizens": {
+   "label": "supported",
+   "says": "Citizens were free males born in the city, perhaps 20% of adults; in practice relatively few spoke; those over 50 had the right to be heard first.",
+   "src": [
+    "wp-pnyx"
+   ],
+   "quote": [
+    "Citizens were free males born in the city, or perhaps 20% of the adult population.",
+    "In practice, relatively few citizens actually spoke or proposed actions.",
+    "There was a rule that citizens aged over 50 had a right to be heard first."
+   ]
+  },
+  "px-moved": {
+   "label": "supported",
+   "says": "By the 1st century BC the assembly met in the Theatre of Dionysus instead.",
+   "src": [
+    "wp-pnyx"
+   ],
+   "quote": [
+    "Certainly by the 1st century B.C. the assembly held their meetings in the Theater of Dionysos"
+   ]
+  },
+  "px-meton": {
+   "label": "supported",
+   "says": "Here are the foundations of Meton's heliotropion, the oldest known astronomical observatory; his 19-year cycle appears in the Antikythera mechanism.",
+   "src": [
+    "wp-pnyx"
+   ],
+   "quote": [
+    "the foundations of Meton's heliotropion, the oldest known astronomical observatory",
+    "the eponymous 19-year Metonic cycle",
+    "a calendar that appears in the Antikythera Mechanism"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "On the hill",
+   "stand": "On the path up the hill, at a spot under the trees where you can look back at the Acropolis.",
+   "paras": [
+    {
+     "t": "This is Philopappos Hill. In ancient times it was the Hill of the Muses. Today it takes its name from the marble tomb up ahead. It's planted with pines and other trees, more like a small forest than a city park.",
+     "c": [
+      "ph-hill",
+      "ph-trees"
+     ],
+     "level": 1
+    },
+    {
+     "t": "A word about your feet. Wear shoes with good grip, because the marble underfoot can be slippery. And this is a walk for daylight: the hill is best avoided at night.",
+     "c": [
+      "ph-safety"
+     ],
+     "level": 1
+    }
+   ]
+  },
+  {
+   "name": "The Philopappos Monument",
+   "stand": "At the marble monument, facing its front.",
+   "paras": [
+    {
+     "t": "This is the tomb of Philopappos, a prince from the Kingdom of Commagene, who lived from 65 to 116 AD. When he died, his sister Julia Balbilla and the people of Athens built this for him. Putting it here, opposite the Acropolis, inside the city, says how much Athens thought of him.",
+     "c": [
+      "ph-who",
+      "ph-grief",
+      "ph-place"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Look at the front. Along the lower level, a carved frieze shows him as a Roman consul, riding in a chariot. Above, there were three statues: his grandfather, King Antiochus, on the left, Philopappos himself in the center, and on the right, Seleucus, the king his family claimed descent from. That one is now lost.",
+     "c": [
+      "ph-frieze"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Here's what makes him interesting. In the niche below his statue, a Greek inscription gives his name as an Athenian citizen. In the niche to the left, a Latin one lists his Roman career, consul included. So here's a prince from the East who was also an Athenian and a Roman.",
+     "c": [
+      "ph-names"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Tradition held that this spot was already a grave: the poet and seer Musaeus, from the 6th century BC, was believed to be buried here. And the ancient travel writer Pausanias summed the tomb up as a monument built for a Syrian man.",
+     "c": [
+      "ph-musaeus",
+      "ph-syrian"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Only two-thirds of the front survives. It was still intact in 1436. Later some of its stones were carried off and used to build the Ottoman minaret in the Parthenon, right across the way.",
+     "c": [
+      "ph-ruin"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Pnyx",
+   "stand": "Walk down to the Pnyx and stand on the open ground in front of the big flat stone platform cut into the hillside.",
+   "paras": [
+    {
+     "t": "This hillside is the Pnyx. From as early as 507 BC, this is where the Athenian assembly met. It's one of the earliest and most important places in the story of democracy. That stone platform in front of you was the bema, the speakers' platform.",
+     "c": [
+      "px-what",
+      "px-bema"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Pericles spoke here, and Aristides, and Alcibiades, all within sight of the Parthenon. Demosthenes stood here to attack Philip of Macedon. And from up here, the Pnyx looks down on the old Agora, the city's marketplace.",
+     "c": [
+      "px-speakers",
+      "px-agora"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Every debate opened with the same question: Who wishes to speak? That was the idea of isegoria, the equal right of every citizen to debate.",
+     "c": [
+      "px-who-speaks"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Let's be honest about who that meant. Citizens were free men born in the city, perhaps 20 percent of the adults. About 6,000 could stand on this ground, and scholars think later changes may have made room for as many as 13,000. And in practice, relatively few ever spoke. Men over 50 had the right to be heard first.",
+     "c": [
+      "px-citizens",
+      "px-crowd"
+     ],
+     "level": 3
+    },
+    {
+     "t": "By the 1st century BC the assembly had moved to the Theatre of Dionysus. One more thing up here: the foundations of the oldest known observatory, Meton's. His 19-year calendar cycle turns up on the Antikythera mechanism, in the National Archaeological Museum.",
+     "c": [
+      "px-moved",
+      "px-meton"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Stay facing the speakers' platform.",
+   "paras": [
+    {
+     "t": "Picture the presiding officer standing up, looking out over thousands of men, and asking, Who wishes to speak? Then the silence, while someone found the nerve. It's a good question to carry down the hill with you.",
+     "c": [
+      "px-who-speaks"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

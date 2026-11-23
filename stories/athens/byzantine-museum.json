@@ -1,0 +1,92 @@
+{
+ "id": "byzantine-museum",
+ "v": 1,
+ "city": "athens",
+ "title": "Byzantine and Christian Museum",
+ "match": {
+  "ids": ["byzantine-museum"],
+  "names": ["byzantine and christian museum", "byzantine museum", "villa ilissia", "ilissia"],
+  "wikidata": ["Q1018775"]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "by-what": {
+   "label": "supported",
+   "says": "The Byzantine and Christian Museum is on Vassilissis Sofias Avenue in Athens.",
+   "src": ["wp-byzantine-museum"],
+   "quote": ["The Byzantine and Christian Museum (Greek: Βυζαντινό και Χριστιανικό Μουσείο) is situated at Vassilissis Sofias Avenue in Athens, Greece."]
+  },
+  "by-collection": {
+   "label": "supported",
+   "says": "It holds more than 25,000 exhibits, including pictures, scriptures, frescoes, pottery, fabrics and manuscripts, from the 3rd century AD to the Late Middle Ages.",
+   "src": ["wp-byzantine-museum"],
+   "quote": ["It houses more than 25,000 exhibits with rare collections of pictures, scriptures, frescoes, pottery, fabrics, manuscripts, and copies of artefacts from the 3rd century AD to the Late Middle Ages."]
+  },
+  "by-founded": {
+   "label": "supported",
+   "says": "Founded in 1914, it was first housed on the first floor of the Academy, then moved to the villa of the Duchesse de Plaisance, the Ilissia Villa, a building of 1848.",
+   "src": ["wp-byzantine-museum"],
+   "quote": ["Founded in 1914, it was originally situated on the first floor of the Academy but it was later moved to the villa of the Duchesse de Plaisance, also known as the Ilissia Villa, a building of 1848."]
+  },
+  "by-architect": {
+   "label": "supported",
+   "says": "Villa Ilissia was designed by Stamatios Kleanthis.",
+   "src": ["wp-byzantine-museum"],
+   "quote": ["It is housed in Villa Ilissia  designed by Stamatios Kleanthis."]
+  },
+  "by-2004": {
+   "label": "supported",
+   "says": "In June 2004, for its 90th anniversary and the Athens Olympics, it reopened after a major renovation and a new wing.",
+   "src": ["wp-byzantine-museum"],
+   "quote": ["In June 2004, in time for its 90th anniversary and the 2004 Athens Olympics, the museum reopened to the public after an extensive renovation and the addition of another wing."]
+  },
+  "by-lyceum": {
+   "label": "supported",
+   "says": "The site of Aristotle's Lyceum, rediscovered in 1996, is entered from the same entrance as the Byzantine and Christian Museum.",
+   "src": ["wv-athens"],
+   "quote": ["Aristotle made the temple the home of his school, the Lyceum.", "Rediscovered in 1996, the site can now be viewed outdoors. Entrance is from the north, from the same entrance as for the Byzantine and Christian museum."]
+  }
+ },
+ "parts": [
+  {
+   "name": "The villa",
+   "stand": "Outside, facing the Villa Ilissia, the old villa that houses the museum.",
+   "paras": [
+    {
+     "t": "This is the Byzantine and Christian Museum. Inside are more than 25,000 objects: pictures, frescoes, manuscripts, fabrics and pottery, from the 3rd century AD to the late Middle Ages. That's well over a thousand years under one roof.",
+     "c": ["by-what", "by-collection"],
+     "level": 1
+    },
+    {
+     "t": "The museum was founded in 1914. At first it was on the first floor of the Academy. Then it moved here, to the Villa Ilissia, the villa of the Duchesse de Plaisance, a building from 1848, designed by Stamatios Kleanthis. In June 2004, for its 90th birthday and the Athens Olympics, it reopened with a new wing.",
+     "c": ["by-founded", "by-architect", "by-2004"],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Before you go in",
+   "stand": "Still outside, before you head in.",
+   "paras": [
+    {
+     "t": "Inside, follow the signs, and ask the staff if you're looking for something in particular.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "One more thing worth knowing. This is also the way into the site of the Lyceum, where Aristotle had his school. It was only rediscovered in 1996, and you use the same entrance as the museum.",
+     "c": ["by-lyceum"],
+     "level": 2
+    },
+    {
+     "t": "As you walk through, don't try to see everything. Find one face that holds your eye, and stay with it a while.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

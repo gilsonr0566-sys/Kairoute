@@ -1,0 +1,347 @@
+{
+ "id": "nam",
+ "v": 1,
+ "city": "athens",
+ "title": "National Archaeological Museum",
+ "match": {
+  "ids": ["nam"],
+  "names": ["national archaeological museum", "archaeological museum of athens", "ethniko archaiologiko"],
+  "wikidata": ["Q637187"]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "nam-what": {
+   "label": "supported",
+   "says": "The museum is considered one of the greatest in the world, with the richest collection of ancient Greek artifacts anywhere.",
+   "src": ["wp-nam"],
+   "quote": ["It is considered one of the greatest museums in the world and contains the richest collection of Greek Antiquity artifacts worldwide."]
+  },
+  "nam-garden": {
+   "label": "supported",
+   "says": "In front of the museum is a large neoclassical garden decorated with sculptures.",
+   "src": ["wp-nam"],
+   "quote": ["At the front of the museum there is a large neo-classic design garden which is decorated with sculptures."]
+  },
+  "nam-built": {
+   "label": "supported",
+   "says": "The building was begun in 1866 and completed in 1889.",
+   "src": ["wp-nam"],
+   "quote": ["the construction of the museum's building began in 1866 and was completed in 1889"]
+  },
+  "nam-first": {
+   "label": "supported",
+   "says": "Greece's first national archaeological museum was set up by the governor Ioannis Kapodistrias on Aigina in 1829.",
+   "src": ["wp-nam"],
+   "quote": ["The first national archaeological museum in Greece was established by the governor of Greece, Ioannis Kapodistrias, in Aigina in 1829."]
+  },
+  "nam-stais": {
+   "label": "supported",
+   "says": "In 1887 the archaeologist Valerios Stais became the museum's curator.",
+   "src": ["wp-nam"],
+   "quote": ["In 1887, the archaeologist Valerios Stais became the museum's curator."]
+  },
+  "nam-war": {
+   "label": "supported",
+   "says": "In the Second World War the museum closed and the antiquities were sealed in protective boxes and buried; in 1945 exhibits were displayed again.",
+   "src": ["wp-nam"],
+   "quote": ["During World War II, the museum was closed and the antiquities were sealed in special protective boxes and buried, in order to avoid their destruction and looting. In 1945, exhibits were again displayed"]
+  },
+  "mask-what": {
+   "label": "supported",
+   "says": "The Mask of Agamemnon is a gold funeral mask found at Mycenae; the historian Cathy Gere called it the Mona Lisa of prehistory.",
+   "src": ["wp-mask-agamemnon"],
+   "quote": ["The Mask of Agamemnon is a gold funerary mask which was discovered at the Bronze Age site of Mycenae in southern Greece.", "has been described by the historian Cathy Gere as the \"Mona Lisa of prehistory\""]
+  },
+  "mask-masks": {
+   "label": "supported",
+   "says": "The gold masks covered the faces of dead Mycenaean nobles; the most famous was wrongly named the mask of Agamemnon.",
+   "src": ["wp-nam"],
+   "quote": ["Most notable are the golden funerary masks which covered the faces of deceased Mycenean nobles. Among them, the most famous is the one that was named erroneously as the mask of Agamemnon."]
+  },
+  "mask-schliemann": {
+   "label": "supported",
+   "says": "Heinrich Schliemann found it in 1876 and believed he had found the body of King Agamemnon of the Iliad.",
+   "src": ["wp-mask-agamemnon"],
+   "quote": ["German archaeologist Heinrich Schliemann, who discovered the artifact in 1876, believed that he had found the body of the Mycenaean king Agamemnon"]
+  },
+  "mask-date": {
+   "label": "supported",
+   "says": "Modern research dates the mask to around the 16th century BC, 300 to 400 years before the mythical Trojan War.",
+   "src": ["wp-mask-agamemnon"],
+   "quote": ["Modern archaeological research suggests that the mask dates to around the 16th century BC, pre-dating the period of the mythical Trojan War by 300–400 years."]
+  },
+  "mask-telegram": {
+   "label": "legend",
+   "says": "Schliemann is supposed to have telegraphed the king: I have gazed upon the face of Agamemnon.",
+   "src": ["wp-mask-agamemnon"],
+   "quote": ["Schliemann notified King George I.", "He is supposed to have told the king in a telegraph, \"I have gazed upon the face of Agamemnon\""]
+  },
+  "mask-schulze": {
+   "label": "supported",
+   "says": "Near the end of his life Schliemann accepted the doubts, and is quoted as saying: let's call him Schulze.",
+   "src": ["wp-mask-agamemnon"],
+   "quote": ["Close to the end of his life, the archaeologist accepted doubts as to the mask's true owner", "All right, let's call him Schulze."]
+  },
+  "mask-made": {
+   "label": "supported",
+   "says": "It was made from a single thick gold sheet, hammered against a wooden background, with details chased later.",
+   "src": ["wp-mask-agamemnon"],
+   "quote": ["The Mask of Agamemnon was created from a single thick gold sheet, heated and hammered against a wooden background with the details chased on later with a sharp tool."]
+  },
+  "mask-style": {
+   "label": "supported",
+   "says": "Unlike other masks it is three-dimensional, and alone among Mycenaean faces it has a full pointed beard and handlebar moustache.",
+   "src": ["wp-mask-agamemnon"],
+   "quote": ["it is three-dimensional rather than flat", "the face alone of all the depictions of faces in Mycenaean art has a full pointed beard with handlebar moustache"]
+  },
+  "mask-fake": {
+   "label": "disputed",
+   "says": "Its authenticity has been questioned, mainly by William Calder and David Traill; modern research suggests it is genuine.",
+   "src": ["wp-mask-agamemnon"],
+   "quote": ["the authenticity of the mask has been formally questioned, primarily by William Calder III and David Traill", "Modern archaeological research suggests that the mask is genuine"]
+  },
+  "art-what": {
+   "label": "supported",
+   "says": "The Artemision Bronze was recovered from the sea off Cape Artemision in northern Euboea.",
+   "src": ["wp-artemision-bronze"],
+   "quote": ["is an ancient Greek sculpture that was recovered from the sea off Cape Artemision, in northern Euboea, Greece"]
+  },
+  "art-who": {
+   "label": "disputed",
+   "says": "Most scholars think it is Zeus; some suggest Poseidon; opinion remains divided.",
+   "src": ["wp-artemision-bronze"],
+   "quote": ["According to most scholars, the bronze represents Zeus, the thunder-god and king of gods, though it has also been suggested it might represent Poseidon.", "However, opinion remains divided."]
+  },
+  "art-size": {
+   "label": "supported",
+   "says": "It is slightly over life size at 2.09 meters and would have held a thunderbolt if Zeus or a trident if Poseidon.",
+   "src": ["wp-artemision-bronze"],
+   "quote": ["The statue is slightly over lifesize at 2.09 meters, and would have held either a thunderbolt, if Zeus, or a trident if Poseidon."]
+  },
+  "art-hand": {
+   "label": "supported",
+   "says": "The debate hangs on the lost object in the right hand; a trident would hide the face from the side.",
+   "src": ["wp-artemision-bronze"],
+   "quote": ["The debate over whether the statue represents Poseidon or Zeus hinges on the lost attribute held in the figure's right hand.", "a trident would obscure the face, especially from the profile view"]
+  },
+  "art-eyes": {
+   "label": "supported",
+   "says": "The empty eye sockets were once inlaid, probably with bone; the eyebrows with silver; the lips and nipples with copper.",
+   "src": ["wp-artemision-bronze"],
+   "quote": ["The empty eye sockets were originally inset, probably with bone, as well as the eyebrows (with silver), the lips, and the nipples (with copper)."]
+  },
+  "art-sculptor": {
+   "label": "supported",
+   "says": "The sculptor is unknown.",
+   "src": ["wp-artemision-bronze"],
+   "quote": ["The sculptor is unknown.", "there is no way of knowing for certain who created the work"]
+  },
+  "art-moment": {
+   "label": "supported",
+   "says": "Carol Mattusch: the figure is poised to throw, but the action is just beginning.",
+   "src": ["wp-artemision-bronze"],
+   "quote": ["the figure has the potential for violence, is concentrating, poised to throw, but the action is just beginning"]
+  },
+  "art-date": {
+   "label": "estimate",
+   "says": "It is dated to around 460 BC.",
+   "src": ["wp-artemision-bronze"],
+   "quote": ["dated to c. 460 BC"]
+  },
+  "art-wreck": {
+   "label": "supported",
+   "says": "It was found in 1926 at a shipwreck; exploration stopped when a diver died in 1928 and never resumed.",
+   "src": ["wp-artemision-bronze"],
+   "quote": ["The sculpture was first discovered in 1926 and further excavated in 1928, at the site of a shipwreck", "exploration was abandoned when a diver died in 1928, and was never resumed"]
+  },
+  "art-money": {
+   "label": "supported",
+   "says": "Its head appeared on a Greek 500 drachma stamp and a 1,000 drachma banknote.",
+   "src": ["wp-artemision-bronze"],
+   "quote": ["The sculpture's head, now an icon of Hellenic culture, formed the subject of a Greek 500 drachma postage stamp", "and a 1,000 drachma banknote"]
+  },
+  "ant-what": {
+   "label": "supported",
+   "says": "The Antikythera mechanism is a hand-powered Greek model of the solar system from the 2nd century BC, found in 1901, the oldest known analogue computer, able to predict eclipses decades ahead.",
+   "src": ["wp-antikythera"],
+   "quote": ["is an ancient Greek hand-powered orrery (model of the Solar System) built in the 2nd century BC and discovered in 1901. It is the oldest known example of an analogue computer. It could be used to predict astronomical positions and eclipses decades in advance."]
+  },
+  "ant-olympics": {
+   "label": "supported",
+   "says": "It could also track the four-year cycle of the ancient Olympic Games.",
+   "src": ["wp-antikythera"],
+   "quote": ["It could also be used to track the four-year cycle of athletic games similar to an olympiad, the cycle of the ancient Olympic Games."]
+  },
+  "ant-wreck": {
+   "label": "supported",
+   "says": "Sponge divers from Symi found the wreck, a Roman cargo ship, in early 1900, at a depth of 45 metres.",
+   "src": ["wp-antikythera"],
+   "quote": ["a crew of sponge divers from Symi island discovered the Antikythera wreck in early 1900", "This wreck of a Roman cargo ship was found at a depth of 45 metres"]
+  },
+  "ant-lump": {
+   "label": "supported",
+   "says": "It looked like a lump of corroded bronze and wood and went unnoticed for two years while staff worked on the statues.",
+   "src": ["wp-antikythera"],
+   "quote": ["The mechanism appeared to be a lump of corroded bronze and wood.", "It went unnoticed for two years, while museum staff worked on piecing together more obvious treasures, such as the statues."]
+  },
+  "ant-gear": {
+   "label": "supported",
+   "says": "On 17 May 1902 Valerios Stais and his cousin Spyridon Stais found a gear wheel embedded in one of the pieces.",
+   "src": ["wp-antikythera"],
+   "quote": ["On 17 May 1902, archaeologist Valerios Stais, together with his cousin, the Greek politician Spyridon Stais, found one of the pieces of rock had a gear wheel embedded in it."]
+  },
+  "ant-fragments": {
+   "label": "supported",
+   "says": "It is now in 82 fragments, all kept at the National Archaeological Museum with reconstructions and replicas.",
+   "src": ["wp-antikythera"],
+   "quote": ["now divided into 82 separate fragments", "All these fragments of the mechanism are kept at the National Archaeological Museum, along with reconstructions and replicas"]
+  },
+  "ant-gears": {
+   "label": "supported",
+   "says": "Scans in 2005 suggest it had 35 meshing bronze gears, 30 still visible.",
+   "src": ["wp-antikythera"],
+   "quote": ["In 2005, a team from Cardiff University", "These scans suggest that the mechanism had 35 meshing bronze gears, 30 of which are still visible"]
+  },
+  "ant-hipparchus": {
+   "label": "disputed",
+   "says": "The astronomer Hipparchus of Rhodes may have been consulted in its construction.",
+   "src": ["wp-antikythera"],
+   "quote": ["This motion was studied in the 2nd century BC by astronomer Hipparchus of Rhodes, and he may have been consulted in the machine's construction."]
+  },
+  "ant-unique": {
+   "label": "supported",
+   "says": "Machines of similar complexity did not appear again until the 14th century in western Europe.",
+   "src": ["wp-antikythera"],
+   "quote": ["Machines with similar complexity did not appear again until the 14th century in western Europe."]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "In the garden in front of the museum, facing the museum's front.",
+   "paras": [
+    {
+     "t": "This is the National Archaeological Museum. It's considered one of the greatest museums in the world, with the richest collection of ancient Greek treasures anywhere. The garden you're standing in, with its sculptures, is part of the welcome.",
+     "c": ["nam-what", "nam-garden"],
+     "level": 1
+    },
+    {
+     "t": "The building took a long time. It was begun in 1866 and finished in 1889. But the idea is older: Greece's first national archaeological museum was set up on the island of Aigina in 1829, by the country's first governor, Ioannis Kapodistrias.",
+     "c": ["nam-built", "nam-first"],
+     "level": 2
+    },
+    {
+     "t": "This is a big building, and it's easy to get lost in it. I'll take you to three highlights. Follow the signs, and if you can't find something, just ask the staff. They're used to the question.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "The Mask of Agamemnon",
+   "stand": "Inside, follow the signs for the Mycenaean collection and stop in front of the gold funeral masks. Ask the staff if you can't find them.",
+   "paras": [
+    {
+     "t": "Look for the gold face with the pointed beard. This is the famous Mask of Agamemnon, a gold funeral mask from Mycenae. The historian Cathy Gere called it the Mona Lisa of prehistory. But here's the twist: the famous name was given in error.",
+     "c": ["mask-what", "mask-masks", "mask-style"],
+     "level": 1
+    },
+    {
+     "t": "The German archaeologist Heinrich Schliemann dug it up in 1876. He believed he'd found the body of Agamemnon himself, the king from Homer's Iliad. The story goes that he telegraphed King George: I have gazed upon the face of Agamemnon.",
+     "c": ["mask-schliemann", "mask-telegram"],
+     "level": 2
+    },
+    {
+     "t": "So why the doubt? Modern research dates the mask to around the 16th century BC. That's some 300 to 400 years before the time of the Trojan War, which is itself the stuff of myth. Near the end of his life, Schliemann accepted the doubts. He's quoted as saying, all right, let's call him Schulze.",
+     "c": ["mask-date", "mask-schulze"],
+     "level": 2
+    },
+    {
+     "t": "Lean in and look at how it was made. One thick sheet of gold, hammered over a wooden form, with the details cut in afterwards. Masks like these covered the faces of Mycenaean nobles in their graves.",
+     "c": ["mask-made", "mask-masks"],
+     "level": 3
+    },
+    {
+     "t": "There's one more argument you should know about. Some scholars, mainly William Calder and David Traill, have questioned whether the mask is genuine at all. It is three-dimensional where the others are flat, and it's the only Mycenaean face with that full beard and handlebar moustache. Modern research, though, suggests it is genuine. The debate is part of its story now.",
+     "c": ["mask-fake", "mask-style"],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The god from the sea",
+   "stand": "Follow the signs or ask for the Artemision Bronze, and stand back far enough to see the whole figure.",
+   "paras": [
+    {
+     "t": "Here is a god, caught in bronze, about to throw. This statue was pulled from the sea off Cape Artemision, in northern Euboea. It's slightly over life size, 2.09 meters tall. Most scholars think it's Zeus, about to hurl a thunderbolt. Some think it's Poseidon, with a trident. Opinion is still divided.",
+     "c": ["art-what", "art-size", "art-who"],
+     "level": 1
+    },
+    {
+     "t": "Look at the right hand. It's empty, and that's the whole argument. Whatever it held is lost. One point for Zeus: walk round to the side, and imagine a long trident there. It would hide the face.",
+     "c": ["art-hand"],
+     "level": 2
+    },
+    {
+     "t": "Now look at the eyes. They're empty sockets today, but once they were inlaid, probably with bone. The eyebrows were silver, and the lips were copper. Imagine those eyes looking back at you. And the sculptor? Nobody knows.",
+     "c": ["art-eyes", "art-sculptor"],
+     "level": 2
+    },
+    {
+     "t": "It's dated to around 460 BC. It came up from a shipwreck, first found in 1926. A diver died there in 1928, the exploration was abandoned, and it was never taken up again. Later, the god's head went on Greek money: a 500 drachma stamp and a 1,000 drachma banknote.",
+     "c": ["art-date", "art-wreck", "art-money"],
+     "level": 3
+    },
+    {
+     "t": "The scholar Carol Mattusch put it beautifully. The figure is poised to throw, but the action is just beginning. Stand here a moment and you'll feel it too.",
+     "c": ["art-moment"],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Antikythera mechanism",
+   "stand": "Follow the signs or ask for the Antikythera mechanism, and stand in front of the corroded bronze pieces and the models beside them.",
+   "paras": [
+    {
+     "t": "These corroded bronze pieces are the Antikythera mechanism. It was a hand-powered model of the heavens, built in the 2nd century BC and found in 1901. It's the oldest known example of an analogue computer. Turn a handle, and it could predict eclipses decades ahead.",
+     "c": ["ant-what"],
+     "level": 1
+    },
+    {
+     "t": "Sponge divers from the island of Symi found the shipwreck in early 1900: a Roman cargo ship, 45 metres down. When the finds reached this museum, the mechanism looked like a lump of corroded bronze and wood. For two years nobody noticed it, while the staff worked on the statues.",
+     "c": ["ant-wreck", "ant-lump"],
+     "level": 2
+    },
+    {
+     "t": "Then, on 17 May 1902, the archaeologist Valerios Stais and his cousin Spyridon spotted a gear wheel inside one of the pieces. Valerios Stais had been the museum's curator since 1887. Today it survives in 82 fragments, all kept here, with reconstructions and replicas to show how it worked.",
+     "c": ["ant-gear", "nam-stais", "ant-fragments"],
+     "level": 2
+    },
+    {
+     "t": "Scans made in 2005 suggest it had 35 bronze gears meshing together, and 30 can still be seen. It could even track the four-year cycle of the ancient Olympic Games. The great astronomer Hipparchus of Rhodes may have been consulted on it, though nobody knows for sure.",
+     "c": ["ant-gears", "ant-olympics", "ant-hipparchus"],
+     "level": 3
+    },
+    {
+     "t": "Think about this. Machines this complex did not appear again until the 14th century, in western Europe. Somebody, all those centuries ago, was thinking very far ahead.",
+     "c": ["ant-unique"],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "On your way out, back in the garden.",
+   "paras": [
+    {
+     "t": "One last thing. During the Second World War, this museum closed, and its treasures were sealed in boxes and buried, to save them from destruction and looting. In 1945 they came back on display. Think of the people who did that work, so that one day you could stand here and look.",
+     "c": ["nam-war"],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}
