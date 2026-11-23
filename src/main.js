@@ -4693,7 +4693,10 @@ function placeRel(a, b) {
   // Near-identical names count as one place only when neither has a telling word the other lacks: "Natural History
   // Museum of Crete" is not the "Historical Museum of Crete".
   const loose = (w, g) => { const gw = keyOf(g).split(" "); return keyOf(String(w).replace(/\(.*?\)/g, " ")).split(" ").filter(t => t.length > 1 && !SMALL_WORDS.has(t) && !PLACE_GENERIC.has(t) && !PLACE_DESC.has(t) && !gw.some(x => x === t || (x.length > 4 && t.length > 4 && (x.startsWith(t.slice(0, 5)) || t.startsWith(x.slice(0, 5)))))); };
-  if ((a.wd && b.wd && a.wd === b.wd) || keyOf(a.name) === keyOf(b.name) || (nameMatch(a.name, b.name) && nameMatch(b.name, a.name) && !loose(a.name, b.name).length && !loose(b.name, a.name).length)) return "same";
+  if (a.wd && b.wd && a.wd === b.wd) return "same";
+  // The same name far apart is two places (Nov 23 sight check: Lübeck's Holstentor took the id of a Hamburg one 59 km away).
+  if (isFinite(a.lat) && isFinite(b.lat) && hav(a, b) > 5) return "";
+  if (keyOf(a.name) === keyOf(b.name) || (nameMatch(a.name, b.name) && nameMatch(b.name, a.name) && !loose(a.name, b.name).length && !loose(b.name, a.name).length)) return "same";
   const km = isFinite(a.lat) && isFinite(b.lat) ? hav(a, b) : null;
   // Two names for the same building (another language, another source): the same kind of place (a church, a
   // museum...) at the same spot, or a few steps apart and sharing a telling word of their names.

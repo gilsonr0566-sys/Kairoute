@@ -60,6 +60,9 @@ async function dump() {
       : ['2027-06-08', '2027-06-09', '2027-06-10'].map((date, i) => ({ id: 'd' + (i + 1), date, destination: label, type: 'land', mode: 'flight', time: '09:00', pointIdx: 0, startTime: '09:00', hours: 8, alongWay: true, returnToStart: true, selected: null }));
     const first = days.findIndex(d => d.type !== 'sea');
     const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+    // What the helper said about each place (its kinds, gone, part-of, area), kept beside the app's list so a finding can be
+    // traced to the facts or to the app's rule.
+    const helperStops = []; p.on('response', async r => { try { if (/\/sources\b/.test(r.url()) && r.ok()) { const j = await r.json(); for (const x of (j && j.stops) || []) helperStops.push({ name: x.name, wd: x.wd, sl: x.sl, src: (x.src || []).length, kinds: x.kinds, gone: x.gone, partOf: x.partOf, area: x.area, posDoubt: x.posDoubt }); } } catch (e) {} });
     await p.route('**/*', r => { const u = r.request().url(); if (u.startsWith(MOCK)) return helper(r); return /^file:/.test(u) ? r.continue() : r.abort(); });
     await p.goto('file://' + FILE);
     await p.evaluate(([days, prefs, a]) => { localStorage.setItem('kairoute.intro1', '1'); localStorage.setItem('wayside.trip2', JSON.stringify({ id: 't-audit', name: 'Audit', style: 'mix', active: a, lodging: {}, journal: {}, prefs, days })); }, [days, prefs, first]);
@@ -81,7 +84,7 @@ async function dump() {
     }, first);
     const bucket = await p.evaluate(() => window.__kairouteBucket(false)).catch(() => null);
     const src = await p.evaluate(() => { try { return typeof sourcesCache !== 'undefined' ? Object.keys(sourcesCache) : null; } catch (e) { return null; } }).catch(() => null);
-    fs.writeFileSync(path.join(DIR, name + '.dump.json'), JSON.stringify({ name, label, kind, at: new Date().toISOString(), guide: out, bucket, src }));
+    fs.writeFileSync(path.join(DIR, name + '.dump.json'), JSON.stringify({ name, label, kind, at: new Date().toISOString(), guide: out, bucket, src, helperStops }));
     console.log(`${name}: ${out ? out.sites.length + ' sights, ' + out.farther.length + ' farther (' + out.city + ')' : 'NO GUIDE'}`);
     await p.close();
   }
@@ -278,8 +281,9 @@ async function audit() {
     const order = ['POS', 'DUP', 'NOT', 'NOID', 'NAME', 'FOLD', 'LEN', 'FAME', 'TRIP', 'POS?', 'ERR', 'INFO'];
     report.push(`## ${label} (${D.guide.city}${D.guide.builtin ? ', built-in guide' : D.guide.srcGuide ? ', guide from sources' : ''})\n` + F.sort((a, b) => order.indexOf(a[0]) - order.indexOf(b[0])).map(([k, t]) => `- ${k} ${t}`).join('\n') + '\n');
     console.log(report[report.length - 1]);
+    // Saved place by place, so a run cut off by a time limit keeps every place it finished.
+    fs.writeFileSync(path.join(DIR, `report-${name}.md`), report[report.length - 1] + '\n');
   }
-  fs.writeFileSync(path.join(DIR, `report-${process.env.BATCH || 'all'}.md`), report.join('\n'));
 }
 function o_same(a, b, osm) { const x = a.wd && osm[a.wd], y = b.wd && osm[b.wd]; return !!(x && y && x.type === y.type); }
 

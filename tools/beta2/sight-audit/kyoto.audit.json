@@ -2,8 +2,8 @@
  "name": "kyoto",
  "label": "Kyoto, Japan",
  "centre": {
-  "lat": 35.01127,
-  "lng": 135.77297
+  "lat": 35.01417,
+  "lng": 135.77171
  },
  "findings": [
   {
@@ -24,75 +24,11 @@
    }
   },
   {
-   "k": "FOLD",
-   "t": "Kiyomizu-dera is part of Historic Monuments of Ancient Kyoto (Wikidata) but is a separate stop",
+   "k": "FAME",
+   "t": "#1 best known nearby, \"Historic Monuments of Ancient Kyoto\" (41 Wikipedia languages, Q874027), is not offered",
    "x": {
-    "id": "src-q221716",
-    "of": "src-q874027"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Kinkaku-ji Temple is part of Historic Monuments of Ancient Kyoto (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q270983",
-    "of": "src-q874027"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Ginkaku-ji Temple is part of Historic Monuments of Ancient Kyoto (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q257473",
-    "of": "src-q874027"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Ryōan-ji Temple is part of Historic Monuments of Ancient Kyoto (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q587371",
-    "of": "src-q874027"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Tō-ji Temple is part of Historic Monuments of Ancient Kyoto (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q1046403",
-    "of": "src-q874027"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Nijō Castle is part of Historic Monuments of Ancient Kyoto (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q1013399",
-    "of": "src-q874027"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Ninna-ji Temple is part of Historic Monuments of Ancient Kyoto (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q1202871",
-    "of": "src-q874027"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Shimogamo Shrine is part of Historic Monuments of Ancient Kyoto (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q701620",
-    "of": "src-q874027"
-   }
-  },
-  {
-   "k": "FOLD",
-   "t": "Nishi Hongan-ji Temple is part of Historic Monuments of Ancient Kyoto (Wikidata) but is a separate stop",
-   "x": {
-    "id": "src-q1146038",
-    "of": "src-q874027"
+    "wd": "Q874027",
+    "sl": 41
    }
   },
   {
@@ -137,12 +73,12 @@
   },
   {
    "k": "INFO",
-   "t": "34 sights, 11 day trips/towns; must-see: Kiyomizu-dera, Kinkaku-ji Temple; top by fame: Kiyomizu-dera 77, Kinkaku-ji Temple 57, Historic Monuments of Ancient Kyoto 41, Fushimi Inari-taisha 41, Ginkaku-ji Temple 33, Kyoto Imperial Palace 33, Ryōan-ji Temple 32, Tō-ji Temple 30",
+   "t": "30 sights, 10 day trips/towns; must-see: Kiyomizu-dera, Kinkaku-ji Temple; top by fame: Kiyomizu-dera 77, Kinkaku-ji Temple 58, Fushimi Inari-taisha 41, Ginkaku-ji Temple 33, Kyoto Imperial Palace 33, Ryōan-ji Temple 32, Tō-ji Temple 30, Nijō Castle 29",
    "x": {}
   },
   {
    "k": "INFO",
-   "t": "day trips: Uji, Koka, Osaka, Byōdō-in Temple, Ujigami Shrine, Uji Shrine, Kōshō-ji Temple, Mimuroto-ji Temple, Nintendo Museum, Amagase Dam, Minakuchi Castle",
+   "t": "day trips: Uji, Koka, Byōdō-in Temple, Ujigami Shrine, Uji Shrine, Kōshō-ji Temple, Mimuroto-ji Temple, Nintendo Museum, Amagase Dam, Minakuchi Castle",
    "x": {}
   }
  ],
@@ -153,8 +89,8 @@
    "local": "清水寺",
    "lat": 34.99483,
    "lng": 135.785,
-   "minutes": 90,
-   "category": "Ancient site",
+   "minutes": 60,
+   "category": "Temple",
    "kind": "touristy",
    "quick": false,
    "mustSee": true,
@@ -185,11 +121,11 @@
    "lat": 35.0395,
    "lng": 135.7285,
    "minutes": 60,
-   "category": "Ancient site",
+   "category": "Temple",
    "kind": "touristy",
    "quick": false,
    "mustSee": true,
-   "fame": 57,
+   "fame": 58,
    "unesco": false,
    "heritage": true,
    "wd": "Q270983",
@@ -208,36 +144,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "The Temple of the Golden Pavilion, formally known as Rokuonji (鹿苑寺), is the most popular tourist attraction in Kyoto."
-  },
-  {
-   "id": "src-q874027",
-   "name": "Historic Monuments of Ancient Kyoto",
-   "local": "古都京都の文化財",
-   "lat": 35.06028,
-   "lng": 135.75278,
-   "minutes": 60,
-   "category": "Ancient site",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 41,
-   "unesco": true,
-   "heritage": true,
-   "wd": "Q874027",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "UNESCO World Heritage",
-    "Wikipedia in Japanese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": true,
-   "summary": "A World Heritage ancient site in Kyoto, Japan, named by 3 independent sources."
   },
   {
    "id": "src-q714828",
@@ -276,8 +182,8 @@
    "local": "慈照寺",
    "lat": 35.02667,
    "lng": 135.79833,
-   "minutes": 60,
-   "category": "Ancient site",
+   "minutes": 45,
+   "category": "Temple",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -307,8 +213,8 @@
    "local": "龍安寺",
    "lat": 35.03444,
    "lng": 135.71833,
-   "minutes": 60,
-   "category": "Ancient site",
+   "minutes": 45,
+   "category": "Temple",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -338,8 +244,8 @@
    "local": "東寺",
    "lat": 34.98056,
    "lng": 135.74778,
-   "minutes": 60,
-   "category": "Ancient site",
+   "minutes": 45,
+   "category": "Temple",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -370,7 +276,7 @@
    "lat": 35.01417,
    "lng": 135.7475,
    "minutes": 50,
-   "category": "Palace",
+   "category": "Castle or fort",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -426,6 +332,37 @@
    "summary": "Built in 1895 in commemoration of the 1100th anniversary of Kyoto, the shrine was designed as a scaled-down replica of the original Imperial Palace."
   },
   {
+   "id": "src-q700448",
+   "name": "Kamigamo Shrine",
+   "local": "賀茂別雷神社",
+   "lat": 35.05928,
+   "lng": 135.75253,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 27,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q700448",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in Japanese"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Collectively, Kamigamo Shrine and Shimogamo Shrine are known as the Kamo Shrines, and they were highly favored by the Imperial Court during the Heian Period. Th"
+  },
+  {
    "id": "src-q147286",
    "name": "Kyoto National Museum",
    "local": "京都国立博物館",
@@ -462,8 +399,8 @@
    "local": "仁和寺",
    "lat": 35.03111,
    "lng": 135.71389,
-   "minutes": 60,
-   "category": "Ancient site",
+   "minutes": 45,
+   "category": "Temple",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -524,8 +461,8 @@
    "local": "東福寺",
    "lat": 34.97571,
    "lng": 135.77368,
-   "minutes": 60,
-   "category": "Ancient site",
+   "minutes": 45,
+   "category": "Temple",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -555,8 +492,8 @@
    "local": "三十三間堂",
    "lat": 34.98788,
    "lng": 135.77171,
-   "minutes": 60,
-   "category": "Ancient site",
+   "minutes": 45,
+   "category": "Temple",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -617,8 +554,8 @@
    "local": "南禅寺",
    "lat": 35.01127,
    "lng": 135.79308,
-   "minutes": 60,
-   "category": "Ancient site",
+   "minutes": 45,
+   "category": "Temple",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -648,8 +585,8 @@
    "local": "知恩院",
    "lat": 35.00617,
    "lng": 135.78328,
-   "minutes": 60,
-   "category": "Ancient site",
+   "minutes": 45,
+   "category": "Temple",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -679,8 +616,8 @@
    "local": "大徳寺",
    "lat": 35.04389,
    "lng": 135.74603,
-   "minutes": 60,
-   "category": "Ancient site",
+   "minutes": 45,
+   "category": "Temple",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -771,8 +708,8 @@
    "local": "妙心寺",
    "lat": 35.02317,
    "lng": 135.72018,
-   "minutes": 60,
-   "category": "Ancient site",
+   "minutes": 45,
+   "category": "Temple",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -795,37 +732,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "A large Zen temple complex famous for its large collection of famous artwork. To enter the main hall of Myōshin-ji, you must pay for a tour (tours typically ope"
-  },
-  {
-   "id": "src-q1146038",
-   "name": "Nishi Hongan-ji Temple",
-   "local": "西本願寺",
-   "lat": 34.99178,
-   "lng": 135.75169,
-   "minutes": 60,
-   "category": "Ancient site",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 17,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q1146038",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "national heritage register",
-    "Wikivoyage (English)",
-    "Wikipedia in Japanese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": true,
-   "summary": "One of many World Heritage Sites in Kyoto, Nishi Honganji is one of two temple complexes of the Buddhist sect, Jōdo Shinshū (the other being Higashi Honganji). "
   },
   {
    "id": "src-q783923",
@@ -857,37 +763,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "Housed in an old elementary school building, the museum holds over 300,000 manga-related items ranging from rare Meiji-era publications to the works of contempo"
-  },
-  {
-   "id": "src-q2702064",
-   "name": "Kōdai-ji Temple",
-   "local": "高台寺",
-   "lat": 35.00076,
-   "lng": 135.78111,
-   "minutes": 60,
-   "category": "Ancient site",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 15,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q2702064",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "national heritage register",
-    "Wikivoyage (English)",
-    "Wikipedia in Japanese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "This temple was built for Toyotomi Hideyoshi's widow by Tokugawa Ieyasu and is located right next to the Ryōzen Kannon temple on the Higashiyama mountain. If yo"
   },
   {
    "id": "src-q713177",
@@ -982,66 +857,6 @@
    "summary": "A source of bitterness of locals due to its futuristic feel, which counteracts the historic feel the city is known for, the Kyoto Tower is an overpriced viewing"
   },
   {
-   "id": "src-q1440954",
-   "name": "Kennin-ji Temple",
-   "local": "建仁寺",
-   "lat": 35.00119,
-   "lng": 135.77393,
-   "minutes": 60,
-   "category": "Ancient site",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 13,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q1440954",
-   "src": [
-    "Wikivoyage (English)",
-    "national heritage register",
-    "Wikipedia in Japanese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "Japan's oldest Zen temple, has handsome halls and sand and moss gardens, and is of particular interest to art lovers. Sōtatsu's famed Edo-period screens of the "
-  },
-  {
-   "id": "src-q1060771",
-   "name": "Rokuharamitsu-ji Temple",
-   "local": "六波羅蜜寺",
-   "lat": 34.99711,
-   "lng": 135.77333,
-   "minutes": 60,
-   "category": "Ancient site",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 10,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q1060771",
-   "src": [
-    "Wikivoyage (English)",
-    "national heritage register",
-    "Wikipedia in Japanese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "While the temple may not seem so special, the trip is made worthwhile by the amazing Kamakura Period artwork housed in its museum."
-  },
-  {
    "id": "src-q3330657",
    "name": "Kyoto Municipal Museum of Art",
    "local": "",
@@ -1071,6 +886,36 @@
    "posDoubt": false,
    "summary": "This museum houses a wide variety of art with the permanent collections featuring artists that are from Kyoto. Special exhibits may feature Japanese art from ot",
    "wdByName": true
+  },
+  {
+   "id": "src-q1108695",
+   "name": "Maruyama Park",
+   "local": "円山公園 (京都府)",
+   "lat": 35.0035,
+   "lng": 135.77952,
+   "minutes": 40,
+   "category": "Park or garden",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 10,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q1108695",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register",
+    "Wikipedia in Japanese"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "One of the most popular spot for cherry blossom viewing in Kyoto, and can get extremely crowded at that time of year."
   },
   {
    "id": "src-q738971",
@@ -1103,20 +948,20 @@
    "summary": "A small shrine, which is an especially popular destination during the cherry blossom season, setting up amusement and food stalls."
   },
   {
-   "id": "src-q3028486",
-   "name": "Shisen-dō Temple",
-   "local": "詩仙堂",
-   "lat": 35.04374,
-   "lng": 135.79624,
-   "minutes": 60,
-   "category": "Ancient site",
+   "id": "src-q500955",
+   "name": "Imamiya Shrine",
+   "local": "今宮神社 (京都市)",
+   "lat": 35.04601,
+   "lng": 135.74204,
+   "minutes": 40,
+   "category": "Sight",
    "kind": "local",
    "quick": false,
    "mustSee": false,
-   "fame": 8,
+   "fame": 6,
    "unesco": false,
    "heritage": true,
-   "wd": "Q3028486",
+   "wd": "Q500955",
    "src": [
     "Wikivoyage (English)",
     "national heritage register",
@@ -1130,37 +975,7 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "Built in 1641, this temple once housed the poet Jōzan Ishikawa. Inside the temple there are portraits of 36 influential Chinese poets. Outside there is a garden"
-  },
-  {
-   "id": "src-q11658945",
-   "name": "Zuishin-in Temple",
-   "local": "随心院",
-   "lat": 34.95949,
-   "lng": 135.81629,
-   "minutes": 60,
-   "category": "Ancient site",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 4,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q11658945",
-   "src": [
-    "Wikivoyage (English)",
-    "national heritage register",
-    "Wikipedia in Japanese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "According to legend, this is where Ono no Komachi, one of Japan's famous femme fatales, resided."
+   "summary": "Although the current structure dates back to 1902, the original was built during the Heian Period. At the time, the city was being plagued by illness and diseas"
   },
   {
    "id": "src-q11630696",
@@ -1203,12 +1018,12 @@
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
-   "fame": 0,
+   "fame": 60,
    "unesco": false,
    "heritage": false,
    "wd": "Q326956",
    "src": [
-    "Wikivoyage (English)"
+    "Wikidata (Wikipedia in many languages)"
    ],
    "srcOnly": false,
    "builtin": false,
@@ -1247,34 +1062,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "home of ninjas, and there is the Miho Museum."
-  },
-  {
-   "id": "osaka-far",
-   "name": "Osaka",
-   "local": "",
-   "lat": 34.69389,
-   "lng": 135.50222,
-   "minutes": 180,
-   "category": "Day trip",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q35765",
-   "src": [
-    "Wikivoyage (English)"
-   ],
-   "srcOnly": false,
-   "builtin": false,
-   "famousFix": true,
-   "far": true,
-   "travel": "Train from 京都市役所前, about 70 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "about half an hour from Kyoto by JR rapid train, this bustling city offers more retail opportunities and a central castle."
   },
   {
    "id": "uji-far~Q61094",
@@ -1341,11 +1128,13 @@
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
-   "fame": 0,
+   "fame": 60,
    "unesco": false,
    "heritage": false,
    "wd": "Q12742788",
-   "src": [],
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
    "srcOnly": false,
    "builtin": true,
    "famousFix": false,

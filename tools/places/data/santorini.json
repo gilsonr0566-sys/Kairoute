@@ -574,5 +574,182 @@
    },
    "osm": "way/975082643"
   }
+ ],
+ "eatHours": [
+  [
+   "Select Cafe",
+   36.41806,
+   25.43141,
+   "Jan-Aug",
+   "cafe"
+  ],
+  [
+   "akrotiri cafe",
+   36.34931,
+   25.40111,
+   "Mo-Su 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "5 Senses",
+   36.42019,
+   25.43122,
+   "12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Lukumum",
+   36.41826,
+   25.43332,
+   "Mo-Su 08:00-17:30",
+   "cafe"
+  ],
+  [
+   "Magma City Cafe",
+   36.41744,
+   25.43365,
+   "Mo-Sa 07:30-00:00; Su 08:30-00:00",
+   "cafe"
+  ],
+  [
+   "McDonald's",
+   36.41897,
+   25.43216,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "2 Brothers Bar Santorini",
+   36.41808,
+   25.43197,
+   "Mo-Su 12:00-05:00",
+   "bar"
+  ],
+  [
+   "Vitrin",
+   36.46091,
+   25.37327,
+   "Mo-Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Roka",
+   36.4628,
+   25.37523,
+   "Mo-Su 12:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Καντούνι",
+   36.46263,
+   25.37572,
+   "Apr-Oct",
+   "restaurant"
+  ],
+  [
+   "Creme de la Crepe",
+   36.4189,
+   25.4316,
+   "Mo-Su 09:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Paradox",
+   36.46302,
+   25.37847,
+   "Mar05-Dec10 We-Su 12:30-20:00",
+   "restaurant"
+  ],
+  [
+   "Yogi Gyro",
+   36.41783,
+   25.43227,
+   "12:00-00:00",
+   "fast_food"
+  ],
+  [
+   "Ambrosia",
+   36.46184,
+   25.37688,
+   "Mo-Su 18:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Karma",
+   36.46194,
+   25.3748,
+   "Mo-Su 13:30-23:00",
+   "restaurant"
+  ],
+  [
+   "FalafeLAND",
+   36.41811,
+   25.43363,
+   "11:45-22:00; Nov-Mar Off",
+   "fast_food"
+  ],
+  [
+   "Pizza Santorini",
+   36.46319,
+   25.37765,
+   "10:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Esperisma",
+   36.41663,
+   25.43102,
+   "Mo-Su 12:30-01:00",
+   "restaurant"
+  ],
+  [
+   "Restaurant Aris",
+   36.41736,
+   25.4311,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "DEILINO Food Drink & Shisha",
+   36.464,
+   25.3757,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Bliss Lounge sushi & cocktail bar",
+   36.46183,
+   25.37648,
+   "Mo-Su 12:00-23:00",
+   "bar"
+  ],
+  [
+   "CIELLE Restaurant & Bar Santorini",
+   36.41892,
+   25.43128,
+   "Mo-Su 10:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Tephra Rooftop",
+   36.46324,
+   25.37452,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Sun Spirit",
+   36.46143,
+   25.37256,
+   "Mo-Su 10:00-22:30",
+   "bar"
+  ],
+  [
+   "Glaros",
+   36.35006,
+   25.39963,
+   "12:00-22:00",
+   "restaurant"
+  ]
  ]
 }

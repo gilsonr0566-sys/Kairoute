@@ -472,6 +472,10 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
     for (const x of noLunch.slice(0, 8)) ok(false, `no lunch on a day over lunchtime: ${x}`);
     for (const x of shutAt.slice(0, 8)) ok(false, `lunch at a place shut at that hour: ${x}`);
     ok(!shutAt.length, `every planned lunch is at a place not known to be shut then (map hours read for the date)`);
+    { const b = E.applyPlaces({ cities: { X: { restaurants: [{ name: 'Sorbillo', lat: 40.85, lng: 14.255 }, { name: 'Far Away Grill', lat: 40.86, lng: 14.255 }, { name: 'Bar', lat: 40.85, lng: 14.255 }] } }, days: [] },
+        { X: { key: 'X', eatHours: [['Antonio Sorbillo', 40.8503, 14.255, 'Mo-Sa 12:00-15:30', 'restaurant'], ['Far Away Grill', 40.85, 14.255, 'Mo-Su 10:00-22:00', 'restaurant'], ['Barolo Wine', 40.85, 14.255, 'Mo-Su 18:00-23:00', 'bar']] } });
+      const rs = b.cities.X.restaurants;
+      ok(rs[0].hours === 'Mo-Sa 12:00-15:30' && !rs[1].hours && !rs[2].hours, 'a guide place to eat takes the map hours of the place with its name within 200 m (never a far one, never on a short name)'); }
     { const fx = E.eatFactsFor({ date: '2026-11-23', eats: {} }, [{ name: 'Noon Place', hours: 'Mo-Sa 12:00-15:30; Su off' }, { name: 'Sunday Shut', hours: 'Mo-Sa 12:00-15:00' }, { name: 'Odd', hours: 'Jun-Sep 12:00-15:00' }, { name: 'Junk', hours: 'ask the owner' }]);
       const sun = E.eatFactsFor({ date: '2026-11-22' }, [{ name: 'Noon Place', hours: 'Mo-Sa 12:00-15:30; Su off' }]);
       ok(fx[E.eatKey('Noon Place')] && JSON.stringify(fx[E.eatKey('Noon Place')].oh.spans) === '[[720,930]]' && sun[E.eatKey('Noon Place')].closed && fx[E.eatKey('Odd')] && fx[E.eatKey('Odd')].closed && !fx[E.eatKey('Junk')]

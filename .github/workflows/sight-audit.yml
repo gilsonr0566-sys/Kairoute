@@ -10,13 +10,16 @@ on:
 permissions:
   contents: write
 jobs:
+  # One place per job, each saving its own results to the branch the moment it is done, so a time limit or a slow
+  # lookup loses at most that one place (Nov 23: 8 batches of 4 ran 3 hours and the merge step kept only one batch).
   run:
     strategy:
       fail-fast: false
+      max-parallel: 16
       matrix:
-        batch: ["0", "1", "2", "3", "4", "5", "6", "7"]
+        place: [istanbul, vienna, lisbon, barcelona, edinburgh, kyoto, lehavre, southampton, kotor, dubrovnik, juneau, ketchikan, grandturk, mykonos, pontadelgada, halfmooncay, haifa, reykjavik, venice, dubai, athens, santorini, heraklion, chania, kusadasi, messina, naples, rome, madrid, nassau, cococay, hamburg]
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,35 +27,32 @@ jobs:
           node-version: 22
       - run: bash build-beta2.sh
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
-      - name: Run the app on each place and keep its sights (the helper's code from this branch, run locally)
+      - name: Run the app on the place and keep its sights (the helper's code from this branch, run locally)
         env:
-          BATCH: ${{ matrix.batch }}
+          ONLY: ${{ matrix.place }}
           HELPER_URL: http://localhost:8790/workers.dev
         run: |
           (node tools/beta2/local-helper.mjs 8790 > local-helper.log 2>&1 &); sleep 2
           node tools/beta2/sight-audit.cjs dump beta2-site/index.html
       - name: Check every sight against Wikidata and the map
+        timeout-minutes: 70
+        env:
+          ONLY: ${{ matrix.place }}
+        run: node tools/beta2/sight-audit.cjs audit
+      - name: Save this place's results to the branch
         if: always()
         env:
-          BATCH: ${{ matrix.batch }}
-        run: node tools/beta2/sight-audit.cjs audit
-      - if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: sight-audit-${{ matrix.batch }}
-          path: tools/beta2/sight-audit/
-  keep:
-    needs: run
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          path: got
-      - run: |
-          git fetch origin "$GITHUB_REF_NAME" && git reset --hard "origin/$GITHUB_REF_NAME"
-          mkdir -p tools/beta2/sight-audit && cp got/*/* tools/beta2/sight-audit/ 2>/dev/null || true
-          cat tools/beta2/sight-audit/report-*.md > tools/beta2/sight-audit/report.md || true
+          P: ${{ matrix.place }}
+        run: |
+          mkdir -p /tmp/keep && cp tools/beta2/sight-audit/$P.* tools/beta2/sight-audit/report-$P.md /tmp/keep/ 2>/dev/null || true
           git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/beta2/sight-audit; git diff --cached --quiet || { git commit -m "Sight audit results"; git push || { git pull --rebase -X theirs && git push; }; }
+          for i in 1 2 3 4 5 6; do
+            git fetch -q origin "$GITHUB_REF_NAME" && git reset -q --hard "origin/$GITHUB_REF_NAME"
+            cp /tmp/keep/* tools/beta2/sight-audit/ 2>/dev/null || true
+            rm -f tools/beta2/sight-audit/report-[0-9].md tools/beta2/sight-audit/report-all.md
+            cat tools/beta2/sight-audit/report-*.md > tools/beta2/sight-audit/report.md 2>/dev/null || true
+            git add -A tools/beta2/sight-audit
+            git diff --cached --quiet && break
+            git commit -qm "Sight audit: $P" && git push -q origin "HEAD:$GITHUB_REF_NAME" && break
+            sleep $((RANDOM % 20 + 5))
+          done

@@ -573,17 +573,24 @@ export default {
       const ok = v => Array.isArray(v) && v.length === 2 && v.every(n => typeof n === "number" && isFinite(n)) && Math.abs(v[0]) <= 90 && Math.abs(v[1]) <= 180;
       // Pairs are looked up side by side, so a page asking for several still gets its answer in well under a minute.
       const pairs = (Array.isArray(b.pairs) ? b.pairs : []).slice(0, 12);
+      // At most 8 pairs a request are looked up afresh (each is five timetable searches and the map): the rest answer
+      // "busy" and the page asks again shortly, so one request stays within the helper's limit on outside calls.
+      let fresh = 0;
       const out = await Promise.all(pairs.map(async pr => {
         if (!pr || !ok(pr.a) || !ok(pr.b)) return { error: "bad" };
         const dow = Number.isInteger(pr.dow) && pr.dow >= 0 && pr.dow <= 6 ? pr.dow : 3, kind = dow === 0 ? "su" : dow === 6 ? "sa" : "wk";
         // The trip's date (when the page gives it) picks the timetable; answers are kept per month, since a summer
         // ferry runs in July and not in November.
         const date = typeof pr.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(pr.date) ? pr.date : null;
-        const key = "tr6:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
+        const key = "tr12:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
         // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day. When the map answered
-        // after the reply went out, its full answer replaces the partial one. A partial answer met again after 10 minutes
-        // is looked up afresh in the background (once per 10 minutes), so a busy map server never hides a ferry for a day.
-        const keep = x => env.USAGE.put(key, JSON.stringify({ opts: x.opts, partial: !!x.partial, t: Date.now() }), { expirationTtl: (x.partial ? 1 : x.opts.length ? 14 : 7) * 86400 });
+        // after the reply went out, its full answer replaces the partial one. A partial answer met again after 2 minutes
+        // is looked up afresh in the background (once per 2 minutes), so a busy map server never hides a ferry for a day.
+        const keep = x => env.USAGE.put(key, JSON.stringify({ opts: x.opts, partial: !!x.partial, ttMissed: x.ttMissed == null ? null : x.ttMissed, t: Date.now() }), { expirationTtl: (x.partial ? 1 : x.opts.length ? 14 : 7) * 86400 });
+        // A fresh look replaces a kept partial answer when it knows more of the day: more hours of the timetable answered,
+        // or more departures (Nov 21: an answer kept with 3 of 15 hours was never replaced, as both looked "partial").
+        const deps = x => Math.max(0, ...((x && x.opts) || []).map(o => (o.kindDeps || o.deps || []).length));
+        const better = (r, was) => !r.partial || r.opts.length > (was.opts || []).length || deps(r) > deps(was) || (r.ttMissed != null && (was.ttMissed == null || r.ttMissed < was.ttMissed));
         const store = { get: k => env.USAGE.get(k, "json"), put: (k, v, ttl) => env.USAGE.put(k, JSON.stringify(v), { expirationTtl: ttl }) };
         const look = () => allOptions({ lat: pr.a[0], lng: pr.a[1] }, { lat: pr.b[0], lng: pr.b[1] }, dow, 12000, store, date);
         // A saved answer with no ferry gets the ferries kept for both ends (filled in later by the schedule when the
@@ -598,16 +605,19 @@ export default {
         // fresh: the page re-checks a ride the day before and the morning of the day it is taken (timetables change).
         // A kept answer over 6 hours old is looked up again now (one live look per ride per 6 hours, shared by every
         // traveler); a busy source keeps the kept answer.
-        if (hit && pr.fresh && Date.now() - (hit.t || 0) > 6 * 3600e3 && !(await env.USAGE.get("lf:" + key))) {
+        if (hit && pr.fresh && Date.now() - (hit.t || 0) > 6 * 3600e3 && fresh < 8 && !(await env.USAGE.get("lf:" + key))) { fresh++;
           await env.USAGE.put("lf:" + key, "1", { expirationTtl: 6 * 3600 }).catch(() => {});
           try { const r = await look(); if (!r.partial && r.opts.length) { ctx.waitUntil(keep(r).catch(() => {})); return withFerries({ opts: r.opts, partial: false }); } } catch (e) {}
         }
         if (hit) {
-          if (hit.partial && Date.now() - (hit.t || 0) > 600000 && !(await env.USAGE.get("lk:" + key))) {
-            ctx.waitUntil(env.USAGE.put("lk:" + key, "1", { expirationTtl: 600 }).then(look).then(r => (!r.partial || r.opts.length > (hit.opts || []).length) ? keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null) : (r.late ? r.late.then(f => f && keep(f)) : null)).catch(() => {}));
+          // Every 2 minutes, not 10 (Nov 22 live probe: a way back to the ship known only until 9:53 am stayed a taxi
+          // while the page waited; the page now asks again after 2 minutes, so the fresh look must be there by then).
+          if (hit.partial && Date.now() - (hit.t || 0) > 120000 && !(await env.USAGE.get("lk:" + key))) {
+            ctx.waitUntil(env.USAGE.put("lk:" + key, "1", { expirationTtl: 120 }).then(look).then(r => better(r, hit) ? keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null) : (r.late ? r.late.then(f => f && keep(f)) : null)).catch(() => {}));
           }
           return withFerries({ opts: hit.opts, partial: !!hit.partial });
         }
+        if (++fresh > 8) return { opts: [], partial: true };
         try { const r = await look(), res = await withFerries({ opts: r.opts, partial: !!r.partial });
           ctx.waitUntil(keep(r).then(() => r.late ? r.late.then(f => f && keep(f)) : null).catch(() => {}));
           return res;
@@ -1036,7 +1046,7 @@ const SIGHT_KINDS = { Q811979: "structure", Q618123: "feature", Q41176: "buildin
   Q33506: "museum", Q207694: "art-museum", Q16970: "church", Q2977: "cathedral", Q32815: "mosque", Q34627: "synagogue", Q44539: "temple", Q108325: "chapel", Q44613: "monastery",
   Q23413: "castle", Q57821: "fortification", Q16560: "palace", Q174782: "square", Q12280: "bridge", Q4989906: "monument", Q179700: "statue", Q483453: "fountain", Q12518: "tower", Q11303: "skyscraper", Q2105463: "observation-deck",
   Q24354: "theatre", Q153562: "opera-house", Q1060829: "concert-hall", Q483110: "stadium", Q641226: "arena", Q1076486: "sports-venue", Q37654: "market", Q43501: "zoo", Q2281788: "aquarium", Q194195: "amusement-park",
-  Q43229: "organization", Q1656682: "event", Q1190554: "occurrence", Q34770: "language", Q17537576: "creative-work", Q82794: "region", Q5107: "continent", Q56061: "admin-area", Q486972: "settlement",
+  Q43229: "organization", Q1656682: "event", Q1190554: "occurrence", Q34770: "language", Q17537576: "creative-work", Q82794: "region", Q1620908: "region", Q3024240: "region", Q6256: "region", Q34763: "region", Q1969448: "term", Q19860854: "destroyed", Q676050: "old-town", Q15243209: "old-town", Q5107: "continent", Q56061: "admin-area", Q486972: "settlement",
   Q3918: "university", Q3914: "school", Q16917: "hospital", Q55488: "station", Q1248784: "airport", Q27686: "hotel", Q79007: "street", Q34442: "road", Q1021645: "office-building", Q4830453: "business" };
 // Where a sight is when its sources disagree: the SAME rule as tools/places/where.cjs (where-check.cjs runs both copies
 // through the same cases). listing = the travel guide's point (or the encyclopedia's when no guide lists it), wd = the
@@ -1126,7 +1136,10 @@ async function sourcesData(label, env, ctx) {
       if (res.every(Boolean)) {
         for (const j of res) for (const b of j.results.bindings) { const c = b.c.value.split("/").pop(); (up.get(c) || up.set(c, new Set()).get(c)).add(SIGHT_KINDS[b.w.value.split("/").pop()]); }
         for (const id of ids) { const x = byId.get(id); if (!x) continue; const ks = new Set(); for (const c of direct.get(id) || []) for (const k of up.get(c) || []) ks.add(k); x.kinds = [...ks].sort();
-          if (razed.has(id) || (ended.has(id) && !ks.has("organization") && !ks.has("event") && !ks.has("occurrence"))) x.gone = true; }
+          if (razed.has(id) || (ended.has(id) && !ks.has("organization") && !ks.has("event") && !ks.has("occurrence"))) x.gone = true;
+          // "Destroyed building or structure" (the Bastille: a castle and a prison, so the end-date rule spared it as an
+          // organisation) is gone too, unless its ruins are an archaeological site to visit (Nov 23 sight check).
+          if (ks.has("destroyed") && !ks.has("archaeological") && !ks.has("ancient-city")) x.gone = true; }
       }
     }
   } catch (e) {}
@@ -1153,7 +1166,9 @@ async function sourcesData(label, env, ctx) {
     for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"]) {
       const j = await getJ(ep, 26000, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { ...UA, "content-type": "application/x-www-form-urlencoded", accept: "application/json" } });
       if (!j) continue;
-      for (const e of j.elements || []) { const x = byId.get(e.tags && e.tags.wikidata), c = e.center || (e.lat != null ? { lat: e.lat, lon: e.lon } : null); if (x && c && !x.mp) x.mp = { lat: c.lat, lng: c.lon }; }
+      for (const e of j.elements || []) { const x = byId.get(e.tags && e.tags.wikidata), c = e.center || (e.lat != null ? { lat: e.lat, lon: e.lon } : null); if (x && c && !x.mp) x.mp = { lat: c.lat, lng: c.lon };
+        // The map's own word that it is a country, state or region (an area, not a place to stand in).
+        if (x && /^(country|state|region|province|county|archipelago)$/.test(e.tags.place || "")) x.area = true; }
       break; }
     lap("map"); }
   for (const x of byId.values()) { const L = x.lp || x.wdp; if (!L) continue;
@@ -1161,7 +1176,7 @@ async function sourcesData(label, env, ctx) {
     x.lat = at.lat; x.lng = at.lng; if (at.posDoubt) x.posDoubt = true; if (at.from !== "listing") x.posFrom = at.from; }
   const near = x => x.lat == null || kmOf(x, center) <= 12;
   const stops = [...byId.values(), ...noId].filter(x => x.name && !/^Q\d+$/.test(x.name) && near(x) && fold(x.name) !== fold(area))
-    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined, posDoubt: x.posDoubt || undefined, posFrom: x.posFrom || undefined, kinds: x.kinds, gone: x.gone || undefined, partOf: x.partOf && x.partOf.length ? x.partOf.slice(0, 6) : undefined }))
+    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined, posDoubt: x.posDoubt || undefined, posFrom: x.posFrom || undefined, kinds: x.kinds, gone: x.gone || undefined, partOf: x.partOf && x.partOf.length ? x.partOf.slice(0, 6) : undefined, area: x.area || undefined }))
     .sort((a, b) => b.src.length - a.src.length || b.sl - a.sl).slice(0, 160);
   // A small place the guidebooks and the encyclopedia barely cover (a small island, a cruise line's private island,
   // a resort port): add the named tourist places the map knows nearby (beaches, attractions, water parks,

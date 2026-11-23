@@ -47,9 +47,9 @@ const SRC_EVENT = /\b(disaster|crash|accident|bombing|shooting|attack|explosion|
 //    Heritage or an old town or quarter (the Old City of Jerusalem);
 //  - a university, school, hospital, station, hotel or office block only as a listed monument or World Heritage.
 // Kinds unknown (an older answer, a failed ask): the name rules below decide, as before.
-const SRC_PLACE_KINDS = /^(structure|feature|building|archaeological|ancient-city|amphitheatre|mausoleum|park|garden|natural|beach|mountain|island|waterfall|cemetery|viewpoint|museum|art-museum|church|cathedral|mosque|synagogue|temple|chapel|monastery|castle|fortification|palace|square|bridge|monument|statue|fountain|tower|skyscraper|observation-deck|theatre|opera-house|concert-hall|stadium|arena|sports-venue|market|zoo|aquarium|amusement-park)$/;
-const SRC_SIGHT_KINDS = /^(archaeological|ancient-city|amphitheatre|mausoleum|park|garden|natural|beach|mountain|island|waterfall|cemetery|viewpoint|museum|art-museum|church|cathedral|mosque|synagogue|temple|chapel|monastery|castle|fortification|palace|square|bridge|monument|statue|fountain|tower|skyscraper|observation-deck|theatre|opera-house|concert-hall|market|zoo|aquarium|amusement-park)$/;
-const SRC_OLD_TOWN = /(old town|old city|historic (centre|center|quarter)|quarter|medina|altstadt|centro storico|vieille ville|casco antiguo|ciutat vella|plaka|kaleici)/i;
+const SRC_PLACE_KINDS = /^(old-town|structure|feature|building|archaeological|ancient-city|amphitheatre|mausoleum|park|garden|natural|beach|mountain|island|waterfall|cemetery|viewpoint|museum|art-museum|church|cathedral|mosque|synagogue|temple|chapel|monastery|castle|fortification|palace|square|bridge|monument|statue|fountain|tower|skyscraper|observation-deck|theatre|opera-house|concert-hall|stadium|arena|sports-venue|market|zoo|aquarium|amusement-park)$/;
+const SRC_SIGHT_KINDS = /^(old-town|archaeological|ancient-city|amphitheatre|mausoleum|park|garden|natural|beach|mountain|island|waterfall|cemetery|viewpoint|museum|art-museum|church|cathedral|mosque|synagogue|temple|chapel|monastery|castle|fortification|palace|square|bridge|monument|statue|fountain|tower|skyscraper|observation-deck|theatre|opera-house|concert-hall|market|zoo|aquarium|amusement-park)$/;
+const SRC_OLD_TOWN = /\b(old town|old city|historic (centre|center|quarter)|quarter|medina|altstadt|centro storico|vieille ville|casco antiguo|ciutat vella|plaka|kaleici)\b/i;
 const srcKnown = x => Array.isArray(x && x.kinds) && x.kinds.length > 0;
 const srcHas2 = (x, re) => (x.kinds || []).some(k => re.test(k));
 const srcListed = x => !!(x.unesco || x.heritage || (x.src || []).some(t => /Wikivoyage/.test(t)));
@@ -59,17 +59,23 @@ function srcNotPlace(x) {
   // A listing of places, not a place: a whole whose parts are on the list themselves and lie kilometres apart
   // ("Historic Monuments of Ancient Kyoto", 17 temples across the city; Nov 23 sight check). See srcMarkGroups.
   if (x.isGroup) return true;
+  // The map says it is a country, state or region: an area, not a place to stand in.
+  if (x.area && !srcHas2(x, SRC_SIGHT_KINDS)) return true;
   if (!srcKnown(x)) return false;
+  // A word, not a place: the encyclopedia calls it a term, and nothing more specific than "a location" (the Holy Land, Nov 23).
+  if (srcHas2(x, /^term$/) && !srcHas2(x, SRC_SIGHT_KINDS) && !srcHas2(x, /^(building|structure)$/)) return true;
   if (!srcHas2(x, SRC_PLACE_KINDS) && !srcHas2(x, /^(settlement|admin-area)$/)) return true;
   if (srcHas2(x, /^continent$/)) return true;
-  if (srcHas2(x, /^region$/) && !srcHas2(x, SRC_SIGHT_KINDS) && !srcHas2(x, /^(building|structure)$/)) return true;
+  // A region, country or peninsula is no stop; an old town is (the Old City of Jerusalem is both a region and an old town).
+  if (srcHas2(x, /^region$/) && !srcHas2(x, SRC_SIGHT_KINDS) && !srcHas2(x, /^(building|structure)$/) && !x.unesco && !SRC_OLD_TOWN.test(x.name + " " + (x.local || ""))) return true;
   if (srcHas2(x, /^(stadium|arena|sports-venue)$/) && !srcHas2(x, /^(archaeological|ancient-city|amphitheatre)$/) && !srcListed(x)) return true;
   if (srcHas2(x, /^(settlement|admin-area)$/) && !srcHas2(x, SRC_SIGHT_KINDS) && !x.unesco && !SRC_OLD_TOWN.test(x.name + " " + (x.local || ""))) return true;
   if (srcHas2(x, /^(university|school|hospital|station|airport|hotel|office-building|business)$/) && !srcHas2(x, /^(museum|art-museum|church|cathedral|mosque|synagogue|temple|chapel|monastery|castle|palace|archaeological)$/) && !x.unesco && !x.heritage) return true;
   return false;
 }
 if (typeof window !== "undefined") window.__kairouteNotPlace = x => srcNotPlace(x);
-const srcNotSpot = x => srcNotPlace(x) || SRC_NEVER.test(x.name) || SRC_BUSINESS.test(x.name) || (SRC_EVENT.test(x.name) && !SRC_MEMORIAL.test(x.name)) || ((SRC_UNLESS_LISTED.test(x.name) || /\bbuilding\b/i.test(x.name)) && !x.heritage && !x.unesco);
+// "City" in a name means a city or district, except in an old town's ("Old City of Jerusalem" was never offered, Nov 23).
+const srcNotSpot = x => srcNotPlace(x) || (SRC_NEVER.test(x.name) && !(SRC_OLD_TOWN.test(x.name) && !/\b(metro|station|line|airport|bank|school|hospital)\b/i.test(x.name))) || SRC_BUSINESS.test(x.name) || (SRC_EVENT.test(x.name) && !SRC_MEMORIAL.test(x.name)) || ((SRC_UNLESS_LISTED.test(x.name) || /\bbuilding\b/i.test(x.name)) && !x.heritage && !x.unesco);
 // What kind of stop a name describes: a typical visit length, a category and whether it is a walk-past stop.
 const SRC_KINDS = [
   [/museum|museo|musei|museu|mus[ée]e|gallery|galleria|galer[ií]a|pinacoteca|collection/i, "Museum", 90],
@@ -90,7 +96,7 @@ const SRC_KINDS = [
   [/fountain|fontana|fuente|font |statue|column|colonna|obelisk|obelisco|bridge|ponte|puente|pont |gate|porta|puerta|arch of|arco di|arco de|stairs|steps|scalinata|keyhole|monument to/i, "Landmark", 10]
 ];
 // Kind from the English and local names ("San Luigi dei Francesi" is "Chiesa di San Luigi dei Francesi" locally).
-const srcKind = (name, local) => { const t = name + " " + (local || ""); return SRC_KINDS.find(k => k[0].test(t)) || (/^(san|santa|sant'|santo|saint|st\.?|são|santi|santissim)\b/i.test(name) ? SRC_KINDS[1] : [null, "Sight", 40]); };
+const srcKind = (name, local) => { const t = name + " " + (local || ""); return SRC_KINDS.find(k => k[0].test(t)) || (/^(san|santa|sant'|santo|saint|st\.?|são|santi|santissim)\b/i.test(name) && !/\b(lift|elevator|elevador|funicular|street|road|avenue|rua|calle|via|station|gate|hospital|school|island|beach|park|hill|bay|lighthouse)\b/i.test(name) ? SRC_KINDS[1] : [null, "Sight", 40]); };
 const srcQuick = (name, local) => srcKind(name, local)[1] === "Landmark";
 // Kind from the encyclopedia's facts first (Hagia Sophia, the Colosseum, the Tower of London and Burj Khalifa have no
 // telling word in their names), the name only when the facts don't say. The first that fits wins, so a palace that
@@ -225,6 +231,15 @@ function sourceSights(city, src) {
     const x = src.stops.find(y => y.wd === m[1]); if (!x || !srcKnown(x) || srcNotPlace(x)) continue;
     const [, cat, m0] = srcKindOf(x); if (cat === "Sight") continue;
     if (!s.wd) s.wd = m[1]; s.category = cat; if (s.minutes === 30 || s.minutes === 60) s.minutes = srcMinutes(cat, m0, x.sl); }
+  // A travel-guide listing that is a sight the guide already has under its English name leaves the list (Nov 23 sight
+  // check: "Museo regionale di Messina" beside the "Regional Museum of Messina", "San Paolo fuori le Mura" beside the
+  // "Basilica of Saint Paul Outside the Walls"): the same id, or the encyclopedia's English name is the guide's own, within 2 km.
+  { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).map(String)));
+    const twin = s => { const m = /^wv~(Q\d+)$/.exec(String(s.id)); if (!m || !s.fromGuide || mine.has(String(s.id))) return false;
+      const x = src.stops.find(y => y.wd === m[1]), en = keyOf((x && x.name) || "");
+      return allSites(city).some(t => t !== s && !/^wv~/.test(String(t.id)) && (!isFinite(t.lat) || !isFinite(s.lat) || hav(t, s) <= 2) &&
+        (t.wd === m[1] || (en && en.split(" ").length >= 2 && (keyOf(t.name) === en || keyOf(t.srcName || "") === en)))); };
+    for (const k of ["sites", "farther"]) if (Array.isArray(city[k])) city[k] = city[k].filter(s => !twin(s)); }
   // A sight a saved guide got from the sources that the facts now show is no place to visit (an organisation, an event, a
   // region, a village) leaves the list, unless the traveler chose it themselves.
   { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).map(String)));

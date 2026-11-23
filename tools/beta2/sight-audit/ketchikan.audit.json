@@ -36,11 +36,40 @@
   },
   {
    "k": "INFO",
-   "t": "6 sights, 0 day trips/towns; must-see: Totem Heritage Center; top by fame: Saxman Totem Park 4, Totem Heritage Center 3, Southeast Alaska Discovery Center 1, Tongass Historical Museum 0, Tribal Fish Hatchery 0, Alaska Rainforest Sanctuary 0",
+   "t": "6 sights, 0 day trips/towns; must-see: Saxman Totem Park, Totem Heritage Center; top by fame: Saxman Totem Park 4, Totem Heritage Center 3, Southeast Alaska Discovery Center 1, Tongass Historical Museum 0, Tribal Fish Hatchery 0, Alaska Rainforest Sanctuary 0",
    "x": {}
   }
  ],
  "sights": [
+  {
+   "id": "src-q18331580",
+   "name": "Saxman Totem Park",
+   "local": "",
+   "lat": 55.3197,
+   "lng": -131.595,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 4,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q18331580",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic sight in Ketchikan, Alaska, named by 2 independent sources."
+  },
   {
    "id": "src-q3532720",
    "name": "Totem Heritage Center",
@@ -181,35 +210,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "While Alaska is probably one of the last places people would associate with the term \"rainforest\", the large amount of rainfall over this {{acre"
-  },
-  {
-   "id": "wv~saxman-totem-park",
-   "name": "Saxman Totem Park",
-   "local": "",
-   "lat": 55.3197,
-   "lng": -131.595,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 4,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q18331580",
-   "src": [
-    "Wikivoyage (English)",
-    "national heritage register"
-   ],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": ""
   }
  ]
 }

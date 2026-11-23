@@ -367,5 +367,49 @@
    },
    "osm": "way/443693930"
   }
+ ],
+ "eatHours": [
+  [
+   "Subway",
+   27.7206,
+   -97.39962,
+   "10:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Irie's Island Food",
+   27.82928,
+   -97.06812,
+   "Mo-Su 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Salty Dog Saloon",
+   27.83376,
+   -97.06271,
+   "Mo-Su 12:00-02:00",
+   "bar"
+  ],
+  [
+   "Island Tropical Sno",
+   27.82926,
+   -97.06584,
+   "Mo-Su 10:00-20:00",
+   "fast_food"
+  ],
+  [
+   "Whataburger",
+   27.72055,
+   -97.39884,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "San Juan Restaurant",
+   27.8339,
+   -97.07149,
+   "06:00-22:00",
+   "restaurant"
+  ]
  ]
 }

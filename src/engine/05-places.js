@@ -55,7 +55,7 @@
         const key = n => String(n || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
         // The same place under a longer name in the guide ("The Roman Forum" is in "Colosseum and Roman Forum", Nov 23).
         const bare = n => key(n).replace(/^the /, ""), within = (big, small) => small.split(" ").length >= 2 && (" " + big + " ").includes(" " + small + " ");
-        const more = P.guideSights.filter(x => !x.closedForGood && isFinite(x.lat) && !(city.sites || []).some(s => key(s.name) === key(x.name) || within(bare(s.name), bare(x.name)) || (isFinite(s.lat) && E.hav(s, x) <= 0.15)))
+        const more = P.guideSights.filter(x => !x.closedForGood && isFinite(x.lat) && ![...(city.sites || []), ...(city.farther || [])].some(s => key(s.name) === key(x.name) || within(bare(s.name), bare(x.name)) || (isFinite(s.lat) && E.hav(s, x) <= 0.15)))
           .map((x, n) => Object.assign({ id: "wv~" + (x.wikidata || key(x.name).replace(/ /g, "-")), name: x.name, lat: x.lat, lng: x.lng, minutes: /museum|museo|musei|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
             editions: x.editions || 0, unesco: !!x.unesco, tags: ["from-guide"], category: "Sight", fromGuide: true, blurb: x.note || "" }, x.web ? { web: x.web } : {}, x.posDoubt ? { posDoubt: true } : {})).filter((x, i, a) => a.findIndex(y => y.id === x.id) === i);
         // Filled up to 30 sights, the best known first (a guide page can list 170: too many to choose from on a phone,
@@ -73,6 +73,16 @@
           const m = P.cityEats.find(x => x.hours && x.name && E.eatKey(E.latin(x.name) || x.name) === k && (!isFinite(r.lat) || !isFinite(x.lat) || E.hav(r, x) <= 0.3)); if (m) r.hours = m.hours; }
         city.restaurants = (city.restaurants || []).concat(P.cityEats.filter(x => x.name && !E.notPublicEat(x) && E.readable(E.latin(x.name) || x.name) && isFinite(x.lat) && isFinite(x.lng) && !have.has(E.eatKey(x.name)))
           .map(x => Object.assign({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }, x.hours ? { hours: x.hours } : {}))); }
+      // Opening hours of the places to eat on the map near the sights ([name, lat, lng, hours, kind]): a place the guide
+      // names, with no hours of its own, takes the hours of the place on the map with its name within 200 m ("Sorbillo" is
+      // the map's "Antonio Sorbillo"). Nov 23 real-map check: lunches planned before the place opens.
+      if ((P.eatHours || []).length) for (const r of city.restaurants || []) {
+        if (r.hours || !r.name || !isFinite(r.lat) || !isFinite(r.lng)) continue; const k = E.eatKey(r.name); if (k.length < 4) continue;
+        const hit = P.eatHours.filter(x => x && x[0] && x[3] && E.hav(r, { lat: x[1], lng: x[2] }) <= 0.2).map(x => ({ x, mk: E.eatKey(E.latin(x[0]) || x[0]) }))
+          .filter(o => o.mk && (o.mk === k || (o.mk.length >= 4 && (o.mk.includes(k) || k.includes(o.mk)))))
+          .sort((a, b) => (b.mk === k) - (a.mk === k) || E.hav(r, { lat: a.x[1], lng: a.x[2] }) - E.hav(r, { lat: b.x[1], lng: b.x[2] }))[0];
+        if (hit) { r.hours = hit.x[3]; if (hit.x[4]) r.mapKind = hit.x[4]; }
+      }
       // One sight, one id: a town's sights the app already lists (it shows the places files' sights in its own list, and
       // sends them back) are never added again (Nov 19 sweep: Toledo's sights twice over made a day of 23 stops, an 8-second tick).
       const added = [], haveFar = new Set((city.farther || []).map(x => String(x.id)));

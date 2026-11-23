@@ -3,7 +3,7 @@
  "label": "Rome",
  "centre": {
   "lat": 41.8986,
-  "lng": 12.4825
+  "lng": 12.482058
  },
  "findings": [
   {
@@ -20,13 +20,6 @@
    "t": "Olympic Stadium: built-in sight with no Wikidata id and nothing of the name on the map nearby",
    "x": {
     "id": "wv~Q159884"
-   }
-  },
-  {
-   "k": "NOID",
-   "t": "The Roman Forum: built-in sight with no Wikidata id and nothing of the name on the map nearby",
-   "x": {
-    "id": "wv~Q180212"
    }
   },
   {
@@ -60,15 +53,6 @@
     "id": "wv~Q207808",
     "min": 30,
     "kind": "archaeological site or ancient city"
-   }
-  },
-  {
-   "k": "LEN",
-   "t": "Musei Capitolini {Q333906 by name}: 30 min, but a art museum or gallery usually takes 45-240 min",
-   "x": {
-    "id": "wv~Q333906",
-    "min": 30,
-    "kind": "art museum or gallery"
    }
   },
   {
@@ -141,6 +125,110 @@
    "x": {
     "a": "wv~Q231699",
     "b": "stpaulwalls-far"
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#1 best known nearby, \"European Convention on Human Rights\" (76 Wikipedia languages, Q183191), is not offered",
+   "x": {
+    "wd": "Q183191",
+    "sl": 76
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#3 best known nearby, \"Year of the Four Emperors\" (62 Wikipedia languages, Q470596), is not offered",
+   "x": {
+    "wd": "Q470596",
+    "sl": 62
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#4 best known nearby, \"The Creation of Adam\" (61 Wikipedia languages, Q500242), is not offered",
+   "x": {
+    "wd": "Q500242",
+    "sl": 61
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#5 best known nearby, \"Rome Statute of the International Criminal Court\" (60 Wikipedia languages, Q838958), is not offered",
+   "x": {
+    "wd": "Q838958",
+    "sl": 60
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#6 best known nearby, \"Great Fire of Rome\" (58 Wikipedia languages, Q215231), is not offered",
+   "x": {
+    "wd": "Q215231",
+    "sl": 58
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#7 best known nearby, \"Pietà\" (57 Wikipedia languages, Q235242), is not offered",
+   "x": {
+    "wd": "Q235242",
+    "sl": 57
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#8 best known nearby, \"Rome Metro\" (54 Wikipedia languages, Q237480), is not offered",
+   "x": {
+    "wd": "Q237480",
+    "sl": 54
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#9 best known nearby, \"The Last Judgment\" (51 Wikipedia languages, Q567861), is not offered",
+   "x": {
+    "wd": "Q567861",
+    "sl": 51
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#10 best known nearby, \"Arch of Constantine\" (49 Wikipedia languages, Q5786), is not offered",
+   "x": {
+    "wd": "Q5786",
+    "sl": 49
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#11 best known nearby, \"Laocoön and His Sons\" (47 Wikipedia languages, Q465762), is not offered",
+   "x": {
+    "wd": "Q465762",
+    "sl": 47
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#12 best known nearby, \"Battle of the Milvian Bridge\" (46 Wikipedia languages, Q339321), is not offered",
+   "x": {
+    "wd": "Q339321",
+    "sl": 46
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#13 best known nearby, \"Campus Martius\" (44 Wikipedia languages, Q242839), is not offered",
+   "x": {
+    "wd": "Q242839",
+    "sl": 44
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "#14 best known nearby, \"Capitoline Wolf\" (43 Wikipedia languages, Q408623), is not offered",
+   "x": {
+    "wd": "Q408623",
+    "sl": 43
    }
   },
   {
@@ -413,32 +501,6 @@
    "summary": "The stadium is on the west bank of River Tiber, about three km directly north of the Vatican. It is part of a sports complex that was built for the 1960 Olympic"
   },
   {
-   "id": "wv~Q180212",
-   "name": "The Roman Forum",
-   "local": "",
-   "lat": 41.8922,
-   "lng": 12.4852,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "If stones could talk: these hallowed ruins were the most powerful seat of government in the world. To stand in the political, legal and religious centre of the "
-  },
-  {
    "id": "wv~Q83425",
    "name": "St. Peter's Square",
    "local": "",
@@ -632,7 +694,7 @@
    "local": "",
    "lat": 41.893056,
    "lng": 12.4825,
-   "minutes": 30,
+   "minutes": 60,
    "category": "Sight",
    "kind": "",
    "quick": false,
@@ -971,6 +1033,33 @@
    "merged": [],
    "posDoubt": false,
    "summary": "This is the largest square in Rome. It sometimes hosts pop concerts and is the focal point for Rome's New Year's Eve celebrations. The twin churches ''Santa Mar",
+   "wdByName": true
+  },
+  {
+   "id": "wv~Q848386",
+   "name": "Palazzo Farnese",
+   "local": "",
+   "lat": 41.894722,
+   "lng": 12.470833,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q848386",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Since 1871 this has been the French Embassy. This 16th-century palace contains an important fresco cycle by Annibale Carracci and houses a library of collection",
    "wdByName": true
   },
   {
