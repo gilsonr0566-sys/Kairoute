@@ -1,5 +1,5 @@
 ## Barcelona, Spain (Barcelona)
-- POS Sitges [day trip] {Q15551 by name}: app 41.23700,1.80590 is 0.50 km from the map's Sitges (node/1470839456, 41.23536,1.81141); Wikidata 0.63 km from the map
+- POS Sitges [day trip] {Q15551 by name}: app is 0.38 km from Wikidata's point (not on the map by id)
 - NOID Santa Maria del Mar: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Sant Pau Recinte Modernista: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Bunkers del Carmel: built-in sight with no Wikidata id and nothing of the name on the map nearby
