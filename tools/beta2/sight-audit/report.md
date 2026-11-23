@@ -177,7 +177,7 @@
 - INFO day trips: Bremen, Buxtehude, Itzehoe, Lübeck, Rathaus, Roland, Dom St. Petri, Böttcherstraße, Wallanlagen, Schnoor, Überseemuseum, Wuseum, Kunsthalle, Gerhard-Marcks-Haus, Wilhelm-Wagenfeld-Haus, Weserburg, St. Petri church, City hall, Buxtehude Museum für Regionalgeschichte und Kunst, Germanengrab, Nagelsche Fachwerkhäuser, Stadtkirche St. Laurentii, St.-Jürgen-Kapelle, St. Marien, The Dom, St. Petri, St. Jakobi, St. Aegidien, St. Katharinen, Holstentor, Burgtor, Heiligen-Geist-Hospital, Behnhaus/Drägerhaus, Willy Brandt House, Haus der Kaufmannschaft, Museumsquartier St. Annen, Buddenbrookhaus, Günter-Grass-Haus, Museumshafen, European Hansemuseum, Museum für Natur und Umwelt Lübeck, Kloster Itzehoe, Rathaus, Theaterfigurenmuseum Lübeck
 
 ## Heraklion (Heraklion, built-in guide)
-- POS Kali Limenes (Fair Havens) [day trip] {Q11818846 by name}: app 34.93300,24.81500 is 1.20 km from the map's Kali Limenes (node/3784701989, 34.93176,24.80192); Wikidata 0.27 km from the map
+- POS Kali Limenes (Fair Havens) [day trip] {Q11818846 by name}: app is 1.39 km from Wikidata's point (not on the map by id)
 - NOT Palace of Knossos {Q9054457 by name}: Wikidata has an end date (closed, dissolved or demolished)
 - NOID Venetian harbor and Koules fortress: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Church of Saint Titus: built-in sight with no Wikidata id and nothing of the name on the map nearby
