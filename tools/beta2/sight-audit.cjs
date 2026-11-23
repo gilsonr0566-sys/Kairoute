@@ -24,7 +24,7 @@ const PLACES = [
   ['grandturk', 'Grand Turk, Turks and Caicos', 'port'], ['mykonos', 'Mykonos, Greece', 'port'], ['pontadelgada', 'Ponta Delgada, Azores', 'port'], ['halfmooncay', 'Half Moon Cay, Bahamas', 'port'],
   ['haifa', 'Haifa (Jerusalem), Israel', 'port'], ['reykjavik', 'Reykjavik, Iceland', 'stay'], ['venice', 'Venice, Italy', 'stay'], ['dubai', 'Dubai, UAE', 'stay'],
   // The Greece trip's places (built-in guides plus their sources)
-  ['athens', 'Athens', 'stay'], ['santorini', 'Santorini', 'port'], ['heraklion', 'Heraklion', 'port'], ['chania', 'Chania', 'port'], ['kusadasi', 'Kusadasi', 'port'],
+  ['athens', 'Athens', 'stay'], ['santorini', 'Santorini', 'port'], ['heraklion', 'Heraklion', 'port'], ['chania', 'Chania', 'port'], ['kusadasi', 'Kusadasi', 'port'], ['kusadasi-tr', 'Kusadasi, Turkey', 'port'],
   ['messina', 'Messina', 'port'], ['naples', 'Naples', 'port'], ['rome', 'Rome', 'port'], ['madrid', 'Madrid', 'stay'],
   // The Bahamas field test, and Hamburg (Lübeck must come up as a day trip)
   ['nassau', 'Nassau, Bahamas', 'port'], ['cococay', 'Perfect Day at CocoCay, Bahamas', 'port'], ['hamburg', 'Hamburg, Germany', 'stay'],
