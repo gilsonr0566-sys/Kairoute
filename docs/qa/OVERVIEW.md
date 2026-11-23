@@ -112,8 +112,9 @@ the tests missed it**, the kind of test added, and its status. **RUNNING**
 
 **New today, found by the independent checker before any traveler saw it:** a departure typed in the small hours (for
 example 12:20 am) on a departure day is read as the next night, and the day fills with sights. Nobody is asked. A ticket
-dated that day means this morning. It's reported as a known issue so it doesn't hold back today's fixes, and it's handed
-to the leaving-days work as a general rule: ask the traveler which night, and plan nothing until they answer.
+dated that day means this morning. It was first listed as a known issue so it wouldn't hold back today's fixes. Richard
+reviewed that as a serious design flaw, so since Nov 23 a safety finding can never be a warning: it blocks the release
+until fixed (escapes.md E16). The leaving-days fix asks the traveler which night and plans nothing until they answer.
 
 ## Your testing directive, rule by rule
 

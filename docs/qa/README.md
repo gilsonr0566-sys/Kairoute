@@ -41,9 +41,15 @@ templates are not used. Its rules are.
 - **P2 / S2:** wrong or misleading on screen, with a workaround. Released only with an owner, written in the ledger.
 - **P3 / S3:** untidy. Goes in the backlog.
 
-A new check that finds a problem already on the live build is reported as WARN, not a failure, until its fix lands.
-The fix gets an owner the same day. That way a release that is no worse than what travelers have now is not held back.
-The `--warn` list in the gate is that record, and each entry names its owner in `escapes.md`.
+**A safety finding is never a warning.** An S1 or P1 finding blocks the release, even when the same problem is already on
+the live build, and even when a new check finds it for the first time. The app refuses to publish what it cannot show is
+safe. (Until Nov 23 a new S1 finding could be listed as WARN while its fix was written. Richard called that a serious
+design flaw, and it is gone: escapes.md E16.)
+
+Enforced, not promised: the independent check and the odd-trip checks refuse `--warn` for any safety rule and fail the
+run when asked; `tools/truth/no-warn-check.cjs` runs in the gate's code part and fails if any workflow warns a safety
+rule or either tool stops refusing; the release report counts every safety finding, printed FAIL or WARN, as a fourth
+release target that must be 0. Only an S2 finding may be listed as WARN, and only with an owner in `escapes.md`.
 
 ## Files
 

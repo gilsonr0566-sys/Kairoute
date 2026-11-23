@@ -37,7 +37,7 @@
 //                20 min of it, on the day's date. A place whose hours are not on the map is not judged (unknown).
 //   S2 lunchlate a lunch at a place to eat starting after 3:30 pm (an hour past the usual last orders)
 // Usage (module): require('./oracle.cjs').checkDay(day, plan, ctx) -> [{rule, sev, msg}]
-// Usage (CLI):    node tools/truth/oracle.cjs [--trips odd.json] [--corpus] [--show 6] [--warn rule,rule]
+// Usage (CLI):    node tools/truth/oracle.cjs [--trips odd.json] [--corpus] [--show 6] [--warn rule,rule  (S2 rules only; an S1 rule is refused)]
 //                 --trips reads the file odd-trips.cjs --out writes; --corpus plans the saved test trips.
 'use strict';
 const R = 6371, rad = x => x * Math.PI / 180;
@@ -218,7 +218,13 @@ if (require.main === module) {
   const trips = [];
   if (arg('trips')) for (const t of JSON.parse(fs.readFileSync(arg('trips')))) trips.push({ name: t.name, b: t.bucket });
   if (arg('corpus') || !arg('trips')) { const dir = process.env.SNAP_DIR || path.join(__dirname, '..', 'beta2', 'corpus'); for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) trips.push({ name: f.replace(/\.json$/, ''), b: JSON.parse(fs.readFileSync(path.join(dir, f))) }); }
-  const found = {}, ex = {}, SHOW = +arg('show', 6), WARN = String(arg('warn', '') || '').split(',').filter(Boolean);
+  // --warn rule,rule lists a known finding without failing the run. It is allowed ONLY for S2 rules (wrong on screen).
+  // An S1 rule (could miss a flight, train or ship) can never be warned: asking for it is refused and the rule still
+  // fails (Richard, Nov 23: "the S1 warning exception is a serious design flaw"). A safety finding always blocks.
+  const S1 = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified'];
+  const asked = String(arg('warn', '') || '').split(',').filter(Boolean), refused = asked.filter(k => S1.includes(k)), WARN = asked.filter(k => !S1.includes(k));
+  if (refused.length) console.log(`REFUSED --warn ${refused.join(',')}: S1 safety rules always fail the run; no warn-only path`);
+  const found = {}, ex = {}, SHOW = +arg('show', 6);
   let days = 0, planned = 0;
   for (const { name, b } of trips) {
     let plans; try { plans = E.planTrip(E.applyPlaces(b, places)); } catch (e) { (found.error = (found.error || 0) + 1); (ex.error = ex.error || []).push(name + ': ' + e.message); continue; }
@@ -230,5 +236,5 @@ if (require.main === module) {
   for (const k of order) { const n = found[k] || 0; console.log(`${n ? (WARN.includes(k) ? 'WARN' : 'FAIL') : 'ok  '} ${k.padEnd(9)} ${n}`); (ex[k] || []).slice(0, SHOW).forEach(e => console.log('       ' + e)); }
   if (lunchUntested.n) { console.log(`NOT TESTED lunchshut: ${lunchUntested.n} lunches with map hours not judged (the opening_hours library is not installed: npm i --no-save opening_hours@3.16.0)`); }
   if (process.env.ALL) fs.writeFileSync(process.env.ALL, JSON.stringify(ex, null, 1));
-  process.exitCode = order.some(k => found[k] && !WARN.includes(k)) || lunchUntested.n ? 1 : 0;
+  process.exitCode = order.some(k => found[k] && !WARN.includes(k)) || lunchUntested.n || refused.length ? 1 : 0;
 }

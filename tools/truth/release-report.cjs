@@ -33,8 +33,13 @@ const ran = k => needs[k] && (needs[k].result === 'success' || needs[k].result =
 const unverified = ran('safety') ? count(/^FAIL unverified\s+(\d+)/) : null;
 const crit = parts.some(ran) ? count(/^FAIL error\s+(\d+)/) + (all.match(/planTrip threw|Uncaught |pageerror|TypeError:|ReferenceError:/g) || []).length : null;
 const notRun = parts.filter(k => !ran(k)).length + (all.match(/^NOT TESTED/mg) || []).length;
+// A fourth target (Richard, Nov 23): safety findings. Every S1 finding (a flight, train or ship that could be missed) and
+// every safety rule of the day checks counts, whether printed FAIL or WARN, and any refused attempt to warn one. There is
+// no warn-only path for safety: a trip the run cannot show is safe stops the release.
+const SAFETY_RULES = /^(FAIL|WARN)\s+(gone|reach|leaveby|before|night|unverified|back|start|order|nan)\s+(\d+)\s*$/;
+const s1Count = parts.some(ran) ? all.split('\n').reduce((a, l) => { const m = SAFETY_RULES.exec(l); return a + (m ? +m[3] : 0); }, 0) + (all.match(/^REFUSED --warn/mg) || []).length : null;
 const T = (n, what) => `| ${what} | ${n == null ? 'NOT TESTED' : n} | ${n === 0 ? 'met' : n == null ? 'NOT MET (not tested)' : 'NOT MET'} |`;
-const targetsMet = unverified === 0 && crit === 0 && notRun === 0;
+const targetsMet = unverified === 0 && crit === 0 && notRun === 0 && s1Count === 0;
 const allPass = parts.every(k => needs[k] && needs[k].result === 'success');
 const ok = allPass && targetsMet;
 
@@ -53,7 +58,7 @@ const out = [];
 out.push(`# Beta 2 release report`, ``, `Commit ${(process.env.GITHUB_SHA || sh('git rev-parse HEAD')).slice(0, 8)}${process.env.GITHUB_RUN_NUMBER ? ', gate run ' + process.env.GITHUB_RUN_NUMBER : ''}, ${new Date().toISOString().replace('T', ' ').slice(0, 16)} UTC.${live ? ' Compared with the published build ' + live + '.' : ''}`, ``);
 out.push(`## Release recommendation: **${ok ? 'RELEASE OK' : 'DO NOT RELEASE'}**`, ``);
 out.push(ok ? 'Every part ran and passed, and every release target is 0. This is a gate, not a claim that every failure is gone.' : `${!allPass ? 'A part failed or was not tested (not tested is never a pass). ' : ''}${!targetsMet ? 'A release target is not met.' : ''}`, ``);
-out.push(`## Release targets (each must be 0)`, ``, `| Target | Count | |`, `|---|---|---|`, T(unverified, 'Unverified return connections presented as confirmed'), T(crit, 'Unhandled critical workflow failures'), T(notRun, 'Mandatory tests not executed'), ``);
+out.push(`## Release targets (each must be 0)`, ``, `| Target | Count | |`, `|---|---|---|`, T(unverified, 'Unverified return connections presented as confirmed'), T(crit, 'Unhandled critical workflow failures'), T(notRun, 'Mandatory tests not executed'), T(s1Count, 'Safety findings (S1), including any known or warned'), ``, `A safety finding is never a warning: it blocks the release until fixed.`, ``);
 out.push(`## 1. What was tested`, ``, `| Part | Result |`, `|---|---|`, ...parts.map(k => `| ${NAMES[k] || k} | ${word(needs[k] && needs[k].result)} |`), ``);
 out.push(`## 2. What was not tested`, ``, ...(parts.filter(k => !ran(k)).map(k => `- ${NAMES[k] || k}: ${word(needs[k] && needs[k].result)}`)), `- Known gaps, never tested by the gate (docs/qa/test-map.md):`, ...gaps.map(g => '  ' + g), `- AI answers at runtime: AI is off by Richard's rule, so they are not tested here. The recorded stories are checked at build time (factcheck.json), not in this gate.`, ``);
 out.push(`## 3-5. Counts`, ``, `- Gate parts: ${parts.filter(k => needs[k] && needs[k].result === 'success').length} passed, ${parts.filter(k => needs[k] && needs[k].result === 'failure').length} failed, ${parts.filter(k => !ran(k)).length} not tested (blocked, skipped or cancelled).`,
