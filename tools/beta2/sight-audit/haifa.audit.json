@@ -3,7 +3,7 @@
  "label": "Haifa (Jerusalem), Israel",
  "centre": {
   "lat": 31.77611,
-  "lng": 35.22975
+  "lng": 35.23211
  },
  "findings": [
   {
@@ -38,17 +38,17 @@
   },
   {
    "k": "FAME",
-   "t": "#2 best known nearby, \"crucifixion of Jesus\" (69 Wikipedia languages, Q51636), is not offered",
+   "t": "#2 best known nearby, \"Solomon's Temple\" (69 Wikipedia languages, Q223644), is not offered",
    "x": {
-    "wd": "Q51636",
+    "wd": "Q223644",
     "sl": 69
    }
   },
   {
    "k": "FAME",
-   "t": "#3 best known nearby, \"Solomon's Temple\" (69 Wikipedia languages, Q223644), is not offered",
+   "t": "#3 best known nearby, \"crucifixion of Jesus\" (69 Wikipedia languages, Q51636), is not offered",
    "x": {
-    "wd": "Q223644",
+    "wd": "Q51636",
     "sl": 69
    }
   },
@@ -150,7 +150,7 @@
   },
   {
    "k": "INFO",
-   "t": "18 sights, 4 day trips/towns; must-see: Dome of the Rock, Al-Aqsa Mosque, Western Wall, Israel Museum, Church of the Holy Sepulchre, The Temple Institute, Holy Land, Calvary; top by fame: Al-Aqsa Mosque 103, Holy Land 91, Israel Museum 90, Dome of the Rock 87, Western Wall 84, Calvary 81, Church of the Holy Sepulchre 76, The Temple Institute 76",
+   "t": "18 sights, 4 day trips/towns; must-see: Dome of the Rock, Al-Aqsa Mosque, Western Wall, Israel Museum, Church of the Holy Sepulchre, Old City of Jerusalem, The Temple Institute, Calvary; top by fame: Al-Aqsa Mosque 103, Israel Museum 90, Dome of the Rock 87, Western Wall 84, Old City of Jerusalem 84, Calvary 81, Church of the Holy Sepulchre 76, The Temple Institute 76",
    "x": {}
   },
   {
@@ -309,6 +309,35 @@
    "summary": "The Holy Sepulchre is a large building spanning several areas in which Christ is believed by Christians to have been crucified and died, was buried, and then ro"
   },
   {
+   "id": "src-q213274",
+   "name": "Old City of Jerusalem",
+   "local": "",
+   "lat": 31.77667,
+   "lng": 35.23417,
+   "minutes": 60,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 84,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q213274",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic sight in Jerusalem, named by 2 independent sources."
+  },
+  {
    "id": "src-q2909160",
    "name": "The Temple Institute",
    "local": "",
@@ -336,34 +365,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "A fairly interesting place which has reconstructed most of the more obvious ritual tools to be used in the Temple services in the hopes of one day restoring the"
-  },
-  {
-   "id": "src-q48175",
-   "name": "Holy Land",
-   "local": "",
-   "lat": 31.77833,
-   "lng": 35.22972,
-   "minutes": 60,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": true,
-   "fame": 91,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q48175",
-   "src": [
-    "Wikidata (Wikipedia in many languages)"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": true,
-   "summary": "A sight in Jerusalem, named by 1 independent sources."
   },
   {
    "id": "src-q126130",
@@ -706,7 +707,7 @@
    "builtin": false,
    "famousFix": true,
    "far": true,
-   "travel": "Bus from ככר הדוידקה/הנביאים, about 55 min one way",
+   "travel": "Bus from הדווידקה, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -760,7 +761,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from ככר הדוידקה/הנביאים, about 55 min one way",
+   "travel": "Bus from הדווידקה, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -786,7 +787,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from ככר הדוידקה/הנביאים, about 55 min one way",
+   "travel": "Bus from הדווידקה, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
