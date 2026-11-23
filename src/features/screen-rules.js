@@ -84,8 +84,21 @@ function rules(text, info = {}) {
   P.rides.forEach(r => { if (!/^Walk$/.test(r.mode) || r.dist == null || r.dist < 0.25 || !r.min) return; const kmh = r.dist / (r.min / 60);
     if ((kmh < 2 || kmh > 7) && !/spare|steps|stairs|queue|climb|uphill|hill|includes|wait/i.test(r.notes.join(' '))) add('S2', 'walk time matches its distance', `${r.head}: ${kmh.toFixed(1)} km/h, nothing on the card says why`); });
   stops.forEach(s => { const want = dur(s.meta); if (want != null && s.arrive != null && s.leave != null && s.leave - s.arrive + 1 < want) add('S2', 'visit length matches the clock', `${s.name}: card says ${s.meta.split(' · ')[0]}, clock gives ${s.leave - s.arrive} min`); });
-  const lunch = P.rows.filter(r => r.key === 'L');
-  lunch.forEach(s => { const t = s.name + ' ' + s.meta; if (/Lunch near |Your pick|^(Quick )?lunch:?$|on your own|find a place/i.test(t) && !/bring|pack|picnic|no restaurant/i.test(t)) add('S2', 'lunch has a real place', `"${s.name}${s.meta ? ' · ' + s.meta : ''}" names no place to eat and does not say to bring food`); });
+  const lunch = P.rows.filter(r => r.key === 'L'), t = r => r.name + ' ' + r.meta + ' ' + r.notes.join(' ');
+  lunch.forEach(s => { const t = s.name + ' ' + s.meta; if (/Lunch near |Lunch: Lunch in |Your pick|^(Quick )?lunch:?$|on your own|find a place/i.test(t) && !/bring|pack|picnic|no restaurant/i.test(t)) add('S2', 'lunch has a real place', `"${s.name}${s.meta ? ' · ' + s.meta : ''}" names no place to eat and does not say to bring food`); });
+  // Lunch is a meal (lunch audit, Nov 22): never at a place whose name says coffee, drinks or a treat and no meal, and it starts
+  // by the kitchen's last orders (2:30 pm) unless it is a lunch brought along or the card says it is late.
+  lunch.forEach(s => { const nm = s.name.replace(/^(Quick )?lunch:\s*/i, '');
+    if (/\b(coffee|espresso|tabacchi|sherry|wine ?bar|cocktails?|lounge|events|tea ?room|juice|gelateria|pasticceria|bakery|patisserie|ice ?cream|donuts?)\b/i.test(nm) && !/\b(taverna|restaurant|trattoria|osteria|bistro|brasserie|grill|meze|kitchen|dining|seafood|steak|pizza|pasta|tapas|lunch)\b/i.test(nm + ' ' + s.meta)) add('S2', 'lunch is a meal', `"${nm}" is a place for coffee, drinks or a treat, not lunch`);
+    const at = s.arrive != null ? s.arrive : s.leave; if (at != null && at > 14 * 60 + 30 && !/bring|late lunch|reservation|your pick|on board/i.test(t(s))) add('S2', 'lunch at a lunch hour', `lunch at ${nm} starts ${clock(at)}, after the kitchen's last orders (2:30 pm)`); });
+  // Into a meal the clock adds up: leave + ride = arrive (card review, Nov 22: lunch looked pinned to 11:45 am, up to 47 min
+  // missing). Time to spare before lunch shows on the card, never in the gap.
+  P.rides.forEach(r => { const k = P.rows.indexOf(r.from), nx = P.rows[k + 1]; if (!nx || nx.key !== 'L' || r.from.leave == null || nx.arrive == null || r.choices.length) return;
+    if (P.rides.filter(q => q.from === r.from).length > 1) return;
+    const gap = nx.arrive - (r.from.leave + r.min); if (Math.abs(gap) > 2 && !/spare|wait|includes/i.test(r.notes.join(' '))) add('S2', 'leave + ride = arrive at lunch', `${r.from.name} leave ${clock(r.from.leave)} + ${r.head} gives ${clock(r.from.leave + r.min)}, lunch says arrive ${clock(nx.arrive)}`); });
+  // Dinner at a dinner hour (card review: "ARRIVE 11:43 pm Suggested dinner").
+  const lines = raw.split('\n').map(l => l.trim());
+  lines.forEach((l, k) => { if (/^(From|FROM|ARRIVE)$/.test(l) && T(lines[k + 1]) != null && T(lines[k + 1]) > 21 * 60 + 30 && /dinner/i.test(lines.slice(k + 2, k + 5).join(' '))) add('S2', 'dinner at a dinner hour', `dinner at ${lines[k + 1]}`); });
   const firstT = (P.rows[0] || {}).leave, lastT = end ? end.arrive : (P.rows[P.rows.length - 1] || {}).leave;
   if (stops.length >= 2 && firstT != null && lastT != null && firstT <= 12 * 60 && lastT >= 14 * 60 + 30 && !lunch.length && !P.lunchSaid) add('S2', 'lunch on a day out', `out ${clock(firstT)} to ${clock(lastT)} with no lunch and nothing said about it`);
   /* Bags: stored and collected with nothing between is storage for nothing; time out after collecting means carrying the bags. */

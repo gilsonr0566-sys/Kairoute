@@ -67,8 +67,12 @@
       // Restaurants and cafés on the map beside the place's sights: lunch where the traveler is, never a detour back to the
       // few the guide names (Nov 18, a small coastal city). Kept apart as from the map (no review behind them).
       if ((P.cityEats || []).length) { const have = new Set((city.restaurants || []).map(r => E.eatKey(r.name)));
+        // A place the guide names that is also on the map keeps the map's opening hours (Nov 23 real-map check: Sala Thai
+        // planned for 11:45, before it opens at noon, because the guide's copy had no hours and the map's copy was dropped).
+        for (const r of city.restaurants || []) { if (r.hours || !r.name) continue; const k = E.eatKey(r.name);
+          const m = P.cityEats.find(x => x.hours && x.name && E.eatKey(E.latin(x.name) || x.name) === k && (!isFinite(r.lat) || !isFinite(x.lat) || E.hav(r, x) <= 0.3)); if (m) r.hours = m.hours; }
         city.restaurants = (city.restaurants || []).concat(P.cityEats.filter(x => x.name && !E.notPublicEat(x) && E.readable(E.latin(x.name) || x.name) && isFinite(x.lat) && isFinite(x.lng) && !have.has(E.eatKey(x.name)))
-          .map(x => ({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }))); }
+          .map(x => Object.assign({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }, x.hours ? { hours: x.hours } : {}))); }
       // One sight, one id: a town's sights the app already lists (it shows the places files' sights in its own list, and
       // sends them back) are never added again (Nov 19 sweep: Toledo's sights twice over made a day of 23 stops, an 8-second tick).
       const added = [], haveFar = new Set((city.farther || []).map(x => String(x.id)));

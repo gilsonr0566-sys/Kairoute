@@ -1,0 +1,18 @@
+name: Beta 2 lunch places vs the real map
+on:
+  push:
+    branches: ["claude/project-thread-h50p7p"]
+    paths: ["tools/beta2/lunch-sample.json", "tools/beta2/lunch-verify.cjs", ".github/workflows/lunch-verify.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/beta2/lunch-verify.cjs
