@@ -34,7 +34,10 @@ function parse(text) {
         cur = { key: L[k + 2], arrive, leave: l === 'LEAVE' ? t : null, by: l === 'BY' ? t : null, name: L[k + 3] || '', meta: isRide ? '' : mt, notes: [] }; P.rows.push(cur); arrive = null; ride = null; k += isRide ? 3 : 4; continue; }
     }
     if (l === 'ARRIVE' || l === 'LEAVE') continue;
-    if (arrive == null && KEY.test(l) && l === 'E' && /^Back at|^At the|^Arrive|^End/i.test(L[k + 1] || '')) { cur = { key: 'E', arrive: null, name: L[k + 1], meta: '', notes: [] }; P.rows.push(cur); continue; }
+    // The day's end row. On ship and leaving days it follows its own ARRIVE time ("ARRIVE 5:23 pm / E / Back at the ship");
+    // before Nov 23 that layout was never read, so "back by" and "ride back fits" never ran on those days (found by
+    // tools/truth/screen-rule-proof.cjs, which plants each rule's bug and checks it fires).
+    if (KEY.test(l) && l === 'E' && /^Back at|^At the|^Arrive|^End/i.test(L[k + 1] || '')) { cur = { key: 'E', arrive, name: L[k + 1], meta: '', notes: [] }; P.rows.push(cur); arrive = null; ride = null; continue; }
     const m = RIDE.exec(l);
     if (m && (m[2] || m[3]) && !/^(\d+ h|\d+ min)/.test(l) && cur) {
       const min = (+m[2] || 0) * 60 + (+m[3] || 0);
@@ -155,7 +158,7 @@ function rules(text, info = {}) {
   stops.forEach(st => { const ts = st.notes.map(l => /(\d{1,2}:\d\d\s*[ap]m)$/i.exec(l)).filter(Boolean).map(m => T(m[1])), want = dur(st.meta);
     if (ts.length >= 3 && want >= 30 && Math.max(...ts) - Math.min(...ts) < want / 4) add('S2', 'visit parts spread over the visit', `${st.name}: ${ts.length} parts timed ${clock(Math.min(...ts))} to ${clock(Math.max(...ts))} in a ${want} min visit`); });
   // ---- S3: readable
-  const RL = raw.split('\n'), foreign = RL.filter((l, k) => SCRIPT.test(l) && !/^[A-Za-z]+(-[A-Za-z]+)+\b/.test((RL[k + 1] || '').trim()) && !/USEFUL WORDS/i.test(RL.slice(Math.max(0, k - 30), k).join(' '))); /* a phrase card shows the local words with how to say them */ if (foreign.length) add('S3', 'English letters', `"${foreign[0].trim().slice(0, 70)}"`);
+  const RL = raw.split('\n'), foreign = RL.filter((l, k) => SCRIPT.test(l) && !/^[A-Za-z]+(-[A-Za-z]+)+\b/.test((RL[k + 1] || '').trim()) && !/USEFUL WORDS/i.test(RL.slice(Math.max(0, k - 30), k).join(' '))); /* a phrase card shows the local words with how to say them */ if (foreign.length) add('S2', 'English letters', `"${foreign[0].trim().slice(0, 70)}"`);
   P.rides.forEach(r => r.choices.forEach(c => { if (c.min > Math.max(3 * r.min, r.min + 90)) add('S3', 'no absurd ride choice', `"${c.txt}" offered beside ${r.head}`); }));
   // ---- Opening hours (Nov 22, "make opening hours and closed days reliable"): what a stop's own hours line says agrees
   // with the times beside it. A visit starts after it opens and ends by its closing (a last entry is kept); a stop whose

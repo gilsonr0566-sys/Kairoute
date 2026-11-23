@@ -31,6 +31,13 @@
       "owner": "Stop the select sites page jumping",
       "until": "2026-11-30",
       "why": "header shrinking on scroll start and the Choose sights re-sort; fix written, waiting for release"
+    },
+    {
+      "rule": "language",
+      "tool": "language-check",
+      "owner": "Check every sight's facts and position",
+      "until": "2026-11-26",
+      "why": "R-11: names from the timetable helper, restaurants and towns in scripts other than Greek and Cyrillic reach the screen unconverted (E23); the class check is new and the fix is being built"
     }
   ]
 }
