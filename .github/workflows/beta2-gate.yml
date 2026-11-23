@@ -34,7 +34,7 @@ jobs:
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - run: sh build-beta2.sh
       - name: Code checks (secrets, syntax) and the engine's own rules
-        run: (node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs && node tools/beta2/sight-rules-check.cjs beta2-site/index.html && node tools/beta2/lunch-during-screen.cjs beta2-site/index.html) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+        run: (node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs && node tools/beta2/sight-rules-check.cjs beta2-site/index.html && node tools/beta2/lunch-during-screen.cjs beta2-site/index.html && node tools/truth/sight-mutants.cjs beta2-site/index.html) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Helper (AI switch, one AI gate, spend caps, other websites)
         if: always()
         run: (node tools/worker-check.mjs && node tools/worker-ai-gate.mjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
