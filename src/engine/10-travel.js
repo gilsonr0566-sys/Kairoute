@@ -83,6 +83,16 @@
   E.hasPos = p => !!p && (typeof p.lat === "number" && typeof p.lng === "number" ? isFinite(p.lat) && isFinite(p.lng) : p.lat != null && p.lng != null && p.lat !== "" && p.lng !== "" && isFinite(p.lat) && isFinite(p.lng));
   E.SLOWER_THAN_WALK = 10; // most a way may be slower than a walk of up to twice the traveler's walking limit
   E.SPARE_RUN = 60; // minutes kept for a missed change on the way to the ship, a train or a plane (one train or bus later)
+  // A line with no timetable, only how often it runs (or the usual for its kind): the helper plans the worst case, a
+  // full gap between departures plus boarding. Measured against real timetables (Nov 23 ride check) that made train
+  // rides about 28 min longer than they really are. The rule a way a port's note names already follows: half the gap
+  // (plus boarding) is planned as the wait, and the full gap is kept, said on screen as "up to", on a ride to a time to
+  // be back (the ship, a train, a plane). waitMax/minMax keep the worst case with the answer. Never shorter than the
+  // helper's own wait; an answer with real departures (deps) is untouched (its wait is the real next departure).
+  E.expectWait = (o, toDeadline) => {
+    if (!o || !o.noTimetable || toDeadline || (Array.isArray(o.deps) && o.deps.length) || !(+o.every > 0) || !isFinite(+o.wait)) return o;
+    const w = Math.round(Math.min(+o.every, 60) / 2) + (o.mode === "ferry" ? 10 : 3);
+    return w < +o.wait ? Object.assign({}, o, { wait: w, min: o.min - (+o.wait - w), waitMax: +o.wait, minMax: o.min }) : o; };
   E.UNKNOWN_RIDE = 45; // minutes for a ride to or from a place not on the map: a guess, said as one
   E.modeOfKind = k => k === "walk" ? "walk" : k === "taxi" ? "ride" : k === "ferry" ? "boat" : "transit";
   // A choice saved before the kinds were named (the app kept "transit", "boat", "ride" or a timetable row's own id).
@@ -155,7 +165,7 @@
     // or the very row the traveler chose (Nov 18, an airport ride: three rows of the same metro ride).
     function answered(a, b, d, want) {
       if (!answers || d < 1.5) return [];
-      const got = (answers(a, b) || []).filter(o => o && isFinite(o.min)).slice().sort((x, y) => x.min - y.min || String(x.label).localeCompare(String(y.label)));
+      const got = (answers(a, b) || []).filter(o => o && isFinite(o.min)).map(o => E.expectWait(o, !!(b.backToShip || b.deadline))).slice().sort((x, y) => x.min - y.min || String(x.label).localeCompare(String(y.label)));
       const by = new Map();
       for (const o of got) { const k = E.lineKind(String(o.mode || o.kind || "train")), r = by.get(k);
         if (!r) { by.set(k, o); continue; } if (want != null && String(r.id) === String(want)) continue;

@@ -1254,4 +1254,18 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   ok(Array.isArray(two.leaveTimes || lt) && (two.leaveTimes || lt).length === 3, `a kind's departures are read together (${JSON.stringify(two.leaveTimes || lt)})`);
   const kd = E.makeTravel({ walk: 'medium' }, null, null, null, (a, b) => [{ id: 'rail|A', min: 75, label: 'Train A', mode: 'rail', steps: ['A'], deps: [{ t: 1231 }], kindDeps: [{ t: 455, a: 5 }, { t: 515, a: 5 }, { t: 1231, a: 8 }] }], null).estimate({ lat: 41.9, lng: 12.5 }, { lat: 42.09, lng: 11.79 });
   ok(JSON.stringify(kd.leaveTimes) === '[450,510,1223]', `every departure of the kind the helper sends is read (${JSON.stringify(kd.leaveTimes)})`); }
+// Nov 23 ride check against real timetables: trains with no timetable (only how often they run) were planned with a
+// full gap of waiting, about 28 min longer than the real ride. Going out: half the gap plus boarding, the full gap kept
+// as "up to". On the way back to the ship (or a train or plane): the full gap, unchanged. With real departures: as sent.
+{ const ans = deps => [{ id: 'rail|N', min: 13 + 40 + 63, ride: 40, wait: 63, every: 60, everySrc: 'usual', label: 'Train N', mode: 'train', kind: 'Train', steps: ['N'], noTimetable: !deps, deps, access: { how: 'walk', min: 5, km: 0.4 }, egress: { how: 'walk', min: 8, km: 0.6 } }];
+  const A = { lat: 41.9, lng: 12.5 }, B = { lat: 42.09, lng: 11.79 }, train = e => (e.options || [e]).find(x => x.kind === 'train') || {};
+  const out = train(E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null).estimate(A, B));
+  const back = train(E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null).estimate(A, Object.assign({ backToShip: true }, B)));
+  const dl = train(E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null).estimate(A, Object.assign({ deadline: 1000 }, B)));
+  const tt = E.expectWait(ans([{ t: 600 }])[0], false);
+  ok(out.ans && out.ans.wait === 33 && out.ans.waitMax === 63 && out.ans.min === 86 && out.ans.minMax === 116, `a ride out on a line with no timetable plans half the gap plus boarding, keeps the full gap as "up to" (${out.ans && out.ans.wait}/${out.ans && out.ans.waitMax}, ${out.ans && out.ans.min})`);
+  ok(back.ans && back.ans.wait === 63 && back.ans.waitMax == null && dl.ans && dl.ans.wait === 63, `the ride back to the ship, a train or a plane keeps the full gap (${back.ans && back.ans.wait} / ${dl.ans && dl.ans.wait})`);
+  ok(back.min >= out.min + 30, `the way back to the ship is planned at least the half gap longer than the same ride out (${back.min} vs ${out.min})`);
+  ok(tt.wait === 63 && tt.waitMax == null, 'an answer with real departures keeps its own wait (the timeline waits for the real next one)');
+  ok(E.expectWait(Object.assign(ans()[0], { wait: 20 }), false).wait === 20, 'never a longer wait than the helper sent'); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

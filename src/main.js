@@ -917,7 +917,7 @@ function depLine(o, start, endBy, back, slack) {
   // Times from today's timetable when the operator hasn't published the one for the trip's date yet (a summer ferry).
   const later = !o.forDate && o.checked && typeof planDate !== "undefined" && planDate && Date.parse(planDate) - Date.now() > 45 * 86400e3 ? `; the timetable for ${fmtDate(planDate)} isn't published yet, so these are today's times` : "";
   const when = off && seen ? ` (no signal: timetable last checked ${fmtDate(seen)})` : o.checked ? ` (timetable checked ${fmtDate(o.checked)}${later}; Kairoute checks it again the day before and the morning of)` : "";
-  if (!o.deps || !o.deps.length) return o.noTimetable ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.` : "";
+  if (!o.deps || !o.deps.length) return o.noTimetable ? (o.waitMax > o.wait ? ` No published timetable found for this ${o.kind.toLowerCase()}: planned with about ${dur(o.wait)} of waiting and boarding (half the usual gap between departures); up to ${dur(o.waitMax)} if you just miss one. Check the ${o.kind.toLowerCase()} timetable before you go.` : ` No published timetable found for this ${o.kind.toLowerCase()}: planned with a full gap between departures. Check the ${o.kind.toLowerCase()} timetable before you go.`) : "";
   // A departure is named only when it is the one this plan takes (within the hour): a sample's far-off departure reads
   // as "no train until then" (Round 2 re-check 5: "Next departure about 8:31 pm" on a 7:30 am train).
   const at = start + o.access.min, nx0 = isFinite(start) ? o.deps.find(d => d.t >= at) : null, nx = nx0 && nx0.t - at <= 60 ? nx0 : null;
