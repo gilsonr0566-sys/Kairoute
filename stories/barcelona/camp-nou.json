@@ -34,14 +34,15 @@
   },
   "renovation": {
    "label": "supported",
-   "says": "Renovation began on 1 June 2023; the stadium reopened for matches in November 2025 at reduced capacity, and the club expects to reach 105,000 seats ahead of the 2028-29 season.",
+   "says": "Renovation began on 1 June 2023; the stadium reopened for matches in November 2025 at reduced capacity; the club plans to return temporarily to the Olympic Stadium at the start of the 2027-28 season while the roof is installed, and expects 105,000 seats ahead of the 2028-29 season.",
    "src": [
     "wp-camp-nou"
    ],
    "quote": [
     "Renovation of the stadium began on 1 June 2023.",
     "Camp Nou reopened for competitive matches in November 2025 at a reduced capacity.",
-    "the stadium is expected to reach its planned capacity of 105,000 ahead of the 2028–29 season"
+    "the stadium is expected to reach its planned capacity of 105,000 ahead of the 2028–29 season",
+    "Barcelona plan to temporarily return to the Olympic Stadium at the start of the 2027–28 season while the stadium roof is installed"
    ]
   },
   "club": {
@@ -234,14 +235,14 @@
    "stand": "Stand outside the stadium where you can see the great curve of the stands.",
    "paras": [
     {
-     "t": "This is Camp Nou, the New Field, home of FC Barcelona since 1957. When the rebuilding is done it will hold 105,000 people, the biggest stadium in Spain and in Europe.",
+     "t": "This is Camp Nou, the New Field, FC Barcelona's home since 1957. It's being rebuilt, and when it's done it will hold 105,000 people, the biggest stadium in Spain and in Europe.",
      "c": [
       "what"
      ],
      "level": 1
     },
     {
-     "t": "You may see construction work. Work started on 1 June 2023, and the team came back to play here in November 2025, with part of the stands still closed. The club expects the full 105,000 seats ahead of the 2028-29 season.",
+     "t": "You may see construction work. It started on June 1, 2023, and the team came back to play here in November 2025, with part of the stands still closed. The club's latest plan is to move out again for a while at the start of the 2027-28 season, while the roof goes on. It expects the full 105,000 seats ahead of the 2028-29 season.",
      "c": [
       "renovation"
      ],
@@ -267,7 +268,7 @@
    "stand": "Stay where you can see the stands.",
    "paras": [
     {
-     "t": "The old ground, Les Corts, had no room to grow. Then in 1950 the club signed László Kubala, one of its greatest players ever, and that added to the push for something bigger. The first stone here was laid on 28 March 1954.",
+     "t": "The old ground, Les Corts, had no room to grow. Then in 1950 the club signed László Kubala, one of its greatest players ever, and that added to the push for something bigger. The first stone here was laid on March 28, 1954.",
      "c": [
       "first-stone",
       "kubala"
@@ -275,7 +276,7 @@
      "level": 2
     },
     {
-     "t": "It cost more than four times what was planned, and the club borrowed for years to pay for it. But on 24 September 1957 it opened, with a Mass and Handel's Hallelujah chorus, in front of some 90,000 people.",
+     "t": "It cost more than four times what was planned, and the club borrowed for years to pay for it. But on September 24, 1957 it opened, with a Mass and Handel's Hallelujah chorus, in front of some 90,000 people.",
      "c": [
       "cost",
       "opening"
@@ -283,7 +284,7 @@
      "level": 1
     },
     {
-     "t": "Everybody expected it to be named after the founder, Joan Gamper. Franco's authorities said no. People often say it was because Gamper took his own life, but historians think his politics mattered more: foreign-born, a Catalan nationalist, a liberal and a Protestant.",
+     "t": "Everybody expected it to be named after the founder, Joan Gamper. Franco's authorities said no. People often say it was because Gamper took his own life. More probably it was who he was: foreign-born, a Catalan nationalist, a liberal and a Protestant.",
      "c": [
       "name-gamper",
       "name-why"
@@ -311,7 +312,7 @@
    "stand": "If you're inside on the tour, find a seat looking out over the pitch.",
    "paras": [
     {
-     "t": "The biggest crowd ever here was 120,000, against Juventus, on 5 March 1986. This stadium hosted the opening match of the 1982 World Cup, the Olympic football final in 1992, and European finals.",
+     "t": "The biggest crowd for a Barça match here was 120,000, against Juventus, on March 5, 1986. This stadium hosted the opening match of the 1982 World Cup, the Olympic football final in 1992, and European finals.",
      "c": [
       "record",
       "events"
@@ -326,7 +327,7 @@
      "level": 2
     },
     {
-     "t": "And one strange night of silence. On 1 October 2017, during political turmoil in Catalonia, a league match was played here with the stands completely empty.",
+     "t": "And one strange night of silence. On October 1, 2017, during political turmoil in Catalonia, a league match was played here with the stands completely empty.",
      "c": [
       "empty"
      ],
@@ -339,7 +340,7 @@
    "stand": "If the club museum is open, head there.",
    "paras": [
     {
-     "t": "The club museum opened in 1984. More than 1.2 million people a year come through it, which makes it the second-most visited museum in Catalonia.",
+     "t": "The club museum opened in 1984. In a normal year more than 1.2 million people come through it, which makes it the second-most visited museum in Catalonia.",
      "c": [
       "museum"
      ],
@@ -353,7 +354,7 @@
      "level": 2
     },
     {
-     "t": "Later he came back as coach and built the Dream Team. Before the European Cup final against Sampdoria, his last words to the players were simple: go out and enjoy it. Ronald Koeman's free kick in extra time won the club its first European Cup.",
+     "t": "Later he came back as coach and built what fans called the Dream Team. Before the European Cup final against Sampdoria, his last words to the players were simple: go out and enjoy it. Ronald Koeman's free kick in extra time won the club its first European Cup.",
      "c": [
       "cruyff-coach"
      ],
@@ -373,11 +374,10 @@
    "stand": "On your way out, look back at the stands.",
    "paras": [
     {
-     "t": "A stadium they couldn't name the way they wanted, for a club that couldn't use its own language. And still the fans called it what they liked, and kept it theirs. More than a club, they say. Standing here, you can feel it.",
+     "t": "More than a club, they say here. A club owned by its own fans, in a stadium the fans named themselves: the New Field. Standing here, you can feel it.",
      "c": [
-      "name-vote",
-      "catalan-name",
-      "club"
+      "club",
+      "name-vote"
      ],
      "level": 1
     }

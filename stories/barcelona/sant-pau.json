@@ -290,7 +290,7 @@
      "level": 1
     },
     {
-     "t": "UNESCO calls it the largest hospital complex in the Modernista style, which is Barcelona's own version of Art Nouveau.",
+     "t": "UNESCO calls it the largest hospital complex in the Modernista style, which is Catalonia's own version of Art Nouveau.",
      "c": [
       "largest"
      ],
@@ -346,7 +346,7 @@
      "level": 2
     },
     {
-     "t": "This wasn't his first try, by the way. Domènech had already built a hospital for the mentally ill in Reus, the Institut Pere Mata, and the new ideas he tried there were carried over and improved here. And by combining the traditional Catalan vault with steel, he could give the rooms inside a feeling of size and light.",
+     "t": "This wasn't his first try, by the way. Domènech had already begun a hospital for the mentally ill in Reus, the Institut Pere Mata, and the new ideas he tried there were carried over and improved here. And by combining the traditional Catalan vault with steel, he could make large, open spaces inside.",
      "c": [
       "peremata",
       "vault"
@@ -362,7 +362,7 @@
      "level": 2
     },
     {
-     "t": "Those tiles have been looked after. When damaged ones had to be replaced, great care was taken to make exact copies of the originals.",
+     "t": "The tiles on these buildings have been looked after. When damaged ones had to be replaced, great care was taken to make exact copies of the originals.",
      "c": [
       "tiles"
      ],
@@ -383,7 +383,7 @@
    "stand": "Find a quiet spot in the shade, facing the nearest pavilion.",
    "paras": [
     {
-     "t": "In 2003 a new hospital building went up to the north of these pavilions, and almost all the departments moved there. Sant Pau stopped being a full hospital in June 2009, and that same year a careful restoration began.",
+     "t": "A new hospital building went up just north of these pavilions in 2003, and almost all the departments moved across. By June 2009 Sant Pau was no longer a full working hospital, and that same year a careful restoration began.",
      "c": [
       "newhosp",
       "functioning",
@@ -392,7 +392,7 @@
      "level": 2
     },
     {
-     "t": "Over 30 teams of experts and architects worked on it, with a budget of 100 million euros, and the doors reopened to visitors in 2014. Some of the old wards are offices now, for organizations such as the World Health Organization. Fitting, isn't it?",
+     "t": "Over 30 teams of experts and architects worked on it, with a budget of 100 million euros, and the doors reopened to visitors in 2014. Some of the buildings now give office space to organizations such as the World Health Organization. Fitting, isn't it?",
      "c": [
       "restoration",
       "who"

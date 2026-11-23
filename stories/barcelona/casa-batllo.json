@@ -49,11 +49,12 @@
   },
   "finest": {
    "label": "supported",
-   "says": "A historian writes that the city's wealthy industrialists \"fought with each other to build the finest house on the street.\"",
+   "says": "Writer Michael Eaude writes that the city's wealthy industrialists \"fought with each other to build the finest house on the street.\"",
    "src": [
     "wp-casa-batllo"
    ],
    "quote": [
+    "As Michael Eaude writes in his insightful 2024 book Antoni Gaudí",
     "\"united to combat the anarchist‑led working class, but fought with each other to build the finest house on the street.\""
    ]
   },
@@ -164,13 +165,14 @@
   },
   "george-legend": {
    "label": "legend",
-   "says": "In the legend, Saint George defeats a dragon that demanded tribute from villagers and saves a princess chosen as its next offering.",
+   "says": "In the legend, Saint George defeats a dragon that took tribute from villagers, then human victims chosen by lot, until the lot fell on the princess.",
    "src": [
     "wp-saint-george-dragon"
    ],
    "quote": [
     "Saint George and the Dragon is a legend in which Saint George—a soldier venerated in Christianity and among the Druze—defeats a dragon. The story goes that the dragon originally extorted tribute from villagers.",
-    "One day, the princess herself was selected as the next offering."
+    "One day, the princess herself was selected as the next offering.",
+    "they started giving up a human tribute of two children per day, selected by lot"
    ]
   },
   "house-dragon": {
@@ -195,7 +197,7 @@
    ]
   },
   "no-straight": {
-   "label": "supported",
+   "label": "tradition",
    "says": "Gaudí observed: \"There are no straight lines or sharp corners in nature. Therefore, buildings must have no straight lines or sharp corners.\"",
    "src": [
     "wp-casa-batllo"
@@ -256,21 +258,21 @@
    "stand": "Stand on the far side of Passeig de Gràcia, across from the colorful house with the scaly roof, so you can see its neighbors too.",
    "paras": [
     {
-     "t": "Look at this stretch of the avenue. Locals call it the Block of Discord, because of these strikingly different buildings, side by side, each by a famous architect.",
+     "t": "Look at this stretch of the avenue. Locals call it the Block of Discord, because of these strikingly different buildings, each by a famous architect.",
      "c": [
       "block"
      ],
      "level": 1
     },
     {
-     "t": "It was a rich men's contest. In 1898 the chocolate maker Antoni Amatller had his house redone by Josep Puig i Cadafalch, with that stepped Flemish gable. In 1902 Francesca Morera, a few doors along, answered with Lluís Domènech i Montaner. Then in 1904 Josep Batlló, Amatller's next-door neighbor, hired Gaudí, to put the others to shame.",
+     "t": "It was a contest between rich neighbors. In 1898 the chocolate maker Antoni Amatller had his house redone by Josep Puig i Cadafalch, with that stepped Flemish gable. In 1902 Francesca Morera, a few doors along, answered with Lluís Domènech i Montaner. Then in 1904 Josep Batlló, Amatller's next-door neighbor, hired Gaudí, to put the others to shame.",
      "c": [
       "rivalry"
      ],
      "level": 2
     },
     {
-     "t": "One historian puts it perfectly. The city's industrialists \"fought with each other to build the finest house on the street.\"",
+     "t": "One writer on Gaudí, Michael Eaude, puts it perfectly. The city's industrialists \"fought with each other to build the finest house on the street.\"",
      "c": [
       "finest"
      ],
@@ -314,7 +316,7 @@
      "level": 2
     },
     {
-     "t": "Gaudí famously said, \"There are no straight lines or sharp corners in nature. Therefore, buildings must have no straight lines or sharp corners.\" See if you can find one here.",
+     "t": "Gaudí is said to have put it this way: \"There are no straight lines or sharp corners in nature. Therefore, buildings must have no straight lines or sharp corners.\" See if you can find one here.",
      "c": [
       "no-straight"
      ],
@@ -334,14 +336,14 @@
    "stand": "Look up to the roofline.",
    "paras": [
     {
-     "t": "Now the roof. That arched ridge is the back of a dragon, with ceramic tiles for scales. Green on the right, where the head begins, then blue and violet, then pink and red on the left. The small triangular window toward the right is its eye.",
+     "t": "Now the roof. That arched ridge looks like the back of a dragon, with ceramic tiles for scales. Green on the right, where the head begins, then blue and violet, then pink and red on the left. The small triangular window toward the right is its eye.",
      "c": [
       "dragon-roof"
      ],
      "level": 1
     },
     {
-     "t": "Why a dragon? There's an old legend of Saint George, a soldier saint who defeats a dragon, a dragon that had demanded the princess herself as its next offering. George is the patron saint of Catalonia, and this is known as the House of the Dragon.",
+     "t": "Why a dragon? There's an old legend of Saint George, a soldier saint who defeats a dragon. The dragon was being fed victims chosen by lot, and one day the lot fell on the princess herself. George is the patron saint of Catalonia, and this is known as the House of the Dragon.",
      "c": [
       "george-legend",
       "house-dragon"
@@ -376,7 +378,7 @@
      "level": 1
     },
     {
-     "t": "On this floor lived the Batlló family. Look up for skylights shaped like tortoise shells, and find the mushroom-shaped fireplace, tucked into a little nook for courting couples.",
+     "t": "On this floor lived the Batlló family. In the entrance hall of this floor, look up for skylights shaped like tortoise shells, and find the mushroom-shaped fireplace, tucked into a little nook for courting couples.",
      "c": [
       "noble"
      ],
@@ -404,7 +406,7 @@
    "stand": "Back out on the avenue, take one last look up.",
    "paras": [
     {
-     "t": "It started as a contest between neighbors, to show off. Gaudí took that bit of vanity and turned an ordinary old house into a dragon, a lake and a legend, right in the middle of the street.",
+     "t": "It started as a contest between neighbors, to show off. Gaudí took that bit of vanity and turned an ordinary old house into a dragon, a lake and a legend, right here on the avenue.",
      "c": [
       "rivalry",
       "dragon-roof"

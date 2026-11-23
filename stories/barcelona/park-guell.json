@@ -85,12 +85,12 @@
   },
   "to-city": {
    "label": "supported",
-   "says": "In 1923 the Güell family gave the land to the city; Güell died in 1918 in his house in the park.",
+   "says": "The Güell family later passed the land to the city; Güell died in 1918 in his house in the park.",
    "src": [
     "wp-eusebi-guell"
    ],
    "quote": [
-    "In 1923, the Güell family gave the land to the city, as Park Güell.",
+    "the Güell family gave the land to the city, as Park Güell.",
     "He died in 1918 in his house of Park Güell."
    ]
   },
@@ -115,8 +115,8 @@
    ]
   },
   "father": {
-   "label": "supported",
-   "says": "Güell's father had made much of his fortune in Cuba as a slave trader.",
+   "label": "disputed",
+   "says": "Güell's father grew rich during his stay in Cuba; one account calls him a slave trader there.",
    "src": [
     "wp-eusebi-guell"
    ],
@@ -224,16 +224,6 @@
     "One house, built as a show home in 1904, remained unsold. Güell persuaded Gaudí to purchase it with his savings. Gaudí moved in with his father and niece in 1906. The house, designed by Francesc Berenguer i Mestres, became the Gaudí House Museum in 1963"
    ]
   },
-  "lived": {
-   "label": "supported",
-   "says": "It was Gaudí's home from 1906 to 1926.",
-   "src": [
-    "wp-antoni-gaudi"
-   ],
-   "quote": [
-    "was Gaudí's residence from 1906 to 1926"
-   ]
-  },
   "crosses": {
    "label": "supported",
    "says": "At the highest point, steps lead to the Hill of the Three Crosses, a calvary; one cross points to the sky, two mark directions. From here you can see the Sagrada Família, Montjuïc and the Mediterranean.",
@@ -270,7 +260,7 @@
      "level": 1
     },
     {
-     "t": "Here's the surprise. It was never meant to be a park. Güell wanted a luxury housing estate, inspired by the English garden cities, which is why it's called Park, in English. There were sixty plots. Only two houses were ever built.",
+     "t": "Here's the surprise. It wasn't meant to be a public park. Güell wanted a luxury housing estate, inspired by the English garden cities, which is why it's called Park, in English. There were sixty plots. Only two houses were ever built.",
      "c": [
       "garden-city",
       "failed"
@@ -278,7 +268,7 @@
      "level": 1
     },
     {
-     "t": "Back then this was a rocky hill people called Muntanya Pelada, the Bare Mountain. Notice the wall that runs around the site, stone topped with glazed ceramic.",
+     "t": "Back then this was a rocky hill people called Muntanya Pelada, the Bare Mountain. Notice the wall that runs around the site, made of stone and glazed ceramic.",
      "c": [
       "bare-mountain",
       "wall"
@@ -367,7 +357,7 @@
      "level": 2
     },
     {
-     "t": "Keep your ears open, too. The park is home to parrots, not native here, and to hummingbird hawk moths.",
+     "t": "Keep your eyes and ears open, too. The park is home to parrots, not native here, and to hummingbird hawk moths.",
      "c": [
       "wildlife"
      ],
@@ -377,12 +367,11 @@
   },
   {
    "name": "Gaudí's house",
-   "stand": "Find Gaudí's house, the Torre Rosa, now the Gaudí House Museum.",
+   "stand": "Follow the signs to the Gaudí House Museum.",
    "paras": [
     {
-     "t": "This was Gaudí's home, from 1906 until 1926. It was a show house nobody bought, so Güell persuaded Gaudí to buy it with his own savings. He moved in with his father and his niece.",
+     "t": "This was Gaudí's home for many years, from 1906. It was a show house nobody bought, so Güell persuaded Gaudí to buy it with his own savings. He moved in with his father and his niece.",
      "c": [
-      "lived",
       "house"
      ],
      "level": 1
@@ -396,14 +385,14 @@
      "level": 2
     },
     {
-     "t": "It's fair to say where the money came from, too. Güell's father had made a large part of his fortune in Cuba as a slave trader.",
+     "t": "It's fair to ask where the money came from, too. Güell's father grew rich in Cuba, and some accounts say he was a slave trader there. How far he was involved is not settled.",
      "c": [
       "father"
      ],
      "level": 3
     },
     {
-     "t": "Güell himself died in 1918, in his house here in the park. In 1923 his family gave the land to the city, and in 1926 it opened as a public park.",
+     "t": "Güell himself died in 1918, in his house here in the park. Later the land passed from his family to the city, and in 1926 it opened as a public park.",
      "c": [
       "to-city",
       "built"
@@ -424,14 +413,14 @@
      "level": 1
     },
     {
-     "t": "Today UNESCO lists the park as World Heritage. And it's still used the way it was meant to be used, as a place for people to come and breathe.",
+     "t": "UNESCO lists the park as World Heritage, and notes that it is still a public park and green space.",
      "c": [
       "unesco"
      ],
      "level": 2
     },
     {
-     "t": "The housing estate failed. Nobody wanted to live up here. But look around you at all these people, sitting, talking, looking out at the sea. Maybe it turned out better this way.",
+     "t": "The housing estate failed. Hardly anyone wanted to build up here. It was too far from the city. But look around you at all these people, sitting, talking, looking out at the sea. Maybe it turned out better this way.",
      "c": [
       "failed"
      ],

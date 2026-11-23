@@ -235,7 +235,8 @@
    ],
    "quote": [
     "On 7 June 1926, Gaudí took his daily walk to the Sant Felip Neri church for his habitual prayer and confession.",
-    "he was struck by a passing number 30 tram and lost consciousness. Assumed to be a beggar, the unconscious Gaudí did not receive immediate aid."
+    "he was struck by a passing number 30 tram and lost consciousness. Assumed to be a beggar, the unconscious Gaudí did not receive immediate aid.",
+    "he was poorly dressed and appeared quite gaunt, supposedly leading people to think he was homeless"
    ]
   },
   "death": {
@@ -378,6 +379,16 @@
    "quote": [
     "Descent is via a very narrow spiral staircase of over 300 steps. There is a posted caution for those with medical conditions."
    ]
+  },
+  "cathedral-where": {
+   "label": "supported",
+   "says": "Barcelona Cathedral is in the Gothic Quarter.",
+   "src": [
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "The Barcelona Cathedral is located in the cathedral neighborhood in the Gothic quarter of Barcelona."
+   ]
   }
  },
  "parts": [
@@ -393,21 +404,22 @@
      "level": 1
     },
     {
-     "t": "The tallest tower, in the middle, is the Tower of Jesus Christ, 172.5 meters high. Pope Leo XIV blessed it on 10 June 2026, a hundred years to the day after Gaudí died.",
+     "t": "The tallest tower, in the middle, is the Tower of Jesus Christ, 172.5 meters high. Pope Leo XIV blessed it on June 10, 2026, a hundred years to the day after Gaudí died.",
      "c": [
       "tower"
      ],
      "level": 1
     },
     {
-     "t": "One small thing people get wrong. This is not Barcelona's cathedral. That title belongs to the Cathedral of the Holy Cross and Saint Eulalia, down in the old town.",
+     "t": "One small thing people get wrong. This is not Barcelona's cathedral. That title belongs to the Cathedral of the Holy Cross and Saint Eulalia in the Gothic Quarter.",
      "c": [
-      "not-cathedral"
+      "not-cathedral",
+      "cathedral-where"
      ],
      "level": 3
     },
     {
-     "t": "The idea came from a bookseller, José María Bocabella. He wanted an expiatory temple, a church of atonement, paid for entirely by donations. Work began on 19 March 1882, the feast of Saint Joseph, with an ordinary Gothic revival design by another architect, Villar. In 1883 Gaudí took over, and he changed it radically.",
+     "t": "The idea came from a bookseller, José María Bocabella. He wanted an expiatory temple, a church of atonement, paid for entirely by donations. Work began on March 19, 1882, the feast of Saint Joseph, with an ordinary Gothic revival design by another architect, Villar. In 1883 Gaudí took over, and he changed it radically.",
      "c": [
       "bocabella",
       "start"
@@ -480,7 +492,7 @@
      "level": 1
     },
     {
-     "t": "Look at the columns around you. They branch as they rise, to carry the weight. The simplest ones start as a square, turn into an octagon, then a sixteen-sided shape, and end as a circle. And look for a flat surface. You'll struggle. There are no exact right angles anywhere in this church.",
+     "t": "Look at the columns around you. They branch as they rise, to carry the weight. The simplest ones start as a square, turn into an octagon, then a sixteen-sided shape, and end as a circle. Now look for a flat wall, or a flat ceiling. You'll struggle. There are no exact right angles anywhere in this church.",
      "c": [
       "columns",
       "no-flat"
@@ -488,21 +500,21 @@
      "level": 2
     },
     {
-     "t": "Even unfinished, this is a working church. Pope Benedict XVI consecrated it on 7 November 2010, with 6,500 people inside and some 50,000 more following outside.",
+     "t": "Even unfinished, this is a working church. Pope Benedict XVI consecrated it on November 7, 2010, with 6,500 people inside and some 50,000 more following outside.",
      "c": [
       "consecration"
      ],
      "level": 3
     },
     {
-     "t": "Up at the far end, in the apse, there are gaps in the floor where you can look down into the crypt. That's where Gaudí is buried.",
+     "t": "In the apse, the rounded end of the church, there are gaps in the floor where you can look down into the crypt. That's where Gaudí is buried.",
      "c": [
       "crypt-view"
      ],
      "level": 3
     },
     {
-     "t": "His death is a sad story. On 7 June 1926 he was walking, as he did every day, to church for prayer and confession, and he was hit by a tram. He was so poorly dressed by then that people took him for a beggar, and he didn't get help right away. He died on 10 June, at 73. His gravestone says his ashes await the resurrection of the dead.",
+     "t": "His death is a sad story. On June 7, 1926 he was walking, as he did every day, to church for prayer and confession, and he was hit by a tram. He was so poorly dressed by then that people are said to have taken him for a beggar, and he didn't get help right away. He died on June 10, at 73. His gravestone says his ashes await the resurrection of the dead.",
      "c": [
       "tram",
       "death"
@@ -523,7 +535,7 @@
      "level": 1
     },
     {
-     "t": "It faces the setting sun, the symbol of Christ's death. Gaudí drew it in 1917, but work only began in 1954. From 1987 a team led by the sculptor Josep Maria Subirachs carved the scenes, and these figures have been controversial ever since.",
+     "t": "It faces the setting sun, the symbol of Christ's death. Gaudí drew it in 1917, but work only began in 1954. From 1987 a team led by the sculptor Josep Maria Subirachs carved the scenes, and his figures are controversial.",
      "c": [
       "passion-sun",
       "passion-dates"
@@ -565,7 +577,7 @@
      "level": 3
     },
     {
-     "t": "The war nearly ended it all. In July 1936 anarchists set fire to the crypt and broke into Gaudí's workshop, partially destroying his plans. The builders carried on with what was saved, and with plans pieced back together from publications and photographs.",
+     "t": "The war stopped the work. In July 1936 anarchists set fire to the crypt and broke into Gaudí's workshop, partially destroying his plans. The builders carried on with what was saved, and with plans pieced back together from publications and photographs.",
      "c": [
       "civil-war"
      ],
@@ -600,7 +612,7 @@
    "stand": "Take one last look up at the towers before you go.",
    "paras": [
     {
-     "t": "Gaudí knew from the start that he would never see this finished. He built anyway, so that people he would never meet could carry it on. And they have.",
+     "t": "Gaudí knew that he would never see this finished. He built anyway, so that people he would never meet could carry it on. And they have.",
      "c": [
       "nativity-why"
      ],

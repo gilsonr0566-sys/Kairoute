@@ -40,7 +40,7 @@
   },
   "funicular": {
    "label": "supported",
-   "says": "The Tibidabo Funicular was the first of its kind in Spain.",
+   "says": "The Tibidabo Funicular was the first funicular of its kind in Spain.",
    "src": [
     "wp-tibidabo"
    ],
@@ -50,22 +50,23 @@
   },
   "matthew": {
    "label": "scripture",
-   "says": "Matthew 4:9 (KJV wording as quoted): \"And saith unto him, All these things will I give thee, if thou wilt fall down and worship me.\" In the Latin Vulgate: tibi omnia dabo.",
+   "says": "Matthew 4:8-9 (KJV): the devil taketh him up into an exceeding high mountain and sheweth him all the kingdoms of the world, and the glory of them; and saith, All these things will I give thee, if thou wilt fall down and worship me.",
    "src": [
-    "wp-tibidabo"
+    "kjv-matthew4"
    ],
    "quote": [
-    "\"…et dixit illi haec tibi omnia dabo si cadens adoraveris me\" – \"And saith unto him, All these things will I give thee, if thou wilt fall down and worship me\" (Matthew 4:9)"
+    "\"chapter\":4,\"verse\":8,\"text\":\"Again, the devil taketh him up into an exceeding high mountain, and sheweth him all the kingdoms of the world, and the glory of them;",
+    "\"verse\":9,\"text\":\"And saith unto him, All these things will I give thee, if thou wilt fall down and worship me."
    ]
   },
   "luke": {
    "label": "scripture",
-   "says": "Luke 4:6 (as quoted): \"All this power will I give thee, and the glory of them.\"",
+   "says": "Luke 4:6 (KJV): And the devil said unto him, All this power will I give thee, and the glory of them.",
    "src": [
-    "wp-tibidabo"
+    "kjv-luke4"
    ],
    "quote": [
-    "\"All this power will I give thee, and the glory of them: for that is delivered unto me; and to whomsoever I will I give it\" (Luke 4:6)"
+    "\"chapter\":4,\"verse\":6,\"text\":\"And the devil said unto him, All this power will I give thee, and the glory of them"
    ]
   },
   "temptation": {
@@ -161,12 +162,14 @@
   },
   "park": {
    "label": "supported",
-   "says": "The amusement park, built by Salvador Andreu and opened in 1905, is among the oldest still working in the world and Spain's longest running.",
+   "says": "The pharmacist Salvador Andreu first proposed the park in 1899; the first rides were installed in 1905; it is among the oldest parks still working and Spain's longest running.",
    "src": [
     "wp-tibidabo-amusement-park"
    ],
    "quote": [
-    "The park was built in 1899 by the entrepreneur Salvador Andreu and opened in 1905. The park is among the oldest in the world still functioning. It is Spain's longest running amusement park."
+    "first proposed in 1899 by pharmacist Salvador Andreu",
+    "The first amusement rides however weren't installed until 1905",
+    "The park is among the oldest in the world still functioning. It is Spain's longest running amusement park."
    ]
   },
   "avio": {
@@ -180,12 +183,13 @@
    ]
   },
   "disney": {
-   "label": "supported",
-   "says": "In 1957 Walt Disney tried to buy the park's whole automaton collection with blank checks; the management refused.",
+   "label": "legend",
+   "says": "The story goes that in 1957 Walt Disney tried to buy the Museum of Automats' entire collection with blank checks; the management refused.",
    "src": [
     "wp-tibidabo-amusement-park"
    ],
    "quote": [
+    "Museum of Automats; An exhibition of automaton that has been shown at the park since its inception.",
     "In 1957, Walt Disney – who himself had a love for the park - attempted to buy the museum's entire collection with blank cheques, an offer which the management refused."
    ]
   },
@@ -206,7 +210,7 @@
    "stand": "On the open summit, in front of the church, with the city spread out below you.",
    "paras": [
     {
-     "t": "This is Tibidabo, at 512 meters the tallest hill in the Collserola range. Below you is the whole of Barcelona, out to the sea. Up here you've got the Sagrat Cor church, an old amusement park, and a short walk away, the Collserola telecom tower.",
+     "t": "This is Tibidabo, at 512 meters the tallest hill in the Collserola range. Below you is Barcelona, out to the sea. Up here you've got the Sagrat Cor church, an old amusement park, and a short walk away, the Collserola telecom tower.",
      "c": [
       "hill",
       "summit"
@@ -220,7 +224,7 @@
      "cue": true
     },
     {
-     "t": "If you came up on the funicular, you rode the first of its kind in Spain.",
+     "t": "If you came up on the funicular, you rode the line that was the first funicular in Spain.",
      "c": [
       "funicular"
      ],
@@ -233,7 +237,7 @@
    "stand": "Stay at the viewpoint, looking out over the city.",
    "paras": [
     {
-     "t": "The name comes straight from the Bible, in Latin: tibi dabo, I will give to you. In Matthew's Gospel, chapter four, the devil takes Jesus up a high mountain and shows him all the kingdoms of the world. And he says, in the King James words, \"All these things will I give thee, if thou wilt fall down and worship me.\"",
+     "t": "The name comes straight from the Bible, in Latin: tibi dabo, I will give to you. In Matthew's Gospel, chapter four, the devil takes Jesus up into an exceeding high mountain, and shows him all the kingdoms of the world, and the glory of them. And he says, in the King James words, \"All these things will I give thee, if thou wilt fall down and worship me.\"",
      "c": [
       "temptation",
       "matthew"
@@ -241,7 +245,7 @@
      "level": 1
     },
     {
-     "t": "Luke's Gospel tells the same moment: \"All this power will I give thee, and the glory of them.\"",
+     "t": "Luke's Gospel, also in chapter four, tells the same moment: \"All this power will I give thee, and the glory of them.\"",
      "c": [
       "luke"
      ],
@@ -284,7 +288,7 @@
      "level": 2
     },
     {
-     "t": "How did a church get up here? In the late 1800s there were rumors of a Protestant church and a hotel-casino on the summit. A group of Catholic knights bought the land and gave it to Saint John Bosco in 1886. The first statue on top, by Frederic Marès, was made in 1935 and destroyed the next year as the Civil War began. And look up at the tower windows: they carry the words tibi dabo.",
+     "t": "How did a church get up here? In the late 1800s there were rumors of a Protestant church and a hotel-casino on the summit. A group of Catholic knights bought the land and gave it to Saint John Bosco in 1886. The first statue on top, by Frederic Marès, was made in 1935 and destroyed the next year as the Civil War began. And inside, the windows of the four towers carry the words tibi dabo.",
      "c": [
       "origin",
       "statue",
@@ -299,7 +303,7 @@
    "stand": "At the edge of the amusement park, where you can see the rides against the sky.",
    "paras": [
     {
-     "t": "Next door is one of the oldest amusement parks in the world still running, and the longest running in Spain. Salvador Andreu built it, and it opened in 1905.",
+     "t": "Next door is one of the oldest amusement parks in the world still running, and the longest running in Spain. The pharmacist Salvador Andreu proposed it in 1899, and the first rides were installed in 1905.",
      "c": [
       "park"
      ],
@@ -314,7 +318,7 @@
      "level": 2
     },
     {
-     "t": "Here's a story I love. In 1957 Walt Disney tried to buy the park's whole collection of old mechanical automatons, with blank checks. The management said no.",
+     "t": "Here's a story worth telling. The story goes that in 1957 Walt Disney tried to buy the whole collection of the park's Museum of Automats, with blank checks. The management said no.",
      "c": [
       "disney"
      ],

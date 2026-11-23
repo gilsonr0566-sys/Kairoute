@@ -80,7 +80,7 @@
   },
   "sieges": {
    "label": "supported",
-   "says": "Girona has undergone twenty-five sieges; in 1809, besieged from May to December by 35,000 French troops, it held out until disease and famine forced surrender on 12 December.",
+   "says": "Girona has undergone twenty-five sieges; in 1809, besieged from May to December by 35,000 French troops, it held out until disease and famine forced surrender on December 12.",
    "src": [
     "wp-girona"
    ],
@@ -92,12 +92,13 @@
   },
   "jews": {
    "label": "supported",
-   "says": "The earliest evidence of a Jewish community dates to about 885; in the 12th century it flourished with one of Europe's most important Kabbalistic schools; Nahmanides was appointed Great Rabbi of Catalonia.",
+   "says": "The earliest evidence of a Jewish community dates to about 885; in the 12th century it flourished with one of Europe's most important Kabbalistic schools; Nahmanides was appointed Great Rabbi of Catalonia. Nahmanides lived 1194-1270.",
    "src": [
     "wp-girona"
    ],
    "quote": [
-    "The earliest documented evidence of a Jewish Catalan community in Girona dates to about 885.  The 12th century saw the Jewish community of Girona flourish, having one of the most important Kabbalistic schools in Europe. The Rabbi of Girona, Moshe ben Nahman Gerondi (better known as Nahmanides or Ramban) was appointed Great Rabbi of Catalonia."
+    "The earliest documented evidence of a Jewish Catalan community in Girona dates to about 885.  The 12th century saw the Jewish community of Girona flourish, having one of the most important Kabbalistic schools in Europe. The Rabbi of Girona, Moshe ben Nahman Gerondi (better known as Nahmanides or Ramban) was appointed Great Rabbi of Catalonia.",
+    "Nachmanides (1194–1270), Jewish rabbi, philosopher, physician, and kabbalist"
    ]
   },
   "forca": {
@@ -122,12 +123,12 @@
   },
   "rediscovered": {
    "label": "supported",
-   "says": "After Franco died in 1975, excavations found the home of Nahmanides; early 2000s excavations turned up 1,200 old documents.",
+   "says": "After Franco died in 1975, interest revived and some old buildings were excavated; early 2000s excavations turned up 1,200 old documents.",
    "src": [
     "wp-girona"
    ],
    "quote": [
-    "When the dictator Francisco Franco died in November 1975, interest in the region's cultural history was revived. Some of the old buildings were excavated leading to the discovery of the home of Nahmanides",
+    "When the dictator Francisco Franco died in November 1975, interest in the region's cultural history was revived. Some of the old buildings were excavated",
     "Excavations in the early 2000s also turned up 1,200 old documents"
    ]
   },
@@ -239,12 +240,32 @@
   },
   "thrones": {
    "label": "supported",
-   "says": "Several scenes of season 6 of Game of Thrones were shot in Girona.",
+   "says": "HBO filmed outdoor scenes for season 6 of Game of Thrones at the cathedral and its steps.",
+   "src": [
+    "wp-girona-cathedral"
+   ],
+   "quote": [
+    "HBO filmed outdoor scenes for season 6 of its fantasy television series Game of Thrones at the cathedral and its steps"
+   ]
+  },
+  "route": {
+   "label": "supported",
+   "says": "A walking route along the walls, the Passeig de la Muralla, is a popular route around the old town.",
    "src": [
     "wp-girona"
    ],
    "quote": [
-    "Several scenes of season 6 of Game of Thrones were shot in Girona."
+    "A walking route following the walls, known as el Passeig de la Muralla, is now a popular tourist route around the old city."
+   ]
+  },
+  "nahhome": {
+   "label": "tradition",
+   "says": "One excavated building was identified as the home of Nahmanides.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "leading to the discovery of the home of Nahmanides"
    ]
   }
  },
@@ -254,7 +275,7 @@
    "stand": "On the Eiffel footbridge, the Pont de les Peixateries Velles, looking along the river at the colored houses.",
    "paras": [
     {
-     "t": "Welcome to Girona, about 99 kilometers northeast of Barcelona. You're standing on a footbridge over the river Onyar, a metal lattice bridge designed by Gustave Eiffel. Across the water, the old town climbs a steep hill.",
+     "t": "Welcome to Girona, about 99 kilometers northeast of Barcelona. You're standing on a footbridge over the river Onyar, a metal lattice bridge designed by Gustave Eiffel. On the east bank, the old town climbs a steep hill.",
      "c": [
       "where",
       "bridge",
@@ -280,7 +301,7 @@
   },
   {
    "name": "A city that held out",
-   "stand": "Cross to the old town side and pause by the river before heading uphill.",
+   "stand": "At the end of the bridge on the hill side, toward the cathedral, before you head uphill.",
    "paras": [
     {
      "t": "A quick word for your feet. The old town has slopes, lumpy cobblestones and steep stairs, so wear good shoes and take your time.",
@@ -296,7 +317,7 @@
      "level": 2
     },
     {
-     "t": "Girona has lived through twenty-five sieges. The most famous came in 1809. 35,000 of Napoleon's troops surrounded the city from May to December, and Girona held out until disease and famine forced it to surrender on 12 December.",
+     "t": "Girona has lived through twenty-five sieges. One came in 1809. 35,000 of Napoleon's troops surrounded the city from May to December, and Girona held out until disease and famine forced it to surrender on December 12.",
      "c": [
       "sieges"
      ],
@@ -309,7 +330,7 @@
    "stand": "On Carrer de la Força, the narrow street that leads toward the cathedral.",
    "paras": [
     {
-     "t": "This street, Carrer de la Força, was the heart of the Call, the Jewish quarter. The first record of Jews in Girona dates to about 885. By the 1100s the community was flourishing, with one of the most important schools of Kabbalah in Europe. Its great rabbi, Nahmanides, was appointed Great Rabbi of Catalonia.",
+     "t": "This street, Carrer de la Força, was the heart of the Call, the Jewish quarter. The first record of Jews in Girona dates to about 885. By the 1100s the community was flourishing, with one of the most important schools of Kabbalah in Europe. In the next century its rabbi, Nahmanides, who lived from 1194 to 1270, was appointed Great Rabbi of Catalonia.",
      "c": [
       "forca",
       "jews"
@@ -324,10 +345,11 @@
      "level": 2
     },
     {
-     "t": "It stayed buried for centuries. After Franco died in 1975, interest in the past revived, and excavations found the home of Nahmanides. Digs in the early 2000s turned up 1,200 old documents. Along this street, the Centre Bonastruc ça Porta stands on the site of a 15th-century synagogue, and today it houses the Museum of Jewish History.",
+     "t": "It stayed buried for centuries. After Franco died in 1975, interest in the past revived, and excavations uncovered old buildings of the quarter, including one that is said to be the home of Nahmanides. Digs in the early 2000s turned up 1,200 old documents. Along this street, the Centre Bonastruc ça Porta stands on the site of a 15th-century synagogue, and today it houses the Museum of Jewish History.",
      "c": [
       "rediscovered",
-      "museum"
+      "museum",
+      "nahhome"
      ],
      "level": 2
     },
@@ -352,6 +374,13 @@
      "level": 1
     },
     {
+     "t": "Game of Thrones fans may know these steps: outdoor scenes for season 6 were filmed at the cathedral and on this stairway.",
+     "c": [
+      "thrones"
+     ],
+     "level": 3
+    },
+    {
      "t": "Inside is something you won't see anywhere else. The Gothic nave is 22.98 meters wide. That's the widest Gothic nave in the world, and only St. Peter's in Rome has a wider church nave of any kind.",
      "c": [
       "nave"
@@ -368,10 +397,9 @@
      "level": 2
     },
     {
-     "t": "Nearby is the church of Sant Feliu, Saint Felix, said to have been martyred in Girona in 304 AD. By tradition, Saint Narcissus was one of the city's early bishops, and his tomb is inside. And yes, Game of Thrones fans: several scenes of season 6 were shot in Girona.",
+     "t": "Nearby is the church of Sant Feliu, Saint Felix, said to have been martyred in Girona in 304 AD. By tradition, Saint Narcissus was one of the city's early bishops, and his tomb is inside.",
      "c": [
-      "felix",
-      "thrones"
+      "felix"
      ],
      "level": 3
     }
@@ -381,6 +409,13 @@
    "name": "The walls",
    "stand": "Up on the city walls, at a spot where you can look out over the rooftops.",
    "paras": [
+    {
+     "t": "When you're ready, follow the signs for the Passeig de la Muralla, the walking route along the walls.",
+     "c": [
+      "route"
+     ],
+     "level": 2
+    },
     {
      "t": "You can walk these walls and climb their towers. The Romans built the first wall in the 1st century BC. It was rebuilt in the 1300s, and much of this eastern stretch was rebuilt again between 1983 and 2003.",
      "c": [
@@ -395,7 +430,7 @@
      "cue": true
     },
     {
-     "t": "For the best view, find Torre Gironella, a watchtower at the highest point of the walls.",
+     "t": "For a good view over the town and gardens, find Torre Gironella, a watchtower at the highest point of the walls.",
      "c": [
       "gironella"
      ],

@@ -12,15 +12,13 @@
    "la rambla",
    "las ramblas",
    "les rambles",
-   "rambla",
    "placa de catalunya",
    "plaça de catalunya",
    "plaza de cataluna",
    "plaza de cataluña",
    "boqueria",
    "placa reial",
-   "plaça reial",
-   "liceu"
+   "plaça reial"
   ],
   "wikidata": [
    "Q850593",
@@ -149,16 +147,6 @@
     "The La Boqueria market opens off the Rambla and is one of the city's foremost tourist landmarks, housing a very diverse selection of goods."
    ]
   },
-  "boqueria-tip": {
-   "label": "supported",
-   "says": "Wikivoyage notes the Boqueria is closed Sundays and that near closing time sellers may offer a special price.",
-   "src": [
-    "wv-barcelona"
-   ],
-   "quote": [
-    "If you go near closing time (20:00) sellers will make you a special price (2 or 3 for €2). Closed Sundays."
-   ]
-  },
   "miro": {
    "label": "supported",
    "says": "In the Pla de l'Os there is a 1971 pavement mosaic by Joan Miró.",
@@ -226,7 +214,7 @@
   },
   "attack": {
    "label": "supported",
-   "says": "On 17 August 2017 a van was deliberately driven down La Rambla in a terrorist attack, causing 16 deaths and at least 300 injuries.",
+   "says": "On 17 August 2017 a van was deliberately driven down La Rambla in a terrorist attack, killing and injuring many people.",
    "src": [
     "wp-la-rambla-barcelona"
    ],
@@ -254,6 +242,17 @@
    "quote": [
     "Many of them offer bus-shuttles to locations at the south end of La Rambla."
    ]
+  },
+  "redevelop": {
+   "label": "supported",
+   "says": "A redevelopment of the street, set to begin in late 2022, is being carried out in stages.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "Construction for the redevelopment is slated to begin in late 2022.",
+    "will be carried out in stages"
+   ]
   }
  },
  "parts": [
@@ -276,7 +275,7 @@
      "level": 3
     },
     {
-     "t": "One honest warning before we walk. Pickpockets are the biggest problem visitors face here. Keep your bag in front of you, and if you see a group betting on a cardboard table, walk on. They're thieves.",
+     "t": "One honest warning before we walk. Pickpockets are the biggest problem visitors face here. Keep your bag in front of you, and if you see a group betting on a cardboard table, walk on. It's a known trick to rob onlookers.",
      "c": [
       "thieves"
      ],
@@ -304,7 +303,14 @@
      "level": 2
     },
     {
-     "t": "Look down at the paving. It ripples, like water. That's a nod to what this was: a stream bed. The word rambla comes from the Arabic for sand, and means a dry riverbed. In 1440 the stream was sent outside the new city walls, and slowly it became a street.",
+     "t": "The street is being rebuilt in stages, so watch for fences and work zones as you walk.",
+     "c": [
+      "redevelop"
+     ],
+     "level": 2
+    },
+    {
+     "t": "If the old paving is still here, look down: it ripples, like water. That's a nod to what this was: a stream bed. The word rambla comes from the Arabic for sand, and means a dry riverbed. In 1440 the stream was sent outside the new city walls, and slowly it became a street.",
      "c": [
       "ripple",
       "stream"
@@ -333,14 +339,7 @@
      "level": 1
     },
     {
-     "t": "Wikivoyage says it's closed on Sundays, and if you come near closing time, the sellers may give you a special price. Check the hours before you go.",
-     "c": [
-      "boqueria-tip"
-     ],
-     "level": 3
-    },
-    {
-     "t": "Now look down at the pavement in this stretch, at the spot called the Pla de l'Os. There's a mosaic by the painter Joan Miró, laid in 1971, right under people's feet.",
+     "t": "Somewhere under your feet on this walk, at a spot called the Pla de l'Os, is a pavement mosaic by the painter Joan Miró, laid in 1971. Watch for it as you go.",
      "c": [
       "miro"
      ],
@@ -353,14 +352,14 @@
    "stand": "Continue down to the opera house, the Liceu, and look at its front from the middle of the promenade.",
    "paras": [
     {
-     "t": "This is the Liceu, Barcelona's opera house, opened here in 1847. For well over a century it was the biggest opera house in Europe, and it has burned and been rebuilt twice.",
+     "t": "This is the Liceu, Barcelona's opera house, opened here in 1847. For well over a century it was the biggest opera house in Europe by number of seats, and it has burned and been rebuilt twice.",
      "c": [
       "liceu"
      ],
      "level": 1
     },
     {
-     "t": "It has a darker memory too. On 7 November 1893, on the opening night of the season, an anarchist threw two bombs into the stalls. About twenty people died.",
+     "t": "It has a darker memory too. On November 7, 1893, on the opening night of the season, an anarchist threw two bombs into the stalls. About twenty people died.",
      "c": [
       "liceu-bomb"
      ],
@@ -370,7 +369,7 @@
   },
   {
    "name": "Plaça Reial",
-   "stand": "Turn off through the short passage on the Gothic Quarter side into Plaça Reial, and stand by one of the lampposts.",
+   "stand": "Turn off through the short passage on the Gothic Quarter side into Plaça Reial.",
    "paras": [
     {
      "t": "Step into Plaça Reial, the Royal Square, with its tall palm trees and arcades. It went up in the 1800s on the site of a Capuchin convent, pulled down in 1835.",
@@ -380,7 +379,7 @@
      "level": 1
     },
     {
-     "t": "Now look at the lamppost next to you. It's by Gaudí, one of his very first projects, designed in 1878 and installed in 1879.",
+     "t": "Gaudí designed lampposts for this square, one of his very first projects, in 1878. They were installed in 1879. Look for the most elaborate lampposts here.",
      "c": [
       "gaudi-lamps"
      ],
@@ -393,7 +392,7 @@
    "stand": "Head back to La Rambla and walk down until you can see the Columbus column at the end.",
    "paras": [
     {
-     "t": "At the bottom stands the Columbus Monument, and beyond it the old port. If you came off a cruise ship, your shuttle may well have dropped you around here.",
+     "t": "At the bottom stands the Columbus Monument, and beyond it the old port. If you came off a cruise ship, your shuttle may well have dropped you down at that end.",
      "c": [
       "columbus",
       "cruise"
@@ -401,14 +400,14 @@
      "level": 1
     },
     {
-     "t": "Not all of this street's money was clean. In the late 1800s, some Catalans who had grown rich from the slave trade, or from slave plantations in the Americas, came home and built grand houses on streets like this. One historian says La Rambla was built on the backs of slaves. Others disagree and call that an exaggeration.",
+     "t": "Not all of this street's money was clean. In the late 1800s, some Catalans who had grown rich from the slave trade, or from slave plantations in the Americas, came home and built grand houses on streets like this. One historian says La Rambla was built on the backs of slaves. That's disputed: The Guardian newspaper called it an exaggeration.",
      "c": [
       "slavery"
      ],
      "level": 3
     },
     {
-     "t": "And a moment of remembrance. On 17 August 2017, a van was deliberately driven down this promenade in a terrorist attack. Sixteen people died, and at least 300 were hurt.",
+     "t": "And a moment of remembrance. On August 17, 2017, a van was deliberately driven down this promenade in a terrorist attack. Many people were killed, and many more hurt.",
      "c": [
       "attack"
      ],

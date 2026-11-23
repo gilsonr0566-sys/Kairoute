@@ -10,9 +10,6 @@
   "names": [
    "barcelona cathedral",
    "catedral de barcelona",
-   "santa eulalia",
-   "santa eulàlia",
-   "santa creu",
    "barri gotic",
    "barri gòtic",
    "gothic quarter",
@@ -91,14 +88,16 @@
    ]
   },
   "eulalia": {
-   "label": "supported",
+   "label": "tradition",
    "says": "Eulalia was a 13-year-old Christian girl martyred in Barcelona under the emperor Diocletian; she is a patron saint of the city.",
    "src": [
-    "wp-eulalia-barcelona"
+    "wp-eulalia-barcelona",
+    "wp-barcelona-cathedral"
    ],
    "quote": [
     "was a 13-year-old Roman Christian virgin who was martyred in Barcelona during the persecution of Christians in the reign of emperor Diocletian",
-    "She is a patron saint of Barcelona."
+    "She is a patron saint of Barcelona.",
+    "according to Catholic tradition, suffered martyrdom during Roman times in the city"
    ]
   },
   "eulalia-dispute": {
@@ -274,7 +273,7 @@
      "level": 2
     },
     {
-     "t": "Christians have worshipped on this spot for a very long time. The Gothic cathedral was begun on 1 May 1298 on top of older churches. A Romanesque cathedral stood here first, consecrated in 1058. Before that, an early Christian church, badly damaged when al-Mansur attacked the city in 985.",
+     "t": "Christians have worshipped on this spot for a very long time. The Gothic cathedral was begun on May 1, 1298 on top of older churches. Before it stood a Romanesque cathedral, consecrated in 1058. And before that, an early Christian church, badly damaged when al-Mansur attacked the city in 985.",
      "c": [
       "gothic-start",
       "earlier"
@@ -295,7 +294,7 @@
    "stand": "Go inside and walk up the nave toward the high altar, until you can see down into the crypt beneath it.",
    "paras": [
     {
-     "t": "Under the high altar, in the crypt, lies Saint Eulalia, one of the city's patron saints. She was thirteen, a Christian girl, martyred here in Barcelona under the emperor Diocletian.",
+     "t": "Under the high altar, in the crypt, is the tomb of Saint Eulalia, one of the city's patron saints. Tradition says she was a Christian girl of thirteen, martyred here in Barcelona under the emperor Diocletian.",
      "c": [
       "eulalia",
       "crypt"
@@ -303,7 +302,7 @@
      "level": 1
     },
     {
-     "t": "In one account, she walked into the city and confronted the Roman governor to his face for persecuting Christians, and he had her tortured to death. Tradition adds more: a miraculous snowfall in spring to cover her, and a barrel, with knives in one telling and broken glass in another, rolled down the street still called Baixada de Santa Eulàlia, Saint Eulalia's descent.",
+     "t": "In one account, she walked into the city and confronted the Roman governor to his face for persecuting Christians, and he had her tortured to death. Tradition adds more: a miraculous snowfall in spring to cover her. And a barrel, lined with knives in one telling and broken glass in another, that she was shut inside and rolled down the street still called Baixada de Santa Eulàlia, Saint Eulalia's descent.",
      "c": [
       "confront",
       "snow-barrel"
@@ -386,14 +385,14 @@
      "level": 1
     },
     {
-     "t": "But don't take the name too literally. Much of what looks medieval here was restored, or simply built, in the late 19th and early 20th centuries, timed for the 1929 exhibition. That lacy stone bridge over Carrer del Bisbe looks ancient. It went up in 1928.",
+     "t": "But don't take the name too literally. Much of what looks medieval here was restored, or simply built, in the late 19th and early 20th centuries, timed for the 1929 exhibition. The lacy stone bridge over Carrer del Bisbe, if you pass under it, looks ancient. It went up in 1928.",
      "c": [
       "not-medieval"
      ],
      "level": 2
     },
     {
-     "t": "Just around the corner is the Plaça del Rei. One of its old houses, Casa Padellàs, built around 1500, was moved here in 1931 from another street. Today it's the City History Museum, and underground you can walk among remains of the early Christian church, with a baptistery from the 300s.",
+     "t": "Elsewhere in this quarter is the Plaça del Rei. One of its old houses, Casa Padellàs, built around 1500, was moved here in 1931 from another street. Today it's the City History Museum, and underground you can walk among remains of the early Christian church, with a baptistery from the 300s.",
      "c": [
       "padellas",
       "museum-below"
@@ -404,10 +403,10 @@
   },
   {
    "name": "Closing",
-   "stand": "Before you move on, look back at the cathedral spire above the rooftops.",
+   "stand": "Before you move on, pause wherever you are.",
    "paras": [
     {
-     "t": "A grand Gothic church, a new front, a quarter partly rebuilt for visitors. And at the center of it all, a thirteen-year-old girl remembered for her courage, and geese that, by tradition, still count out her years.",
+     "t": "Old Gothic stone, a leaning crucifix, a cloister full of geese. And at the center of it all, by tradition, a young girl remembered for her courage, whose years the geese still count.",
      "c": [
       "eulalia",
       "geese"

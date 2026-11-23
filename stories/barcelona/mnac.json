@@ -36,23 +36,12 @@
   },
   "fountain": {
    "label": "supported",
-   "says": "The Magic Fountain, designed by Carles Buïgas, was built in 1929 and amazed the public with light and water displays; musical light shows are often held there.",
+   "says": "The Magic Fountain, designed by Carles Buïgas, was built in 1929 and amazed the public with light and water displays.",
    "src": [
     "wp-1929-barcelona-international"
    ],
    "quote": [
-    "The famous Magic Fountain of Montjuïc, designed by Carles Buïgas, was constructed in 1929 on Avinguda Maria Cristina at the foot of Montjuic, and amazed the public with its light and water displays.",
-    "musical lightshows are often performed there"
-   ]
-  },
-  "columns": {
-   "label": "supported",
-   "says": "Puig i Cadafalch first built four columns here to represent the Catalan flag; the dictator Primo de Rivera had them removed.",
-   "src": [
-    "wp-1929-barcelona-international"
-   ],
-   "quote": [
-    "Originally, four columns were built in this location by Puig i Cadafalch to represent the Catalan flag, but these were removed by Spanish dictator Primo de Rivera's orders."
+    "The famous Magic Fountain of Montjuïc, designed by Carles Buïgas, was constructed in 1929 on Avinguda Maria Cristina at the foot of Montjuic, and amazed the public with its light and water displays."
    ]
   },
   "museum": {
@@ -73,17 +62,18 @@
     "wp-museu-nacional-d-art-catalun"
    ],
    "quote": [
-    "The National Palau of Montjuïc, known as Palau Nacional was constructed between 1926 and 1929, with the goal of being the main building of the 1929 Barcelona International Exposition"
+    "The National Palau of Montjuïc, known as Palau Nacional was constructed between 1926 and 1929, with the goal of being the main building of the 1929 Barcelona International Exposition",
+    "Under these plans, the Palau Nacional was to be the central palace for the exhibition."
    ]
   },
   "domes": {
    "label": "supported",
-   "says": "The facade is crowned by a great dome inspired by St. Peter's in Rome, flanked by two smaller domes, with four towers modeled on Santiago de Compostela Cathedral.",
+   "says": "The facade is crowned by a great dome inspired by St. Peter's in Rome, flanked by two smaller domes.",
    "src": [
     "wp-museu-nacional-d-art-catalun"
    ],
    "quote": [
-    "Its façade is crowned by a great dome inspired by St. Peter's Basilica in the Vatican City in Rome, flanked by two smaller domes, while four towers modelled on Santiago de Compostela Cathedral stand at the corners"
+    "Its façade is crowned by a great dome inspired by St. Peter's Basilica in the Vatican City in Rome, flanked by two smaller domes"
    ]
   },
   "puig": {
@@ -113,7 +103,8 @@
     "wp-museu-nacional-d-art-catalun"
    ],
    "quote": [
-    "with the goal of being the main building of the 1929 Barcelona International Exposition, holding an Exhibition of Spanish Art named El Arte en España (The Art of Spain). More than 5,000 works came to the Exhibition from across Spain."
+    "with the goal of being the main building of the 1929 Barcelona International Exposition, holding an Exhibition of Spanish Art named El Arte en España (The Art of Spain). More than 5,000 works came to the Exhibition from across Spain.",
+    "a great exhibition entitled Art in Spain"
    ]
   },
   "oval": {
@@ -223,7 +214,7 @@
   },
   "modern": {
    "label": "supported",
-   "says": "The modern collection includes Ramon Casas and Santiago Rusiñol, furniture and decoration by Gaudí from Casa Batlló and others from Passeig de Gràcia, and Picasso since 2007.",
+   "says": "The modern collection includes Ramon Casas and Santiago Rusiñol, interior decorative art by Gaudí from Casa Batlló, and Picasso since 2007.",
    "src": [
     "wp-museu-nacional-d-art-catalun"
    ],
@@ -235,13 +226,14 @@
   },
   "war": {
    "label": "supported",
-   "says": "The plan to gather Catalan art here from 1934 was frustrated by the Civil War (1936-1939), when many works were sent for protection to Olot, Darnius and Paris.",
+   "says": "The Palau Nacional has housed the Museu d'Art de Catalunya since 1934; the plan to gather Catalan art here was frustrated by the Civil War (1936-1939), when many works were sent to Olot, Darnius and Paris.",
    "src": [
     "wp-museu-nacional-d-art-catalun"
    ],
    "quote": [
     "A project to install all these Catalan art collections in the Palau Nacional, launched in 1934",
-    "was frustrated by the outbreak of the Spanish Civil War (1936–1939), when for protection many works were transferred to Olot, Darnius and Paris"
+    "was frustrated by the outbreak of the Spanish Civil War (1936–1939), when for protection many works were transferred to Olot, Darnius and Paris",
+    "which has housed the Museu d'Art de Catalunya since 1934"
    ]
   },
   "inaugurated": {
@@ -253,6 +245,16 @@
    "quote": [
     "The museum was officially inaugurated on 16 December 2004."
    ]
+  },
+  "towers": {
+   "label": "supported",
+   "says": "Four towers modeled on Santiago de Compostela Cathedral stand at the corners of the Oval Hall.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "four towers modelled on Santiago de Compostela Cathedral stand at the corners of the so-called Sala Oval, or Oval Hall"
+   ]
   }
  },
  "parts": [
@@ -261,25 +263,19 @@
    "stand": "At the foot of Montjuïc, by the Magic Fountain, looking up the long staircase toward the palace with the great dome.",
    "paras": [
     {
-     "t": "Look up the hill. That grand building with the dome is the Palau Nacional, home of the National Art Museum of Catalonia. The palace, this fountain and the staircase between them all survive from the 1929 International Exposition.",
+     "t": "Look up the hill. That grand building with the dome is the Palau Nacional, home of the National Art Museum of Catalonia. Its great dome was inspired by St. Peter's in Rome, with a smaller dome on each side. The palace, this fountain and the staircase between them all survive from the 1929 International Exposition.",
      "c": [
-      "expo"
+      "expo",
+      "domes"
      ],
      "level": 1
     },
     {
-     "t": "The fountain in front of you is the Magic Fountain. It was designed by Carles Buïgas and built in 1929, and it amazed the public with its light and water. Musical light shows are often held here.",
+     "t": "The fountain in front of you is the Magic Fountain. It was designed by Carles Buïgas and built in 1929, and it amazed the public with its light and water.",
      "c": [
       "fountain"
      ],
      "level": 2
-    },
-    {
-     "t": "Here's a bit of politics hidden in plain sight. Before the fountain, the architect Puig i Cadafalch built four columns on this spot to stand for the Catalan flag. The dictator Primo de Rivera ordered them removed.",
-     "c": [
-      "columns"
-     ],
-     "level": 3
     },
     {
      "t": "A word before the climb. It's a long way up, with plenty of steps. Take your time, carry water on a hot day, and stop to look back at the view.",
@@ -294,10 +290,9 @@
    "stand": "At the top of the stairs, in front of the palace entrance.",
    "paras": [
     {
-     "t": "The palace went up between 1926 and 1929 as the main building of the Exposition. The big central dome was inspired by St. Peter's in Rome. Look for the two smaller domes on either side, and the four towers, modeled on the cathedral of Santiago de Compostela.",
+     "t": "The palace went up between 1926 and 1929 as the main building of the Exposition, the centerpiece of the whole fair.",
      "c": [
-      "palau",
-      "domes"
+      "palau"
      ],
      "level": 1
     },
@@ -345,6 +340,13 @@
       "shields"
      ],
      "level": 3
+    },
+    {
+     "t": "One more detail for when you're back outside: at the four corners of this hall stand towers modeled on the cathedral of Santiago de Compostela.",
+     "c": [
+      "towers"
+     ],
+     "level": 3
     }
    ]
   },
@@ -353,7 +355,7 @@
    "stand": "In the Romanesque section, in front of the painted apse from Sant Climent de Taüll.",
    "paras": [
     {
-     "t": "This is the heart of the museum. These paintings, from the 11th to the 13th centuries, once covered the walls of small country churches in the Pyrenees. No other museum in the world has a Romanesque collection like it.",
+     "t": "This is the heart of the museum. Many of these paintings, from the 11th to the 13th centuries, once covered the walls of country churches in the Pyrenees. No other museum in the world has a Romanesque collection like it.",
      "c": [
       "romanesque",
       "museum"
@@ -395,14 +397,14 @@
      "level": 2
     },
     {
-     "t": "The modern collection is Barcelona's own story. There are paintings by Ramon Casas and Santiago Rusiñol, furniture and decoration by Gaudí from Casa Batlló, and since 2007, Picasso.",
+     "t": "The modern collection is Barcelona's own story. There are paintings by Ramon Casas and Santiago Rusiñol, decorative pieces Gaudí designed for Casa Batlló, and since 2007, Picasso.",
      "c": [
       "modern"
      ],
      "level": 2
     },
     {
-     "t": "The museum's own road was long. A plan to gather Catalonia's art here began in 1934, but the Civil War broke out, and many works were sent away for safety, to Olot, Darnius and even Paris. The museum as you see it was only officially inaugurated on 16 December 2004.",
+     "t": "The museum's own road was long. An art museum has been in this palace since 1934, but the plan to bring all of Catalonia's art together here was cut short by the Civil War, and many works were sent away for safety, to Olot, Darnius and even Paris. The full national museum you see today was officially inaugurated on December 16, 2004.",
      "c": [
       "war",
       "inaugurated"

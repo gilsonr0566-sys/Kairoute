@@ -75,7 +75,7 @@
   },
   "slavery": {
    "label": "supported",
-   "says": "Güell's father had made his fortune partly as a slave trader in Cuba, and his father-in-law, the Marquis of Comillas, was also a notorious slave trader.",
+   "says": "By one account Güell's father amassed considerable riches in Cuba as a slave trader; his father-in-law, the Marquis of Comillas, was a notorious slave trader.",
    "src": [
     "wp-eusebi-guell"
    ],
@@ -96,14 +96,15 @@
   },
   "phoenix": {
    "label": "disputed",
-   "says": "The emblem at the entrance: one account says a bronze phoenix between the two gates, symbol of Catalan rebirth; another says the Catalan coat of arms with a helmet and winged dragon by Joan Oñós.",
+   "says": "Most accounts (including two passages) call the creature on the entrance emblem a phoenix, symbol of Catalan rebirth; one passage calls it a winged dragon, the work of Joan Oñós.",
    "src": [
     "wp-palau-guell",
     "wp-antoni-gaudi"
    ],
    "quote": [
     "Gaudí placed the bronze sculpture of a phoenix between the two gates, a mythical animal that is an emblem of the economic and cultural renaissance experienced by Catalan society.",
-    "decorated with the Catalan coat of arms and a helmet with a winged dragon, the work of Joan Oñós"
+    "decorated with the Catalan coat of arms and a helmet with a winged dragon, the work of Joan Oñós",
+    "a helmet with a phoenix as an alegory to the rebirth of Catalan culture"
    ]
   },
   "ramp": {
@@ -224,14 +225,14 @@
      "level": 1
     },
     {
-     "t": "Look at the two gates. Guests rolled in here by horse and carriage, under those parabolic arches. Look closely at the ironwork: it's meant to look like seaweed, and in places like a horsewhip.",
+     "t": "Look at the two gates. Guests rolled in here by horse and carriage, under the parabolic arch of each gate. Look closely at the ironwork: it's meant to look like seaweed, and in places like a horsewhip.",
      "c": [
       "gates"
      ],
      "level": 1
     },
     {
-     "t": "Now look between the gates, at the emblem with the Catalan coat of arms. Accounts differ on the creature up there. One calls it a phoenix, a symbol of Catalonia's rebirth. Another calls it a winged dragon, made by Joan Oñós. Look for yourself and decide.",
+     "t": "Now look between the gates, at the emblem with the Catalan coat of arms. Most accounts call the creature on top a phoenix, a symbol of Catalonia's rebirth, but one calls it a winged dragon, so the accounts differ a little. The ironwork is credited to Joan Oñós. Look for yourself and decide.",
      "c": [
       "phoenix"
      ],
@@ -259,7 +260,7 @@
      "level": 2
     },
     {
-     "t": "There's a harder side to this wealth, and it's worth saying plainly. Güell's father made much of his fortune in Cuba as a slave trader, and his father-in-law, the Marquis of Comillas, was a notorious slave trader too.",
+     "t": "There's a harder side to this wealth, and it's worth saying plainly. Güell's father made a fortune in Cuba, by some accounts as a slave trader, and his father-in-law, the Marquis of Comillas, was a notorious slave trader too.",
      "c": [
       "slavery"
      ],
@@ -269,7 +270,7 @@
   },
   {
    "name": "Coming in",
-   "stand": "Just inside the entrance, where the way divides between the ramp going down and the stairs going up.",
+   "stand": "Just inside the entrance.",
    "paras": [
     {
      "t": "The house was built around arrival. Horses went down a ramp to the stable in the basement, where the servants lived. Guests went up the stairs to the receiving room.",
@@ -305,14 +306,14 @@
      "level": 1
     },
     {
-     "t": "When you reach the main party room, look for the small holes near the top of its tall ceiling. At night, lanterns were hung outside them, so the guests below saw what looked like a starlit sky.",
+     "t": "The palace's main party room has small holes near the top of its tall ceiling. At night, lanterns were hung outside them, so the guests below saw what looked like a starlit sky.",
      "c": [
       "stars"
      ],
      "level": 2
     },
     {
-     "t": "As you walk through the rooms, look up at the ceilings. Gaudí decorated the inside in a rich Mudejar style style, and the wood and iron ceilings are the stars of the show.",
+     "t": "As you walk through the rooms, look up at the ceilings. Gaudí decorated the inside in a rich Mudejar style, and the wood and iron ceilings are the stars of the show.",
      "c": [
       "mudejar"
      ],
@@ -338,7 +339,7 @@
      "level": 2
     },
     {
-     "t": "The palace hasn't had an easy life. In 2004 it closed to visitors, because some of the original stone was weak and had cracked. The restoration was finished in April 2011. Film fans may know these rooms too: it's where Jack Nicholson and Maria Schneider first meet in Antonioni's film The Passenger.",
+     "t": "The palace hasn't had an easy life. In 2004 it closed to visitors, because some of the original stone was weak and had cracked. The restoration was finished in April 2011. Film fans may know this house too: it's where Jack Nicholson and Maria Schneider first meet in Antonioni's film The Passenger.",
      "c": [
       "restore",
       "film"
