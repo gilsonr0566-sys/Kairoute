@@ -20,7 +20,10 @@ jobs:
         with:
           node-version: 22
       - name: The saved test trips (the 20-city list and live trips)
-        run: mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/
+        # The hourly run starts from main, which doesn't hold the test trips: they come from the Beta 2 work branch.
+        run: |
+          [ -d tools/beta2/corpus ] || { git fetch -q origin claude/project-thread-xrdp7v && git checkout FETCH_HEAD -- tools/beta2/corpus; }
+          mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/
       - name: The live helper's ride code (main)
         run: git fetch -q origin main && mkdir -p /tmp/live && git show origin/main:worker/transit.js > /tmp/live/transit.js
       # The full check (on a push or by hand) compares the live code and, when it differs, this branch's candidate in one
