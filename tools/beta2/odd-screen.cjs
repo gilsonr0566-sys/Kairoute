@@ -41,7 +41,9 @@ const variants = d => {
     for (const [label, fields, sights] of variants(trip0.days[i])) {
       const t0 = Date.now();
       const text = await p.evaluate(async ({ i, fields, sights, saved }) => {
-        localStorage.setItem('wayside.trip2', saved); // every change starts from the trip as saved
+        // Every change starts from the day as saved: its own fields put back first (the app keeps the trip in memory).
+        const d0 = JSON.parse(saved).days[i];
+        window.__kairouteDay(i, d0.selected == null ? null : d0.selected, Object.assign({}, d0, { cleared: d0.cleared, order: d0.order || null }));
         const all = window.__kairouteDay(i, sights === 'all' ? '.' : null, fields) || [];
         if (sights === 'none') window.__kairouteDay(i, []);
         if (sights === 'rev' && window.__kairouteOrder) { try { const ids = (window.__kairouteAt(i, 'ids') || []).slice().reverse(); window.__kairouteOrder(i, ids); } catch (e) {} }
@@ -52,6 +54,7 @@ const variants = d => {
         return (document.querySelector('main') || document.body).innerText;
       }, { i, fields, sights, saved });
       const ms = Date.now() - t0; if (ms > 6000) slow.push(`day ${i + 1} (${label}): ${(ms / 1000).toFixed(1)} s to show`);
+      if (process.env.BUCKET && label.includes(process.env.DUMP || '')) fs.writeFileSync(process.env.BUCKET, JSON.stringify([{ name: 'b', edits: [], bucket: await p.evaluate(() => window.__kairouteBucket(true)) }]));
       if (process.env.DUMP && label.includes(process.env.DUMP)) console.log('=== day ' + (i + 1) + ' ' + label + '\n' + text);
       shown++; const info = Object.assign({}, days[i] || {}, { i });
       for (const f of R.rules(text, info)) fails.push(Object.assign({ where: `day ${i + 1} ${info.type || ''} ${info.dest || ''} (${label})` }, f));

@@ -46,13 +46,23 @@ if (typeof document !== "undefined" && typeof MutationObserver !== "undefined") 
 //   left           time left to fill: what Choose sights' bar, the free time row and the notes all say.
 //   leaveBy        when to leave the last stop (or the free time) to be back by endBy: the countdown's own time.
 //   allAboard      the ship's all-aboard time on the port's clock (port and boarding days).
+// Where the traveler is when the way back begins: the plan's last stop or meal ashore (lunch back on board comes after the
+// ride back); with none, the top of the cable car (or funicular) ridden up at the start; else the start itself. One answer
+// for the free time row, the leave-by and the countdown (Nov 22 odd-trips screen check, a 7:00-11:00 tender call with no
+// stops: the free time sat after the cable car down, and the start was moved to the leave-by time).
+function lastAshoreIdx(plan) {
+  const its = (plan && plan.items) || []; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || (it.type === "meal" && !(it.place && it.place.onBoard))) j = k; });
+  if (j >= 0) return j;
+  its.forEach((it, k) => { if (it.type === "start" || (it.type === "fixed" && it.up)) j = k; });
+  return j;
+}
 function dayFacts(d, plan) {
   if (!d || !plan || plan.error) return null;
   const fixed = typeof fixedTitle === "function" && !!fixedTitle(d) && plan.w && plan.w.tail && plan.w.tail.length;
   const tl = typeof timeLeft === "function" ? timeLeft(plan, d) : null;
   const left = tl ? Math.max(0, Math.round(tl.left)) : Math.max(0, plan.endBy - plan.end);
   // The ride back from the plan's last stop or meal: the same rides the timeline lists after it.
-  const its = plan.items || []; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || (it.type === "meal" && !(it.place && it.place.onBoard))) j = k; }); // lunch back on board comes after the ride back (Round 1: Ketchikan)
+  const its = plan.items || [], j = lastAshoreIdx(plan); // lunch back on board comes after the ride back (Round 1: Ketchikan)
   // Everything after the last stop is the way back: its rides and its fixed steps (a cable car's queue down, collecting
   // bags on the way): the latest time to leave the last stop leaves room for all of them (screen check, Nov 22: "leave
   // here by 2:59" printed after bags collected at 3:19, when the real latest was about 4:36).

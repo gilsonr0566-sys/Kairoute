@@ -5794,7 +5794,7 @@ function itineraryText() {
       const F = plan && !plan.error ? dayFacts(d, plan) : null, freeOn = F && F.left >= 30 && !(plan.dropped || []).length && !(plan.w && plan.w.straight);
       let freeDone = false;
       if (plan && !plan.error) plan.items.forEach((it, k) => {
-        if (freeOn && !freeDone && k === (() => { let j = -1; plan.items.forEach((x, q) => { if (x.type === "stop" || (x.type === "meal" && !(x.place && x.place.onBoard))) j = q; }); return j + 1; })()) { freeDone = true; out.push(`   ${fmt(F.leaveBy - F.left)}  Free time until ${fmt(F.leaveBy)}`); }
+        if (freeOn && !freeDone && k === lastAshoreIdx(plan) + 1) { freeDone = true; out.push(`   ${fmt(F.leaveBy - F.left)}  Free time until ${fmt(F.leaveBy)}`); }
         if (it.type === "travel") return;
         const nm = it.type === "meal" ? it.meal.label + ": " + it.place.name : it.type === "start" || it.type === "end" ? it.label : (it.place.along ? "On the way: " : it.place.bonus ? "Optional: " : "") + it.place.name;
         out.push(`   ${it.type === "end" && freeOn ? "by " + fmt(F.endBy) : fmt(it.time)}  ${nm}`);
@@ -6807,7 +6807,7 @@ function renderPlan(d) {
   let freeShown = false;
   // Free time sits where it is spent: right after the last stop or meal, before the way back with its fixed steps
   // (collecting bags, a cable car's queue down) (screen check, Nov 22: free time printed after bags were collected).
-  const freeAt = (() => { let j = -1; plan.items.forEach((x, k) => { if (x.type === "stop" || (x.type === "meal" && !(x.place && x.place.onBoard))) j = k; }); return j + 1; })();
+  const freeAt = lastAshoreIdx(plan) + 1;
   // After the free time the way back follows on the clock: its rides and fixed steps start when the free time ends.
   const freeShift = freeOn && plan.items[freeAt] && isFinite(plan.items[freeAt].time) && F.leaveBy > plan.items[freeAt].time ? F.leaveBy - plan.items[freeAt].time : 0;
   const rows = plan.items.map((it0, idx) => {

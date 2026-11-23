@@ -302,7 +302,14 @@
     // Each loss is judged on the day as it would really be planned (the same arrange as the final day, lunch included, in its
     // quick form), never on a simpler schedule that could pick a different stop to give up (Nov 19 review).
     const quick = seq => arrange(seq, win, ctx, true).r;
-    const base = quick(keep).end;
+    const b0 = arrange(keep, win, ctx, true), base = b0.r.end;
+    // Many to choose from (a day with every sight ticked): each is first weighed by what leaving it out of today's route
+    // saves (its visit and its detour), and only the 6 that look best by the same order below are planned in full
+    // (Nov 22 odd-trips run: 46 picks planned the day 1,000 times over to give up 36 of them). 12 or fewer: all of them.
+    if (from.length > 12) { const seq = b0.seq.filter(x => !x.mealOf), at = new Map(seq.map((x, k) => [String(x.id), k])), head = win.head[win.head.length - 1], tail = win.tail.length ? win.tail[0] : null;
+      const gain = s => { const k = at.get(String(s.id)); if (k == null) return s.minutes || 0; const p = k ? seq[k - 1] : head, q = seq[k + 1] || tail;
+        return (s.minutes || 0) + ctx.tr.min(p, s) + (q ? ctx.tr.min(s, q) - ctx.tr.min(p, q) : 0); };
+      from = from.map(s => ({ s, g: Math.max(1, gain(s)) })).sort((a, b) => keepRank(a.s) - keepRank(b.s) || (a.s.worth || 1) / a.g - (b.s.worth || 1) / b.g || E.byId(a.s, b.s)).slice(0, 6).map(x => x.s); }
     const scored = from.map(s => { const r = quick(keep.filter(k => k !== s)); return { s, fits: !r.over && !r.late, saved: Math.max(1, base - r.end) }; });
     const fixing = scored.filter(x => x.fits);
     // Over the time: the stop giving back the most time for its worth goes first (two lesser stops before one great
@@ -355,24 +362,6 @@
     ctx.ownOrder = Array.isArray(d.order) && d.order.length > 1 ? d.order.map(String) : null;
     ctx.lunchAt = d.mealAt && d.mealAt.Lunch != null ? String(d.mealAt.Lunch) : null;
     let keep = stops.slice(), dropped = [];
-    // Far more picked than the day can hold (Nov 22 odd-trips run: every one of 39 sights ticked on a leaving day took a
-    // minute to plan, each one given up after trying the day without every other): the visits alone, before any ride,
-    // over one and a half times the time there is. Those that give the least for their time go first, by the same order as below
-    // (wanted ones last), until the visits alone take no more than a tenth over the day; the careful way does the rest.
-    { const room = (isFinite(win.sightTo) ? win.sightTo : win.endBy) - (win.sightFrom || win.start), mins = s => s.minutes || 0;
-      let sum = keep.reduce((a, s) => a + mins(s), 0);
-      if (keep.length > 6 && room > 0 && sum > 1.5 * room) {
-        const order = keep.slice().sort((a, b) => keepRank(a) - keepRank(b) || (a.worth || 1) / Math.max(1, mins(a)) - (b.worth || 1) / Math.max(1, mins(b)) || E.byId(a, b));
-        for (const s of order) { if (sum <= 1.1 * room || keep.length <= 1) break; keep = keep.filter(k => k !== s); sum -= mins(s);
-          dropped.push({ id: s.id, name: s.name, wish: !!s.wish, wanted: wanted(s), stop: s, why: "didn't fit in the time", needs: null, pre: true }); } } }
-    // Then, still far over: the stops in their best order, rides included but no lunch, end more than half an hour past the time
-    // there is. The one giving least for its time goes, one at a time, until that rough day is within half an hour; the careful
-    // way below decides the rest (a leaving day with 22 picks left took 13 s, each one given up after trying all the others).
-    if (keep.length > 6) { const start = win.head[win.head.length - 1], end = win.tail.length ? win.tail[0] : null, mins = s => s.minutes || 0;
-      const rough = seq => E.walkDay(E.bestOrder(seq, start, end, ctx.tr.min), win, ctx.tr.estimate, ctx.siteDay);
-      const order = keep.slice().sort((a, b) => keepRank(a) - keepRank(b) || (a.worth || 1) / Math.max(1, mins(a)) - (b.worth || 1) / Math.max(1, mins(b)) || E.byId(a, b));
-      for (const s of order) { if (keep.length <= 6 || !(rough(keep).over > 30)) break; keep = keep.filter(k => k !== s);
-        dropped.push({ id: s.id, name: s.name, wish: !!s.wish, wanted: wanted(s), stop: s, why: "didn't fit in the time", needs: null, pre: true }); } }
     let cur = arrange(keep, win, ctx), guard = 0;
     const needsLunchRoom = () => cur.noLunch === "time" && keep.some(s => !s.wish);
     while ((cur.r.over || cur.r.late || needsLunchRoom()) && keep.length && guard++ < 40) {
@@ -391,7 +380,9 @@
       if (why === "over" && wanted(out)) {
         const t = trimToFit(keep, win, ctx); if (t) { keep = t.keep; cur = t.cur; continue; }
       }
-      const next = keep.filter(s => s !== out), c = arrange(next, win, ctx);
+      // Still over by more than an hour, the day is timed the quick way (no reordering to repair it: no move fixes an hour);
+      // the day as kept is timed in full once the loop ends.
+      const far = why === "over" && cur.r.over > 60, next = keep.filter(s => s !== out), c = Object.assign(arrange(next, win, ctx, far), far ? { roughly: true } : {});
       if (why === "lunch" && c.noLunch === "time") break; // giving it up wouldn't make room for lunch: keep it
       const endWith = cur.r.end; keep = next; cur = c;
       // The time it needs and the time there is, in numbers (Nov 22, Richard asked how a day trip was "closed" when the note said
@@ -408,21 +399,16 @@
       const tooLate = opens != null && isFinite(win.endBy) && opens + Math.min(out.minutes || 60, 60) > win.endBy;
       dropped.push({ id: out.id, name: out.name, wish: !!out.wish, wanted: wanted(out), stop: out, why: noBoat.has(String(out.id)) ? "is reached only by boat, and " + noBoat.get(String(out.id)) + ": on a day with a time to be back, the way back is planned only on a sailing a timetable confirms" : tooLate ? "opens at " + E.clock(opens) + ", too late to see before " + E.clock(win.endBy) : why === "late" ? "would arrive after its last entry" : "didn't fit in the time", needs: timeWhy });
     }
+    if (cur.roughly) cur = arrange(keep, win, ctx);
     // Room left after the drops: a stop given up earlier comes back when it now fits (wanted ones first, best first).
     for (const x of dropped.slice().sort((a, b) => keepRank(b.stop) - keepRank(a.stop) || (b.stop.worth || 0) - (a.stop.worth || 0) || E.byId(a.stop, b.stop))) {
       // A stop whose visit is longer than all the time left (with a lunch shortened to the quickest), or that runs the day
       // over even in the best order with no lunch at all, can't come back: not tried (each try plans the day with its lunch,
-      // seconds on a phone for a day of many picks). One given up before the careful way is not tried if it would be late either.
-      if ((x.stop.minutes || 0) > win.endBy - cur.r.end + 30 || (() => { const r = E.walkDay(E.bestOrder(keep.concat([x.stop]), win.head[win.head.length - 1], win.tail.length ? win.tail[0] : null, ctx.tr.min), win, ctx.tr.estimate, ctx.siteDay); return r.over > 0 || (x.pre && r.late); })()) continue;
+      // seconds on a phone for a day of many picks; Nov 22 odd-trips run).
+      if ((x.stop.minutes || 0) > win.endBy - cur.r.end + 30 || (() => { const r = E.walkDay(E.bestOrder(keep.concat([x.stop]), win.head[win.head.length - 1], win.tail.length ? win.tail[0] : null, ctx.tr.min), win, ctx.tr.estimate, ctx.siteDay); return r.over > 0; })()) continue;
       const next = keep.concat([x.stop]), c = arrange(next, win, ctx);
       if (!c.r.over && !c.r.late && !(win.hard && win.endBy - c.r.end < E.FILL_MARGIN) && (c.noLunch !== "time" || cur.noLunch === "time" || wanted(x.stop))) { keep = next; cur = c; dropped = dropped.filter(y => y !== x); }
     }
-    // Those given up before the careful way say why in numbers too (screen rule "reason has its numbers"): the visit
-    // alone against the time left, or, when the visit alone would fit, that with the rides to it the day runs over.
-    { const left = Math.max(0, Math.floor((win.endBy - cur.r.end) / 5) * 5), hm = m => m >= 60 ? Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : m + " min";
-      dropped.forEach(x => { if (!x.pre || x.needs) return; const v = x.stop.minutes || 0;
-        x.needs = v > left ? "needs about " + hm(v) + " for the visit alone, and with today's other stops only " + hm(left) + " is left before " + E.clock(win.endBy)
-          : "needs its " + hm(v) + " visit and the rides to it and on, more than the " + hm(left) + " left before " + E.clock(win.endBy) + " with today's other stops"; }); }
     if (cur.noLunch === "time" && lunchWanted(win)) { const t = trimForLunch(keep, win, ctx, cur.r.end); if (t) { keep = t.keep; cur = t.cur; } }
     // Spare time is the traveler's (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to fill
     // the spots."): the app never adds a sight on its own. It names the best unused sights nearby that would still fit,
