@@ -1,5 +1,5 @@
 SOURCE: https://en.wikipedia.org/wiki/Fort_Fincastle
-RETRIEVED: 2026-11-22T21:17:17.802Z
+RETRIEVED: 2026-11-23T01:31:20.918Z
 STATUS: 200
 TITLE: Fort Fincastle
 
