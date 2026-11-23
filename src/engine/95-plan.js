@@ -69,13 +69,21 @@
       // after it, the traveler is there when the free time begins, never back at the start before it (Nov 23: free time
       // was shown at the airport before the ride to the hotel, and before the bags were left).
       if (x.t === "fixed" && win.head.some(p => p.fixed && p.id === x.id)) { it.head = true; if (!/bags/i.test(x.name || "")) it.up = true; }
-      if (x.packed) it.packed = true; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
+      if (x.packed) it.packed = true; if (x.during != null) it.during = x.during; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       // What is known about a place to eat travels with it to the screen: found only on the map (no guide or review behind
       // it), and whether its hours that day are known (Nov 22: never say more than the data says).
       if (x.t === "meal" || x.t === "evening") { if (x.fromMap) it.fromMap = true; const fx = (fit.eatFacts || {})[E.eatKey(x.name || "")]; if (fx && (fx.closed || (fx.oh && fx.oh.spans && fx.oh.spans.length))) it.hoursKnown = true; }
       Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
+    // A lunch brought along in the middle of a long visit (lunchFor times the visit in two parts around it): one visit on the
+    // plan, lunch inside it (lunchIn: when and how long), and the lunch kept right after it, marked as eaten during it.
+    for (let k = 0; k < items.length; k++) { const m = items[k]; if (m.t !== "meal" || m.during == null) continue;
+      let a = k - 1; while (a >= 0 && items[a].t === "ride") a--; let b = k + 1; while (b < items.length && items[b].t === "ride") b++;
+      const A = items[a], B = items[b];
+      if (!A || !B || A.t !== "stop" || B.t !== "stop" || String(A.id) !== String(m.during) || String(B.id) !== String(m.during)) { delete m.during; continue; }
+      A.min = B.at + (B.min || 0) - A.at; A.lunchIn = { at: m.at, min: m.min }; if (B.late) A.late = Math.max(A.late || 0, B.late);
+      m.during = A.id; items.splice(a + 1, b - a, m); k = a + 1; }
     if (fit.onBoard) { const sp = win.tail[win.tail.length - 1]; items.push({ t: "meal", id: null, name: "Back on board", at: fit.onBoard.at, min: fit.onBoard.min, bonus: false, along: false, meal: "Lunch", late: 0, onBoard: true, lat: sp.lat, lng: sp.lng }); }
     if (dinner) items.push({ t: "evening", id: null, name: dinner.name, at: dinner.at, min: dinner.min, lat: dinner.lat, lng: dinner.lng, bonus: false, along: false, meal: "Dinner", late: 0, booked: !!dinner.booked, chosen: !!dinner.chosen });
     return { i, start: win.start, endBy: win.endBy, end: fit.r.end, over: fit.r.over > 0, straight: !!win.straight,
@@ -615,9 +623,15 @@
     // A pick moved to another day says so only when that day really has it (Nov 22: "closed on Tuesday, so it's planned
     // on Monday" while Monday had no room for it): otherwise the day it was picked for says it didn't fit there either.
     for (const [id, m] of movedTo) { const p = out[m.from], q = out[m.to]; if (!p || !p.explain) continue;
-      const has = q && q.items && (q.items.some(x => x.t === "stop" && (String(x.id) === id || (x.includesIds || []).map(String).includes(id))) || (q.folded || []).map(String).includes(id));
-      if (has) continue; const k = p.explain.findIndex(t => t.startsWith(m.name + (m.inside ? " is inside " : " is closed on ")));
-      if (k >= 0) p.explain[k] = m.inside ? m.name + " is inside " + m.inside + ", planned on " + dayWord(m.to) + ", but it didn't fit that day." : m.name + " is closed on " + dayWord(m.from) + ", and it didn't fit on " + dayWord(m.to) + ", the day it's open."; }
+      const holds = o => !!(o && o.items && (o.items.some(x => x.t === "stop" && (String(x.id) === id || (x.includesIds || []).map(String).includes(id))) || (o.folded || []).map(String).includes(id)));
+      if (holds(q)) continue; const k = p.explain.findIndex(t => t.startsWith(m.name + (m.inside ? " is inside " : " is closed on ")));
+      // Picked on another day of the stay too, and planned there: that day is named, never "it didn't fit" (Nov 23 odd-screen:
+      // every sight ticked on a leaving day said two sights "didn't fit on Friday" while Thursday's plan had both).
+      const other = out.findIndex((o, j) => j !== m.from && j !== m.to && holds(o));
+      if (k >= 0 && other >= 0) { p.explain[k] = m.inside ? m.name + " is inside " + m.inside + ": seen on " + dayWord(other) + "." : m.name + " is closed on " + dayWord(m.from) + ", and it's planned on " + dayWord(other) + "."; continue; }
+      // With the numbers the other day's planner gave (what it needs and what was left there), never a bare "didn't fit".
+      const qw = q && q.dropWhy && q.dropWhy[id], num = qw && /\d/.test(qw) ? " (it " + qw + ")" : "";
+      if (k >= 0) p.explain[k] = m.inside ? m.name + " is inside " + m.inside + ", planned on " + dayWord(m.to) + ", but it didn't fit that day" + num + "." : m.name + " is closed on " + dayWord(m.from) + ", and it didn't fit on " + dayWord(m.to) + ", the day it's open" + num + "."; }
     // A sight offered for free time is never one planned on any day.
     out.forEach(p => { if (p && p.suggest) p.suggest = p.suggest.filter(x => !plannedIds.has(String(x.id))); });
     // Each thing said once.
@@ -646,7 +660,7 @@
   // The ride choices that can touch a group of places: a choice holds for a ride between its two spots, or one close enough
   // to it (E.nearRide, at most 5 km off at each end), and every ride the group plans is between places its own facts
   // name. So a choice with an end more than 6 km from every spot in the group can't change its plans, and a ride chosen in
-  // one city no longer re-plans every other city of the trip (tap speed, Nov 23: a tick in Naples re-planned all 21 days).
+  // one city no longer re-plans every other city of the trip (tap speed, Nov 23: a tick in one port re-planned all 21 days).
   // When the trip has choices but none here, one that matches no ride is kept, so the group is planned the same two-step
   // way (plain rides first) as before.
   const groupModes = (modes, sub) => {

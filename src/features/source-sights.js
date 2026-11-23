@@ -191,13 +191,47 @@ function srcMarkGroups(src) {
     const parts = stops.filter(p => p !== w && Array.isArray(p.partOf) && p.partOf.includes(w.wd) && p.lat != null);
     if (parts.length >= 2 && parts.some(p => hav(p, w) > 2)) w.isGroup = true; }
 }
-function srcWholeOf(s, src, all) {
-  const x = s.wd && ((src && src.stops) || []).find(y => y.wd === s.wd); if (!x || !Array.isArray(x.partOf) || !x.partOf.length) return null;
-  for (const id of x.partOf) {
-    const W = src.stops.find(y => y.wd === id); if (!W || W.lat == null || !isFinite(s.lat) || hav(W, s) > 1 || !srcKnown(W) || srcNotPlace(W)) continue;
+// A museum's own travel-guide description that names a sight as one of the things seen inside it ("most famous for its
+// spiral staircase, the Raphael Rooms and the exquisitely decorated Sistine Chapel"): that sight is seen in the museum's
+// visit (Nov 23: the Sistine Chapel was planned as its own stop after the Vatican Museums, because the encyclopedia files
+// it under the palace, not the museum). Never when the words put it beside the museum ("next to", "opposite", "a walk
+// from"), and never a place that is a whole visit of its own (another museum, a castle, an ancient site, a square, a park).
+const SRC_BESIDE = /\b(next to|near|nearby|opposite|across|beside|behind|in front of|facing|close to|walk(?:ing)? (?:to|from)|way to|from|towards|outside|around|beyond|past|overlooking|views? of|view over|than|unlike)\s+(the\s+)?$/i;
+const SRC_OWN_VISIT = /^(museum|art-museum|castle|fortification|archaeological|ancient-city|old-town|square|park|garden|palace|cathedral|island|natural|mountain|beach|stadium|arena|sports-venue)$/;
+const SRC_OWN_VISIT_NAME = /\b(museum|museo|musei|mus[ée]e|castle|fortress|citadel|acropolis|forum|agora|palace|palazzo|cathedral|basilica|duomo|square|piazza|plaza|park|garden|island|old town|ruins|stadium|stadio|estadi|estadio|arena)\b/i;
+const srcIsMuseum = W => srcKnown(W) ? srcHas2(W, /^(museum|art-museum)$/) : /\b(museum|museo|musei|mus[ée]e|museu|muzeum|gallery|galleria)\b/i.test(W.name + " " + (W.local || ""));
+function srcNamedInside(x, W) {
+  const t = String(W.en || W.summary || ""); if (!t || !x || x === W || x.wd && x.wd === W.wd) return false;
+  if (srcKnown(x) ? srcHas2(x, SRC_OWN_VISIT) : SRC_OWN_VISIT_NAME.test(x.name + " " + (x.local || ""))) return false;
+  for (const n of [x.name, x.local]) {
+    if (!n || n.length < 6 || !/\s/.test(n.trim())) continue; // a whole name of two words or more, never one common word
+    const m = new RegExp("(^|[^\\p{L}])" + n.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?![\\p{L}])", "iu").exec(t); if (!m) continue;
+    if (SRC_BESIDE.test(t.slice(Math.max(0, m.index - 40), m.index + m[1].length))) continue;
+    // Part of a longer name (a stadium's tour, "the Camp Nou Experience"), not the place itself.
+    if (/^\s+\p{Lu}/u.test(t.slice(m.index + m[0].length))) continue;
+    return true;
+  }
+  return false;
+}
+function srcWholeOf(s, src, all, depth) {
+  const stops = (src && src.stops) || [], x = s.wd && stops.find(y => y.wd === s.wd); if (!x || !isFinite(s.lat)) return null;
+  for (const id of Array.isArray(x.partOf) ? x.partOf : []) {
+    const W = stops.find(y => y.wd === id); if (!W || W.lat == null || hav(W, s) > 1 || !srcKnown(W) || srcNotPlace(W)) continue;
     // A tower beside a church or palace (St Mark's Campanile, Big Ben) is climbed or seen on its own.
     if (!srcHas2(W, SRC_WHOLE_ANY) && !(srcHas2(W, SRC_WHOLE_LESSER) && (x.sl || 0) < (W.sl || 0) && !srcHas2(x, /^(tower|observation-deck|skyscraper)$/))) continue;
     const on = all.find(o => o !== s && (o.wd === id || sameSight(o, W))); if (on) return on;
+    // Its whole is itself seen inside a bigger visit (a fresco in a chapel that is seen in a museum): that visit.
+    if (!(depth > 1)) { const up = srcWholeOf(Object.assign({}, W, { lat: W.lat, lng: W.lng }), src, all.filter(o => o !== s), (depth || 0) + 1); if (up) return up; }
+  }
+  // Named inside a museum's own description, within a kilometre: that museum, when it is on the list.
+  for (const W of stops) {
+    if (W === x || W.lat == null || hav(W, s) > 1 || !srcIsMuseum(W) || srcNotPlace(W) || !srcNamedInside(x, W)) continue;
+    const on = all.find(o => o !== s && ((W.wd && o.wd === W.wd) || sameSight(o, W))); if (on) return on;
+  }
+  // A guide's own museum with such a description (its built-in card's summary).
+  for (const o of all) {
+    if (o === s || o.wd === x.wd || !isFinite(o.lat) || hav(o, s) > 1 || !srcIsMuseum(o) || !srcNamedInside(x, o)) continue;
+    return o;
   }
   return null;
 }

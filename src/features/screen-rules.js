@@ -136,10 +136,10 @@ function rules(text, info = {}) {
   { const lines = raw.split('\n');
     lines.filter(l => /closed,? or (no longer|can't|doesn't)|is closed or |closed or can't be visited|isn't available on the plan's date|not available on (this|the) (date|day)/i.test(l))
       .forEach(l => add('S2', 'one real reason', `"${l.trim().slice(0, 120)}" gives a guessed either/or reason instead of the one the app knows`));
-    lines.filter(l => /(no longer fits|doesn't fit|didn't fit|won't fit|can't fit)/i.test(l) && !/needs|over today's time|left|picks are over|more than|only \d|minutes? short|h \d+ min|\d+ min/i.test(l))
+    lines.filter(l => /(no longer fits|doesn't fit|didn't fit|won't fit|can't fit)/i.test(l) && !/needs|over today's time|left|picks are over|more than|only \d|minutes? short|h \d+ min|\d+ min|\d+ h\b|\d{1,2}:\d{2}\s*(am|pm)?/i.test(l))
       .forEach(l => add('S3', 'reason has its numbers', `"${l.trim().slice(0, 120)}" says it doesn't fit without the numbers`));
-    lines.forEach(l => { const m = /needs about (?:(\d+) h ?)?(?:(\d+) min)?[^.]*?only (?:(\d+) h ?)?(?:(\d+) min)? (?:is )?left/i.exec(l);
-      if (m) { const need = (+m[1] || 0) * 60 + (+m[2] || 0), left = (+m[3] || 0) * 60 + (+m[4] || 0); if (need && need <= left) add('S2', 'reason adds up', `"${l.trim().slice(0, 120)}": needs ${need} min but ${left} min are left`); } });
+    lines.forEach(l => { for (const m of l.matchAll(/needs about (?:(\d+) h ?)?(?:(\d+) min)?(?:(?!needs about)[^.;])*?only (?:(\d+) h ?)?(?:(\d+) min)? (?:is )?left/gi)) {
+      const need = (+m[1] || 0) * 60 + (+m[2] || 0), left = (+m[3] || 0) * 60 + (+m[4] || 0); if (need && need <= left) add('S2', 'reason adds up', `"${l.trim().slice(0, 120)}": needs ${need} min but ${left} min are left`); } });
     lines.forEach((l, k) => { const m = /no departure near (\d{1,2}:\d\d\s*[ap]m)[^.]*?next (?:known )?is about (\d{1,2}:\d\d\s*[ap]m)/i.exec(l); if (!m) return;
       const near = lines.slice(Math.max(0, k - 6), k + 6).join(' '), ev = /runs about every (\d+) min/i.exec(near), gap = T(m[2]) - T(m[1]);
       if (ev && gap > 2 * +ev[1] + 10 && !/missing|not known|isn't known|not in the timetable data|not confirmed/i.test(l)) add('S2', 'missing data said as missing', `a line that runs about every ${ev[1]} min is said to have no departure for ${gap} min: "${l.trim().slice(0, 100)}"`); }); }

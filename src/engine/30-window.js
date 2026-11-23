@@ -24,9 +24,11 @@
   // seaplane base and a freight terminal were each taken for a station, airport or cruise port). kind: station, airport
   // or cruise; a candidate's map kind (OpenStreetMap's value), when known, must be one that kind can be.
   const GATE_BAD = { station: /\b(fire|police|service|petrol|gas|filling|fuel|power|pumping|radio|lifeboat|research|space|weather|polling|coast ?guard|ambulance|bus|coach|subway|u-?bahn|metro|underground|tram|tube)\b|\bterminus\b/i,
-    airport: /\b(airfield|heliport|seaplane|sea plane|air ?base|air force|naval air|aero ?club|gliding|flying club|airstrip|national guard|army|military|executive airport)\b/i,
+    airport: /\b(airfield|heliport|helipad|helicopter|seaplane|sea plane|air ?base|air force|naval air|aero ?club|gliding|glider|flying club|flying school|airstrip|air ?park|ultralight|microlight|national guard|army|military|executive airport|concourse|apron|runway|taxiway|hangar|control tower|car ?park|parking|cargo|freight)\b|\baerodrom(e|o)?\b/i,
     cruise: /\b(freight|cargo|container|seaplane|marina|yacht|fishing|naval|oil|fuel|bay|gulf|sound|strait|channel)\b/i };
-  const GATE_KINDS = { station: /^(station|halt|train_station|stop)$/, airport: /^(aerodrome|airport|terminal|international_airport)$/, cruise: /^(ferry_terminal|pier|terminal|harbour|harbor|port|dock|wharf|quay|berth|cruise_terminal)$/ };
+  // An airport is offered only as a whole airport with passenger flights (round 6a tester: a planned airport not yet
+  // built was offered, picked, and planned as a normal arrival). A terminal, gate or other part of one is not an airport.
+  const GATE_KINDS = { station: /^(station|halt|train_station|stop)$/, airport: /^(aerodrome|airport|international_airport)$/, cruise: /^(ferry_terminal|pier|terminal|harbour|harbor|port|dock|wharf|quay|berth|cruise_terminal)$/ };
   // Where a cruise ship ties up (Round 1, Nov 20: a state ferry terminal, an old harbour for small boats, a whole port's
   // encyclopedia article placed in the old town, and a travel-guide sentence about the ferry to another country were each
   // taken for the cruise pier). A ferry terminal, an old port, a sentence or an article about the whole port is not a pier.
@@ -43,7 +45,19 @@
   // cruise pier as a marina, were dropped). How sure a cruise pier is: named for cruises,
   // a mapped terminal, a pier or wharf.
   E.cruiseRank = c => (/cruise/i.test(String(c.name || "")) ? 4 : 0) + (/cruise_terminal/.test(String(c.kind || "")) ? 3 : 0) + (/terminal|berth|wharf|pier|dock|quay/i.test(String(c.name || "")) ? 1 : 0);
-  E.gateOk = (kind, c) => !!c && (kind !== "cruise" || E.cruiseOk(c)) && !/^(list|lists|index|outline) of\b/i.test(String(c.name || "").trim()) && !(GATE_BAD[kind] && GATE_BAD[kind].test(String(c.name || ""))) && !(c.kind && GATE_KINDS[kind] && !GATE_KINDS[kind].test(String(c.kind)) && !(kind === "cruise" && /\bpassengers?\b.*\bterminal\b|\bcruise\b.*\b(terminal|pier|pirs?|quay|berth|wharf|dock|center|centre)s?\b/i.test(String(c.name || ""))));
+  // What an encyclopedia article's opening sentence says about an airport: one still being planned or built, one that
+  // has closed, or a military, private or helicopter field is no airport a traveler flies to. A real airport with
+  // passenger flights has an IATA code, and its article gives it in the opening ("(IATA: XXX, ICAO: XXXX)").
+  const AIR_OUT = /\b(planned|proposed|projected|future|under construction|to be (built|constructed)|being built|will (be|replace|open|serve)|expected to (open|begin|start)|scheduled to open|former(ly)?|closed|defunct|decommissioned|disused|abandoned|demolished|ceased|no longer|was (an?|the)\b[^.]*\b(airport|airfield|aerodrome)|heliport|private(ly[- ]owned)? (airport|airfield|aerodrome)|general aviation (airport|airfield|aerodrome)|glid(ing|er)|ultralight|air ?base|air force base|air station)\b/i;
+  const AIR_MIL = /\bmilitary (airport|airfield|aerodrome|air ?base)\b/i, AIR_CIVIL = /\b(civil|civilian|commercial|passenger|joint)\b/i;
+  E.airportUse = c => { const t = String((c && (c.about != null ? c.about : c.extract)) || "").replace(/\s+/g, " ").trim(); if (!t) return null; // nothing to tell from
+    const first = t.split(/(?<=[a-z0-9)\]])\.\s+(?=[A-Z])/)[0];
+    if (AIR_OUT.test(first) || (AIR_MIL.test(first) && !AIR_CIVIL.test(first))) return false;
+    return /\bIATA\b\s*(code)?\s*[:\-]?\s*[A-Z]{3}\b/.test(t); };
+  // A terminal or gate on its own is part of an airport, not one to choose; a guide's own "<Airport>, Terminal 2" names
+  // the whole airport and which terminal of it, so it stays.
+  const AIR_PART = /\b(terminals?|gates?|piers?|satellite)\b/i, AIR_WHOLE = /\b(airport|aeroporto|aeropuerto|a[ée]roport|flughafen|lufthavn|luchthaven|havaliman[ıi])\b[^,]*,\s*(terminals?|gates?|piers?|satellite)\b/i;
+  E.gateOk = (kind, c) => !!c && (kind !== "cruise" || E.cruiseOk(c)) && (kind !== "airport" || (E.airportUse(c) !== false && !(AIR_PART.test(String(c.name || "")) && !AIR_WHOLE.test(String(c.name || ""))))) && !/^(list|lists|index|outline) of\b/i.test(String(c.name || "").trim()) && !(GATE_BAD[kind] && GATE_BAD[kind].test(String(c.name || ""))) && !(c.kind && GATE_KINDS[kind] && !GATE_KINDS[kind].test(String(c.kind)) && !(kind === "cruise" && /\bpassengers?\b.*\bterminal\b|\bcruise\b.*\b(terminal|pier|pirs?|quay|berth|wharf|dock|center|centre)s?\b/i.test(String(c.name || ""))));
   // Every real airport and station is kept, whether the map or the encyclopedia found it: a big airport known only from
   // its article must never be dropped (Round 2 re-check: dropping those picked a small airport silently, no question).
   E.gateChoices = (list, kind) => { const key = n => String(n || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim(), out = [];
@@ -86,6 +100,7 @@
     // A city with more than one station or airport and none chosen: asked, never guessed.
     if (P && P.ask && P.ask.length > 1 && d.type !== "land" && d.type !== "port" && d.type !== "embark") { const word = (E.MODES[d.mode] || E.MODES.flight).word;
       return E.fail(`Which ${word} ${d.type === "arrival" ? "do you arrive at" : "do you leave from"}? There is more than one here (${E.listWords(P.ask.slice(0, 4), "or")}${P.ask.length > 4 ? " or another" : ""}). Choose it in the day's settings${d.type === "arrival" ? "" : " and the day gets its time to leave by"}: no time is given on a guess.`, { unsure: true, askGate: true }); }
+    if (P && P.notGate && d.type !== "land") return E.fail(`${P.name} isn't an airport with passenger flights that I know of, so this day isn't planned from it. Name the airport on your booking and the day is planned from there.`, { unsure: true, notGate: true });
     if (P && P.unknown && d.type !== "land" && !d.thru) return E.fail(`We couldn't find exactly where ${P.name} is, so this day isn't planned on a guess.`, { unsure: true });
     if (d.type === "land") {
       if (!L) return E.fail("Choose where you're staying.");

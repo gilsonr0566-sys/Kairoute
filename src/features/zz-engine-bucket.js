@@ -42,7 +42,7 @@ function mealPrefsFor(d) {
 }
 function engineBucket(withOld) {
   const n = v => (isFinite(+v) ? +v : null);
-  const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)), ask: Array.isArray(p.ask) && p.ask.length > 1 ? p.ask.map(String) : null } : null;
+  const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)), notGate: !!p.notGate, ask: Array.isArray(p.ask) && p.ask.length > 1 ? p.ask.map(String) : null } : null;
   const ints = (() => { try { return interestWords(); } catch (e) { console.warn("engineBucket: interests", e); return []; } })();
   const cityOut = {}, dayOut = [], waterHomes = {};
   const siteFacts = (city, s) => ({
