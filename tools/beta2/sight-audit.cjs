@@ -278,8 +278,9 @@ async function audit() {
     const order = ['POS', 'DUP', 'NOT', 'NOID', 'NAME', 'FOLD', 'LEN', 'FAME', 'TRIP', 'POS?', 'ERR', 'INFO'];
     report.push(`## ${label} (${D.guide.city}${D.guide.builtin ? ', built-in guide' : D.guide.srcGuide ? ', guide from sources' : ''})\n` + F.sort((a, b) => order.indexOf(a[0]) - order.indexOf(b[0])).map(([k, t]) => `- ${k} ${t}`).join('\n') + '\n');
     console.log(report[report.length - 1]);
+    // Saved place by place, so a run cut off by a time limit keeps every place it finished.
+    fs.writeFileSync(path.join(DIR, `report-${name}.md`), report[report.length - 1] + '\n');
   }
-  fs.writeFileSync(path.join(DIR, `report-${process.env.BATCH || 'all'}.md`), report.join('\n'));
 }
 function o_same(a, b, osm) { const x = a.wd && osm[a.wd], y = b.wd && osm[b.wd]; return !!(x && y && x.type === y.type); }
 
