@@ -25,7 +25,7 @@
     "wp-artemis"
    ],
    "quote": [
-    "Today the site of the temple, which lies just outside Selçuk, is marked by a single column constructed of miscellaneous fragments discovered at the site."
+    "Today the site of the temple, which lies just outside Selçuk, is marked by a single column constructed of  miscellaneous fragments discovered at the site."
    ]
   },
   "wonder": {
@@ -89,13 +89,14 @@
     "wp-herostratus"
    ],
    "quote": [
+    "He was then executed.",
     "In 356 BC, the temple burned down. Various sources describe this as an act of arson by Herostratus, who set fire to the wooden roof-beams, seeking fame at any cost",
     "For this outrage, the Ephesians sentenced the perpetrator to death and forbade anyone from mentioning his name, although Theopompus later noted it."
    ]
   },
   "torture": {
    "label": "supported",
-   "says": "He confessed his motive only under torture.",
+   "says": "He confessed his motive under torture.",
    "src": [
     "wp-herostratus"
    ],
@@ -155,6 +156,17 @@
     "Work started in 323 BC and continued for many years. The third temple was larger than the second; 137 m (450 ft) long by 69 m (225 ft) wide and 18 m (60 ft) high, with more than 127 columns."
    ]
   },
+  "museum": {
+   "label": "supported",
+   "says": "The Ephesus Archaeological Museum in Selçuk shows the mother goddess in her guises, including poly-breasted Artemis.",
+   "src": [
+    "wv-selcuk"
+   ],
+   "quote": [
+    "Ephesus Archaeological Museum",
+    "Also displayed is the cult of the Anatolian mother goddess in her guises from Kybele to poly-breasted Artemis."
+   ]
+  },
   "antipater": {
    "label": "supported",
    "says": "Antipater of Sidon wrote that beside the house of Artemis the other wonders lost their brilliancy.",
@@ -162,6 +174,7 @@
     "wp-artemis"
    ],
    "quote": [
+    "Antipater of Sidon's list of the world's Seven Wonders",
     "but when I saw the house of Artemis that mounted to the clouds, those other marvels lost their brilliancy"
    ]
   },
@@ -276,7 +289,8 @@
      "t": "That one column, standing in a marshy field, is nearly all that's left of the Temple of Artemis, one of the Seven Wonders of the ancient world. It's not even an original column: it was put together from fragments found here.",
      "c": [
       "column",
-      "wonder"
+      "wonder",
+      "swamp"
      ],
      "level": 1
     },
@@ -322,7 +336,7 @@
      "level": 3
     },
     {
-     "t": "Then, in 356 BC, the temple burned. As the story goes, a man named Herostratus set fire to the roof beams for one reason: to be famous. The Ephesians executed him and banned anyone from saying his name. It didn't work. His name became a word for someone who commits a crime just to be known.",
+     "t": "In 356 BC the temple here burned. As the story goes, a man named Herostratus set fire to the roof beams for one reason: to be famous. The Ephesians executed him and banned anyone from saying his name. It didn't work. His name became a word for someone who commits a crime just to be known.",
      "c": [
       "herostratus",
       "eponym"
@@ -330,7 +344,7 @@
      "level": 1
     },
     {
-     "t": "Was it really him? Scholars aren't sure. He confessed his motive only under torture, and some suggest the temple's own managers may have set the fire, because they knew the foundation was sinking.",
+     "t": "Was it really him? Scholars aren't sure. He confessed his motive under torture, and some suggest the temple's own managers may have set the fire, because they knew the foundation was sinking.",
      "c": [
       "torture",
       "doubt"
@@ -338,7 +352,7 @@
      "level": 2
     },
     {
-     "t": "Ancient tradition added a flourish: the fire happened on the very day Alexander the Great was born. Plutarch joked that Artemis was too busy with the delivery to save her temple. Years later Alexander offered to pay for the rebuilding, and the Ephesians tactfully refused. It would be improper, they said, for one god to build a temple to another.",
+     "t": "Ancient tradition added a flourish: the fire happened on the very day Alexander the Great was born. Plutarch remarks that Artemis was too busy with the delivery to save her temple. Years later Alexander offered to pay for the rebuilding, and the Ephesians tactfully refused. It would be improper, they said, for one god to build a temple to another.",
      "c": [
       "alexander-birth",
       "alexander-offer"
@@ -346,7 +360,7 @@
      "level": 3
     },
     {
-     "t": "They rebuilt it themselves from 323 BC, even bigger: 450 feet long, 225 wide, 60 feet high, with more than 127 columns. One ancient poet, Antipater of Sidon, said that when he saw the house of Artemis, the other wonders lost their brilliancy.",
+     "t": "They rebuilt it themselves from 323 BC, even bigger: 450 feet long, 225 wide, 60 feet high, with more than 127 columns. Antipater of Sidon, who drew up a list of the Seven Wonders, wrote that when he saw the house of Artemis, the other wonders lost their brilliancy.",
      "c": [
       "third",
       "antipater"
@@ -357,10 +371,10 @@
   },
   {
    "name": "Great is Diana",
-   "stand": "Turn so the column is at your side, looking toward the town of Selçuk.",
+   "stand": "Stay by the column.",
    "paras": [
     {
-     "t": "This is the temple behind the riot in the book of Acts. A silversmith named Demetrius made silver shrines for Diana, and he warned the craftsmen that because of Paul, the temple of the great goddess Diana might be despised, whom all Asia and the world worshippeth. The crowd cried out, Great is Diana of the Ephesians.",
+     "t": "This is the temple behind the riot in the book of Acts. A silversmith named Demetrius made silver shrines for Diana, and he warned the craftsmen that because of Paul, the temple of the great goddess Diana might be despised, whom all Asia and the world worshippeth. They cried out, Great is Diana of the Ephesians.",
      "c": [
       "a19-24",
       "a19-28"
@@ -376,8 +390,9 @@
      "level": 3
     },
     {
-     "t": "You may see her statues in the museum, covered in oval shapes. They were long read as many breasts, a sign of fertility. Modern scholars doubt it.",
+     "t": "In the Ephesus Museum in Selçuk you may see her statues, covered in oval shapes. They were long read as many breasts, a sign of fertility. Modern scholars doubt it.",
      "c": [
+      "museum",
       "breasts"
      ],
      "level": 3

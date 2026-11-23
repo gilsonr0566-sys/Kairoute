@@ -238,7 +238,7 @@
      "level": 1
     },
     {
-     "t": "Before you go on, notice the keyhole-shaped baptismal pool you pass on the way up. Some think early Christians may have been baptized here in secret.",
+     "t": "Did you notice the keyhole-shaped baptismal pool you passed on the way up? Some think early Christians may have been baptized here in secret.",
      "c": [
       "pool"
      ],
@@ -271,7 +271,7 @@
      "level": 2
     },
     {
-     "t": "So two traditions grew up. The older one places the end of Mary's life in Jerusalem. The Ephesus tradition dates from the 12th century. Scholars note that the evidence for Ephesus is not strong, and the indications for Jerusalem are better.",
+     "t": "So two traditions grew up. The older one places the end of Mary's life in Jerusalem. The idea of Ephesus is old, but as a settled tradition it dates from the 12th century, and it has always competed with the older Jerusalem one. So where Mary spent her last years is uncertain. One scholarly assessment puts it plainly: the evidence that Mary stayed here is not very strong, and the indications for Jerusalem are better.",
      "c": [
       "two-traditions"
      ],
@@ -291,9 +291,15 @@
      "level": 1
     },
     {
-     "t": "She never wrote them down herself. The poet Clemens Brentano did, and his book came out in 1852. Neither of them had ever been to Ephesus. Later scholars found maps and travel guides among Brentano's papers that could have been used to embellish her accounts, and a Vatican official called the writings Brentano's artistic fantasy, which played no part in her beatification. Pope John Paul II beatified her in 2004.",
+     "t": "The poet Clemens Brentano wrote them down from his visits with her, and his book came out in 1852. Neither of them had ever been to Ephesus.",
      "c": [
-      "brentano",
+      "brentano"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Later scholars found maps and travel guides among Brentano's papers that could have been used to embellish her accounts, and a Vatican official called the writings Brentano's artistic fantasy, which played no part in her beatification. Pope John Paul II beatified her in 2004.",
+     "c": [
       "brentano-doubt",
       "beatified"
      ],
@@ -318,10 +324,10 @@
   },
   {
    "name": "Inside the chapel",
-   "stand": "Go in through the door, quietly, and stop just inside.",
+   "stand": "Outside the chapel door, before you join the line to go in.",
    "paras": [
     {
-     "t": "Inside there's one large room, with an altar and a statue of Mary in the center. The smaller room on the right is the one tradition says was Mary's bedroom.",
+     "t": "When you go in, you'll find one large room, with an altar and a statue of Mary in the center. The smaller room on the right is the one tradition says was Mary's bedroom. It's small inside, so keep moving gently with the line.",
      "c": [
       "inside"
      ],
@@ -338,7 +344,7 @@
   },
   {
    "name": "The wishing wall",
-   "stand": "Follow the path down to the long wall covered in paper and cloth.",
+   "stand": "Outside the shrine, at the wall covered in paper and cloth.",
    "paras": [
     {
      "t": "This is the wishing wall. Pilgrims tie their prayers to it on paper and cloth. Nearby is the fountain; some pilgrims believe its water heals.",
@@ -348,7 +354,7 @@
      "level": 1
     },
     {
-     "t": "What does the Church say? The Catholic Church has never ruled on whether this is really Mary's house, because there's no scientific evidence either way. But in 1951 Pope Pius XII declared it a Holy Place, and three popes have come here: Paul VI in 1967, John Paul II in 1979, and Benedict XVI in 2006. Every August 15 a liturgy is held here for the Assumption, and Muslims come to honor Mary as well.",
+     "t": "What does the Church say? The Catholic Church has never ruled on whether this is really Mary's house, for lack of scientifically acceptable evidence. But in 1951 Pope Pius XII declared it a Holy Place, and three popes have come here: Paul VI in 1967, John Paul II in 1979, and Benedict XVI in 2006. Every August 15 a liturgy is held here for the Assumption, and Muslims come to honor Mary as well.",
      "c": [
       "church",
       "popes",

@@ -470,17 +470,6 @@
     "The theatre dominates the view down Harbour Street, which leads to the silted-up harbour."
    ]
   },
-  "arcadiane": {
-   "label": "supported",
-   "says": "The Arcadiane runs west from the theatre; Arcadius, who reigned 395-408, rebuilt it as a grand avenue.",
-   "src": [
-    "wv-ephesus"
-   ],
-   "quote": [
-    "Arcadiane (Harbour Street) (runs west from the Great Theatre for 500 m)",
-    "It's named for Emperor Arcadius, who reigned 395-408 AD and repaired the much older street. He turned it into a monumental avenue designed to impress arrivals"
-   ]
-  },
   "silted": {
    "label": "supported",
    "says": "The harbour silted up and is now 5 km inland.",
@@ -827,9 +816,8 @@
      "level": 2
     },
     {
-     "t": "The street is the Arcadiane, named for the emperor Arcadius, who reigned from 395 to 408 and rebuilt it as a grand avenue to impress arrivals. Near the lower gate is the Church of Mary, probably where the Council of Ephesus met in 431. About 250 bishops condemned the teaching of Nestorius and declared Mary Theotokos, the Mother of God.",
+     "t": "Near the lower gate is the Church of Mary, probably where the Council of Ephesus met in 431. About 250 bishops condemned the teaching of Nestorius and declared Mary Theotokos, the Mother of God.",
      "c": [
-      "arcadiane",
       "church-mary",
       "council",
       "council-size"
