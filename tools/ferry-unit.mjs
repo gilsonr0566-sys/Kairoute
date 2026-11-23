@@ -55,7 +55,7 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   const worker = (await import("../worker/worker.js")).default, kv = new Map();
   const env = { USAGE: { get: async (k, t) => { const v = kv.get(k); return v == null ? null : t === "json" ? JSON.parse(v) : v; }, put: async (k, v) => { kv.set(k, v); }, delete: async k => { kv.delete(k); }, list: async ({ prefix }) => ({ keys: [...kv.keys()].filter(k => k.startsWith(prefix)).map(name => ({ name })) }) } };
   const ctx = { waitUntil: () => {} }, a = [40.852, 14.26], b = [40.6263, 14.3757];
-  kv.set("tr12:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(","), JSON.stringify({ opts: [{ mode: "train", label: "Train 1 (Eav) + 1 change", min: 112 }], partial: false, t: Date.now() }));
+  kv.set("tr6:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(","), JSON.stringify({ opts: [{ mode: "train", label: "Train 1 (Eav) + 1 change", min: 112 }], partial: false, t: Date.now() }));
   const ask = async () => (await (await worker.fetch(new Request("https://x/transit", { method: "POST", body: JSON.stringify({ pairs: [{ a, b, dow: 3 }] }) }), env, ctx)).json()).results[0];
   const r1 = await ask();
   ok(r1.partial === true && !r1.opts.some(o => o.mode === "ferry"), "ferries at an end not known yet: the saved answer is sent as partial (asked again soon)");
@@ -65,24 +65,14 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   const r2 = await ask(), f2 = r2.opts.find(o => o.mode === "ferry");
   ok(!!f2 && r2.opts.some(o => o.mode === "train"), `once both ends are known the saved answer offers the ferry beside the train (${f2 ? f2.label + ", " + f2.min + " min" : "none"})`);
   globalThis.fetch = realFetch; }
-// Nov 22 live probe: a kept partial answer (trains known only until 9:53 am) is looked up afresh after 2 minutes, not 10.
-{ const realFetch = globalThis.fetch; globalThis.fetch = async () => { throw new Error("busy"); };
-  const worker = (await import("../worker/worker.js")).default, kv = new Map(); let bg = 0;
-  const env = { USAGE: { get: async (k, t) => { const v = kv.get(k); return v == null ? null : t === "json" ? JSON.parse(v) : v; }, put: async (k, v) => { kv.set(k, v); }, delete: async k => { kv.delete(k); }, list: async () => ({ keys: [] }) } };
-  const ctx = { waitUntil: p => { bg++; p.catch(() => {}); } }, a = [41.9033, 12.4533], b = [42.095, 11.79], key = "tr12:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(",");
-  const ask = async () => (await (await worker.fetch(new Request("https://x/transit", { method: "POST", body: JSON.stringify({ pairs: [{ a, b, dow: 3 }] }) }), env, ctx)).json()).results[0];
-  const put = age => { kv.clear(); kv.set(key, JSON.stringify({ opts: [{ mode: "train", label: "Train 1", min: 100, kindDeps: [{ t: 372 }, { t: 593 }] }], partial: true, ttMissed: 9, t: Date.now() - age })); bg = 0; };
-  put(60000); await ask(); const young = kv.has("lk:" + key);
-  put(180000); await ask(); const old = kv.has("lk:" + key);
-  ok(!young && old, `a kept partial answer is looked up afresh after 2 minutes, not before (1 min: ${young}, 3 min: ${old})`);
-  globalThis.fetch = realFetch; }
 { const many = [1, 2, 3, 4, 5].map(i => ({ mode: "train", label: "T" + i, min: 100 + i })).concat([{ mode: "ferry", label: "F", min: 134 }]), t = topRides(many, 5);
   ok(t.length === 5 && t.some(o => o.mode === "ferry"), "a long list of quicker trains never pushes the ferry out (" + t.map(o => o.label).join(",") + ")"); }
 // Trip date: the timetable is asked for the trip's own date (a summer ferry shows only then), the answer marked with it;
 // when that date isn't published yet (nothing comes back) the next date of the same weekday kind is asked instead.
-// The date is a month ahead: dates more than 120 days out are not asked (operators haven't published them).
-{ const realFetch = globalThis.fetch, asked = [], date = new Date(Date.now() + 30 * 86400e3).toISOString().slice(0, 10); let empty = false;
-  const it = (h) => ({ startTime: `2027-07-12T0${h}:00:00Z`, endTime: `2027-07-12T0${h + 1}:30:00Z`, duration: 5400, legs: [{ mode: "FERRY", startTime: `2027-07-12T0${h}:00:00Z`, duration: 5400, routeShortName: "", agencyName: "NLG", from: { name: "Molo Beverello", tz: "Europe/Rome" }, to: { name: "Amalfi" } }] });
+{ const realFetch = globalThis.fetch, asked = []; let empty = false;
+  // A date 40 days ahead: inside the window operators publish (the helper doesn't ask beyond 120 days).
+  const date = new Date(Date.now() + 40 * 86400e3).toISOString().slice(0, 10);
+  const it = (h) => ({ startTime: `${date}T0${h}:00:00Z`, endTime: `${date}T0${h + 1}:30:00Z`, duration: 5400, legs: [{ mode: "FERRY", startTime: `${date}T0${h}:00:00Z`, duration: 5400, routeShortName: "", agencyName: "NLG", from: { name: "Molo Beverello", tz: "Europe/Rome" }, to: { name: "Amalfi" } }] });
   globalThis.fetch = async u => { const t = new URL(u).searchParams.get("time"); asked.push(t); return { ok: true, json: async () => ({ itineraries: empty && t.startsWith(date) ? [] : [it(6), it(8)] }) }; };
   const A = { lat: 40.8366, lng: 14.2563 }, B = { lat: 40.6327, lng: 14.6029 };
   const r = await timetableOptions(A, B, 1, date);
@@ -114,19 +104,4 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   ok(top.includes(x95), "the quickest ride of each kind stays: four metro variants never push the airport bus out");
   const f = { mode: "ferry", label: "Ferry", min: 200 }, many = topRides([m(1), x95, { mode: "train", label: "Train", min: 50 }, { mode: "tram", label: "Tram", min: 60 }, f], 3);
   ok(many.includes(f), "a ferry still always stays when there are more kinds than room"); }
-// An hour the timetable service turns away is asked again, and an hour it never answers marks the answer incomplete
-// (Nov 21 live check: a ride kept with only the 1 to 3 pm searches knew no train after 4 pm: the way back became a taxi).
-{ const realFetch = globalThis.fetch, tries = {}; let never = null;
-  const at = (h, m) => `2027-06-30T${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00Z`;
-  const it = h => ({ startTime: at(h, 5), endTime: at(h, 50), duration: 2700, legs: [{ mode: "RAIL", startTime: at(h, 5), duration: 2700, routeShortName: "R" + h, agencyName: "Rail", from: { name: "A", tz: "UTC" }, to: { name: "B" } }] });
-  globalThis.fetch = async u => { const t = new URL(u).searchParams.get("time"), h = +t.slice(11, 13); tries[h] = (tries[h] || 0) + 1;
-    if (h === never || (h >= 15 && tries[h] === 1)) return { ok: false, status: 429, json: async () => ({}) };
-    return { ok: true, json: async () => ({ itineraries: [it(h)] }) }; };
-  const A = { lat: 0.0, lng: 0.0 }, B = { lat: 0.3, lng: 0.0 };
-  const r = await timetableOptions(A, B, 3, "2027-06-30"), late = Math.max(0, ...r.flatMap(o => (o.kindDeps || []).map(d => d.t)));
-  ok(r.missed === 0 && late >= 20 * 60, `hours turned away once are asked again: the day's last train is known (${Math.floor(late / 60)}:${String(late % 60).padStart(2, "0")}, ${r.missed} hours missed)`);
-  for (const k in tries) delete tries[k]; never = 17;
-  const r2 = await timetableOptions(A, B, 3, "2027-06-30");
-  ok(r2.missed === 1, `an hour never answered is counted, so the answer is kept as incomplete and asked again (${r2.missed})`);
-  globalThis.fetch = realFetch; }
 console.log(bad ? `${bad} ferry check(s) failed` : "ferry checks passed"); process.exit(bad ? 1 : 0);

@@ -13,9 +13,14 @@ const R_STOP = 2500, R_FERRY = 1500; // how far from each end a station or pier 
 // takes a taxi to and from them, and that taxi is counted in the time. So for rides of 20 km and more, train stations
 // are looked for up to 12% of the distance away (at most 10 km), and the taxis at both ends together may be at most a
 // third of the way. Only trains: a metro or tram line is a city ride, and a city ride is never stretched like this.
+// A long-distance, high-speed or night service (few a day; a seat usually booked ahead), from the map's own tags.
+const longHaul = t => /^(long_distance|high_speed|night|international|national)$/i.test(String((t && (t.service || t.passenger)) || ""));
 export const trainReach = (a, b) => { const km = hav(a, b); return km >= 20 ? Math.min(10000, Math.max(R_STOP, Math.round(km * 120))) : R_STOP; };
 // Cautious running speeds (km/h) and the time lost at each stop between, by kind of line.
-const SPEED = { train: [55, 0.8], light_rail: [45, 0.7], subway: [33, 0.5], monorail: [30, 0.5], tram: [17, 0.4], bus: [24, 0.5], trolleybus: [20, 0.4], ferry: [28, 0] };
+// Cruising speed (km/h) and the minutes each stop on the way adds (slowing, dwell, pulling away). Nov 23 ride check
+// against the published timetables: metros and trains on long, widely spaced runs (an airport branch, a 60 km regional
+// line) came out a third slower than timetabled, because a low average speed was charged on top of the stops.
+const SPEED = { train: [70, 1.2], light_rail: [45, 0.7], subway: [42, 0.7], monorail: [30, 0.5], tram: [17, 0.4], bus: [24, 0.5], trolleybus: [20, 0.4], ferry: [28, 0] };
 // A ferry the map says carries cars (motor_vehicle/motorcar/hgv yes) is a slow car ferry (28 km/h); one that carries only
 // people is a fast boat, a hydrofoil or catamaran (38 km/h, still under their usual 45-55): Naples-Sorrento was given
 // about an hour where every operator's timetable says 35-45 min (Nov 22, Richard's check). A duration on the map wins.
@@ -241,10 +246,13 @@ export async function transitOptions(a, b, store) {
   const RW = trainReach(a, b), TR = `[type=route][route=train]`;
   const wide = (P, set) => RW > R_STOP ? `(node(around:${RW},${P})[railway~"^(station|halt|stop)$"][station!=subway][station!=light_rail];node(around:${RW},${P})[public_transport=stop_position][train=yes];)->.${set};` : "";
   const rels = (n, w, out) => RW > R_STOP ? `(rel(bn.${n})${RT};rel(bn.${w})${TR};)->.${out};` : `rel(bn.${n})${RT}->.${out};`;
-  const q1 = `[out:json][timeout:25];${stops(A, "sa")}${stops(B, "sb")}${wide(A, "wa")}${wide(B, "wb")}${rels("sa", "wa", "ra")}${rels("sb", "wb", "rb")}rel.ra.rb;out ids;
+  const q1 = `[out:json][timeout:25];${stops(A, "sa")}${stops(B, "sb")}${wide(A, "wa")}${wide(B, "wb")}${rels("sa", "wa", "ra")}${rels("sb", "wb", "rb")}rel.ra.rb;out tags;
 .sa out tags;.sb out tags;${RW > R_STOP ? ".wa out tags;.wb out tags;" : ""}`;
   const railP = (async () => { const d1 = await overpass(q1);
-    const ids = [...new Set((d1.elements || []).filter(e => e.type === "relation").map(e => e.id))].slice(0, 8);
+    // The lines a traveler would take first: local and regional services ahead of long-distance, high-speed and night
+    // trains (Nov 23: a 60 km port-to-city ride was named after an intercity train when regionals run every half hour).
+    const rs = [...new Map((d1.elements || []).filter(e => e.type === "relation").map(e => [e.id, e])).values()];
+    const ids = rs.sort((x, y) => (longHaul(x.tags) ? 1 : 0) - (longHaul(y.tags) ? 1 : 0)).map(e => e.id).slice(0, 8);
     const d2 = ids.length ? await overpass(`[out:json][timeout:25];rel(id:${ids.join(",")});out geom;`) : { elements: [] };
     return (d1.elements || []).filter(e => e.type !== "relation").concat(d2.elements || []); })();
   const [rail, fer] = await Promise.allSettled([railP, ferP]);
@@ -297,7 +305,7 @@ async function buildOpts(el, fWays, a, b) {
     const [v0, perStop] = SPEED[mode], v = mode === "ferry" ? ferryKmh(t) : v0, total = line.length >= 2 ? lineLen(line) : 0, dur = mins(t.duration);
     let ride = dur && total > 0 ? dur * Math.min(1, km / total) : km / v * 60 + between * perStop;
     ride = Math.max(ride, km / (v * 1.6) * 60); // never quicker than the line could run
-    const every = mins(t.interval), nmA = (stopTag.get(sa.s.id) || {}).name, nmB = (stopTag.get(sb.s.id) || {}).name;
+    const every = mins(t.interval) || (longHaul(t) ? 120 : null), nmA = (stopTag.get(sa.s.id) || {}).name, nmB = (stopTag.get(sb.s.id) || {}).name;
     opts.push(mk({ mode, ref: t.ref || "", name: t["name:en"] || t.name || "", operator: t.operator || t.network || "", from: nmA || t.from || "", to: nmB || t.to || "", fromPt: sa.s, toPt: sb.s, km, ride, every, hours: t.opening_hours || "", seasonal: t.seasonal || "", fare: t.charge || t.fee || "", stops: between, path, a, b, osm: "r" + r.id }));
   }
   // Ferries are often mapped as one way from pier to pier rather than as a route relation.
