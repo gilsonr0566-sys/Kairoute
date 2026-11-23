@@ -1,0 +1,394 @@
+{
+ "id": "theatre-dionysus",
+ "v": 1,
+ "city": "athens",
+ "title": "Theatre of Dionysus",
+ "match": {
+  "ids": [
+   "theatre-dionysus"
+  ],
+  "names": [
+   "theatre of dionysus",
+   "theater of dionysus",
+   "theatre of dionysos"
+  ],
+  "wikidata": [
+   "Q1227044"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "td-what": {
+   "label": "supported",
+   "says": "An ancient Greek theatre on the south slope of the Acropolis, originally part of the sanctuary of Dionysus Eleuthereus.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "is an ancient Greek theatre in Athens. It is built on the south slope of the Acropolis hill, originally part of the sanctuary of Dionysus Eleuthereus (Dionysus the Liberator)."
+   ]
+  },
+  "td-first": {
+   "label": "estimate",
+   "says": "The first orchestra terrace was built around the mid- to late-6th century BC and hosted the City Dionysia.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "The first orchestra terrace was constructed on the site around the mid- to late-sixth century BC, where it hosted the City Dionysia."
+   ]
+  },
+  "td-oldest": {
+   "label": "supported",
+   "says": "It is considered the oldest theatre; it honored Dionysus, god of wine and theatre, and showed works by Aristophanes, Aeschylus, Sophocles and Euripides.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "it is considered the oldest theatre. It was used to celebrate the Greek god Dionysus⁠, the god of wine and theatre.",
+    "It displayed works by Aristophanes⁠, Aeschylus⁠, Sophocles⁠, and Euripides⁠."
+   ]
+  },
+  "td-premieres": {
+   "label": "supported",
+   "says": "Many of the great Greek plays were performed here for the first time.",
+   "src": [
+    "wv-athens"
+   ],
+   "quote": [
+    "Many of the great Greek plays were performed here for the first time."
+   ]
+  },
+  "td-wood-stone": {
+   "label": "supported",
+   "says": "It began as a simple wooden structure in the 6th century BC and became a stone theatre in the 4th century BC.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "The Theatre of Dionysus started as a simple wooden structure built in the 6th century BC that was renovated into a stone amphitheater during 4th century BC."
+   ]
+  },
+  "td-lycurgus": {
+   "label": "supported",
+   "says": "Lycurgus, who controlled the state's finances, turned it into the stone-built theatre seen today.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "controller of the state's finances. In his role as epistate of the Theatre of Dionysus he was also instrumental in transforming the theatre into the stone-built structure seen today."
+   ]
+  },
+  "td-capacity": {
+   "label": "disputed",
+   "says": "Capacity: Wikipedia says up to 25,000 at its fullest in the 4th century BC; Wikivoyage gives 19,000.",
+   "src": [
+    "wp-theatre-dionysus",
+    "wv-athens"
+   ],
+   "quote": [
+    "The theatre reached its fullest extent in the fourth century BC under the epistates of Lycurgus, when it would have had a capacity of up to 25,000",
+    "According to Plato's Symposium, it could hold an audience of 19,000 spectators."
+   ]
+  },
+  "td-thrones": {
+   "label": "supported",
+   "says": "The two front rows are stone thrones, the seats of honor, each bearing the name of the priest or official who sat there.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "The two fronts rows, still partially preserved today, consist of Pentelic stone chairs or thrones; these were the prohedria or seats of honour.",
+    "the surviving ones each bear the name of the priest or official who occupied it"
+   ]
+  },
+  "td-priest": {
+   "label": "supported",
+   "says": "The central throne, tentatively dated to the 1st century BC, belonged to the priest of Dionysus.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "The central throne, which is tentatively dated to the first century BC, belonged to the priest of Dionysus."
+   ]
+  },
+  "td-seats": {
+   "label": "supported",
+   "says": "The seats were 33 cm deep and 33 cm high, in seventy-eight rows.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "The seats were 33 cm in depth and 33 cm in height with a forward projecting lip, with seventy-eight rows in total."
+   ]
+  },
+  "td-clouds": {
+   "label": "supported",
+   "says": "Aristophanes' The Clouds, mocking Socrates, was first performed here; Plato saw it as a factor in Socrates' trial.",
+   "src": [
+    "wv-athens"
+   ],
+   "quote": [
+    "Aristophanes' The Clouds, mocking Socrates, was first performed here, and Plato considered this play to be a contributing factor in Socrates' trial and execution."
+   ]
+  },
+  "td-roman": {
+   "label": "supported",
+   "says": "In Roman times the orchestra was refloored in multicolored marble with a rhombus pattern in the center.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "the orchestra was reduced in size and refloored in varicoloured marble with a rhombus pattern in the centre"
+   ]
+  },
+  "td-barrier": {
+   "label": "disputed",
+   "says": "A marble barrier was put up in 61 AD or later around the orchestra, perhaps to protect the audience during gladiator fights.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "A marble barrier was erected in 61 AD or later, enclosing the orchestra up to the parodoi. The object of this might have been to protect the audience during gladiatorial combats."
+   ]
+  },
+  "td-church": {
+   "label": "supported",
+   "says": "After the late 5th century AD the theatre was abandoned; the orchestra became the courtyard of a Christian basilica and the seating a stone quarry.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "After the late 5th century AD the theatre was abandoned: its orchestra became an enclosed courtyard for a Christian basilica (aithrion) which was built into the eastern parados, while its cavea served as a stone quarry."
+   ]
+  },
+  "td-dig": {
+   "label": "supported",
+   "says": "Serious excavation began in the 19th century, with Rousopoulos in 1861.",
+   "src": [
+    "wp-theatre-dionysus"
+   ],
+   "quote": [
+    "Archaeological examination of the site began in earnest in the nineteenth century with the excavation of Rousopoulos in 1861."
+   ]
+  },
+  "od-what": {
+   "label": "supported",
+   "says": "The Odeon of Herodes Atticus is a stone theatre on the southwest slope of the Acropolis.",
+   "src": [
+    "wp-odeon-herodes"
+   ],
+   "quote": [
+    "is a stone Greek theatre structure located on the southwest slope of the Acropolis of Athens, Greece"
+   ]
+  },
+  "od-regilla": {
+   "label": "supported",
+   "says": "Herodes Atticus built it in AD 161 in memory of his Roman wife, Aspasia Annia Regilla.",
+   "src": [
+    "wp-odeon-herodes"
+   ],
+   "quote": [
+    "It was built in AD 161 by orator Herodes Atticus in memory of his Roman wife, Aspasia Annia Regilla"
+   ]
+  },
+  "od-roof": {
+   "label": "supported",
+   "says": "It had a three-story stone front wall and a roof of cedar of Lebanon, and held 5,000 for concerts.",
+   "src": [
+    "wp-odeon-herodes"
+   ],
+   "quote": [
+    "It was originally a steep-sloped theatre with a three-story stone front wall and a wooden roof made of expensive cedar of Lebanon timber.",
+    "It was used as a venue for music concerts with a capacity of 5,000"
+   ]
+  },
+  "od-wall": {
+   "label": "supported",
+   "says": "The stone backdrop still stands three stories high because it was built into a later fortification.",
+   "src": [
+    "wv-athens"
+   ],
+   "quote": [
+    "The stone backdrop is still preserved to a remarkable height of 3 stories, because it was incorporated into a later fortification on the site."
+   ]
+  },
+  "od-heruli": {
+   "label": "supported",
+   "says": "It was destroyed by the Heruli in AD 267.",
+   "src": [
+    "wp-odeon-herodes"
+   ],
+   "quote": [
+    "It lasted intact until it was destroyed and left in ruins by the Heruli in AD 267."
+   ]
+  },
+  "od-festival": {
+   "label": "supported",
+   "says": "Restored with Pentelic marble in the 1950s, it became the main venue of the Athens Festival.",
+   "src": [
+    "wp-odeon-herodes"
+   ],
+   "quote": [
+    "The audience stands and the orchestra (stage) were restored using Pentelic marble in the 1950s. Since then it has been the main venue of the Athens Festival"
+   ]
+  },
+  "od-stars": {
+   "label": "supported",
+   "says": "Maria Callas sang here in 1957; Frank Sinatra gave two benefit concerts in 1962.",
+   "src": [
+    "wp-odeon-herodes"
+   ],
+   "quote": [
+    "In 1957, Maria Callas performed at the Odeon as part of the Athens Festival",
+    "In May 1962 Frank Sinatra gave two benefit concerts for the city of Athens."
+   ]
+  },
+  "od-close": {
+   "label": "supported",
+   "says": "After the 2026 festival it is to close for at least three years for restoration.",
+   "src": [
+    "wp-odeon-herodes"
+   ],
+   "quote": [
+    "Following the 2026 festival, the theatre will close for at least three years for restoration."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Inside the theatre, as close to the front rows of seats as the barriers allow, looking up the slope toward the Acropolis.",
+   "paras": [
+    {
+     "t": "You're standing in the Theatre of Dionysus, on the south slope of the Acropolis. It's considered the oldest theatre of all. This is where Athens honored Dionysus, god of wine and theatre, and where it watched the plays of Aeschylus, Sophocles, Euripides and Aristophanes. Many of the great Greek plays were performed here for the first time.",
+     "c": [
+      "td-what",
+      "td-oldest",
+      "td-premieres"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Watch your step here. The stone is old and uneven, and the edges of the seats aren't always where you expect.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    },
+    {
+     "t": "It didn't start in stone. The first performance terrace went in around the mid to late 500s BC, for a festival called the City Dionysia. For a long time the seats were wooden. Then in the 300s BC a statesman called Lycurgus, who ran the city's finances, turned it into the stone theatre you see today.",
+     "c": [
+      "td-first",
+      "td-wood-stone",
+      "td-lycurgus"
+     ],
+     "level": 2
+    },
+    {
+     "t": "How many people fit in? Accounts differ. One source says it may have held up to 25,000 at its fullest; another says 19,000. Either way, imagine this whole hillside full of faces.",
+     "c": [
+      "td-capacity"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The seats of honor",
+   "stand": "Move to face the front row of stone chairs, close to the center.",
+   "paras": [
+    {
+     "t": "Now look at these stone chairs in the front rows. These were the seats of honor. Each one carries the name of the priest or official who sat in it. And the throne in the middle belonged to the priest of Dionysus himself.",
+     "c": [
+      "td-thrones",
+      "td-priest"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Behind them, the ordinary seats were 33 centimeters deep and 33 high, and there were seventy-eight rows. Not much room. People sat close here.",
+     "c": [
+      "td-seats"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Here's a story with a sting in it. Aristophanes' comedy The Clouds, which made fun of Socrates, was first performed on this spot. Plato thought that play helped bring about the trial and execution of Socrates. Laughter can be dangerous.",
+     "c": [
+      "td-clouds"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The theatre's later lives",
+   "stand": "Stay where you can see the open floor in front of the seats.",
+   "paras": [
+    {
+     "t": "That open floor is the orchestra. In Roman times it was paved in colored marble, with a rhombus pattern in the center. And a marble barrier went up around it, in 61 AD or later. Historians think it may have been there to protect the audience during gladiator fights.",
+     "c": [
+      "td-roman",
+      "td-barrier"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Then the plays stopped. After the late 400s AD the theatre was abandoned. The orchestra became the courtyard of a Christian church, and the seats were used as a stone quarry. Real excavation only began in the nineteenth century, with Rousopoulos in 1861.",
+     "c": [
+      "td-church",
+      "td-dig"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Odeon of Herodes Atticus",
+   "stand": "Walk west along the slope, the Acropolis on your right, to where you can look at the tall stone front wall of the Odeon.",
+   "paras": [
+    {
+     "t": "Further along the slope is a second theatre, the Odeon of Herodes Atticus. It was built in AD 161 by Herodes Atticus, in memory of his Roman wife, Regilla.",
+     "c": [
+      "od-what",
+      "od-regilla"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It had a three-story front wall, which still stands because it was later built into a fortification, and once a roof of cedar from Lebanon. It held 5,000 people for concerts, until it was wrecked by the Heruli in AD 267.",
+     "c": [
+      "od-roof",
+      "od-heruli",
+      "od-wall"
+     ],
+     "level": 2
+    },
+    {
+     "t": "In the 1950s the seats and stage were restored in marble, and it became the main stage of the Athens Festival. Maria Callas sang here in 1957, and Frank Sinatra gave two benefit concerts in 1962. Plans were to close it after the 2026 festival for at least three years of restoration, so don't be surprised by scaffolding, or to find it closed.",
+     "c": [
+      "od-festival",
+      "od-stars",
+      "od-close"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Take a last look back toward the Theatre of Dionysus.",
+   "paras": [
+    {
+     "t": "Sit for a moment if you can. Many of the great Greek plays were first heard back there, in the Theatre of Dionysus, by a hillside full of Athenians. The voices are gone, but it's the same hill, and the same sky over it.",
+     "c": [
+      "td-premieres",
+      "td-oldest"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

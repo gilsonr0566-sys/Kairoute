@@ -1,0 +1,432 @@
+{
+ "id": "mnac",
+ "v": 1,
+ "city": "barcelona",
+ "title": "National Art Museum of Catalonia (Montjuïc)",
+ "match": {
+  "ids": [
+   "mnac",
+   "src-q861252"
+  ],
+  "names": [
+   "mnac",
+   "museu nacional d'art de catalunya",
+   "national art museum of catalonia",
+   "palau nacional",
+   "font magica",
+   "font màgica",
+   "magic fountain"
+  ],
+  "wikidata": [
+   "Q861252"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "expo": {
+   "label": "supported",
+   "says": "The Palau Nacional, the Magic Fountain and the grand staircase survive from the 1929 International Exposition on Montjuïc.",
+   "src": [
+    "wp-montjuic"
+   ],
+   "quote": [
+    "The surviving buildings from this effort include the grand Palau Nacional, the Estadi Olímpic (the Olympic stadium), the ornate Magic Fountain of Montjuïc (Font Màgica), and a grand staircase leading up from the foot of Montjuïc at the south end of the Avinguda de la Reina Maria Cristina, past the Font Màgica and through the Plaça del Marquès de Foronda and the Plaça de les Cascades to the Palau Nacional.",
+    "The site was selected to host the 1929 International Exposition"
+   ]
+  },
+  "fountain": {
+   "label": "supported",
+   "says": "The Magic Fountain, designed by Carles Buïgas, was built in 1929 and amazed the public with light and water displays.",
+   "src": [
+    "wp-1929-barcelona-international"
+   ],
+   "quote": [
+    "The famous Magic Fountain of Montjuïc, designed by Carles Buïgas, was constructed in 1929 on Avinguda Maria Cristina at the foot of Montjuic, and amazed the public with its light and water displays."
+   ]
+  },
+  "museum": {
+   "label": "supported",
+   "says": "MNAC, the National Art Museum of Catalonia, is notable for Romanesque church paintings and for Catalan art of the late 19th and early 20th centuries; it is one of the largest museums in Spain.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "the museum is  notable for its  collection of Romanesque church paintings, and for Catalan art and design from the late 19th and early 20th centuries",
+    "is one of the largest museums in Spain"
+   ]
+  },
+  "palau": {
+   "label": "supported",
+   "says": "The Palau Nacional was built between 1926 and 1929 as the main building of the 1929 International Exposition.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "The National Palau of Montjuïc, known as Palau Nacional was constructed between 1926 and 1929, with the goal of being the main building of the 1929 Barcelona International Exposition",
+    "Under these plans, the Palau Nacional was to be the central palace for the exhibition."
+   ]
+  },
+  "domes": {
+   "label": "supported",
+   "says": "The facade is crowned by a great dome inspired by St. Peter's in Rome, flanked by two smaller domes.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "Its façade is crowned by a great dome inspired by St. Peter's Basilica in the Vatican City in Rome, flanked by two smaller domes"
+   ]
+  },
+  "puig": {
+   "label": "supported",
+   "says": "Puig i Cadafalch was first in charge; when Primo de Rivera seized power in 1923 he was removed, and a competition was won by Cendoya, Catà and Domènech i Roura.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "In 1923, the dictator Primo de Rivera seized power, with the result that Puig i Cadafalch was removed from the project. A competition to design and build the Palau Nacional was then won by the architects Eugenio P. Cendoya, Enric Catà and Pere Domènech i Roura."
+   ]
+  },
+  "temporary": {
+   "label": "supported",
+   "says": "The Palau Nacional was built as a temporary building for the 1929 Exhibition; its speed and modest materials meant it needed restoring by 1934.",
+   "src": [
+    "wp-palau-nacional"
+   ],
+   "quote": [
+    "constructed Palau Nacional as a temporary building for the Exhibition of 1929. The speed of the construction and the modesty of the materials used meant that a restoration of the structure was called for in 1934"
+   ]
+  },
+  "artspain": {
+   "label": "supported",
+   "says": "In 1929 it held the exhibition Art in Spain, with more than 5,000 works from across Spain.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "with the goal of being the main building of the 1929 Barcelona International Exposition, holding an Exhibition of Spanish Art named El Arte en España (The Art of Spain). More than 5,000 works came to the Exhibition from across Spain.",
+    "a great exhibition entitled Art in Spain"
+   ]
+  },
+  "oval": {
+   "label": "supported",
+   "says": "The Oval Hall covers 2,300 square meters and holds a monumental organ, one of the biggest in Europe, awaiting restoration.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "This great space (2,300 m2)",
+    "it also houses a monumental organ, one of the biggest in Europe, waiting for an important restoration work."
+   ]
+  },
+  "opening1929": {
+   "label": "supported",
+   "says": "The Oval Hall hosted the Exhibition's opening ceremony, presided by King Alfonso XIII and Queen Victoria Eugenie.",
+   "src": [
+    "wp-palau-nacional"
+   ],
+   "quote": [
+    "The Oval Room hosted the opening ceremony of the Exhibition, presided by Alfonso XIII and Queen Victoria Eugenie."
+   ]
+  },
+  "organ": {
+   "label": "supported",
+   "says": "The organ was built in 1929 by E.F. Walcker of Ludwigsburg, Germany, with more than two thousand pipes; in 1955 two thousand five hundred more were added.",
+   "src": [
+    "wp-palau-nacional"
+   ],
+   "quote": [
+    "The organ was built in 1929 by E.F. Walcker & Cie. from Ludwigsburg (Germany).",
+    "with more than two thousand organ pipes",
+    "The organ was restored and enlarged in 1955, wherein two thousand five hundred new pipes were added to the previous amount."
+   ]
+  },
+  "shields": {
+   "label": "supported",
+   "says": "Fifty-six small shields between the arches stand for the fifty Spanish provinces of 1929; the other six show musical instruments, near the organ.",
+   "src": [
+    "wp-palau-nacional"
+   ],
+   "quote": [
+    "Another design element of the Salon is the fifty-six small heraldic shields which occupy the space between the arches and represent the fifty Spanish provinces which existed in 1929. The six remaining shields depict musical instruments and are located in the part of the Salon where the organ is found."
+   ]
+  },
+  "olympics": {
+   "label": "supported",
+   "says": "The Oval Hall was reopened for the 1992 Summer Olympic Games.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "The Oval Hall was reopened for the 1992 Summer Olympic Games"
+   ]
+  },
+  "romanesque": {
+   "label": "supported",
+   "says": "The Romanesque murals, from the 11th to 13th centuries, mostly adorned rural churches in the Pyrenees and Old Catalonia; the collection is unmatched by any other museum.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "the Museu Nacional Romanesque Collection is unmatched by any other museum in the world. Dating to the 11th to 13th centuries, many of the works originally adorned rural churches in the Pyrenees and other sites in Old Catalonia"
+   ]
+  },
+  "boston": {
+   "label": "supported",
+   "says": "In 1919 an American art dealer bought frescoes from Mur and had them detached by Italian experts with the 'strappo' technique; they went to the Museum of Fine Arts in Boston.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "the actions of an American art dealer in 1919",
+    "The art dealer purchased many of the frescos at the former monastery in Castell de Mur, intending to sell them for a profit. The dealer brought in two Italian art restorers who were experts at detaching wall paintings, a technique called \"strappo\". The frescos were sent to the United States, and they now reside in the Museum of Fine Arts in Boston."
+   ]
+  },
+  "rescue": {
+   "label": "supported",
+   "says": "No Spanish law forbade this; alarmed, the Catalan Board of Museums hired the same Italian experts and from 1919 to 1923 moved many Pyrenean frescoes to Barcelona.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "There were no laws in Spain forbidding the removal and expatriation of the art, but the shipment of the monastery murals to the United States alarmed the Junta de Museus de Catalunya (Catalan Board of Museums).",
+    "Hiring the Italian experts, from 1919 to 1923 they successfully intervened to detach many of the ecclesiastical frescos from the rural churches in the Pyrenees and transfer them to the Museum of Barcelona"
+   ]
+  },
+  "taull": {
+   "label": "supported",
+   "says": "The paintings from the apse of Sant Climent de Taüll include the 12th-century Pantocrator, Christ in Majesty; beside it stand works from Santa Maria de Taüll, a Romanesque church painted throughout.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "There are also paintings from the Apse of Sant Climent de Taüll, including the 12th century Pantocrator or Christ in Majesty. Beside this piece stands another group of works, from Santa Maria de Taüll, the most important example of the interior of a Romanesque church painted throughout"
+   ]
+  },
+  "majorca": {
+   "label": "supported",
+   "says": "The Mural paintings of the Conquest of Majorca preside over the first Gothic room.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "These include the renowned Mural paintings of the Conquest of Majorca, which preside over the first Gothic room."
+   ]
+  },
+  "modern": {
+   "label": "supported",
+   "says": "The modern collection includes Ramon Casas and Santiago Rusiñol, interior decorative art by Gaudí from Casa Batlló, and Picasso since 2007.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "are those by Ramon Casas and Santiago Rusiñol",
+    "interior decorative art by Josep Puig i Cadafalch, Gaspar Homar and Antoni Gaudí from, respectively, the Amatller, Lleó Morera and Batlló houses in Barcelona's Passeig de Gràcia",
+    "the most exceptional figure is Pablo Picasso, represented in the Museu Nacional d'Art de Catalunya collection since 2007."
+   ]
+  },
+  "war": {
+   "label": "supported",
+   "says": "The Palau Nacional has housed the Museu d'Art de Catalunya since 1934; the plan to gather Catalan art here was frustrated by the Civil War (1936-1939), when many works were sent to Olot, Darnius and Paris.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "A project to install all these Catalan art collections in the Palau Nacional, launched in 1934",
+    "was frustrated by the outbreak of the Spanish Civil War (1936–1939), when for protection many works were transferred to Olot, Darnius and Paris",
+    "which has housed the Museu d'Art de Catalunya since 1934"
+   ]
+  },
+  "inaugurated": {
+   "label": "supported",
+   "says": "After a long renovation, the museum was officially inaugurated on 16 December 2004.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "The museum was officially inaugurated on 16 December 2004."
+   ]
+  },
+  "towers": {
+   "label": "supported",
+   "says": "Four towers modeled on Santiago de Compostela Cathedral stand at the corners of the Oval Hall.",
+   "src": [
+    "wp-museu-nacional-d-art-catalun"
+   ],
+   "quote": [
+    "four towers modelled on Santiago de Compostela Cathedral stand at the corners of the so-called Sala Oval, or Oval Hall"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The Magic Fountain",
+   "stand": "At the foot of Montjuïc, by the Magic Fountain, looking up the long staircase toward the palace with the great dome.",
+   "paras": [
+    {
+     "t": "Look up the hill. That grand building with the dome is the Palau Nacional, home of the National Art Museum of Catalonia. Its great dome was inspired by St. Peter's in Rome, with a smaller dome on each side. The palace, this fountain and the staircase between them all survive from the 1929 International Exposition.",
+     "c": [
+      "expo",
+      "domes"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The fountain in front of you is the Magic Fountain. It was designed by Carles Buïgas and built in 1929, and it amazed the public with its light and water.",
+     "c": [
+      "fountain"
+     ],
+     "level": 2
+    },
+    {
+     "t": "A word before the climb. It's a long way up, with plenty of steps. Take your time, carry water on a hot day, and stop to look back at the view.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "The palace",
+   "stand": "At the top of the stairs, in front of the palace entrance.",
+   "paras": [
+    {
+     "t": "The palace went up between 1926 and 1929 as the main building of the Exposition, the centerpiece of the whole fair.",
+     "c": [
+      "palau"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Here's the surprise. All this grandeur was meant to be temporary. It was built fast, with modest materials, and by 1934 it already needed restoring.",
+     "c": [
+      "temporary"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Politics shaped this building too. Puig i Cadafalch was first in charge of the project, but when Primo de Rivera seized power in 1923 he was removed. A competition was then won by the architects Eugenio Cendoya, Enric Catà and Pere Domènech i Roura. In 1929 the palace held a huge show called Art in Spain, with more than 5,000 works from across the country.",
+     "c": [
+      "puig",
+      "artspain"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Oval Hall",
+   "stand": "Inside, in the great Oval Hall beyond the lobby.",
+   "paras": [
+    {
+     "t": "This is the Oval Hall, 2,300 square meters of it. King Alfonso XIII and Queen Victoria Eugenie opened the Exposition right here. And it was reopened for the 1992 Olympic Games.",
+     "c": [
+      "oval",
+      "opening1929",
+      "olympics"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Look for the organ. It's one of the biggest in Europe, built in 1929 by the Walcker company of Ludwigsburg, Germany, with more than two thousand pipes. In 1955 another two thousand five hundred were added. Today it's waiting for a major restoration.",
+     "c": [
+      "oval",
+      "organ"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Now look between the arches for the small coats of arms. There are fifty-six of them. Fifty stand for the Spanish provinces of 1929. The last six, over by the organ, show musical instruments.",
+     "c": [
+      "shields"
+     ],
+     "level": 3
+    },
+    {
+     "t": "One more detail for when you're back outside: at the four corners of this hall stand towers modeled on the cathedral of Santiago de Compostela.",
+     "c": [
+      "towers"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Romanesque rooms",
+   "stand": "In the Romanesque section, in front of the painted apse from Sant Climent de Taüll.",
+   "paras": [
+    {
+     "t": "This is the heart of the museum. Many of these paintings, from the 11th to the 13th centuries, once covered the walls of country churches in the Pyrenees. No other museum in the world has a Romanesque collection like it.",
+     "c": [
+      "romanesque",
+      "museum"
+     ],
+     "level": 1
+    },
+    {
+     "t": "In front of you is the apse from Sant Climent de Taüll, with its 12th-century Pantocrator, Christ in Majesty. Right beside it are works from Santa Maria de Taüll, a church that was painted from top to bottom.",
+     "c": [
+      "taull"
+     ],
+     "level": 2
+    },
+    {
+     "t": "So how did church walls end up in a museum? In 1919 an American art dealer bought frescoes from a monastery at Mur. He brought in Italian experts who could peel paintings off a wall, a technique called strappo, and those frescoes now hang in the Museum of Fine Arts in Boston.",
+     "c": [
+      "boston"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Spain had no law against it, and Catalonia's museum board was alarmed. So they hired the same Italian experts, and from 1919 to 1923 they took many of the Pyrenean frescoes down and brought them to Barcelona, to keep them safe.",
+     "c": [
+      "rescue"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Gothic to modern",
+   "stand": "Wherever you choose to go next in the collection.",
+   "paras": [
+    {
+     "t": "If you go on to the Gothic rooms, the first one is presided over by the mural paintings of the Conquest of Majorca.",
+     "c": [
+      "majorca"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The modern collection is Barcelona's own story. There are paintings by Ramon Casas and Santiago Rusiñol, decorative pieces Gaudí designed for Casa Batlló, and since 2007, Picasso.",
+     "c": [
+      "modern"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The museum's own road was long. An art museum has been in this palace since 1934, but the plan to bring all of Catalonia's art together here was cut short by the Civil War, and many works were sent away for safety, to Olot, Darnius and even Paris. The full national museum you see today was officially inaugurated on December 16, 2004.",
+     "c": [
+      "war",
+      "inaugurated"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Back outside on the terrace in front of the palace, looking out over the city.",
+   "paras": [
+    {
+     "t": "Think of those painters in the Pyrenees, centuries ago, working on the walls of a little mountain church. People had to lift their work off the walls to save it. It survived because someone cared enough to carry it down the mountain.",
+     "c": [
+      "romanesque",
+      "rescue"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

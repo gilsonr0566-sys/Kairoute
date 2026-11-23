@@ -1,0 +1,341 @@
+{
+ "id": "sorrento",
+ "v": 1,
+ "city": "naples",
+ "title": "Sorrento",
+ "match": {
+  "ids": [
+   "sorrento"
+  ],
+  "names": [
+   "sorrento",
+   "surrentum"
+  ],
+  "wikidata": [
+   "Q72672"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "where": {
+   "label": "supported",
+   "says": "Sorrento overlooks the Bay of Naples, with views of Naples, Vesuvius and Capri.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "is a city and comune overlooking the Bay of Naples in Southern Italy",
+    "The Sorrentine Peninsula has views of Naples, Vesuvius and the Isle of Capri."
+   ]
+  },
+  "tasso-square": {
+   "label": "supported",
+   "says": "Piazza Torquato Tasso is Sorrento's main square, joined to Piazza Lauro by Corso Italia.",
+   "src": [
+    "wv-sorrento"
+   ],
+   "quote": [
+    "Piazza Torquato Tasso. Sorrento's main piazza, connected to Piazza Lauro by Corso Italia."
+   ]
+  },
+  "tasso": {
+   "label": "supported",
+   "says": "Sorrento was the birthplace of the poet Torquato Tasso, author of Gerusalemme Liberata.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "Sorrento was the birthplace of the poet Torquato Tasso, author of the Gerusalemme Liberata."
+   ]
+  },
+  "surrentum": {
+   "label": "supported",
+   "says": "The Roman name was Surrentum; its oldest ruins are Oscan, from about 600 BC.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "The Roman name for Sorrento was Surrentum.",
+    "the oldest ruins of Surrentum are Oscan, dating from about 600 BC."
+   ]
+  },
+  "gorges": {
+   "label": "supported",
+   "says": "Surrentum was protected by deep gorges, and the modern streets keep the plan of the ancient town.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "The position of Surrentum was very secure, protected by deep gorges.",
+    "The arrangement of the modern streets preserves that of the ancient town"
+   ]
+  },
+  "mills": {
+   "label": "supported",
+   "says": "A few steps up Viale Enrico Caruso a railing looks down into the Valley of the Mills, the gorge below Piazza Tasso, with the ruins of a water mill at the bottom.",
+   "src": [
+    "wv-sorrento"
+   ],
+   "quote": [
+    "Walk a few meters up Viale Enrico Caruso to enjoy the view over the railing down to:",
+    "Valley of the Mills (Vallone dei Mulini) (in the gorge below Piazza Tasso.). At the bottom of the gorge, there are ruins of one of a water-powered mills with a lumberyard adjacent."
+   ]
+  },
+  "cathedral": {
+   "label": "supported",
+   "says": "The cathedral on Corso Italia dates from the 14th century, with a facade rebuilt in 1924 and 11th-century doors from Constantinople.",
+   "src": [
+    "wp-sorrento",
+    "wv-sorrento"
+   ],
+   "quote": [
+    "Cathedral of Sorrento (Santi Filippo e Giacomo Cathedral), from the 14th century with façade reconstructed in 1924. It was built over time in different styles, with doors of the 11th century from Constantinople",
+    "Duomo (Cathedral) (Along Corso Italia)."
+   ]
+  },
+  "sack": {
+   "label": "estimate",
+   "says": "On 13 June 1558 an Ottoman fleet under Dragut and Piali sacked Sorrento; 2,000 captives were reportedly taken; new walls followed.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "On 13 June 1558 it was sacked by elements of the Ottoman navy under the command of Dragut and his lieutenant Piali",
+    "2,000 captives were reportedly taken away.",
+    "The attack led to the construction of a new line of walls."
+   ]
+  },
+  "wine": {
+   "label": "supported",
+   "says": "In antiquity Surrentum was famous for its wine; the lemons grown now came later.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "In antiquity, Surrentum was famous for its wine (oranges and lemons which are now widely cultivated there were not yet introduced in Italy in antiquity)"
+   ]
+  },
+  "limoncello": {
+   "label": "supported",
+   "says": "Limoncello, made from lemon rinds, alcohol, water and sugar, is produced in Sorrento.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "Limoncello, a digestif made from lemon rinds, alcohol, water and sugar, is produced in Sorrento"
+   ]
+  },
+  "san-cesareo": {
+   "label": "supported",
+   "says": "Via San Cesareo is one of the oldest streets in town and its main shopping street.",
+   "src": [
+    "wv-sorrento",
+    "wp-sorrento"
+   ],
+   "quote": [
+    "Via San Cesareo. One of the oldest streets in town.",
+    "Via San Cesareo, Sorrento's main shopping street"
+   ]
+  },
+  "villa-comunale": {
+   "label": "supported",
+   "says": "The Villa Comunale park looks over the coast and the Gulf of Naples to Vesuvius.",
+   "src": [
+    "wv-sorrento",
+    "wp-sorrento"
+   ],
+   "quote": [
+    "Villa Comunale. Offers a beautiful view over the Sorrento coastline with Mount Vesuvius in the distance.",
+    "Park of Villa communale with a view of the Gulf of Naples with the volcano Vesuvius"
+   ]
+  },
+  "sirens": {
+   "label": "legend",
+   "says": "The myth of the Sirens has been linked with Sorrento since antiquity: three of them lived on the Li Galli islands near Punta Campanella, enchanting sailors.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "The myth of the Sirens has been loosely associated with Sorrento since antiquity. Three mermaids settled at li galli islands near Punta Campanella enchanting the seafarers sailing through those waters."
+   ]
+  },
+  "temples": {
+   "label": "supported",
+   "says": "Surrentum's chief temples were of Athena, on the promontory at the tip of the peninsula, and of the Sirens; no trace of either survives.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "The most important temples of Surrentum were those of Athena and of the Sirens",
+    "as far as the temple of Athena on the promontory named after her at the extremity of the peninsula (now Punta Campanella)",
+    "Neither of this nor of the famous temple of the Sirens are any traces existing."
+   ]
+  },
+  "ulysses": {
+   "label": "legend",
+   "says": "Legend says the Athenaion, a great sanctuary, was founded by Ulysses for the cult of the Sirens, hence Sorrento's name.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "according to the legend, founded by Ulysses and originally devoted to the cult of the Sirens, hence Sorrento's name."
+   ]
+  },
+  "titus": {
+   "label": "supported",
+   "says": "An inscription shows Titus restored the town's clock the year after the earthquake of 79 AD.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "An inscription shows that Titus in the year after the earthquake of 79 AD restored the horologium (clock) of the town"
+   ]
+  },
+  "visitors": {
+   "label": "supported",
+   "says": "Visitors included Byron, Keats, Goethe, Dickens, Wagner, Ibsen and Nietzsche; Nietzsche spent six months here in 1876 and worked on Human, All Too Human; Ibsen wrote parts of Peer Gynt here.",
+   "src": [
+    "wp-sorrento",
+    "wv-sorrento"
+   ],
+   "quote": [
+    "Sorrento has been visited by Lord Byron, John Keats, Johann Wolfgang von Goethe, Charles Dickens, Richard Wagner, Henrik Ibsen, and Friedrich Nietzsche.",
+    "was in Sorrento for six months in 1876. He there wrote Human, All Too Human",
+    "Place where Norwegian writer Henrik Ibsen lived while writing parts of Peer Gynt"
+   ]
+  },
+  "song": {
+   "label": "supported",
+   "says": "The town features in the early 20th-century song Torna a Surriento, Come Back to Sorrento.",
+   "src": [
+    "wp-sorrento"
+   ],
+   "quote": [
+    "The town was featured in the early 20th century song \"Torna a Surriento\" (Come Back to Sorrento)"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Piazza Tasso",
+   "stand": "In Piazza Tasso, the main square, at the foot of Viale Enrico Caruso.",
+   "paras": [
+    {
+     "t": "This is Piazza Tasso, the main square of Sorrento, named for the poet Torquato Tasso, who was born here. Now walk a few steps up Viale Enrico Caruso to the railing and look down.",
+     "c": [
+      "tasso-square",
+      "tasso"
+     ],
+     "level": 1
+    },
+    {
+     "t": "That deep gorge is the Valley of the Mills. At the bottom are the ruins of an old water mill. Gorges like this protected the ancient town, and the streets of the old town still follow its plan.",
+     "c": [
+      "mills",
+      "gorges"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Hold on to the railing and keep children close; it's a long drop.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "The Romans called this place Surrentum, but it's older than Rome's rule here. The oldest ruins are Oscan, from about 600 BC.",
+     "c": [
+      "surrentum"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The old streets",
+   "stand": "Walk along Corso Italia to the cathedral, then into the narrow lanes of the old town toward Via San Cesareo.",
+   "paras": [
+    {
+     "t": "Along Corso Italia is the cathedral. It goes back to the 14th century, though the front was rebuilt in 1924, and its doors, from the 11th century, are said to have come from Constantinople.",
+     "c": [
+      "cathedral"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Via San Cesareo is one of the oldest streets in town, and now the main shopping street. You'll see lemons and limoncello everywhere, made from lemon rind, alcohol, water and sugar. Here's the surprise: in Roman times Surrentum was famous for its wine, not for lemons. The lemon groves came much later.",
+     "c": [
+      "san-cesareo",
+      "limoncello",
+      "wine"
+     ],
+     "level": 2
+    },
+    {
+     "t": "This town has had hard days too. On 13 June 1558 an Ottoman fleet sacked Sorrento, and about 2,000 captives were reportedly carried off. New walls went up afterwards.",
+     "c": [
+      "sack"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Villa Comunale",
+   "stand": "In the Villa Comunale park, at the edge of the terrace, facing the bay.",
+   "paras": [
+    {
+     "t": "And here's the view. The coast below you, the Bay of Naples, and Vesuvius in the distance. On a clear day you can see across the bay toward Naples.",
+     "c": [
+      "villa-comunale",
+      "where"
+     ],
+     "level": 1
+    },
+    {
+     "t": "This coast has a myth. Since ancient times, the Sirens have been linked with Sorrento: three of them, the story goes, lived on the little Li Galli islands near Punta Campanella, enchanting passing sailors. Legend even says Ulysses founded a great sanctuary on this peninsula, first devoted to the Sirens, and that this is where the name Sorrento comes from.",
+     "c": [
+      "sirens",
+      "ulysses"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Ancient Surrentum's most important temples really were to Athena and to the Sirens. Athena's stood out at the tip of the peninsula. No trace of either survives.",
+     "c": [
+      "temples"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Look across at Vesuvius again. An inscription shows that the emperor Titus restored the town's timepiece, its horologium, the year after the earthquake of 79 AD, the same disaster year as Pompeii.",
+     "c": [
+      "titus"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Writers and artists kept coming. Byron, Keats, Goethe, Dickens, Wagner and Ibsen all visited; Ibsen wrote parts of Peer Gynt here. Nietzsche stayed six months in 1876 and worked on Human, All Too Human.",
+     "c": [
+      "visitors"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Stay at the terrace edge a moment longer.",
+   "paras": [
+    {
+     "t": "There's an old song, Torna a Surriento: Come Back to Sorrento. Standing here, you can see why someone wrote it.",
+     "c": [
+      "song"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

@@ -1,0 +1,579 @@
+{
+ "id": "sansevero",
+ "v": 1,
+ "city": "naples",
+ "title": "Sansevero Chapel and the Veiled Christ",
+ "match": {
+  "ids": [
+   "sansevero"
+  ],
+  "names": [
+   "sansevero",
+   "veiled christ",
+   "cristo velato",
+   "pietatella"
+  ],
+  "wikidata": [
+   "Q897839",
+   "Q3697674"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "where": {
+   "label": "supported",
+   "says": "The chapel is on Via Francesco de Sanctis 19, just northeast of San Domenico Maggiore; its proper name is the Chapel of Santa Maria della Pietà.",
+   "src": [
+    "wp-sansevero"
+   ],
+   "quote": [
+    "is a chapel located on Via Francesco de Sanctis 19, just northeast of the church of San Domenico Maggiore, in the historic center of Naples, Italy. The chapel is more properly named the Chapel of Santa Maria della Pietà."
+   ]
+  },
+  "thirty": {
+   "label": "estimate",
+   "says": "The chapel holds almost thirty works of art.",
+   "src": [
+    "wp-sansevero"
+   ],
+   "quote": [
+    "The chapel houses almost thirty works of art"
+   ]
+  },
+  "queue": {
+   "label": "supported",
+   "says": "Because the chapel is small, the line can be longer than at other sights in Naples.",
+   "src": [
+    "wv-naples"
+   ],
+   "quote": [
+    "Because of the small size, the waiting queue may be longer than at other attractions in Naples."
+   ]
+  },
+  "origin": {
+   "label": "supported",
+   "says": "In 1590 John Francesco di Sangro, Duke of Torremaggiore, after recovering from a serious illness, had a private chapel built in the gardens of the nearby family palace.",
+   "src": [
+    "wp-sansevero",
+    "wv-naples"
+   ],
+   "quote": [
+    "Its origin dates to 1590 when John Francesco di Sangro, Duke of Torremaggiore, after recovering from a serious illness, had a private chapel built in what were then the gardens of the nearby Sansevero family residence, the Palazzo Sansevero."
+   ]
+  },
+  "burial": {
+   "label": "supported",
+   "says": "In 1613 Alessandro di Sangro made it the family burial chapel, as inscribed on the marble plinth over the entrance.",
+   "src": [
+    "wp-sansevero"
+   ],
+   "quote": [
+    "The building was converted into a family burial chapel by Alessandro di Sangro in 1613 (as inscribed on the marble plinth over the entrance to the chapel)."
+   ]
+  },
+  "pietatella": {
+   "label": "legend",
+   "says": "The nickname Pietatella comes from a painting of the Virgin Mary said to have been spotted there by an unjustly arrested prisoner, a story written down in 1623.",
+   "src": [
+    "wp-sansevero"
+   ],
+   "quote": [
+    "The chapel received its alternative name of Pietatella from a painting of the Virgin Mary (La Pietà), spotted there by an unjustly arrested prisoner, as reported in the book Napoli Sacra by Cesare d'Engenio Caracciolo in 1623."
+   ]
+  },
+  "rai-bio": {
+   "label": "supported",
+   "says": "Raimondo di Sangro, Prince of Sansevero (1710-1771), was a nobleman, inventor, soldier, writer, scientist, alchemist and freemason, best remembered for rebuilding the chapel.",
+   "src": [
+    "wp-raimondo"
+   ],
+   "quote": [
+    "Raimondo di Sangro, Prince of Sansevero (30 January 1710 – 22 March 1771) was an Italian nobleman, inventor, soldier, writer, scientist, alchemist and freemason best remembered for his reconstruction of the Sansevero Chapel in Naples."
+   ]
+  },
+  "rai-form": {
+   "label": "supported",
+   "says": "Raimondo gave the chapel its final form and included Masonic symbols.",
+   "src": [
+    "wp-sansevero"
+   ],
+   "quote": [
+    "Definitive form was given to the chapel by Raimondo di Sangro, Prince of Sansevero, who also included Masonic symbols in its reconstruction."
+   ]
+  },
+  "vc-made": {
+   "label": "supported",
+   "says": "The Veiled Christ was completed in 1753 by the Neapolitan Giuseppe Sanmartino, carved from a single block of white marble.",
+   "src": [
+    "wp-veiled-christ",
+    "wp-sammartino"
+   ],
+   "quote": [
+    "is a marble tomb effigy completed in 1753 by the Neapolitan artist Giuseppe Sanmartino. Carved from a single block of white marble"
+   ]
+  },
+  "vc-centre": {
+   "label": "supported",
+   "says": "It shows the dead Jesus lying on a couch under a clinging veil, and lies in the centre of the nave.",
+   "src": [
+    "wp-veiled-christ"
+   ],
+   "quote": [
+    "Sanmartino produced a sculpture of the dead Jesus lying on a couch and covered by a veil which adheres perfectly to his body.",
+    "The new sculpture was placed in the centre of the nave, where it still lies."
+   ]
+  },
+  "vc-pain": {
+   "label": "supported",
+   "says": "The veil reveals the suffering of the crucifixion; signs of pain show on the face and body.",
+   "src": [
+    "wp-veiled-christ"
+   ],
+   "quote": [
+    "The mastery of the Neapolitan sculptor lies in the way the veil reveals the suffering that Jesus had undergone during the crucifixion. Signs of Jesus's pain can be seen on his face and body."
+   ]
+  },
+  "vc-feet": {
+   "label": "supported",
+   "says": "At his feet are the instruments of the Passion: pliers, shackles and the crown of thorns.",
+   "src": [
+    "wp-veiled-christ"
+   ],
+   "quote": [
+    "Sanmartino carved the instruments of the passion at Jesus's feet, including pliers, shackles, and the crown of thorns."
+   ]
+  },
+  "vc-corradini": {
+   "label": "supported",
+   "says": "The work was first given to the Venetian sculptor Antonio Corradini, who made a terracotta model and died.",
+   "src": [
+    "wp-veiled-christ",
+    "wp-sammartino"
+   ],
+   "quote": [
+    "He commissioned the sculptor Antonio Corradini to produce the centrepiece of the church",
+    "Corradini produced a terracotta bozzetto model, now in the Museo Nazionale di San Martino, but died shortly after.",
+    "commissioned initially from the Venetian sculptor Antonio Corradini who did not live to complete the work"
+   ]
+  },
+  "vc-brief": {
+   "label": "supported",
+   "says": "Sanmartino's brief: a realistic marble Christ in death under a transparent shroud carved from the same block.",
+   "src": [
+    "wp-veiled-christ"
+   ],
+   "quote": [
+    "He was charged with producing \"a marble statue sculpted with the greatest realism, representing Our Lord Jesus Christ in death, covered by a transparent shroud carved from the same block of stone as the statue.\""
+   ]
+  },
+  "canova": {
+   "label": "supported",
+   "says": "Antonio Canova tried to acquire it and said he would give ten years of his life to have made something as good.",
+   "src": [
+    "wp-veiled-christ"
+   ],
+   "quote": [
+    "The 18th-century sculptor Antonio Canova tried to acquire the work, stating that he would willingly give ten years of his life to have produced something of similar quality."
+   ]
+  },
+  "vc-legend": {
+   "label": "legend",
+   "says": "Some believed the prince had turned a real veil into marble by a secret alchemical process.",
+   "src": [
+    "wp-veiled-christ",
+    "wp-raimondo"
+   ],
+   "quote": [
+    "Some visitors surmised that the prince had draped the underlying figure with a real veil which he then transformed into marble by means of a secret alchemical process.",
+    "whose Veiled Christ's detailed marble veil was thought by many to be created by di Sangro's alchemy"
+   ]
+  },
+  "vc-fact": {
+   "label": "supported",
+   "says": "The veiled-statue effect is old; the earliest date from classical times.",
+   "src": [
+    "wp-veiled-christ"
+   ],
+   "quote": [
+    "In fact, this sculptural effect was an old one: the earliest “veiled statues” date from classical times."
+   ]
+  },
+  "sanmartino": {
+   "label": "supported",
+   "says": "Little is known of Sanmartino's early life; he was born in Naples in 1720, and the Veiled Christ (1753) is his first dated work.",
+   "src": [
+    "wp-sammartino"
+   ],
+   "quote": [
+    "There is little known about Sanmartino's early life. He was born in Naples in 1720.",
+    "His first dated (1753) work is Veiled Christ"
+   ]
+  },
+  "career": {
+   "label": "supported",
+   "says": "It was highly praised and launched Sanmartino's career.",
+   "src": [
+    "wp-veiled-christ"
+   ],
+   "quote": [
+    "It was highly praised, and helped launch Sanmartino's career."
+   ]
+  },
+  "modesty": {
+   "label": "supported",
+   "says": "Modesty (Pudicizia), by Antonio Corradini, 1752, is a tomb monument to Raimondo's mother Cecilia, who died shortly after his birth.",
+   "src": [
+    "wp-sansevero",
+    "wp-raimondo"
+   ],
+   "quote": [
+    "The Veiled Truth (Pudicizia, also called Modesty or Chastity) was completed by Antonio Corradini in 1752 as a tomb monument dedicated to Cecilia Gaetani dell'Aquila d'Aragona, mother of Raimondo.",
+    "His mother died shortly after his birth."
+   ]
+  },
+  "influence": {
+   "label": "supported",
+   "says": "The Veiled Christ shows the influence of the veiled Modesty.",
+   "src": [
+    "wp-sansevero"
+   ],
+   "quote": [
+    "shows the influence of the veiled Modesty"
+   ]
+  },
+  "disinganno": {
+   "label": "supported",
+   "says": "The Release from Deception (Disinganno), by Francesco Queirolo of Genoa, is a monument to Raimondo's father, with a carved fisherman's net.",
+   "src": [
+    "wp-sansevero"
+   ],
+   "quote": [
+    "The Release from Deception (Disinganno) completed in 1753–54 by Francesco Queirolo of Genoa serves as a monument to Raimondo's father.",
+    "their depiction of translucent veils and a fisherman's net represent remarkable artistic achievement"
+   ]
+  },
+  "ceiling": {
+   "label": "supported",
+   "says": "The ceiling, the Glory of Paradise, was painted by Francesco Maria Russo in 1749.",
+   "src": [
+    "wp-sansevero"
+   ],
+   "quote": [
+    "The ceiling, the Glory of Paradise, was painted by Francesco Maria Russo in 1749."
+   ]
+  },
+  "floor": {
+   "label": "tradition",
+   "says": "The original floor was a black-and-white labyrinth, said to symbolize good and evil, a Masonic symbol of initiation; most of today's floor dates from 1901.",
+   "src": [
+    "wp-sansevero"
+   ],
+   "quote": [
+    "The original floor (most of the present one dates from 1901) was in black and white (said to symbolize good/evil) in the design of a labyrinth (a masonic symbol for \"initiation\")."
+   ]
+  },
+  "inventions": {
+   "label": "supported",
+   "says": "His inventions included coloured fireworks and a carriage with wood and cork horses that could travel on land and water.",
+   "src": [
+    "wp-raimondo"
+   ],
+   "quote": [
+    "A carriage with wood and cork \"horses\" which, driven by a cunning system of paddlewheels, could travel on both land and water",
+    "Coloured fireworks"
+   ]
+  },
+  "excomm": {
+   "label": "disputed",
+   "says": "He led the Neapolitan Masonic lodge until excommunicated; Pope Benedict XIV later revoked it, probably because of his family's influence.",
+   "src": [
+    "wp-raimondo"
+   ],
+   "quote": [
+    "He was head of the Neapolitan masonic lodge until he was excommunicated by the Church",
+    "The excommunication was later revoked by Pope Benedict XIV, probably on account of the influence of the di Sangro family."
+   ]
+  },
+  "archive": {
+   "label": "supported",
+   "says": "He destroyed his scientific archive; his descendants, threatened with excommunication, destroyed the rest.",
+   "src": [
+    "wp-raimondo"
+   ],
+   "quote": [
+    "He destroyed his own scientific archive before he died. After his death, his descendants, under threat of excommunication by the Church due to di Sangro's involvement with Freemasonry and alchemy, destroyed what was left of his writings"
+   ]
+  },
+  "gesualdo": {
+   "label": "supported",
+   "says": "At the end of the 16th century the composer Carlo Gesualdo killed his wife and her lover in the Palazzo Sansevero.",
+   "src": [
+    "wp-raimondo"
+   ],
+   "quote": [
+    "the Palazzo Sansevero, was the scene of a brutal murder at the end of the 16th century, when the composer Carlo Gesualdo caught his wife and her lover in flagrante delicto, and hacked them to death in their bed."
+   ]
+  },
+  "machines": {
+   "label": "supported",
+   "says": "In the basement, the anatomical machines, made by the anatomist Giuseppe Salerno around 1760 for Raimondo: a man and a pregnant woman whose skeletons are wrapped in arteries and veins coloured red and blue.",
+   "src": [
+    "wp-sansevero"
+   ],
+   "quote": [
+    "as implemented by anatomist Giuseppe Salerno ca. 1760 from a commission by Raimondo di Sangro. The exhibit consists of a mature male and a pregnant woman. Their skeletons are encased in the hardened arteries and veins which are colored red and blue respectively."
+   ]
+  },
+  "rai-legends": {
+   "label": "legend",
+   "says": "Legends said he could create blood from nothing, repeat the liquefaction of San Gennaro's blood, and had people killed for experiments.",
+   "src": [
+    "wp-raimondo"
+   ],
+   "quote": [
+    "Many legends grew up around his alchemical activities: that he could create blood out of nothing, that he could replicate the liquefaction of blood of San Gennaro, that he had people killed so that he could use their bones and skin for experiments."
+   ]
+  },
+  "am-belief": {
+   "label": "tradition",
+   "says": "Many Neapolitans believed the models were his servant and a pregnant woman, injected with a substance.",
+   "src": [
+    "wp-raimondo"
+   ],
+   "quote": [
+    "Until recently many Neapolitans believed that the models were of his servant and a pregnant woman, into whose veins an artificial substance was injected under pressure"
+   ]
+  },
+  "am-research": {
+   "label": "supported",
+   "says": "Recent analysis shows no injection; the vessels are beeswax, iron wire and silk.",
+   "src": [
+    "wp-sansevero"
+   ],
+   "quote": [
+    "However, recent analysis shows no evidence of techniques involving injection. Analysis of the \"blood vessels\" indicate they are constructed of beeswax, iron wire, and silk."
+   ]
+  },
+  "am-method": {
+   "label": "disputed",
+   "says": "Even today the exact method is not known.",
+   "src": [
+    "wp-raimondo"
+   ],
+   "quote": [
+    "(even today the exact method is not known)"
+   ]
+  },
+  "death": {
+   "label": "supported",
+   "says": "He died in 1771, his death hastened by dangerous chemicals; in 1794 the plant genus Sansevieria was named after him.",
+   "src": [
+    "wp-raimondo"
+   ],
+   "quote": [
+    "Raimondo di Sangro died in Naples in 1771, his death being hastened by the continuous use of dangerous chemicals in his experiments and inventions. In 1794, the Swedish naturalist Carl Peter Thunberg named the plant genus Sansevieria after him."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Outside the chapel",
+   "stand": "In the narrow street outside the chapel entrance, out of the way of the line.",
+   "paras": [
+    {
+     "t": "This is the Sansevero Chapel, properly the Chapel of Santa Maria della Pietà. Inside are almost thirty works of art, and one of them is the Veiled Christ. It's a small place, which is why the line here can be longer than at other sights in Naples.",
+     "c": [
+      "where",
+      "thirty",
+      "queue",
+      "vc-made"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It began in 1590 as a private chapel. John Francesco di Sangro, Duke of Torremaggiore, had it built after he recovered from a serious illness, in what were then the gardens of his family's palace nearby. In 1613 Alessandro di Sangro made it the family's burial chapel. That's recorded on the marble over the entrance.",
+     "c": [
+      "origin",
+      "burial"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It's also called the Pietatella. The story goes that an unjustly arrested prisoner spotted a painting of the Virgin Mary, a Pietà, here, and the name grew from that painting. The tale was written down in 1623.",
+     "c": [
+      "pietatella"
+     ],
+     "level": 3
+    },
+    {
+     "t": "But the chapel you're about to see is really one man's creation: Raimondo di Sangro, Prince of Sansevero, who lived from 1710 to 1771. Nobleman, soldier, inventor, writer, scientist, alchemist and freemason. He gave the chapel its final form, and he built Masonic symbols into it.",
+     "c": [
+      "rai-bio",
+      "rai-form"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Inside it's one quiet room. Take your time, and give the people around the sculpture a little space.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "The Veiled Christ",
+   "stand": "Inside, a step back from the sculpture lying in the center of the nave, near Christ's feet.",
+   "paras": [
+    {
+     "t": "Here he is. The Veiled Christ, finished in 1753 by the Neapolitan sculptor Giuseppe Sanmartino, from a single block of white marble. The dead Christ lies on a couch, under a thin shroud that clings to his body. Look at the face. You can see the signs of pain right through the veil.",
+     "c": [
+      "vc-made",
+      "vc-centre",
+      "vc-pain"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Now look down by his feet. Sanmartino carved the instruments of the Passion there: the pliers, the shackles, and the crown of thorns.",
+     "c": [
+      "vc-feet"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It wasn't meant to be Sanmartino's job. The prince first gave it to the Venetian sculptor Antonio Corradini, who made a clay model and then died. The commission passed to Sanmartino, with a demanding brief: a marble statue of Our Lord Jesus Christ in death, covered by a transparent shroud carved from the same block of stone as the statue.",
+     "c": [
+      "vc-corradini",
+      "vc-brief"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And here's where the legend comes in. Some visitors decided the prince, a known alchemist, had laid a real veil over the figure and turned it to marble by a secret process. It's a good story. In fact, veiled statues go back to classical times. This is carving, not chemistry.",
+     "c": [
+      "vc-legend",
+      "vc-fact"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The sculptor Antonio Canova tried to acquire it, and said he would gladly give ten years of his life to have made something as good. As for Sanmartino, he was born in Naples in 1720, and little is known about his early life. This is his first dated work, and it helped launch his career.",
+     "c": [
+      "canova",
+      "sanmartino",
+      "career"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Modesty and Disillusion",
+   "stand": "Walk along the chapel to find the other veiled statue and the one wrapped in a marble net.",
+   "paras": [
+    {
+     "t": "Two more marble tricks complete the set. Modesty, by Antonio Corradini, finished in 1752, is another figure under a see-through veil. It's a tomb monument to Raimondo's mother, Cecilia, who died shortly after he was born.",
+     "c": [
+      "modesty"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The Veiled Christ shows the influence of this veiled Modesty. Now find the Release from Deception, Il Disinganno, by Francesco Queirolo of Genoa, a monument to Raimondo's father. Look for the fisherman's net, carved in marble.",
+     "c": [
+      "influence",
+      "disinganno"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The prince's chapel",
+   "stand": "Stand beside the Veiled Christ again and look up at the ceiling.",
+   "paras": [
+    {
+     "t": "Above you is the Glory of Paradise, painted by Francesco Maria Russo in 1749.",
+     "c": [
+      "ceiling"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Now look down. The original floor was a black and white labyrinth. It is said the colors stood for good and evil, and the labyrinth is a Masonic symbol of initiation. Most of the floor you see today dates from 1901.",
+     "c": [
+      "floor"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Raimondo was a restless mind. Among his inventions were colored fireworks, and a carriage with wood and cork horses that could travel on land and on water. He led the Masonic lodge of Naples until the Church excommunicated him. Pope Benedict the Fourteenth later lifted that, probably thanks to his family's influence. Before he died he destroyed his own scientific archive, and his descendants, under threat of excommunication, destroyed the rest.",
+     "c": [
+      "inventions",
+      "excomm",
+      "archive"
+     ],
+     "level": 3
+    },
+    {
+     "t": "His family palace nearby had a darker past. At the end of the 1500s, the composer Carlo Gesualdo caught his wife and her lover there, and killed them both.",
+     "c": [
+      "gesualdo"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The anatomical machines",
+   "stand": "Down in the basement, in front of the two figures.",
+   "paras": [
+    {
+     "t": "Take the steps down slowly. And a word of warning: what's down here is unsettling.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "These are the anatomical machines: a man and a pregnant woman, their skeletons wrapped in a web of arteries and veins, colored red and blue. They were made around 1760 by the anatomist Giuseppe Salerno, for Raimondo.",
+     "c": [
+      "machines"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Naples told dark stories about the prince. The legend said he could make blood out of nothing, and even copy the miracle of San Gennaro's blood. Many Neapolitans believed these two were his servant and a pregnant woman, whose veins had been injected with some substance. The latest research says otherwise: there's no sign of injection, and the vessels are made of beeswax, iron wire and silk. Even so, nobody knows exactly how they were made.",
+     "c": [
+      "rai-legends",
+      "am-belief",
+      "am-research",
+      "am-method"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Raimondo died in 1771, his death hastened by the dangerous chemicals he worked with. In 1794 a Swedish naturalist named a plant genus after him: Sansevieria.",
+     "c": [
+      "death"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "A last look",
+   "stand": "Back upstairs, one last time beside the Veiled Christ.",
+   "paras": [
+    {
+     "t": "For all the prince's secrets, the real marvel here is in plain sight. Sanmartino's veil doesn't hide the suffering, it shows it. Take one more look at that face before you go.",
+     "c": [
+      "vc-pain"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

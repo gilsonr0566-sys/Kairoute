@@ -1,0 +1,433 @@
+{
+ "id": "park-guell",
+ "v": 1,
+ "city": "barcelona",
+ "title": "Park Güell",
+ "match": {
+  "ids": [
+   "parkguell"
+  ],
+  "names": [
+   "park guell",
+   "park güell",
+   "parc guell",
+   "parc güell",
+   "parque guell"
+  ],
+  "wikidata": [
+   "Q212867"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "Park Güell is a complex of parks and gardens with architectural elements on the southern slope of the Turó del Carmel hill, overlooking the city.",
+   "src": [
+    "wp-park-guell"
+   ],
+   "quote": [
+    "is a complex of parks and gardens in Barcelona with architectural elements",
+    "It is situated on the southern slope of the Turó del Carmel hill, part of the Collserola mountain range, overlooking the city."
+   ]
+  },
+  "built": {
+   "label": "supported",
+   "says": "Eusebi Güell commissioned Gaudí; construction ran from 1900 to 1914, and the park opened to the public in 1926.",
+   "src": [
+    "wp-park-guell"
+   ],
+   "quote": [
+    "Catalan industrialist and art patron Eusebi Güell commissioned architect Antoni Gaudí",
+    "Construction took place between 1900 and 1914, and the park officially opened to the public in 1926."
+   ]
+  },
+  "unesco": {
+   "label": "verified",
+   "says": "UNESCO lists Park Güell among the Works of Antoni Gaudí, still used as the public park it was designed to be.",
+   "src": [
+    "unesco-gaudi"
+   ],
+   "quote": [
+    "The Park Güell is still used as a public park and green space, the purpose for which it was designed"
+   ]
+  },
+  "garden-city": {
+   "label": "supported",
+   "says": "It was meant to be a luxury housing estate inspired by the English garden city movement; the name Park reflects that English influence.",
+   "src": [
+    "wp-park-guell"
+   ],
+   "quote": [
+    "Count Eusebi Güell had originally planned to establish a high-end residential development for the bourgeoisie, inspired by the English garden city movement. The name \"Park\" reflects this English influence."
+   ]
+  },
+  "bare-mountain": {
+   "label": "supported",
+   "says": "The site was a rocky hill called Muntanya Pelada, Bare Mountain.",
+   "src": [
+    "wp-park-guell"
+   ],
+   "quote": [
+    "The location, a rocky hill called Muntanya Pelada (Bare Mountain)"
+   ]
+  },
+  "failed": {
+   "label": "supported",
+   "says": "The plan had sixty plots, but only two houses were built, as the area was too far from the city centre.",
+   "src": [
+    "wp-park-guell"
+   ],
+   "quote": [
+    "The plan included sixty triangular plots for luxury homes.",
+    "only two homes were built (neither by Gaudí) as the sparsely developed area was found to be too far from the city centre"
+   ]
+  },
+  "to-city": {
+   "label": "supported",
+   "says": "The Güell family later passed the land to the city; Güell died in 1918 in his house in the park.",
+   "src": [
+    "wp-eusebi-guell"
+   ],
+   "quote": [
+    "the Güell family gave the land to the city, as Park Güell.",
+    "He died in 1918 in his house of Park Güell."
+   ]
+  },
+  "friends": {
+   "label": "supported",
+   "says": "Güell and Gaudí were lifelong friends, both devout Catholics.",
+   "src": [
+    "wp-eusebi-guell"
+   ],
+   "quote": [
+    "The pair became lifelong friends and associates and found that they had mutual interests, including religion (both were devout Catholics)."
+   ]
+  },
+  "respect": {
+   "label": "tradition",
+   "says": "Reportedly Gaudí once said, \"Sometimes I think we are the only people who like this architecture,\" and Güell replied, \"I don't like your architecture, I respect it.\"",
+   "src": [
+    "wp-eusebi-guell"
+   ],
+   "quote": [
+    "Reportedly on one occasion Gaudí said to Güell, \"Sometimes I think we are the only people who like this architecture.\" Güell replied, \"I don't like your architecture, I respect it.\""
+   ]
+  },
+  "father": {
+   "label": "disputed",
+   "says": "Güell's father grew rich during his stay in Cuba; one account calls him a slave trader there.",
+   "src": [
+    "wp-eusebi-guell"
+   ],
+   "quote": [
+    "a wealthy industrialist from Torredembarra who had amassed considerable riches during his stay in Cuba as a slave trader"
+   ]
+  },
+  "gatehouses": {
+   "label": "supported",
+   "says": "The entrance is marked by two whimsical gatehouses, the Porter's Lodge pavilion; one now holds an exhibit of the Barcelona City History Museum.",
+   "src": [
+    "wp-park-guell"
+   ],
+   "quote": [
+    "The entrance is marked by two whimsical gatehouses forming the Porter's Lodge pavilion. One housed a phone booth; the other now contains a permanent exhibit of the Barcelona City History Museum."
+   ]
+  },
+  "wall": {
+   "label": "supported",
+   "says": "The site is surrounded by a stone and glazed-ceramic wall.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "the site is surrounded by a stone and glazed-ceramic wall"
+   ]
+  },
+  "dragon": {
+   "label": "supported",
+   "says": "Steps beyond the gate, decorated with sculpted fountains, lead upward; the dragon fountain has become a symbol of the park.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "After passing through the gate, steps lead to higher levels, decorated with sculpted fountains, notably the dragon fountain, which has become a symbol of the park and one of Gaudí's most recognised emblems."
+   ]
+  },
+  "catalan": {
+   "label": "supported",
+   "says": "Gaudí put Catalan motifs in the park, such as a mosaic with the Catalan flag and dragons, seen as Catalan symbols because of the patron saint George.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "Gaudí inserted numerous Catalan motifs in the park, such as a large mosaic with the Catalan flag or the representations of dragons, which were seen as Catalan symbols during the Renaixença because of their connection to Catalan patron saint George."
+   ]
+  },
+  "market": {
+   "label": "supported",
+   "says": "The steps lead to the Hypostyle Hall, meant as the residents' market, built with large Doric columns.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "These steps lead to the Hypostyle Hall, which was to have been the residents' market, constructed with large Doric columns."
+   ]
+  },
+  "terrace": {
+   "label": "supported",
+   "says": "Above it is a large plaza in the form of a Greek theatre with the undulating bench covered in broken ceramics, trencadís, the work of Josep Maria Jujol.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "Above this chamber is a large plaza in the form of a Greek theatre, with the famous undulating bench covered in broken ceramics (trencadís), the work of Josep Maria Jujol."
+   ]
+  },
+  "bench": {
+   "label": "supported",
+   "says": "The long curving bench is shaped like a sea serpent, and its form creates enclaves to encourage people to talk.",
+   "src": [
+    "wp-park-guell"
+   ],
+   "quote": [
+    "The park's focal point is a terrace bordered by a long, curving bench shaped like a sea serpent. Designed by Josep Maria Jujol, the bench’s ergonomic form creates enclaves to encourage social interaction."
+   ]
+  },
+  "viaducts": {
+   "label": "supported",
+   "says": "Raised pathways, first meant for carriages, run through the park; built of local stone, their columns and vaults mimic tree trunks.",
+   "src": [
+    "wp-park-guell"
+   ],
+   "quote": [
+    "A system of elevated pathways—originally intended for carriages—threads through the park. Designed by Gaudí using local stone, they blend seamlessly with the landscape. Their columns and vaulted supports mimic tree trunks and natural forms."
+   ]
+  },
+  "steep": {
+   "label": "supported",
+   "says": "The area is rugged with steep slopes, which Gaudí handled with viaducts.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "a rugged area, with steep slopes that Gaudí negotiated with a system of viaducts integrated into the terrain"
+   ]
+  },
+  "house": {
+   "label": "supported",
+   "says": "A show home built in 1904 went unsold; Güell persuaded Gaudí to buy it with his savings, and Gaudí moved in with his father and niece in 1906. It became the Gaudí House Museum in 1963.",
+   "src": [
+    "wp-park-guell"
+   ],
+   "quote": [
+    "One house, built as a show home in 1904, remained unsold. Güell persuaded Gaudí to purchase it with his savings. Gaudí moved in with his father and niece in 1906. The house, designed by Francesc Berenguer i Mestres, became the Gaudí House Museum in 1963"
+   ]
+  },
+  "crosses": {
+   "label": "supported",
+   "says": "At the highest point, steps lead to the Hill of the Three Crosses, a calvary; one cross points to the sky, two mark directions. From here you can see the Sagrada Família, Montjuïc and the Mediterranean.",
+   "src": [
+    "wp-park-guell"
+   ],
+   "quote": [
+    "At the park’s highest point is a hill with steps leading to El Turó de les Tres Creus (Hill of the Three Crosses)—a calvary of three stone crosses. One points skyward; the other two mark cardinal directions. From here, visitors can view the Sagrada Família, Torre Glòries, Montjuïc, and the Mediterranean."
+   ]
+  },
+  "wildlife": {
+   "label": "supported",
+   "says": "The park has non-native parrots and hummingbird hawk moths.",
+   "src": [
+    "wp-park-guell"
+   ],
+   "quote": [
+    "Park Güell supports a diverse range of wildlife, including non-native parrots",
+    "It is also known for hummingbird hawk moths."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The gate",
+   "stand": "Stand just outside the main entrance, where you can see both gatehouses.",
+   "paras": [
+    {
+     "t": "Welcome to Park Güell. Look at these two gatehouses, straight out of a fairy tale. Antoni Gaudí designed this hillside for his patron, Eusebi Güell, and built it between 1900 and 1914.",
+     "c": [
+      "gatehouses",
+      "built"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Here's the surprise. It wasn't meant to be a public park. Güell wanted a luxury housing estate, inspired by the English garden cities, which is why it's called Park, in English. There were sixty plots. Only two houses were ever built.",
+     "c": [
+      "garden-city",
+      "failed"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Back then this was a rocky hill people called Muntanya Pelada, the Bare Mountain. Notice the wall that runs around the site, made of stone and glazed ceramic.",
+     "c": [
+      "bare-mountain",
+      "wall"
+     ],
+     "level": 2
+    },
+    {
+     "t": "One of the gatehouses now holds a small exhibit of the Barcelona City History Museum.",
+     "c": [
+      "gatehouses"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The dragon stairway",
+   "stand": "Go through the gate and stop at the foot of the stairway with the fountains.",
+   "paras": [
+    {
+     "t": "There's the famous one. The dragon fountain on these steps has become the symbol of the whole park.",
+     "c": [
+      "dragon"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Why a dragon? For Catalans, dragons were tied to their patron saint, George. Gaudí filled the park with Catalan symbols like this, including a mosaic of the Catalan flag.",
+     "c": [
+      "catalan"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Expect a crowd around the dragon. Be patient, and keep an eye on your bag.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "The market hall and the terrace",
+   "stand": "Climb to the top of the stairs, step in among the big columns, then go up to the open terrace above.",
+   "paras": [
+    {
+     "t": "This forest of columns is the Hypostyle Hall. It was meant to be the market for the people who would live here. They're big Doric columns, the old classical kind.",
+     "c": [
+      "market"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Up on the big terrace above, laid out like a Greek theater, runs the long bench, curving like a sea serpent and covered in broken tiles. That mosaic is called trencadís. The bench was the work of Josep Maria Jujol.",
+     "c": [
+      "terrace",
+      "bench"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Sit down for a moment. The curves of the bench make little nooks. It was designed to get people talking.",
+     "c": [
+      "bench"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The stone viaducts",
+   "stand": "Follow the paths uphill until you're walking along one of the raised stone walkways with columns underneath.",
+   "paras": [
+    {
+     "t": "These raised walkways were built for carriages. Gaudí made them from the local stone, and the columns underneath are made to look like tree trunks.",
+     "c": [
+      "viaducts"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The hillside here is rugged and steep. That's exactly why he built the viaducts. Take the slopes at your own pace, and on a hot day, carry water and find some shade.",
+     "c": [
+      "steep"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Keep your eyes and ears open, too. The park is home to parrots, not native here, and to hummingbird hawk moths.",
+     "c": [
+      "wildlife"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Gaudí's house",
+   "stand": "Follow the signs to the Gaudí House Museum.",
+   "paras": [
+    {
+     "t": "This was Gaudí's home for many years, from 1906. It was a show house nobody bought, so Güell persuaded Gaudí to buy it with his own savings. He moved in with his father and his niece.",
+     "c": [
+      "house"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The two men were lifelong friends, and both devout Catholics. Gaudí is said to have told him once, \"Sometimes I think we are the only people who like this architecture.\" And Güell answered, \"I don't like your architecture. I respect it.\"",
+     "c": [
+      "friends",
+      "respect"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It's fair to ask where the money came from, too. Güell's father grew rich in Cuba, and some accounts say he was a slave trader there. How far he was involved is not settled.",
+     "c": [
+      "father"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Güell himself died in 1918, in his house here in the park. Later the land passed from his family to the city, and in 1926 it opened as a public park.",
+     "c": [
+      "to-city",
+      "built"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The Three Crosses",
+   "stand": "If your legs are up for it, climb to the highest point of the park, the small hill with the stone crosses.",
+   "paras": [
+    {
+     "t": "This is the Hill of the Three Crosses, a little calvary. One cross points up to the sky. From here you can pick out the Sagrada Família, Montjuïc, and the Mediterranean.",
+     "c": [
+      "crosses"
+     ],
+     "level": 1
+    },
+    {
+     "t": "UNESCO lists the park as World Heritage, and notes that it is still a public park and green space.",
+     "c": [
+      "unesco"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The housing estate failed. Hardly anyone wanted to build up here. It was too far from the city. But look around you at all these people, sitting, talking, looking out at the sea. Maybe it turned out better this way.",
+     "c": [
+      "failed"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

@@ -1,0 +1,344 @@
+{
+ "sights": [
+  {
+   "id": "eiffel-tower",
+   "title": "The Eiffel Tower",
+   "appIds": [
+    "src-q243"
+   ],
+   "wikidata": [
+    "Q243"
+   ],
+   "editions": 191,
+   "folds": [
+    "Champ de Mars"
+   ],
+   "sources": [
+    "wp-eiffel-tower",
+    "wp-gustave-eiffel",
+    "wp-exposition-universelle",
+    "wp-champ-mars",
+    "unesco-paris-seine",
+    "wv-paris"
+   ]
+  },
+  {
+   "id": "louvre",
+   "title": "The Louvre",
+   "appIds": [
+    "src-q19675",
+    "src-q818517"
+   ],
+   "wikidata": [
+    "Q19675",
+    "Q818517"
+   ],
+   "editions": 170,
+   "folds": [
+    "Louvre Pyramid",
+    "Tuileries Garden"
+   ],
+   "sources": [
+    "wp-louvre",
+    "wp-mona-lisa",
+    "wp-louvre-pyramid",
+    "wp-tuileries-garden",
+    "unesco-paris-seine"
+   ]
+  },
+  {
+   "id": "notre-dame",
+   "title": "Notre-Dame de Paris",
+   "appIds": [
+    "src-q2981"
+   ],
+   "wikidata": [
+    "Q2981"
+   ],
+   "editions": 125,
+   "folds": [
+    "Île de la Cité"
+   ],
+   "sources": [
+    "wp-notre-dame-paris",
+    "wp-notre-dame-paris-fire",
+    "wp-hunchback-notre-dame",
+    "wp-maurice-sully",
+    "unesco-paris-seine"
+   ]
+  },
+  {
+   "id": "orsay",
+   "title": "Musée d'Orsay",
+   "appIds": [
+    "src-q23402"
+   ],
+   "wikidata": [
+    "Q23402"
+   ],
+   "editions": 122,
+   "folds": [],
+   "sources": [
+    "wp-musee-d-orsay",
+    "wp-gare-d-orsay",
+    "wp-impressionism"
+   ]
+  },
+  {
+   "id": "arc-de-triomphe",
+   "title": "Arc de Triomphe and the Champs-Élysées",
+   "appIds": [
+    "src-q64436",
+    "src-q550"
+   ],
+   "wikidata": [
+    "Q64436",
+    "Q550"
+   ],
+   "editions": 95,
+   "folds": [
+    "Champs-Élysées"
+   ],
+   "sources": [
+    "wp-arc-triomphe",
+    "wp-champs-elysees",
+    "wp-tomb-unknown-soldier",
+    "wp-napoleon"
+   ]
+  },
+  {
+   "id": "bastille",
+   "title": "Place de la Bastille",
+   "appIds": [
+    "src-q1865480"
+   ],
+   "wikidata": [
+    "Q1865480"
+   ],
+   "editions": 86,
+   "folds": [
+    "July Column"
+   ],
+   "sources": [
+    "wp-place-la-bastille",
+    "wp-storming-bastille",
+    "wp-bastille",
+    "wp-july-column"
+   ]
+  },
+  {
+   "id": "pere-lachaise",
+   "title": "Père Lachaise Cemetery",
+   "appIds": [
+    "src-q311"
+   ],
+   "wikidata": [
+    "Q311"
+   ],
+   "editions": 71,
+   "folds": [],
+   "sources": [
+    "wp-pere-lachaise-cemetery",
+    "wp-frederic-chopin",
+    "wp-jim-morrison",
+    "wp-oscar-wilde"
+   ]
+  },
+  {
+   "id": "palais-garnier",
+   "title": "Palais Garnier",
+   "appIds": [
+    "src-q187840"
+   ],
+   "wikidata": [
+    "Q187840"
+   ],
+   "editions": 63,
+   "folds": [],
+   "sources": [
+    "wp-palais-garnier",
+    "wp-charles-garnier",
+    "wp-phantom-opera",
+    "wp-marc-chagall"
+   ]
+  },
+  {
+   "id": "pompidou",
+   "title": "Centre Pompidou",
+   "appIds": [
+    "src-q178065"
+   ],
+   "wikidata": [
+    "Q178065"
+   ],
+   "editions": 63,
+   "folds": [
+    "Stravinsky Fountain"
+   ],
+   "sources": [
+    "wp-centre-pompidou",
+    "wp-renzo-piano",
+    "wp-richard-rogers",
+    "wp-stravinsky-fountain"
+   ]
+  },
+  {
+   "id": "concorde",
+   "title": "Place de la Concorde",
+   "appIds": [
+    "src-q189503"
+   ],
+   "wikidata": [
+    "Q189503"
+   ],
+   "editions": 62,
+   "folds": [
+    "Luxor Obelisk"
+   ],
+   "sources": [
+    "wp-place-la-concorde",
+    "wp-luxor-obelisk",
+    "wp-execution-louis-xvi",
+    "wp-marie-antoinette",
+    "unesco-paris-seine"
+   ]
+  },
+  {
+   "id": "sacre-coeur",
+   "title": "Sacré-Cœur and Montmartre",
+   "appIds": [
+    "src-q28785"
+   ],
+   "wikidata": [
+    "Q28785"
+   ],
+   "editions": 61,
+   "folds": [
+    "Montmartre"
+   ],
+   "sources": [
+    "wp-sacre-cur-paris",
+    "wp-montmartre",
+    "wp-paul-abadie",
+    "wp-paris-commune"
+   ]
+  },
+  {
+   "id": "pantheon",
+   "title": "The Panthéon",
+   "appIds": [
+    "src-q188856"
+   ],
+   "wikidata": [
+    "Q188856"
+   ],
+   "editions": 61,
+   "folds": [],
+   "sources": [
+    "wp-pantheon",
+    "wp-foucault-pendulum",
+    "wp-victor-hugo",
+    "wp-marie-curie"
+   ]
+  },
+  {
+   "id": "le-havre",
+   "title": "Le Havre: the city rebuilt by Auguste Perret",
+   "appIds": [],
+   "wikidata": [
+    "Q42810"
+   ],
+   "editions": null,
+   "folds": [
+    "St. Joseph's Church"
+   ],
+   "sources": [
+    "wp-le-havre",
+    "wp-auguste-perret",
+    "wp-st-joseph-s-church-le-havre",
+    "wp-impression-sunrise",
+    "unesco-le-havre",
+    "wv-le-havre"
+   ]
+  },
+  {
+   "id": "chartres",
+   "title": "Day trip: Chartres Cathedral",
+   "appIds": [
+    "chartres-far"
+   ],
+   "wikidata": [
+    "Q130272",
+    "Q180274"
+   ],
+   "editions": 73,
+   "folds": [],
+   "sources": [
+    "wp-chartres-cathedral",
+    "wp-chartres",
+    "wp-gothic-architecture",
+    "unesco-chartres",
+    "wv-chartres"
+   ]
+  },
+  {
+   "id": "fontainebleau",
+   "title": "Day trip: Palace of Fontainebleau",
+   "appIds": [
+    "fontainebleau-far"
+   ],
+   "wikidata": [
+    "Q201428",
+    "Q739976"
+   ],
+   "editions": 56,
+   "folds": [
+    "Château de Vaux-le-Vicomte"
+   ],
+   "sources": [
+    "wp-palace-fontainebleau",
+    "wp-francis-i-france",
+    "wp-chateau-vaux-le-vicomte",
+    "wp-nicolas-fouquet",
+    "unesco-fontainebleau",
+    "wv-fontainebleau"
+   ]
+  },
+  {
+   "id": "chantilly",
+   "title": "Day trip: Château de Chantilly",
+   "appIds": [
+    "chantilly-far"
+   ],
+   "wikidata": [
+    "Q126675",
+    "Q766938"
+   ],
+   "editions": 30,
+   "folds": [],
+   "sources": [
+    "wp-chateau-chantilly",
+    "wp-musee-conde",
+    "wp-henri-d-orleans-duke-aumale",
+    "wv-chantilly"
+   ]
+  },
+  {
+   "id": "disneyland",
+   "title": "Day trip: Disneyland Paris",
+   "appIds": [
+    "disneyland-paris-far"
+   ],
+   "wikidata": [
+    "Q206521"
+   ],
+   "editions": 0,
+   "folds": [],
+   "sources": [
+    "wp-disneyland-paris",
+    "wp-disneyland-park",
+    "wv-disneyland-paris"
+   ]
+  }
+ ]
+}

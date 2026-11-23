@@ -1,0 +1,92 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-kotor",
+   "wiki": "Kotor"
+  },
+  {
+   "key": "wp-natural-culturo-historical-r",
+   "wiki": "Natural and Culturo-Historical Region of Kotor"
+  },
+  {
+   "key": "wp-venetian-albania",
+   "wiki": "Venetian Albania"
+  },
+  {
+   "key": "unesco-kotor",
+   "url": "https://whc.unesco.org/en/list/125/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "unesco-venetian-defence",
+   "url": "https://whc.unesco.org/en/list/1533/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "wv-kotor",
+   "wiki": "Kotor",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-cathedral-saint-tryphon",
+   "wiki": "Cathedral of Saint Tryphon"
+  },
+  {
+   "key": "wp-saint-tryphon",
+   "wiki": "Saint Tryphon"
+  },
+  {
+   "key": "wp-roman-catholic-diocese-kotor",
+   "wiki": "Roman Catholic Diocese of Kotor"
+  },
+  {
+   "key": "wp-perast",
+   "wiki": "Perast"
+  },
+  {
+   "key": "wp-our-lady-rocks",
+   "wiki": "Our Lady of the Rocks"
+  },
+  {
+   "key": "wp-bay-kotor",
+   "wiki": "Bay of Kotor"
+  },
+  {
+   "key": "wv-perast",
+   "wiki": "Perast",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-lovcen",
+   "wiki": "Lovćen"
+  },
+  {
+   "key": "wp-petar-ii-petrovic-njegos",
+   "wiki": "Petar II Petrović-Njegoš"
+  },
+  {
+   "key": "wp-njegusi",
+   "wiki": "Njeguši"
+  },
+  {
+   "key": "wp-njeguski-prsut",
+   "wiki": "Njeguški pršut"
+  },
+  {
+   "key": "wp-dobrota",
+   "wiki": "Dobrota"
+  },
+  {
+   "key": "wp-prcanj",
+   "wiki": "Prčanj"
+  },
+  {
+   "key": "wp-serbian-orthodox-church",
+   "wiki": "Serbian Orthodox Church"
+  },
+  {
+   "key": "wp-bokelj-navy",
+   "wiki": "Bokelj Navy"
+  }
+ ]
+}

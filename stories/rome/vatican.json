@@ -1,0 +1,816 @@
+{
+ "id": "vatican",
+ "v": 1,
+ "city": "rome",
+ "title": "Saint Peter's Basilica and Square",
+ "match": {
+  "ids": [
+   "vatican"
+  ],
+  "names": [
+   "st peter",
+   "st. peter",
+   "saint peter",
+   "san pietro",
+   "vatican"
+  ],
+  "wikidata": [
+   "Q12512",
+   "Q83425",
+   "Q182955",
+   "Q2943"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "sq-bernini": {
+   "label": "supported",
+   "says": "Bernini designed the square almost 100 years after the obelisk arrived, with colonnades four columns deep that he called the maternal arms of Mother Church.",
+   "src": [
+    "wp-st-peters-square"
+   ],
+   "quote": [
+    "Gian Lorenzo Bernini designed the square almost 100 years later, including the massive Tuscan colonnades, four columns deep, which embrace visitors in \"the maternal arms of Mother Church\""
+   ]
+  },
+  "sq-why": {
+   "label": "supported",
+   "says": "The square was designed so that the greatest number of people could see the Pope give his blessing.",
+   "src": [
+    "wp-st-peters-square"
+   ],
+   "quote": [
+    "designed \"so that the greatest number of people could see the Pope give his blessing, either from the middle of the façade of the church or from a window in the Vatican Palace\""
+   ]
+  },
+  "obelisk": {
+   "label": "supported",
+   "says": "The obelisk is an uninscribed Egyptian obelisk of red granite, first raised in Heliopolis by an unknown pharaoh; Caligula brought it to Rome in AD 37 for the Circus of Nero, and it was moved here in 1586.",
+   "src": [
+    "wp-st-peters-square"
+   ],
+   "quote": [
+    "an uninscribed Egyptian obelisk of red granite",
+    "The obelisk was originally erected in Heliopolis, Egypt, by an unknown pharaoh.",
+    "where it stood until AD 37, when Caligula ordered the forum demolished and the obelisk transferred to Rome. He had it placed on the spina which ran along the center of the Circus of Nero.",
+    "It was moved to its current site in 1586"
+   ]
+  },
+  "obelisk-witness": {
+   "label": "tradition",
+   "says": "Tradition places Peter's crucifixion near this obelisk in the Circus of Nero; it is revered as a witness to his death.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "The crucifixion took place near an ancient Egyptian obelisk in the Circus of Nero.",
+    "The obelisk now stands in St. Peter's Square and is revered as a \"witness\" to Peter's death."
+   ]
+  },
+  "statues": {
+   "label": "supported",
+   "says": "On the steps stand big statues of the apostles Peter and Paul; Peter is on the left of the stairs. Christ, John the Baptist and eleven apostles stand along the top of the façade.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "approached by steps on which stand two 5.55-metre (18.2 ft) statues of the first-century apostles to Rome, Saints Peter and Paul.",
+    "thirteen statues: Christ flanked by eleven of the Apostles (except Saint Peter, whose statue is left of the stairs) and John the Baptist."
+   ]
+  },
+  "dress": {
+   "label": "supported",
+   "says": "Dress modestly: no sleeveless shirts, shorts or skirts above the knee, or you can be refused entry to places in the Vatican.",
+   "src": [
+    "wv-vatican"
+   ],
+   "quote": [
+    "Dress appropriately — no sleeveless shirts, shorts, flip-flops, trainers, or skirts that do not cover the knee — or else you will be refused entry to various places around the Vatican."
+   ]
+  },
+  "largest": {
+   "label": "verified",
+   "says": "St Peter's is the largest church in the world by interior measure; UNESCO calls it the largest religious building in the world.",
+   "src": [
+    "unesco-vatican",
+    "wp-st-peters"
+   ],
+   "quote": [
+    "is the largest religious building in the world",
+    "is the largest church in the world by interior measure"
+   ]
+  },
+  "old-new": {
+   "label": "verified",
+   "says": "Constantine founded the first basilica here in the 4th century; the present one was begun on 18 April 1506 and completed in 1626.",
+   "src": [
+    "unesco-vatican",
+    "wp-st-peters"
+   ],
+   "quote": [
+    "since the foundation of Saint Peter's Basilica by Constantine (4th century)",
+    "Construction of the present basilica began on 18 April 1506 and was completed on 18 November 1626."
+   ]
+  },
+  "architects": {
+   "label": "verified",
+   "says": "It was designed principally by Bramante, Michelangelo and Maderno, with the square and fittings by Bernini.",
+   "src": [
+    "unesco-vatican",
+    "wp-st-peters"
+   ],
+   "quote": [
+    "the fruit of the combined genius of Bramante, Raphael, Michelangelo, Bernini and Maderno",
+    "Designed principally by Donato Bramante, Michelangelo, and Carlo Maderno, with piazza and fittings by Gian Lorenzo Bernini"
+   ]
+  },
+  "indulgences": {
+   "label": "supported",
+   "says": "Part of the money came from selling indulgences; Johann Tetzel's salesmanship provoked a scandal that led to the Protestant Reformation.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "One method employed to finance the building of St. Peter's Basilica was the granting of indulgences in return for contributions.",
+    "he appointed the German Dominican preacher Johann Tetzel, whose salesmanship provoked a scandal and led to the Protestant Reformation."
+   ]
+  },
+  "holy-door": {
+   "label": "tradition",
+   "says": "The northernmost door from the porch is the Holy Door, which by tradition is walled up and opened only for jubilees. The church faces east, so the north end is on the right as you face the doors.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "both this church and its successor had the entrance to the east and the apse at the west end of the building",
+    "The northernmost door is the \"Holy Door\" which, by tradition, is walled-up with bricks, and opened only for holy years such as the Jubilee year by the Pope."
+   ]
+  },
+  "pieta-where": {
+   "label": "supported",
+   "says": "The Pietà is in the first chapel on the right as you enter.",
+   "src": [
+    "wv-vatican"
+   ],
+   "quote": [
+    "In the first chapel on the right (nr. 9 on the map) as one enters the basilica is a Pietà"
+   ]
+  },
+  "pieta": {
+   "label": "supported",
+   "says": "Michelangelo carved the Pietà in Carrara marble in 1498 to 1499, for the funeral chapel of a French cardinal in Old St Peter's.",
+   "src": [
+    "wp-pieta"
+   ],
+   "quote": [
+    "1498–1499) is a Carrara marble sculpture of Jesus and Mary",
+    "The sculpture was made, probably as an altarpiece, for the cardinal's funeral chapel in Old St Peter's."
+   ]
+  },
+  "pieta-moment": {
+   "label": "supported",
+   "says": "It shows the moment Jesus, taken down from the cross, is given to his mother; Mary looks younger than her son.",
+   "src": [
+    "wp-pieta"
+   ],
+   "quote": [
+    "The sculpture captures the moment when Jesus, taken down from the cross, is given to his mother Mary. Mary looks younger than Jesus"
+   ]
+  },
+  "pieta-young": {
+   "label": "disputed",
+   "says": "Why Mary looks so young is explained in different ways: Michelangelo told his biographer Condivi it was her purity; others point to a line in Dante.",
+   "src": [
+    "wp-pieta"
+   ],
+   "quote": [
+    "Various explanations have been suggested for this. One is that her youth symbolizes her incorruptible purity, as Michelangelo himself said to his biographer",
+    "says: \"Vergine madre, figlia del tuo figlio\" (\"Virgin mother, daughter of your son\")."
+   ]
+  },
+  "pieta-signed": {
+   "label": "supported",
+   "says": "It is the only work Michelangelo ever signed, on the sash across Mary's chest; Vasari says he did it after hearing it credited to another sculptor, and later regretted it.",
+   "src": [
+    "wp-pieta"
+   ],
+   "quote": [
+    "It is the only piece Michelangelo ever signed.",
+    "According to Giorgio Vasari, shortly after the installation of his Pietà, Michelangelo overheard someone remark (or asked visitors about the sculptor) that it was the work of another sculptor, Cristoforo Solari, whereupon Michelangelo signed the sculpture. Michelangelo carved the words on the sash running across Mary's chest.",
+    "Vasari also reports the anecdote that Michelangelo later regretted his outburst of pride and swore never to sign another work of his hands."
+   ]
+  },
+  "pieta-1972": {
+   "label": "supported",
+   "says": "Mary's figure was attacked in 1972; since then the statue has been behind bulletproof glass.",
+   "src": [
+    "wp-pieta"
+   ],
+   "quote": [
+    "The statue had to be restored after the figure of Mary was vandalized on Pentecost Sunday of 1972; after the incident, the statue was protected by a bulletproof glass screen"
+   ]
+  },
+  "peter-foot": {
+   "label": "disputed",
+   "says": "The church faces east, so the north-east pier is the one on your right as you reach the dome from the nave. Against it sits a bronze Saint Peter Enthroned, perhaps by the late 13th-century sculptor Arnolfo di Cambio, though some scholars date it to the 400s; one foot is worn away by pilgrims' kisses.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "both this church and its successor had the entrance to the east and the apse at the west end of the building",
+    "Set against the north east pier of the dome is a statue of Saint Peter Enthroned, sometimes attributed to late 13th-century sculptor Arnolfo di Cambio, with some scholars dating it to the fifth century. One foot of the statue is largely worn away by pilgrims kissing it for centuries."
+   ]
+  },
+  "dome": {
+   "label": "supported",
+   "says": "Michelangelo took charge of the building in 1547, in his seventies, saying he did it only for the love of God and in honour of the Apostle; he died in 1564, and the dome was finished in 1590.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "On 1 January 1547, in the reign of Pope Paul III, Michelangelo, then in his seventies, succeeded Sangallo the Younger",
+    "Michelangelo wrote, \"I undertake this only for the love of God and in honour of the Apostle\".",
+    "Michelangelo died in 1564, leaving the drum of the dome complete",
+    "Giacomo della Porta and Domenico Fontana brought the dome to completion in 1590"
+   ]
+  },
+  "dome-words": {
+   "label": "supported",
+   "says": "Around the inside of the dome, in big letters, runs the Latin of Matthew 16:18-19: you are Peter, and on this rock I will build my church, and I will give you the keys of the kingdom of heaven.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "(\"... you are Peter, and on this rock I will build my church. ... and I will give you the keys of the kingdom of heaven ...\" Vulgate, Matthew 16:18–19.)"
+   ]
+  },
+  "rock": {
+   "label": "supported",
+   "says": "The name Peter comes from petra, Greek for stone or rock, translating the Aramaic Kepa, the name Jesus gave Simon.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "deriving from petra which means \"stone\" or \"rock\" in Greek, and is the literal translation of the Aramaic \"Kepa\", the name given to Simon by Jesus."
+   ]
+  },
+  "dome-climb": {
+   "label": "supported",
+   "says": "Climbing the dome means a lot of stairs, and the last stretch is a spiral staircase little more than shoulder-width.",
+   "src": [
+    "wv-vatican"
+   ],
+   "quote": [
+    "Be warned that there are a lot of stairs so it is not for the faint at heart (literally or figuratively) nor those suffering from claustrophobia as the very last section of the ascent is through little more than a shoulder-width spiral staircase."
+   ]
+  },
+  "baldachin": {
+   "label": "supported",
+   "says": "Bernini's bronze canopy stands under the dome over the high altar, to mark Saint Peter's tomb below; Pope Urban VIII commissioned it, and the work ran from 1623 to 1634.",
+   "src": [
+    "wp-baldacchino"
+   ],
+   "quote": [
+    "Designed by the Italian artist Gian Lorenzo Bernini, it was intended to mark, in a monumental way, the place of Saint Peter's tomb underneath. Under its canopy is the high altar of the basilica. Commissioned by Pope Urban VIII, the work began in 1623 and ended in 1634."
+   ]
+  },
+  "baldachin-size": {
+   "label": "supported",
+   "says": "The canopy is 28.74 metres (94.3 feet) tall and is claimed to be the largest piece of bronze in the world.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "a pavilion-like structure 28.74 metres (94.3 ft) tall and claimed to be the largest piece of bronze in the world"
+   ]
+  },
+  "bees": {
+   "label": "supported",
+   "says": "Look for bees and laurel leaves: emblems of the Barberini family, Urban VIII's family.",
+   "src": [
+    "wp-baldacchino"
+   ],
+   "quote": [
+    "heraldic emblems of the Barberini family (Urban VIII was born Maffeo Barberini) such as bees and laurel leaves"
+   ]
+  },
+  "solomon": {
+   "label": "tradition",
+   "says": "The twisted columns copy ancient marble columns from the old basilica, which by the Middle Ages were believed to have come from the Temple in Jerusalem; they are in fact of Greek marble. Eight of them now stand in pairs halfway up the piers around the canopy.",
+   "src": [
+    "wp-baldacchino"
+   ],
+   "quote": [
+    "supported by 2nd century Solomonic columns that had been brought \"from Greece\" by Constantine I (and which are indeed of Greek marble). These were by the Middle Ages believed to have come from the Temple of Jerusalem",
+    "Eight of the original twelve columns are now found in pairs halfway up the piers on either side of the baldachin."
+   ]
+  },
+  "bronze-source": {
+   "label": "disputed",
+   "says": "People believed the bronze came from the Pantheon, but Urban's accounts say most Pantheon bronze went into cannon and the canopy's bronze came from Venice.",
+   "src": [
+    "wp-baldacchino"
+   ],
+   "quote": [
+    "it was believed to have been taken from the roof or portico ceiling of the ancient Roman Pantheon, though Urban's accounts say that about ninety percent of the bronze from the Pantheon was used for a cannon, and that the bronze for the baldachin came from Venice."
+   ]
+  },
+  "confessio": {
+   "label": "supported",
+   "says": "In front of the high altar, two curving marble staircases lead down to the Confessio, at the level of the old basilica and just above the purported burial place of Peter.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "Two curving marble staircases lead to this underground chapel at the level of the Constantinian church and immediately above the purported burial place of Saint Peter."
+   ]
+  },
+  "circus": {
+   "label": "verified",
+   "says": "Ruins of the circus of Caligula and Nero lie beneath the basilica.",
+   "src": [
+    "unesco-vatican"
+   ],
+   "quote": [
+    "remains of the first basilica founded by Constantine still exist, as well as ruins of the circus of Caligula and Nero"
+   ]
+  },
+  "ostian": {
+   "label": "supported",
+   "says": "Paul's burial place on the Via Ostiensis, the Ostian Way, is where the Basilica of Saint Paul Outside the Walls stands.",
+   "src": [
+    "wp-paul"
+   ],
+   "quote": [
+    "Paul's body was buried outside the walls of Rome, at the second mile on the Via Ostiensis",
+    "The present-day Basilica of Saint Paul Outside the Walls was built there in the early 19th century."
+   ]
+  },
+  "acts-peter": {
+   "label": "supported",
+   "says": "The book of Acts records that Simon Peter, a fisherman from Galilee, took a leadership position among Jesus' followers.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "it is recorded in the Biblical book of the Acts of the Apostles that one of his twelve disciples, Simon known as Saint Peter, a fisherman from Galilee, took a leadership position among Jesus' followers"
+   ]
+  },
+  "nt-silent": {
+   "label": "tradition",
+   "says": "The New Testament does not mention Peter's martyrdom in Rome; tradition, based on the Church Fathers, holds that his tomb is below the canopy and altar.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "Although the New Testament does not mention St. Peter's martyrdom in Rome, tradition, based on the writings of the Fathers of the Church, holds that his tomb is below the baldachin and the altar of the Basilica in the \"Confession\"."
+   ]
+  },
+  "nero": {
+   "label": "tradition",
+   "says": "Tradition holds that Peter died in Rome under Nero, after the Great Fire, and Jerome says he was crucified head downwards at his own request.",
+   "src": [
+    "wp-st-peters"
+   ],
+   "quote": [
+    "during the reign of the Roman Emperor Nero. His execution was one of the many martyrdoms of Christians following the Great Fire of Rome. According to Jerome, Peter was crucified head downwards, by his own request because he considered himself unworthy to die in the same manner as Jesus."
+   ]
+  },
+  "caius": {
+   "label": "supported",
+   "says": "Around the year 200 the Roman Christian Caius wrote that he could show the trophies, the memorials, of the apostles at the Vatican and on the Ostian Way.",
+   "src": [
+    "wp-peters-tomb"
+   ],
+   "quote": [
+    "There is evidence of the existence of the tomb (trophoea, i.e., trophies, as signs or memorials of victory) at the beginning of the 3rd century",
+    "But I can show the trophies of the Apostles. For if you will go to the Vatican, or to the Ostian way, you will find the trophies of those who laid the foundations of this church."
+   ]
+  },
+  "dig": {
+   "label": "disputed",
+   "says": "Excavations under the basilica from 1939 found a 2nd-century shrine and bones. In 1950 Pius XII said none could be confirmed as Peter's with absolute certainty; in 1968 Paul VI called the identification of other bones convincing, though the dig's own lead archaeologist, Antonio Ferrua, was not convinced.",
+   "src": [
+    "wp-peters-tomb",
+    "wp-st-peters"
+   ],
+   "quote": [
+    "In 1939, in the reign of Pope Pius XII, 10 years of archaeological research began under the crypt of the basilica",
+    "many bones have been found at the site of the 2nd-century shrine, but Pope Pius XII stated in December 1950 that none could be confirmed to be Saint Peter's with absolute certainty.",
+    "On 26 June 1968, following the discovery of bones that had been transferred from a second tomb under the monument, Pope Paul VI stated that the relics of Saint Peter had been identified in a manner considered to be convincing.",
+    "Antonio Ferrua, the archaeologist who headed the excavation that uncovered what the Catholic Church says is Saint Peter's Tomb, said he was not convinced the bones found were those of Saint Peter."
+   ]
+  },
+  "early-christians": {
+   "label": "supported",
+   "says": "The ancient Christians who buried their dead at this spot chose it because they believed Peter was buried there.",
+   "src": [
+    "wp-peters-tomb"
+   ],
+   "quote": [
+    "it is clear that the ancient Christians who buried their dead at the site chose to do so based on their belief that Peter was buried there also."
+   ]
+  },
+  "museums": {
+   "label": "supported",
+   "says": "Pope Julius II founded the Vatican Museums in the early 1500s; they hold roughly 70,000 works, about 20,000 on display, and the Sistine Chapel is the last room on the route.",
+   "src": [
+    "wp-vatican-museums"
+   ],
+   "quote": [
+    "The museums contain roughly 70,000 works, of which 20,000 are on display",
+    "Pope Julius II founded the museums in the early 16th century.",
+    "with the Sistine Chapel, notably, being the last room visited within the Museum."
+   ]
+  },
+  "sistine": {
+   "label": "supported",
+   "says": "The Sistine Chapel is named for Pope Sixtus IV, who built it between 1473 and 1481; it is where the cardinals elect a new pope.",
+   "src": [
+    "wp-sistine"
+   ],
+   "quote": [
+    "it takes its name from Pope Sixtus IV, who had it built between 1473 and 1481",
+    "Today, it is the site of the papal conclave, the process by which a new pope is selected."
+   ]
+  },
+  "smoke": {
+   "label": "supported",
+   "says": "During a conclave a chimney goes up on the roof: white smoke means a new pope, black smoke means no one has two-thirds of the vote.",
+   "src": [
+    "wp-sistine"
+   ],
+   "quote": [
+    "On the occasion of a conclave, a chimney is installed in the roof of the chapel, from which smoke arises as a signal. If white smoke appears, a new Pope has been elected. If the smoke is black, no candidate has received the required two-thirds vote"
+   ]
+  },
+  "ceiling": {
+   "label": "supported",
+   "says": "Michelangelo painted the ceiling between 1508 and 1512; along its center run nine scenes from the Book of Genesis, among them the Creation of Adam.",
+   "src": [
+    "wp-sistine",
+    "wp-sistine-ceiling"
+   ],
+   "quote": [
+    "Between 1508 and 1512, under the patronage of Pope Julius II, Michelangelo painted the chapel's ceiling",
+    "Central to the ceiling decoration are nine scenes from the Book of Genesis, including The Creation of Adam."
+   ]
+  },
+  "standing": {
+   "label": "supported",
+   "says": "He did not paint lying on his back but standing, head tilted backwards, in great discomfort, as Vasari wrote.",
+   "src": [
+    "wp-sistine",
+    "wp-sistine-ceiling"
+   ],
+   "quote": [
+    "Contrary to popular belief, he did not lie on this scaffolding while he painted, but painted from a standing position.",
+    "Vasari wrote: \"These frescos were done with the greatest discomfort, for he had to stand there working with his head tilted backwards.\""
+   ]
+  },
+  "judgment": {
+   "label": "supported",
+   "says": "Michelangelo came back to paint The Last Judgment across the whole wall behind the altar, between 1535 and 1541; Christ is high on the wall, the dead rise at the bottom left, the damned are dragged down on the right.",
+   "src": [
+    "wp-sistine"
+   ],
+   "quote": [
+    "between 1535 and 1541, painted The Last Judgment for popes Clement VII and Paul III",
+    "spans the entire wall behind the altar of the Sistine Chapel",
+    "High on the wall is the heroic figure of Christ, with the saints clustered in groups around him. At the bottom left of the painting the dead are raised from their graves and ascend to be judged. To the right are those who are assigned to Hell and are dragged down by demons."
+   ]
+  },
+  "biagio": {
+   "label": "legend",
+   "says": "When the papal master of ceremonies Biagio da Cesena called the nudes disgraceful, Michelangelo painted his face on Minos, judge of the underworld; it is said the pope replied his authority did not reach as far as hell.",
+   "src": [
+    "wp-sistine"
+   ],
+   "quote": [
+    "In response Michelangelo worked da Cesena's semblance into the scene as Minos, judge of the underworld. It is said that when he complained to the Pope, the pontiff responded that his jurisdiction did not extend to hell, so the portrait would have to remain."
+   ]
+  },
+  "skin": {
+   "label": "supported",
+   "says": "Michelangelo painted his own face on the flayed skin held by Saint Bartholomew.",
+   "src": [
+    "wp-sistine"
+   ],
+   "quote": [
+    "Michelangelo also painted his own portrait, on the flayed skin held by St. Bartholomew."
+   ]
+  },
+  "quiet": {
+   "label": "supported",
+   "says": "In the Sistine Chapel photography is not allowed and visitors are expected to be quiet.",
+   "src": [
+    "wv-vatican"
+   ],
+   "quote": [
+    "Photography and video recording are not allowed. Visitors are expected to be quiet at all times. The guards will regularly remind you of this."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The square",
+   "stand": "Stand near the obelisk in the middle of the square and face the basilica.",
+   "paras": [
+    {
+     "t": "Here we are in Saint Peter's Square. Those great curving rows of columns on both sides are Bernini's. He called them the maternal arms of Mother Church, reaching out to embrace whoever arrives.",
+     "c": [
+      "sq-bernini"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Count how deep they are: four columns. And the square had a practical purpose too. It was laid out so the greatest number of people could see the Pope give his blessing.",
+     "c": [
+      "sq-bernini",
+      "sq-why"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Now the obelisk beside you. It's Egyptian red granite, with no hieroglyphs on it, first raised in Heliopolis by a pharaoh nobody can name. The emperor Caligula brought it to Rome in AD 37 for the Circus of Nero, whose ruins lie under the basilica. It was moved to this spot in 1586.",
+     "c": [
+      "obelisk",
+      "circus"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Tradition says Peter was crucified near this obelisk, so it's revered as a witness to his death.",
+     "c": [
+      "obelisk-witness"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Walk toward the steps. Saint Peter stands on the left of the stairs and Saint Paul on the other side, the two apostles of Rome. Up along the top of the façade are Christ, John the Baptist and eleven apostles. Peter isn't up there; he's down here with you.",
+     "c": [
+      "statues"
+     ],
+     "level": 3
+    },
+    {
+     "t": "One practical word: shoulders and knees need to be covered to go in.",
+     "c": [
+      "dress"
+     ],
+     "level": 1
+    }
+   ]
+  },
+  {
+   "name": "The basilica and the Pietà",
+   "stand": "Go in through the doors and turn right to the first chapel on that side.",
+   "paras": [
+    {
+     "t": "You're now inside the largest church in the world, measured inside.",
+     "c": [
+      "largest"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The first church here was Constantine's, in the fourth century. This one was begun in 1506 and finished in 1626.",
+     "c": [
+      "old-new"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Its main designers were Bramante, Michelangelo and Maderno, with Bernini doing the square and much of the furnishing. And before you came in, if you glanced at the door at the northern end of the porch, the far right as you face the church, that's the Holy Door. By tradition it stays walled up and opens only in a jubilee year.",
+     "c": [
+      "architects",
+      "holy-door"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Part of the money came from indulgences granted in return for donations. One preacher, Johann Tetzel, pushed them so hard that his salesmanship caused a scandal, and that scandal helped set off the Protestant Reformation.",
+     "c": [
+      "indulgences"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Here in the first chapel on the right is Michelangelo's Pietà: Mary holding her son, just taken down from the cross.",
+     "c": [
+      "pieta-where",
+      "pieta-moment"
+     ],
+     "level": 1
+    },
+    {
+     "t": "He carved it in 1498 and 1499, for a French cardinal's funeral chapel in the old basilica.",
+     "c": [
+      "pieta"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Look at Mary's face. She looks younger than her son, and nobody knows for sure why. Michelangelo told his biographer it showed her purity; others point to a line in Dante: Virgin mother, daughter of your son.",
+     "c": [
+      "pieta-moment",
+      "pieta-young"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Now find the band across her chest. That's his signature, the only work he ever signed. According to the writer Vasari, he heard visitors credit it to another sculptor and carved his name into it. Vasari adds that he later regretted the pride, and swore never to sign another.",
+     "c": [
+      "pieta-signed"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The glass is there because in 1972 someone attacked Mary's figure.",
+     "c": [
+      "pieta-1972"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Under the dome",
+   "stand": "Walk up the middle of the nave and stop in the open space under the dome, facing the bronze canopy.",
+   "paras": [
+    {
+     "t": "Near the end of the nave, against the great pillar on your right as you reach the dome, sits a bronze Saint Peter on a throne. Scholars disagree about its age; some say the late 1200s, some the 400s. Look at his foot, worn smooth by centuries of pilgrims' kisses.",
+     "c": [
+      "peter-foot"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Now look up. Michelangelo took charge of this building in 1547, in his seventies. He wrote that he did it only for the love of God and in honor of the Apostle. He died in 1564, and others finished the dome in 1590.",
+     "c": [
+      "dome"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Around the inside of the dome runs a line in Latin from Matthew chapter 16. In English it says: you are Peter, and on this rock I will build my church, and I will give you the keys of the kingdom of heaven. The name Peter itself means rock; it's the Greek for Kepa, the name Jesus gave to Simon.",
+     "c": [
+      "dome-words",
+      "rock"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Beneath it stands Bernini's bronze canopy over the high altar, built to mark Saint Peter's tomb below. Pope Urban VIII commissioned it, and it took from 1623 to 1634.",
+     "c": [
+      "baldachin"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It's about 94 feet tall, nearly 29 meters, and claimed to be the largest piece of bronze in the world. Look for bees and laurel leaves on it: the emblems of the pope's family, the Barberini.",
+     "c": [
+      "baldachin-size",
+      "bees"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The twisted columns copy ancient marble ones from the old church, which by the Middle Ages people believed had come from the Temple in Jerusalem. In fact they're Greek marble. Eight of the originals are still here, in pairs halfway up the great pillars around you.",
+     "c": [
+      "solomon"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And the bronze? People believed it was stripped from the Pantheon. But the pope's accounts say most of the Pantheon's bronze went into cannon, and the canopy's came from Venice. So the old story is probably wrong.",
+     "c": [
+      "bronze-source"
+     ],
+     "level": 3
+    },
+    {
+     "t": "If you're going to climb the dome, be ready for a lot of stairs; the last stretch is a spiral staircase barely as wide as your shoulders.",
+     "c": [
+      "dome-climb"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Peter's tomb",
+   "stand": "Go to the rail in front of the high altar and look down into the sunken space below it.",
+   "paras": [
+    {
+     "t": "Below you, two curving staircases lead down to the Confession, a chapel just above the place where Peter is said to be buried.",
+     "c": [
+      "confessio"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Let's be careful here. The New Testament does not mention Peter's death in Rome. That comes from tradition, from the early Church writers, and tradition holds that his tomb lies right below this altar.",
+     "c": [
+      "nt-silent"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The Bible does show us the man himself: the book of Acts has Peter, the fisherman from Galilee, leading the first followers of Jesus.",
+     "c": [
+      "acts-peter"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Tradition also says he died under the emperor Nero, after the Great Fire of Rome, and Jerome says Peter asked to be crucified head downwards, feeling unworthy to die the way Jesus did.",
+     "c": [
+      "nero"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The memory is old. Around the year 200, a Roman Christian named Caius wrote that he could show the trophies, the memorials, of the apostles, at the Vatican and on the Ostian Way. The Ostian Way is where Saint Paul's church stands today.",
+     "c": [
+      "caius",
+      "ostian"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Then the archaeologists came. From 1939, digs under this floor found a shrine from the second century, and bones. In 1950 Pope Pius XII said none could be confirmed as Peter's with absolute certainty. In 1968 Pope Paul VI called the identification of other bones convincing. But Antonio Ferrua, who led the dig, said he was not convinced. Historians still disagree.",
+     "c": [
+      "dig"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Vatican Museums and the Sistine Chapel",
+   "stand": "If your visit includes the museums, play this as you set off; the Sistine Chapel is the last room on the route.",
+   "paras": [
+    {
+     "t": "The Vatican Museums hold roughly 70,000 works, with about 20,000 on show, and the Sistine Chapel comes at the very end of the route.",
+     "c": [
+      "museums"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The chapel is named for Pope Sixtus IV, who built it between 1473 and 1481, and it's still where cardinals elect a new pope. White smoke from the chimney means a pope; black means nobody has two-thirds of the vote yet.",
+     "c": [
+      "sistine",
+      "smoke"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Inside, keep quiet, and no photos; the guards will remind you.",
+     "c": [
+      "quiet"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Look up at the middle of the ceiling: nine scenes from Genesis, among them the Creation of Adam, painted by Michelangelo between 1508 and 1512. He painted standing, his head tilted back, not lying down.",
+     "c": [
+      "ceiling",
+      "standing"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Now the wall behind the altar: The Last Judgment, from 1535 to 1541. Christ is high on the wall. At the bottom left the dead rise from their graves; on the right the damned are dragged down.",
+     "c": [
+      "judgment"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Two faces to find. The papal master of ceremonies, Biagio da Cesena, called all the nudes disgraceful, so Michelangelo gave his face to Minos, judge of the underworld. It is said the pope told Biagio his authority didn't reach as far as hell. And Michelangelo painted himself on the flayed skin held by Saint Bartholomew.",
+     "c": [
+      "biagio",
+      "skin"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Wherever you finish your visit, pause for a moment before you leave.",
+   "paras": [
+    {
+     "t": "Ancient Christians chose to bury their dead here because they believed Peter lay here, long before this dome. Everything you've seen today grew from that remembering.",
+     "c": [
+      "early-christians"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

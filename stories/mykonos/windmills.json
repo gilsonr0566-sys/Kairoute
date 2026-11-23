@@ -1,0 +1,360 @@
+{
+ "id": "windmills",
+ "v": 1,
+ "city": "mykonos",
+ "title": "Kato Mili Windmills",
+ "match": {
+  "ids": [
+   "windmills"
+  ],
+  "names": [
+   "kato mili",
+   "windmills of mykonos",
+   "mykonos windmills"
+  ],
+  "wikidata": [
+   "Q6947604"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "row": {
+   "label": "supported",
+   "says": "Kato Mili, Greek for 'lower mills', stand in a row on a hill above the sea in Chora, to catch the strong north winds.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "The famous \"Kato Mili\" in Chora (Greek for lower mills), stand in a row on a hill overlooking the sea to harness the strong northern winds."
+   ]
+  },
+  "west": {
+   "label": "supported",
+   "says": "The windmills are in the western part of town.",
+   "src": [
+    "wv-mykonos"
+   ],
+   "quote": [
+    "The Windmills, Mykonos Town (western part of town)"
+   ]
+  },
+  "count": {
+   "label": "supported",
+   "says": "There are 16 windmills on Mykonos today, seven of them on this landmark hill in Chora.",
+   "src": [
+    "wp-windmills-myk"
+   ],
+   "quote": [
+    "There are currently 16 windmills on Mykonos of which seven are positioned on the landmark hill in Chora."
+   ]
+  },
+  "seen": {
+   "label": "supported",
+   "says": "The windmills can be seen from every point of the town, and are the first thing seen coming into the harbor of Alefkandra.",
+   "src": [
+    "wp-windmills-myk"
+   ],
+   "quote": [
+    "The windmills can be seen from every point of the village of Mykonos",
+    "The windmills are the first thing seen when coming into the harbour of Alefkandra, as they stand on a hill overlooking the area."
+   ]
+  },
+  "shape": {
+   "label": "supported",
+   "says": "Each is round and white, with a pointed roof and very small windows, capped with wood and straw.",
+   "src": [
+    "wp-windmills-myk",
+    "wp-mykonos"
+   ],
+   "quote": [
+    "all have a round shape, white colour and a pointed roof and very small windows",
+    "Capped with wood and straw"
+   ]
+  },
+  "north": {
+   "label": "supported",
+   "says": "Most windmills face north, where the strongest winds come from for most of the year.",
+   "src": [
+    "wp-windmills-myk"
+   ],
+   "quote": [
+    "Most windmills face towards the North where the island's climate sources its strongest winds over the largest part of the year."
+   ]
+  },
+  "winds": {
+   "label": "supported",
+   "says": "Mykonos is nicknamed 'The Island of the Winds' for its very strong winds.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "Mykonos's nickname is \"The Island of the Winds\", due to the very strong winds that usually blow on the island."
+   ]
+  },
+  "meltemi": {
+   "label": "supported",
+   "says": "The meltemi wind blows in July and August and takes a little edge off the heat.",
+   "src": [
+    "wv-mykonos"
+   ],
+   "quote": [
+    "The Cyclades are famous for the constant wind (called meltemi) in July and August that mitigates the heat a bit."
+   ]
+  },
+  "built": {
+   "label": "supported",
+   "says": "Most were built by the Venetians in the 16th century, and building went on into the early 20th century.",
+   "src": [
+    "wp-windmills-myk"
+   ],
+   "quote": [
+    "Most of them were built by the Venetians in the 16th century, but their construction continued into the early 20th century."
+   ]
+  },
+  "venetian": {
+   "label": "supported",
+   "says": "Mykonos came under direct Venetian rule in 1390.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "finally given over to direct Venetian rule in 1390."
+   ]
+  },
+  "ottoman": {
+   "label": "supported",
+   "says": "Barbarossa attacked Mykonos in 1537 and it became part of the Ottoman Empire from 1537 to 1830.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "In 1537, while the Venetians still reigned, Mykonos was attacked by Hayreddin Barbarossa",
+    "Mykonos thus became part of the Ottoman Empire for almost three centuries, from 1537 to 1830."
+   ]
+  },
+  "wheat": {
+   "label": "supported",
+   "says": "They were mainly used to mill wheat and were an important source of income.",
+   "src": [
+    "wp-windmills-myk"
+   ],
+   "quote": [
+    "They were primarily used to mill wheat. They were an important source of income for the inhabitants."
+   ]
+  },
+  "bread": {
+   "label": "supported",
+   "says": "The island was once a great producer of wheat and bread.",
+   "src": [
+    "wv-mykonos"
+   ],
+   "quote": [
+    "Once this island was a great producer of wheat and bread."
+   ]
+  },
+  "end": {
+   "label": "disputed",
+   "says": "Accounts differ on when the mills stopped: one says they were used until the early 20th century, another that production ceased in the middle of the 20th century.",
+   "src": [
+    "wp-mykonos",
+    "wp-windmills-myk"
+   ],
+   "quote": [
+    "remained in use until the early 20th century",
+    "Their use gradually declined until they ceased production in the middle of the 20th century."
+   ]
+  },
+  "homes": {
+   "label": "supported",
+   "says": "Many have been restored as homes and as stores for Mykonian heritage documents.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "Many have been refurbished and restored to serve as homes to locals and vaults to numerous Mykonian heritage documents."
+   ]
+  },
+  "cyclades": {
+   "label": "supported",
+   "says": "Windmills like these are found on almost all the Cyclades islands.",
+   "src": [
+    "wp-windmills-myk"
+   ],
+   "quote": [
+    "Such windmills are found in almost all Cyclades islands."
+   ]
+  },
+  "upper": {
+   "label": "supported",
+   "says": "Above the town, in Ano Myloi, the Upper Windmills, one mill holds the Agricultural Museum, also called the Bonis Mill.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "Agricultural Museum (also known as the Bonis Mill) – old tools and machinery are displayed in one of Mykonos' windmills and, located above the main town of Chora in Ano Myloi (meaning Upper Windmills)"
+   ]
+  },
+  "camel": {
+   "label": "supported",
+   "says": "Camel Rock, off the coast near Kato Mili, looks like a camel sitting in the shallow water.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "Camel Rock – a rock formation off the coast and near the windmills at \"Kato Mili\". It derives its name from its appearance which resembles a camel sitting in the shallow blue and green water."
+   ]
+  },
+  "sunset": {
+   "label": "supported",
+   "says": "The windmill area looks over Little Venice and is the most popular place on Mykonos to watch the sunset.",
+   "src": [
+    "wv-mykonos"
+   ],
+   "quote": [
+    "The area of the windmills has a splendid view on Little Venice and is the most popular place in Mykonos to watch the sunset."
+   ]
+  },
+  "stairs": {
+   "label": "supported",
+   "says": "You reach Little Venice from the windmills by walking down the stairs.",
+   "src": [
+    "wv-mykonos"
+   ],
+   "quote": [
+    "You will reach Little Venice walking from the windmills down the stairs."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The row of mills",
+   "stand": "On the windmill hill, well back from the edge, with the row of mills in front of you and the sea beyond.",
+   "paras": [
+    {
+     "t": "Here they are: Kato Mili, which is Greek for the lower mills. A row of white windmills on a hill above the sea, set here to catch the strong north wind.",
+     "c": [
+      "row"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It can blow hard up here. Hold on to your hat, keep children close, and stay back from the drop on the sea side.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "Look at their shape. Each one is round and white, with a pointed roof and very small windows, and the roofs are capped with wood and straw. Most windmills on the island face north, because that's where the strongest wind comes from most of the year.",
+     "c": [
+      "shape",
+      "north"
+     ],
+     "level": 2
+    },
+    {
+     "t": "There are 16 windmills on Mykonos today, and seven of them are on this hill in Chora, Wikipedia says. They stand out above the town, and they're the first thing you see coming into the harbor of Alefkandra below.",
+     "c": [
+      "count",
+      "seen"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Wind and wheat",
+   "stand": "Stay where you are and feel the wind on your face.",
+   "paras": [
+    {
+     "t": "Mykonos has a nickname: the Island of the Winds. These mills put that wind to work. They ground wheat, and they were an important source of income for the people here.",
+     "c": [
+      "winds",
+      "wheat"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Most of them were built by the Venetians in the 1500s. Venice had ruled Mykonos directly since 1390, until the Ottomans took the island in 1537. But the building didn't stop with them. New mills were still going up into the early 20th century. Once, Wikivoyage says, this island was a great producer of wheat and bread.",
+     "c": [
+      "built",
+      "venetian",
+      "ottoman",
+      "bread"
+     ],
+     "level": 2
+    },
+    {
+     "t": "When did the sails stop turning? Accounts differ. One says the mills were used until the early 1900s. Another says production ended in the middle of the century.",
+     "c": [
+      "end"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Many have since been restored, some as homes, others as safe stores for the island's old documents. And you'll find mills like these on almost every island in the Cyclades.",
+     "c": [
+      "homes",
+      "cyclades"
+     ],
+     "level": 3
+    },
+    {
+     "t": "In July and August, a wind called the meltemi blows steadily through these islands. It takes a little of the edge off the summer heat.",
+     "c": [
+      "meltemi"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Looking down",
+   "stand": "Turn to face the sea and the waterfront houses below.",
+   "paras": [
+    {
+     "t": "From here you look over Little Venice. Wikivoyage calls this the most popular place on the island to watch the sun go down.",
+     "c": [
+      "sunset"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Somewhere off this coast, near the mills, is a formation called Camel Rock. It's named for its shape, like a camel sitting in the shallow blue and green water.",
+     "c": [
+      "camel"
+     ],
+     "level": 2
+    },
+    {
+     "t": "These are the lower mills, and there are upper ones too. Above the town, in Ano Myloi, the Upper Windmills, one old mill now holds the Agricultural Museum, also called the Bonis Mill.",
+     "c": [
+      "upper"
+     ],
+     "level": 3
+    },
+    {
+     "t": "When you're ready, the stairs lead down from the windmills into Little Venice.",
+     "c": [
+      "stairs"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Take the steps slowly. They can be steep and worn.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    },
+    {
+     "t": "Nobody built these to be pretty. They were built for wheat and bread, and for a living. Yet here we all are, at the end of the day, watching them against the sky.",
+     "c": [
+      "wheat",
+      "sunset"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

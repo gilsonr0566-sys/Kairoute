@@ -1,0 +1,579 @@
+{
+ "id": "capri",
+ "v": 1,
+ "city": "naples",
+ "title": "Capri",
+ "match": {
+  "ids": [
+   "capri"
+  ],
+  "names": [
+   "capri"
+  ],
+  "wikidata": [
+   "Q173292",
+   "Q605185",
+   "Q2165460"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "island": {
+   "label": "supported",
+   "says": "Capri is an island on the south side of the Gulf of Naples, about 5 km from the tip of the Sorrento Peninsula.",
+   "src": [
+    "wp-capri"
+   ],
+   "quote": [
+    "Capri is an island located in the Tyrrhenian Sea off the Sorrento Peninsula, on the south side of the Gulf of Naples",
+    "approximately 5 km from the mainland tip of the Sorrento Peninsula"
+   ]
+  },
+  "resort": {
+   "label": "supported",
+   "says": "Capri has been a resort since the time of the Roman Republic.",
+   "src": [
+    "wp-capri"
+   ],
+   "quote": [
+    "A resort destination since the time of the Roman Republic"
+   ]
+  },
+  "landscape": {
+   "label": "supported",
+   "says": "The island is rugged limestone, with sea stacks, sea caves including the Blue Grotto, and high cliffs.",
+   "src": [
+    "wp-capri"
+   ],
+   "quote": [
+    "The island is characterized by its rugged limestone landscape, sea stacks (faraglioni), coastal grottoes including the renowned Blue Grotto, and high cliffs overlooking the sea."
+   ]
+  },
+  "say-it": {
+   "label": "supported",
+   "says": "Italians pronounce the island's name KAH-pree.",
+   "src": [
+    "wv-capri"
+   ],
+   "quote": [
+    "if you want to pronounce the name of the island like Italians do, you have to say KAH-pree."
+   ]
+  },
+  "name": {
+   "label": "disputed",
+   "says": "The origin of the name is uncertain: Greek for wild boar, or Latin for goats; boar fossils found on the island support the Greek idea.",
+   "src": [
+    "wp-capri"
+   ],
+   "quote": [
+    "The origin of the name Capri is uncertain.",
+    "meaning 'wild boar'",
+    "the name could come from the Latin capreae, meaning 'goats'",
+    "Fossils of wild boars have been found on the island, supporting the Greek etymology."
+   ]
+  },
+  "harbour": {
+   "label": "supported",
+   "says": "Boats arrive at Marina Grande on the north coast; from there the funicular climbs to Capri town and boats leave for the Blue Grotto.",
+   "src": [
+    "wp-capri",
+    "wv-capri"
+   ],
+   "quote": [
+    "The two main harbours are Marina Grande on the north coast (the primary port)",
+    "From Marina Grande, a funicular goes up to Capri Town, and boats leave for the Blue Grotto."
+   ]
+  },
+  "two-towns": {
+   "label": "supported",
+   "says": "The island has two towns, Capri and Anacapri, the latter higher up on Monte Solaro, the highest point at 589 m.",
+   "src": [
+    "wp-capri"
+   ],
+   "quote": [
+    "The island is divided into two municipalities: Capri and Anacapri.",
+    "Anacapri, the latter situated higher up the slopes of Monte Solaro, the island's highest point",
+    "The highest point is Monte Solaro at 589 m (1,932 ft)."
+   ]
+  },
+  "bg-light": {
+   "label": "supported",
+   "says": "Sunlight entering through an underwater opening is reflected up through the water, giving the cave a blue glow; red is filtered out.",
+   "src": [
+    "wp-blue-grotto"
+   ],
+   "quote": [
+    "Sunlight shining through an underwater cavity is reflected back upward through the seawater below the cavern, giving the water a blue glow that illuminates the cavern.",
+    "As light passes through the water into the cave, red reflections are filtered out and only blue light enters the cave."
+   ]
+  },
+  "bg-entry": {
+   "label": "supported",
+   "says": "The entrance is 2 m wide and roughly 1 m high at low tide, so safe access is possible only at low tide in a calm sea; visitors lie flat in a small rowboat while the oarsman pulls it in by a chain.",
+   "src": [
+    "wp-blue-grotto"
+   ],
+   "quote": [
+    "The entry is 2 metres (6 ft 7 in) wide and roughly 1 metre (3 ft 3 in) high at low tides, making safe access possible only when tides are low and the sea is calm.",
+    "To enter the grotto, visitors must lie flat on the bottom of a small four-person rowboat. The oarsman then uses a metal chain attached to the cave walls to guide the boat inside the grotto."
+   ]
+  },
+  "bg-closes": {
+   "label": "supported",
+   "says": "The grotto often closes because of tides and waves.",
+   "src": [
+    "wv-capri"
+   ],
+   "quote": [
+    "The grotto often closes due to tides and waves"
+   ]
+  },
+  "bg-silver": {
+   "label": "supported",
+   "says": "Objects in the water appear silver, and a hand placed in the water seems to glow.",
+   "src": [
+    "wp-blue-grotto"
+   ],
+   "quote": [
+    "Objects placed in the water of the grotto famously appear silver.",
+    "A visitor who places a hand in the water can see it \"glow\" eerily in this light."
+   ]
+  },
+  "bg-tiberius": {
+   "label": "supported",
+   "says": "In Roman times the grotto was Tiberius's swimming hole and a marine temple; statues of Neptune and Triton raised from its floor in 1964 are shown in a museum in Anacapri.",
+   "src": [
+    "wp-blue-grotto"
+   ],
+   "quote": [
+    "During Roman times, the grotto was used as the personal swimming hole of Emperor Tiberius as well as a marine temple.",
+    "Three statues of the Roman sea gods Neptune and Triton were recovered from the floor of the grotto in 1964 and are now on display at a museum in Anacapri."
+   ]
+  },
+  "bg-witches": {
+   "label": "legend",
+   "says": "Sailors and islanders avoided the cave because it was said to be home to witches and monsters.",
+   "src": [
+    "wp-blue-grotto"
+   ],
+   "quote": [
+    "It was avoided by sailors and islanders because it was said to be inhabited by witches and monsters."
+   ]
+  },
+  "bg-1826": {
+   "label": "supported",
+   "says": "The grotto was 'rediscovered' in 1826 by the German writer August Kopisch and painter Ernst Fries, guided by the fisherman Angelo Ferraro; an 18th-century song shows it was already known.",
+   "src": [
+    "wp-blue-grotto"
+   ],
+   "quote": [
+    "The grotto was then \"rediscovered\" by the public in 1826, with the visit of German writer August Kopisch and his friend Ernst Fries, who were taken to the grotto by local fisherman Angelo Ferraro.",
+    "A Neapolitan song dating from the 18th century, \"la grotta azzurra\" refers to this cave and also proves that it was already well known before its rediscovery in 1826."
+   ]
+  },
+  "piazzetta": {
+   "label": "supported",
+   "says": "Piazza Umberto I, the Piazzetta, is the hub of social life in Capri town.",
+   "src": [
+    "wp-capri"
+   ],
+   "quote": [
+    "The central Piazza Umberto I, commonly known as the Piazzetta, is the hub of social life and tourism in Capri town."
+   ]
+  },
+  "augustus": {
+   "label": "supported",
+   "says": "Augustus made Capri a private resort, with villas, temples, aqueducts and gardens.",
+   "src": [
+    "wp-capri"
+   ],
+   "quote": [
+    "Emperor Augustus developed Capri as a private resort, building villas, temples, and aqueducts, and planting gardens."
+   ]
+  },
+  "bones": {
+   "label": "supported",
+   "says": "Suetonius says workers digging Augustus's villa found giant bones and stone weapons, which Augustus displayed; modern analysis suggests they may have been fossils of large extinct mammals.",
+   "src": [
+    "wp-capri"
+   ],
+   "quote": [
+    "The Roman historian Suetonius recounts that when workers excavated the foundations for Emperor Augustus's villa, they discovered giant bones and stone weapons, which Augustus displayed in his residence",
+    "Modern analysis suggests these may have been fossils of large extinct mammals."
+   ]
+  },
+  "artists": {
+   "label": "supported",
+   "says": "From the later 19th century Capri drew European artists and writers and gained a name as a tolerant haven; Gorky hosted Lenin here in 1908.",
+   "src": [
+    "wp-capri"
+   ],
+   "quote": [
+    "From the later 19th century, Capri became an increasingly popular resort for European artists, writers, and expatriates. It gained a reputation as a tolerant haven",
+    "Lenin (hosted by Gorky in 1908, establishing a Party School)"
+   ]
+  },
+  "pirates": {
+   "label": "supported",
+   "says": "In the 16th century Ottoman admirals Barbarossa and Turgut Reis captured the island, in 1535 and 1553.",
+   "src": [
+    "wp-capri"
+   ],
+   "quote": [
+    "Pirate raids intensified during the 16th century; admirals Barbarossa Hayreddin Pasha and Turgut Reis captured the island for the Ottoman Empire in 1535 and 1553, respectively."
+   ]
+  },
+  "tiberius": {
+   "label": "supported",
+   "says": "Tiberius built twelve villas on Capri according to Tacitus, moved here permanently in AD 27 and ruled the empire from the island until his death in AD 37.",
+   "src": [
+    "wp-capri"
+   ],
+   "quote": [
+    "His successor, Tiberius, constructed twelve villas on the island according to Tacitus.",
+    "In AD 27, Tiberius moved permanently to Capri, governing the Roman Empire from the island until his death in AD 37."
+   ]
+  },
+  "jovis": {
+   "label": "supported",
+   "says": "Villa Jovis, the 'Villa of Jupiter', is the largest of Tiberius's villas, atop Monte Tiberio in the far north-east of the island at 334 m.",
+   "src": [
+    "wp-villa-jovis"
+   ],
+   "quote": [
+    "Villa Jovis (\"Villa of Jupiter\") is a Roman palace on Capri",
+    "Villa Jovis is the largest of the twelve Tiberian villas on Capri mentioned by Tacitus.",
+    "Villa Jovis is situated in the very northeast of the island atop Monte Tiberio; its 334 m (1,096 ft) elevation"
+   ]
+  },
+  "jovis-walk": {
+   "label": "supported",
+   "says": "The villa can be reached only on foot, an uphill walk of about two kilometres from Capri town.",
+   "src": [
+    "wp-villa-jovis"
+   ],
+   "quote": [
+    "Access to the complex is possible only on foot, and involves an uphill walk of about two kilometres (one mile) from the town of Capri."
+   ]
+  },
+  "jovis-size": {
+   "label": "estimate",
+   "says": "The complex spans several terraces, about 40 m of height difference, and covers some 7,000 square metres.",
+   "src": [
+    "wp-villa-jovis"
+   ],
+   "quote": [
+    "The entire complex, spanning several terraces and a difference in elevation of about 40 m (130 ft), covers some 7,000 square metres (75,000 square feet)."
+   ]
+  },
+  "jovis-plan": {
+   "label": "supported",
+   "says": "The north wing held living quarters, the south wing administration, the east wing receptions, and the west wing an open hall with a view toward Anacapri.",
+   "src": [
+    "wp-villa-jovis"
+   ],
+   "quote": [
+    "The north wing of the building contained the living quarters, while the south wing saw administrative use. The east wing was meant for receptions, whereas the west wing featured an open-walled hall (ambulatio) which offered a scenic view towards Anacapri."
+   ]
+  },
+  "jovis-water": {
+   "label": "supported",
+   "says": "Water was scarce, so engineers collected rainwater from the roofs into a large cistern.",
+   "src": [
+    "wp-villa-jovis"
+   ],
+   "quote": [
+    "As water was difficult to obtain at the villa's location, Roman engineers constructed an intricate system for the collection of rainwater from the roofs and a large cistern that supplied the palace with fresh water."
+   ]
+  },
+  "jovis-tower": {
+   "label": "supported",
+   "says": "South of the main building are remains of a watch tower for signalling the mainland, for example by fire or smoke.",
+   "src": [
+    "wp-villa-jovis"
+   ],
+   "quote": [
+    "South of the main building there are remains of a watch tower (specula) for the quick telegraphic exchange of messages with the mainland, e.g. by fire or smoke."
+   ]
+  },
+  "jovis-why": {
+   "label": "disputed",
+   "says": "Apparently Tiberius moved to Capri out of wariness of politics in Rome and fear of assassination; his quarters were hard to reach and heavily guarded.",
+   "src": [
+    "wp-villa-jovis"
+   ],
+   "quote": [
+    "Apparently, the main motivations for Tiberius's move from Rome to Capri were his wariness of the political manoeuvring in Rome and a lingering fear of assassination.",
+    "Tiberius's quarters in the north and east of the palatial villa were particularly difficult to reach and heavily guarded."
+   ]
+  },
+  "jovis-tales": {
+   "label": "disputed",
+   "says": "Suetonius said Tiberius indulged in wild debauchery here; most modern historians regard these tales as sensationalized.",
+   "src": [
+    "wp-villa-jovis"
+   ],
+   "quote": [
+    "The Villa Jovis is also, at least according to Suetonius, the place where Tiberius engaged in wild debauchery. Most modern historians regard these tales as sensationalized"
+   ]
+  },
+  "cliff-story": {
+   "label": "legend",
+   "says": "Stories say those who displeased Tiberius were flung from the cliffs.",
+   "src": [
+    "wv-capri"
+   ],
+   "quote": [
+    "Those who displeased the emperor were flung to their deaths from the cliffs."
+   ]
+  },
+  "faraglioni": {
+   "label": "supported",
+   "says": "Three famous faraglioni, sea stacks eroded by waves, stand off Capri's south-east coast: Stella (109 m, joined to the island), Mezzo (82 m) and Scopolo or Fuori (106 m).",
+   "src": [
+    "wp-faraglioni",
+    "wp-capri"
+   ],
+   "quote": [
+    "are stacks, coastal and oceanic rock formations eroded by waves",
+    "there are three famous faraglioni in the Bay of Naples, off the island of Capri",
+    "Stella, connected to the island; 109 metres (358 ft) high.",
+    "Mezzo; 82 metres (269 ft) high.",
+    "Scopolo (or Fuori); 106 metres (348 ft) high.",
+    "the famous sea stacks known as the Faraglioni off the southeast coast"
+   ]
+  },
+  "lizard": {
+   "label": "supported",
+   "says": "A blue lizard is endemic to the outer stack, Scopolo.",
+   "src": [
+    "wp-faraglioni"
+   ],
+   "quote": [
+    "The blue lizard or lucertola azzurra (Podarcis siculus coeruleus) is endemic to this faraglione."
+   ]
+  },
+  "faro-word": {
+   "label": "disputed",
+   "says": "The word faraglione may come from the Greek or Latin for lighthouse.",
+   "src": [
+    "wp-faraglioni"
+   ],
+   "quote": [
+    "The word may be derived from the Greek pháros or Latin pharus (\"lighthouse\")"
+   ]
+  },
+  "sirens": {
+   "label": "legend",
+   "says": "In Greek mythology Capri was the isle of the sirens.",
+   "src": [
+    "wv-capri"
+   ],
+   "quote": [
+    "Capri, known in Greek mythology as the isle of the sirens"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival at Marina Grande",
+   "stand": "On the quay at Marina Grande, out of the way of the crowds, looking up at the town on the hill.",
+   "paras": [
+    {
+     "t": "Welcome to Capri. Italians say it KAH-pree. You've landed at Marina Grande, the main harbor. From here the funicular climbs to Capri town, and boats leave for the Blue Grotto.",
+     "c": [
+      "say-it",
+      "harbour"
+     ],
+     "level": 1
+    },
+    {
+     "t": "This island has been a resort since the days of the Roman Republic. It's small and made of rugged limestone, about 5 kilometers off the tip of the Sorrento Peninsula, with sea caves, sea stacks and high cliffs. There are two towns: Capri, and Anacapri, higher up on the slopes of Monte Solaro, the island's highest point at 589 meters.",
+     "c": [
+      "resort",
+      "island",
+      "landscape",
+      "two-towns"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Where does the name come from? Nobody knows for sure. It may be Greek for wild boar, or Latin for goats. Boar fossils have turned up on the island, which helps the Greek idea. And in one telling of the Greek myth, this was the island of the sirens.",
+     "c": [
+      "name",
+      "sirens"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Blue Grotto",
+   "stand": "At Marina Grande or by the cave, while you wait your turn for a rowboat.",
+   "paras": [
+    {
+     "t": "This is the Blue Grotto. The opening is only about a meter high at low tide, which is why you'll lie flat while the boatman pulls the boat in on a chain. Inside, the sunlight comes up from an opening under the water, and the red is filtered out, so the whole cave glows blue.",
+     "c": [
+      "bg-entry",
+      "bg-light"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Keep your head and hands inside the boat until the boatman says it's clear.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "Once you're inside and the boatman says it's fine, dip a hand in the water. Things placed in it look silver, and your own hand will seem to glow. The cave often closes when the tide or the waves are up, so if you got in today, you were lucky.",
+     "c": [
+      "bg-silver",
+      "bg-closes"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The Romans knew this place well. It was the emperor Tiberius's swimming hole, and a temple of the sea. Statues of the sea gods Neptune and Triton were raised from the floor in 1964, and they're now in a museum in Anacapri.",
+     "c": [
+      "bg-tiberius"
+     ],
+     "level": 2
+    },
+    {
+     "t": "In the 1700s, sailors and islanders kept away. The cave was said to be home to witches and monsters. Then in 1826 a local fisherman, Angelo Ferraro, took two German visitors to the cave, the writer August Kopisch and the painter Ernst Fries, and after their visit the wider world discovered it. Though an old Neapolitan song from the 1700s shows the locals knew it all along.",
+     "c": [
+      "bg-witches",
+      "bg-1826"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Piazzetta",
+   "stand": "Up in Capri town, in the little main square where the funicular brings you.",
+   "paras": [
+    {
+     "t": "This is the Piazzetta, Piazza Umberto the First, the living room of Capri town. Everyone passes through here sooner or later.",
+     "c": [
+      "piazzetta"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The first emperor to fall for Capri was Augustus. He made it his private resort, with villas, temples, aqueducts and gardens. The historian Suetonius says his workmen dug up giant bones and stone weapons, and Augustus put them on display. Modern experts think they may have been fossils of huge extinct animals.",
+     "c": [
+      "augustus",
+      "bones"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The island's later history is rougher. In the 1500s Ottoman admirals captured it twice, Barbarossa in 1535 and Turgut Reis in 1553. Then from the later 1800s came artists and writers, drawn by the beauty and by Capri's name as a tolerant place. In 1908 the writer Maxim Gorky even hosted Lenin here.",
+     "c": [
+      "pirates",
+      "artists"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Villa Jovis",
+   "stand": "At the top of Monte Tiberio, at the entrance to the ruins of Villa Jovis.",
+   "paras": [
+    {
+     "t": "This is Villa Jovis, the Villa of Jupiter, the largest of the twelve villas that, according to the Roman historian Tacitus, the emperor Tiberius built on Capri. In AD 27 he moved here for good, and he ruled the Roman Empire from this island until he died in AD 37.",
+     "c": [
+      "jovis",
+      "tiberius"
+     ],
+     "level": 1
+    },
+    {
+     "t": "You'll have earned this view. The only way up is on foot, about two kilometers uphill from town, so bring water and take the climb slowly.",
+     "c": [
+      "jovis-walk"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Why here, in the far north-east corner of the island? Probably because he was wary of the politics in Rome, and afraid of being murdered. His own rooms were hard to reach and heavily guarded.",
+     "c": [
+      "jovis",
+      "jovis-why"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The palace steps down several terraces, some 40 meters from top to bottom, and covers about 7,000 square meters. The north wing held the living quarters, the south wing the offices, and the east wing was for receptions. On the west side was an open hall looking toward Anacapri. Water was the hard part up here, so the engineers caught rain from the roofs in a large cistern.",
+     "c": [
+      "jovis-size",
+      "jovis-plan",
+      "jovis-water"
+     ],
+     "level": 3
+    },
+    {
+     "t": "South of the main building are the remains of a watch tower. From there, messages could be sent to the mainland, by fire or by smoke.",
+     "c": [
+      "jovis-tower"
+     ],
+     "level": 3
+    },
+    {
+     "t": "You may hear darker stories. The Roman writer Suetonius said Tiberius lived in wild debauchery up here, and the story goes that people who displeased him were thrown from the cliffs. Most modern historians think those tales were sensationalized.",
+     "c": [
+      "jovis-tales",
+      "cliff-story"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The Faraglioni",
+   "stand": "Wherever you get a clear view of the three great rocks off the south-east coast.",
+   "paras": [
+    {
+     "t": "Those three giant rocks are the Faraglioni, sea stacks carved by the waves.",
+     "c": [
+      "faraglioni"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Stella, joined to the island, is 109 meters high; Mezzo is 82; and Scopolo, also called Fuori, 106.",
+     "c": [
+      "faraglioni"
+     ],
+     "level": 2
+    },
+    {
+     "t": "On Scopolo, think small. A rare blue lizard is found on that rock. And the word faraglione perhaps comes from the old Greek and Latin words for a lighthouse.",
+     "c": [
+      "lizard",
+      "faro-word"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Before you head back down to the harbor, find one last spot looking out to sea.",
+   "paras": [
+    {
+     "t": "Take one more look. An emperor came here, perhaps to hide from the world, and governed it from this island all the same. Today the island belongs to whoever is standing still long enough to look.",
+     "c": [
+      "tiberius",
+      "jovis-why"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

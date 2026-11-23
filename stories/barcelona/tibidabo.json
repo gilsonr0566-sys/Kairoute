@@ -1,0 +1,339 @@
+{
+ "id": "tibidabo",
+ "v": 1,
+ "city": "barcelona",
+ "title": "Tibidabo",
+ "match": {
+  "ids": [
+   "tibidabo"
+  ],
+  "names": [
+   "tibidabo",
+   "sagrat cor",
+   "sagrado corazon"
+  ],
+  "wikidata": [
+   "Q658271"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "hill": {
+   "label": "supported",
+   "says": "Tibidabo, at 512 meters, is the tallest hill in the Serra de Collserola, with views over the city and the coast.",
+   "src": [
+    "wp-tibidabo"
+   ],
+   "quote": [
+    "At 512 metres (1,680 ft), it is the tallest hill in the Serra de Collserola.  Rising sharply to the north-west, it has views over the city and the surrounding coastline."
+   ]
+  },
+  "summit": {
+   "label": "supported",
+   "says": "The summit holds the Sagrat Cor church and the Tibidabo Amusement Park; the Torre de Collserola is a short walk away; all three can be seen from most of Barcelona.",
+   "src": [
+    "wp-tibidabo"
+   ],
+   "quote": [
+    "The summit of the hill is occupied by the Sagrat Cor church and adjacent Tibidabo Amusement Park. The Torre de Collserola telecommunications tower is a short walk away. All three are prominently visible from most of the city of Barcelona."
+   ]
+  },
+  "funicular": {
+   "label": "supported",
+   "says": "The Tibidabo Funicular was the first funicular of its kind in Spain.",
+   "src": [
+    "wp-tibidabo"
+   ],
+   "quote": [
+    "the Tibidabo Funicular, which was the first of its kind in Spain"
+   ]
+  },
+  "matthew": {
+   "label": "scripture",
+   "says": "Matthew 4:8-9 (KJV): the devil taketh him up into an exceeding high mountain and sheweth him all the kingdoms of the world, and the glory of them; and saith, All these things will I give thee, if thou wilt fall down and worship me.",
+   "src": [
+    "kjv-matthew4"
+   ],
+   "quote": [
+    "\"chapter\":4,\"verse\":8,\"text\":\"Again, the devil taketh him up into an exceeding high mountain, and sheweth him all the kingdoms of the world, and the glory of them;",
+    "\"verse\":9,\"text\":\"And saith unto him, All these things will I give thee, if thou wilt fall down and worship me."
+   ]
+  },
+  "luke": {
+   "label": "scripture",
+   "says": "Luke 4:6 (KJV): And the devil said unto him, All this power will I give thee, and the glory of them.",
+   "src": [
+    "kjv-luke4"
+   ],
+   "quote": [
+    "\"chapter\":4,\"verse\":6,\"text\":\"And the devil said unto him, All this power will I give thee, and the glory of them"
+   ]
+  },
+  "temptation": {
+   "label": "supported",
+   "says": "The name comes from Latin Vulgate verses meaning 'I will give to you', words the Devil said tempting Jesus on a high mountain, seeing all the kingdoms of the world.",
+   "src": [
+    "wp-tibidabo"
+   ],
+   "quote": [
+    "The name derives from several Latin Vulgate Bible verses",
+    "These two Gospel passages, where the words mean \"I will give to you\", were said by the Devil in tempting Jesus as they were atop a high mountain and seeing \"all the kingdoms of the world, and the glory of them\"."
+   ]
+  },
+  "whyname": {
+   "label": "disputed",
+   "says": "Why the hill got the name is uncertain: perhaps a folk belief linking it with the biblical mountain, or more likely a tongue-in-cheek way of saying how glorious and tempting Barcelona is.",
+   "src": [
+    "wp-tibidabo"
+   ],
+   "quote": [
+    "The name could reflect a folk belief identifying Barcelona’s hill with the biblical mountain, or more likely, it is simply a tongue in cheek transferral of this action to Barcelona, just to indicate how glorious and tempting Barcelona could be."
+   ]
+  },
+  "windows": {
+   "label": "supported",
+   "says": "The windows of the church's four towers carry the Latin phrase tibi dabo.",
+   "src": [
+    "wp-temple-expiatori-sagrat-cor"
+   ],
+   "quote": [
+    "The windows of the four towers contain the Latin phrase tibi dabo (\"I'll give you\"), the name of the mountain."
+   ]
+  },
+  "church": {
+   "label": "supported",
+   "says": "The Temple Expiatori del Sagrat Cor, dedicated to the Sacred Heart of Jesus, is by Enric Sagnier, finished by his son; it was built from 1902 to 1961.",
+   "src": [
+    "wp-temple-expiatori-sagrat-cor"
+   ],
+   "quote": [
+    "The building is the work of the Catalan architect Enric Sagnier and was completed by his son Josep Maria Sagnier i Vidal. The construction of the church, dedicated to the Sacred Heart of Jesus, lasted from 1902 to 1961."
+   ]
+  },
+  "origin": {
+   "label": "supported",
+   "says": "The church idea arose in the late 19th century amid rumors of a Protestant church and a hotel-casino on the summit; Catholic knights bought the land and gave it to Saint John Bosco in 1886.",
+   "src": [
+    "wp-temple-expiatori-sagrat-cor"
+   ],
+   "quote": [
+    "The idea of building a Catholic church on the summit of the Tibidabo emerged in the late 19th century amidst rumors about the construction of a Protestant church and a hotel-casino at that location. This motivated a \"Board of Catholic Knights\" to acquire the ownership of the field and give it to Saint John Bosco in 1886"
+   ]
+  },
+  "twolevels": {
+   "label": "supported",
+   "says": "Outside, the crypt looks like a Romanesque fortress of Montjuïc stone, topped by a neo-Gothic church reached by two grand outdoor stairways.",
+   "src": [
+    "wp-temple-expiatori-sagrat-cor"
+   ],
+   "quote": [
+    "The external appearance of the church is of a Romanesque fortress of stone from Montjuïc (the crypt), topped by a monumental neo-Gothic church accessed by two grand outdoor stairways."
+   ]
+  },
+  "patrons": {
+   "label": "supported",
+   "says": "Sculptures over the crypt entrance show the Virgin of Mercy, Saint George and Saint James, patrons of Barcelona, Catalonia and Spain.",
+   "src": [
+    "wp-temple-expiatori-sagrat-cor"
+   ],
+   "quote": [
+    "The sculptures represent the Virgin of Mercy, Saint George, and Saint James, the patron saints of Barcelona, Catalonia, and Spain, respectively."
+   ]
+  },
+  "statue": {
+   "label": "supported",
+   "says": "The church is crowned by a huge bronze Sacred Heart by Josep Miret, from 1950; it replaced Frederic Marès's original of 1935, destroyed the next year as the Civil War began.",
+   "src": [
+    "wp-temple-expiatori-sagrat-cor"
+   ],
+   "quote": [
+    "The church is crowned by the enormous bronze statue of the Sacred Heart made by Josep Miret in 1950. It replaced the original by Frederic Marès, which was made in 1935 and destroyed the following year as the Spanish Civil War began."
+   ]
+  },
+  "ascent": {
+   "label": "supported",
+   "says": "The climb from the crypt through the church to the statue is meant to reflect the rise and purification of the human condition.",
+   "src": [
+    "wp-temple-expiatori-sagrat-cor"
+   ],
+   "quote": [
+    "The ascent from the crypt, passing through the church and ending at the sculpture, reflects the rise and the purification of the human condition by means of sacrifice and atonement."
+   ]
+  },
+  "park": {
+   "label": "supported",
+   "says": "The pharmacist Salvador Andreu first proposed the park in 1899; the first rides were installed in 1905; it is among the oldest parks still working and Spain's longest running.",
+   "src": [
+    "wp-tibidabo-amusement-park"
+   ],
+   "quote": [
+    "first proposed in 1899 by pharmacist Salvador Andreu",
+    "The first amusement rides however weren't installed until 1905",
+    "The park is among the oldest in the world still functioning. It is Spain's longest running amusement park."
+   ]
+  },
+  "avio": {
+   "label": "supported",
+   "says": "The Avió, built in 1928, is a plane modeling the first commercial flight from Madrid to Barcelona in 1927, hung from a crane and turned by its own propeller; it's the park's star attraction.",
+   "src": [
+    "wp-tibidabo-amusement-park"
+   ],
+   "quote": [
+    "Avió; A plane modeling the first commercial aircraft flight from Madrid to Barcelona in 1927. Built in 1928, the attractions consists of the replica plane suspended by a crane, which could move around in a circle and is powered by the plane's propeller. With the vantage point of Barcelona, it is considered the park's star attraction."
+   ]
+  },
+  "disney": {
+   "label": "legend",
+   "says": "The story goes that in 1957 Walt Disney tried to buy the Museum of Automats' entire collection with blank checks; the management refused.",
+   "src": [
+    "wp-tibidabo-amusement-park"
+   ],
+   "quote": [
+    "Museum of Automats; An exhibition of automaton that has been shown at the park since its inception.",
+    "In 1957, Walt Disney – who himself had a love for the park - attempted to buy the museum's entire collection with blank cheques, an offer which the management refused."
+   ]
+  },
+  "talaia": {
+   "label": "supported",
+   "says": "The Talaia, opened in 1921, lifts riders to 551 meters above sea level, with views of Barcelona and the sea.",
+   "src": [
+    "wp-tibidabo-amusement-park"
+   ],
+   "quote": [
+    "Talaia; An observation attraction that carries guests in a pair of buckets to a height of 551 metres (1,808 ft) above sea level, offering a birds-eye view of Barcelona, the Mediterranean, and the Serra de Collserola. It was opened on December 18, 1921"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The summit",
+   "stand": "On the open summit, in front of the church, with the city spread out below you.",
+   "paras": [
+    {
+     "t": "This is Tibidabo, at 512 meters the tallest hill in the Collserola range. Below you is Barcelona, out to the sea. Up here you've got the Sagrat Cor church, an old amusement park, and a short walk away, the Collserola telecom tower.",
+     "c": [
+      "hill",
+      "summit"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Hold on to your hat in the wind, and keep children close near the viewpoints.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "If you came up on the funicular, you rode the line that was the first funicular in Spain.",
+     "c": [
+      "funicular"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "A name from the Gospels",
+   "stand": "Stay at the viewpoint, looking out over the city.",
+   "paras": [
+    {
+     "t": "The name comes straight from the Bible, in Latin: tibi dabo, I will give to you. In Matthew's Gospel, chapter four, the devil takes Jesus up into an exceeding high mountain, and shows him all the kingdoms of the world, and the glory of them. And he says, in the King James words, \"All these things will I give thee, if thou wilt fall down and worship me.\"",
+     "c": [
+      "temptation",
+      "matthew"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Luke's Gospel, also in chapter four, tells the same moment: \"All this power will I give thee, and the glory of them.\"",
+     "c": [
+      "luke"
+     ],
+     "level": 2
+    },
+    {
+     "t": "So why name a Barcelona hill after the devil's offer? Nobody knows for sure. It may come from a folk belief that this was the mountain itself. More likely it's a wink: look at the view, and you'll see how tempting Barcelona can be.",
+     "c": [
+      "whyname"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The church",
+   "stand": "Facing the front of the church, at the foot of its outdoor stairways.",
+   "paras": [
+    {
+     "t": "This is the Church of the Sacred Heart of Jesus, by the architect Enric Sagnier, finished by his son. It took from 1902 to 1961 to build. On top stands a huge bronze statue of the Sacred Heart, by Josep Miret, from 1950.",
+     "c": [
+      "church",
+      "statue"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Notice it's really two churches stacked up. The lower one, the crypt, looks like a Romanesque fortress in Montjuïc stone. Above it rises a neo-Gothic church, reached by two grand outdoor stairways. Over the crypt entrance, look for the Virgin of Mercy, Saint George and Saint James, patron saints of Barcelona, Catalonia and Spain.",
+     "c": [
+      "twolevels",
+      "patrons"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The climb is the message. Going up from the crypt, through the church, to the statue at the top is meant to reflect the rise and the purification of the human condition. Take the stairs carefully if you go up.",
+     "c": [
+      "ascent"
+     ],
+     "level": 2
+    },
+    {
+     "t": "How did a church get up here? In the late 1800s there were rumors of a Protestant church and a hotel-casino on the summit. A group of Catholic knights bought the land and gave it to Saint John Bosco in 1886. The first statue on top, by Frederic Marès, was made in 1935 and destroyed the next year as the Civil War began. And inside, the windows of the four towers carry the words tibi dabo.",
+     "c": [
+      "origin",
+      "statue",
+      "windows"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The amusement park",
+   "stand": "At the edge of the amusement park, where you can see the rides against the sky.",
+   "paras": [
+    {
+     "t": "Next door is one of the oldest amusement parks in the world still running, and the longest running in Spain. The pharmacist Salvador Andreu proposed it in 1899, and the first rides were installed in 1905.",
+     "c": [
+      "park"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Look for the little plane hanging from its crane. That's the Avió, built in 1928, a copy of the plane from the first commercial flight from Madrid to Barcelona in 1927. It swings around in a circle, pushed by its own propeller. And the Talaia, opened in 1921, lifts riders up to 551 meters above sea level.",
+     "c": [
+      "avio",
+      "talaia"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Here's a story worth telling. The story goes that in 1957 Walt Disney tried to buy the whole collection of the park's Museum of Automats, with blank checks. The management said no.",
+     "c": [
+      "disney"
+     ],
+     "level": 3
+    },
+    {
+     "t": "So here they are, side by side on one hilltop: a church and a funfair. Look out at the city again. Whatever the devil promised, the view is already a gift, and it's free.",
+     "c": [
+      "summit",
+      "temptation"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

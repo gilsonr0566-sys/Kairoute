@@ -1,0 +1,418 @@
+{
+ "id": "prehistmus",
+ "v": 1,
+ "city": "santorini",
+ "title": "Museum of Prehistoric Thera",
+ "match": {
+  "ids": [
+   "prehistmus"
+  ],
+  "names": [
+   "prehistoric thera"
+  ],
+  "wikidata": [
+   "Q16895556"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "where": {
+   "label": "supported",
+   "says": "The museum stands at the southeast corner of the Orthodox Cathedral of Ypapanti in Fira.",
+   "src": [
+    "wp-fira"
+   ],
+   "quote": [
+    "the Museum of Prehistoric Thera at the southeast corner of the White Orthodox Cathedral of Ypapanti"
+   ]
+  },
+  "site": {
+   "label": "supported",
+   "says": "It was built on the site of the old Ypapanti Church, destroyed in the 1956 Amorgos earthquake.",
+   "src": [
+    "wp-prehist-museum"
+   ],
+   "quote": [
+    "It was built on the site of the old Ypapanti Church which was destroyed in the 1956 Amorgos earthquake."
+   ]
+  },
+  "two": {
+   "label": "supported",
+   "says": "Fira has two history museums; this one tells the story of Bronze Age Akrotiri, the other is the Archaeological Museum of Thera.",
+   "src": [
+    "wv-santorini"
+   ],
+   "quote": [
+    "and the Archaeological Museum of Thera",
+    "Confusingly, Fira has two different history museums: the Museum of Prehistoric Thera, which tells the story of the ancient Bronze Age settlement at Akrotiri"
+   ]
+  },
+  "holds": {
+   "label": "supported",
+   "says": "It holds a very large number of artifacts from excavations on Santorini, such as Akrotiri and Potamos.",
+   "src": [
+    "wp-prehist-museum"
+   ],
+   "quote": [
+    "The Museum houses a very large number of ancient artifacts from various excavations on Santorini, such as at Akrotiri (southwest part of the island, located on a peninsula), and at the nearby Potamos site."
+   ]
+  },
+  "span": {
+   "label": "supported",
+   "says": "It covers the island from the Late Neolithic to the Late Cycladic I period; the collections run in chronological order.",
+   "src": [
+    "wp-prehist-museum"
+   ],
+   "quote": [
+    "The Museum covers the island's history starting from the Late Neolithic period to the Late Cycladic I period.",
+    "The collections are ordered chronologically, and include ceramics, sculptures, jewellery, wall paintings, and ritual objects."
+   ]
+  },
+  "flourish": {
+   "label": "supported",
+   "says": "Akrotiri flourished especially in the 17th century BC; finds from this period are abundantly illustrated.",
+   "src": [
+    "wp-prehist-museum"
+   ],
+   "quote": [
+    "the city flourished especially during the mature Late Cycladic I period (17th century B.C.); the artefacts from this period are abundantly illustrated."
+   ]
+  },
+  "contacts": {
+   "label": "supported",
+   "says": "The museum explains the island's complex network of contacts with the outside world.",
+   "src": [
+    "wp-prehist-museum"
+   ],
+   "quote": [
+    "The island's complex network of contacts with the outside world is also explained."
+   ]
+  },
+  "figurines": {
+   "label": "supported",
+   "says": "It shows Neolithic pottery and Early Cycladic marble figurines and pottery.",
+   "src": [
+    "wp-prehist-museum"
+   ],
+   "quote": [
+    "The Museum illustrates the Neolithic pottery found on the island, and Early Cycladic marble figurines and pottery."
+   ]
+  },
+  "swallows": {
+   "label": "supported",
+   "says": "Middle Cycladic bird jugs, often with swallows, from the 20th-18th century BC, were found at Ftellos, Megalochori and Akrotiri.",
+   "src": [
+    "wp-prehist-museum"
+   ],
+   "quote": [
+    "Middle Cycladic pottery is represented by a series of impressive bird jugs, often featuring swallows. These objects – dating to 20th-18th century B.C. -- were found at Ftellos, Megalochori and Akrotiri."
+   ]
+  },
+  "walls": {
+   "label": "supported",
+   "says": "The art of wall-painting is represented in great detail.",
+   "src": [
+    "wp-prehist-museum"
+   ],
+   "quote": [
+    "The monumental art of wall-painting is represented in great detail."
+   ]
+  },
+  "frescoes-why": {
+   "label": "supported",
+   "says": "Akrotiri's frescoes are much better preserved than those known from Knossos and other sites on Crete.",
+   "src": [
+    "wp-akrotiri"
+   ],
+   "quote": [
+    "they are much better preserved than those that were already known from Knossos and other sites on Crete"
+   ]
+  },
+  "colors": {
+   "label": "supported",
+   "says": "Theran painters used white, yellow, red, brown, blue and black.",
+   "src": [
+    "wp-akrotiri"
+   ],
+   "quote": [
+    "The colors used in Theran painting include white, yellow, red, brown, blue and black."
+   ]
+  },
+  "technique": {
+   "label": "supported",
+   "says": "The painting was begun on wet plaster but finished dry, so in places paint soaked in and in others flakes off.",
+   "src": [
+    "wp-akrotiri"
+   ],
+   "quote": [
+    "appears as though the painting was begun while the plaster was still wet, but as though the artist made no effort to keep it wet, and seemed content to complete the work on a dry surface. As a result, often on the same fresco, the paint has penetrated the plaster in some areas but flakes off easily in others."
+   ]
+  },
+  "reconstructed": {
+   "label": "supported",
+   "says": "The usual version of the Boxer Fresco has large sections reconstructed by archaeologists, recognizable by their smooth texture.",
+   "src": [
+    "wp-thera-frescoes"
+   ],
+   "quote": [
+    "includes large sections \"reconstructed\" by archaeologists, which can be identified by their smooth texture."
+   ]
+  },
+  "boxers": {
+   "label": "supported",
+   "says": "The Boxer Fresco shows two young boys with boxing gloves and belts; they appear slightly over life-size.",
+   "src": [
+    "wp-thera-frescoes"
+   ],
+   "quote": [
+    "It is a fresco depicting two young boys wearing boxing gloves and belts",
+    "They appear to be slightly over life-size"
+   ]
+  },
+  "boxers-unknown": {
+   "label": "disputed",
+   "says": "It is impossible to know whether the match was competitive or routine sport.",
+   "src": [
+    "wp-thera-frescoes"
+   ],
+   "quote": [
+    "It is impossible to know whether the match was a competitive one or simply a routine sport."
+   ]
+  },
+  "scenes": {
+   "label": "supported",
+   "says": "Akrotiri frescoes show antelopes, a man holding fish, boats with leaping dolphins, and saffron-gatherers offering crocus to a seated woman, perhaps a goddess.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "two antelopes painted with a confident calligraphic line, a man holding fish strung by their gills, a flotilla of pleasure boats that are accompanied by leaping dolphins",
+    "depict \"saffron-gatherers\" offering crocus-stamens to a seated woman, perhaps a goddess important to the Akrotiri culture."
+   ]
+  },
+  "ash": {
+   "label": "supported",
+   "says": "Akrotiri was buried in volcanic ash, which helped preserve its frescoes.",
+   "src": [
+    "wp-akrotiri"
+   ],
+   "quote": [
+    "was buried in volcanic ash, which helped preserve its fine frescoes."
+   ]
+  },
+  "akro-dist": {
+   "label": "supported",
+   "says": "Akrotiri's finds are shown in this museum, away from the site.",
+   "src": [
+    "wp-akrotiri"
+   ],
+   "quote": [
+    "Excavated artifacts have been installed in a museum distant from the site (Museum of Prehistoric Thera), with many objects and artworks presented."
+   ]
+  },
+  "fouque": {
+   "label": "supported",
+   "says": "The earliest excavations were by French geologist F. Fouque in 1867, after locals found old artifacts in a quarry.",
+   "src": [
+    "wp-prehist-museum"
+   ],
+   "quote": [
+    "The earliest excavations on Santorini were conducted by French geologist F. Fouque in 1867, after some local people found old artifacts at a quarry."
+   ]
+  },
+  "hiller": {
+   "label": "supported",
+   "says": "In 1895-1900 Baron Friedrich Hiller von Gaertringen uncovered ancient Thera on Mesa Vouno.",
+   "src": [
+    "wp-prehist-museum"
+   ],
+   "quote": [
+    "Later, in 1895-1900, the digs by German archeologist Baron Friedrich Hiller von Gaertringen revealed the ruins of ancient Thera on Mesa Vouno."
+   ]
+  },
+  "society": {
+   "label": "supported",
+   "says": "The main Akrotiri excavations were directed by the Archaeological Society of Athens.",
+   "src": [
+    "wp-prehist-museum"
+   ],
+   "quote": [
+    "The main excavations at Akrotiri were conducted under the direction of the Archaeological Society of Athens."
+   ]
+  },
+  "marinatos": {
+   "label": "supported",
+   "says": "Marinatos began the modern excavation of Akrotiri in 1967.",
+   "src": [
+    "wp-akrotiri"
+   ],
+   "quote": [
+    "The extensive modern excavation was started in 1967 by Spyridon Marinatos"
+   ]
+  },
+  "evacuation": {
+   "label": "supported",
+   "says": "At Akrotiri only a single gold object was found and no uninterred skeletons, indicating an orderly evacuation.",
+   "src": [
+    "wp-akrotiri"
+   ],
+   "quote": [
+    "Only a single gold object has been found, hidden beneath flooring, and no uninterred human skeletal remains have been found. This indicates that an orderly evacuation was performed with little or no loss of life."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Outside the museum entrance.",
+   "paras": [
+    {
+     "t": "This is the Museum of Prehistoric Thera. It tells the story of the Bronze Age town at Akrotiri, the town buried by the volcano, and it holds a very large number of finds from digs all over Santorini.",
+     "c": [
+      "two",
+      "holds"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It sits at the southeast corner of the Cathedral of Ypapanti. And it stands where the old Ypapanti Church stood until the 1956 earthquake destroyed it.",
+     "c": [
+      "where",
+      "site"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Don't mix it up with Fira's other museum, the Archaeological Museum of Thera. This is the prehistoric one.",
+     "c": [
+      "two"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The people who dug",
+   "stand": "Just inside, before the first cases.",
+   "paras": [
+    {
+     "t": "Digging on Santorini began with a French geologist, F. Fouque, in 1867, after local people found old objects in a quarry. From 1895 to 1900, the German Baron Hiller von Gaertringen uncovered the later city of ancient Thera, up on the mountain called Mesa Vouno.",
+     "c": [
+      "fouque",
+      "hiller"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Much of what you'll see here comes from Akrotiri, where the great modern excavation was begun by Spyridon Marinatos in 1967, under the Archaeological Society of Athens.",
+     "c": [
+      "marinatos",
+      "society",
+      "akro-dist"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The town was at its best in the 1600s BC, and the finds from that time are shown here in abundance.",
+     "c": [
+      "flourish"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "From the first potters",
+   "stand": "At the earliest cases, where the displays begin.",
+   "paras": [
+    {
+     "t": "The rooms run in time order, from the Late Neolithic onward. So as you walk, you move forward through the island's past.",
+     "c": [
+      "span"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Look for the early pottery and the Early Cycladic figurines carved in marble.",
+     "c": [
+      "figurines"
+     ],
+     "level": 2
+    },
+    {
+     "t": "And look for the bird jugs, often painted with swallows. They date from the 20th to the 18th century BC, and were found at Ftellos, Megalochori and Akrotiri. Swallows turn up again and again.",
+     "c": [
+      "swallows"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Along the way, the museum also explains how far this little island's contacts reached in the outside world.",
+     "c": [
+      "contacts"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The painted walls",
+   "stand": "In the rooms with the wall paintings.",
+   "paras": [
+    {
+     "t": "And now the wall paintings. This museum shows the art of wall painting in great detail. Akrotiri's frescoes survived far better than the ones from Knossos on Crete, because the volcanic ash helped preserve them.",
+     "c": [
+      "walls",
+      "frescoes-why",
+      "ash"
+     ],
+     "level": 1
+    },
+    {
+     "t": "We don't know which paintings are on display today, so ask the staff. But here's what the excavators found at Akrotiri: two antelopes, a fisherman holding his catch, a fleet of boats with leaping dolphins, and girls gathering saffron for a seated woman, perhaps a goddess.",
+     "c": [
+      "scenes"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The painters used white, yellow, red, brown, blue and black. They started on wet plaster but finished on dry, so in places the paint soaked in, and in others it flakes off easily.",
+     "c": [
+      "colors",
+      "technique"
+     ],
+     "level": 3
+    },
+    {
+     "t": "One famous painting shows two young boys wearing boxing gloves and belts, a little over life-size, wherever it hangs today. The version usually shown has large sections reconstructed by archaeologists, which you can tell by their smooth texture. Was it a real fight, or just sport? Nobody knows.",
+     "c": [
+      "boxers",
+      "reconstructed",
+      "boxers-unknown"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Before you leave, near the last displays.",
+   "paras": [
+    {
+     "t": "One more thing to carry with you. At Akrotiri, almost no gold was found, just a single object, and no bodies at all. The people seem to have left in good order.",
+     "c": [
+      "evacuation"
+     ],
+     "level": 2
+    },
+    {
+     "t": "So Akrotiri's real treasure isn't gold. It's a swallow on a jug, two boys in boxing gloves, a girl gathering saffron. Somehow, that tells us more about these people than gold could.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

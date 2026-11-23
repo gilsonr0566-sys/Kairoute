@@ -1,0 +1,722 @@
+{
+ "id": "duomo-me",
+ "v": 1,
+ "city": "messina",
+ "title": "Messina Cathedral and the Astronomical Clock",
+ "match": {
+  "ids": [
+   "duomo-me"
+  ],
+  "names": [
+   "duomo di messina",
+   "messina cathedral",
+   "astronomical clock of messina",
+   "messina astronomical clock",
+   "fontana di orione",
+   "fountain of orion"
+  ],
+  "wikidata": [
+   "Q733217",
+   "Q546826"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "name": {
+   "label": "supported",
+   "says": "Messina Cathedral, the Duomo, is the Basilica Cathedral of Santa Maria Assunta, a Roman Catholic cathedral.",
+   "src": [
+    "wp-duomo-me"
+   ],
+   "quote": [
+    "Basilica Cathedrale metropolitana di Santa Maria Assunta) is a Roman Catholic cathedral located in Messina, Sicily"
+   ]
+  },
+  "norman": {
+   "label": "supported",
+   "says": "Built by the Normans, it was consecrated in 1197 by Archbishop Berardo, with Emperor Henry VI and Constance of Sicily present.",
+   "src": [
+    "wp-duomo-me"
+   ],
+   "quote": [
+    "Built by the Normans, it was consecrated in 1197 by the Archbishop Berardo. Henry VI, Holy Roman Emperor and Constance I of Sicily were present to witness the ceremony."
+   ]
+  },
+  "rebuilt": {
+   "label": "supported",
+   "says": "Today's building is the result of twentieth-century reconstructions after the 1908 earthquake and the bombing of World War II.",
+   "src": [
+    "wp-duomo-me"
+   ],
+   "quote": [
+    "The current building is the final result of some twentieth-century reconstructions, which took place following the disastrous earthquake that struck Messina in 1908 and the considerable damage that resulted from the heavy aerial bombardment in World War II."
+   ]
+  },
+  "survivors1908": {
+   "label": "supported",
+   "says": "After the earthquake only the perimeter walls, the Gothic portal and an apse were left standing.",
+   "src": [
+    "wp-duomo-me"
+   ],
+   "quote": [
+    "Only the perimeter walls, the Gothic portal and an apse remained standing after the catastrophic earthquake which also destroyed surrounding edifices in Piazza Duomo."
+   ]
+  },
+  "bombs1943": {
+   "label": "supported",
+   "says": "In 1943 incendiary bombs fell on the restored roof and destroyed much of the interior; only an original mosaic and a statue survived.",
+   "src": [
+    "wp-duomo-me"
+   ],
+   "quote": [
+    "In 1943 incendiary bombs fell on the restored roof destroying much of its interior. Only an original mosaic and statue survived."
+   ]
+  },
+  "bells1400": {
+   "label": "supported",
+   "says": "Two older bells, cast by Micheal Salicula in 1400, were saved from the 1908 earthquake.",
+   "src": [
+    "wp-duomo-me"
+   ],
+   "quote": [
+    "There are 2 other fixed bells, cast by Micheal Salicula in 1400. They were saved from the terrible Messina earthquake of 1908."
+   ]
+  },
+  "quake": {
+   "label": "supported",
+   "says": "The earthquake struck at 5:20 in the morning on 28 December 1908, with its epicentre in the Strait of Messina.",
+   "src": [
+    "wp-1908"
+   ],
+   "quote": [
+    "On Monday, 28 December 1908, at 5:20:27 an earthquake of 7.1 on the moment magnitude scale occurred. Its epicentre was in the Strait of Messina"
+   ]
+  },
+  "quake-37": {
+   "label": "supported",
+   "says": "The ground shook for 37 seconds.",
+   "src": [
+    "wp-1908"
+   ],
+   "quote": [
+    "The ground shook for 37 seconds"
+   ]
+  },
+  "quake-toll": {
+   "label": "estimate",
+   "says": "Around 120,000 people died in all; 75,000 were killed in Messina and its suburbs, and at least 91% of the city's structures were destroyed or irreparably damaged.",
+   "src": [
+    "wp-1908"
+   ],
+   "quote": [
+    "around 120,000 people died",
+    "At least 91% of the structures in Messina were destroyed or irreparably damaged and 75,000 people were killed in the city and its suburbs."
+   ]
+  },
+  "asleep": {
+   "label": "supported",
+   "says": "Most people were asleep, and were killed or buried as their houses collapsed.",
+   "src": [
+    "wp-1908"
+   ],
+   "quote": [
+    "The elevated death toll was due to the fact that most people were asleep, and killed outright or buried alive in their beds, as their houses collapsed on top of them."
+   ]
+  },
+  "aida": {
+   "label": "supported",
+   "says": "The city was more crowded than usual because visitors had come to see Verdi's Aida, staged the evening before.",
+   "src": [
+    "wp-1908"
+   ],
+   "quote": [
+    "Messina was even more crowded than usual, due to the number of overnight visitors from outlying areas who had come to the city  to see a performance of Giuseppe Verdi's opera Aida, which had been staged the previous evening"
+   ]
+  },
+  "tsunami": {
+   "label": "supported",
+   "says": "About ten minutes after the earthquake the sea withdrew on both sides of the Strait and a 12-meter tsunami swept in.",
+   "src": [
+    "wp-1908"
+   ],
+   "quote": [
+    "About ten minutes after the earthquake, the sea on both sides of the Strait suddenly withdrew as a 12-meter (39-foot) tsunami swept in"
+   ]
+  },
+  "fountain": {
+   "label": "supported",
+   "says": "The Fountain of Orion, beside the cathedral, was built by Montorsoli in 1547 to a design by Francesco Maurolico; Orion stands for Emperor Charles V. Wikivoyage calls Montorsoli a student of Michelangelo.",
+   "src": [
+    "wp-orion",
+    "wv-messina"
+   ],
+   "quote": [
+    "Maurolico also designed an ornate fountain, built by the sculptor Giovanni Angelo Montorsoli in 1547, in which Orion is a central figure, symbolizing the Emperor Charles V, also a master of the sea and restorer of Messina",
+    "Fontana di Orione, Piazza del Duomo (next to the Duomo). Work of Montorsoli (1547), a student of Michelangelo."
+   ]
+  },
+  "maurolico": {
+   "label": "supported",
+   "says": "Francesco Maurolico, a Renaissance historian and mathematician from Messina, identified the remains of a temple of Orion near the cathedral.",
+   "src": [
+    "wp-orion"
+   ],
+   "quote": [
+    "The Renaissance historian and mathematician Francesco Maurolico, who came from Messina, identified the remains of a temple of Orion near the present Messina Cathedral."
+   ]
+  },
+  "orion-legend": {
+   "label": "legend",
+   "says": "A story told by Diodorus says Orion helped Zanclus, founder of Zancle, by building the promontory that forms the harbor; the fountain shows Orion with his dog Sirius as a legendary founder.",
+   "src": [
+    "wp-orion",
+    "wv-messina"
+   ],
+   "quote": [
+    "One tells how he aided Zanclus, the founder of Zancle (the former name for Messina), by building the promontory which forms the harbor.",
+    "Orion, with his dog Sirius, is portrayed as one of the legendary founders of Messina."
+   ]
+  },
+  "zancle": {
+   "label": "supported",
+   "says": "The city's early name Zancle, said Thucydides, came from a word meaning scythe, for the shape of the natural port.",
+   "src": [
+    "wp-messina"
+   ],
+   "quote": [
+    "Zancle, which Thucydides said was from a Siculian word meaning \"scythe\", because of the shape of the natural port"
+   ]
+  },
+  "tower": {
+   "label": "supported",
+   "says": "The bell tower was rebuilt on its original site after 1908, to the original design, and rises over 65 metres.",
+   "src": [
+    "wp-duomo-me"
+   ],
+   "quote": [
+    "The current bell tower was rebuilt on its original site following the devastating 1908 earthquake. Its design was based on that of the original structure.",
+    "Rising over 65 metres"
+   ]
+  },
+  "clock-made": {
+   "label": "supported",
+   "says": "The clock was built into the bell tower by the Ungerer Company of Strasbourg in 1933.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "constructed by the Ungerer Company of Strasbourg in 1933. It is built into the campanile of Messina Cathedral."
+   ]
+  },
+  "clock-largest": {
+   "label": "supported",
+   "says": "It is considered the largest and most complex mechanical and astronomical clock in the world.",
+   "src": [
+    "wp-duomo-me"
+   ],
+   "quote": [
+    "This intricate system is considered the largest and most complex mechanical and astronomical clock in the world."
+   ]
+  },
+  "clock-paino": {
+   "label": "supported",
+   "says": "Archbishop Angelo Paino commissioned it to mark the rebuilding of the bell tower after the 1908 earthquake.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "It was commissioned by the Archbishop of Messina Angelo Paino to mark the reconstruction of the campanile after the 1908 Messina earthquake"
+   ]
+  },
+  "clock-pius": {
+   "label": "disputed",
+   "says": "Perhaps the idea came from Pope Pius XI, who gave Paino a working model of the Strasbourg clock.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "perhaps on inspiration of Pope Pius XI, who gave him a functioning model of the Strasbourg clock."
+   ]
+  },
+  "faces": {
+   "label": "supported",
+   "says": "The clock's displays are on several levels of the tower, on the sides facing the square and the cathedral; the square side is described from bottom to top.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "The clock's displays appear in several different levels of the campanile, on the sides facing the square and the cathedral.",
+    "The side of the campanile facing the square has the following displays, described from bottom to top"
+   ]
+  },
+  "days": {
+   "label": "supported",
+   "says": "A carousel shows each day of the week as a classical god in an animal-drawn chariot: Apollo with a horse on Sunday, Mercury with a panther on Wednesday.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "The carousel of the days of the week. Each day is represented by its classical deity, in a chariot pulled by an animal",
+    "Sunday: Apollo, driving a horse",
+    "Wednesday: Mercury, driving a panther"
+   ]
+  },
+  "ages": {
+   "label": "supported",
+   "says": "Four figures for the ages of life (child, young man, warrior, old man) change every quarter hour, passing Death with his scythe.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "Four statues represent the ages of man: a child, a young man, a warrior, and an old man. Each succeeds the last every quarter hour, passing in front of the skeletal figure of Death, who waves a scythe."
+   ]
+  },
+  "montalto": {
+   "label": "supported",
+   "says": "The Montalto scene recalls the sanctuary's foundation in the 13th century: at midday a dove circles and the sanctuary rises from the ground.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "The Sanctuary of the Madonna at Montalto. Representing the sanctuary's foundation in the 13th century, a dove flies in a circle and the sanctuary rises from the ground at midday."
+   ]
+  },
+  "biblical": {
+   "label": "supported",
+   "says": "A biblical scene changes with each quarter of the church year, such as the shepherds at Christmas and the Resurrection at Easter.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "A different biblical scene appears in each quarter of the liturgical year",
+    "Christmas to Epiphany: the Adoration of the Shepherds. The shepherds pass and bow before Joseph, Mary and the infant Jesus.",
+    "Easter to Pentecost: the Resurrection of Jesus. Two soldiers keep watch over Jesus' tomb, from which Jesus rises."
+   ]
+  },
+  "dina": {
+   "label": "legend",
+   "says": "Legend says Dina drove off an attack by rolling rocks while Clarenza rang the bells, during the Sicilian Vespers in 1282; on the clock they ring the quarter hours.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "According to legend, Dina repelled an attack on Messina by rolling rocks while Clarenza rang the bells of the campanile to alert the city, during the Sicilian Vespers in 1282. They ring the quarter hour bells."
+   ]
+  },
+  "lion": {
+   "label": "supported",
+   "says": "At the top, the crowned lion holds the flag of Messina; at midday it waves the flag, moves its tail, turns its head and roars three times.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "At the top, the crowned lion (symbol of the Province of Messina) carries the flag of Messina. At midday, it waves the flag, moves its tail, turns its head and roars three times."
+   ]
+  },
+  "rooster": {
+   "label": "supported",
+   "says": "At midday the rooster flaps its wings and crows three times.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "at midday, the rooster flaps its wings, raises its head and crows three times."
+   ]
+  },
+  "noon-daily": {
+   "label": "supported",
+   "says": "Wikivoyage describes the clock show of moving figures every day at noon.",
+   "src": [
+    "wv-messina"
+   ],
+   "quote": [
+    "A must-see for visitors with an amazing clock show, including symbolical and allegorical moving metal animals and statues, every day at 12:00."
+   ]
+  },
+  "calendar": {
+   "label": "supported",
+   "says": "On the cathedral side, the lower dial is a perpetual calendar, with a marble angel pointing to the day and moving panels for movable feasts.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "The lower dial is the perpetual calendar.",
+    "Moving panels on the ring indicate moveable feasts. A marble angel points an arrow to indicate the day."
+   ]
+  },
+  "planetarium": {
+   "label": "supported",
+   "says": "The upper dial is a planetarium showing the planets circling the Sun through the signs of the zodiac.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "The upper dial is the planetarium.",
+    "around the Sun, at the dial's centre, moving through the signs of the Zodiac."
+   ]
+  },
+  "moon": {
+   "label": "supported",
+   "says": "Above the dials, a half-gold, half-black sphere 1.2 m across shows the phase of the moon.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "Above the dials, the Moon is represented by a half-gold, half-black rotating sphere, 1.2m in diameter, which indicates the lunar phase."
+   ]
+  },
+  "patron": {
+   "label": "supported",
+   "says": "The Madonna of the Letter is the patron of Messina.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "The Madonna of the Letter, patron saint of Messina."
+   ]
+  },
+  "letter-legend": {
+   "label": "legend",
+   "says": "Legend says Messina's ambassadors went to Jerusalem to honor the Virgin Mary and received a letter from her blessing the city.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "According to legend, Messina's ambassadors were sent to Jerusalem to pay their respects to the Virgin Mary, and received a letter from her, granting the city her benediction."
+   ]
+  },
+  "letter-noon": {
+   "label": "supported",
+   "says": "At midday on the clock, an angel hands the letter to the Madonna, and St. Paul and the ambassadors pass and bow.",
+   "src": [
+    "wp-clock-me"
+   ],
+   "quote": [
+    "At midday, an angel hands the letter to the Madonna. St. Paul and the ambassadors pass in front of the Madonna and bow their heads."
+   ]
+  },
+  "letter-42": {
+   "label": "tradition",
+   "says": "The inscription \"We bless you and your City\" is taken, by tradition, from a letter from Mary in 42 AD.",
+   "src": [
+    "wv-messina"
+   ],
+   "quote": [
+    "The inscription \"We bless you and your City\" is taken from a letter from Mary in 42 AD."
+   ]
+  },
+  "statue": {
+   "label": "supported",
+   "says": "A tall gilded statue of the Madonna of the Letter stands on the tower of Forte San Salvatore at the tip of the sickle-shaped harbor.",
+   "src": [
+    "wv-messina"
+   ],
+   "quote": [
+    "A towering gilded statue of the Madonna della Lettera is located atop of the tall Forte San Salvatore tower at the tip of the sickle in the sickle-shaped harbour."
+   ]
+  },
+  "reggio": {
+   "label": "supported",
+   "says": "Across the strait lies Reggio Calabria, whose first Latin name was Rhegium.",
+   "src": [
+    "wp-messina",
+    "wp-rhegium"
+   ],
+   "quote": [
+    "it is an important access terminal to the Calabria region on the mainland, namely the town of Villa San Giovanni and the city of Reggio Calabria",
+    "Regium or Rhegium, its first Latin name"
+   ]
+  },
+  "acts-13": {
+   "label": "scripture",
+   "says": "Acts 28:13: \"we fetched a compass, and came to Rhegium: and after one day the south wind blew\".",
+   "src": [
+    "kjv-acts28a"
+   ],
+   "quote": [
+    "\"chapter\":28,\"verse\":13,\"text\":\"And from thence we fetched a compass, and came to Rhegium: and after one day the south wind blew, and we came the next day to Puteoli:"
+   ]
+  },
+  "paul-rhegium": {
+   "label": "supported",
+   "says": "In AD 61 the apostle Paul passed through Rhegium on his final voyage toward Rome.",
+   "src": [
+    "wp-rhegium"
+   ],
+   "quote": [
+    "In AD 61 the apostle St. Paul passed through Rhegium on his final voyage towards Rome"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "In the cathedral square, facing the front of the cathedral.",
+   "paras": [
+    {
+     "t": "This is Messina Cathedral, built by the Normans and consecrated in 1197. But most of what you see was rebuilt in the twentieth century, after the earthquake of 1908 and the bombs of World War Two.",
+     "c": [
+      "norman",
+      "rebuilt"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Its full name is the cathedral of Santa Maria Assunta. The consecration was a royal occasion: Archbishop Berardo led it, and the Emperor Henry the Sixth and Constance of Sicily were there to watch.",
+     "c": [
+      "name",
+      "norman"
+     ],
+     "level": 2
+    },
+    {
+     "t": "So why does a cathedral that old look so new? Hold on to that question. This square is a story of things knocked down and stubbornly put back up.",
+     "c": [
+      "norman",
+      "rebuilt"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Fountain of Orion",
+   "stand": "Walk over to the big fountain beside the cathedral, in the same square.",
+   "paras": [
+    {
+     "t": "This is the Fountain of Orion. The sculptor Montorsoli built it in 1547, and the giant hunter Orion stands at its heart.",
+     "c": [
+      "fountain"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Why Orion? The story goes that he helped Zanclus, the founder of the city, by building the promontory that forms the harbor. So here he is, with his dog Sirius, as one of Messina's legendary founders.",
+     "c": [
+      "orion-legend"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The harbor gave the city its first name, too. It was Zancle, and Thucydides said the word meant scythe, from the curved shape of the natural port.",
+     "c": [
+      "zancle"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The design came from Francesco Maurolico, a Renaissance historian and mathematician from Messina. In his plan, Orion stands for the Emperor Charles the Fifth, a master of the sea and the restorer of Messina. Maurolico also claimed to have identified the remains of a temple of Orion near this cathedral. One guidebook adds that Montorsoli had studied under Michelangelo.",
+     "c": [
+      "fountain",
+      "maurolico"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The night of 1908",
+   "stand": "Turn back to face the front of the cathedral.",
+   "paras": [
+    {
+     "t": "Early in the morning of December 28, 1908, an earthquake hit the strait. Around 120,000 people died. Of this cathedral, only the outer walls, the Gothic portal and an apse were left standing.",
+     "c": [
+      "quake",
+      "quake-toll",
+      "survivors1908"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It came at twenty past five, and the ground shook for 37 seconds. Most people were asleep, and their houses fell on them. The city was even fuller than usual: visitors had come in for Verdi's opera Aida, staged the evening before.",
+     "c": [
+      "quake",
+      "quake-37",
+      "asleep",
+      "aida"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Then, about ten minutes later, the sea pulled back from both shores of the strait, and a tsunami twelve meters high swept in. Here in the city and its suburbs, some 75,000 people were killed, and at least 91 percent of the buildings were destroyed or damaged beyond repair.",
+     "c": [
+      "tsunami",
+      "quake-toll"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The rebuilt cathedral had one more ordeal to come. In 1943, incendiary bombs fell on the restored roof and destroyed much of the interior. Only an original mosaic and a statue survived.",
+     "c": [
+      "bombs1943"
+     ],
+     "level": 3
+    },
+    {
+     "t": "A small mercy: the tower also has two older bells, cast by Michael Salicula in 1400. They were saved from the earthquake of 1908.",
+     "c": [
+      "bells1400"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The clock tower",
+   "stand": "Step back into the square and face the side of the bell tower that looks onto the square.",
+   "paras": [
+    {
+     "t": "This bell tower holds Messina's astronomical clock, built by the Ungerer company of Strasbourg in 1933. It's considered the largest and most complex of its kind in the world.",
+     "c": [
+      "clock-made",
+      "clock-largest"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The tower is new as well. It was rebuilt on its old site after 1908, to the original design, and it rises over 65 meters. Archbishop Angelo Paino ordered the clock to mark that rebuilding. Perhaps the idea came from Pope Pius the Eleventh, who had given him a working model of the famous clock in Strasbourg.",
+     "c": [
+      "tower",
+      "clock-paino",
+      "clock-pius"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Let's read this side from the bottom up. Near the bottom is the carousel of the days of the week: each day has its classical god in a chariot pulled by an animal. On Sunday it's Apollo with a horse; on Wednesday, Mercury with a panther.",
+     "c": [
+      "faces",
+      "days"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Above that, the ages of life: a child, a young man, a warrior and an old man. Every quarter hour one gives way to the next, passing in front of Death, a skeleton waving a scythe.",
+     "c": [
+      "ages"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Next comes the sanctuary of the Madonna of Montalto. At midday a dove flies in a circle and the little church rises from the ground, recalling how the sanctuary was founded, back in the 1200s.",
+     "c": [
+      "montalto"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Then a Bible scene that changes with the church year. From Christmas to Epiphany, the shepherds bow before the infant Jesus. From Easter to Pentecost, two soldiers keep watch at the tomb, and Jesus rises.",
+     "c": [
+      "biblical"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Higher still are two local heroines, Dina and Clarenza. Legend says that during the Sicilian Vespers, in 1282, Dina drove off an attack by rolling rocks, while Clarenza rang the bells to warn the city. Up there, they ring the quarter hours.",
+     "c": [
+      "dina"
+     ],
+     "level": 2
+    },
+    {
+     "t": "That's a lot of looking up. Step back far enough to see the top without craning, and keep a hand on your bag when the square fills up.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "The sky side",
+   "stand": "Walk around to the side of the bell tower that faces the cathedral.",
+   "paras": [
+    {
+     "t": "This side is about the sky: a calendar dial below, a planetarium above, and a turning sphere that shows the phase of the moon.",
+     "c": [
+      "faces",
+      "calendar",
+      "planetarium",
+      "moon"
+     ],
+     "level": 1
+    },
+    {
+     "t": "On the calendar, a marble angel points an arrow at the date, and moving panels mark the feasts that shift from year to year.",
+     "c": [
+      "calendar"
+     ],
+     "level": 3
+    },
+    {
+     "t": "In the planetarium, the Sun sits at the center and the planets circle it through the signs of the zodiac. The moon above is half gold and half black, 1.2 meters across.",
+     "c": [
+      "planetarium",
+      "moon"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Noon, and the letter",
+   "stand": "Go back into the square and face the bell tower again.",
+   "paras": [
+    {
+     "t": "At midday the tower comes alive. The lion at the top waves its flag and roars three times, and the rooster crows three times.",
+     "c": [
+      "lion",
+      "rooster"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Watch for the Madonna of the Letter, the patron of Messina. Legend says the city sent ambassadors to Jerusalem to honor the Virgin Mary, and she sent back a letter blessing the city. At noon an angel hands her the letter, and Saint Paul and the ambassadors pass by and bow.",
+     "c": [
+      "patron",
+      "letter-legend",
+      "letter-noon"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Tradition even gives the letter a date, 42 AD, and its words: We bless you and your city. Out at the tip of the sickle-shaped harbor, a tall gilded statue of the Madonna of the Letter stands on top of the tower of Forte San Salvatore.",
+     "c": [
+      "letter-42",
+      "statue"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Now let me keep Scripture and tradition apart. The Bible does reach this strait. Across the water is Reggio Calabria, which in Latin was Rhegium, and the apostle Paul passed through it on his last voyage toward Rome. Acts, chapter twenty-eight, verse thirteen, puts it like this: \"And from thence we fetched a compass, and came to Rhegium: and after one day the south wind blew, and we came the next day to Puteoli.\"",
+     "c": [
+      "reggio",
+      "paul-rhegium",
+      "acts-13"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Notice that Acts names Rhegium, not Messina. The story of the letter and the ambassadors is Messina's own legend, and the clock tells it, with Paul in the procession.",
+     "c": [
+      "acts-13",
+      "letter-legend",
+      "letter-noon"
+     ],
+     "level": 2
+    },
+    {
+     "t": "This city has been shaken, flooded and bombed. And still, every day at noon, a lion on a rebuilt tower lifts a flag and roars. A city that keeps on saying it's alive.",
+     "c": [
+      "quake",
+      "tsunami",
+      "bombs1943",
+      "lion",
+      "noon-daily"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

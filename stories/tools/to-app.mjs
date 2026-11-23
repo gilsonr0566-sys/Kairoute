@@ -4,15 +4,31 @@
 // check-stories.mjs are used. Run: node stories/tools/to-app.mjs   (no AI; the words are the checked words)
 import fs from "node:fs"; import crypto from "node:crypto";
 const cities = fs.readdirSync("stories").filter(c => fs.existsSync(`stories/${c}/check-report.json`));
-const CITY = { athens: "Athens|Piraeus" };
+// The trip city names a story's place can go by (the stop must also match the sight's own names). Default: the folder.
+const CITY = { athens: "Athens|Piraeus", heraklion: "Heraklion|Iraklion|Iraklio", chania: "Chania|Hania|Souda",
+  santorini: "Santorini|Thira|Fira", mykonos: "Mykonos", kusadasi: "Kusadasi|Kuşadası|Ephesus|Selcuk|Selçuk|Izmir",
+  messina: "Messina|Taormina", naples: "Naples|Napoli|Pompeii|Sorrento|Capri|Pozzuoli|Salerno", rome: "Rome|Roma|Civitavecchia|Vatican",
+  istanbul: "Istanbul|İstanbul", vienna: "Vienna|Wien", lisbon: "Lisbon|Lisboa|Sintra", barcelona: "Barcelona",
+  edinburgh: "Edinburgh|Leith|South Queensferry|Rosyth", kyoto: "Kyoto|Kyōto|Osaka", paris: "Paris|Le Havre|Versailles",
+  southampton: "Southampton|Salisbury|Winchester|Portsmouth", kotor: "Kotor|Perast", dubrovnik: "Dubrovnik|Gruž|Cavtat",
+  juneau: "Juneau", ketchikan: "Ketchikan", grandturk: "Grand Turk|Cockburn Town", pontadelgada: "Ponta Delgada|São Miguel|Azores",
+  halfmooncay: "Half Moon Cay|Little San Salvador", jerusalem: "Jerusalem|Haifa|Tel Aviv|Jaffa|Ashdod",
+  reykjavik: "Reykjav[ií]k", venice: "Venice|Venezia|Mestre", dubai: "Dubai", nassau: "Nassau|Paradise Island",
+  cococay: "CocoCay|Coco Cay|Little Stirrup Cay" };
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const out = [], say = fs.existsSync("stories/say.json") ? JSON.parse(fs.readFileSync("stories/say.json", "utf8")) : [];
+// Each city's own pronunciations (stories/<city>/say-add.json) join the shared list; the first spelling of a word wins.
+for (const c of fs.readdirSync("stories")) { const f = `stories/${c}/say-add.json`; if (!fs.existsSync(f)) continue;
+  for (const [a, b] of JSON.parse(fs.readFileSync(f, "utf8"))) if (!say.some(([x]) => x.toLowerCase() === a.toLowerCase())) say.push([a, b]); }
 for (const city of cities) {
   const rep = JSON.parse(fs.readFileSync(`stories/${city}/check-report.json`, "utf8"));
   if ((rep.fail || []).length) { console.error(`${city}: the story checks don't pass, so its stories stay out of the app`); continue; }
+  const fcf = `stories/${city}/factcheck.json`, fc = fs.existsSync(fcf) ? JSON.parse(fs.readFileSync(fcf, "utf8")) : {};
   const idx = Object.fromEntries(JSON.parse(fs.readFileSync(`stories/${city}/snapshots/index.json`, "utf8")).map(x => [x.key, x]));
-  const all = fs.readdirSync(`stories/${city}`).filter(f => /^[a-z].*\.json$/.test(f) && !/^(sources|check-report)\.json$/.test(f))
-    .map(f => JSON.parse(fs.readFileSync(`stories/${city}/${f}`, "utf8"))).filter(s => s.parts);
+  const all = fs.readdirSync(`stories/${city}`).filter(f => /^[a-z].*\.json$/.test(f) && !/^(sources|check-report|say-add|plan|factcheck)\.json$/.test(f))
+    .map(f => JSON.parse(fs.readFileSync(`stories/${city}/${f}`, "utf8"))).filter(s => s.parts)
+    // Only stories that passed the independent fact-check (stories/<city>/factcheck.json lists them) go into the app.
+    .filter(s => (fc.stories || []).includes(s.id));
   // A longer name of another story (for example "acropolis museum") is never taken by a shorter one ("acropolis").
   const names = s => s.match.names.map(n => n.toLowerCase());
   for (const st of all) {

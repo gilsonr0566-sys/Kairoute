@@ -1,0 +1,225 @@
+{
+ "id": "minas",
+ "v": 1,
+ "city": "heraklion",
+ "title": "Agios Minas Cathedral",
+ "match": {
+  "ids": [
+   "minas"
+  ],
+  "names": [
+   "agios minas",
+   "saint minas",
+   "st minas",
+   "saint menas"
+  ],
+  "wikidata": [
+   "Q2942217"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "Agios Minas is a Greek Orthodox cathedral, seat of the Archbishop of Crete, dedicated to Saint Menas, patron saint of Heraklion.",
+   "src": [
+    "wp-minas"
+   ],
+   "quote": [
+    "is a Greek Orthodox cathedral in Heraklion, on the island of Crete, Greece, serving as the seat of the Archbishop of Crete",
+    "who is the patron saint of Heraklion"
+   ]
+  },
+  "largest": {
+   "label": "supported",
+   "says": "It is the largest cathedral in Crete and one of the largest in Greece.",
+   "src": [
+    "wp-minas"
+   ],
+   "quote": [
+    "It is the largest cathedral in Crete and one of the largest in Greece."
+   ]
+  },
+  "menas": {
+   "label": "tradition",
+   "says": "Saint Menas is remembered as a martyr and wonderworker, 285-309 AD.",
+   "src": [
+    "wp-minas"
+   ],
+   "quote": [
+    "the martyr and wonderworker (285-309 A.D.)"
+   ]
+  },
+  "build": {
+   "label": "supported",
+   "says": "Built on a garden bought from a Turk to designs by Athanasios Moussis; foundation stone 1862; interrupted by the Cretan Revolution of 1866-1869; resumed 1883; completed 1895.",
+   "src": [
+    "wp-minas"
+   ],
+   "quote": [
+    "The site chosen for the construction of the cathedral was a garden that was purchased from a Turk. Designed by Athanasios Moussis, the foundation stone was laid in 1862. The construction was interrupted during the Cretan Revolution of 1866–1869, was resumed in 1883, and completed in 1895."
+   ]
+  },
+  "form": {
+   "label": "supported",
+   "says": "Cruciform with a central dome; two bell towers at the northeastern and southeastern corners; 43.2 m long and 29.5 m wide.",
+   "src": [
+    "wp-minas"
+   ],
+   "quote": [
+    "The cathedral has a cruciform structure with a central dome",
+    "It has two bell towers, one each in the northeastern and southeastern corners. The exterior floor plan of the cathedral is 43.2 metres (142 ft) long and 29.5 metres (97 ft) wide"
+   ]
+  },
+  "little": {
+   "label": "supported",
+   "says": "The small old church of Agios Minas, built in 1735, stands close by; locals call it little Agios Minas; it had become too small for the growing community.",
+   "src": [
+    "wp-minas"
+   ],
+   "quote": [
+    "the small church of Agios Minas, erected in 1735, did not meet the religious needs of the growing Christian community. The small and old church, within close proximity of the cathedral, remains extant, referred to by locals as the little Agios Minas."
+   ]
+  },
+  "aisles": {
+   "label": "supported",
+   "says": "One aisle is dedicated to the Apostle Titus, the other to the Ten Martyrs of Crete.",
+   "src": [
+    "wp-minas"
+   ],
+   "quote": [
+    "The right aisle is dedicated to Apostle Titos and the left aisle to the Ten Martyrs of Crete."
+   ]
+  },
+  "titus5": {
+   "label": "scripture",
+   "says": "Titus 1:5: 'For this cause left I thee in Crete... ordain elders in every city'.",
+   "src": [
+    "kjv-titus1"
+   ],
+   "quote": [
+    "\"chapter\":1,\"verse\":5,\"text\":\"For this cause left I thee in Crete, that thou shouldest set in order the things that are wanting, and ordain elders in every city, as I had appointed thee:"
+   ]
+  },
+  "titustrad": {
+   "label": "tradition",
+   "says": "Saint Titus is honored as Bishop of Crete and a saint.",
+   "src": [
+    "wp-gortyn"
+   ],
+   "quote": [
+    "Saint Titus (d.107), Bishop of Crete and saint"
+   ]
+  },
+  "screen": {
+   "label": "supported",
+   "says": "Following plans by Anastasios Orlandos, the carved wooden icon screen and the bishop's seat were replaced in marble; the paintings follow Byzantine iconography.",
+   "src": [
+    "wp-minas"
+   ],
+   "quote": [
+    "With plans of the architect Anastasios Orlandos the woodcut icon screen was replaced by another one made of marble, the same happened with the bishop's seat.",
+    "who followed the principles of Byzantine iconography"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "In the square in front of the cathedral, facing its main front.",
+   "paras": [
+    {
+     "t": "This great church is Agios Minas, the cathedral of Saint Menas, and the seat of the Archbishop of Crete. It's the largest cathedral on Crete, and one of the largest in Greece.",
+     "c": [
+      "what",
+      "largest"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Saint Menas is the patron saint of Heraklion. Tradition remembers him as a martyr and a wonderworker, and gives his dates as 285 to 309 AD.",
+     "c": [
+      "what",
+      "menas"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Building it took a long time. The foundation stone was laid in 1862, on a garden bought from a Turkish owner, to designs by Athanasios Moussis. Work stopped during the Cretan Revolution of 1866 to 1869, started again in 1883, and was finished in 1895.",
+     "c": [
+      "build"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Take in the shape. It's laid out as a cross, with a central dome, and there are two bell towers. The whole church is 43.2 meters long and 29.5 meters wide.",
+     "c": [
+      "form"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Little Agios Minas",
+   "stand": "Look for the small old church close by the cathedral.",
+   "paras": [
+    {
+     "t": "Close by stands the small old church of Agios Minas, built in 1735. Locals call it little Agios Minas. As the Christian community grew, it became too small, and that's why the big cathedral was built.",
+     "c": [
+      "little"
+     ],
+     "level": 1
+    }
+   ]
+  },
+  {
+   "name": "Inside",
+   "stand": "Inside, a little way in from the door, facing the icon screen.",
+   "paras": [
+    {
+     "t": "If a service is going on, keep your voice low and stay toward the back.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "The side aisles have their own dedications: one to the Apostle Titus, the other to the Ten Martyrs of Crete.",
+     "c": [
+      "aisles"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Titus brings the Bible into this church. Paul's letter to Titus, chapter 1, verse 5, in the King James Version, says: \"For this cause left I thee in Crete, that thou shouldest set in order the things that are wanting, and ordain elders in every city, as I had appointed thee.\" That's Scripture. Church tradition honors Titus as Bishop of Crete, and a saint.",
+     "c": [
+      "titus5",
+      "titustrad"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The icon screen in front of you is marble. Following plans by the architect Anastasios Orlandos, it replaced an earlier carved wooden one, and the bishop's seat was redone in marble too. The paintings follow the principles of Byzantine iconography.",
+     "c": [
+      "screen"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "On your way out, at the door.",
+   "paras": [
+    {
+     "t": "Before you go, think about how this church was built. People started it, stopped during a revolution, and came back years later to finish it. Some things are worth waiting for.",
+     "c": [
+      "build"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

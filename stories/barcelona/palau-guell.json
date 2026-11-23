@@ -1,0 +1,360 @@
+{
+ "id": "palau-guell",
+ "v": 1,
+ "city": "barcelona",
+ "title": "Palau Güell",
+ "match": {
+  "ids": [
+   "palauguell"
+  ],
+  "names": [
+   "palau guell",
+   "palau güell",
+   "guell palace",
+   "güell palace"
+  ],
+  "wikidata": [
+   "Q597051"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "Palau Güell is a mansion designed by Antoni Gaudí for the industrial tycoon Eusebi Güell, built between 1886 and 1888.",
+   "src": [
+    "wp-palau-guell"
+   ],
+   "quote": [
+    "is a mansion designed by the architect Antoni Gaudí for the industrial tycoon Eusebi Güell, and was built between 1886 and 1888."
+   ]
+  },
+  "street": {
+   "label": "supported",
+   "says": "It stands on Carrer Nou de la Rambla, in the El Raval neighborhood.",
+   "src": [
+    "wp-palau-guell"
+   ],
+   "quote": [
+    "It is situated on the Carrer Nou de la Rambla, in the El Raval neighborhood of Barcelona"
+   ]
+  },
+  "unesco": {
+   "label": "verified",
+   "says": "It is one of the Works of Antoni Gaudí on the UNESCO World Heritage list, listed in 1984.",
+   "src": [
+    "unesco-gaudi",
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "The Park Güell, the Palau Güell, the Casa Milà-La Pedrera",
+    "in 1984 the Park Güell, the Palau Güell and the Casa Milà"
+   ]
+  },
+  "guell": {
+   "label": "supported",
+   "says": "Eusebi Güell (1846-1918) was an entrepreneur who profited greatly from Catalonia's industrial revolution.",
+   "src": [
+    "wp-eusebi-guell"
+   ],
+   "quote": [
+    "15 December 1846 – 8 July 1918",
+    "was a Spanish entrepreneur who profited greatly from the industrial revolution in Catalonia in the late 19th century."
+   ]
+  },
+  "met": {
+   "label": "supported",
+   "says": "Güell met Gaudí after seeing his work at the 1878 Paris World Fair; they became lifelong friends, both devout Catholics, and Güell became his patron.",
+   "src": [
+    "wp-eusebi-guell"
+   ],
+   "quote": [
+    "Güell met the young architect, Antoni Gaudí, following a visit to the World Fair held in Paris in 1878, where he had seen Gaudi's work at the Spanish Pavilion. The pair became lifelong friends and associates",
+    "both were devout Catholics). Güell became a patron to Gaudí."
+   ]
+  },
+  "slavery": {
+   "label": "supported",
+   "says": "By one account Güell's father amassed considerable riches in Cuba as a slave trader; his father-in-law, the Marquis of Comillas, was a notorious slave trader.",
+   "src": [
+    "wp-eusebi-guell"
+   ],
+   "quote": [
+    "a wealthy industrialist from Torredembarra who had amassed considerable riches during his stay in Cuba as a slave trader",
+    "daughter of Antonio López y López, Marquis of Comillas and notorious slave trader"
+   ]
+  },
+  "gates": {
+   "label": "supported",
+   "says": "Guests arrived by horse-drawn carriage through iron gates with a parabolic arch and forged ironwork like seaweed and, in places, a horsewhip.",
+   "src": [
+    "wp-palau-guell"
+   ],
+   "quote": [
+    "Guests entered the home in horse-drawn carriages through the front iron gates, which featured a parabolic arch and intricate patterns of forged ironwork resembling seaweed and in some parts a horsewhip."
+   ]
+  },
+  "phoenix": {
+   "label": "disputed",
+   "says": "Most accounts (including two passages) call the creature on the entrance emblem a phoenix, symbol of Catalan rebirth; one passage calls it a winged dragon, the work of Joan Oñós.",
+   "src": [
+    "wp-palau-guell",
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "Gaudí placed the bronze sculpture of a phoenix between the two gates, a mythical animal that is an emblem of the economic and cultural renaissance experienced by Catalan society.",
+    "decorated with the Catalan coat of arms and a helmet with a winged dragon, the work of Joan Oñós",
+    "a helmet with a phoenix as an alegory to the rebirth of Catalan culture"
+   ]
+  },
+  "ramp": {
+   "label": "supported",
+   "says": "Animals were taken down a ramp to the stable in the basement, where the servants lived, while guests went up the stairs to the receiving room.",
+   "src": [
+    "wp-palau-guell"
+   ],
+   "quote": [
+    "Animals could be taken down a ramp and kept in the livery stable in the basement where the servants resided, while the guests went up the stairs to the receiving room."
+   ]
+  },
+  "peek": {
+   "label": "supported",
+   "says": "Small viewing windows high in the receiving room let the owners look at guests from upstairs before greeting them.",
+   "src": [
+    "wp-palau-guell"
+   ],
+   "quote": [
+    "The ornate walls and ceilings of the receiving room disguised small viewing windows high on the walls where the owners of the home could view their guests from the upper floor and get a \"sneak peek\" before greeting them, in case they needed to adjust their attire accordingly."
+   ]
+  },
+  "mudejar": {
+   "label": "supported",
+   "says": "Gaudí gave the interior a sumptuous Mudejar-style decoration, with wood and iron coffered ceilings.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "He designed the interior with a sumptuous Mudejar-style decoration, where the wood and iron coffered ceilings stand out."
+   ]
+  },
+  "hall": {
+   "label": "supported",
+   "says": "The core of the house is a triple-height hall with a double dome, parabolic inside and conical outside, a solution typical of Byzantine art.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "A notable feature is the triple-height entrance hall; it is the core of the building, surrounded by the main rooms, and it is remarkable for its double dome, with a parabolic interior and conical exterior, a solution typical of Byzantine art."
+   ]
+  },
+  "stars": {
+   "label": "supported",
+   "says": "The main party room's tall ceiling has small holes near the top; lanterns hung outside at night made it look like a starlit sky.",
+   "src": [
+    "wp-palau-guell"
+   ],
+   "quote": [
+    "The main party room has a tall ceiling with small holes near the top where lanterns were hung at night from the outside to give the appearance of a starlit sky."
+   ]
+  },
+  "roof": {
+   "label": "supported",
+   "says": "On the roof, chimneys are faced in vividly colored tiles, and a tall tiled spire, the outside of the dome, is topped with an iron weather vane.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "The chimneys on the roof are a remarkable feature, faced in vividly coloured ceramic tiles, as is the tall spire in the form of a lantern tower, which is the external termination of the dome within, and is also faced",
+    "with ceramic tiles and topped with an iron weather vane."
+   ]
+  },
+  "gallery": {
+   "label": "supported",
+   "says": "For the gallery on the street facade Gaudí used catenary arches and columns with hyperbolic capitals, a style he used only here.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "For the gallery on the street façade Gaudí used an original system of catenary arches and columns with hyperbolic capitals, a style he used only there."
+   ]
+  },
+  "restore": {
+   "label": "supported",
+   "says": "Public visits were suspended in 2004 because weak original stone had cracked; restoration was completed in April 2011.",
+   "src": [
+    "wp-palau-guell"
+   ],
+   "quote": [
+    "In 2004, visits by the public were completely suspended due to renovations; some of the stone used in the original construction was weak and had cracked over the years causing structural problems within the building.",
+    "with all restoration work completed in April 2011."
+   ]
+  },
+  "film": {
+   "label": "supported",
+   "says": "It appears in Antonioni's film The Passenger, where Jack Nicholson and Maria Schneider first meet.",
+   "src": [
+    "wp-palau-guell"
+   ],
+   "quote": [
+    "It was used in Antonioni's film  The Passenger as a backdrop for the first meeting between Jack Nicholson and Maria Schneider."
+   ]
+  },
+  "respect": {
+   "label": "tradition",
+   "says": "Reportedly Gaudí once said, \"Sometimes I think we are the only people who like this architecture,\" and Güell replied, \"I don't like your architecture, I respect it.\"",
+   "src": [
+    "wp-eusebi-guell"
+   ],
+   "quote": [
+    "Reportedly on one occasion Gaudí said to Güell, \"Sometimes I think we are the only people who like this architecture.\" Güell replied, \"I don't like your architecture, I respect it.\""
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The gates",
+   "stand": "On Carrer Nou de la Rambla, across the narrow street from the two iron gates.",
+   "paras": [
+    {
+     "t": "This is Palau Güell, the Güell Palace. Antoni Gaudí designed it for the industrial tycoon Eusebi Güell, and it went up between 1886 and 1888, here on Carrer Nou de la Rambla in the Raval. Since 1984 it's been part of Gaudí's UNESCO World Heritage listing.",
+     "c": [
+      "what",
+      "street",
+      "unesco"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Look at the two gates. Guests rolled in here by horse and carriage, under the parabolic arch of each gate. Look closely at the ironwork: it's meant to look like seaweed, and in places like a horsewhip.",
+     "c": [
+      "gates"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Now look between the gates, at the emblem with the Catalan coat of arms. Most accounts call the creature on top a phoenix, a symbol of Catalonia's rebirth, but one calls it a winged dragon, so the accounts differ a little. The ironwork is credited to Joan Oñós. Look for yourself and decide.",
+     "c": [
+      "phoenix"
+     ],
+     "level": 2
+    },
+    {
+     "t": "On the street front, the gallery uses arches and columns in a style Gaudí used only on this building.",
+     "c": [
+      "gallery"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Patron and architect",
+   "stand": "Stay by the gates for a moment, out of the way of other visitors.",
+   "paras": [
+    {
+     "t": "Who was Eusebi Güell? A businessman who did very well out of Catalonia's industrial revolution. He met the young Gaudí after seeing his work at the Paris World Fair of 1878. They became lifelong friends, both devout Catholics, and Güell became his great patron.",
+     "c": [
+      "guell",
+      "met"
+     ],
+     "level": 2
+    },
+    {
+     "t": "There's a harder side to this wealth, and it's worth saying plainly. Güell's father made a fortune in Cuba, by some accounts as a slave trader, and his father-in-law, the Marquis of Comillas, was a notorious slave trader too.",
+     "c": [
+      "slavery"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Coming in",
+   "stand": "Just inside the entrance.",
+   "paras": [
+    {
+     "t": "The house was built around arrival. Horses went down a ramp to the stable in the basement, where the servants lived. Guests went up the stairs to the receiving room.",
+     "c": [
+      "ramp"
+     ],
+     "level": 1
+    },
+    {
+     "t": "If you go down to the basement, take the ramp slowly and watch your footing.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    },
+    {
+     "t": "Here's a lovely detail upstairs. Hidden in the ornate walls of the receiving room are small windows, high up. The owners could take a sneak peek at their guests from the floor above, and fix their clothes if needed before coming down.",
+     "c": [
+      "peek"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The great hall",
+   "stand": "In the tall central hall, under the dome.",
+   "paras": [
+    {
+     "t": "This hall is the heart of the house. It rises three stories, with the main rooms around it. Look up into the dome. It's a double dome, curved inside and cone-shaped outside, an idea that goes back to Byzantine buildings.",
+     "c": [
+      "hall"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The palace's main party room has small holes near the top of its tall ceiling. At night, lanterns were hung outside them, so the guests below saw what looked like a starlit sky.",
+     "c": [
+      "stars"
+     ],
+     "level": 2
+    },
+    {
+     "t": "As you walk through the rooms, look up at the ceilings. Gaudí decorated the inside in a rich Mudejar style, and the wood and iron ceilings are the stars of the show.",
+     "c": [
+      "mudejar"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The roof",
+   "stand": "Up on the roof terrace, near the tall central spire.",
+   "paras": [
+    {
+     "t": "Take care up here: watch the steps and the uneven surface, and keep children close.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "This is the playful side. The chimneys are covered in brightly colored tile. And the tall spire in the middle is the outside of the dome you just stood under, also tiled and topped with an iron weather vane.",
+     "c": [
+      "roof"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The palace hasn't had an easy life. In 2004 it closed to visitors, because some of the original stone was weak and had cracked. The restoration was finished in April 2011. Film fans may know this house too: it's where Jack Nicholson and Maria Schneider first meet in Antonioni's film The Passenger.",
+     "c": [
+      "restore",
+      "film"
+     ],
+     "level": 3
+    },
+    {
+     "t": "One last story. It is said that Gaudí once told Güell, \"Sometimes I think we are the only people who like this architecture.\" And Güell answered, \"I don't like your architecture, I respect it.\" Maybe that's the best a friend can give: not always agreement, but respect.",
+     "c": [
+      "respect"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

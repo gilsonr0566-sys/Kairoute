@@ -1,0 +1,54 @@
+SOURCE: https://en.wikipedia.org/wiki/1667_Dubrovnik_earthquake
+RETRIEVED: 2026-11-22T20:43:26.119Z
+STATUS: 200
+TITLE: 1667 Dubrovnik earthquake
+
+The 1667 Dubrovnik earthquake was one of the three most devastating earthquakes to hit what is now modern Croatia in the last 2,400 years, since records began. The entire city was almost destroyed and around 3,000 to 5,000 people were killed. The city's Rector Simone Ghetaldi was killed and over three quarters of all public buildings were destroyed. At the time, Dubrovnik was the capital of the Republic of Ragusa. The earthquake marked the beginning of the end of the Republic.
+
+
+== Tectonic setting ==
+Dubrovnik's region is located in the eastern part of the Adriatic Sea and is a narrow strip of land, dotted by a series of bays, with the Dinaric Alps in the background, and hundreds of islands along the coast.
+The city of Dubrovnik was built in the most seismically active area in Croatia, which makes earthquakes the strongest in the whole country. It is the only Croatian town that is shown in red on the seismic map, which means that it is exposed to potential hazard of the strongest earthquakes, those of 10 degrees in the Mercalli scale.
+
+
+== Earthquake ==
+The earthquake occurred at around 8 in the morning on April 6, 1667. Survivors of the event witnessed a rumbling sound followed by a tremendous kick that rocked the city. It occurred at about 8:45 in the morning, and lasted between 8 and 15 seconds. This event is thought to be the biggest one in the history of Dalmatia and practically defines seismic hazard in the coastal area of Croatia.
+The effects of the earthquake were most keenly felt in the territory of the Republic of Ragusa, with a maximum intensity of 9 EMS98 being assigned to three settlements: Ragusa itself, Ombla and Gruž. Other parts of the Republic were most likely affected as well, although no written records were found by historians that related to them. The Venetian enclave of Cattaro experienced a maximum intensity of 8 EMS98, with an estimated 250-300 people dead in a town of ~1300 residents. In total, 37 settlements were affected, with the EMS98 spanning 6 to 9.
+
+
+=== Damage ===
+Many of the city buildings were reduced to rubble, with a majority of the ones that remained standing suffering significant damage. It is assumed that the large scale of destruction is due primarily to two factors: the previous earthquakes of 1520 and 1639, and the poor properties of the adhesives, prepared using brackish and sea water, used in the construction of the buildings. The Rector's Palace, the Major Council Hall and Sponza Palace all suffered severe damage. All the buildings lining the Stradun were destroyed, and passage through the street was blocked by rubble. Although the Franciscan Church and Monastery weren't destroyed by the earthquake, the subsequent fire destroyed much of the monastery, as well as its great library.
+Citizens of the city witnessed huge stones rolling down the hill of Srđ destroying everything in their way. Large cracks appeared in the land, and the city's water sources dried up. The dust created by the destroyed buildings was thick enough to obscure the sky. Later, a powerful tsunami devastated the port, flooding everything near the shore. Strong winds fueled fires from homes and bakeries, and the resulting blaze would not be extinguished for almost 20 days.
+
+
+== Aftermath ==
+The Sponza and the Rector's palace were the only buildings that survived the natural disaster. The city was reconstructed in the baroque style that has survived intact to this day. Despite the reconstruction, the decline of the Mediterranean as a hub for trade meant that Dubrovnik, like other Mediterranean ports, began a steady decline. According to the historian Robin Harris, the earthquake killed around 2,000 inhabitants of the city and up to 1,000 in the rest of the republic. Among the dead were the Rector and half of the members of the Great council. The effects of the earthquake also resulted in the loss of half of the nobility population.
+
+
+=== Thievery ===
+Alongside the fire, robbery had taken over the city as a result of the anarchy that followed, given that the earthquake killed the Rector and wiped out a great part of the government. The first claims filed before the Criminal Court concerned thefts of items and valuables from collapsed houses and rubble, with only a few cases of theft of construction material. By the beginning of 1668, the theft of construction material increased. It became the dominant form of thievery by the end of the year, and remained as such until 1674. In the period between June 21, 1667, and December 31, 1676, ~70% of theft reports concerned material used in the city reconstruction, while 30% of the reports concerned theft of personal items and valuables.
+
+
+=== Water shortages ===
+The earthquake had done significant damage to various sources of fresh water, due to the damage done to the city's aqueduct. Furthermore, the wells around the city either dried up, or gave a yellowish, thick mass instead of water. Water had to be imported, gathered from rainfall or drawn from the wells of the Gruž Dominican monastery, which were surprisingly undamaged. Consequently, significant funds had to be diverted into the reconstruction of the aqueduct.
+
+
+== See also ==
+List of earthquakes in Croatia
+List of historical earthquakes
+
+
+== References ==
+
+
+== Bibliography ==
+Harris, Robin (2006). Dubrovnik, A History. Saqi Books. ISBN 0-86356-332-5.
+
+
+== Further reading ==
+Balija, Petrica (April 2015). "Sve se razgrabi ko je bolje mogo: krađe iz ruševina nakon dubrovačkog potresa iz 1667. godine" [Loot and prey while you may: thefts in the aftermath of the 1667 Great Earthquake of Dubrovnik]. Anali Zavoda za povijesne znanosti Hrvatske akademije znanosti i umjetnosti u Dubrovniku (in Croatian). 53 (1): 149–193. doi:10.21857/94kl4cwqnm.
+
+
+== External links ==
+Earthquakes in Croatia State Protection and Rescue Administration (DUZS)
+Potres u Dubrovniku 1667. godine [1667 Dubrovnik Earthquake] hrt.hr, Croatian Radiotelevision Archived 2020-04-08 at the Wayback Machine (in Croatian)

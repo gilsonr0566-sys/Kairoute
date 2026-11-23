@@ -1,0 +1,543 @@
+{
+ "id": "duomo-na",
+ "v": 1,
+ "city": "naples",
+ "title": "Naples Cathedral and the Chapel of San Gennaro",
+ "match": {
+  "ids": [
+   "duomo-na"
+  ],
+  "names": [
+   "duomo di napoli",
+   "naples cathedral",
+   "cattedrale di san gennaro",
+   "tesoro di san gennaro",
+   "santa restituta"
+  ],
+  "wikidata": [
+   "Q256486"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "names": {
+   "label": "supported",
+   "says": "Officially the Cathedral of the Assumption of Mary, seat of the Archbishop, it is widely known as the Cathedral of San Gennaro (Saint Januarius), the city's patron saint.",
+   "src": [
+    "wp-duomo-na"
+   ],
+   "quote": [
+    "or the Cathedral of the Assumption of Mary (Italian: Cattedrale di Santa Maria Assunta), is a Roman Catholic cathedral, the main church of Naples, southern Italy, and the seat of the Archbishop of Naples. It is widely known as the Cathedral of Saint Januarius (Cattedrale di San Gennaro), in honour of the city's patron saint."
+   ]
+  },
+  "built": {
+   "label": "verified",
+   "says": "The Gothic cathedral was commissioned by Charles I of Anjou and completed in the early 14th century under Robert of Anjou.",
+   "src": [
+    "wp-duomo-na",
+    "unesco-naples"
+   ],
+   "quote": [
+    "The present cathedral in Angevin Gothic style (Italian: gotico angioino) was commissioned by King Charles I of Anjou. Construction continued during the reign of his successor, Charles II (1285–1309) and was completed in the early 14th century under Robert of Anjou.",
+    "the chapel of Santa Restituta in the 14th-century cathedral"
+   ]
+  },
+  "robert-sc": {
+   "label": "supported",
+   "says": "King Robert also built Santa Chiara with Queen Sancha.",
+   "src": [
+    "wp-santa-chiara"
+   ],
+   "quote": [
+    "The double monastic complex was built in 1313–1340 by Queen Sancha of Majorca and her husband King Robert of Naples"
+   ]
+  },
+  "facade": {
+   "label": "supported",
+   "says": "The facade was reworked by Enrico Alvino in the late 19th century but keeps the 15th-century portal with sculptures by Tino da Camaino.",
+   "src": [
+    "wp-duomo-na"
+   ],
+   "quote": [
+    "The façade was reworked by Enrico Alvino in the late 19th century, but retains the 15th century portal, including some sculptures by Tino da Camaino."
+   ]
+  },
+  "foundations": {
+   "label": "supported",
+   "says": "It stands on the foundations of two early Christian basilicas; excavations beneath revealed Greek and Roman artifacts.",
+   "src": [
+    "wp-duomo-na",
+    "wv-naples"
+   ],
+   "quote": [
+    "It was built on the foundations of two palaeo-Christian basilicas, whose traces can still be clearly seen. Underneath the building excavations have revealed Greek and Roman artifacts."
+   ]
+  },
+  "gen-life": {
+   "label": "legend",
+   "says": "No contemporary sources survive; later sources and legend say Januarius, a bishop, died in the Great Persecution, which ended in 305.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "While no contemporary sources on his life are preserved, later sources and legends say he died during the Great Persecution, which ended with Diocletian's retirement in 305.",
+    "Little is known of Januarius' life."
+   ]
+  },
+  "gen-martyr": {
+   "label": "legend",
+   "says": "Legend says he was condemned to the bears at Pozzuoli's amphitheater but beheaded near the Solfatara; other legends say the beasts refused him or he survived a furnace.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "He and his colleagues were condemned to be thrown to wild bears in the Flavian Amphitheater at Pozzuoli, but the sentence was changed due to fear of public disturbance, and they were instead beheaded at the Solfatara crater near Pozzuoli. Other legends say either that the wild beasts refused to eat him or that he was thrown into a furnace but came out unscathed."
+   ]
+  },
+  "gen-432": {
+   "label": "supported",
+   "says": "The earliest historical mention is a letter of 432 calling him 'bishop as well as martyr, an illustrious member of the Neapolitan church'.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "The earliest historical reference to Januarius is in a letter by Uranius, bishop of Nola, dated 432",
+    "Of Januarius, the letter says only that he was \"bishop as well as martyr, an illustrious member of the Neapolitan church\"."
+   ]
+  },
+  "relics": {
+   "label": "supported",
+   "says": "His body was brought to Naples in 1497; the Succorpo crypt beneath the cathedral was finished in 1506; the bones are kept in a crypt under the main altar.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "In 1497, at the instigation of Cardinal Oliviero Carafa, the body was transferred to Naples",
+    "Carafa commissioned a richly decorated crypt, the Succorpo, beneath the cathedral to house the reunited body and head. The Succorpo was finished in 1506",
+    "the bones are kept in a crypt under Naples Cathedral's main altar"
+   ]
+  },
+  "vesuvius": {
+   "label": "tradition",
+   "says": "By tradition Neapolitans invoke him in need; he was called on to stop the 1631 eruption of Vesuvius, and the lava slowed down.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "Januarius has been traditionally invoked by the people of Naples on several occasions, e.g. to ask for help, healing and special favors; memorably, he was called on to stop the 1631 eruption of Mount Vesuvius, and the lava – that was about to destroy the towns around it – slowed down."
+   ]
+  },
+  "treasure-chapel": {
+   "label": "supported",
+   "says": "The Royal Chapel of the Treasure of San Gennaro has frescoes by Domenichino and Lanfranco, a high altar by Solimena and a bronze railing by Cosimo Fanzago.",
+   "src": [
+    "wp-duomo-na"
+   ],
+   "quote": [
+    "Another attraction of the interior is the Royal Chapel of the Treasure of San Gennaro, with frescoes by Domenichino and Giovanni Lanfranco, altarpieces by Domenichino, Massimo Stanzione and Jusepe Ribera, the rich high altar by Francesco Solimena, the bronze railing by Cosimo Fanzago"
+   ]
+  },
+  "deputation": {
+   "label": "supported",
+   "says": "The Treasure, gifts gathered over seven centuries, has been kept by the Deputation, a secular body founded in 1527 by a vote of the city.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "The Treasure of St. Januarius is a collection of works and donations collected over seven centuries from popes, kings, emperors, and other famous and ordinary people.",
+    "kept untouched thanks to the Deputation of the Chapel of St Januarius, a secular institution founded in 1527 by a vote of the city of Naples."
+   ]
+  },
+  "value": {
+   "label": "supported",
+   "says": "According to a pool of experts, the Treasure is worth more than the crowns of Queen Elizabeth II and the Tsar.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "According to studies by a pool of experts who analyzed all the pieces in the collection, the Treasure of St. Januarius is of higher value than the crown of Queen Elizabeth II of the United Kingdom and the Tsar of Russia."
+   ]
+  },
+  "tobias": {
+   "label": "supported",
+   "says": "The almost life-size silver group of Tobias and the Angel (1797) in the Treasure chapel was made from designs by Sanmartino, whose most famous work is the Veiled Christ (1753).",
+   "src": [
+    "wp-sammartino"
+   ],
+   "quote": [
+    "After Sanmartino’s death, the same del Giudice silversmiths executed the almost life-size group of Tobias and the Angel (1797; Naples Cathedral, Royal Chapel of the Treasure of St. Januarius) after his designs.",
+    "His most famous work is the Veiled Christ (1753) in Sansevero Chapel in Naples."
+   ]
+  },
+  "museum": {
+   "label": "supported",
+   "says": "The Museum of the Treasure has its entrance on the right side of the cathedral under the arcades; through it the chapel can be visited even when the cathedral is closed.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "The Treasure is exhibited in the Museum of the Treasure of St. Januarius, whose entrance is on the right side of the Dome of Naples, under the arcades. By visiting the museum, the Chapel of San Gennaro is accessible even when the cathedral is closed."
+   ]
+  },
+  "blood-vial": {
+   "label": "tradition",
+   "says": "Three times a year the faithful gather to witness the liquefaction of what is claimed to be his blood, kept in two sealed small ampoules.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "the faithful gather three times a year in Naples Cathedral to witness the liquefaction of what is claimed to be a sample of his blood kept in a sealed ampoule.",
+    "The blood is stored in two hermetically sealed small ampoules"
+   ]
+  },
+  "blood-dates": {
+   "label": "supported",
+   "says": "It is brought out on the Saturday before the first Sunday of May, on September 19 and on December 16, when the dried blood usually liquefies.",
+   "src": [
+    "wp-duomo-na",
+    "wp-gennaro"
+   ],
+   "quote": [
+    "on 19 September (Saint Januarius' Day, commemorating his martyrdom), 16 December (celebrating his patronage of Naples and its archdiocese), and the Saturday before the first Sunday of May (commemorating the reunification of his relics).",
+    "when the dried blood usually liquefies"
+   ]
+  },
+  "blood-legend": {
+   "label": "legend",
+   "says": "Legend says disaster will befall Naples if the blood fails to liquefy.",
+   "src": [
+    "wp-duomo-na"
+   ],
+   "quote": [
+    "If the blood fails to liquefy, then legend has it that disaster will befall Naples."
+   ]
+  },
+  "blood-history": {
+   "label": "supported",
+   "says": "A chronicle of 1382 describes his cult without mentioning the blood; the first certain date of melting is 1389.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "A chronicle of Naples written in 1382 describes the cult of Saint Januarius in detail, but mentions neither the relic nor the miracle. The first certain date is 1389, when it was found to have melted."
+   ]
+  },
+  "eusebia": {
+   "label": "legend",
+   "says": "Legend says a woman named Eusebia saved his blood just after his death.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "according to legend, was saved by a woman named Eusebia just after his death"
+   ]
+  },
+  "ritual": {
+   "label": "supported",
+   "says": "The archbishop tilts the reliquary to show the contents solid; after prayers, including by the 'relatives of San Gennaro', the larger vial typically appears to liquefy, sometimes at once, sometimes after hours or days.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "where the archbishop holds up the reliquary and tilts it to show that the contents are solid",
+    "After intense prayers by the faithful, including the so-called \"relatives of Saint Januarius\" (parenti di San Gennaro), the content of the larger vial typically appears to liquify.",
+    "The liquefaction sometimes takes place almost immediately and sometimes takes hours or even days."
+   ]
+  },
+  "church": {
+   "label": "supported",
+   "says": "The Church has made no official statement, stays neutral on scientific study, and does not allow the vials to be opened.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "it has never formulated an official statement on the phenomenon and maintains a neutral stance about scientific investigations. It does not permit the vials to be opened"
+   ]
+  },
+  "science": {
+   "label": "disputed",
+   "says": "Explanations are disputed: one hypothesis is a gel that liquefies when moved; a Naples biologist in 2010 tested a different old blood relic (from Camaldoli) that also changed phase, and concluded there is blood but no miracle; a historian argues for a thermal cause.",
+   "src": [
+    "wp-gennaro",
+    "wp-duomo-na"
+   ],
+   "quote": [
+    "A recent hypothesis by Garlaschelli & al. is that the vial contains a thixotropic gel. In such a substance viscosity increases if left unstirred and decreases if stirred or moved.",
+    "He concluded, \"there's blood, no miracle\".",
+    "In 2010, Giuseppe Geraci, a professor in the Department of Molecular Biology at Naples' Frederick II University, conducted an experiment on a vial containing old blood—a relic dating to the 18th century from the Eremo di Camaldoli",
+    "Geraci showed that the Camaldoli relic also contains blood that can change its solid-liquid phase by shaking.",
+    "which, according to him, has a thermal origin"
+   ]
+  },
+  "popes": {
+   "label": "supported",
+   "says": "In 2015, during Pope Francis's visit, the archbishop said the blood had half liquefied; it did not liquefy for Benedict XVI in 2007.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "It supposedly liquefied in the presence of Pope Pius IX in 1848, but not that of John Paul II in 1979 or Benedict XVI in 2007.",
+    "On March 21, 2015, Pope Francis venerated the dried blood during a visit to Naples Cathedral",
+    "Archbishop Sepe then said, \"The blood has half liquefied, which shows that Saint Januarius loves our pope and Naples.\""
+   ]
+  },
+  "omen": {
+   "label": "tradition",
+   "says": "A failure is said to be a bad omen; some link failed years with wars or pandemics.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "When the blood fails to liquefy it is said to be a bad omen, some people even correlate some of the years when the miracle did not happen with wars or pandemics."
+   ]
+  },
+  "thousands": {
+   "label": "supported",
+   "says": "Thousands gather in the cathedral three times a year to witness it.",
+   "src": [
+    "wp-gennaro"
+   ],
+   "quote": [
+    "Thousands of people assemble to witness this event in Naples Cathedral three times a year"
+   ]
+  },
+  "restituta": {
+   "label": "supported",
+   "says": "The cathedral gives access to Santa Restituta, the original early Christian church, whose excavations show a Greek wall of a temple of Apollo, a late Roman house, a Roman aqueduct and a Greek road.",
+   "src": [
+    "wp-duomo-na"
+   ],
+   "quote": [
+    "The cathedral gives access to the archaeological remains in the crypt of the neighbouring original palaeochristian church of Santa Restituta where there is a Greek wall belonging to the temple of Apollo, in opus reticulatum. Under the apse the peristyle of a late imperial domus can be seen; also a stretch of Roman aqueduct after the foundation of the city and a stretch of Greek road on an inclined plane."
+   ]
+  },
+  "baptistery": {
+   "label": "supported",
+   "says": "The early Christian baptistery has mosaics from the 4th century.",
+   "src": [
+    "wp-duomo-na"
+   ],
+   "quote": [
+    "the palaeo-Christian baptistery, with mosaics from the 4th century"
+   ]
+  },
+  "extras": {
+   "label": "supported",
+   "says": "There is an Assumption by Perugino, and the Minutolo Chapel, mentioned in Boccaccio's Decameron, has 14th-century frescoes.",
+   "src": [
+    "wp-duomo-na"
+   ],
+   "quote": [
+    "Other artworks include an Assumption by Pietro Perugino",
+    "The Minutolo Chapel, mentioned in Boccaccio's Decameron, has 14th-century frescoes."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The front",
+   "stand": "On the sidewalk across the street from the cathedral, where you can take in the whole front.",
+   "paras": [
+    {
+     "t": "This is the cathedral of Naples. Officially it's the Cathedral of the Assumption of Mary, but it's widely known as the cathedral of San Gennaro, Saint Januarius, the city's patron saint.",
+     "c": [
+      "names"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The church itself is Gothic. King Charles the First of Anjou commissioned it, and it was finished in the early 1300s under King Robert, the same Robert who built Santa Chiara. The front you see is newer, reworked in the late 1800s by Enrico Alvino, but the main doorway is from the 1400s, and it includes sculptures by Tino da Camaino.",
+     "c": [
+      "built",
+      "robert-sc",
+      "facade"
+     ],
+     "level": 2
+    },
+    {
+     "t": "And underneath, it's older still. The cathedral stands on the foundations of two early Christian basilicas, and digs under the building have turned up Greek and Roman remains.",
+     "c": [
+      "foundations"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The street out front carries traffic. Stay on the sidewalk while you look.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "This is a working church. If a Mass is on, keep your voice low and stay toward the back.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "Who was San Gennaro?",
+   "stand": "Step inside and stop in the nave, facing the main altar.",
+   "paras": [
+    {
+     "t": "So who was Januarius? Honestly, very little is known. No records from his own lifetime survive. Later sources and legend say he was a bishop, martyred in the Great Persecution under the emperor Diocletian, who retired in 305.",
+     "c": [
+      "gen-life"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The legend goes further. He was condemned to be thrown to bears in the amphitheater at Pozzuoli, but in the end he was beheaded near the Solfatara crater. Other versions say the beasts refused to touch him, or that he walked out of a furnace unharmed.",
+     "c": [
+      "gen-martyr"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The first real historical mention is a letter from 432. It calls him simply bishop as well as martyr, an illustrious member of the Neapolitan church.",
+     "c": [
+      "gen-432"
+     ],
+     "level": 3
+    },
+    {
+     "t": "His body was brought to Naples in 1497, and a richly decorated crypt was built for it beneath the cathedral, the Succorpo, finished in 1506. His bones are kept in a crypt under the main altar, ahead of you.",
+     "c": [
+      "relics"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Naples turns to him in hard times. By tradition, he was called on to stop the eruption of Vesuvius in 1631, and, the tradition goes, the lava heading for the towns slowed down.",
+     "c": [
+      "vesuvius"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Chapel of the Treasure",
+   "stand": "At the entrance to the Royal Chapel of the Treasure of San Gennaro.",
+   "paras": [
+    {
+     "t": "This is the Royal Chapel of the Treasure of San Gennaro. Look for the bronze railing by Cosimo Fanzago. Inside are frescoes by Domenichino and Giovanni Lanfranco, and a rich high altar by Francesco Solimena.",
+     "c": [
+      "treasure-chapel"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The treasure is a collection of gifts gathered over seven centuries, from popes, kings, emperors and ordinary people. And it's been kept, not by the clergy, but by the Deputation, a secular body set up in 1527 by a vote of the city of Naples. According to one group of experts who studied it, it's worth more than the crowns of the late Queen Elizabeth the Second and the Tsar of Russia.",
+     "c": [
+      "deputation",
+      "value"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Look for the almost life-size silver group of Tobias and the Angel, made in 1797 from designs by Giuseppe Sanmartino, the sculptor of the Veiled Christ.",
+     "c": [
+      "tobias"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The Museum of the Treasure has its entrance on the right side of the cathedral, under the arcades. Through it you can reach this chapel even when the cathedral is closed.",
+     "c": [
+      "museum"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The blood",
+   "stand": "Stay near the Treasure chapel, or find a seat in the nave.",
+   "paras": [
+    {
+     "t": "And now the famous part. Naples keeps what is believed to be the blood of San Gennaro, sealed in two small vials. Three times a year it's brought out: on the Saturday before the first Sunday in May, on September 19, and on December 16. Usually, the dried blood appears to turn liquid. And legend says that if it fails, disaster will fall on Naples.",
+     "c": [
+      "blood-vial",
+      "blood-dates",
+      "blood-legend"
+     ],
+     "level": 1
+    },
+    {
+     "t": "When did this begin? A chronicle of Naples from 1382 describes his cult in detail, and doesn't mention the blood at all. The first certain date is 1389, when it was found to have melted. The legend says a woman named Eusebia saved his blood just after his death.",
+     "c": [
+      "blood-history",
+      "eusebia"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Here's how it goes. The archbishop holds up the reliquary and tilts it, to show the contents are solid. Then the faithful pray, among them the people known as the relatives of San Gennaro. Usually the larger vial appears to turn liquid. Sometimes it happens almost at once; sometimes it takes hours, or even days.",
+     "c": [
+      "ritual"
+     ],
+     "level": 3
+    },
+    {
+     "t": "So what's actually in it? Nobody knows for sure. The Church has never made an official statement, and it doesn't allow the vials to be opened. Some researchers suggest a gel that turns liquid when it's moved. A biologist in Naples tested a different old blood relic in 2010, saw the same kind of change, and concluded: there's blood, no miracle. A historian argues it's all about temperature. Scholars still disagree.",
+     "c": [
+      "church",
+      "science"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It's watched closely. In 2015, during a visit by Pope Francis, the archbishop announced the blood had half liquefied. For Benedict the Sixteenth, in 2007, it didn't. A failure is said to be a bad omen, and some people even link the failed years with wars and pandemics.",
+     "c": [
+      "popes",
+      "omen"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Santa Restituta and the baptistery",
+   "stand": "Find the way into Santa Restituta, the older church reached from inside the cathedral.",
+   "paras": [
+    {
+     "t": "This is Santa Restituta, the original early Christian church, next to the cathedral and reached from inside it. The cathedral also keeps an early Christian baptistery, with mosaics from the 300s.",
+     "c": [
+      "restituta",
+      "baptistery"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Down in the excavations you can read the city in layers: a Greek wall from a temple of Apollo, the courtyard of a late Roman house, a stretch of Roman aqueduct, and a piece of Greek road climbing a slope.",
+     "c": [
+      "restituta"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Two more things to look for in the cathedral: an Assumption by Perugino, and the Minutolo Chapel, with frescoes from the 1300s. Boccaccio mentions that chapel in the Decameron.",
+     "c": [
+      "extras"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Back in the nave, take a seat if you can.",
+   "paras": [
+    {
+     "t": "Whatever you make of the blood, think about the people. Thousands fill this church three times a year, praying, waiting, watching one small vial. A whole city holding its breath together. That, more than any chemistry, is what you're standing in.",
+     "c": [
+      "thousands"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}
