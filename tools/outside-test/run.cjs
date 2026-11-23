@@ -27,7 +27,7 @@ const screen = (res, where, text) => { const c = SC.check(text); if (!c) return;
     res.refused[p] = (res.refused[p] || 0) + 1; return r.fulfill({ status: 429, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: '{"error":"off in this test"}' });
   };
   await ctx.route(u => /workers\.dev/.test(u.hostname), helperRoute);
-  const p = await ctx.newPage(); p.on('pageerror', e => res.errors.push(String(e.message).slice(0, 300)));
+  const p = await ctx.newPage(); p.on('pageerror', e => res.errors.push(String(e.message).slice(0, 300))); res.hosts = {}; const hn = (u, k) => { try { const h = new URL(u).host; if (/github\.io$/.test(h)) return; const o = res.hosts[h] = res.hosts[h] || { ok: 0, bad: 0, fail: 0 }; o[k]++; } catch (e) {} }; p.on('response', r => hn(r.url(), r.status() < 400 ? 'ok' : 'bad')); p.on('requestfailed', r => hn(r.url(), 'fail'));
   await p.goto(LIVE, { waitUntil: 'load' }); await sleep(2500);
   res.version = await p.evaluate(() => fetch('version.txt', { cache: 'no-store' }).then(r => r.text()).catch(e => 'ERR ' + e));
   await p.evaluate(() => window.__kairouteMockHelper && window.__kairouteMockHelper('https://kairoute-ai.rickgilson.workers.dev', null, true));
