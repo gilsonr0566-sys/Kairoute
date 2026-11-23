@@ -22,6 +22,11 @@ templates are not used. Its rules are.
    of the gate. Each one goes in `docs/qa/escapes.md` with the answer to "why didn't a test catch it?" and the class of
    test added. The fix is not done until that test exists and fails on the old code. Where possible it becomes a
    planted defect.
+5. **One rule for each class of bug, and every fix names it.** `docs/qa/RULES.md` is the one list of app-wide rules,
+   each written for a whole class ("everything on screen is in the traveler's language"), with the gate check that
+   enforces it and a planted bug that proves the check fires. `tools/truth/rules-check.cjs` fails the release when a
+   logged bug is under no rule, a rule has no check or proof (or its owner's date has passed), or a commit that changes
+   `src/` or `worker/` has no `Rule: R-xx` line. `tools/truth/screen-rule-proof.cjs` plants a bug for every screen rule.
 
 ## When things run
 
