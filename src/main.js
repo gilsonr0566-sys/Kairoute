@@ -1115,7 +1115,9 @@ function askNote(cls, msg, back, ahead) {
 const namesHTML = n => n.length === 1 ? `<b>${esc(n[0])}</b>` : `<b>${n.slice(0, -1).map(esc).join(", ")}</b> and <b>${esc(n[n.length - 1])}</b>`;
 function cutNote(d) {
   const c = d.pendingCut; if (!c || !c.names || !c.names.length) return "";
-  return askNote("cutask", `With the shorter day, ${c.names.length === 1 ? `<b>${esc(c.names[0])}</b> no longer fits` : `these no longer fit: <b>${c.names.map(esc).join(", ")}</b>`}. Shorten the day and take ${c.names.length === 1 ? "it" : "them"} off your picks?`,
+  // With the numbers: how long the day is now and how long it was (every reason on screen traces to real data).
+  const was = d.timeSnap && d.timeSnap.vals && +d.timeSnap.vals.hours, now = +d.hours, nums = now > 0 && was > 0 && was !== now ? ` (${dur(now * 60)} of sightseeing instead of ${dur(was * 60)})` : now > 0 ? ` (${dur(now * 60)} of sightseeing)` : "";
+  return askNote("cutask", `With the shorter day${nums}, ${c.names.length === 1 ? `<b>${esc(c.names[0])}</b> no longer fits` : `these no longer fit: <b>${c.names.map(esc).join(", ")}</b>`}. Shorten the day and take ${c.names.length === 1 ? "it" : "them"} off your picks?`,
     ["cutkeep", "Keep my hours"], ["cutok", "Shorten anyway"]);
 }
 // Why a sight came off the day, in one plain reason: the one saved when it came off, else worked out now from the
@@ -1128,6 +1130,15 @@ function bumpWhy(d, b) {
     if (need && t && need.min > t.left) { const up = Math.ceil(need.min / 5) * 5, dn = Math.floor(t.left / 5) * 5, near = up - dn < 5; return "needs about " + dur(near ? need.min : up) + " (the visit and the rides to it and on), and " + ((near ? t.left : dn) > 0 ? "with today's other stops only " + dur(near ? t.left : dn) + " is left" : "today's other stops leave no time") + " before " + fmt(plan.endBy); }
   } catch (e) {}
   return "";
+}
+// The "Didn't fit today" banner names each pick with the one reason the planner knows and its numbers (what it needs,
+// what is left, how far past the day's end it would run), never a bare "doesn't fit" (Nov 23, odd-screen: "reason has its
+// numbers"; Richard, Nov 22: every reason on screen traces to real data).
+function dropLine(d, plan, list, plain) {
+  const why = x => { let w = ""; try { w = shutOn(d, x) ? "closed on " + fmtDow(d.date) + " " + fmtDate(d.date) : (plan.dropWhy && plan.dropWhy[x.id]) || ""; } catch (e) { w = (plan.dropWhy && plan.dropWhy[x.id]) || ""; }
+    return /^is closed on /.test(w) ? w.slice(3) : w; };
+  const parts = list.map(x => { const w = why(x); return (plain ? esc(x.name) : `<b>${esc(x.name)}</b>`) + (w ? ": " + esc(w) : ""); });
+  return `Didn't fit today: ${parts.join(". ")}.`;
 }
 function bumpedNote(d) {
   if (d.pendingCut) return cutNote(d);
@@ -1833,7 +1844,7 @@ function checksCard(d, city, plan) {
   if (plan.over) add("warn", `The day runs past ${fmt(plan.endBy)}. Take out a stop.`);
   else if (freeOn) add("ok", `The day fits, with travel, meals and lines allowed for: ${dur(F.left)} of free time, then leave by ${fmt(F.leaveBy)} to be back by ${fmt(plan.endBy)}.`);
   else add("ok", `The day fits: done by ${fmt(plan.end)}, with travel, meals and lines allowed for.`);
-  if ((plan.dropped || []).length) add("warn", `Didn't fit today: ${esc(plan.dropped.map(s => s.name).join(", "))}.`);
+  if ((plan.dropped || []).length) add("warn", dropLine(d, plan, plan.dropped, true));
   const short = (plan.stops || []).filter(s => s.shortFrom && s.shortFrom > s.minutes);
   if (short.length) add("warn", `To fit all your sights, ${esc(short.map(s => `${s.name} gets ${dur(s.minutes)} (the guide suggests ${dur(s.shortFrom)})`).join("; "))}.`);
   const rides = plan.items.filter(x => x.type === "travel" && x.leg.said);
@@ -6992,7 +7003,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     rideChangeBanner(d),
     plan.over ? `<div class="banner warn" role="alert">This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Remove a stop with Choose sights, or change the times.</div>` : "",
     closedBanner(d, plan), liveOn(d) ? "" : bumpedNote(d), liveOn(d) ? "" : offListHTML(d),
-    dropNow.length && !liveOn(d) ? `<div class="banner warn dropped"><span>Didn't fit today: <b>${dropNow.map(s => esc(s.name)).join(", ")}</b>. Your sights don't all fit today's time.${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>${estShip(d) && aiReady() ? `<button type="button" class="btn small ghost" data-act="shiptimes">Add ship times</button>` : ""}<button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
+    dropNow.length && !liveOn(d) ? `<div class="banner warn dropped"><span>${dropLine(d, plan, dropNow)}${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>${estShip(d) && aiReady() ? `<button type="button" class="btn small ghost" data-act="shiptimes">Add ship times</button>` : ""}<button type="button" class="btn small" data-act="fitfix">Make it fit</button></div>` : "",
     (tc => tc ? `<div class="banner warn" role="alert">This day has ${dur(tc.ride)} of travel for ${dur(tc.see)} at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.</div>` : "")(travelCheck(plan)),
     plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : "",
     weatherBanner(d, plan),

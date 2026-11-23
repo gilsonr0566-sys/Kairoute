@@ -453,6 +453,7 @@
       }
       // Still over by more than an hour, the day is timed the quick way (no reordering to repair it: no move fixes an hour);
       // the day as kept is timed in full once the loop ends.
+      const overWas = cur.r.over, lateWas = (cur.r.items.find(x => x.t === "stop" && String(x.id) === String(out.id)) || {}).late || 0;
       const far = why === "over" && cur.r.over > 60, next = keep.filter(s => s !== out), c = Object.assign(arrange(next, win, ctx, far), far ? { roughly: true } : {});
       if (why === "lunch" && c.noLunch === "time") break; // giving it up wouldn't make room for lunch: keep it
       const endWith = cur.r.end; keep = next; cur = c;
@@ -463,12 +464,14 @@
       const hm = (m, f) => { m = Math.max(0, f(m)); return m >= 60 ? Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : m + " min"; };
       const up = m => Math.ceil(m / 5) * 5, down = m => Math.floor(m / 5) * 5, exact = m => Math.round(m);
       const addMin = endWith - c.r.end, leftMin = win.endBy - c.r.end, close = up(addMin) <= down(leftMin) || up(addMin) - down(leftMin) < 5;
-      const timeWhy = isFinite(addMin) && isFinite(leftMin) && addMin > leftMin && addMin > 0 ? "needs about " + hm(addMin, close ? exact : up) + " (the visit and the rides to it and on), and with today's other stops only " + hm(leftMin, close ? exact : down) + " is left before " + E.clock(win.endBy) : null;
+      const timeWhy = isFinite(addMin) && isFinite(leftMin) && addMin > leftMin && addMin > 0 ? "needs about " + hm(addMin, close ? exact : up) + " (the visit and the rides to it and on), and " + (Math.max(0, close ? exact(leftMin) : down(leftMin)) > 0 ? "with today's other stops only " + hm(leftMin, close ? exact : down) + " is left before " : "today's other stops already fill the time until ") + E.clock(win.endBy) : null;
       // The real reason (Fable review #13: a museum "didn't fit" when it simply opens too late for the day): a sight that
       // opens too late to be seen before the day's end says so.
       const sd = ctx.siteDay ? ctx.siteDay(out.id) : null, opens = sd && sd.oh && sd.oh.spans && sd.oh.spans.length ? sd.oh.spans[0][0] : null;
+      // Given up to make room for lunch: said so, with the numbers of the shortest lunch the day would plan.
+      const LM = E.MEALS[0], lunchWhy = "with it, today has no room for lunch (even a quick lunch takes " + LM.quick + " min)";
       const tooLate = opens != null && isFinite(win.endBy) && opens + Math.min(out.minutes || 60, 60) > win.endBy;
-      dropped.push({ id: out.id, name: out.name, wish: !!out.wish, wanted: wanted(out), stop: out, why: noBoat.has(String(out.id)) ? "is reached only by boat, and " + noBoat.get(String(out.id)) + ": on a day with a time to be back, the way back is planned only on a sailing a timetable confirms" : tooLate ? "opens at " + E.clock(opens) + ", too late to see before " + E.clock(win.endBy) : why === "late" ? "would arrive after its last entry" : "didn't fit in the time", needs: timeWhy });
+      dropped.push({ id: out.id, name: out.name, wish: !!out.wish, wanted: wanted(out), stop: out, why: noBoat.has(String(out.id)) ? "is reached only by boat, and " + noBoat.get(String(out.id)) + ": on a day with a time to be back, the way back is planned only on a sailing a timetable confirms" : tooLate ? "opens at " + E.clock(opens) + ", too late to see before " + E.clock(win.endBy) : why === "late" ? (lateWas > 0 ? "would arrive " + hm(lateWas, up) + " after its last entry" : "would arrive after its last entry") : why === "lunch" ? lunchWhy : "didn't fit in the time", needs: timeWhy || (why === "over" && overWas > 0 ? "with it, today's plan runs " + hm(overWas, up) + " past " + E.clock(win.endBy) : null) });
     }
     if (cur.roughly) cur = arrange(keep, win, ctx);
     // Room left after the drops: a stop given up earlier comes back when it now fits (wanted ones first, best first).
