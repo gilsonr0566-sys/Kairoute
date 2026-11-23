@@ -65,7 +65,10 @@
       if (x.wait) it.wait = x.wait; if (x.freeBefore) it.freeBefore = x.freeBefore; if (x.early) it.early = x.early; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true; if (x.booked) it.booked = true;
       // A fixed step of the day's start that takes the traveler somewhere (the cable car up from a tender landing): with no
       // stop after it, the free time is spent there and the way back starts there.
-      if (x.t === "fixed" && !/bags/i.test(x.name || "") && win.head.some(p => p.fixed && p.id === x.id)) it.up = true;
+      // Every fixed step of the day's start is marked as such (head): leaving the bags in storage, checking in. With no stop
+      // after it, the traveler is there when the free time begins, never back at the start before it (Nov 23: free time
+      // was shown at the airport before the ride to the hotel, and before the bags were left).
+      if (x.t === "fixed" && win.head.some(p => p.fixed && p.id === x.id)) { it.head = true; if (!/bags/i.test(x.name || "")) it.up = true; }
       if (x.packed) it.packed = true; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       // What is known about a place to eat travels with it to the screen: found only on the map (no guide or review behind
       // it), and whether its hours that day are known (Nov 22: never say more than the data says).
@@ -439,7 +442,10 @@
         // Never later than the back-by time less the rides back, whatever the plan's own end row says (a boat's wait at
         // the pier counted in its row): one leave-by for the badge, the countdown and the notes.
         if (isFinite(win.endBy)) t = Math.min(t, win.endBy - ridesBack);
-        const bagsK = its.findIndex(x => x.t === "fixed" && /bags/i.test(x.name || "")), lastK = its.reduce((a, x, j) => x.t === "stop" || x.t === "meal" || x.t === "start" || upStep(x) ? j : a, -1);
+        // The bags COLLECTED on the way back, never the bags left in storage at the start of the day (Nov 23: off the ship and
+        // flying out, the drop-off was read as the pick-up, so "leave Casa Batlló by" gave the time to leave for the airport,
+        // 41 min too late). The traveler is last at a stop, a meal, the start, or a fixed step of the start (the bags left).
+        const bagsK = its.findIndex(x => x.t === "fixed" && /bags/i.test(x.name || "") && !x.head), lastK = its.reduce((a, x, j) => x.t === "stop" || x.t === "meal" || x.t === "start" || upStep(x) || (x.t === "fixed" && x.head) ? j : a, -1);
         // How sure the way back is (Nov 21 outside review): a plan whose way back rests on a guessed ride time never reads
         // as sure as one a timetable or the road map confirms. "timetable": every ride on it has its timetable; "roads": the
         // road map's time (no live traffic); "estimate": at least one ride is timed from the distance or the guide's words; "walk": on foot.

@@ -102,7 +102,9 @@
       if (!L) return E.fail("Choose where you're staying."); if (!P) return E.fail("Choose your arrival point.");
       const m = E.MODES[d.mode] || E.MODES.flight;
       w.start = E.toMin(d.time) + m.clear; w.head = [P, Object.assign(fixed(L, "Check in or drop bags", 20), { bags: true })]; w.tail = [L];
-      w.sightFrom = w.start + chain(w.head, tr); w.endBy = Math.min(23 * 60, lunchIn(w.sightFrom, d.hours));
+      // A late arrival's day ends no sooner than the traveler reaches the hotel (Nov 23: a 9:30 pm flight gave a day from
+      // 10:45 pm to 11:00 pm and a plan reaching the hotel at 12:14 am, past its own end).
+      w.sightFrom = w.start + chain(w.head, tr); w.endBy = Math.max(w.sightFrom, Math.min(23 * 60, lunchIn(w.sightFrom, d.hours)));
     } else if (d.type === "departure" || d.type === "embark") {
       const ship = d.type === "embark", m = ship ? E.MODES.ship : E.MODES[d.mode] || E.MODES.flight;
       if (!P) return E.fail(ship ? "Choose the cruise port." : "Choose your departure point.");

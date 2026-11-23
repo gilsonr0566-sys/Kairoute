@@ -664,6 +664,28 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
   ok(w.error && /won't work/.test(w.error) && w.tooTight > 0, `a 10:00 am flight after a 7:00 am ship: said it can't work (${w.error || 'planned from ' + E.clock(w.start)})`);
   const ok2 = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '15:00', point: air, thru: { mode: 'ship', time: '07:00', point: { lat: air.lat + 0.1, lng: air.lng + 0.1, name: 'Port' } } }), tb);
   ok(!ok2.error && ok2.start >= 7 * 60, `a 3:00 pm flight after a 7:00 am ship is planned, starting once off the ship (${ok2.error || E.clock(ok2.start)})`); }
+// Nov 23 (leaving-day thread): off the ship and flying out the same day, the bags LEFT in storage at the start are never
+// read as the bags COLLECTED on the way back. With a sight planned, the time to leave it reaches the bags by their time
+// (the countdown said "leave Casa Batlló by 11:27", the time to leave for the airport, 41 min too late); with none, the
+// traveler is at the luggage storage when the free time begins, and the day's first steps are marked as such.
+{ const s0 = fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'departure' && d.mode === 'flight' && d.lodging));
+  if (s0) { const li = s0.days.findIndex(d => d.type === 'departure' && d.mode === 'flight' && d.lodging);
+    for (const empty of [false, true]) for (const fl of ['14:30', '15:30', '18:00']) {
+      const s = JSON.parse(JSON.stringify(s0)), d = s.days[li]; Object.assign(d, { time: fl, thru: { mode: 'ship', time: '07:00', point: Object.assign({}, d.lodging, { name: 'Cruise port', lat: d.lodging.lat + 0.01 }) } });
+      if (empty) { d.selected = []; d.cleared = true; }
+      const p = E.planTrip(s)[li], its = p.items || [], la = p.leaveAt || {}, tag = `off a 7:00 am ship, ${fl} flight${empty ? ', no sights' : ''}`;
+      const drop = its.findIndex(x => x.t === 'fixed' && /leave your bags/i.test(x.name || '')), pick = its.findIndex(x => x.t === 'fixed' && /collect/i.test(x.name || ''));
+      if (drop < 0 || pick < 0) { ok(p.error || p.straight || (p.items || []).length, `${tag}: planned (${p.error || 'no bag steps'})`); continue; }
+      ok(its[drop].head && !its[pick].head, `${tag}: the bags left are a step of the day's start, the bags collected are not`);
+      const lastK = its.reduce((a, x, j) => j < pick && (x.t === 'stop' || x.t === 'meal' || (x.t === 'fixed' && x.head)) ? j : a, -1);
+      const toBags = its.slice(lastK + 1, pick).reduce((m, x) => m + (x.min || 0) + (x.wait || 0), 0);
+      ok(Number.isFinite(la.last) && Number.isFinite(la.bags) && la.last + toBags <= la.bags + 1 && la.bags + (its[pick].min || 0) <= la.out + 1, `${tag}: leaving ${its[lastK] && its[lastK].name} by ${E.clock(la.last)} reaches the bags by ${E.clock(la.bags)}, then the airport ride at ${E.clock(la.out)}`);
+      ok(!(p.explain || []).some(t => /^Leave .* by /.test(t)) || (p.explain || []).some(t => t.includes(E.clock(la.last))), `${tag}: the note names the same time to leave the last place`); } } }
+// Nov 23: a late arrival's day ends no sooner than the traveler reaches the hotel (a 9:30 pm flight gave a day of 10:45 to
+// 11:00 pm and a plan reaching the hotel at 12:14 am, past its own end).
+{ const tb = E.makeTravel({ walk: 'medium' }, {});
+  for (const t of ['19:00', '21:30', '23:10']) { const w = E.dayWindow(day({ type: 'arrival', mode: 'flight', time: t, point: air, hours: 4 }), tb), r = E.walkDay([], w, tb.estimate, null);
+    ok(!w.error && w.endBy >= w.sightFrom && r.end <= w.endBy + 1, `a ${t} flight in: the day ends at ${E.clock(w.endBy)}, at the hotel by ${E.clock(r.end)}`); } }
 // First-timer walk, Nov 22: a 9:00 am train on a day set to start at 9:00 is this morning's: the day starts earlier to
 // reach it, with no time for sights (it was taken as the next morning's: sights all day, "free time 16 h 10 min").
 { const tb = E.makeTravel({ walk: 'medium' }, {}), w = E.dayWindow(day({ type: 'departure', mode: 'train', time: '09:00', startTime: '09:00', point: air }), tb);

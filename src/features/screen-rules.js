@@ -74,7 +74,16 @@ function rules(text, info = {}) {
   if (P.allAboard != null && back != null && back > P.allAboard - 30) add('S1', 'spare before all aboard', `back-by ${clock(back)} is less than 30 min before all aboard ${clock(P.allAboard)}`);
   if (P.ashore != null) { const first = P.rows.find(r => r.key === 'S'); if (first && first.leave != null && first.leave < P.ashore - 1) add('S1', 'ashore first', `leaves the ship ${clock(first.leave)}, before ashore ${clock(P.ashore)}`); }
   if (hard) P.rides.filter(r => r.to && r.to.key === 'E').forEach(r => { if (/about \d+ ?min|approximately|roughly/i.test(r.head)) add('S1', 'checked ride back', `the ride back is a guide's rough figure: "${r.head}"`); });
+  // The countdown's own sentence adds up: leaving the last place by its time, the ride there reaches the bags (or other
+  // stop on the way) by the time it gives (Nov 23: off the ship and flying out, "Collect your bags by 11:12 am ... From
+  // Casa Batlló: taxi or car 26 min, so leave by 11:27 am", 26 min too late, because the bags left at 8:00 were read as the pick-up).
+  { const m = /\bby (\d{1,2}:\d\d\s*[ap]m): \d[^.]* there, then the trip on takes the rest\. From ([^:]+): .*?(?:(\d+) h )?(\d+) min, so leave by (\d{1,2}:\d\d\s*[ap]m)/i.exec(raw);
+    if (m) { const via = T(m[1]), lv = T(m[5]), ride = (+m[3] || 0) * 60 + +m[4]; if (via != null && lv != null && lv + ride > via + 1 && !(lv + ride > via + 720)) add('S1', 'leave-by reaches the bags', `"leave ${m[2]} by ${clock(lv)}" + ${ride} min reaches the stop on the way at ${clock(lv + ride)}, after its time ${clock(via)}`); } }
   // ---- S2: what the screen says must add up
+  // Free time comes after the day's own first steps (bags left in storage, the hotel check-in), never before them at the
+  // airport or the pier (Nov 23: "Free time 1 h 16 min" at the airport, then the ride to the hotel).
+  { const fi = P.rows.findIndex(r => r.until != null), hi = P.rows.findIndex(r => /^(Leave your bags in luggage storage|Check in or drop bags)$/.test(r.name || ''));
+    if (fi >= 0 && hi > fi) add('S2', 'free time after the first steps', `free time until ${clock(P.rows[fi].until)} comes before "${P.rows[hi].name}"`); }
   let prev = null;
   for (const r of P.rows) { if (r.until != null && r.leave != null && r.until < r.leave - 1) add('S2', 'times go forward', `free time "leave here by ${clock(r.until)}" comes after ${r.name} at ${clock(r.leave)}`); const t = r.arrive != null ? r.arrive : r.leave; if (prev != null && t != null && t < prev - 1) add('S2', 'times go forward', `${r.name} at ${clock(t)} comes after ${clock(prev)}`); const o = r.until != null ? r.until : r.leave != null ? r.leave : r.arrive; if (o != null) prev = o; }
   P.rides.forEach(r => { if (!r.to || r.to.arrive == null) return; const left = r.from.until != null ? r.from.until : r.from.leave; if (left == null) return;
@@ -104,7 +113,7 @@ function rules(text, info = {}) {
   /* Bags: stored and collected with nothing between is storage for nothing; time out after collecting means carrying the bags. */
   const drop = P.rows.findIndex(r => r.key === 'H' && /leave your bags|luggage storage/i.test(r.name)), pick = P.rows.findIndex(r => r.key === 'H' && /collect your bags/i.test(r.name));
   if (drop >= 0 && pick > drop) { const mid = P.rows.slice(drop + 1, pick).filter(r => /^\d+$|^L$|^\+$/.test(r.key));
-    if (!mid.length) add('S2', 'bags stored for something', `bags are left in storage and collected again with nothing in between (${clock(P.rows[drop].arrive)} to ${clock(P.rows[pick].leave)})`);
+    if (!mid.length && P.rows[drop].until == null) add('S2', 'bags stored for something', `bags are left in storage and collected again with nothing in between (${clock(P.rows[drop].arrive)} to ${clock(P.rows[pick].leave)})`);
     P.rows.slice(pick).filter((r, i) => r.until != null || (i && /^\d+$|^L$/.test(r.key))).forEach(r => add('S2', 'bags stored for something', r.until != null ? `free time until ${clock(r.until)} comes after ${r.name}, so the traveler carries the bags` : `${r.name} comes after Collect your bags, so the traveler carries the bags there`)); }
   const names = stops.filter(s => s.key !== 'L').map(s => s.name.toLowerCase()); names.forEach((n, i) => { if (names.indexOf(n) !== i) add('S2', 'sight once', `${n} is on the plan twice`); });
   if (/\bNaN\b|undefined|\bnull\b|Invalid Date|\[object /.test(raw)) add('S2', 'no broken values', (raw.match(/.{0,40}(\bNaN\b|undefined|\bnull\b|Invalid Date|\[object ).{0,20}/) || [''])[0]);

@@ -433,7 +433,8 @@ function alarmState(d, plan, opt) {
   if (target && src === "plan" && now == null) { const its = plan.items; let j = lastAshoreIdx(plan);
     // No stop at all (straight from the airport to the ship): from the start (or the top of a cable car ridden up), on the
     // plan's own ride with its extra time (Nov 21, Bahamas test trip: "leave by 1:43" from a 47-min estimate while the plan's ride was 1 h with the extra).
-    if (j >= 0 && its[j].place && isFinite(its[j].place.lat)) { from = its[j].place; let m = 0, how = "";
+    // From the bags left in storage (no stop after them): the place is named, never the step ("From Leave your bags in ...").
+    if (j >= 0 && its[j].place && isFinite(its[j].place.lat)) { from = its[j].type === "fixed" && its[j].head && /bags/i.test(its[j].place.name || "") ? Object.assign({}, its[j].place, { name: "the luggage storage" }) : its[j].place; let m = 0, how = "";
       for (let k = j + 1; k < its.length; k++) { const it = its[k]; if (it.type === "travel") { m += it.leg.min || 0; how = how || it.leg.how || ""; }
         else if (it.type === "fixed" && !/bags/i.test((it.place && it.place.name) || "")) m += (it.place && it.place.minutes) || 0; else if (it.type === "fixed" || it.type === "end") break; }
       const lt = legTo(from, target); leg = /street route/.test(lt.src || "") && lt.min > m ? lt : { min: m, how: how || lt.how, transit: lt.transit, src: "the day plan's own ride back" }; } }
@@ -446,7 +447,7 @@ function alarmState(d, plan, opt) {
   const LA = plan.engine2 && plan.engine2.leaveAt;
   if (LA && now == null && src === "plan" && Number.isFinite(LA.out)) {
     const sameSpot = !via || (from && hav(from, via) < 0.05);
-    st.leaveBy = sameSpot || !Number.isFinite(LA.last) ? LA.out : LA.last; if (Number.isFinite(LA.bags)) st.goBy = LA.bags; st.early = false;
+    st.leaveBy = sameSpot || !Number.isFinite(LA.last) ? LA.out : LA.last; if (Number.isFinite(LA.bags)) st.goBy = LA.bags; st.early = false; st.sameSpot = !!(sameSpot && via);
   }
   st.ride = point && !via ? rideBack(d, plan, st) : null;
   // On the day, leave-by is for the train or ferry you can still catch.
@@ -546,7 +547,10 @@ function alarmTick() {
     const rideTxt = !R ? "" : R.none ? `No ${R.word} from ${R.where} gets you to ${dest} in time any more. Take a taxi now: about ${dur(R.taxiMin)} by road${R.fare ? `, roughly ${R.sym}${R.fare[0]}–${R.fare[1]} (agree the fare first)` : ""}.`
       : `${R.missed ? `You've missed the ${fmt(R.planned.t)} ${R.word}. ` : ""}${R.kind} ${R.to ? "to " + R.to + " " : ""}leaves ${R.where} at ${fmt(R.next.t)}: leave ${R.extra ? fromTxt : "for the " + (R.word === "ferry" ? "pier" : "station")} by ${fmt(R.leaveBy)}.${R.last && R.last !== R.next ? ` Last safe ${R.word}: ${fmt(R.last.t)}.` : ` This is the last ${R.word} that gets you back in time.`} If you miss it, a taxi takes about ${dur(R.taxiMin)}.`;
     const viaTxt = st.via ? ` ${st.via.name} by ${fmt(st.goBy)}: ${dur(st.via.minutes || 0)} there, then the trip on takes the rest.` : "";
-    if (sub) sub.textContent = R && st.now != null ? `${word} ${rideTxt}` : `${word}${viaTxt} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}${st.early ? " (early enough from any of today's stops)" : ""}.${R ? " " + rideTxt : ""}`;
+    // Already where the bags are (the hotel, the luggage storage): collect them, then leave; never "From the hotel: walk 0
+    // min, so leave by" a time after the one given for the bags (Nov 23).
+    if (sub && st.sameSpot && st.now == null && !R) sub.textContent = `${word} ${st.via.name} by ${fmt(st.goBy)} (${dur(st.via.minutes || 0)}), then leave by ${fmt(st.leaveBy)}.`;
+    else if (sub) sub.textContent = R && st.now != null ? `${word} ${rideTxt}` : `${word}${viaTxt} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}${st.early ? " (early enough from any of today's stops)" : ""}.${R ? " " + rideTxt : ""}`;
     const agent = document.getElementById("cdAgent"); if (agent) agent.hidden = !(R && (R.none || R.missed) && d.portAgent);
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;
     // How sure the way back is, from the plan itself (the engine's leaveAt.basis: the weakest ride on it), said by the

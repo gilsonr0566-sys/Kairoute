@@ -161,7 +161,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       }
       if (x.t === "start") { items.push({ type: "start", place: Object.assign({}, w.head[0] || at(x)), time: x.at, label: w.startLabel }); return; }
       if (x.t === "end") { items.push({ type: "end", place: Object.assign({}, w.tail[w.tail.length - 1] || at(x)), time: x.at, label: w.endLabel || "Day done" }); return; }
-      if (x.t === "fixed") { items.push(Object.assign({ type: "fixed", place: at(x, x.name, { minutes: x.min, fixed: true }), time: x.at }, x.up ? { up: true } : {})); return; }
+      if (x.t === "fixed") { items.push(Object.assign({ type: "fixed", place: at(x, x.name, { minutes: x.min, fixed: true }), time: x.at }, x.up ? { up: true } : {}, x.head ? { head: true } : {})); return; }
       if (x.t === "stop") {
         const s = byId.get(String(x.id)); const p = Object.assign({}, s || at(x), { minutes: x.min });
         p.bonus = !!x.bonus; // the engine's own word: a stop it planned is part of the day, whatever the guide's listing says

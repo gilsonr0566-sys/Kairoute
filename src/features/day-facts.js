@@ -53,7 +53,9 @@ if (typeof document !== "undefined" && typeof MutationObserver !== "undefined") 
 function lastAshoreIdx(plan) {
   const its = (plan && plan.items) || []; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || (it.type === "meal" && !(it.place && it.place.onBoard))) j = k; });
   if (j >= 0) return j;
-  its.forEach((it, k) => { if (it.type === "start" || (it.type === "fixed" && it.up)) j = k; });
+  // With no stop: the last step of the day's start (the bags left in storage, the hotel check-in, the cable car up), else
+  // the start itself (Nov 23: free time was shown at the airport before the ride to the hotel, and before the bags were left).
+  its.forEach((it, k) => { if (it.type === "start" || (it.type === "fixed" && (it.up || it.head))) j = k; });
   return j;
 }
 function dayFacts(d, plan) {
