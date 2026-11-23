@@ -126,6 +126,16 @@
 - INFO 32 sights, 3 day trips/towns; must-see: Jerónimos Monastery, Belém Tower; top by fame: Belém Tower 57, Jerónimos Monastery 53, 25 de Abril Bridge 34, Alfama 34, Lisbon Cathedral 32, Praça do Comércio 32, Padrão dos Descobrimentos 32, Castle of Saint George 31
 - INFO day trips: Mafra, Convento de Mafra, Basilica of Our Lady and St. Anthony
 
+## Mykonos, Greece (Mykonos, built-in guide)
+- NOID Mykonos Town (Chora) lanes: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Kato Mili windmills: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Little Venice: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Panagia Paraportiani church: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Delos island [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- FAME must-see "Paraportiani" is offered (Panagia Paraportiani church) but not marked must-see
+- INFO 6 sights, 1 day trips/towns; must-see: Mykonos Town (Chora) lanes, Kato Mili windmills, Little Venice; top by fame: Mykonos Town (Chora) lanes 0, Kato Mili windmills 0, Little Venice 0, Panagia Paraportiani church 0, Archaeological Museum of Mykonos 0, Agricultural Museum 0
+- INFO day trips: Delos island
+
 ## Nassau, Bahamas (Nassau, Bahamas, guide from sources)
 - FAME must-see "Queen's Staircase" is not offered
 - FAME must-see "Fort Charlotte" is not offered
