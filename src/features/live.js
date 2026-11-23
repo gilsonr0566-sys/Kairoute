@@ -352,11 +352,14 @@ function liveWindow(d, w) {
 }
 const geoFresh = () => !!(geoPos && geoPos.at && Date.now() - geoPos.at < 3 * 60e3 && (geoPos.acc || 0) < 150);
 let liveMsg = null, liveUndo = null, liveLastAuto = {}, liveHold = 0; // last automatic re-plan, per day
+// Lunch back on board is on the ship, after the ride back: never a place ashore to leave from, count from or be late at
+// (Nov 22 odd-trips screen check: "LEAVE BY 12:06 pm but Lunch: Back on board is planned to leave at 1:32 pm").
+const onShip = i => i.type === "meal" && !!(i.place && i.place.onBoard), ashoreMeal = i => i.type === "meal" && !onShip(i);
 const durOf = i => i.type === "meal" ? i.meal.len : i.place.minutes || 0;
 function replanNow(d, o) {
   o = o || {}; const now = liveNow(d); if (now == null) return false;
   const plan = buildPlan(d); if (!plan || plan.error) return false;
-  const items = plan.items.filter(i => (i.type === "stop" && !i.place.along) || i.type === "meal");
+  const items = plan.items.filter(i => (i.type === "stop" && !i.place.along) || ashoreMeal(i));
   let k = -1, from = null, atStop = true;
   const same = (a, b) => a && b && a.type === b.type && a.place.name === b.place.name;
   if (o.at) k = items.findIndex(i => same(i, o.at));
@@ -410,7 +413,7 @@ function legTo(from, to) {
 let alarmFired = {}, liveArrived = {};
 function alarmState(d, plan, opt) {
   // opt.before: the before-the-day reading (the one leave-by time), whatever the clock says (calendar reminders).
-  const now = opt && opt.before ? null : liveNow(d), items = plan.items.filter(i => i.type === "stop" || i.type === "meal");
+  const now = opt && opt.before ? null : liveNow(d), items = plan.items.filter(i => i.type === "stop" || ashoreMeal(i));
   let from = null, src = "";
   if (geoFresh() && now != null && isToday(d)) { from = { name: "where you are", lat: geoPos.lat, lng: geoPos.lng }; src = "GPS"; }
   else if (!(opt && opt.before) && cdWhere != null && cdWhere !== "auto" && items[+cdWhere]) { from = items[+cdWhere].place; src = "chosen"; }
@@ -431,7 +434,7 @@ function alarmState(d, plan, opt) {
   // to 16:01, because the time was taken from the farthest pick of the day, Sorrento, which the plan had already left).
   // A street route measured later that is slower than the plan's ride makes it earlier, never later.
   let worst = null;
-  if (target && src === "plan" && now == null) { const its = plan.items; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || it.type === "meal") j = k; });
+  if (target && src === "plan" && now == null) { const its = plan.items; let j = -1; its.forEach((it, k) => { if (it.type === "stop" || ashoreMeal(it)) j = k; });
     // No stop at all (straight from the airport to the ship): from the start, on the plan's own ride with its extra time
     // (Nov 21, Bahamas test trip: "leave by 1:43" from a 47-min estimate while the plan's ride was 1 h with the extra).
     if (j < 0) j = its.findIndex(it => it.type === "start");
@@ -494,7 +497,7 @@ function rideBack(d, plan, st) {
 }
 function alarmCard(d, plan) {
   if (noShore(d)) return "";
-  const fixed = !!fixedTitle(d) && plan.w.tail.length, live = liveNow(d) != null, items = plan.items.filter(i => i.type === "stop" || i.type === "meal");
+  const fixed = !!fixedTitle(d) && plan.w.tail.length, live = liveNow(d) != null, items = plan.items.filter(i => i.type === "stop" || ashoreMeal(i));
   if (!fixed && !live) return "";
   const today = isToday(d), gpsOn = geoFresh();
   // On the day, the countdown follows the device's GPS by itself: no button to press, no place to pick.
@@ -531,7 +534,7 @@ function alarmTick() {
   // Running late, noticed by GPS: still at a stop well past the time the plan leaves it, or nowhere near the
   // stop the plan expected 20 minutes ago. At most once every 10 minutes, and never right after an Undo.
   if (isToday(d) && geoFresh() && Math.abs(Date.now() - (liveLastAuto[d.id] || 0)) > 10 * 60e3 && Date.now() > liveHold) {
-    const now = nowMin(d), items = plan.items.filter(i => (i.type === "stop" && !i.place.along) || i.type === "meal");
+    const now = nowMin(d), items = plan.items.filter(i => (i.type === "stop" && !i.place.along) || ashoreMeal(i));
     const near = items.find(i => hav(geoPos, i.place) <= 0.12);
     if (near) { const k = d.id + "|" + near.place.name; if (!liveArrived[k]) liveArrived[k] = now;
       // You'll leave here when your visit is done (or now, if you've stayed past it): compare that with the plan.

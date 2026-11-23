@@ -417,6 +417,12 @@
       const next = keep.concat([x.stop]), c = arrange(next, win, ctx);
       if (!c.r.over && !c.r.late && !(win.hard && win.endBy - c.r.end < E.FILL_MARGIN) && (c.noLunch !== "time" || cur.noLunch === "time" || wanted(x.stop))) { keep = next; cur = c; dropped = dropped.filter(y => y !== x); }
     }
+    // Those given up before the careful way say why in numbers too (screen rule "reason has its numbers"): the visit
+    // alone against the time left, or, when the visit alone would fit, that with the rides to it the day runs over.
+    { const left = Math.max(0, Math.floor((win.endBy - cur.r.end) / 5) * 5), hm = m => m >= 60 ? Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : m + " min";
+      dropped.forEach(x => { if (!x.pre || x.needs) return; const v = x.stop.minutes || 0;
+        x.needs = v > left ? "needs about " + hm(v) + " for the visit alone, and with today's other stops only " + hm(left) + " is left before " + E.clock(win.endBy)
+          : "needs its " + hm(v) + " visit and the rides to it and on, more than the " + hm(left) + " left before " + E.clock(win.endBy) + " with today's other stops"; }); }
     if (cur.noLunch === "time" && lunchWanted(win)) { const t = trimForLunch(keep, win, ctx, cur.r.end); if (t) { keep = t.keep; cur = t.cur; } }
     // Spare time is the traveler's (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to fill
     // the spots."): the app never adds a sight on its own. It names the best unused sights nearby that would still fit,

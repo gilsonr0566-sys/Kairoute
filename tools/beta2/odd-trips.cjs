@@ -30,7 +30,8 @@
 //              the plan's own leave-by
 //   slow       a whole trip taking over 2.5 s to plan here (a phone is about 4 times slower)
 //   zigzag     an order that crosses back and forth when moving one stop keeps everything and rides a fifth less
-// Usage: node tools/beta2/odd-trips.cjs [--n 400] [--seed 1] [--out file.json] [--only rule,rule] [--show 5]
+// Usage: node tools/beta2/odd-trips.cjs [--n 400] [--seed 1] [--out file.json] [--only rule,rule] [--warn rule,rule] [--show 5]
+//   NOZIG=1 skips the zig-zag check (it plans each day again for every move), PROGRESS=1 prints each trip's time.
 const fs = require('fs'), path = require('path'), E = require('./engine.cjs');
 const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > 0 ? process.argv[i + 1] : d; };
 const SLOW_MS = +(process.env.SLOW_MS || 2500), N = +arg('n', 400), SEED = +arg('seed', 1), SHOW = +arg('show', 4), ONLY = (arg('only', '') || '').split(',').filter(Boolean);
@@ -208,4 +209,6 @@ console.log(`Odd trips: ${tripsN} trips, ${daysN} days, ${plannedN} days planned
 const order = ['slow', 'error', 'nan', 'back', 'leaveby', 'order', 'start', 'lunch', 'lunchtime', 'shut', 'walk', 'zero', 'twice', 'pick', 'untrue', 'zigzag'];
 for (const k of order) { const n = out[k] || 0; console.log(`${n ? 'FAIL' : 'ok  '} ${k.padEnd(9)} ${n}`); (examples[k] || []).slice(0, SHOW).forEach(e => console.log('       ' + e)); }
 if (process.env.ALL) fs.writeFileSync(process.env.ALL, JSON.stringify(examples, null, 1));
-process.exitCode = order.some(k => out[k]) ? 1 : 0;
+// --warn rule,rule: listed, not failed (a finding handed to the thread that owns it).
+const WARN = (arg('warn', '') || '').split(',').filter(Boolean);
+process.exitCode = order.some(k => out[k] && !WARN.includes(k)) ? 1 : 0;

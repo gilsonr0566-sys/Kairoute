@@ -6782,7 +6782,9 @@ if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltin
 // The schedule says plainly when you get to each place and when you leave it.
 function tcell(it) {
   const len = it.type === "meal" || it.type === "evening" ? (it.meal && it.meal.len) || 0 : it.type === "stop" || it.type === "fixed" ? (it.place && it.place.minutes) || 0 : 0;
-  const arr = it.type === "start" ? null : it.time, lv = it.type === "end" || it.type === "evening" ? null : it.type === "start" ? it.time : it.time + len;
+  // Lunch back on board is on the ship: its time, never a time to leave (the leave-by rows are the ones ashore).
+  const ship = it.type === "meal" && it.place && it.place.onBoard;
+  const arr = it.type === "start" ? null : it.time, lv = it.type === "end" || it.type === "evening" || ship ? null : it.type === "start" ? it.time : it.time + len;
   return `<div class="time">${arr != null ? `<span class="ta">Arrive</span><span class="tt ar">${fmt(arr)}</span>` : ""}${lv != null && (arr == null || len >= 5) ? `<span class="ta">Leave</span><span class="tt lv">${fmt(lv)}</span>` : ""}</div>`;
 }
 function renderPlan(d) {

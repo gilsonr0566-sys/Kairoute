@@ -51,6 +51,12 @@ jobs:
           git clone -q --depth 6 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/b2pub
           OLD=""; for c in $(git -C /tmp/b2pub log --format=%h -n 6 -- index.html | sed -n '1p;3p'); do git -C /tmp/b2pub show $c:index.html > /tmp/old-$c.html; OLD="$OLD /tmp/old-$c.html"; done
           node tools/beta2/screen-gate.cjs beta2-site/index.html $OLD
+      - name: Odd trips (hundreds of unusual cruises, multi-city trips, midnight flights and bag days, every day checked)
+        if: always()
+        run: NOZIG=1 node tools/beta2/odd-trips.cjs --n 300 --seed 1 --warn walk
+      - name: Odd day changes on the phone screen (short, late and after-midnight port calls, midnight flights, Light/Half/Full, every sight ticked)
+        if: always()
+        run: VARIANTS=8 node tools/beta2/odd-screen.cjs beta2-site/index.html
       - name: Ship days keep their sights while the water check waits on its slow part
         if: always()
         run: node tools/beta2/water-wait-check.cjs beta2-site/index.html
