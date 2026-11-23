@@ -154,7 +154,7 @@ ${material}`;
     const text = String(b.text || "").slice(0, b.kind === "primer" ? 9000 : 3000).trim(), x = { name: String(b.name || "").slice(0, 120), theme: String(b.theme || "").slice(0, 80) };
     if (text.length < 80) return json({ error: "Too little to go on" }, 400);
     const key = "xw1:" + b.kind + ":" + (await H.sha(JSON.stringify([text, x]))), hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
-    let raw; try { raw = await runAI(H, env, ctx, W.prompt(text, x), W.max, 0.4); } catch (e) { return json({ error: e.message === "allowance" ? "allowance used up" : "busy" }, e.message === "allowance" ? 429 : 502); }
+    let raw; try { raw = await runAI(H, env, ctx, W.prompt(text, x), W.max, 0.4); } catch (e) { if (e.gate) return json({ error: "This feature is switched off for now.", disabled: true, why: e.gate }, e.gate === "today's AI allowance is used up" ? 429 : 403); return json({ error: e.message === "allowance" ? "allowance used up" : "busy" }, e.message === "allowance" ? 429 : 502); }
     const j = jsonOf(raw), out = j && typeof j.text === "string" ? j.text.trim() : "";
     if (b.kind === "theme" && /^none\.?$/i.test(out)) { const body = JSON.stringify({ none: true }); ctx.waitUntil(env.USAGE.put(key, body, { expirationTtl: 180 * 86400 })); return sendRaw(body); }
     const words = out.split(/\s+/).length;
