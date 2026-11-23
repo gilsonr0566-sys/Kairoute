@@ -19,7 +19,7 @@ const SID = process.argv[3] || process.env.STOP || "prague-clock";
   if (parts.length < want) { bad++; console.log("FAIL the stop page did not open with all its parts"); }
   // Every recording answers (checked directly, so a missing file is found without listening to the whole stop).
   const missing = await p.evaluate(async () => { const S = window.__kairouteScripts.STOP_SCRIPTS, V = window.__kairouteScripts.voices, out = [];
-    for (const v of V) for (const sc of S) for (const [k, pt] of sc.parts.entries()) for (let i = 0; i < pt.paras.length; i++) { const u = `audio/${sc.id}/${v}/p${k}-${i}.mp3`, r = await fetch(u, { method: "HEAD", cache: "no-store" }); if (!r.ok || !/audio|mpeg/.test(r.headers.get("content-type") || "")) out.push(u + " " + r.status); }
+    for (const v of V) for (const sc of S) for (const [k, pt] of sc.parts.entries()) for (let i = 0; i < pt.paras.length; i++) { const u = `audio/${sc.id}/${v}/p${k}-${i}.mp3`; let r; for (let t = 0; t < 3; t++) { r = await fetch(u, { method: "HEAD", cache: "no-store" }); if (r.status !== 503 && r.status !== 429) break; await new Promise(z => setTimeout(z, 2000 * (t + 1))); } if (!r.ok || !/audio|mpeg/.test(r.headers.get("content-type") || "")) out.push(u + " " + r.status); }
     return out; });
   console.log("Missing recordings:", missing.length ? missing.join(", ") : "none");
   if (missing.length) bad++;
