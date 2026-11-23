@@ -64,6 +64,13 @@
 - FAME must-see "Mount Roberts Tramway" is not offered
 - INFO 8 sights, 0 day trips/towns; must-see: St. Nicholas Russian Orthodox Church, Alaska State Centennial Museum, Goldbelt Tram; top by fame: St. Nicholas Russian Orthodox Church 5, Alaska State Centennial Museum 3, Goldbelt Tram 3, Wickersham House 2, Juneau Arts & Humanities Council 0, Alaskan Brewing Company Brewery Tour 0, Sealaska Heritage Institute 0, Upside-Down Forest 0
 
+## Ketchikan, Alaska (Ketchikan, Alaska, guide from sources)
+- NOID Tongass Historical Museum: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English))
+- NOID Tribal Fish Hatchery: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English))
+- NOID Alaska Rainforest Sanctuary: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- FAME must-see "Creek Street" is not offered
+- INFO 6 sights, 0 day trips/towns; must-see: Totem Heritage Center; top by fame: Saxman Totem Park 4, Totem Heritage Center 3, Southeast Alaska Discovery Center 1, Tongass Historical Museum 0, Tribal Fish Hatchery 0, Alaska Rainforest Sanctuary 0
+
 ## Kotor, Montenegro (Kotor, Montenegro, guide from sources)
 - POS Lovćen National Park: app is 5.82 km from Wikidata's point (not on the map by id)
 - NOID Castle of San Giovanni: built-in sight with no Wikidata id and nothing of the name on the map nearby
