@@ -114,6 +114,15 @@
 - FAME must-see "Cockburn Town" is not offered
 - INFO 4 sights, 0 day trips/towns; must-see: none; top by fame: Grand Turk 26, Her Majesty's Prison 0, Turks and Caicos National Museum 0, Palm Grove Sunset Cabana beach 0
 
+## Haifa, Israel (Haifa, Israel, guide from sources)
+- POS Nahariyya [day trip]: app is 0.64 km from Wikidata's point (not on the map by id)
+- POS Nazareth [day trip]: app is 0.51 km from Wikidata's point (not on the map by id)
+- NAME Akko [day trip]: shown under its local name; English name "Acre"
+- NAME Nahariyya [day trip]: shown under its local name; English name "Nahariya"
+- FAME #1 best known nearby, "Carmelit" (28 Wikipedia languages, Q715213), is not offered
+- INFO 6 sights, 3 day trips/towns; must-see: Stella Maris Monastery, Tikotin Museum of Japanese Art, Sail Tower, Israel National Museum of Science, Technology, and Space, Tel Shikmona; top by fame: Stella Maris Monastery 18, Bahá'í World Centre buildings 18, Tikotin Museum of Japanese Art 15, Sail Tower 12, Israel National Museum of Science, Technology, and Space 11, Tel Shikmona 11
+- INFO day trips: Akko, Nahariyya, Nazareth
+
 ## Haifa (Jerusalem), Israel (Jerusalem (from Haifa, Israel), guide from sources)
 - NOID Church of Our Lady of the Covenant [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID The Benedictine monastery in Abu Ghosh [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
@@ -414,6 +423,14 @@
 - FAME must-see "Fort Charlotte" is not offered
 - INFO 6 sights, 0 day trips/towns; must-see: Ardastra Gardens, Zoo and Conservation Centre, National Art Gallery of The Bahamas, Cable Beach, Fort Fincastle; top by fame: Paradise Island 20, Ardastra Gardens, Zoo and Conservation Centre 5, National Art Gallery of The Bahamas 5, Cable Beach 5, Fort Fincastle 4, Pirates of Nassau 1
 
+## Osaka, Japan (Osaka, Japan, guide from sources)
+- POS Suita [day trip]: app is 0.80 km from Wikidata's point (not on the map by id)
+- FAME #2 best known nearby, "Osaka Metro" (37 Wikipedia languages, Q303026), is not offered
+- FAME #3 best known nearby, "Siege of Osaka" (32 Wikipedia languages, Q475780), is not offered
+- FAME #4 best known nearby, "Siege of Osaka" (32 Wikipedia languages, Q475780), is not offered
+- INFO 9 sights, 4 day trips/towns; must-see: Abeno Harukas; top by fame: Abeno Harukas 67, Shitennō-ji Temple 31, Tsūtenkaku 23, Japan Mint 13, Tennōji Zoo 11, Ōsaka Tenmangū 9, Osaka Science Museum 9, Osaka Museum of History 8
+- INFO day trips: Kyoto, Suita, Hirakata, Ibaraki
+
 ## Reykjavik, Iceland (Reykjavik, Iceland, guide from sources)
 - POS Reykjavík Cathedral: app is 0.70 km from Wikidata's point (not on the map by id)
 - NOID Hafnarfjörður Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
@@ -470,6 +487,24 @@
 - FAME #1 best known nearby, "Minoan eruption" (34 Wikipedia languages, Q1144693), is not offered
 - FAME must-see "Akrotiri" is offered (Akrotiri prehistoric town) but not marked must-see
 - INFO 5 sights, 0 day trips/towns; must-see: Fira caldera path, Oia village; top by fame: Fira caldera path 0, Oia village 0, Akrotiri prehistoric town 0, Pyrgos village 0, Museum of Prehistoric Thera 0
+
+## Split, Croatia (Split, Croatia, guide from sources)
+- INFO 3 sights, 0 day trips/towns; must-see: Diocletian's Palace, Stadion Poljud; top by fame: Diocletian's Palace 52, Stadion Poljud 40, Archaeological Museum Split 8
+
+## Thessaloniki, Greece (Thessaloniki, Greece, guide from sources)
+- FOLD Basilica of Agios Dimitrios, Thessaloniki is part of Paleochristian and Byzantine monuments of Thessaloniki (Wikidata) but is a separate stop
+- FOLD Hagia Sophia is part of Paleochristian and Byzantine monuments of Thessaloniki (Wikidata) but is a separate stop
+- FOLD Arch of Galerius and Rotunda is part of Paleochristian and Byzantine monuments of Thessaloniki (Wikidata) but is a separate stop
+- FOLD Church of Saint Nicholas Orphanos is part of Paleochristian and Byzantine monuments of Thessaloniki (Wikidata) but is a separate stop
+- FOLD Church of Panagia Chalkeon is part of Paleochristian and Byzantine monuments of Thessaloniki (Wikidata) but is a separate stop
+- FOLD Vlatadon Monastery is part of Paleochristian and Byzantine monuments of Thessaloniki (Wikidata) but is a separate stop
+- FOLD Church of the Holy Twelve Apostles is part of Paleochristian and Byzantine monuments of Thessaloniki (Wikidata) but is a separate stop
+- FOLD Church of Prophet Elijah is part of Paleochristian and Byzantine monuments of Thessaloniki (Wikidata) but is a separate stop
+- FOLD Church of Saint Catherine, Thessaloniki is part of Paleochristian and Byzantine monuments of Thessaloniki (Wikidata) but is a separate stop
+- FOLD Heptapyrgion is part of Paleochristian and Byzantine monuments of Thessaloniki (Wikidata) but is a separate stop
+- FAME #1 best known nearby, "Thessaloniki Metro" (33 Wikipedia languages, Q1326567), is not offered
+- FAME #3 best known nearby, "Siege of Thessalonica" (26 Wikipedia languages, Q2426040), is not offered
+- INFO 18 sights, 0 day trips/towns; must-see: Paleochristian and Byzantine monuments of Thessaloniki, Basilica of Agios Dimitrios, Thessaloniki, White Tower of Thessaloniki, Hagia Sophia, Arch of Galerius and Rotunda, Archaeological Museum of Thessaloniki; top by fame: Basilica of Agios Dimitrios, Thessaloniki 36, White Tower of Thessaloniki 33, Paleochristian and Byzantine monuments of Thessaloniki 30, Hagia Sophia 29, Arch of Galerius and Rotunda 26, Archaeological Museum of Thessaloniki 24, Church of Saint Nicholas Orphanos 19, Church of Panagia Chalkeon 19
 
 ## Venice, Italy (Venice, Italy, guide from sources)
 - POS Padua [day trip] {Q617 by name}: app is 1.12 km from Wikidata's point (not on the map by id)

@@ -36,6 +36,8 @@ const MUTANTS = [
     was: 'Kusadasi: "Kadı Kalesi", "Halk Plajı" shown under their Turkish names: no English name in any source (Nov 23, rule R-11)' },
   { id: 'listing-keeps-local-name', from: 'if (!s.srcName && x.name && !nonLatin(x.name) && keyOf(x.name) !== keyOf(s.name)) {', to: 'if (false) {',
     was: 'Messina: "Palazzo Zanca" shown under its listing name though it has an English one (Nov 23, rule R-11)' },
+  { id: 'close-group-as-stop', from: 'if (srcKnown(w) && w.kinds.every(k => k === "feature") && parts.length >= 3) w.isGroup = true;', to: '',
+    was: '"Paleochristian and Byzantine monuments of Thessaloniki" offered as a must-see stop beside its own churches (Nov 23)' },
 ];
 const html = fs.readFileSync(file, 'utf8'), tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'sight-mutants-'));
 const real = spawnSync('node', [CHECK, file], { encoding: 'utf8' });
