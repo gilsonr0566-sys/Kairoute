@@ -52,7 +52,10 @@ function checkRules(rules, gate = GATE) {
 }
 function checkEscapes(rules, esc) {
   const listed = new Set(rules.flatMap(r => r.bugs.match(/\bE\d+\b/g) || [])), bad = [];
-  for (const l of esc.split('\n')) { const m = /^\| (E\d+) \|/.exec(l); if (m && !listed.has(m[1])) bad.push(`${m[1]}: in the escaped-bug log but under no rule in docs/qa/RULES.md`); }
+  const seen = new Set();
+  for (const l of esc.split('\n')) { const m = /^\| (E\d+) \|/.exec(l); if (!m) continue;
+    if (seen.has(m[1])) bad.push(`${m[1]}: two rows in the escaped-bug log share this number`); seen.add(m[1]);
+    if (!listed.has(m[1])) bad.push(`${m[1]}: in the escaped-bug log but under no rule in docs/qa/RULES.md`); }
   return bad;
 }
 function checkCommits(rules, commits, links) {
@@ -80,6 +83,7 @@ else fails.push(...checkCommits(rules, commits, rd('docs/qa/rule-links.md')));
 // The check proves itself on planted input: each of these must be caught.
 const self = [
   ['an escaped bug under no rule', checkEscapes(rules, '| E999 | Nov 23 | planted | x | S2 | x | x | Open |').length === 1],
+  ['two escaped bugs with one number', checkEscapes(rules, '| E1 | a |\n| E1 | b |').length === 1],
   ['a fix with no rule line', checkCommits(rules, [{ sha: 'f'.repeat(40), msg: 'Lunch: fix\n\nCo-Authored-By: x' }], '').length === 1],
   ['a fix naming a rule that does not exist', checkCommits(rules, [{ sha: 'f'.repeat(40), msg: 'x\n\nRule: R-999' }], '').length === 1],
   ['a fix with its rule passes', checkCommits(rules, [{ sha: 'f'.repeat(40), msg: 'x\n\nRule: R-11, R-12' }], '').length === 0],
