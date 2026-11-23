@@ -89,6 +89,12 @@
   // (plus boarding) is planned as the wait, and the full gap is kept, said on screen as "up to", on a ride to a time to
   // be back (the ship, a train, a plane). waitMax/minMax keep the worst case with the answer. Never shorter than the
   // helper's own wait; an answer with real departures (deps) is untouched (its wait is the real next departure).
+  // The rides that keep the full gap: to the ship, a train or a plane, and to any of the day's own fixed steps (collect
+  // the bags, the bag storage, the cable car down, a check-in). On a day with a time to be back those steps are the
+  // chain after the last visit, so its leave-by rests on the full gap (testing thread review, Nov 23: the ride from the
+  // last stop to "Collect bags" and to the cable car top were halved, leave-by up to half a gap late). A fixed step at
+  // the start of a day keeps the full gap too: the cautious side.
+  E.toFixedEnd = b => !!(b && (b.backToShip || b.deadline || b.fixed));
   E.expectWait = (o, toDeadline) => {
     if (!o || !o.noTimetable || toDeadline || (Array.isArray(o.deps) && o.deps.length) || !(+o.every > 0) || !isFinite(+o.wait)) return o;
     const w = Math.round(Math.min(+o.every, 60) / 2) + (o.mode === "ferry" ? 10 : 3);
@@ -125,7 +131,7 @@
   E.nearGap = (a, b, n, byRoad) => n ? E.gapMin(E.hav(a, n.A), byRoad) + E.gapMin(E.hav(b, n.B), byRoad) : 0;
   const roadMemos = new Map();
   E.makeTravel = (prefs, legModes, legs, lines, answers, piers) => {
-    const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map(), memoBags = new Map();
+    const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map(), memoBags = new Map(), memoFixed = new Map();
     const walkMinOf = km => Math.max(1, Math.round(km * 1.3 / speed * 60));
     // The traveler's ride choice belongs to the two places, whichever way the day goes between them (Nov 18: the train
     // picked between two trips out was lost when the day ran them the other way round). A choice also holds for a ride close
@@ -146,7 +152,7 @@
       if (roadMemo.size > 200000) roadMemo.clear(); roadMemo.set(key, r && Object.freeze(Object.assign({}, r))); return r; };
     function estimate(a, b) {
       // Already worked out for these two spots (only ever kept for two places on the map, neither a cable car's end): the same answer.
-      if (a && b && !a.viaLift && !b.viaLift) { let m = b.bags ? memoBags : (b.backToShip || b.deadline) ? memoEnd : memo;
+      if (a && b && !a.viaLift && !b.viaLift) { let m = b.bags ? memoBags : (b.backToShip || b.deadline) ? memoEnd : b.fixed ? memoFixed : memo;
         m = m.get(a.lat); if (m) m = m.get(a.lng); if (m) m = m.get(b.lat); if (m) { const got = m.get(b.lng); if (got) return got; } }
       // A place with no position on the map is never a ride of no time (a 0-minute walk made a day look as if it fit): the
       // ride is a taxi of E.UNKNOWN_RIDE minutes, said to be a guess (Nov 19 review).
@@ -156,7 +162,7 @@
       const lift = (p, q) => p.viaLift && E.hav(q, p.viaLift) < 0.05;
       if (lift(a, b) || lift(b, a)) return { mode: "lift", kind: "train", how: (a.viaLift || b.viaLift).name || "Cable car", km: 0, min: 0 };
       // Remembered by the four coordinates (numbers make fast keys), apart for legs that end at a deadline.
-      let m = b.bags ? memoBags : (b.backToShip || b.deadline) ? memoEnd : memo;
+      let m = b.bags ? memoBags : (b.backToShip || b.deadline) ? memoEnd : b.fixed ? memoFixed : memo;
       for (const x of [a.lat, a.lng, b.lat]) { let n = m.get(x); if (!n) { n = new Map(); m.set(x, n); } m = n; }
       const got = m.get(b.lng); if (got) return got;
       const v = Object.freeze(calc(a, b)); m.set(b.lng, v); return v;
@@ -165,7 +171,7 @@
     // or the very row the traveler chose (Nov 18, an airport ride: three rows of the same metro ride).
     function answered(a, b, d, want) {
       if (!answers || d < 1.5) return [];
-      const got = (answers(a, b) || []).filter(o => o && isFinite(o.min)).map(o => E.expectWait(o, !!(b.backToShip || b.deadline))).slice().sort((x, y) => x.min - y.min || String(x.label).localeCompare(String(y.label)));
+      const got = (answers(a, b) || []).filter(o => o && isFinite(o.min)).map(o => E.expectWait(o, E.toFixedEnd(b))).slice().sort((x, y) => x.min - y.min || String(x.label).localeCompare(String(y.label)));
       const by = new Map();
       for (const o of got) { const k = E.lineKind(String(o.mode || o.kind || "train")), r = by.get(k);
         if (!r) { by.set(k, o); continue; } if (want != null && String(r.id) === String(want)) continue;

@@ -1263,6 +1263,10 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   const back = train(E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null).estimate(A, Object.assign({ backToShip: true }, B)));
   const dl = train(E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null).estimate(A, Object.assign({ deadline: 1000 }, B)));
   const tt = E.expectWait(ans([{ t: 600 }])[0], false);
+  // Testing thread review (Nov 23): the ride from the last stop to the day's own fixed steps (collect the bags, the cable
+  // car down) is part of the way back: the full gap, also when the same travel already answered the plain point.
+  const trS = E.makeTravel({ walk: 'medium' }, null, null, null, () => ans(), null), plainB = train(trS.estimate(A, B)), fxB = train(trS.estimate(A, Object.assign({}, B, { fixed: true, name: 'Collect bags' })));
+  ok(plainB.ans && plainB.ans.wait === 33 && fxB.ans && fxB.ans.wait === 63, `the ride to a fixed step (collect the bags, the cable car down) keeps the full gap, even after the same place was answered plain (${plainB.ans && plainB.ans.wait} / ${fxB.ans && fxB.ans.wait})`);
   ok(out.ans && out.ans.wait === 33 && out.ans.waitMax === 63 && out.ans.min === 86 && out.ans.minMax === 116, `a ride out on a line with no timetable plans half the gap plus boarding, keeps the full gap as "up to" (${out.ans && out.ans.wait}/${out.ans && out.ans.waitMax}, ${out.ans && out.ans.min})`);
   ok(back.ans && back.ans.wait === 63 && back.ans.waitMax == null && dl.ans && dl.ans.wait === 63, `the ride back to the ship, a train or a plane keeps the full gap (${back.ans && back.ans.wait} / ${dl.ans && dl.ans.wait})`);
   ok(back.min >= out.min + 30, `the way back to the ship is planned at least the half gap longer than the same ride out (${back.min} vs ${out.min})`);
