@@ -241,7 +241,7 @@
       for (let pass = 0; pass < (many ? 1 : 3); pass++) {
         let best = null;
         // Each single move of one stop, and each reversed run of stops (a loop walked the other way round fixes a late
-        // museum without sending a sight across town and back: phone trip check, Nov 23, a Rome day zig-zagged).
+        // museum without sending a sight across town and back: phone trip check, Nov 23, a full port day zig-zagged).
         const cands = [];
         for (let i = 0; i < order.length; i++) for (let j = 0; j < order.length; j++) {
           if (i === j || j === i - 1 || Math.abs(i - j) > reach) continue; // moving to just before the previous is the same as moving that one after
