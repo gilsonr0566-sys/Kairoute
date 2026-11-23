@@ -1,0 +1,319 @@
+{
+ "id": "nikolaos",
+ "v": 1,
+ "city": "chania",
+ "title": "Church of Saint Nicholas, Splantzia",
+ "match": {
+  "ids": [
+   "nikolaos"
+  ],
+  "names": [
+   "saint nicholas, splantzia",
+   "st. nicholas, chania",
+   "splantzia",
+   "splanzia",
+   "hunkar mosque"
+  ],
+  "wikidata": [
+   "Q10300170"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "where": {
+   "label": "supported",
+   "says": "The Church of Saint Nicholas is a Greek Orthodox church on Splanzia square in Chania, dedicated to Saint Nicholas.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "is a Greek Orthodox church located in the Splanzia square in the town of Chania",
+    "It is dedicated to Saint Nicholas."
+   ]
+  },
+  "origin": {
+   "label": "supported",
+   "says": "Originally a Roman Catholic church, it became a mosque under the Ottomans and a church again in the 20th century.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "Originally a Roman Catholic church, it was converted into a mosque during the Ottoman period and then back into a church in the twentieth century."
+   ]
+  },
+  "unique": {
+   "label": "supported",
+   "says": "It is the only building in Greece with both a bell tower and a minaret.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "It is the only building in Greece to possess both a bell tower and a minaret."
+   ]
+  },
+  "splantzia": {
+   "label": "supported",
+   "says": "The Splantzia quarter is largely untouched.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "The Splantzia quarter (next to the east part of Kasteli) is also largely untouched."
+   ]
+  },
+  "cafes": {
+   "label": "supported",
+   "says": "There are many cafes, restaurants and bars at Splantzia square.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "There are numerous cafes, restaurants and bars throughout the Old Town and especially around the old Venetian harbour, at Enetiki Tafros (Venetian moat) and at Splantzia square"
+   ]
+  },
+  "built": {
+   "label": "estimate",
+   "says": "The church was built around 1320 by the Dominican brotherhood of Candia as a Roman Catholic cathedral.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "The church was built around 1320 by the Dominican brotherhood of Candia as a Roman Catholic cathedral."
+   ]
+  },
+  "basilica": {
+   "label": "supported",
+   "says": "The church is a basilica.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "The Church of Saint Nicholas of the Dominicans is a basilica."
+   ]
+  },
+  "belltower": {
+   "label": "supported",
+   "says": "The original bell tower stood at the northeast of the church but did not survive and was rebuilt.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "The original bell tower of Saint Nicholas was located in the northeast of the church, but it did not survive and had to be rebuilt."
+   ]
+  },
+  "courtyard": {
+   "label": "supported",
+   "says": "West of the church is the atrium of the enclosed courtyard, a cemetery for nobles in Venetian and Turkish times.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "To the west of the church is the atrium of the enclosed courtyard of the church, which served as a cemetery for nobles during both the Venetian and Turkish periods."
+   ]
+  },
+  "mosque": {
+   "label": "supported",
+   "says": "When Crete fell to the Ottomans in the 17th century, the church became the Hunkar Mosque ('Emperor's Mosque'), in honour of the Sultan; Splanzia became the Muslim quarter.",
+   "src": [
+    "wp-nikolaos-ch",
+    "wp-chania"
+   ],
+   "quote": [
+    "When Crete fell to the Ottoman Turks in the seventeenth century, the church was converted into a mosque known as the Hünkar Mosque (“Emperor’s Mosque”), in honour of the Sultan of the Ottoman Empire",
+    "Accordingly, Splanzia became the Muslim quarter of the town."
+   ]
+  },
+  "additions": {
+   "label": "supported",
+   "says": "For the conversion in 1645 a mihrab, a minbar and the minaret were added.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "For the conversion of the Catholic church into an Islamic mosque in 1645, the necessary additions of the mihrab, the minbar and the minaret were made."
+   ]
+  },
+  "important": {
+   "label": "supported",
+   "says": "It was the most important mosque of Chania; its minaret stood out for its two balconies.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "It was the most important mosque of Chania and its minaret stood out due to its two balconies."
+   ]
+  },
+  "minaret-pos": {
+   "label": "supported",
+   "says": "The minaret was built against the south side of the building, toward its west end; it is cylindrical, classical Ottoman style.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "The minaret of Hünkar Mosque was built in contact with the southern side of the building and facing its western end",
+    "The minaret is cylindrical and is of the classical Ottoman style."
+   ]
+  },
+  "height": {
+   "label": "estimate",
+   "says": "The minaret is about 36 m (118 ft) tall; with its lost conical roof it would have exceeded 40 m (130 ft).",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "The current height of the minaret is approximately 36 metres (118 ft) tall, while together with the conical roof (which is no longer preserved) it would have exceeded 40 metres (130 ft)."
+   ]
+  },
+  "sword": {
+   "label": "legend",
+   "says": "The mosque kept the sacred sword of the Dervish who, the story says, first entered the city, climbed the bell tower and with the sword circled the four points of the horizon calling to prayer.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "In the mosque was kept the sacred sword of the Turkish Dervish, who first entered the city, climbed the bell tower and with the sword circled the four points of the horizon calling the faithful to prayer"
+   ]
+  },
+  "sword-left": {
+   "label": "supported",
+   "says": "The sword stayed until the 1923 population exchange, when the departing Muslims took it with them.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "the Dervish sword remained in the Saint Nicholas' Church until the exchange of Muslim and Christian populations between Turkey and Greece in 1923, when the Muslim population had to depart Crete and took it with them."
+   ]
+  },
+  "1918": {
+   "label": "supported",
+   "says": "In 1918 the mosque was consecrated as an Orthodox church.",
+   "src": [
+    "wp-nikolaos-ch"
+   ],
+   "quote": [
+    "In 1918 the mosque was consecrated as an Orthodox church."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The square",
+   "stand": "In Splantzia Square, facing the church.",
+   "paras": [
+    {
+     "t": "This is the Church of Saint Nicholas, on Splantzia Square. Look closely, and you'll see something odd: it has a bell tower, and a minaret. It's the only building in Greece with both.",
+     "c": [
+      "where",
+      "unique"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Splantzia is one of the least changed corners of the old town, and these days its square is full of cafes.",
+     "c": [
+      "splantzia",
+      "cafes"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "A Venetian church",
+   "stand": "Stay facing the church.",
+   "paras": [
+    {
+     "t": "It began as a Roman Catholic church. Dominican friars from Candia built it around 1320, as a cathedral. In form it's a basilica.",
+     "c": [
+      "built",
+      "basilica"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The original bell tower stood at the northeast corner of the church. It didn't survive, and it had to be rebuilt.",
+     "c": [
+      "belltower"
+     ],
+     "level": 3
+    },
+    {
+     "t": "To the west of the church is its enclosed courtyard. Under both the Venetians and the Turks, nobles were buried there.",
+     "c": [
+      "courtyard"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Sultan's mosque",
+   "stand": "Move round to where you can see the minaret, on the south side of the church.",
+   "paras": [
+    {
+     "t": "In 1645, under the Ottomans, the church became a mosque: the Hünkar Mosque, the Emperor's Mosque, named in honor of the Sultan. That's when this minaret was added, against the south side of the building, toward its west end. It's about 36 meters tall, around 118 feet: a round tower in the classical Ottoman style.",
+     "c": [
+      "additions",
+      "mosque",
+      "minaret-pos",
+      "height"
+     ],
+     "level": 1
+    },
+    {
+     "t": "A mihrab and a minbar went in at the same time. It became the most important mosque in Chania, and Splantzia became the Muslim quarter of the town. The minaret stood out for its two balconies. With its conical roof, which is now gone, it would have topped 40 meters, over 130 feet.",
+     "c": [
+      "additions",
+      "important",
+      "mosque",
+      "height"
+     ],
+     "level": 2
+    },
+    {
+     "t": "There's a story told about this place. The story goes that a Dervish was the first to enter the city, climbed the bell tower, and, sword in hand, turned to the four points of the horizon, calling the faithful to prayer. His sword was kept here as a sacred relic.",
+     "c": [
+      "sword"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The sword stayed until 1923, when the exchange of populations between Turkey and Greece meant the Muslims of Crete had to leave. They took it with them.",
+     "c": [
+      "sword-left"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "A church again",
+   "stand": "Step back so you can see both towers at once.",
+   "paras": [
+    {
+     "t": "In 1918, the mosque was consecrated as an Orthodox church, dedicated to Saint Nicholas. And it kept its minaret.",
+     "c": [
+      "1918",
+      "where",
+      "unique"
+     ],
+     "level": 1
+    },
+    {
+     "t": "If a service is on, step in quietly, or wait outside until it's over.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    },
+    {
+     "t": "Catholic, Muslim, Orthodox: three faiths have prayed under this one roof. Whatever you believe, it's worth standing here a quiet moment.",
+     "c": [
+      "origin"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

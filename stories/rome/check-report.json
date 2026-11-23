@@ -1,0 +1,23 @@
+{
+ "fail": 0,
+ "warn": 0,
+ "report": [
+  {
+   "id": "vatican",
+   "title": "Saint Peter's Basilica and Square",
+   "claims": 45,
+   "minutes": {
+    "1": 1.5,
+    "2": 4,
+    "3": 8.2
+   },
+   "labels": {
+    "supported": 31,
+    "tradition": 5,
+    "verified": 4,
+    "disputed": 4,
+    "legend": 1
+   }
+  }
+ ]
+}

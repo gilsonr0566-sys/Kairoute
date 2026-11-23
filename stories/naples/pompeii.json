@@ -1,0 +1,705 @@
+{
+ "id": "pompeii",
+ "v": 1,
+ "city": "naples",
+ "title": "Pompeii",
+ "match": {
+  "ids": [
+   "pompeii"
+  ],
+  "names": [
+   "pompeii",
+   "pompei"
+  ],
+  "wikidata": [
+   "Q43332"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "buried": {
+   "label": "supported",
+   "says": "Pompeii was buried under 4 to 6 m of volcanic ash and pumice in the eruption of Vesuvius in 79 AD.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "it was buried under 4 to 6 m (13 to 20 ft) of volcanic ash and pumice in the eruption of Mount Vesuvius in 79 AD."
+   ]
+  },
+  "unesco-complete": {
+   "label": "verified",
+   "says": "UNESCO calls Pompeii the only archaeological site in the world that gives a complete picture of an ancient Roman city.",
+   "src": [
+    "unesco-pompeii"
+   ],
+   "quote": [
+    "is the only archaeological site in the world that provides a complete picture of an ancient Roman city."
+   ]
+  },
+  "population": {
+   "label": "estimate",
+   "says": "Pompeii was a wealthy town of 10,000 to 20,000 residents; more recent household counts suggest up to 11,500.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "It was a wealthy town of 10,000 to 20,000 residents at the time it was destroyed.",
+    "more recent estimates are up to 11,500 based on household counts"
+   ]
+  },
+  "safety": {
+   "label": "supported",
+   "says": "Summer temperatures run 32 to 35 C; the stone streets are uneven, with cart grooves; bring water, good shoes and a hat.",
+   "src": [
+    "wv-pompeii"
+   ],
+   "quote": [
+    "Everyone will be walking on cobblestones and uneven ground.",
+    "The temperature is between 32° and 35°C in the summer.",
+    "Make sure to take plenty of water and watch your step as the old roads have grooves in them where the carts ran.",
+    "It is advisable to wear good footwear, sunscreen and hats."
+   ]
+  },
+  "oscans": {
+   "label": "supported",
+   "says": "The first settlements date to the 8th century BC, when the Oscans founded five villages here.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "The first stable settlements on the site date to the 8th century BC when the Oscans, a population of central Italy, founded five villages in the area."
+   ]
+  },
+  "name-five": {
+   "label": "disputed",
+   "says": "The name may come from the Oscan word for five, pompe.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "The root of the word Pompeii would appear to be the Oscan word for the number five, pompe"
+   ]
+  },
+  "sulla": {
+   "label": "supported",
+   "says": "In 89 BC Sulla besieged Pompeii, and afterwards it became a Roman colony.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "in 89 BC it was besieged by Sulla",
+    "The result was that Pompeii became a Roman colony"
+   ]
+  },
+  "forum-centre": {
+   "label": "supported",
+   "says": "The Forum was the centre of public life, surrounded by the important government, religious and business buildings.",
+   "src": [
+    "wv-pompeii"
+   ],
+   "quote": [
+    "This was the centre of public life, although it is now in the southwestern part of the excavated area. It was surrounded by many of the important government, religious and business buildings."
+   ]
+  },
+  "forum-buildings": {
+   "label": "verified",
+   "says": "The main forum is flanked by imposing public buildings such as the Capitolium, the Basilica and temples.",
+   "src": [
+    "unesco-pompeii"
+   ],
+   "quote": [
+    "The main forum is flanked by a number of imposing public buildings, such as the Capitolium, the Basilica and temples"
+   ]
+  },
+  "forum-2c": {
+   "label": "supported",
+   "says": "In the 2nd century BC, enriched by Rome's conquest of the east, Pompeii built the Forum and buildings including the Temple of Jupiter and the Basilica.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "In the 2nd century BC, Pompeii enriched itself by taking part in Rome's conquest of the east",
+    "The Forum and many public and private buildings of high architectural quality were built, including The Large Theatre, the Temple of Jupiter, the Basilica"
+   ]
+  },
+  "basilica": {
+   "label": "supported",
+   "says": "The Basilica, west of the Forum, was the most important public building, where justice was administered and trade carried on.",
+   "src": [
+    "wv-pompeii"
+   ],
+   "quote": [
+    "This is to the west of the Forum. It was the most important public building of the city where both justice was administered and trade was carried on."
+   ]
+  },
+  "apollo": {
+   "label": "supported",
+   "says": "The Temple of Apollo, north of the Basilica on the west side of the Forum, has the oldest remains found, some dating back to 575 BC.",
+   "src": [
+    "wv-pompeii"
+   ],
+   "quote": [
+    "This is to the north of the Basilica on the western side of the Forum. It has the oldest remains discovered, with some, including Etruscan items, dating back to 575BC"
+   ]
+  },
+  "robbers": {
+   "label": "disputed",
+   "says": "The missing Forum statues and marble were most likely taken by survivors and robbers after the burial.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "the evidence of missing forum statues and marble wall veneers are most likely due to robbers after the city's burial",
+    "survivors and possibly thieves came to salvage valuables, including the marble statues from the Forum"
+   ]
+  },
+  "house-dug": {
+   "label": "supported",
+   "says": "Archaeologists found a wall graffito left by the robbers saying 'house dug'.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "The robbers left traces of their passage, as in a house where modern archaeologists found a wall graffito saying \"house dug\"."
+   ]
+  },
+  "pliny-witness": {
+   "label": "supported",
+   "says": "The only surviving eyewitness account is two letters by Pliny the Younger, 17 at the time, written to the historian Tacitus some 25 years later; he watched from Misenum, about 29 km (18 miles) away across the bay.",
+   "src": [
+    "wp-vesuvius-79"
+   ],
+   "quote": [
+    "The only surviving eyewitness account of the event consists of two letters by Pliny the Younger, who was 17 at the time of the eruption, written to the historian Tacitus some 25 years after the event.",
+    "Observing the first volcanic activity from Misenum across the Bay of Naples from the volcano, approximately 29 kilometres (18 mi) away"
+   ]
+  },
+  "pine": {
+   "label": "supported",
+   "says": "Pliny saw a dense cloud rising above the mountain that most resembled a pine tree.",
+   "src": [
+    "wp-vesuvius-79"
+   ],
+   "quote": [
+    "Pliny the Younger saw an extraordinarily dense cloud rising rapidly above the mountain",
+    "but in likeness and form it more closely resembled a pine-tree than anything else"
+   ]
+  },
+  "phases": {
+   "label": "supported",
+   "says": "A first phase of pumice rain lasted about 18 hours and let most inhabitants escape; in the night or early next day scorching pyroclastic flows followed.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "The first phase was of pumice rain (lapilli) lasting about 18 hours, allowing most inhabitants to escape.",
+    "At some time in the night or early the next day, pyroclastic flows began near the volcano, consisting of high speed, dense, and scorching ash clouds"
+   ]
+  },
+  "heat-death": {
+   "label": "supported",
+   "says": "A study published in 2010 found heat, not ash suffocation, was the main cause of death at Pompeii.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "indicates that at Pompeii and surrounding towns heat was the main cause of death of people, previously believed to have died by ash suffocation",
+    "The results of the study, published in 2010"
+   ]
+  },
+  "uncle": {
+   "label": "supported",
+   "says": "Pliny the Elder, commanding the fleet at Misenum, launched the galleys to evacuate the coast; told to turn back, he said 'Fortune favors the brave' and went on to Stabiae.",
+   "src": [
+    "wp-vesuvius-79"
+   ],
+   "quote": [
+    "Pliny's uncle, Pliny the Elder, was in command of the Roman fleet at Misenum",
+    "Pliny ordered the immediate launching of the fleet galleys to the evacuation of the coast.",
+    "Advised by the helmsman to turn back, he stated \"Fortune favors the brave\" and ordered him to continue to Stabiae"
+   ]
+  },
+  "uncle-death": {
+   "label": "disputed",
+   "says": "Pliny the Elder died there; his nephew blamed poisonous gas, but a stroke or heart attack is more likely; his body was found without injuries the next day.",
+   "src": [
+    "wp-vesuvius-79"
+   ],
+   "quote": [
+    "his nephew suggested that his death was due to the reaction of his weak lungs to a cloud of poisonous, sulphurous gas",
+    "it is more likely that the corpulent Pliny died from some other cause, such as a stroke or heart attack",
+    "His body was found with no apparent injuries the next day once the plume had dispersed."
+   ]
+  },
+  "mother": {
+   "label": "supported",
+   "says": "Pliny's mother begged him to leave her and save himself; he took her hand and led her away; he compared the ash to a blanket of snow.",
+   "src": [
+    "wp-vesuvius-79"
+   ],
+   "quote": [
+    "Pliny's mother requested him to abandon her and save his own life, as she was too fleshy and aged to go further, but seizing her hand, he led her away as best he could.",
+    "The letter compares the ash to a blanket of snow."
+   ]
+  },
+  "not-mentioned": {
+   "label": "supported",
+   "says": "Pompeii is never mentioned in Pliny the Younger's letter.",
+   "src": [
+    "wp-vesuvius-79"
+   ],
+   "quote": [
+    "Pompeii is never mentioned in Pliny the Younger's letter."
+   ]
+  },
+  "plinian": {
+   "label": "supported",
+   "says": "Volcanologists call similar eruptions 'Plinian' after Pliny the Younger's account.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "Volcanologists have recognised the importance of Pliny the Younger's account of the eruption by calling similar events \"Plinian\"."
+   ]
+  },
+  "date": {
+   "label": "disputed",
+   "says": "UNESCO gives 24 August 79; the date in Pliny's letter may have been corrupted in copying, and a charcoal inscription found in 2018 reads October 17, though it is not known what day it referred to.",
+   "src": [
+    "unesco-pompeii",
+    "wp-vesuvius-79"
+   ],
+   "quote": [
+    "When Vesuvius erupted on 24 August AD 79",
+    "the date given in Pliny's original letter may have been corrupted",
+    "In October 2018, Italian archaeologists uncovered a charcoal inscription",
+    "or October 17",
+    "it is not known whether the Oct[ober] 17 graffito referred to that day, or a day in the past or the future."
+   ]
+  },
+  "stones": {
+   "label": "supported",
+   "says": "Stepping stones in the streets let people cross; streets carried water and waste, so the sidewalks and stepping stones were raised.",
+   "src": [
+    "wv-pompeii"
+   ],
+   "quote": [
+    "There are also stone blocks in the street for pedestrians to step onto to cross the street. The sidewalks are higher than the modern sidewalk because the streets had water and waste flowing through them. The stone blocks in the street were also as high as the sidewalk, so people did not walk in the waste and water."
+   ]
+  },
+  "grooves": {
+   "label": "supported",
+   "says": "The old roads have grooves in them where the carts ran.",
+   "src": [
+    "wv-pompeii"
+   ],
+   "quote": [
+    "the old roads have grooves in them where the carts ran"
+   ]
+  },
+  "thermopolia": {
+   "label": "estimate",
+   "says": "Pompeii had nearly 100 thermopolia, snack bars selling hot food and drinks.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "Thermopolia were inns or snack-bars in which hot food and drinks were sold and in Pompeii there were nearly 100."
+   ]
+  },
+  "bakeries": {
+   "label": "supported",
+   "says": "There were at least 31 bakeries, each with wood-burning ovens, millstones and a sales counter.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "There were at least 31 bakeries in the town, each with wood-burning ovens, millstones and a sales counter."
+   ]
+  },
+  "fountains": {
+   "label": "supported",
+   "says": "An aqueduct supplied the public baths, more than 25 street fountains and many houses.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "An aqueduct provided water to the public baths, to more than 25 street fountains, and to many private houses and businesses."
+   ]
+  },
+  "election": {
+   "label": "verified",
+   "says": "An election was imminent at the time of the eruption; the walls carry many political slogans and more personal, often defamatory, graffiti.",
+   "src": [
+    "unesco-pompeii"
+   ],
+   "quote": [
+    "An election was imminent at the time of the eruption, and there are many political slogans scrawled on walls, as well as others of a more personal nature, often defamatory."
+   ]
+  },
+  "graffiti-latin": {
+   "label": "supported",
+   "says": "The graffiti preserve the everyday spoken Latin of the time.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "The numerous graffiti carved on outside walls and inside rooms provide a wealth of examples of the largely lost Vulgar Latin spoken colloquially at the time"
+   ]
+  },
+  "thermo2020": {
+   "label": "supported",
+   "says": "In December 2020 a thermopolium was excavated with frescoes of the food on offer and pots still holding remains of duck, goat, pig, fish and snails.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "In December 2020, a thermopolium, an inn or snack-bar, was excavated in Regio V. In addition to brightly coloured frescoes depicting some of the food on offer, archaeologists found eight dolia (terracotta pots) still containing remnants of meals, including duck, goat, pig, fish, and snails."
+   ]
+  },
+  "casts-where": {
+   "label": "supported",
+   "says": "Plaster casts are kept in the Forum Granary, and in the Garden of the Fugitives on the south-east side casts of several victims, including children, lie where they fell.",
+   "src": [
+    "wv-pompeii"
+   ],
+   "quote": [
+    "Artifacts like amphorae (storage jars) and plaster casts of people who did not escape the eruption are stored in this building",
+    "at the south-east side where plaster casts of several victims (sadly, including children) are on display where they originally fell"
+   ]
+  },
+  "fiorelli": {
+   "label": "supported",
+   "says": "Giuseppe Fiorelli took charge of the excavations in 1863 and realised the voids in the ash were left by decomposed bodies.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "Giuseppe Fiorelli took charge of the excavations in 1863 and made greater progress.",
+    "Fiorelli realised these were spaces left by the decomposed bodies, and so devised the technique of injecting plaster into them to recreate the forms of Vesuvius's victims."
+   ]
+  },
+  "process": {
+   "label": "supported",
+   "says": "Plaster was poured into each cavity and left to harden, then the ash was removed, leaving a replica of the person at the moment of death.",
+   "src": [
+    "wp-fiorelli"
+   ],
+   "quote": [
+    "Whenever an excavator discovered such a cavity, plaster of Paris was poured in and left to harden. The ash around the plaster was then carefully removed, so that a plaster replica of a person or animal at the moment of their death remained."
+   ]
+  },
+  "bones": {
+   "label": "verified",
+   "says": "The casts contain skeletal remains.",
+   "src": [
+    "unesco-pompeii"
+   ],
+   "quote": [
+    "The casts themselves are important resources as they contain both skeletal remains"
+   ]
+  },
+  "spasm": {
+   "label": "supported",
+   "says": "The contorted postures are not signs of long agony but of cadaveric spasm caused by heat shock.",
+   "src": [
+    "wp-vesuvius-79"
+   ],
+   "quote": [
+    "The contorted postures of bodies as if frozen in suspended action were not the effects of long agony, but of the cadaveric spasm, a consequence of heat shock on corpses."
+   ]
+  },
+  "resin": {
+   "label": "supported",
+   "says": "The technique is still used, now with clear resin, which lasts longer and does not destroy the bones.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "This technique is still in use today, with a clear resin now used instead of plaster because it is more durable and does not destroy the bones, allowing further analysis."
+   ]
+  },
+  "bodies": {
+   "label": "estimate",
+   "says": "Only approximately 1,150 bodies have been found on site.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "Only approximately 1,150 bodies have been found on site"
+   ]
+  },
+  "address": {
+   "label": "supported",
+   "says": "Fiorelli divided the city into nine regions and blocks and numbered the house entrances, a system still in use.",
+   "src": [
+    "wp-pompeii",
+    "wp-fiorelli"
+   ],
+   "quote": [
+    "He divided the city into today's nine areas (regiones) and blocks (insulae) and numbered the entrances of the individual houses (domus).",
+    "a form of reference still in use today"
+   ]
+  },
+  "rediscovery": {
+   "label": "supported",
+   "says": "In 1592 the architect Domenico Fontana, digging an aqueduct, hit buried painted walls but kept it secret; on 20 August 1763 an inscription identified the city as Pompeii.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "The next known date that any part was unearthed was in 1592, when architect Domenico Fontana, while digging an underground aqueduct to the mills of Torre Annunziata, ran into ancient walls covered with paintings and inscriptions.",
+    "However, he kept the finding secret.",
+    "On 20 August 1763, an inscription [...] Rei Publicae Pompeianorum [...] was found and the city was identified as Pompeii."
+   ]
+  },
+  "vesuvius-dist": {
+   "label": "supported",
+   "says": "Pompeii was built on a lava plateau from earlier eruptions of Vesuvius, 8 km (5 mi) away.",
+   "src": [
+    "wp-pompeii"
+   ],
+   "quote": [
+    "on a coastal lava plateau created by earlier eruptions of Mount Vesuvius (8 km or 5 mi distant)"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Just inside the site, step to the side of the path, out of the stream of visitors.",
+   "paras": [
+    {
+     "t": "Welcome to Pompeii. In 79 AD, Mount Vesuvius buried this whole town under 4 to 6 meters of ash and pumice.",
+     "c": [
+      "buried"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Watch your step on these old streets: cobblestones, uneven ground, and grooves worn by cart wheels. In summer it's often 32 to 35 degrees Celsius out here, so wear good shoes and a hat, and carry plenty of water.",
+     "c": [
+      "safety"
+     ],
+     "level": 1
+    },
+    {
+     "t": "This was a wealthy Roman town of somewhere around 10,000 to 20,000 people, though newer counts of the houses suggest up to 11,500. UNESCO calls it the only archaeological site in the world that gives a complete picture of an ancient Roman city.",
+     "c": [
+      "population",
+      "unesco-complete"
+     ],
+     "level": 2
+    },
+    {
+     "t": "This town is much older than the Romans. The first settlements here date to the 8th century BC, when a people called the Oscans founded five villages. The name Pompeii perhaps comes from their word for five, pompe. Then in 89 BC the Roman general Sulla besieged the town, and afterwards it became a Roman colony.",
+     "c": [
+      "oscans",
+      "name-five",
+      "sulla"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And the volcano itself? Vesuvius is about 8 kilometers away, some five miles. The ground under your feet is a plateau of lava from its earlier eruptions. The people here were living on the volcano's own work.",
+     "c": [
+      "vesuvius-dist"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Forum",
+   "stand": "Walk on to the Forum, the big open square, and stop near the middle.",
+   "paras": [
+    {
+     "t": "This is the Forum, the center of public life in Pompeii, ringed by the Basilica, the Capitolium and temples.",
+     "c": [
+      "forum-centre",
+      "forum-buildings"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Much of this went up in the 2nd century BC, when Pompeii grew rich on Rome's conquests in the east. That's when the Temple of Jupiter and the Basilica were built.",
+     "c": [
+      "forum-2c"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Now look to the west side of the square. The Basilica, just west of the Forum, was the most important public building in town. Justice was handed out there, and business was done there too. North of it, on the same western side, is the Temple of Apollo. It holds the oldest remains found in Pompeii, some going back to 575 BC.",
+     "c": [
+      "basilica",
+      "apollo"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Notice how bare it all feels. Where are the statues, the marble? Probably carried off after the eruption, by survivors and by robbers digging down through the ash. In one house, archaeologists even found the robbers' note scratched on the wall: \"house dug.\"",
+     "c": [
+      "robbers",
+      "house-dug"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The eruption",
+   "stand": "Stay in the Forum, in a patch of shade if you can find one.",
+   "paras": [
+    {
+     "t": "So what happened here? The only eyewitness account comes from a 17-year-old, Pliny the Younger, watching from across the bay. Here in town, pumice rained down for about 18 hours, and most people got away. Then scorching clouds of ash and gas swept through.",
+     "c": [
+      "pliny-witness",
+      "phases"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Pliny watched from Misenum, about 29 kilometers, or 18 miles, away. He saw a dense cloud rise above the mountain that, in his words, \"more closely resembled a pine-tree than anything else.\" And a study published in 2010 found that heat, not suffocation, was the main killer here.",
+     "c": [
+      "pliny-witness",
+      "pine",
+      "heat-death"
+     ],
+     "level": 2
+    },
+    {
+     "t": "His uncle, Pliny the Elder, commanded the Roman fleet at Misenum. He launched the galleys to take people off the coast. When his helmsman urged him to turn back, he said, \"Fortune favors the brave,\" and sailed on to Stabiae. He never came home. His nephew blamed poisonous fumes, but a stroke or a heart attack is more likely; nobody knows for sure. His body was found the next day without injuries.",
+     "c": [
+      "uncle",
+      "uncle-death"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The part of his letters I always remember is this. His mother begged him to leave her behind and save himself. Instead he took her hand and led her away as best he could, through ash he compared to a blanket of snow.",
+     "c": [
+      "mother"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Two odd things about those letters. He wrote them some 25 years later, for the historian Tacitus. And Pompeii itself is never mentioned in them. Still, his description was so exact that volcanologists call this kind of eruption \"Plinian.\"",
+     "c": [
+      "pliny-witness",
+      "not-mentioned",
+      "plinian"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And the date? UNESCO gives the 24th of August, 79. But the copies of Pliny's letter may have been corrupted over the centuries, and in 2018 archaeologists found a charcoal scribble here reading October 17. Scholars still argue about it, because nobody knows which day that note was talking about.",
+     "c": [
+      "date"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The streets",
+   "stand": "Leave the Forum along one of the paved streets and stop beside a row of stepping stones.",
+   "paras": [
+    {
+     "t": "Look down at the street. Those big blocks are stepping stones. Water and waste ran down these streets, so the sidewalks were built high, and the stepping stones match them. The grooves? Worn by the carts.",
+     "c": [
+      "stones",
+      "grooves"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Now picture it busy. There were nearly 100 snack bars in town, thermopolia, selling hot food and drink over the counter. There were at least 31 bakeries, each with its ovens, millstones and a counter. And an aqueduct fed more than 25 street fountains.",
+     "c": [
+      "thermopolia",
+      "bakeries",
+      "fountains"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Read the walls as you go. An election was coming when the volcano erupted, and the walls are full of political slogans, plus plenty of personal remarks, often insulting ones. Those scrawls also preserve the everyday Latin people actually spoke.",
+     "c": [
+      "election",
+      "graffiti-latin"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The digging still turns things up. In December 2020 a snack bar was uncovered with bright paintings of the food on offer. Its pots still held the remains of meals: duck, goat, pig, fish, and snails.",
+     "c": [
+      "thermo2020"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The plaster casts",
+   "stand": "Go to the plaster casts of the victims: some are kept in the Forum Granary, others in the Garden of the Fugitives on the south-east side of the site.",
+   "paras": [
+    {
+     "t": "These are the people of Pompeii, or rather the spaces they left. Giuseppe Fiorelli, who took charge here in 1863, realized that the hollows in the ash were left by bodies that had decayed. Plaster was poured in, and when the ash was cleared away, there was the shape of a person at the moment of death.",
+     "c": [
+      "fiorelli",
+      "process"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Please go gently here. Many casts still hold the person's bones. And the twisted poses are not signs of a long struggle; scientists explain them as a spasm caused by the shock of extreme heat. Today, a clear resin is used instead of plaster, because it lasts longer and doesn't destroy the bones.",
+     "c": [
+      "bones",
+      "spasm",
+      "resin"
+     ],
+     "level": 2
+    },
+    {
+     "t": "In the Garden of the Fugitives, the casts lie where the people fell, and some of them are children. Only about 1,150 bodies have been found here in all. Most people did get away.",
+     "c": [
+      "casts-where",
+      "bodies",
+      "phases"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Fiorelli did something else you've been using all day. He divided the city into nine regions and blocks, and numbered the doorways of the houses. Archaeologists still use those addresses.",
+     "c": [
+      "address"
+     ],
+     "level": 3
+    },
+    {
+     "t": "It took a long time to find this place again. In 1592 an architect, Domenico Fontana, dug an aqueduct right through the buried town and hit painted walls, and he kept it secret. Only on 20 August 1763 did an inscription prove that this was Pompeii.",
+     "c": [
+      "rediscovery"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "On your way out, pause in any quiet doorway along the street.",
+   "paras": [
+    {
+     "t": "Pompeii is famous for how it ended. But try to walk out remembering how it lived: slogans for an election that was coming, bakeries with their ovens, and a young man holding his mother's hand in the dark. Ordinary days, a lot like ours.",
+     "c": [
+      "election",
+      "bakeries",
+      "mother"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

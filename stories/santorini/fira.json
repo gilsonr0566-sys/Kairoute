@@ -1,0 +1,658 @@
+{
+ "id": "fira",
+ "v": 1,
+ "city": "santorini",
+ "title": "Fira and the Caldera Path",
+ "match": {
+  "ids": [
+   "fira"
+  ],
+  "names": [
+   "fira",
+   "fira caldera"
+  ],
+  "wikidata": [
+   "Q617169",
+   "Q1547142"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "capital": {
+   "label": "supported",
+   "says": "Fira is the modern capital of Santorini.",
+   "src": [
+    "wp-fira"
+   ],
+   "quote": [
+    "is the modern capital of the Greek Aegean island of Santorini"
+   ]
+  },
+  "name": {
+   "label": "supported",
+   "says": "The name Fira comes from another way of saying Thira, the island's ancient name.",
+   "src": [
+    "wp-fira"
+   ],
+   "quote": [
+    "derives its name from an alternative pronunciation of \"Thíra\", the ancient name of the island itself."
+   ]
+  },
+  "edge": {
+   "label": "supported",
+   "says": "Fira's whitewashed houses are built on the edge of the caldera, 400 metres high, on the western edge of the island.",
+   "src": [
+    "wp-fira"
+   ],
+   "quote": [
+    "Fira is a city of whitewashed houses built on the edge of the 400 metres (1,312 feet) high caldera on the western edge of the semi-circular island of Thera."
+   ]
+  },
+  "view": {
+   "label": "supported",
+   "says": "From Fira you see the 18 km caldera from Cape Akrotiri in the south to Cape Agios Nikolaos in the north, with Nea Kameni at the center and Thirassia.",
+   "src": [
+    "wp-fira"
+   ],
+   "quote": [
+    "From Fira there is a panoramic view of the 18 kilometres (11 miles) long caldera from southern Cape Akrotiri to northern Cape Ag. Nikolaos, plus the volcanic island Nea Kameni at the center with Thirassia Island."
+   ]
+  },
+  "ships": {
+   "label": "supported",
+   "says": "Large cruise ships anchor between Nea Kameni and Fira.",
+   "src": [
+    "wp-fira"
+   ],
+   "quote": [
+    "Large cruise ships anchor in the small harbor between Nea Kameni and Fira."
+   ]
+  },
+  "layers": {
+   "label": "supported",
+   "says": "The inner caldera coast is a sheer precipice of more than 300 m at its highest, showing layers of solidified lava, with the towns on the crest.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "The inner coast around the caldera is a sheer precipice of more than 300 m (980 ft) drop at its highest, and exhibits the various layers of solidified lava on top of each other, and the main towns perched on the crest."
+   ]
+  },
+  "access": {
+   "label": "supported",
+   "says": "From the port you reach Fira by the zigzag footpath, on foot or by donkey, or by the steep cable car.",
+   "src": [
+    "wp-fira"
+   ],
+   "quote": [
+    "climbing from its port via the zigzag footpath on foot or on donkeys, or by riding the steep cable car from its lower terminal by the port."
+   ]
+  },
+  "steps": {
+   "label": "supported",
+   "says": "Wikivoyage counts 588 zigzagging steps; they are winding, narrow in parts with only low walls, and the donkeys won't avoid you.",
+   "src": [
+    "wv-santorini"
+   ],
+   "quote": [
+    "take one of the hundreds of donkeys up the 588 zigzagging steps",
+    "the stairs are winding, narrow in parts with only low walls, they are covered in donkey excrement, and the donkeys will make no attempt to avoid you."
+   ]
+  },
+  "cliffs": {
+   "label": "supported",
+   "says": "Cliffs and low walls over big drops are a danger to children; don't linger under cliffs, which are prone to rockslides.",
+   "src": [
+    "wv-santorini"
+   ],
+   "quote": [
+    "The cliffs and low walls guarding large drops pose a danger to children.",
+    "Don't linger under cliffs, as they are prone to rockslides."
+   ]
+  },
+  "sun": {
+   "label": "supported",
+   "says": "The UV index is extreme all year; avoid the sun in the hottest hours; dehydration and sunburn are the most common health problems.",
+   "src": [
+    "wv-santorini"
+   ],
+   "quote": [
+    "which is considered extreme",
+    "Avoid going out into the sun during the hottest hours of the day",
+    "Dehydration is, together with sunburns, the most common health issue encountered on Santorini."
+   ]
+  },
+  "eruption": {
+   "label": "estimate",
+   "says": "One of the largest eruptions in recorded history struck about 3,600 years ago, leaving a water-filled caldera.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "One of the largest volcanic eruptions in recorded history struck the island about 3,600 years ago, leaving a large water-filled caldera surrounded by deep volcanic ash deposits."
+   ]
+  },
+  "date-debate": {
+   "label": "disputed",
+   "says": "The exact date has been fiercely debated for decades without a definite conclusion.",
+   "src": [
+    "wp-minoan-eruption"
+   ],
+   "quote": [
+    "has been fiercely debated among archaeologists and volcanologists for decades, without coming to a definite conclusion."
+   ]
+  },
+  "cycle": {
+   "label": "supported",
+   "says": "Again and again the volcano erupted and then collapsed into a roughly circular, sea-filled caldera.",
+   "src": [
+    "wp-minoan-eruption"
+   ],
+   "quote": [
+    "In a repeating process, the volcano would violently erupt, then eventually collapse into a roughly circular seawater-filled caldera"
+   ]
+  },
+  "centre": {
+   "label": "supported",
+   "says": "The eruption was centered on a small island just north of today's Nea Kameni.",
+   "src": [
+    "wp-minoan-eruption"
+   ],
+   "quote": [
+    "This cataclysmic eruption was centered on a small island just north of the existing island of Nea Kameni in the centre of the then-existing caldera."
+   ]
+  },
+  "ring": {
+   "label": "supported",
+   "says": "Before the eruption the caldera was a nearly continuous ring with one entrance, between Aspronisi and Thera; the eruption opened two new channels on either side of Therasia.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "Before the Minoan eruption, the caldera formed a nearly continuous ring with the only entrance between the islet of Aspronisi and Thera; the eruption destroyed the sections of the ring between Aspronisi and Therasia, and between Therasia and Thera, creating two new channels."
+   ]
+  },
+  "tephra": {
+   "label": "supported",
+   "says": "A layer of white tephra up to 60 m thick lies over the old ground surface.",
+   "src": [
+    "wp-minoan-eruption"
+   ],
+   "quote": [
+    "On Santorini, there is a 60 m (200 ft) thick layer of white tephra that overlies the soil clearly delineating the ground level before the eruption."
+   ]
+  },
+  "warning": {
+   "label": "disputed",
+   "says": "The volcano gave a few months' warning; since no human remains were found at Akrotiri, the people probably fled.",
+   "src": [
+    "wp-minoan-eruption"
+   ],
+   "quote": [
+    "indicate that the volcano gave the local population a few months' warning.",
+    "Since no human remains have been found at the Akrotiri site, this preliminary volcanic activity probably caused the island's population to flee."
+   ]
+  },
+  "crete": {
+   "label": "supported",
+   "says": "The eruption sent tsunamis of 35 to 150 m that devastated the north coast of Crete, 110 km away.",
+   "src": [
+    "wp-minoan-eruption"
+   ],
+   "quote": [
+    "The eruption also generated 35 to 150 m (115 to 492 ft) high tsunamis that devastated the northern coastline of Crete, 110 km (68 mi) away."
+   ]
+  },
+  "kameni-name": {
+   "label": "supported",
+   "says": "Nea Kameni means new burnt and Palea Kameni old burnt; they formed over the past two millennia from repeated eruptions.",
+   "src": [
+    "wp-nea-kameni"
+   ],
+   "quote": [
+    "Nea Kameni (new burnt) and the neighbouring small island Palea Kameni (old burnt) have formed over the past two millennia through repeated eruptions of dacite lava and ash."
+   ]
+  },
+  "kameni-197": {
+   "label": "supported",
+   "says": "The first of the Kameni islands broke the surface in 197 BC.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "the first of them broke the surface of the sea in 197 BC."
+   ]
+  },
+  "cassius": {
+   "label": "supported",
+   "says": "The Roman historian Cassius Dio recorded in 47 CE that a small islet, hitherto unknown, appeared close to Thera.",
+   "src": [
+    "wp-nea-kameni"
+   ],
+   "quote": [
+    "The Roman historian Cassius Dio records in the year 47 CE \"This year a small islet, hitherto unknown, made an appearance close to the island of Thera.\""
+   ]
+  },
+  "cedrenus": {
+   "label": "supported",
+   "says": "George Cedrenus wrote that in the summer of 727 a vapour like an oven's fire boiled up for days from the sea between Thera and Therasia.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "According to George Cedrenus, the volcano erupted again in the summer of 727",
+    "a vapour like an oven's fire boiled up for days out of the middle of the islands of Thera and Therasia from the depths of the sea, and the whole place burned like fire"
+   ]
+  },
+  "iconoclasm": {
+   "label": "supported",
+   "says": "The explosion was taken as a divine omen against the worship of icons, and gave Emperor Leo III his justification for Iconoclasm.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "This terrifying explosion was interpreted as a divine omen against the worship of religious icons and gave the emperor Leo III the Isaurian the justification he needed to begin implementing his Iconoclasm policy."
+   ]
+  },
+  "1707": {
+   "label": "supported",
+   "says": "In 1707 an undersea volcano broke the surface, forming today's center of activity at Nea Kameni.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "In 1707, an undersea volcano breached the sea surface, forming the current centre of activity at Nea Kameni in the centre of the lagoon"
+   ]
+  },
+  "1950": {
+   "label": "supported",
+   "says": "The last small eruption was in 1950.",
+   "src": [
+    "wp-nea-kameni"
+   ],
+   "quote": [
+    "The last small eruption happened in 1950 and involved lava dome extrusion."
+   ]
+  },
+  "steam": {
+   "label": "supported",
+   "says": "The volcano is dormant, but steam and carbon dioxide come from the active crater.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "Although the volcano is dormant at the present time, at the current active crater (there are several former craters on Nea Kameni), steam and carbon dioxide are emitted."
+   ]
+  },
+  "watched": {
+   "label": "supported",
+   "says": "Scientists monitor Nea Kameni closely; it is a protected scientific site.",
+   "src": [
+    "wp-nea-kameni"
+   ],
+   "quote": [
+    "It is monitored closely by scientists from the Institute for the Study and Monitoring of the Santorini Volcano (ISMOSAV), and is a protected scientific site."
+   ]
+  },
+  "jorgo": {
+   "label": "supported",
+   "says": "An active sulfur vent is called Jorgo, after King George I, because it was active the day after the king visited.",
+   "src": [
+    "wp-nea-kameni"
+   ],
+   "quote": [
+    "one of which is an active sulfur vent, named Jorgo (George)",
+    "The active vent was named by the locals after King George I of Greece, as the vent was active the day after the King visited Santorini."
+   ]
+  },
+  "crater": {
+   "label": "supported",
+   "says": "Visitors climb a gravel path to the top of the 130 m crater.",
+   "src": [
+    "wp-nea-kameni"
+   ],
+   "quote": [
+    "Visitors climb a gravel path to reach the top of the 130-meter-high volcanic crater"
+   ]
+  },
+  "atlantis-plato": {
+   "label": "supported",
+   "says": "Atlantis is a fictional island in Plato's Timaeus and Critias, part of an allegory on the pride of nations.",
+   "src": [
+    "wp-atlantis"
+   ],
+   "quote": [
+    "is a fictional island mentioned in Plato's works Timaeus and Critias as part of an allegory on the hubris of nations."
+   ]
+  },
+  "atlantis-thera": {
+   "label": "disputed",
+   "says": "Marinatos suggested the eruption is reflected in Plato's Atlantis story; current scholarship does not support this.",
+   "src": [
+    "wp-minoan-eruption"
+   ],
+   "quote": [
+    "Spyridon Marinatos, the discoverer of the Akrotiri archaeological site, suggested that the Minoan eruption is reflected in Plato's story of Atlantis.",
+    "However, this view is not supported by current scholarship."
+   ]
+  },
+  "atlantis-debate": {
+   "label": "disputed",
+   "says": "Scholars agree the story is fiction but still debate its inspiration; some suggest Egyptian records of the Thera eruption, others reject that.",
+   "src": [
+    "wp-atlantis"
+   ],
+   "quote": [
+    "While present-day philologists and classicists agree on the story's fictional nature, there is still debate on what served as its inspiration.",
+    "This led a number of scholars to suggest possible inspiration of Atlantis from Egyptian records of the Thera eruption",
+    "Others have rejected this chain of tradition as implausible"
+   ]
+  },
+  "exodus": {
+   "label": "disputed",
+   "says": "Geologist Barbara Sivertsen theorizes a link between the eruption and the plagues of the Exodus; current archaeological research does not support such stories.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "geologist Barbara J. Sivertsen theorizes a causal link between this eruption and the plagues of the Exodus.",
+    "The content of the stories is not supported by current archaeological research"
+   ]
+  },
+  "1956": {
+   "label": "supported",
+   "says": "The 1956 earthquake destroyed 529 houses on Santorini; camps for the homeless were set up on the outskirts of Fira.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "Santorini was also struck by a devastating earthquake in 1956.",
+    "In total, 529 houses were destroyed",
+    "camps for homeless people were established on the outskirts of Fira."
+   ]
+  },
+  "churches": {
+   "label": "supported",
+   "says": "Fira has many churches, including the Cathedral of Ypapanti and the Three Bells of Fira.",
+   "src": [
+    "wp-fira"
+   ],
+   "quote": [
+    "The town also hosts a number of churches, including the Cathedral of Ypapanti and the Three Bells of Fira."
+   ]
+  },
+  "bells": {
+   "label": "supported",
+   "says": "The Three Bells became popular for no clear reason, since many churches have a similar bell arrangement; the spot on the caldera ridge may explain it.",
+   "src": [
+    "wv-santorini"
+   ],
+   "quote": [
+    "The Three Bells of Fira became particularly popular for no apparent reason, as there are many churches on Thira that have a similar bell configuration.",
+    "The picture-perfect location on the ridge of the caldera may have something to do with it."
+   ]
+  },
+  "trail": {
+   "label": "supported",
+   "says": "The walk from Fira to Oia along the caldera can be difficult, with climbs, rocky surfaces and unprotected cliffs.",
+   "src": [
+    "wv-santorini"
+   ],
+   "quote": [
+    "can be difficult, for up and downhill climbs, the rocky surface at times, and the proximity to unprotected cliffs that drop sharply into the caldera"
+   ]
+  },
+  "imerovigli": {
+   "label": "supported",
+   "says": "Just above Fira is Imerovigli, the highest point of the caldera cliffs.",
+   "src": [
+    "wv-santorini"
+   ],
+   "quote": [
+    "Just above Fira is Imerovigli",
+    "as it is the highest point of the Caldera cliffs."
+   ]
+  },
+  "lanterns": {
+   "label": "supported",
+   "says": "In the early 1950s, island children bid yacht passengers farewell by lighting small lanterns along the steps from Fira down to the port.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "The island's tourism in the early 1950s generally took the form of small numbers of wealthy tourists on yacht cruises though the Aegean.",
+    "The island's children would present arriving passengers with flowers and bid them happy sailing by lighting small lanterns along the steps from Fira down to the port, offering them a beautiful farewell spectacle."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "On the caldera path in the center of Fira, at a low wall with a clear view out over the water. Stay on the path side of the wall.",
+   "paras": [
+    {
+     "t": "Here we are, on the rim of a volcano. Fira is Santorini's capital, and its white houses sit right on the edge of the caldera, the great flooded crater in front of you, some 400 meters high.",
+     "c": [
+      "capital",
+      "edge"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Please stay back from the edges. The drops are long and some walls are low, so keep children close.",
+     "c": [
+      "cliffs"
+     ],
+     "level": 1
+    },
+    {
+     "t": "And the sun here is fierce, even when the breeze feels cool. Wikivoyage calls the UV extreme all year, and says dehydration and sunburn are the most common health problems on the island. So keep drinking water, and find shade in the middle of the day.",
+     "c": [
+      "sun"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The name is worth a moment. Fira simply comes from another way of saying Thira, the island's ancient name.",
+     "c": [
+      "name"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Reading the caldera",
+   "stand": "Stay at the wall, looking straight out to sea across the caldera.",
+   "paras": [
+    {
+     "t": "Look out across the water. The caldera runs about 18 kilometers, from Cape Akrotiri far to your left to Cape Agios Nikolaos far to your right. The dark island in the middle is Nea Kameni.",
+     "c": [
+      "view"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Beyond it, the long island across the water is Thirassia. And if there are big cruise ships out there, they're anchored in the small harbor between Nea Kameni and Fira.",
+     "c": [
+      "view",
+      "ships"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Now look down at the cliff itself. This inner wall of the caldera drops more than 300 meters at its highest, and you can see the layers of old lava stacked on top of each other, with the towns perched along the top. Each band is a page in the volcano's diary.",
+     "c": [
+      "layers"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The great eruption",
+   "stand": "Keep the open water in front of you.",
+   "paras": [
+    {
+     "t": "How did this happen? About 3,600 years ago, one of the largest volcanic eruptions in recorded history struck this island, and left behind this huge bowl, flooded by the sea.",
+     "c": [
+      "eruption"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It was centered on a small island just north of where Nea Kameni sits today. Before it, this was almost a closed ring of land, with only one way in for boats. The eruption broke through on either side of Thirassia and opened two new channels to the sea.",
+     "c": [
+      "centre",
+      "ring"
+     ],
+     "level": 2
+    },
+    {
+     "t": "And it wasn't the first time. Again and again over a very long time, this volcano erupted, then collapsed into a roughly circular basin full of seawater.",
+     "c": [
+      "cycle"
+     ],
+     "level": 3
+    },
+    {
+     "t": "On Santorini, the white ash and pumice it threw out lies up to 60 meters thick, right on top of the old ground. Tsunamis between 35 and 150 meters high devastated the north coast of Crete, 110 kilometers away.",
+     "c": [
+      "tephra",
+      "crete"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Here's the mercy in the story. The volcano seems to have given a few months' warning. No human remains have been found in the buried town at Akrotiri, so the people probably got away in time. The exact year? Nobody knows. Scientists have argued about it for decades.",
+     "c": [
+      "warning",
+      "date-debate"
+     ],
+     "level": 2
+    },
+    {
+     "t": "You'll hear the word Atlantis a lot here. Atlantis is a legend, a fictional island in the writings of Plato. Spyridon Marinatos, who found the buried town at Akrotiri, suggested this eruption lies behind it, but scholars today don't support that.",
+     "c": [
+      "atlantis-plato",
+      "atlantis-thera"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Scholars do still debate what inspired Plato's story. Some point to Egyptian records of this eruption; others reject that link entirely.",
+     "c": [
+      "atlantis-debate"
+     ],
+     "level": 3
+    },
+    {
+     "t": "You may also hear the eruption linked to the Bible. One geologist, Barbara Sivertsen, has proposed a connection with the plagues of the Exodus. That's a disputed theory, not what Scripture itself says, and current archaeological research doesn't support such stories.",
+     "c": [
+      "exodus"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Nea Kameni, the volcano still breathing",
+   "stand": "Look back out to the dark island in the middle of the caldera.",
+   "paras": [
+    {
+     "t": "Nea Kameni means new burnt. It's the young volcano, grown out of the sea over the last two thousand years, eruption by eruption.",
+     "c": [
+      "kameni-name"
+     ],
+     "level": 1
+    },
+    {
+     "t": "People watched it happen. The first of these islands broke the surface in 197 BC. In the year 47, the Roman historian Cassius Dio wrote: \"This year a small islet, hitherto unknown, made an appearance close to the island of Thera.\"",
+     "c": [
+      "kameni-197",
+      "cassius"
+     ],
+     "level": 3
+    },
+    {
+     "t": "In the summer of 727, the writer George Cedrenus describes \"a vapour like an oven's fire\" boiling up for days from the sea, \"and the whole place burned like fire.\" People read it as a sign from God against the worship of icons, and Emperor Leo the Third used it to justify his campaign against them.",
+     "c": [
+      "cedrenus",
+      "iconoclasm"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The island you see took shape in 1707, when an undersea volcano broke the surface. The last small eruption was in 1950. It's quiet now, but steam and carbon dioxide still rise from the active crater, and scientists watch it closely.",
+     "c": [
+      "1707",
+      "1950",
+      "steam",
+      "watched"
+     ],
+     "level": 2
+    },
+    {
+     "t": "One steaming vent is nicknamed Jorgo, George, after King George the First, because it was active the day after the king visited. If you take a boat out, a gravel path climbs to the top of the crater, about 130 meters high.",
+     "c": [
+      "jorgo",
+      "crater"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Fira's own story",
+   "stand": "Turn to face the town, with the caldera at your back.",
+   "paras": [
+    {
+     "t": "Fira has known hard times. In 1956 an earthquake destroyed 529 houses on Santorini, and camps for the homeless went up on the edge of Fira.",
+     "c": [
+      "1956"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It's a town of churches too, among them the Cathedral of Ypapanti and the famous Three Bells of Fira. Nobody's quite sure why the Three Bells became so popular, since plenty of churches hang their bells the same way. The spot, up on the caldera ridge, may have something to do with it.",
+     "c": [
+      "churches",
+      "bells"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Below us, a zigzag footpath and a steep cable car link the town to the port. The path is 588 steps, winding, narrow in places, with low walls, and the donkeys won't step aside for you. Go slowly, and keep to the wall side.",
+     "c": [
+      "access",
+      "steps"
+     ],
+     "level": 2
+    },
+    {
+     "t": "If you walk the path north toward Oia, just above Fira is Imerovigli, the highest point of the caldera cliffs. The full walk can be hard going, with climbs, rocky stretches and unprotected edges. Don't linger under the cliffs, which are prone to rockslides.",
+     "c": [
+      "imerovigli",
+      "trail",
+      "cliffs"
+     ],
+     "level": 3
+    },
+    {
+     "t": "One last picture. In the early 1950s, visitors came here a few at a time, on yachts. When they left, the island's children lit small lanterns all along the steps from Fira down to the port, to wish them a good voyage.",
+     "c": [
+      "lanterns"
+     ],
+     "level": 1
+    },
+    {
+     "t": "A little line of light on the side of a volcano. Hold onto that one when you go back down.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

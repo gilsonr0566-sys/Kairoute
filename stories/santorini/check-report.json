@@ -1,0 +1,50 @@
+{
+ "fail": 3,
+ "warn": 0,
+ "report": [
+  {
+   "id": "akrotiri",
+   "title": "Akrotiri Prehistoric Town",
+   "claims": 41,
+   "minutes": {
+    "1": 1.4,
+    "2": 3.2,
+    "3": 6.3
+   },
+   "labels": {
+    "supported": 34,
+    "disputed": 7
+   }
+  },
+  {
+   "id": "fira",
+   "title": "Fira and the Caldera Path",
+   "claims": 39,
+   "minutes": {
+    "1": 1.4,
+    "2": 3.3,
+    "3": 6.4
+   },
+   "labels": {
+    "supported": 33,
+    "estimate": 1,
+    "disputed": 5
+   }
+  },
+  {
+   "id": "oia",
+   "title": "Oia",
+   "claims": 33,
+   "minutes": {
+    "1": 1.2,
+    "2": 3.2,
+    "3": 4.7
+   },
+   "labels": {
+    "estimate": 1,
+    "supported": 31,
+    "disputed": 1
+   }
+  }
+ ]
+}

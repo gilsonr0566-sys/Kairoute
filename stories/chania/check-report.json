@@ -1,0 +1,78 @@
+{
+ "fail": 0,
+ "warn": 0,
+ "report": [
+  {
+   "id": "agora-ch",
+   "title": "Chania Municipal Market",
+   "claims": 9,
+   "minutes": {
+    "1": 0.8,
+    "2": 1.5,
+    "3": 1.5
+   },
+   "labels": {
+    "supported": 9
+   }
+  },
+  {
+   "id": "firkas",
+   "title": "Firkas Fortress and the Maritime Museum",
+   "claims": 26,
+   "minutes": {
+    "1": 1.6,
+    "2": 3.8,
+    "3": 5.6
+   },
+   "labels": {
+    "supported": 24,
+    "estimate": 1,
+    "legend": 1
+   }
+  },
+  {
+   "id": "harbor",
+   "title": "Chania Venetian Harbor and Lighthouse",
+   "claims": 27,
+   "minutes": {
+    "1": 1,
+    "2": 2.5,
+    "3": 4.3
+   },
+   "labels": {
+    "supported": 26,
+    "estimate": 1
+   }
+  },
+  {
+   "id": "nikolaos",
+   "title": "Church of Saint Nicholas, Splantzia",
+   "claims": 17,
+   "minutes": {
+    "1": 1,
+    "2": 1.9,
+    "3": 2.4
+   },
+   "labels": {
+    "supported": 14,
+    "estimate": 2,
+    "legend": 1
+   }
+  },
+  {
+   "id": "oldtown",
+   "title": "Chania Old Town and Topanas",
+   "claims": 27,
+   "minutes": {
+    "1": 1.1,
+    "2": 3.6,
+    "3": 5
+   },
+   "labels": {
+    "supported": 25,
+    "legend": 1,
+    "disputed": 1
+   }
+  }
+ ]
+}

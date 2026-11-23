@@ -1,0 +1,276 @@
+{
+ "id": "paraportiani",
+ "v": 1,
+ "city": "mykonos",
+ "title": "Panagia Paraportiani Church",
+ "match": {
+  "ids": [
+   "paraportiani"
+  ],
+  "names": [
+   "paraportiani"
+  ],
+  "wikidata": [
+   "Q3669454"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "where": {
+   "label": "supported",
+   "says": "The church stands in the Kastro neighborhood of Chora.",
+   "src": [
+    "wp-paraportiani"
+   ],
+   "quote": [
+    "is situated in the neighbourhood of Kastro, in the town of Chora, on the Greek island of Mykonos."
+   ]
+  },
+  "kastro-oldest": {
+   "label": "supported",
+   "says": "The Kastro district is the oldest section of Mykonos Town.",
+   "src": [
+    "wv-mykonos"
+   ],
+   "quote": [
+    "The church is located in the Kastro district, the oldest section of Mykonos Town."
+   ]
+  },
+  "name": {
+   "label": "supported",
+   "says": "Its name literally means 'Our Lady of the Side Gate', because its entrance was in the side gate of the entrance to the Kastro area.",
+   "src": [
+    "wp-paraportiani"
+   ],
+   "quote": [
+    "Its name literally means \"Our Lady of the Side Gate\" in Greek, as its entrance was found in the side gate of the entrance to the Kastro area."
+   ]
+  },
+  "castle": {
+   "label": "supported",
+   "says": "Kastro was the site of a medieval castle built in 1207 by the Ghisi family, who controlled the island then.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "used to be the site of a medieval castle",
+    "constructed in 1207 by the Ghisi family, who controlled the island at the time."
+   ]
+  },
+  "castle-gone": {
+   "label": "supported",
+   "says": "The castle was destroyed in the 16th century, and its remains were covered by new buildings as Chora grew in the 18th century.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "The castle was destroyed in the 16th century and its remnants covered up by new buildings when Chora began to expand in the 18th century."
+   ]
+  },
+  "five": {
+   "label": "supported",
+   "says": "The church is actually five churches joined: four at ground level, for Saint Eustathios, Saint Sozon, Saints Anargyroi and Saint Anastasia, form the base of a fifth built above them.",
+   "src": [
+    "wp-paraportiani"
+   ],
+   "quote": [
+    "This impressive, whitewashed church actually consists of five separate churches which are joined: the four churches (dedicated to Saint Eustathios, Saint Sozon, Saints Anargyroi and Saint Anastasia) are at ground level and constitute the base of the fifth church that has been built above them."
+   ]
+  },
+  "dates": {
+   "label": "supported",
+   "says": "Construction started in 1425 and was not finished until the 17th century.",
+   "src": [
+    "wp-paraportiani",
+    "wv-mykonos"
+   ],
+   "quote": [
+    "Construction of this church started in 1425 and was not completed until the 17th century.",
+    "which building dates back to 1425 and was not completed until the 17th century"
+   ]
+  },
+  "two-hundred": {
+   "label": "estimate",
+   "says": "It took around 200 years to build.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "It took around 200 years to build the church."
+   ]
+  },
+  "famous": {
+   "label": "supported",
+   "says": "Its architectural quirkiness makes it one of the most photographed places in the world.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "Its architectural quirkiness makes it one of the most photographed places in the world."
+   ]
+  },
+  "jewel": {
+   "label": "supported",
+   "says": "Wikivoyage calls it the most impressive church on Mykonos, a true Byzantine jewel, and the most photographed of the island's 400 churches.",
+   "src": [
+    "wv-mykonos"
+   ],
+   "quote": [
+    "Of all the churches on Mykonos, the most impressive is Panagia Paraportianí, a true Byzantine jewel.",
+    "is the most popular and most photographed of the 400 churches on the whole island of Mykonos"
+   ]
+  },
+  "ghisi-1204": {
+   "label": "supported",
+   "says": "In 1204, with the fall of Constantinople in the Fourth Crusade, Mykonos was occupied by Andrea Ghisi.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "In 1204, with the fall of Constantinople in the Fourth Crusade, Mykonos was occupied by Andrea Ghisi."
+   ]
+  },
+  "churches-why": {
+   "label": "supported",
+   "says": "There are so many churches because for many years islanders had to build a church on their land before building a house.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "There is an abundance of churches because, for many years, the islanders were required to build a church on their land before building a house."
+   ]
+  },
+  "folklore": {
+   "label": "supported",
+   "says": "The Folklore Museum, a few meters from Paraportiani, is in an 18th-century sea captain's house.",
+   "src": [
+    "wv-mykonos"
+   ],
+   "quote": [
+    "Folklore Museum, Mykonos Town (a few meters from Paraportiani)",
+    "The Folklore Museum, housed in an 18th-century sea captain's house"
+   ]
+  },
+  "panagia": {
+   "label": "supported",
+   "says": "Panagia Paraportiani is the Church of Our Lady.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "Panagia Paraportiani – (the Church of Our Lady)"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The white church",
+   "stand": "In the open space beside the church, where you can take in its whole shape.",
+   "paras": [
+    {
+     "t": "This soft, white, almost sculpted building is Panagia Paraportiani, the Church of Our Lady. Its odd, lovable shape has made it one of the most photographed places in the world.",
+     "c": [
+      "panagia",
+      "famous"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The whitewash can be dazzling in full sun. Sunglasses help, and the stone underfoot can be uneven, so look down now and then as you circle it.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    },
+    {
+     "t": "Wikivoyage goes further: of all the churches on Mykonos, it calls this the most impressive, a true Byzantine jewel.",
+     "c": [
+      "jewel"
+     ],
+     "level": 2
+    },
+    {
+     "t": "And there's a lot of competition. Mykonos is crowded with churches, because for many years islanders had to build a church on their land before they could build a house. Among all of them, this is the one everyone photographs.",
+     "c": [
+      "churches-why",
+      "jewel"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Five churches in one",
+   "stand": "Walk slowly around the outside, looking up at the upper level.",
+   "paras": [
+    {
+     "t": "Here's the secret of that shape. It isn't one church, it's five, joined together. Four sit at ground level, and the fifth is built on top of them.",
+     "c": [
+      "five"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The four below are dedicated to Saint Eustathios, Saint Sozon, the Saints Anargyroi, and Saint Anastasia. They form the base, and the fifth church rests above them. As you walk around, see if you can tell where one ends and the next begins.",
+     "c": [
+      "five"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It went up slowly. Construction began in 1425 and wasn't finished until the 17th century, around 200 years of work.",
+     "c": [
+      "dates",
+      "two-hundred"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "By the castle gate",
+   "stand": "Stand where you can see the lanes of the Kastro quarter around the church.",
+   "paras": [
+    {
+     "t": "This quarter is Kastro, the oldest part of town. The church's name, Paraportiani, means Our Lady of the Side Gate, because its entrance was at the side gate into the Kastro.",
+     "c": [
+      "where",
+      "kastro-oldest",
+      "name"
+     ],
+     "level": 1
+    },
+    {
+     "t": "A gate into what? A medieval castle. Here's how it came about. In 1204, when Constantinople fell in the Fourth Crusade, Mykonos was taken by Andrea Ghisi. The castle was built here in 1207 by the Ghisi family, who controlled the island at the time.",
+     "c": [
+      "ghisi-1204",
+      "castle"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The castle didn't last. It was destroyed in the 16th century, and when the town grew in the 18th century, new buildings covered what was left. The church outlived the walls it was named for.",
+     "c": [
+      "castle-gone"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Just a few steps away is the Folklore Museum, set in an 18th-century sea captain's house, if you'd like to see how island families once lived.",
+     "c": [
+      "folklore"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Think of the people who laid the first stones here in 1425. The work took around two hundred years. They never saw it finished. Neither did their children. They built it anyway, for those who would come after. Maybe that's why it still feels so cared for.",
+     "c": [
+      "dates",
+      "two-hundred"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

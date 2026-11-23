@@ -1,0 +1,23 @@
+{
+ "fail": 0,
+ "warn": 0,
+ "report": [
+  {
+   "id": "knossos",
+   "title": "The Palace of Knossos",
+   "claims": 43,
+   "minutes": {
+    "1": 1.9,
+    "2": 4.8,
+    "3": 7.4
+   },
+   "labels": {
+    "supported": 26,
+    "disputed": 10,
+    "estimate": 2,
+    "verified": 2,
+    "legend": 3
+   }
+  }
+ ]
+}
