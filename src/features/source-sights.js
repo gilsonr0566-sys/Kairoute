@@ -94,7 +94,7 @@ const SRC_KINDS = [
   [/fountain|fontana|fuente|font |statue|column|colonna|obelisk|obelisco|bridge|ponte|puente|pont |gate|porta|puerta|arch of|arco di|arco de|stairs|steps|scalinata|keyhole|monument to/i, "Landmark", 10]
 ];
 // Kind from the English and local names ("San Luigi dei Francesi" is "Chiesa di San Luigi dei Francesi" locally).
-const srcKind = (name, local) => { const t = name + " " + (local || ""); return SRC_KINDS.find(k => k[0].test(t)) || (/^(san|santa|sant'|santo|saint|st\.?|são|santi|santissim)\b/i.test(name) ? SRC_KINDS[1] : [null, "Sight", 40]); };
+const srcKind = (name, local) => { const t = name + " " + (local || ""); return SRC_KINDS.find(k => k[0].test(t)) || (/^(san|santa|sant'|santo|saint|st\.?|são|santi|santissim)\b/i.test(name) && !/\b(lift|elevator|elevador|funicular|street|road|avenue|rua|calle|via|station|gate|hospital|school|island|beach|park|hill|bay|lighthouse)\b/i.test(name) ? SRC_KINDS[1] : [null, "Sight", 40]); };
 const srcQuick = (name, local) => srcKind(name, local)[1] === "Landmark";
 // Kind from the encyclopedia's facts first (Hagia Sophia, the Colosseum, the Tower of London and Burj Khalifa have no
 // telling word in their names), the name only when the facts don't say. The first that fits wins, so a palace that

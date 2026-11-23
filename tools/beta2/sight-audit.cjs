@@ -60,6 +60,9 @@ async function dump() {
       : ['2027-06-08', '2027-06-09', '2027-06-10'].map((date, i) => ({ id: 'd' + (i + 1), date, destination: label, type: 'land', mode: 'flight', time: '09:00', pointIdx: 0, startTime: '09:00', hours: 8, alongWay: true, returnToStart: true, selected: null }));
     const first = days.findIndex(d => d.type !== 'sea');
     const p = await b.newPage({ viewport: { width: 1280, height: 800 } });
+    // What the helper said about each place (its kinds, gone, part-of, area), kept beside the app's list so a finding can be
+    // traced to the facts or to the app's rule.
+    const helperStops = []; p.on('response', async r => { try { if (/\/sources\b/.test(r.url()) && r.ok()) { const j = await r.json(); for (const x of (j && j.stops) || []) helperStops.push({ name: x.name, wd: x.wd, sl: x.sl, src: (x.src || []).length, kinds: x.kinds, gone: x.gone, partOf: x.partOf, area: x.area, posDoubt: x.posDoubt }); } } catch (e) {} });
     await p.route('**/*', r => { const u = r.request().url(); if (u.startsWith(MOCK)) return helper(r); return /^file:/.test(u) ? r.continue() : r.abort(); });
     await p.goto('file://' + FILE);
     await p.evaluate(([days, prefs, a]) => { localStorage.setItem('kairoute.intro1', '1'); localStorage.setItem('wayside.trip2', JSON.stringify({ id: 't-audit', name: 'Audit', style: 'mix', active: a, lodging: {}, journal: {}, prefs, days })); }, [days, prefs, first]);
@@ -81,7 +84,7 @@ async function dump() {
     }, first);
     const bucket = await p.evaluate(() => window.__kairouteBucket(false)).catch(() => null);
     const src = await p.evaluate(() => { try { return typeof sourcesCache !== 'undefined' ? Object.keys(sourcesCache) : null; } catch (e) { return null; } }).catch(() => null);
-    fs.writeFileSync(path.join(DIR, name + '.dump.json'), JSON.stringify({ name, label, kind, at: new Date().toISOString(), guide: out, bucket, src }));
+    fs.writeFileSync(path.join(DIR, name + '.dump.json'), JSON.stringify({ name, label, kind, at: new Date().toISOString(), guide: out, bucket, src, helperStops }));
     console.log(`${name}: ${out ? out.sites.length + ' sights, ' + out.farther.length + ' farther (' + out.city + ')' : 'NO GUIDE'}`);
     await p.close();
   }

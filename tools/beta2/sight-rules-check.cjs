@@ -37,9 +37,10 @@ const stops = [
   stop('Old City of Testopolis', ['admin-area', 'feature', 'old-town', 'region', 'settlement'], 84, -0.6, 0.1, { unesco: true }),
   stop('Testland Peninsula', ['feature', 'region'], 160, 1.1, -2.2, { heritage: false }),
   stop('Testshire', ['feature'], 60, -2.6, -1.1, { heritage: false, area: true }),
+  stop('Santa Testa Lift', [], 26, 0.9, 0.9),
   stop('Musei Testolini', ['art-museum', 'building', 'museum', 'structure'], 46, -0.3, -0.6),
 ];
-const guideSite = Object.assign({ id: 'wv~Q130', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
+const guideSite = Object.assign({ id: 'wv~Q131', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
 const fails = []; let n = 0;
 const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== undefined ? ' (got ' + JSON.stringify(got) + ')' : '')); };
 (async () => {
@@ -74,6 +75,7 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok('what the map calls a county, state or region is no stop', !get('Testshire'));
   ok('an old town that is also a region stays (the Old City of Jerusalem)', !!get('Old City of Testopolis'));
   ok('a holy place with thin data (Bethany) stays', !!get('Bethtest'));
+  ok('a saint\'s name on a lift is no church ("Santa Justa Lift")', !!get('Santa Testa Lift') && get('Santa Testa Lift').cat !== 'Church', get('Santa Testa Lift'));
   ok('no source sight is called "Church" unless it is one', !sites.some(s => s.cat === 'Church' && /mosque|synagogue|shrine|-ji|-taisha/i.test(s.name)));
   await b.close();
   console.log(fails.length ? 'FAILED:\n- ' + fails.join('\n- ') : '');

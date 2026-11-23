@@ -1036,7 +1036,7 @@ const SIGHT_KINDS = { Q811979: "structure", Q618123: "feature", Q41176: "buildin
   Q33506: "museum", Q207694: "art-museum", Q16970: "church", Q2977: "cathedral", Q32815: "mosque", Q34627: "synagogue", Q44539: "temple", Q108325: "chapel", Q44613: "monastery",
   Q23413: "castle", Q57821: "fortification", Q16560: "palace", Q174782: "square", Q12280: "bridge", Q4989906: "monument", Q179700: "statue", Q483453: "fountain", Q12518: "tower", Q11303: "skyscraper", Q2105463: "observation-deck",
   Q24354: "theatre", Q153562: "opera-house", Q1060829: "concert-hall", Q483110: "stadium", Q641226: "arena", Q1076486: "sports-venue", Q37654: "market", Q43501: "zoo", Q2281788: "aquarium", Q194195: "amusement-park",
-  Q43229: "organization", Q1656682: "event", Q1190554: "occurrence", Q34770: "language", Q17537576: "creative-work", Q82794: "region", Q1620908: "region", Q3024240: "region", Q6256: "region", Q34763: "region", Q1969448: "term", Q676050: "old-town", Q15243209: "old-town", Q5107: "continent", Q56061: "admin-area", Q486972: "settlement",
+  Q43229: "organization", Q1656682: "event", Q1190554: "occurrence", Q34770: "language", Q17537576: "creative-work", Q82794: "region", Q1620908: "region", Q3024240: "region", Q6256: "region", Q34763: "region", Q1969448: "term", Q19860854: "destroyed", Q676050: "old-town", Q15243209: "old-town", Q5107: "continent", Q56061: "admin-area", Q486972: "settlement",
   Q3918: "university", Q3914: "school", Q16917: "hospital", Q55488: "station", Q1248784: "airport", Q27686: "hotel", Q79007: "street", Q34442: "road", Q1021645: "office-building", Q4830453: "business" };
 // Where a sight is when its sources disagree: the SAME rule as tools/places/where.cjs (where-check.cjs runs both copies
 // through the same cases). listing = the travel guide's point (or the encyclopedia's when no guide lists it), wd = the
@@ -1126,7 +1126,10 @@ async function sourcesData(label, env, ctx) {
       if (res.every(Boolean)) {
         for (const j of res) for (const b of j.results.bindings) { const c = b.c.value.split("/").pop(); (up.get(c) || up.set(c, new Set()).get(c)).add(SIGHT_KINDS[b.w.value.split("/").pop()]); }
         for (const id of ids) { const x = byId.get(id); if (!x) continue; const ks = new Set(); for (const c of direct.get(id) || []) for (const k of up.get(c) || []) ks.add(k); x.kinds = [...ks].sort();
-          if (razed.has(id) || (ended.has(id) && !ks.has("organization") && !ks.has("event") && !ks.has("occurrence"))) x.gone = true; }
+          if (razed.has(id) || (ended.has(id) && !ks.has("organization") && !ks.has("event") && !ks.has("occurrence"))) x.gone = true;
+          // "Destroyed building or structure" (the Bastille: a castle and a prison, so the end-date rule spared it as an
+          // organisation) is gone too, unless its ruins are an archaeological site to visit (Nov 23 sight check).
+          if (ks.has("destroyed") && !ks.has("archaeological") && !ks.has("ancient-city")) x.gone = true; }
       }
     }
   } catch (e) {}
