@@ -1,0 +1,250 @@
+{
+ "name": "antalya-tr",
+ "label": "Antalya, Turkey",
+ "centre": {
+  "lat": 36.88531,
+  "lng": 30.7061
+ },
+ "findings": [
+  {
+   "k": "POS",
+   "t": "Kemer [day trip]: app is 1.25 km from Wikidata's point (not on the map by id)",
+   "x": {
+    "d": 1.2464257638437566,
+    "id": "kemer-far",
+    "wd": "Q217047",
+    "app": [
+     36.6,
+     30.55
+    ],
+    "wdpt": [
+     36.6013823,
+     30.5638561
+    ]
+   }
+  },
+  {
+   "k": "INFO",
+   "t": "6 sights, 1 day trips/towns; must-see: Antalya Mosque, Hadrian's Gate, Antalya Museum; top by fame: Antalya Mosque 22, Hadrian's Gate 20, Antalya Museum 15, Hidirlik Tower 13, Atatürk's House Museum 10, Kesik Minare 9",
+   "x": {}
+  },
+  {
+   "k": "INFO",
+   "t": "day trips: Kemer",
+   "x": {}
+  }
+ ],
+ "sights": [
+  {
+   "id": "src-q1753844",
+   "name": "Antalya Mosque",
+   "local": "Yivli Minare",
+   "lat": 36.8864,
+   "lng": 30.7044,
+   "minutes": 30,
+   "category": "Mosque",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 22,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q1753844",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in Turkish"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [
+    "Murat Paşa Mosque"
+   ],
+   "posDoubt": false,
+   "summary": "Elegant six-domed mosque built under Seljuk rule in 1230 and rebuilt in 1373 by the Hamidids. The minaret is 38 m tall."
+  },
+  {
+   "id": "src-q1283114",
+   "name": "Hadrian's Gate",
+   "local": "Hadrian Kapısı",
+   "lat": 36.88531,
+   "lng": 30.70835,
+   "minutes": 30,
+   "category": "Landmark",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 20,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1283114",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Turkish"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A landmark in Antalya, Turkey, named by 3 independent sources."
+  },
+  {
+   "id": "src-q843241",
+   "name": "Antalya Museum",
+   "local": "Antalya Müzesi",
+   "lat": 36.8856,
+   "lng": 30.6797,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 15,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q843241",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Turkish"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": true,
+   "summary": "One of Turkey's largest museums, with 5000 items illustrating the history of the Mediterranean and Pamphylia regions. It's also a repository for some 25,000 ite"
+  },
+  {
+   "id": "src-q218118",
+   "name": "Hidirlik Tower",
+   "local": "Hıdırlık Kulesi",
+   "lat": 36.8813,
+   "lng": 30.7036,
+   "minutes": 40,
+   "category": "Tower",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 13,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q218118",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Turkish"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Built by the Romans in the 2nd century AD with a square base and circular upper storey, this was a bastion and lighthouse. Its present name indicates that it's "
+  },
+  {
+   "id": "src-q4812882",
+   "name": "Atatürk's House Museum",
+   "local": "Antalya Atatürk Evi Müzesi",
+   "lat": 36.8808,
+   "lng": 30.7081,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 10,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q4812882",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Turkish"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": true,
+   "summary": "Atatürk stayed in Antalya in 1930, 1931 and 1935. This rebuilt mansion shows memorabilia of his times."
+  },
+  {
+   "id": "src-q6395079",
+   "name": "Kesik Minare",
+   "local": "",
+   "lat": 36.8826,
+   "lng": 30.7061,
+   "minutes": 30,
+   "category": "Mosque",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 9,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q6395079",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Turkish"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "This was first built as a Roman temple in the 2nd century AD, and in later centuries went back and forth between religions."
+  },
+  {
+   "id": "kemer-far",
+   "name": "Kemer",
+   "local": "",
+   "lat": 36.6,
+   "lng": 30.55,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 54,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q217047",
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Coach from KAZIM KARABEKİR CD-11, about 105 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "southwest is part of the Antalya tourist strip. Go further south along the rugged coast of Lycia for quiet beaches and village harbours."
+  }
+ ]
+}
