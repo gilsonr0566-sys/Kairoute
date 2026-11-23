@@ -7,6 +7,6 @@
 - FAME #4 best known nearby, "Honnō-ji Incident" (25 Wikipedia languages, Q169598), is not offered
 - FAME #5 best known nearby, "Battle of Toba-Fushimi" (25 Wikipedia languages, Q1193959), is not offered
 - FAME must-see "Fushimi Inari" is offered (Fushimi Inari-taisha) but not marked must-see
-- INFO 30 sights, 10 day trips/towns; must-see: Kiyomizu-dera, Kinkaku-ji Temple; top by fame: Kiyomizu-dera 77, Kinkaku-ji Temple 58, Fushimi Inari-taisha 41, Ginkaku-ji Temple 33, Kyoto Imperial Palace 33, Ryōan-ji Temple 32, Tō-ji Temple 30, Nijō Castle 29
-- INFO day trips: Uji, Koka, Byōdō-in Temple, Ujigami Shrine, Uji Shrine, Kōshō-ji Temple, Mimuroto-ji Temple, Nintendo Museum, Amagase Dam, Minakuchi Castle
+- INFO 30 sights, 11 day trips/towns; must-see: Kiyomizu-dera, Kinkaku-ji Temple; top by fame: Kiyomizu-dera 77, Kinkaku-ji Temple 58, Fushimi Inari-taisha 41, Ginkaku-ji Temple 33, Kyoto Imperial Palace 33, Ryōan-ji Temple 32, Tō-ji Temple 30, Nijō Castle 29
+- INFO day trips: Uji, Koka, Osaka, Byōdō-in Temple, Ujigami Shrine, Uji Shrine, Kōshō-ji Temple, Mimuroto-ji Temple, Nintendo Museum, Amagase Dam, Minakuchi Castle
 
