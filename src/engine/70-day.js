@@ -16,7 +16,9 @@
   E.LUNCH_BY = 14 * 60;
   const penalty = E.dayCost = r => r.over * 1000 + r.late * 500 + (r.mealPen || 0) * 4 + r.waits * 0.5 + r.end * 0.01 + r.rideMin * 0.5 + (r.lunchLate || 0) * 0.4 + (r.lunchShort || 0) * 0.45 + (r.visitCut || 0);
   function walk(seq, win, ctx, from) {
-    const r = E.walkDay(seq, win, ctx.tr.estimate, ctx.siteDay, from);
+    // A sight's hours for the day are read once and kept for the day's other tries (the timeline only reads them; planning time, Nov 23).
+    if (ctx.siteDay && ctx.sdFor !== ctx.siteDay) { const f = ctx.siteDay, m = new Map(); ctx.sdFor = f; ctx.sdKept = id => { if (m.has(id)) return m.get(id); const v = f(id); m.set(id, v); return v; }; }
+    const r = E.walkDay(seq, win, ctx.tr.estimate, ctx.siteDay && ctx.sdKept, from);
     r.lateMeal = r.items.reduce((a, x) => a + (x.lateMeal || 0), 0);
     // A meal at a time the traveler set is held like a booked table: being late for it costs ten times as much.
     r.mealPen = r.items.reduce((a, x) => a + (x.lateMeal || 0) * (x.pinned ? 10 : 1), 0);
@@ -131,14 +133,25 @@
     const ok = c => (L.pinned ? c.r.lateMeal <= 10 : strict ? !c.r.lateMeal : c.r.lateMeal <= E.MEAL_LATE) && !c.r.items.some(x => x.shut) && c.r.late <= plain.late && c.r.over <= plain.over
       && (c.k === order.length || c.r.waits - plain.waits <= 45)
       && !(win.hard && !c.r.over && c.r.end > plain.end && win.endBy - c.r.end < E.FILL_MARGIN);
-    let best = null, tried = 0;
+    let best = null, tried = 0, grp = null, packedPass = false;
+    // Every lunch tried is kept with where it was tried: when none is on time, the late pass weighs the same tries again
+    // instead of timing the whole day for each one a second time (the same answers; planning time, Nov 23).
+    const log = [];
     const offer = (seq, k, len, off, fromMap, cut) => {
       // k: where lunch goes in the day; the timing is reused from the plain day up to the first stop that changed.
-      const r = walk(seq, win, ctx, { r: plain, k: cut ? k - 1 : k }), c = { seq, r, k, cut };
+      // A lunch that runs the day later past its time than the day without it is never kept, so its walk stops once it does.
+      const r = walk(seq, win, ctx, Object.assign({ r: plain, k: cut ? k - 1 : k, cap: plain.over, lateCap: plain.late, noShut: true }, k === order.length ? {} : { waitFrom: plain.waits })), c = { seq, r, k, cut };
       c.pen = penalty(r) + (cut || 0) + (len === E.TO_GO ? 60 : len < L.len ? 20 : 0) + off * 1.5 + (fromMap ? 0.5 : 0);
       tried++; if (ok(c) && (!best || c.pen < best.pen - 1e-9)) best = c;
+      log.push({ c, grp, full: len === L.len, packed: packedPass });
       return c;
     };
+    // The late pass over the kept tries, in the same order and with the same rule as the first: once the full lunch fits
+    // at a place, its shorter lunches there are not weighed; lunches brought along only when nothing else fits.
+    const replay = () => { const skip = new Set();
+      const run = list => list.forEach(x => { if (x.grp && skip.has(x.grp)) return; const c = x.c; if (ok(c) && (!best || c.pen < best.pen - 1e-9)) best = c;
+        if (x.grp && x.full && ok(c) && !c.r.over && !c.r.late) skip.add(x.grp); });
+      run(log.filter(x => !x.packed)); if (!best && !quick) run(log.filter(x => x.packed)); };
     // Between stops: the gaps near lunchtime (left from an hour and a quarter before the kitchen opens to its last orders,
     // plus the last gap before and the first after), or where the traveler put lunch on the Day plan.
     const stops = plain.items.filter(x => x.t === "stop"), dep = [win.sightFrom || win.start].concat(stops.map(x => x.at + (x.min || 0)));
@@ -152,11 +165,15 @@
       // (Nov 18, a city across a bay: not back over the bridge for lunch). After the last stop: near where the day ends.
       const a = pts[k], b = order[k] || (k === order.length && win.tail.length ? win.tail[0] : null);
       const mid = b && isFinite(b.lat) ? { lat: (a.lat + b.lat) / 2, lng: (a.lng + b.lng) / 2 } : null;
-      const offOf = e => b && isFinite(b.lat) ? E.hav(a, e.r) + E.hav(e.r, b) - E.hav(a, b) : E.hav(a, e.r);
+      // Worked out once a place (the sort asks for each place many times; planning time, Nov 23).
+      // (kept for the day's other tries too, by the two stops and the place: planning time, Nov 23)
+      const om = ctx.offMemo || (ctx.offMemo = new WeakMap()); let oa = om.get(a); if (!oa) om.set(a, oa = new Map()); let offs = oa.get(b || null); if (!offs) oa.set(b || null, offs = new WeakMap());
+      const offOf = e => { let v = offs.get(e.r); if (v === undefined) { v = b && isFinite(b.lat) ? E.hav(a, e.r) + E.hav(e.r, b) - E.hav(a, b) : E.hav(a, e.r); offs.set(e.r, v); } return v; };
       const cands = my.pick ? [my.pick] : [...new Map((quick ? [a] : [a, b, mid]).filter(q => q && isFinite(q.lat)).flatMap(q => eatsNear(q, ctx, "Lunch", 3)).map(e => [e.k, e])).values()]
         .sort((x, y) => offOf(x) + (x.r.fromMap ? 0.3 : 0) - offOf(y) - (y.r.fromMap ? 0.3 : 0) || x.k.localeCompare(y.k)).slice(0, quick ? 1 : 3);
       for (const e of cands) for (const len of lens) {
-        const c = offer(order.slice(0, k).concat([mealAt(e, len)], order.slice(k)), k, len, my.pick ? 0 : offOf(e), e.r.fromMap);
+        grp = k + "|" + e.k;
+        const c = offer(order.slice(0, k).concat([mealAt(e, len)], order.slice(k)), k, len, my.pick ? 0 : offOf(e), e.r.fromMap); grp = null;
         if (len === L.len && ok(c) && !c.r.over && !c.r.late) break; // the full lunch fits: a shorter one only costs more
       }
     } };
@@ -192,8 +209,8 @@
         }
       }
     });
-    between(); inside(false); if (!best && !quick) inside(true);
-    if (!best) { strict = false; between(); inside(false); if (!best && !quick) inside(true); }
+    between(); inside(false); if (!best && !quick) { packedPass = true; inside(true); packedPass = false; }
+    if (!best) { strict = false; replay(); }
     if (best) return Object.assign({ seq: best.seq, r: best.r }, best.cut ? { lunchIn: true } : {});
     // No lunch: on a day with room it's for want of a place; otherwise the stops fill the day.
     return { seq: order, r: plain, noLunch: tried ? "time" : "place" };
@@ -240,6 +257,28 @@
       if (only.length) { const c = withLunch(order, win, Object.assign({}, ctx, { eats: only, lunchMemo: ctx.hintMemo || (ctx.hintMemo = new WeakMap()) }), quick); if (!c.noLunch && !c.r.over && !c.r.late) return c; } }
     return withLunch(order, win, ctx, quick);
   }
+  // The orders the planner starts from (the best order for travel; with a trip out of town, that trip first and last), and
+  // whether any of them, or any single move or reversed run of one (up to 3 places), has no stop late and the day not over,
+  // timed with no lunch.
+  function firstOrders(stops, win, ctx) {
+    const from = win.head[win.head.length - 1], to = win.tail.length ? win.tail[0] : null, om = ctx.tr.orderMin || ctx.tr.min, out = [E.bestOrder(stops, from, to, om)];
+    const far = stops.filter(s => s.far), near = stops.filter(s => !s.far);
+    if (far.length && near.length) { const f = E.bestOrder(far, from, null, om), n = E.bestOrder(near, from, null, om);
+      out.push(f.concat(E.bestOrder(near, f[f.length - 1], to, om)), n.concat(E.bestOrder(far, n[n.length - 1], to, om))); }
+    return out;
+  }
+  function someOrderFits(stops, win, ctx) {
+    const tol = (win.hard || win.strict ? 0 : 5) + 10, reach = 3;
+    const fits = o => { const r = walk(o, win, ctx, { cap: tol }); return r.end - win.endBy <= tol && r.items.every(x => x.t === "ride" ? !x.noRun : !x.late || (x.t === "stop" && x.min >= 45 + E.TO_GO)); };
+    for (const order of firstOrders(stops, win, ctx)) {
+      if (fits(order)) return true;
+      for (let i = 0; i < order.length; i++) for (let j = 0; j < order.length; j++) {
+        if (i === j || j === i - 1 || Math.abs(i - j) > reach) continue;
+        const o = order.slice(); const [x] = o.splice(i, 1); o.splice(j, 0, x); if (fits(o)) return true; }
+      for (let i = 0; i < order.length - 2; i++) for (let j = i + 2; j < order.length && j - i <= reach; j++) if (fits(order.slice(0, i).concat(order.slice(i, j + 1).reverse(), order.slice(j + 1)))) return true;
+    }
+    return false;
+  }
   function arrangeBy(stops, win, ctx, quick) {
     const from = win.head[win.head.length - 1], to = win.tail.length ? win.tail[0] : null;
     const om = ctx.tr.orderMin || ctx.tr.min; let order = E.bestOrder(stops, from, to, om);
@@ -271,7 +310,7 @@
         for (const [ci, o] of cands.entries()) {
           if (far.length && near.length && !blockAtEnd(o)) continue;
           // Lunch only adds time, so an order already later or later at a last entry without lunch can't win.
-          const bare = walk(o, win, ctx); if (bare.over > cur.r.over || bare.late > cur.r.late || (ci >= nMoves && bare.rideMin > cur.r.rideMin + 1)) continue;
+          const bare = walk(o, win, ctx, Object.assign({ cap: cur.r.over, lateCap: cur.r.late }, ci >= nMoves ? { rideCap: cur.r.rideMin + 1 } : {})); if (bare.over > cur.r.over || bare.late > cur.r.late || (ci >= nMoves && bare.rideMin > cur.r.rideMin + 1)) continue;
           const c = withLunch(o, win, ctx), p = cost(c);
           // A reversed run is taken only when it rides no more than the order it replaces (it is there to undo a zig-zag).
           if (ci >= nMoves && c.r.rideMin > cur.r.rideMin + 1) continue;
@@ -436,6 +475,11 @@
       // over even in the best order with no lunch at all, can't come back: not tried (each try plans the day with its lunch,
       // seconds on a phone for a day of many picks; Nov 22 odd-trips run).
       if ((x.stop.minutes || 0) > win.endBy - cur.r.end + 30 || (() => { const r = E.walkDay(E.bestOrder(keep.concat([x.stop]), win.head[win.head.length - 1], win.tail.length ? win.tail[0] : null, ctx.tr.min), win, ctx.tr.estimate, ctx.siteDay); return r.over > 0; })()) continue;
+      // Nor, on a day of more than 10 stops (one pass of single moves and reversed runs repairs it), one that runs the day over
+      // or leaves a stop late in every order that pass can reach, timed with no lunch at all: lunch only adds time. A late stop
+      // long enough to have lunch inside it (which shortens the visit) still counts as able to fit (Nov 23 odd-trips run: 35
+      // stops tried back on a full Vienna day, each a full repair of the day with its lunches, 3 of the 6 seconds it took).
+      if (!ctx.ownOrder && keep.length + 1 > 10 && !someOrderFits(keep.concat([x.stop]), win, ctx)) continue;
       const next = keep.concat([x.stop]), c = arrange(next, win, ctx);
       if (!c.r.over && !c.r.late && !(win.hard && win.endBy - c.r.end < E.FILL_MARGIN) && (c.noLunch !== "time" || cur.noLunch === "time" || wanted(x.stop))) { keep = next; cur = c; dropped = dropped.filter(y => y !== x); }
     }

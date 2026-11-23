@@ -10,8 +10,9 @@
   // seq: stops and meals in order. win: the day's window. ride(a, b) -> leg { min, mode }. siteDay(id) -> today's hours facts.
   // from: { r, k } resumes from an earlier walk r of the same day whose first k stops match seq (lunch tried in each
   // gap re-walks only from that gap on); the answer is the same as walking seq from the start.
+  const farMemo = new WeakMap();
   E.walkDay = (seq, win, ride, siteDay, from) => {
-    const O = win.head[0], Z = win.tail.length ? win.tail[win.tail.length - 1] : null, st = from && from.r.states && from.r.states[from.k];
+    const O = win.head[0], Z = win.tail.length ? win.tail[win.tail.length - 1] : null, st = from && from.r && from.r.states && from.r.states[from.k];
     const items = st ? from.r.items.slice(0, st.n) : [], states = [];
     let clock = win.start, prev = O, late = 0, waits = 0, rideMin = 0;
     if (st) ({ clock, prev, late, waits, rideMin } = st); else items.push({ t: "start", name: O && O.name, at: clock });
@@ -87,13 +88,27 @@
     const keep = () => states.push({ clock, prev, late, waits, rideMin, n: items.length });
     if (st) { for (let i = 0; i <= from.k; i++) states.push(from.r.states[i]); }
     else { win.head.slice(1).forEach(p => go(p, "fixed")); keep(); }
-    seq.forEach((p, i) => { if (st && i < from.k) return; go(p, p.mealOf ? "meal" : "stop"); keep(); });
+    // from.cap: the caller only wants a day that runs no more than cap minutes past its time (a lunch tried where the day is
+    // already full, an order tried in a repair). Once the clock plus the visits still to come is past that, the rest of the walk
+    // can't change the answer: it stops there and says the day is over (planning time, Nov 23). The same for more stops late
+    // than from.lateCap, more than 45 minutes of waiting over from.waitFrom, more minutes riding than from.rideCap, or (from.noShut) a
+    // meal at a place that is shut: each only grows as the day goes on.
+    const cap = from && from.cap != null ? Math.max(from.cap, win.hard || win.strict ? 0 : 5) : null;
+    let rest = 0; if (cap != null) { for (const p of seq) rest += Math.max(0, p.mealOf ? p.len || p.mealOf.len || 0 : p.minutes || 0); for (const p of win.tail) rest += Math.max(0, p.fixed ? p.minutes || 0 : 0); }
+    for (let i = 0; i < seq.length; i++) { const p = seq[i];
+      if (cap != null) rest -= Math.max(0, p.mealOf ? p.len || p.mealOf.len || 0 : p.minutes || 0);
+      if (st && i < from.k) continue; go(p, p.mealOf ? "meal" : "stop"); keep();
+      if ((cap != null && clock + rest - win.endBy > cap) || (from && ((from.lateCap != null && late > from.lateCap) || (from.waitFrom != null && waits - from.waitFrom > 45)
+        || (from.rideCap != null && rideMin > from.rideCap) || (from.noShut && items[items.length - 1].shut)))) return { items, end: Infinity, late, waits, rideMin, over: Infinity, states, cut: true }; }
     win.tail.forEach((p, i) => go(Object.assign({}, p, { minutes: p.fixed ? p.minutes : 0 }), i === win.tail.length - 1 ? "end" : "fixed"));
     // The extra time for the ship, train or plane belongs to the whole way back (Nov 20 review: a stop beside the ship
     // took the extra off the long taxi back from a far site). Every ride after the day's farthest place counts, and the
     // extra slides with their time (E.slackFor), never less than what the rides already carry.
     if (win.hard && Z && E.hasPos(Z)) {
-      let far = -1, fd = -1; seq.forEach((p, i) => { if (E.hasPos(p)) { const dd = E.hav(Z, p); if (dd > fd) { fd = dd; far = i; } } });
+      // Each spot's distance from the end is kept between walks of the same day (planning time, Nov 23).
+      let far = -1, fd = -1, zm = farMemo.get(Z); if (!zm || zm.lat !== Z.lat || zm.lng !== Z.lng) farMemo.set(Z, zm = { lat: Z.lat, lng: Z.lng, m: new Map() });
+      seq.forEach((p, i) => { if (!E.hasPos(p)) return; let n = zm.m.get(p.lat); if (!n) zm.m.set(p.lat, n = new Map());
+        let dd = n.get(p.lng); if (dd === undefined) n.set(p.lng, dd = E.hav(Z, p)); if (dd > fd) { fd = dd; far = i; } });
       const at = states[far + 1], back = items.slice(at.n).filter(x => x.t === "ride"), has = back.reduce((a, x) => a + (x.slack || 0), 0);
       const base = back.reduce((a, x) => a + (x.mode === "walk" ? 0 : x.min || 0), 0) - has, need = E.slackFor(base) - has;
       // It sits on the last ride, into the ship: the time to leave the last stop comes that much earlier.
