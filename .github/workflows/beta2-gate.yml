@@ -1,4 +1,5 @@
 name: Beta 2 release gate
+# Nov 23: the gate grew past an hour (first-timer and screen checks added); 100 minutes so a green run is never cut off.
 # Nov 21 review: the Kairoute-Beta2 site publishes whatever is pushed to it, with no checks of its own; the checks ran
 # only in whichever working copy built it. This gate runs the same offline checks on GitHub for every push to the
 # Beta 2 branch, on a clean copy, so "this build passed" is a record anyone can open. Publish a Beta 2 build only from
@@ -15,7 +16,7 @@ concurrency:
 jobs:
   gate:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 100
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -43,7 +44,7 @@ jobs:
           node tools/beta2/stress.cjs
       - name: Phone flow on the Beta 2 build
         if: always()
-        run: node tools/beta2/flow-check.cjs beta2-site/index.html
+        run: VERBOSE=1 node tools/beta2/flow-check.cjs beta2-site/index.html
       - name: What the traveler sees (screen rules on every day, other time zones, no signal, trips saved by the last two published builds, screen sizes, voices, the app's own guard)
         if: always()
         run: |
