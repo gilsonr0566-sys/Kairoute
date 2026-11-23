@@ -198,7 +198,7 @@ function tripBudget(full) {
     if (!plan || plan.error) return;
     rows.push(Object.assign({ d, i, city }, dayMoney(plan, d)));
   });
-  if (todo && !budgetTimer && budgetSteps < 3 * trip.days.length) budgetTimer = setTimeout(budgetStep, 300); // capped, in case answers keep arriving
+  if (todo && !budgetTimer && budgetSteps < 3 * trip.days.length) budgetTimer = setTimeout(budgetStep, 120); // capped, in case answers keep arriving
   return { rows, missing, todo, days: rows.filter(r => !r.todo).length };
 }
 function budgetHtml() {
@@ -221,9 +221,18 @@ function budgetStep() {
   budgetTimer = 0; const box = document.querySelector("#view .tripbudget"); if (!box || view !== "journal") { budgetSteps = 0; return; }
   budgetSteps++;
   if (Date.now() - lastTouch < 600) { budgetTimer = setTimeout(budgetStep, 400); return; }
-  const d = trip.days.find(x => !noShore(x) && cityFor(x) && !(x.selected && planPeek(x)));
-  if (d) { const city = cityFor(d); try { refillIfNeeded(d, city); if (!d.selected) { seedPicks(d, city); save(); } buildPlan(d); } catch (e) {} }
-  const open = box.open; box.outerHTML = budgetHtml(); const nb = document.querySelector("#view .tripbudget"); if (nb) nb.open = open;
+  // As many days as fit in 30 ms, then the card is drawn once: a day takes about 5 ms, so the card used to change
+  // every 300 ms for 6 s on a 21-day trip, one day at a time (client feel test, Journal on tablets). Now it is
+  // usually one change, a fraction of a second after the Journal opens; a long trip still yields between batches.
+  const t0 = performance.now(); let seeded = false;
+  while (performance.now() - t0 < 30) {
+    const d = trip.days.find(x => !noShore(x) && cityFor(x) && !(x.selected && planPeek(x)) && !x._budgetTried); if (!d) break;
+    const city = cityFor(d); try { refillIfNeeded(d, city); if (!d.selected) { seedPicks(d, city); seeded = true; } buildPlan(d); } catch (e) {}
+    if (!(d.selected && planPeek(d))) Object.defineProperty(d, "_budgetTried", { value: true, configurable: true, enumerable: false }); // never loop on a day that can't be planned
+  }
+  if (seeded) save();
+  const open = box.open, html = budgetHtml(); if (box.outerHTML === html) return;
+  box.outerHTML = html; const nb = document.querySelector("#view .tripbudget"); if (nb) nb.open = open;
 }
 // ---- The spending report: where the money went, day by day and by kind, in both currencies ----
 // Same look and same print route as the printable plan (print-plan.js): the device's print dialog, where "Save as
