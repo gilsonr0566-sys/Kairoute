@@ -1046,7 +1046,7 @@ const SIGHT_KINDS = { Q811979: "structure", Q618123: "feature", Q41176: "buildin
   Q33506: "museum", Q207694: "art-museum", Q16970: "church", Q2977: "cathedral", Q32815: "mosque", Q34627: "synagogue", Q44539: "temple", Q108325: "chapel", Q44613: "monastery",
   Q23413: "castle", Q57821: "fortification", Q16560: "palace", Q174782: "square", Q12280: "bridge", Q4989906: "monument", Q179700: "statue", Q483453: "fountain", Q12518: "tower", Q11303: "skyscraper", Q2105463: "observation-deck",
   Q24354: "theatre", Q153562: "opera-house", Q1060829: "concert-hall", Q483110: "stadium", Q641226: "arena", Q1076486: "sports-venue", Q37654: "market", Q43501: "zoo", Q2281788: "aquarium", Q194195: "amusement-park",
-  Q43229: "organization", Q1656682: "event", Q1190554: "occurrence", Q34770: "language", Q17537576: "creative-work", Q82794: "region", Q5107: "continent", Q56061: "admin-area", Q486972: "settlement",
+  Q43229: "organization", Q1656682: "event", Q1190554: "occurrence", Q34770: "language", Q17537576: "creative-work", Q82794: "region", Q1620908: "region", Q3024240: "region", Q6256: "region", Q34763: "region", Q1969448: "term", Q19860854: "destroyed", Q676050: "old-town", Q15243209: "old-town", Q5107: "continent", Q56061: "admin-area", Q486972: "settlement",
   Q3918: "university", Q3914: "school", Q16917: "hospital", Q55488: "station", Q1248784: "airport", Q27686: "hotel", Q79007: "street", Q34442: "road", Q1021645: "office-building", Q4830453: "business" };
 // Where a sight is when its sources disagree: the SAME rule as tools/places/where.cjs (where-check.cjs runs both copies
 // through the same cases). listing = the travel guide's point (or the encyclopedia's when no guide lists it), wd = the
@@ -1136,7 +1136,10 @@ async function sourcesData(label, env, ctx) {
       if (res.every(Boolean)) {
         for (const j of res) for (const b of j.results.bindings) { const c = b.c.value.split("/").pop(); (up.get(c) || up.set(c, new Set()).get(c)).add(SIGHT_KINDS[b.w.value.split("/").pop()]); }
         for (const id of ids) { const x = byId.get(id); if (!x) continue; const ks = new Set(); for (const c of direct.get(id) || []) for (const k of up.get(c) || []) ks.add(k); x.kinds = [...ks].sort();
-          if (razed.has(id) || (ended.has(id) && !ks.has("organization") && !ks.has("event") && !ks.has("occurrence"))) x.gone = true; }
+          if (razed.has(id) || (ended.has(id) && !ks.has("organization") && !ks.has("event") && !ks.has("occurrence"))) x.gone = true;
+          // "Destroyed building or structure" (the Bastille: a castle and a prison, so the end-date rule spared it as an
+          // organisation) is gone too, unless its ruins are an archaeological site to visit (Nov 23 sight check).
+          if (ks.has("destroyed") && !ks.has("archaeological") && !ks.has("ancient-city")) x.gone = true; }
       }
     }
   } catch (e) {}
@@ -1163,7 +1166,9 @@ async function sourcesData(label, env, ctx) {
     for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"]) {
       const j = await getJ(ep, 26000, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { ...UA, "content-type": "application/x-www-form-urlencoded", accept: "application/json" } });
       if (!j) continue;
-      for (const e of j.elements || []) { const x = byId.get(e.tags && e.tags.wikidata), c = e.center || (e.lat != null ? { lat: e.lat, lon: e.lon } : null); if (x && c && !x.mp) x.mp = { lat: c.lat, lng: c.lon }; }
+      for (const e of j.elements || []) { const x = byId.get(e.tags && e.tags.wikidata), c = e.center || (e.lat != null ? { lat: e.lat, lon: e.lon } : null); if (x && c && !x.mp) x.mp = { lat: c.lat, lng: c.lon };
+        // The map's own word that it is a country, state or region (an area, not a place to stand in).
+        if (x && /^(country|state|region|province|county|archipelago)$/.test(e.tags.place || "")) x.area = true; }
       break; }
     lap("map"); }
   for (const x of byId.values()) { const L = x.lp || x.wdp; if (!L) continue;
@@ -1171,7 +1176,7 @@ async function sourcesData(label, env, ctx) {
     x.lat = at.lat; x.lng = at.lng; if (at.posDoubt) x.posDoubt = true; if (at.from !== "listing") x.posFrom = at.from; }
   const near = x => x.lat == null || kmOf(x, center) <= 12;
   const stops = [...byId.values(), ...noId].filter(x => x.name && !/^Q\d+$/.test(x.name) && near(x) && fold(x.name) !== fold(area))
-    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined, posDoubt: x.posDoubt || undefined, posFrom: x.posFrom || undefined, kinds: x.kinds, gone: x.gone || undefined, partOf: x.partOf && x.partOf.length ? x.partOf.slice(0, 6) : undefined }))
+    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined, posDoubt: x.posDoubt || undefined, posFrom: x.posFrom || undefined, kinds: x.kinds, gone: x.gone || undefined, partOf: x.partOf && x.partOf.length ? x.partOf.slice(0, 6) : undefined, area: x.area || undefined }))
     .sort((a, b) => b.src.length - a.src.length || b.sl - a.sl).slice(0, 160);
   // A small place the guidebooks and the encyclopedia barely cover (a small island, a cruise line's private island,
   // a resort port): add the named tourist places the map knows nearby (beaches, attractions, water parks,
