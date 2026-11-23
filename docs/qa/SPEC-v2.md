@@ -170,7 +170,7 @@ runs in the gate (or nightly, where stated) and has been seen to fail on the bug
 
 | # | Test to build | Feeds in | Must come out | Owner | Due |
 |---|---|---|---|---|---|
-| T1 | **Planted-defect coverage**: every S1 rule and every fail-closed rule (FC-01..10) has at least one planted defect; a check fails when a rule has none | the mutant lists and the rule lists | a table rule → defects; 0 rules without one | testing thread | Nov 25 |
+| T1 | **Planted-defect coverage**: every S1 rule and every fail-closed rule (FC-01..10) has at least one planted defect; a check fails when a rule has none | the mutant lists and the rule lists | a table rule → defects; 0 rules without one | testing thread | **Done Nov 23** (`mutants.cjs`: all 7 safety rules fire, 11 of 11 defects caught) |
 | T2 | **Nightly holds the release**: the report reads the latest nightly result; an S1 finding or a ride off its timetable (25% or 15 min) holds until fixed or proven false | latest nightly artifacts | DO NOT RELEASE with the finding named | testing thread | **Done Nov 23** (nightly workflow reaches main with the next PR) |
 | T3 | **Nightly finds become permanent**: every failing nightly trip is saved to the test trips with its seed | nightly failures | new corpus files on a branch, retested by every gate | testing thread | Nov 25 |
 | T4 | **Publish refuses** without a RELEASE OK report for the exact commit | commit sha, report artifact | publish stops with the reason | build thread with testing thread | **Built Nov 23** (Kairoute-Beta2 branch claude/project-thread-bw3ktc a9f9f99, pages.yml refuses without a passing gate run on the exact commit; live once merged to its main) |
