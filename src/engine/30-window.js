@@ -60,8 +60,18 @@
   E.gateOk = (kind, c) => !!c && (kind !== "cruise" || E.cruiseOk(c)) && (kind !== "airport" || (E.airportUse(c) !== false && !(AIR_PART.test(String(c.name || "")) && !AIR_WHOLE.test(String(c.name || ""))))) && !/^(list|lists|index|outline) of\b/i.test(String(c.name || "").trim()) && !(GATE_BAD[kind] && GATE_BAD[kind].test(String(c.name || ""))) && !(c.kind && GATE_KINDS[kind] && !GATE_KINDS[kind].test(String(c.kind)) && !(kind === "cruise" && /\bpassengers?\b.*\bterminal\b|\bcruise\b.*\b(terminal|pier|pirs?|quay|berth|wharf|dock|center|centre)s?\b/i.test(String(c.name || ""))));
   // Every real airport and station is kept, whether the map or the encyclopedia found it: a big airport known only from
   // its article must never be dropped (Round 2 re-check: dropping those picked a small airport silently, no question).
+  // An airport's base name, without the terminal ("Barcelona Airport, Terminal 2" -> "Barcelona Airport").
+  E.airportBase = n => String(n || "").replace(/\s*[,(-]\s*(terminals?|T)\s*[0-9A-Z]{1,3}\)?\s*$/i, "").trim();
   E.gateChoices = (list, kind) => { const key = n => String(n || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim(), out = [];
+    // Airports (tester round 7a: Venice-Lido and Kalaeloa still offered): the same field found twice, once by its
+    // encyclopedia article (which says it is a general-aviation, closed or military field) and once on the map with
+    // nothing said, is that same field, never offered. (A second airport the map alone knows is still offered: a real
+    // one, such as a low-cost carriers' airport, must never be dropped for want of an article.)
+    let bad = [];
+    if (kind === "airport") bad = (list || []).filter(c => c && E.airportUse(c) === false);
+    const sameField = (a, b) => key(E.airportBase(a.name)) === key(E.airportBase(b.name)) || (isFinite(a.lat) && isFinite(b.lat) && E.hav(a, b) <= 3);
     for (const c of list || []) { if (!c || !c.name || !isFinite(c.lat) || !isFinite(c.lng) || E.NOT_BUILT.test(c.name + " " + (c.kind || "")) || (kind && !E.gateOk(kind, c))) continue;
+      if (kind === "airport" && E.airportUse(c) !== true && bad.some(b => sameField(b, c))) continue;
       if (!out.some(x => key(x.name) === key(c.name) || E.hav(x, c) <= 1)) out.push(c); }
     return out; };
   // How early to be at the station for a train to another country: ID checks inside the open-border area, passport and
@@ -99,6 +109,9 @@
       return E.fail(`${P.name} is ${Math.round(Math.min(...d.siteSpots.map(x => E.hav(P, x))))} km from every sight here, so it can't be the right place. Check where you arrive or leave; this day isn't planned on a guess.`, { unsure: true, farGate: true });
     // A city with more than one station or airport and none chosen: asked, never guessed.
     if (P && P.ask && P.ask.length > 1 && d.type !== "land" && d.type !== "port" && d.type !== "embark") { const word = (E.MODES[d.mode] || E.MODES.flight).word;
+      // Terminals of one airport (Barcelona, Madrid: tester round 7a): asked as the terminal, never as which airport.
+      const bases = [...new Set(P.ask.map(E.airportBase))];
+      if (word === "airport" && bases.length === 1 && P.ask.some(n => E.airportBase(n) !== n)) return E.fail(`Which terminal of ${bases[0]} ${d.type === "arrival" ? "do you arrive at" : "do you leave from"}? It's on your booking (${E.listWords(P.ask.slice(0, 4), "or")}). Choose it here${d.type === "arrival" ? "" : " and the day gets its time to leave by"}: no time is given on a guess.`, { unsure: true, askGate: true });
       return E.fail(`Which ${word} ${d.type === "arrival" ? "do you arrive at" : "do you leave from"}? There is more than one here (${E.listWords(P.ask.slice(0, 4), "or")}${P.ask.length > 4 ? " or another" : ""}). Choose it in the day's settings${d.type === "arrival" ? "" : " and the day gets its time to leave by"}: no time is given on a guess.`, { unsure: true, askGate: true }); }
     if (P && P.notGate && d.type !== "land") return E.fail(`${P.name} isn't an airport with passenger flights that I know of, so this day isn't planned from it. Name the airport on your booking and the day is planned from there.`, { unsure: true, notGate: true });
     if (P && P.unknown && d.type !== "land" && !d.thru) return E.fail(`We couldn't find exactly where ${P.name} is, so this day isn't planned on a guess.`, { unsure: true });

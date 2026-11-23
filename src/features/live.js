@@ -449,6 +449,9 @@ function alarmState(d, plan, opt) {
     const sameSpot = !via || (from && hav(from, via) < 0.05);
     st.leaveBy = sameSpot || !Number.isFinite(LA.last) ? LA.out : LA.last; if (Number.isFinite(LA.bags)) st.goBy = LA.bags; st.early = false; st.sameSpot = !!(sameSpot && via);
   }
+  // Nothing planned away from the start (an evening call whose picks are all shut): no leave-by from "here" with a 0 min
+  // walk; the time is the back-by, and on the day it counts down from where the traveler really is (Nov 23 recheck).
+  if (src === "plan" && now == null && plan.items && (plan.items[lastAshoreIdx(plan)] || {}).type === "start" && !(leg && leg.min > 0)) { st.nothingAway = true; st.leaveBy = backBy; }
   st.ride = point && !via ? rideBack(d, plan, st) : null;
   // On the day, leave-by is for the train or ferry you can still catch.
   if (st.ride && now != null) st.leaveBy = st.ride.leaveBy;
@@ -549,7 +552,8 @@ function alarmTick() {
     const viaTxt = st.via ? ` ${st.via.name} by ${fmt(st.goBy)}: ${dur(st.via.minutes || 0)} there, then the trip on takes the rest.` : "";
     // Already where the bags are (the hotel, the luggage storage): collect them, then leave; never "From the hotel: walk 0
     // min, so leave by" a time after the one given for the bags (Nov 23).
-    if (sub && st.sameSpot && st.now == null && !R) sub.textContent = `${word} ${st.via.name} by ${fmt(st.goBy)} (${dur(st.via.minutes || 0)}), then leave by ${fmt(st.leaveBy)}.`;
+    if (sub && st.nothingAway && st.now == null && !R) sub.textContent = `${word} Nothing is planned away from ${st.from && st.from.name ? st.from.name : "here"}, so leave in time from wherever you go.`;
+    else if (sub && st.sameSpot && st.now == null && !R) sub.textContent = `${word} ${st.via.name} by ${fmt(st.goBy)} (${dur(st.via.minutes || 0)}), then leave by ${fmt(st.leaveBy)}.`;
     else if (sub) sub.textContent = R && st.now != null ? `${word} ${rideTxt}` : `${word}${viaTxt} From ${fromTxt}: ${legTxt}, so leave by ${fmt(st.leaveBy)}${st.early ? " (early enough from any of today's stops)" : ""}.${R ? " " + rideTxt : ""}`;
     const agent = document.getElementById("cdAgent"); if (agent) agent.hidden = !(R && (R.none || R.missed) && d.portAgent);
     if (srcEl) srcEl.textContent = `Travel time: ${st.leg.src}${st.src === "GPS" ? ", from your GPS position" : st.src === "plan" ? ", from where the plan has you now" : ""}.`;
@@ -567,7 +571,7 @@ function alarmTick() {
     if (bLine) { bLine.textContent = bSay; bLine.hidden = !bSay; }
     if (srcEl && (d.type === "port" || d.type === "embark")) srcEl.textContent += " Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day. Ships don't wait.";
     const chip = document.getElementById("cdCard"), lbl = document.getElementById("cdLbl");
-    if (st.now == null) { if (lbl) lbl.textContent = "Leave by"; if (chip) chip.classList.remove("amber", "soon", "go"); if (el) el.textContent = fmt(st.leaveBy); if (msg) msg.hidden = true; if (srcEl) srcEl.textContent += ` On ${fmtDate(d.date)} it counts down live from your GPS position, with alerts.`; }
+    if (st.now == null) { if (lbl) lbl.textContent = st.nothingAway ? "Back by" : "Leave by"; if (chip) chip.classList.remove("amber", "soon", "go"); if (el) el.textContent = fmt(st.leaveBy); if (msg) msg.hidden = true; if (srcEl) srcEl.textContent += ` On ${fmtDate(d.date)} it counts down live from your GPS position, with alerts.`; }
     else {
       const left = st.leaveBy - st.now;
       const big = left > 0 ? (left >= 60 ? Math.floor(left / 60) + "h " + String(Math.floor(left % 60)).padStart(2, "0") + "m" : Math.ceil(left) + " min") : "Go now";

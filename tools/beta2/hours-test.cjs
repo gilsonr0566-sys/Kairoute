@@ -131,4 +131,13 @@ ok(!E.isMosque({ name: 'Mosque of Cristo de la Luz', content: 'built as a small 
       const q = ps[k]; if (!q || !q.items.some(x => x.t === 'stop' && (x.name === m[1] || (x.includes || []).includes(m[1])))) wrong.push(`${f} day ${i}: "${t}"`); })); }
   ok(!wrong.length, `a move to another day is said only when that day has it (${n} said, wrong: ${wrong.slice(0, 3).join('; ') || 'none'})`); }
 
+// Class rule "no meal while the place is shut" on the screen (Nov 23): a lunch card shows the place's hours when known, and
+// the screen rules hold the lunch's start to them (waiting outside before it opens is fine).
+{ const R = require('./screen-rules.cjs');
+  const card = (arr, lv, extra) => ['ARRIVE', arr, 'LEAVE', lv, 'L', 'Lunch: Komokieras'].concat(extra || [], ['Open 1:15 pm–3:30 pm, 8:30 pm–11:00 pm', '1 h']).join('\n'); // the card's lines as the app shows them
+  const shut = t => R.rules(t, { type: '', date: '' }).some(f => f.rule === 'never planned while closed');
+  ok(shut(card('11:45 am', '12:45 pm')), 'screen: lunch at 11:45 at a place whose card says it opens 1:15 pm is caught');
+  ok(!shut(card('1:15 pm', '2:15 pm')), 'screen: lunch at opening time passes');
+  ok(!shut(card('1:05 pm', '2:15 pm', ['10 min to spare before lunch at 1:15 pm'])), 'screen: arriving early and waiting for opening passes'); }
+
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);

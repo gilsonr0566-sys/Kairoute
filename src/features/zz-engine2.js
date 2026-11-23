@@ -178,7 +178,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         const label = x.meal || "Lunch", m = MEALS.find(z => z.label === label) || MEALS[0];
         const r = x.onBoard ? { name: "Back on board", onBoard: true, generic: true, lat: x.lat, lng: x.lng, alts: [] } : x.packed ? Object.assign({ name: "Bring your own", packed: true, generic: true, lat: x.lat, lng: x.lng, alts: [] }, packedBuy(items, city)) : Object.assign({}, byName(city.restaurants, x.name) || at(x), { alts: [] });
         if (x.booked) Object.assign(r, { booked: true, why: "Your reservation at " + fmt(x.at) + "." }); // a table the traveler booked shows as theirs
-        if (!r.generic) { if (x.fromMap) r.fromMap = true; r.hoursKnown = !!x.hoursKnown; } // what is known about it, said on its card
+        if (!r.generic) { if (x.fromMap) r.fromMap = true; r.hoursKnown = !!x.hoursKnown; if (x.openSpans) r.openSpans = x.openSpans; } // what is known about it, said on its card
         const it = { type: x.t === "evening" ? "evening" : "meal", meal: Object.assign({}, m, { len: x.min || m.len }), place: r, time: x.at };
         if (x.early > 0 && x.t === "meal") it.early = x.early; // here before lunch starts: the card shows the real arrival and the time to spare
         items.push(it); (x.t === "evening" ? evening : meals).push(x.t === "evening" ? it : r);

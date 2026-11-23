@@ -88,6 +88,15 @@ function rules(text, info = {}) {
   { const t = T(info.time), small = info.type === 'departure' && info.mode !== 'ship' && t != null && t < 5 * 60;
     if (small && !info.nightDep && !/early this morning, or late tonight/i.test(raw)) add('S1', 'small-hours departure asked', `a ${info.time} departure is planned without asking whether it is this morning or tonight`);
     if (small && info.nightDep !== 'night' && stops.length) add('S1', 'small-hours departure asked', `a ${info.time} departure ${info.nightDep ? 'this morning' : 'not yet placed'} has ${stops.length} sight(s) planned`); }
+  // A time to leave that is the time to be back, from a walk of no time (Nov 23 recheck, evening port call with nothing
+  // planned ashore: "Leave here by 10:45 pm to be back by 10:45 pm", "From the cruise port: walk 0 min, so leave by").
+  { const m = /Leave here by (\d{1,2}:\d\d\s*[ap]m) to be back by (\d{1,2}:\d\d\s*[ap]m)/i.exec(raw);
+    if (m && T(m[1]) != null && T(m[1]) === T(m[2])) add('S2', 'leave-by is not the back-by', `"Leave here by ${m[1]} to be back by ${m[2]}": the same time, so the words say nothing true`);
+    if (/: walk 0 min, so leave by/.test(raw)) add('S2', 'leave-by is not the back-by', 'a leave-by from a walk of 0 min'); }
+  // "Which airport" with only terminals of one airport to choose from is a terminal question (tester round 7a).
+  { const m = /Which airport [^?]*\? There is more than one here \(([^)]*)\)/.exec(raw);
+    if (m) { const ns = m[1].split(/,? or |, (?!(?:terminals?|T)\s*[0-9A-Z]{1,3}\b)/i).map(s => s.trim()).filter(Boolean), base = n => n.replace(/\s*,?\s*(terminals?|T)\s*[0-9A-Z]{1,3}$/i, '').trim();
+      if (ns.length > 1 && new Set(ns.map(base)).size === 1 && ns.some(n => base(n) !== n)) add('S2', 'terminals asked as terminals', `"Which airport" asked with only terminals of one airport: ${m[1]}`); } }
   // ---- S2: what the screen says must add up
   // Free time comes after the day's own first steps (bags left in storage, the hotel check-in), never before them at the
   // airport or the pier (Nov 23: "Free time 1 h 16 min" at the airport, then the ride to the hotel).
@@ -164,14 +173,19 @@ function rules(text, info = {}) {
   // with the times beside it. A visit starts after it opens and ends by its closing (a last entry is kept); a stop whose
   // hours aren't known says "not confirmed" with the hours it was planned in, and its visit sits inside them; a stop is
   // never planned on a day its line says it's closed.
-  for (const r of stops) { if (r.key === 'L') continue; const line = (r.notes || []).find(n => /^Open \d|Hours not confirmed|^Closed(?! to visitors at prayer)/.test(n)) || '';
+  // A lunch's card shows its opening hours when they are known (class rule "no meal while the place is shut", Nov 23): the
+  // same check holds it to them.
+  for (const r of stops) { const line = (r.key === 'L' ? [r.meta || ''] : []).concat(r.notes || []).find(n => r.key === 'L' ? /^Open \d/.test(n) : /^Open \d|Hours not confirmed|^Closed(?! to visitors at prayer)/.test(n)) || '';
+    if (r.key === 'L' && !line) continue;
+    // lunch starts when the card says ("10 min to spare before lunch at 12:30 pm"): waiting outside before it opens is fine.
+    const spareM = r.key === 'L' && [r.meta || ''].concat(r.notes || []).map(n => /before (?:lunch|dinner)[^0-9]* at (\d{1,2}:\d\d\s*[ap]m)/i.exec(n)).find(Boolean), from = spareM && T(spareM[1]) != null ? T(spareM[1]) : r.arrive;
     const times = [...line.matchAll(/(\d{1,2}:\d\d\s*[ap]m)\s*[–-]\s*(\d{1,2}:\d\d\s*[ap]m)/gi)].map(m => [T(m[1]), T(m[2])]).filter(x => x[0] != null && x[1] != null).map(([a, b]) => [a, b <= a ? b + 1440 : b]);
     const lastM = /last entry (\d{1,2}:\d\d\s*[ap]m)/i.exec(line), last = lastM ? T(lastM[1]) : null, until = r.leave != null ? r.leave : r.until;
     if (/^Closed(?! to visitors at prayer)/.test(line)) { add('S2', 'never planned while closed', `${r.name}: planned at ${clock(r.arrive)} but its hours line says "${line.slice(0, 60)}"`); continue; }
     if (/Hours not confirmed/.test(line) && !times.length) add('S2', 'unknown hours said with the planned window', `${r.name}: "Hours not confirmed" without the hours it was planned in`);
-    if (!times.length || r.arrive == null) continue;
-    const span = times.find(([a, b]) => r.arrive >= a - 1 && r.arrive < b) || null;
-    if (!span) { add('S2', 'never planned while closed', `${r.name}: arrives ${clock(r.arrive)}, its hours are ${line.slice(0, 70)}`); continue; }
+    if (!times.length || from == null) continue;
+    const span = times.find(([a, b]) => from >= a - 1 && from < b) || null;
+    if (!span) { add('S2', 'never planned while closed', `${r.name}: ${r.key === 'L' ? 'lunch at' : 'arrives'} ${clock(from)}, its hours are ${line.slice(0, 70)}`); continue; }
     if (until != null && until > span[1] + 1) add('S2', 'visit ends by closing', `${r.name}: stays until ${clock(until)}, closes ${clock(span[1])}`);
     if (last != null && r.arrive > last + 1) add('S2', 'arrive by last entry', `${r.name}: arrives ${clock(r.arrive)}, last entry ${clock(last)}`);
   }

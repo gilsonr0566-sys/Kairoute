@@ -1395,5 +1395,44 @@
    "Tu-Fr 10:00-01:00; Mo 17:00-01:00; Sa 11:00-01:00; Su 16:00-01:00",
    "fast_food"
   ]
- ]
+ ],
+ "islands": {
+  "centre": null,
+  "towns": {
+   "cavtat-far": {
+    "island": null,
+    "across": false
+   }
+  },
+  "sites": {
+   "src-q2497590": {
+    "island": null,
+    "across": false
+   },
+   "src-q2986276": {
+    "island": null,
+    "across": false
+   },
+   "src-q3396134": {
+    "island": null,
+    "across": false
+   },
+   "src-q2986286": {
+    "island": null,
+    "across": false
+   },
+   "src-q584428": {
+    "island": null,
+    "across": false
+   },
+   "src-q3509032": {
+    "island": null,
+    "across": false
+   },
+   "src-q2750095": {
+    "island": null,
+    "across": false
+   }
+  }
+ }
 }

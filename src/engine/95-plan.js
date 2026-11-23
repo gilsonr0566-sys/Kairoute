@@ -72,7 +72,10 @@
       if (x.packed) it.packed = true; if (x.during != null) it.during = x.during; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       // What is known about a place to eat travels with it to the screen: found only on the map (no guide or review behind
       // it), and whether its hours that day are known (Nov 22: never say more than the data says).
-      if (x.t === "meal" || x.t === "evening") { if (x.fromMap) it.fromMap = true; const fx = (fit.eatFacts || {})[E.eatKey(x.name || "")]; if (fx && (fx.closed || (fx.oh && fx.oh.spans && fx.oh.spans.length))) it.hoursKnown = true; }
+      if (x.t === "meal" || x.t === "evening") { if (x.fromMap) it.fromMap = true; const fx = (fit.eatFacts || {})[E.eatKey(x.name || "")]; if (fx && (fx.closed || (fx.oh && fx.oh.spans && fx.oh.spans.length))) it.hoursKnown = true;
+        // ...and its opening hours that day, shown on its card so the time beside them can be checked on the screen (class rule
+        // "no meal while the place is shut", Nov 23).
+        if (fx && fx.oh && fx.oh.spans && fx.oh.spans.length && !fx.closed) it.openSpans = fx.oh.spans.map(s => s.slice(0, 2)); }
       Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
@@ -355,7 +358,9 @@
         // A day the traveler has made their own (they ticked or unticked its sights) is planned from their list only:
         // the app never picks in their place there, and a list they emptied is a free day. Spare time may still take an
         // optional stop (marked optional, never in the way of a pick), unless they cleared the day.
-        if (d.own) { picks = wishes; if (!wishes.length) explain.push(d.cleared ? "You cleared this day: nothing is planned. Pick any sight to plan it." : "Pick the sights you want and they're planned here."); }
+        // Picks that all can't be visited (shut in an evening port call, Nov 23 recheck) are not "nothing picked": the notes
+        // above say why for each, and this says what to do.
+        if (d.own) { picks = wishes; if (!wishes.length) explain.push(d.cleared ? "You cleared this day: nothing is planned. Pick any sight to plan it." : (sel[i] || []).length ? "None of your picks can be visited in today's time (the reasons are above), so nothing is planned. Pick another sight to plan it." : "Pick the sights you want and they're planned here."); }
         const tripIds = !d.own && !wishes.length && dayTrip.get(i);
         if (tripIds) {
           picks = tripIds.map(id => pool.find(s => String(s.id) === id)).filter(Boolean);
