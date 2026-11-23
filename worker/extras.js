@@ -92,7 +92,7 @@ export async function extras(req, env, ctx, url, h, H) {
   if (p === "/x/near") {
     const la = +(+q.get("lat")).toFixed(3), ln = +(+q.get("lng")).toFixed(3), what = q.get("what") === "amen" ? "amen" : "view";
     if (!isFinite(la) || !isFinite(ln) || Math.abs(la) > 90 || Math.abs(ln) > 180) return json({ error: "Bad request" }, 400);
-    const key = "xn1:" + what + ":" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
+    const key = (await H.codeKey("xn", [extras])) + what + ":" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
     const A = what === "view" ? `(around:2000,${la},${ln})` : `(around:700,${la},${ln})`;
     const qq = what === "view"
       ? `[out:json][timeout:12];(node["tourism"="viewpoint"]["name"]${A};way["tourism"="viewpoint"]["name"]${A};);out center tags 80;`
@@ -115,7 +115,7 @@ export async function extras(req, env, ctx, url, h, H) {
   if (p === "/x/knowhow") {
     const city = String(q.get("city") || "").replace(/\s*\(.*?\)\s*/g, " ").split(",")[0].trim().slice(0, 80), country = String(q.get("country") || "").trim().slice(0, 60);
     if (!city) return json({ error: "Empty" }, 400);
-    const key = "kh4:" + (await H.sha((city + "|" + country).toLowerCase())), hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
+    const key = (await H.codeKey("kh", [extras])) + (await H.sha((city + "|" + country).toLowerCase())), hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
     const [cp, kp] = await Promise.all([voyage(city), country ? voyage(country) : null]);
     const SECT = /^(respect|stay safe|stay healthy|buy|money|costs?|tipping|bargaining|haggling|shopping|cope|scams?|crime|eat|etiquette|dress code|talk)$/i;
     const parts = [];
@@ -170,7 +170,7 @@ ${material}`;
   // Film and TV locations near a point, from Wikidata ("filming location" statements on real works).
   if (p === "/x/film") {
     const la = +(+q.get("lat")).toFixed(3), ln = +(+q.get("lng")).toFixed(3); if (!isFinite(la) || !isFinite(ln)) return json({ error: "Bad request" }, 400);
-    const key = "xf1:" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
+    const key = (await H.codeKey("xf", [extras])) + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return sendRaw(hit);
     const sparql = `SELECT ?place ?placeLabel ?work ?workLabel ?year ?coord WHERE {
       SERVICE wikibase:around { ?place wdt:P625 ?coord. bd:serviceParam wikibase:center "Point(${ln} ${la})"^^geo:wktLiteral; wikibase:radius "4". }
       ?work wdt:P915 ?place. OPTIONAL { ?work wdt:P577 ?date. BIND(YEAR(?date) AS ?year) }

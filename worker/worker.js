@@ -39,6 +39,13 @@ const AURA1 = "angus asteria arcas orion orpheus athena luna zeus perseus helios
 const AURA2 = "amalthea andromeda apollo arcas aries asteria athena atlas aurora callista cora cordelia delia draco electra harmonia helena hera hermes hyperion iris janus juno jupiter luna mars minerva neptune odysseus ophelia orion orpheus pandora phoebe pluto saturn thalia theia vesta zeus".split(" ");
 const VOICE_MODELS = { "aura-1": { id: "@cf/deepgram/aura-1", rate: 1363.64 / 1000, speakers: AURA1 }, "aura-2": { id: "@cf/deepgram/aura-2-en", rate: 2727.27 / 1000, speakers: AURA2 } };
 function voiceChoice(b) { const m = VOICE_MODELS[b.model] ? b.model : "aura-1", vm = VOICE_MODELS[m]; const sp = vm.speakers.includes(b.speaker) ? b.speaker : (SPEAKERS[b.voice] || "hera"); return { m, vm, sp: vm.speakers.includes(sp) ? sp : vm.speakers[0] }; }
+// A cached answer is keyed by the code that made it (Nov 23 class rule: "a helper answer made before a rule change is
+// never served"; the live Bastille kept its old facts until a key was bumped by hand). codeKey(prefix, parts) is the prefix
+// plus a short hash of the source of the functions and tables that build that answer, so any change to them reads
+// past every older answer. Stored records that are not worked out (ratings, crowd counts, paid voice and AI answers)
+// keep plain keys; tools/worker-cache-check.mjs fails on a hand-numbered key for a worked-out answer.
+const verMemo = new Map();
+async function codeKey(prefix, parts) { let v = verMemo.get(prefix); if (!v) { v = (await sha(parts.map(p => typeof p === "function" ? p.toString() : JSON.stringify(p)).join("\n"))).slice(0, 10); verMemo.set(prefix, v); } return prefix + "." + v + ":"; }
 async function sha(t) { const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, "0")).join(""); }
 const MAX_OUT = { quick: 1200, part: 8000, default: 14000, complex: 16000 };
 
@@ -111,7 +118,7 @@ function aiGate(env, path, lim) {
   return gate;
 }
 // Memory of kept answers (see the fetch handler). Only these content prefixes; everything else reads the store.
-const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3):/, MEMO_MS = 600000, MEMO = new Map();
+const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3|p2|gc|gr|ev|gq|fp|wx|wv|dp|bk|tr|ns|nv|fx|fm|sr|leg|xn|kh|xf)(\.[0-9a-f]{10})?:/, MEMO_MS = 600000, MEMO = new Map();
 let memoChars = 0; // kept under ~30 MB of the Worker's 128 MB memory
 function memoStore(kv) {
   if (!kv || kv.__memo) return kv;
@@ -143,7 +150,7 @@ async function fillFerries(env) {
   run.ms = Date.now() - t0; await env.USAGE.put("fqrun", JSON.stringify(run), { expirationTtl: 7 * 86400 }); // the last run, for the live check
 }
 
-export default {
+const HANDLER = {
   // Scheduled work never needs the AI: it gets the gate with no route, which refuses every call.
   async scheduled(ev, env, ctx) { ctx.waitUntil(fillFerries({ ...env, AI: aiGate(env, "", null) })); },
   async fetch(req, env, ctx) {
@@ -164,7 +171,7 @@ export default {
     // travelers' own data are never remembered here.
     env = { ...env, USAGE: memoStore(env.USAGE) };
     // Guide extras (viewpoints, restrooms, local know-how, kids' stories, city primers, theme links, film locations, group tours): see extras.js.
-    if (url.pathname.startsWith("/x/")) return extras(req, env, ctx, url, h, { origin, ALLOWED, MODEL, IN_RATE, OUT_RATE, DAILY_NEURONS: (await lim()).DAILY_NEURONS, used, addUse: (e, n) => addUse(e, n, test), sha });
+    if (url.pathname.startsWith("/x/")) return extras(req, env, ctx, url, h, { origin, ALLOWED, MODEL, IN_RATE, OUT_RATE, DAILY_NEURONS: (await lim()).DAILY_NEURONS, used, addUse: (e, n) => addUse(e, n, test), sha, codeKey });
     // /usage: the numbers behind the owner's "Usage & cost" page. Counts only, nothing about travelers.
     if (url.pathname === "/usage") {
       const g = k => env.USAGE.get(k).then(v => +v || 0), d0 = new Date(), days = [];
@@ -195,7 +202,7 @@ export default {
       const pts = (Array.isArray(b.pts) ? b.pts : []).map(p => [+(+p.lat).toFixed(3), +(+p.lng).toFixed(3)]).filter(p => isFinite(p[0]) && isFinite(p[1])).slice(0, 16);
       const r = Math.min(1500, Math.max(200, +b.r || 700));
       if (!pts.length) return Response.json({ places: [] }, { headers: h });
-      const key = "p2:" + r + ":" + (await sha(JSON.stringify(pts)));
+      const key = (await codeKey("p2", HCODE())) + r + ":" + (await sha(JSON.stringify(pts)));
       const hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       const q = `[out:json][timeout:25];(${pts.map(([la, ln]) => `nwr["amenity"~"^(restaurant|cafe|fast_food|pub|bar|food_court)$"]["name"](around:${r},${la},${ln});`).join("")});out center tags 600;`;
       // First choice: Photon (map search near each point), which answers quickly. Then Overpass as a backup.
@@ -249,7 +256,7 @@ export default {
       // small port that the travel guide and the map can't place by name (Nov 18: "Perfect Day at CocoCay") still gets
       // its searches kept to its own area. Used only when the place can't be found by name, so other cities' answers stay as they were.
       const given = b.center && isFinite(+b.center.lat) && isFinite(+b.center.lng) && Math.abs(+b.center.lat) <= 90 && Math.abs(+b.center.lng) <= 180 ? { lat: +b.center.lat, lng: +b.center.lng, from: "app" } : null;
-      let center = null; const ck = "gc2:" + (await sha(cityQ.toLowerCase()));
+      let center = null; const ck = (await codeKey("gc", HCODE())) + (await sha(cityQ.toLowerCase()));
       if (city) { center = await env.USAGE.get(ck, "json");
         // The travel guide's own page for the city (Wikivoyage) knows which Corpus Christi or Kotor is meant.
         if (!center) for (const t of [cityQ, cityQ.split(",")[0].trim()]) {
@@ -267,7 +274,7 @@ export default {
       const bias = center ? "&lat=" + center.lat + "&lon=" + center.lng + "&location_bias_scale=0.2&zoom=12" : "";
       const one = async name => {
         if (!name) return null;
-        const k = "gr5:" + (await sha(name + "|" + cityQ + (farNames.has(name) ? "|far" : "") + (usedGiven ? "|c" + given.lat.toFixed(2) + "," + given.lng.toFixed(2) : ""))), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
+        const k = (await codeKey("gr", HCODE())) + (await sha(name + "|" + cityQ + (farNames.has(name) ? "|far" : "") + (usedGiven ? "|c" + given.lat.toFixed(2) + "," + given.lng.toFixed(2) : ""))), hit = await env.USAGE.get(k, "json"); if (hit) return hit;
         const plain = name.replace(/\s*\(.*?\)\s*/g, " ").trim(), q = plain + " " + cityQ;
         let wiki = null, map = null;
         {
@@ -309,7 +316,7 @@ export default {
       const lat = +url.searchParams.get("lat"), lng = +url.searchParams.get("lng"), from = String(url.searchParams.get("from") || ""), to = String(url.searchParams.get("to") || from);
       if (!isFinite(lat) || !isFinite(lng) || !/^\d{4}-\d{2}-\d{2}$/.test(from) || !/^\d{4}-\d{2}-\d{2}$/.test(to)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
       if (!env.TM_KEY) return Response.json({ events: [], source: "none" }, { headers: h });
-      const key = "ev1:" + lat.toFixed(2) + "," + lng.toFixed(2) + ":" + from + ":" + to;
+      const key = (await codeKey("ev", HCODE())) + lat.toFixed(2) + "," + lng.toFixed(2) + ":" + from + ":" + to;
       const hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       let events = [];
       try {
@@ -335,7 +342,7 @@ export default {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const list = (Array.isArray(b.places) ? b.places : []).slice(0, 40).filter(x => x && x.name && isFinite(x.lat) && isFinite(x.lng));
       const out = {}, todo = [];
-      for (const x of list) { const k = "gq1:" + (await sha(String(x.name).toLowerCase() + "|" + (+x.lat).toFixed(3) + "|" + (+x.lng).toFixed(3))); const hit = await env.USAGE.get(k, "json"); if (hit) out[x.name] = hit; else todo.push([x, k]); }
+      for (const x of list) { const k = (await codeKey("gq", HCODE())) + (await sha(String(x.name).toLowerCase() + "|" + (+x.lat).toFixed(3) + "|" + (+x.lng).toFixed(3))); const hit = await env.USAGE.get(k, "json"); if (hit) out[x.name] = hit; else todo.push([x, k]); }
       if (!env.GPLACES_KEY) { todo.forEach(([x]) => out[x.name] = { state: "nokey" }); return Response.json({ ratings: out }, { headers: h }); }
       // Rating lookups use Google's "Enterprise" Text Search, which is free for 1,000 calls a month: stay under
       // that with 900 a month (up to 150 in one day, so a whole new trip can be rated at once). Every answer is kept 30 days, so each restaurant is looked up about once a month.
@@ -380,7 +387,7 @@ export default {
     if (url.pathname === "/findplace") {
       const city = String(url.searchParams.get("city") || "").slice(0, 120).replace(/\s*\(.*?\)\s*/g, " ").trim(), q = String(url.searchParams.get("q") || "").slice(0, 120).trim();
       if (!city || q.length < 2) return Response.json({ error: "Empty" }, { status: 400, headers: h });
-      const key = "fp1:" + (await sha(city.toLowerCase() + "|" + q.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      const key = (await codeKey("fp", HCODE())) + (await sha(city.toLowerCase() + "|" + q.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)", "accept-language": "en" };
       const nom = async u => { try { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(9000) }); return r.ok ? await r.json() : null; } catch (e) { return null; } };
       const GR = { α: "a", β: "v", γ: "g", δ: "d", ε: "e", ζ: "z", η: "i", θ: "th", ι: "i", κ: "k", λ: "l", μ: "m", ν: "n", ξ: "x", ο: "o", π: "p", ρ: "r", σ: "s", ς: "s", τ: "t", υ: "y", φ: "f", χ: "ch", ψ: "ps", ω: "o", ά: "a", έ: "e", ή: "i", ί: "i", ό: "o", ύ: "y", ώ: "o", ϊ: "i", ϋ: "y", ΐ: "i", ΰ: "y" };
@@ -448,7 +455,7 @@ export default {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       const la = +(+url.searchParams.get("lat")).toFixed(1), ln = +(+url.searchParams.get("lng")).toFixed(1);
       if (!isFinite(la) || !isFinite(ln) || Math.abs(la) > 90 || Math.abs(ln) > 180) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
-      const key = "wx1:" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      const key = (await codeKey("wx", HCODE())) + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       try {
         const q = `https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${ln}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,weather_code&hourly=temperature_2m,precipitation_probability,precipitation&timezone=auto&forecast_days=16`;
         const r = await fetch(q, { signal: AbortSignal.timeout(15000) }); if (!r.ok) return Response.json({ error: "forecast busy" }, { status: 502, headers: h });
@@ -495,7 +502,7 @@ export default {
     if (url.pathname === "/voyage") {
       const city = String(url.searchParams.get("city") || "").slice(0, 120); if (!city) return Response.json({ error: "Empty" }, { status: 400, headers: h });
       const cityQ = city.replace(/\s*\(.*?\)\s*/g, " ").replace(/\s+/g, " ").trim() || city;
-      const key = "wv1:" + (await sha(city.toLowerCase()));
+      const key = (await codeKey("wv", HCODE())) + (await sha(city.toLowerCase()));
       const hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
       let wt = "", title = "";
@@ -550,7 +557,7 @@ export default {
       const pt = v => { const n = String(v || "").split(",").map(Number); return n.length === 2 && n.every(isFinite) && Math.abs(n[0]) <= 90 && Math.abs(n[1]) <= 180 ? { lat: n[0], lng: n[1] } : null; };
       const a = pt(url.searchParams.get("a")), b = pt(url.searchParams.get("b")), date = url.searchParams.get("date") || "", mode = url.searchParams.get("mode") === "ferry" ? "ferry" : "train";
       if (!a || !b || (date && !/^\d{4}-\d{2}-\d{2}$/.test(date))) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
-      const key = "dp1:" + mode + ":" + [a.lat, a.lng, b.lat, b.lng].map(n => n.toFixed(3)).join(",") + ":" + date;
+      const key = (await codeKey("dp", HCODE())) + mode + ":" + [a.lat, a.lng, b.lat, b.lng].map(n => n.toFixed(3)).join(",") + ":" + date;
       const hit = await env.USAGE.get(key, "json"); if (hit) return Response.json(hit, { headers: h });
       try { const r = await departures(a, b, date, mode); ctx.waitUntil(env.USAGE.put(key, JSON.stringify(r), { expirationTtl: r.deps.length ? 3 * 86400 : 6 * 3600 }).catch(() => {})); return Response.json(r, { headers: h }); }
       catch (e) { return Response.json({ error: "busy" }, { status: 503, headers: h }); }
@@ -561,7 +568,7 @@ export default {
     if (url.pathname === "/bookcheck") {
       const sl = v => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(v || "") && v.length <= 60 ? v : null, f = sl(url.searchParams.get("from")), t = sl(url.searchParams.get("to"));
       if (!f || !t) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
-      const key = "bk1:" + f + ":" + t, hit = await env.USAGE.get(key); if (hit) return Response.json({ trainline: hit }, { headers: h });
+      const key = (await codeKey("bk", HCODE())) + f + ":" + t, hit = await env.USAGE.get(key); if (hit) return Response.json({ trainline: hit }, { headers: h });
       let st = "unknown";
       try { const r = await fetch(`https://www.thetrainline.com/en/train-times/${f}-to-${t}`, { headers: { "user-agent": "Mozilla/5.0 (compatible; Kairoute/1.0; travel guide)", accept: "text/html", "accept-language": "en" }, redirect: "follow", signal: AbortSignal.timeout(12000) });
         st = r.status === 200 ? "ok" : r.status === 404 || r.status === 410 ? "missing" : "unknown"; } catch (e) {}
@@ -579,7 +586,7 @@ export default {
         // The trip's date (when the page gives it) picks the timetable; answers are kept per month, since a summer
         // ferry runs in July and not in November.
         const date = typeof pr.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(pr.date) ? pr.date : null;
-        const key = "tr6:" + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
+        const key = (await codeKey("tr", HCODE())) + kind + ":" + [...pr.a, ...pr.b].map(n => n.toFixed(3)).join(",") + (date ? ":m" + +date.slice(5, 7) : "");
         // A full answer is kept 14 days (timetables change); one where a source was busy only 1 day. When the map answered
         // after the reply went out, its full answer replaces the partial one. A partial answer met again after 10 minutes
         // is looked up afresh in the background (once per 10 minutes), so a busy map server never hides a ferry for a day.
@@ -623,7 +630,7 @@ export default {
       if (origin && !ALLOWED.some(r => r.test(origin))) return Response.json({ error: "Not allowed" }, { status: 403, headers: h });
       const la = +(+url.searchParams.get("lat")).toFixed(4), ln = +(+url.searchParams.get("lng")).toFixed(4), r = Math.min(600, Math.max(60, +url.searchParams.get("r") || 250));
       if (!isFinite(la) || !isFinite(ln)) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
-      const key = "ns2:" + r + ":" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
+      const key = (await codeKey("ns", HCODE())) + r + ":" + la + "," + ln, hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       const A = `(around:${r},${la},${ln})`;
       const q = `[out:json][timeout:15];(node["tourism"~"^(attraction|artwork|viewpoint|museum|gallery)$"]["name"]${A};way["tourism"~"^(attraction|museum|gallery)$"]["name"]${A};node["historic"]["name"]${A};way["historic"]["name"]${A};node["amenity"~"^(place_of_worship|fountain|clock|theatre)$"]["name"]${A};way["amenity"~"^(place_of_worship|theatre)$"]["name"]${A};);out center tags 150;`; // node and way only: light enough for the map servers' busy limits
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
@@ -649,7 +656,7 @@ export default {
       let b; try { b = await req.json(); } catch (e) { return Response.json({ error: "Bad request" }, { status: 400, headers: h }); }
       const ids = [...new Set((Array.isArray(b.ids) ? b.ids : []).map(String).filter(x => /^Q\d+$/.test(x)))].slice(0, 20);
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" }, facts = {}, todo = [];
-      for (const id of ids) { const hit = await env.USAGE.get("fx2:" + id, "json"); if (hit) facts[id] = hit; else todo.push(id); }
+      for (const id of ids) { const hit = await env.USAGE.get((await codeKey("fx", HCODE())) + id, "json"); if (hit) facts[id] = hit; else todo.push(id); }
       if (todo.length) try {
         const w = await (await fetch("https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=sitelinks|descriptions|claims&languages=en&sitefilter=enwiki&ids=" + todo.join("|"), { headers: UA, signal: AbortSignal.timeout(10000) })).json();
         const titles = {};
@@ -663,7 +670,7 @@ export default {
         if (tl.length) { const x = await (await fetch("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=1&explaintext=1&exchars=700&exlimit=20&redirects=1&titles=" + encodeURIComponent(tl.join("|")), { headers: UA, signal: AbortSignal.timeout(10000) })).json();
           const back = {}; for (const r of ((x.query || {}).normalized || []).concat((x.query || {}).redirects || [])) back[r.to] = back[r.from] || r.from;
           for (const pg of Object.values((x.query || {}).pages || {})) { const id = titles[pg.title] || titles[back[pg.title]]; if (id && facts[id]) facts[id].text = (pg.extract || "").replace(/\s+/g, " ").trim(); } }
-        for (const id of todo) if (facts[id]) ctx.waitUntil(env.USAGE.put("fx2:" + id, JSON.stringify(facts[id]), { expirationTtl: 90 * 86400 }));
+        for (const id of todo) if (facts[id]) ctx.waitUntil(env.USAGE.put((await codeKey("fx", HCODE())) + id, JSON.stringify(facts[id]), { expirationTtl: 90 * 86400 }));
       } catch (e) {}
       return Response.json({ facts }, { headers: h });
     }
@@ -686,7 +693,7 @@ export default {
       const out = [];
       for (const it of items) {
         const name = String(it.name || "").slice(0, 160); if (!name) { out.push(null); continue; }
-        const k = "nv1:" + (await sha(name + "|" + city));
+        const k = (await codeKey("nv", HCODE())) + (await sha(name + "|" + city));
         let res = await env.USAGE.get(k, "json");
         if (!res) {
           const tries = [name + ", " + city, name.replace(/\s*\(.*?\)\s*/g, " ").trim() + ", " + city];
@@ -849,10 +856,13 @@ Written text:
     return Response.json({ text, finish, usage: { in: pin, out: pout } }, { headers: { ...h, "cache-control": "no-store" } });
   }
 };
+export default HANDLER;
+// What the handler's own worked-out answers are built from (the handler and the modules it reads).
+const HCODE = () => [HANDLER.fetch, allOptions, ferriesNear, keptFerries, ferryKey, topRides, departures, extras];
 
 // The best-known places in and around a city (see /famous).
 async function famousData(label, env, ctx) {
-  const key = "fm8:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = (await codeKey("fm", [famousData, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: { ...UA, accept: "application/sparql-results+json" }, signal: AbortSignal.timeout(ms || 25000) }); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const centerOf = async name => {
@@ -1006,7 +1016,7 @@ async function mapSights(c, UA) {
   const out = [], put = (name, lat, lng, k, v, t) => { if (!name || !isFinite(lat) || !isFinite(lng) || out.some(x => sameName(x.name, name))) return;
     // A bay counts only as a lagoon to swim in; a grave, memorial or roadside stone only when the encyclopedia knows it.
     if (k === "natural" && v === "bay" && !/lagoon/i.test(name)) return;
-    if ((k === "historic" && /^(memorial|tomb|grave|boundary_stone|milestone|wayside_cross|wayside_shrine)$/.test(v || "") || /grave|tomb|cemetery/i.test(name)) && !(t && t.wikidata)) return; out.push({ name, lat: +(+lat).toFixed(5), lng: +(+lng).toFixed(5), kind: k + ":" + v, historic: k === "historic", web: (t && (t.website || t["contact:website"])) || undefined }); };
+    if ((k === "historic" && /^(memorial|tomb|grave|boundary_stone|milestone|wayside_cross|wayside_shrine)$/.test(v || "") || /grave|tomb|cemetery/i.test(name)) && !(t && t.wikidata)) return; out.push({ name, en: !!(t && t["name:en"]), lat: +(+lat).toFixed(5), lng: +(+lng).toFixed(5), kind: k + ":" + v, historic: k === "historic", web: (t && (t.website || t["contact:website"])) || undefined }); };
   await Promise.all(["tourism", "natural:beach", "leisure:water_park", "leisure:beach_resort", "man_made:lighthouse", "historic"].map(async tag => {
     try { const r = await fetch(`https://photon.komoot.io/reverse?lat=${c.lat}&lon=${c.lng}&radius=3&limit=20&lang=en&osm_tag=${tag}`, { headers: UA, signal: AbortSignal.timeout(6000) });
       if (r.ok) for (const f of (await r.json()).features || []) { const p = f.properties || {}, k = p.osm_key, v = p.osm_value; if (k && MAP_SIGHT[k] && MAP_SIGHT[k].test(v || "")) put(p.name, f.geometry.coordinates[1], f.geometry.coordinates[0], k, v); } } catch (e) {}
@@ -1059,7 +1069,7 @@ function placeOf(listing, wd, map, wholes) {
   return out("listing", listing, true);
 }
 async function sourcesData(label, env, ctx) {
-  const key = "sr11:" + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = (await codeKey("sr", [sourcesData, placeOf, SIGHT_KINDS, mapSights, MAP_SIGHT, parseListings, voyagePages, voyageNext, voyageNextPlaces, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   const getJ = async (u, ms, opt) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) return await r.json(); } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
@@ -1068,7 +1078,8 @@ async function sourcesData(label, env, ctx) {
   const area = fam.area, center = fam.center, kmOf = (a, b) => Math.hypot((a.lat - b.lat) * 111, (a.lng - b.lng) * 111 * Math.cos(b.lat * Math.PI / 180));
   // The city's Wikidata item tells which language is local here and which local Wikivoyage page covers it.
   const enGuess = area.split(",")[0].trim(), enP = voyagePages("en.wikivoyage.org", enGuess, UA).then(v => { lap("enVoy"); return v; });
-  let lang = "", localVoy = "", localWiki = "";
+  // enLocal: English is a language of the place itself (the Bahamas, Malta, Juneau), so its local names are English names.
+  let lang = "", localVoy = "", localWiki = "", enLocal = false;
   const enTitle0 = (await enP).title || area.split(",")[0].trim();
   const ent = await getJ("https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&normalize=1&props=sitelinks|claims&sites=enwikivoyage&titles=" + encodeURIComponent(enTitle0), 15000);
   const city = ent && Object.values(ent.entities || {}).find(e => e && e.sitelinks);
@@ -1077,7 +1088,7 @@ async function sourcesData(label, env, ctx) {
     let langs = ids("P37");
     if (!langs.length && ids("P17").length) { const cj = await getJ("https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=claims&ids=" + ids("P17")[0], 15000); const ce = cj && cj.entities && Object.values(cj.entities)[0]; langs = ((ce && ce.claims && ce.claims.P37) || []).map(x => x.mainsnak.datavalue && x.mainsnak.datavalue.value.id).filter(Boolean); }
     if (langs.length) { const lj = await getJ("https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=claims&ids=" + langs.slice(0, 4).join("|"), 15000);
-      const codes = langs.map(id => { const e = lj && lj.entities && lj.entities[id]; const c = e && e.claims && e.claims.P424 && e.claims.P424[0].mainsnak.datavalue; return c ? c.value : ""; }).filter(c => c && c !== "en");
+      let codes = langs.map(id => { const e = lj && lj.entities && lj.entities[id]; const c = e && e.claims && e.claims.P424 && e.claims.P424[0].mainsnak.datavalue; return c ? c.value : ""; }); enLocal = codes.includes("en"); codes = codes.filter(c => c && c !== "en");
       lang = codes.find(c => city.sitelinks[c + "wikivoyage"]) || codes[0] || "";
       if (lang && city.sitelinks[lang + "wikivoyage"]) localVoy = city.sitelinks[lang + "wikivoyage"].title;
       if (lang && city.sitelinks[lang + "wiki"]) localWiki = city.sitelinks[lang + "wiki"].title; }
@@ -1093,6 +1104,10 @@ async function sourcesData(label, env, ctx) {
     if (!x && !wd) x = [...byId.values(), ...noId].find(y => sameName(name, y.name) && (y.lat == null || lat == null || kmOf({ lat, lng }, y) < 1.5));
     if (!x) { x = { name, wd: wd || "", lat, lng, src: new Set(), sl: 0 }; if (wd) byId.set(wd, x); else noId.push(x); }
     x.src.add(src); if (x.lat == null && lat != null) { x.lat = lat; x.lng = lng; } Object.assign(x, extra || {});
+    // A name from the English travel guide is shown until the encyclopedia's English label replaces it below. It is no
+    // proof of English: the guide lists many places under their local names ("Kadı Kalesi", "Halk Plajı", Kusadasi, Nov 23),
+    // so only where English is a language of the place does it count as an English name.
+    if (src === S.enVoy) { if (!x.en1) x.name = name; if (enLocal) x.en1 = true; }
     // Each source's own point is kept, so where the sight really is can be decided from all of them (placeOf below).
     if (lat != null && isFinite(lat)) { if (src === S.fame) x.wdp = x.wdp || { lat, lng }; else x.lp = x.lp || { lat, lng }; }
     return x;
@@ -1104,7 +1119,7 @@ async function sourcesData(label, env, ctx) {
   const ids = [...byId.keys()].slice(0, 200), chunks = []; for (let k = 0; k < ids.length; k += 50) chunks.push(ids.slice(k, k + 50));
   const answers = await Promise.all(chunks.map(part => {
     const V = `VALUES ?item { ${part.map(x => "wd:" + x).join(" ")} }`, H2 = { headers: { ...UA, accept: "application/sparql-results+json" } }, url = q => "https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q);
-    return Promise.all([getJ(url(`SELECT ?item ?h ?w ?loc ?lab ?sl ?whole ?wloc WHERE { ${V} OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item wikibase:sitelinks ?sl } OPTIONAL { ?item wdt:P361|wdt:P276 ?whole . OPTIONAL { ?whole wdt:P625 ?wloc } } }`), 25000, H2),
+    return Promise.all([getJ(url(`SELECT ?item ?h ?w ?loc ?lab ?sl ?whole ?wloc WHERE { ${V} OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item rdfs:label ?mlab FILTER(LANG(?mlab) = "mul") } OPTIONAL { ?item wikibase:sitelinks ?sl } OPTIONAL { ?item wdt:P361|wdt:P276 ?whole . OPTIONAL { ?whole wdt:P625 ?wloc } } }`), 25000, H2),
       lang ? getJ(url(`SELECT ?item ?local WHERE { ${V} ?a schema:about ?item ; schema:isPartOf <https://${lang}.wikipedia.org/> ; schema:name ?local }`), 25000, H2) : null]).then(([a, b]) => ({ results: { bindings: [...((a && a.results.bindings) || []), ...((b && b.results.bindings) || [])] } })); }));
   lap("details");
   // What each place IS, from the encyclopedia's own facts (P31 "instance of", followed up its "subclass of" tree), so the
@@ -1137,7 +1152,10 @@ async function sourcesData(label, env, ctx) {
   for (const j of answers) {
     for (const b of (j && j.results && j.results.bindings) || []) {
       const x = byId.get(b.item.value.split("/").pop()); if (!x) continue;
-      if (b.lab && b.lab.value) x.name = b.lab.value;
+      // The name English uses: the English label, else the one name for every language ("mul"). A place with neither,
+      // named only by a local-language source, is marked localName: the app never shows a local-language name as a
+      // sight's name, in any language (Nov 23 class rule: Kusadasi listings came in Turkish).
+      if (b.lab && b.lab.value) { x.name = b.lab.value; x.en1 = true; } else if (b.mlab && b.mlab.value && !x.en1) { x.name = b.mlab.value; x.en1 = true; }
       const m = b.loc && /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.loc.value); if (m && x.lat == null) { x.lat = +m[2]; x.lng = +m[1]; } if (m && !x.wdp) x.wdp = { lat: +m[2], lng: +m[1] };
       // The bigger place it is part of or stands in (an old town, a palace complex): a point far from it is wrong.
       // Its ids too, so the app can fold a part into its whole's visit (the Sistine Chapel is seen in the Vatican Museums).
@@ -1166,7 +1184,7 @@ async function sourcesData(label, env, ctx) {
     x.lat = at.lat; x.lng = at.lng; if (at.posDoubt) x.posDoubt = true; if (at.from !== "listing") x.posFrom = at.from; }
   const near = x => x.lat == null || kmOf(x, center) <= 12;
   const stops = [...byId.values(), ...noId].filter(x => x.name && !/^Q\d+$/.test(x.name) && near(x) && fold(x.name) !== fold(area))
-    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined, posDoubt: x.posDoubt || undefined, posFrom: x.posFrom || undefined, kinds: x.kinds, gone: x.gone || undefined, partOf: x.partOf && x.partOf.length ? x.partOf.slice(0, 6) : undefined, area: x.area || undefined }))
+    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, localName: x.en1 ? undefined : true, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined, posDoubt: x.posDoubt || undefined, posFrom: x.posFrom || undefined, kinds: x.kinds, gone: x.gone || undefined, partOf: x.partOf && x.partOf.length ? x.partOf.slice(0, 6) : undefined, area: x.area || undefined }))
     .sort((a, b) => b.src.length - a.src.length || b.sl - a.sl).slice(0, 160);
   // A small place the guidebooks and the encyclopedia barely cover (a small island, a cruise line's private island,
   // a resort port): add the named tourist places the map knows nearby (beaches, attractions, water parks,
@@ -1174,7 +1192,7 @@ async function sourcesData(label, env, ctx) {
   if (stops.filter(x => x.lat != null).length < 6) {
     const osm = await mapSights(center, UA); lap("map");
     for (const o of osm) if (!stops.some(x => sameName(o.name, x.name) || (x.lat != null && kmOf(o, x) < 0.08)) && fold(o.name) !== fold(area))
-      stops.push({ name: o.name, lat: o.lat, lng: o.lng, sl: 0, unesco: false, heritage: !!o.historic, web: o.web, src: ["OpenStreetMap"], kind: o.kind });
+      stops.push({ name: o.name, lat: o.lat, lng: o.lng, sl: 0, unesco: false, heritage: !!o.historic, web: o.web, src: ["OpenStreetMap"], kind: o.kind, localName: o.en || enLocal ? undefined : true });
   }
   // Restaurants and cafes the guidebooks name (English and local), for cross-checking the map's list.
   const eats = [];
@@ -1231,7 +1249,7 @@ async function valhallaLeg(l) {
   return { c, km: Math.round(t.summary.length * 1000) / 1000, min: Math.round(t.summary.time / 60), src: "valhalla" };
 }
 async function routeLeg(l, env, ctx) {
-  const key = `rt1:${l.m}:${r5(l.a[0])},${r5(l.a[1])};${r5(l.b[0])},${r5(l.b[1])}`;
+  const key = (await codeKey("leg", [routeLeg, osrmLeg, valhallaLeg, decodePoly])) + `${l.m}:${r5(l.a[0])},${r5(l.a[1])};${r5(l.b[0])},${r5(l.b[1])}`;
   const hit = await env.USAGE.get(key, "json"); if (hit) return hit;
   let res = null;
   const wait = ms => new Promise(r => setTimeout(r, ms));
