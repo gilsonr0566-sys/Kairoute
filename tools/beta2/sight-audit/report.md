@@ -34,6 +34,28 @@
 - FAME must-see "Cockburn Town" is not offered
 - INFO 4 sights, 0 day trips/towns; must-see: none; top by fame: Grand Turk 26, Her Majesty's Prison 0, Turks and Caicos National Museum 0, Palm Grove Sunset Cabana beach 0
 
+## Haifa (Jerusalem), Israel (Jerusalem (from Haifa, Israel), guide from sources)
+- NOID Church of Our Lady of the Covenant [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID The Benedictine monastery in Abu Ghosh [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- FOLD Yad Vashem is part of Mount Herzl (Wikidata) but is a separate stop
+- FAME #1 best known nearby, "Pentecost" (119 Wikipedia languages, Q39864), is not offered
+- FAME #2 best known nearby, "crucifixion of Jesus" (69 Wikipedia languages, Q51636), is not offered
+- FAME #3 best known nearby, "Solomon's Temple" (69 Wikipedia languages, Q223644), is not offered
+- FAME #4 best known nearby, "Biblical Hebrew" (52 Wikipedia languages, Q1982248), is not offered
+- FAME #5 best known nearby, "President of Israel" (49 Wikipedia languages, Q327948), is not offered
+- FAME #6 best known nearby, "Siege of Jerusalem" (49 Wikipedia languages, Q456993), is not offered
+- FAME #7 best known nearby, "via Dolorosa" (48 Wikipedia languages, Q214077), is not offered
+- FAME #8 best known nearby, "Conquest of Jerusalem" (43 Wikipedia languages, Q815161), is not offered
+- FAME #9 best known nearby, "Siege of Jerusalem" (41 Wikipedia languages, Q844886), is not offered
+- FAME #10 best known nearby, "Deir Yassin massacre" (41 Wikipedia languages, Q1126268), is not offered
+- FAME #11 best known nearby, "Jerusalem Light Rail" (39 Wikipedia languages, Q403269), is not offered
+- FAME #12 best known nearby, "Victims of Acts of Terror Memorial" (37 Wikipedia languages, Q2916616), is not offered
+- FAME #13 best known nearby, "Kiss of Judas" (32 Wikipedia languages, Q10289604), is not offered
+- FAME #14 best known nearby, "Siege of Jerusalem" (31 Wikipedia languages, Q815154), is not offered
+- FAME #15 best known nearby, "King David Hotel bombing" (31 Wikipedia languages, Q1814446), is not offered
+- INFO 18 sights, 4 day trips/towns; must-see: Dome of the Rock, Al-Aqsa Mosque, Western Wall, Israel Museum, Church of the Holy Sepulchre, The Temple Institute, Holy Land, Calvary; top by fame: Al-Aqsa Mosque 103, Holy Land 91, Israel Museum 90, Dome of the Rock 87, Western Wall 84, Calvary 81, Church of the Holy Sepulchre 76, The Temple Institute 76
+- INFO day trips: Abu Ghosh, Tel Aviv, Church of Our Lady of the Covenant, The Benedictine monastery in Abu Ghosh
+
 ## Istanbul, Turkey (Istanbul, Turkey, guide from sources)
 - POS Fatih Istanbul Mosque: app 41.01970,28.94970 is 8.31 km from the map's Fatih Mescidi (node/976474174, 41.00449,28.85270); Wikidata 8.32 km from the map
 - FAME #1 best known nearby, "Fall of Constantinople" (80 Wikipedia languages, Q160077), is not offered
