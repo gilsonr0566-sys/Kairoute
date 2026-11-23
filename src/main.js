@@ -4997,7 +4997,7 @@ function pinRow() {
   if (on !== was) {
     // The spacer also takes the gap the row leaves in its header (Nov 23 feel check: the header shrank 6 px, a jolt as
     // scrolling starts). Measured before pinning, so the page is laid out once.
-    if (on) { const cs = row.parentElement ? getComputedStyle(row.parentElement) : null, gap = cs && /flex|grid/.test(cs.display) ? parseFloat(cs.rowGap) || 0 : 0;
+    if (on) { const cs = row.parentElement ? getComputedStyle(row.parentElement) : null, gap = cs && /flex|grid/.test(cs.display) && (cs.gridTemplateAreas || "none") === "none" ? parseFloat(cs.rowGap) || 0 : 0; // a header laid out in named areas keeps the row's place
       sp.style.height = row.offsetHeight + gap + "px"; row.classList.add("pinned"); }
     else { row.classList.remove("pinned"); sp.style.height = ""; }
   }
@@ -6253,8 +6253,9 @@ function cardSpotOf(id, self) {
   return () => {
     const nx = [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(rid)}"]`)].find(cardShown); if (!nx) return;
     const dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) < 1) return;
-    const pane = document.querySelector("#view .sitesmain");
-    if (pane && pane.scrollHeight > pane.clientHeight + 4 && getComputedStyle(pane).overflowY !== "visible") pane.scrollTop += dy; else window.scrollBy(0, dy);
+    // The panel the card really scrolls in (on tablets the list's own pane); the page only when no panel scrolls.
+    let pane = nx.parentElement; while (pane && pane !== document.body && !(pane.scrollHeight > pane.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(pane).overflowY))) pane = pane.parentElement;
+    if (pane && pane !== document.body) pane.scrollTop += dy; else window.scrollBy(0, dy);
   };
 }
 // Separate stops a few steps apart (a square and the clock on it) say so, so neither looks missing.
