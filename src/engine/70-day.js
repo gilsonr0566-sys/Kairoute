@@ -240,9 +240,14 @@
       const many = order.length > 10, reach = many ? 3 : Infinity;
       for (let pass = 0; pass < (many ? 1 : 3); pass++) {
         let best = null;
+        // Each single move of one stop, and each reversed run of stops (a loop walked the other way round fixes a late
+        // museum without sending a sight across town and back: phone trip check, Nov 23, a Rome day zig-zagged).
+        const cands = [];
         for (let i = 0; i < order.length; i++) for (let j = 0; j < order.length; j++) {
           if (i === j || j === i - 1 || Math.abs(i - j) > reach) continue; // moving to just before the previous is the same as moving that one after
-          const o = order.slice(); const [x] = o.splice(i, 1); o.splice(j, 0, x);
+          const o = order.slice(); const [x] = o.splice(i, 1); o.splice(j, 0, x); cands.push(o); }
+        for (let i = 0; i < order.length - 2; i++) for (let j = i + 2; j < order.length && j - i <= reach; j++) cands.push(order.slice(0, i).concat(order.slice(i, j + 1).reverse(), order.slice(j + 1)));
+        for (const o of cands) {
           if (far.length && near.length && !blockAtEnd(o)) continue;
           // Lunch only adds time, so an order already later or later at a last entry without lunch can't win.
           const bare = walk(o, win, ctx); if (bare.over > cur.r.over || bare.late > cur.r.late) continue;
@@ -458,11 +463,15 @@
   // A dinner suggestion after a land day: the nearest open place to eat not used on another day.
   // The traveler's dinner choice wins: skipped means none; a chosen place is used at its set time (or 6:30 pm), never
   // before the day's end plus the ride there.
+  E.DINNER_LAST = 21 * 60 + 30;
   E.dinnerAfter = (win, lastPoint, end, ctx, usedToday) => {
     const my = E.mealPlan(ctx, "Dinner");
     if (win.hard || !lastPoint || my.skip) return null;
     const e = my.pick || eatsNear(lastPoint, ctx, "Dinner", 4).find(x => !(usedToday && usedToday.has(x.k))); if (!e) return null;
-    const ride = my.pick ? ctx.tr.min(lastPoint, e.r) : 30, from = my.meal.pinned ? my.meal.from : D.from;
+    const ride = my.pick ? ctx.tr.min(lastPoint, e.r) : 30, from = my.meal.pinned ? my.meal.from : D.from, at = Math.max(end + ride, from);
+    // A day that ends late (an arrival at 10 pm) gets no dinner the app picked at 11:30 pm or past midnight, when most
+    // kitchens are closed (outside test round 5, Nov 22); the traveler's own pick or booking stays.
+    if (!my.pick && !my.meal.booked && !my.meal.pinned && at > E.DINNER_LAST) return null;
     return Object.assign({ t: "evening", id: "eat:" + e.k, eatKey: e.k, name: e.r.name, at: Math.max(end + ride, from), min: D.len, lat: e.r.lat, lng: e.r.lng }, my.pick ? { chosen: true } : {}, my.meal.booked ? { booked: true } : {});
   };
 })(KEngine);

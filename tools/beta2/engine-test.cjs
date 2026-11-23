@@ -68,7 +68,7 @@ ok(E.latin('Ζευγολατιό') === 'Zevgolatio' && E.latin('Ευαγγελι
 // Round 1 (Nov 20): an arrival time nobody gave is asked, never planned on; and a straight-to-the-ship day plans no sights.
 // Off a ship and flying out the same day (outside test, Nov 22: bags left at 8:30, collected at 8:45, nothing between):
 // bags are stored only with an hour or more free; under that the day goes straight on with them.
-{ const tight = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '11:00', thru: { mode: 'ship', time: '07:30', point: port }, point: air }), tr);
+{ const tight = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '13:00', thru: { mode: 'ship', time: '07:30', point: port }, point: air }), tr);
   const roomy = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '18:00', thru: { mode: 'ship', time: '07:30', point: port }, point: air }), tr);
   const has = w => [].concat(w.head || [], w.tail || []).some(x => /bags/i.test(x.name || ''));
   ok(!tight.error && !has(tight) && tight.bagsStraight, `under an hour free: no luggage storage, straight on with the bags (head ${JSON.stringify((tight.head || []).map(x => x.name))})`);
@@ -643,6 +643,12 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 // Nov 20 review (finding 5): a road time estimated from the distance never drops as the distance grows.
 { const tb = E.makeTravel({}, {}); let down = 0, prev = 0; for (let km = 1; km <= 300; km += 0.1) { const m = tb.road(km).min; if (m < prev) down++; prev = m; }
   ok(!down, `the road estimate never gets shorter for a longer ride (${down} drops from 1 to 300 km)`); }
+// Weekly ladder, Nov 22: off the ship at 7:00 am with a 10:00 am flight can't work (getting off, the ride, the airport's
+// time); the day says so and plans nothing, never "off the ship" before the ship is in.
+{ const tb = E.makeTravel({ walk: 'medium' }, {}), w = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '10:00', point: air, thru: { mode: 'ship', time: '07:00', point: { lat: air.lat + 0.1, lng: air.lng + 0.1, name: 'Port' } } }), tb);
+  ok(w.error && /won't work/.test(w.error) && w.tooTight > 0, `a 10:00 am flight after a 7:00 am ship: said it can't work (${w.error || 'planned from ' + E.clock(w.start)})`);
+  const ok2 = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '15:00', point: air, thru: { mode: 'ship', time: '07:00', point: { lat: air.lat + 0.1, lng: air.lng + 0.1, name: 'Port' } } }), tb);
+  ok(!ok2.error && ok2.start >= 7 * 60, `a 3:00 pm flight after a 7:00 am ship is planned, starting once off the ship (${ok2.error || E.clock(ok2.start)})`); }
 // First-timer walk, Nov 22: a 9:00 am train on a day set to start at 9:00 is this morning's: the day starts earlier to
 // reach it, with no time for sights (it was taken as the next morning's: sights all day, "free time 16 h 10 min").
 { const tb = E.makeTravel({ walk: 'medium' }, {}), w = E.dayWindow(day({ type: 'departure', mode: 'train', time: '09:00', startTime: '09:00', point: air }), tb);
@@ -655,6 +661,12 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
     for (const [mode, t] of [['flight', '06:30'], ['flight', '08:00'], ['train', '09:10']]) { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[li], { mode, time: t, startTime: '09:00' });
       const p = E.planTrip(s)[li], stops = (p.items || []).filter(x => x.t === 'stop');
       ok(!stops.length && p.end <= p.endBy && p.end <= E.toMin(t) && !(p.explain || []).some(x => /^Free time/.test(x)), `a ${t} ${mode} on the leaving day: no sights, straight there (${stops.length} sights, ends ${E.clock(p.end)}, be there by ${E.clock(p.endBy)})`); } } }
+// Outside test round 5 (Nov 22): a late arrival never gets a dinner the app picked at 11:30 pm or after midnight.
+{ const s0 = fs.existsSync(dir) && fs.readdirSync(dir).filter(f => f.endsWith('.json')).map(f => JSON.parse(fs.readFileSync(path.join(dir, f)))).find(s => (s.days || []).some(d => d.type === 'arrival'));
+  if (s0) { const ai = s0.days.findIndex(d => d.type === 'arrival');
+    for (const t of ['21:30', '22:00']) { const s = JSON.parse(JSON.stringify(s0)); Object.assign(s.days[ai], { mode: 'flight', time: t }); delete (s.days[ai].mealPrefs || {}).Dinner;
+      const ev = (E.planTrip(s)[ai].items || []).find(x => x.t === 'evening');
+      ok(!ev || ev.at <= E.DINNER_LAST, `arriving at ${t}: no dinner picked for ${ev ? E.clock(ev.at) : '-'}`); } } }
 // Nov 20 review (finding 8): a flight or all aboard after midnight is the next morning's; the day stays readable and no
 // clock prints a minus sign.
 { const tb = E.makeTravel({ walk: 'medium' }, {});
@@ -853,7 +865,14 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
       const lim = { low: 0.8, medium: 1.7, high: 3.2 }[(sn.prefs || {}).walk || 'medium'] || 1.7;
       pl.forEach((p, i) => (p && p.items || []).forEach(x => { if (x.t !== 'ride' || !x.options) return; const w = x.options.find(o => o.kind === 'walk'); if (!w || x.km / 1.3 > 2 * lim) return; rides++;
         x.options.filter(o => o.kind !== 'walk' && o.kind !== 'taxi' && o.min > w.min + E.SLOWER_THAN_WALK).forEach(o => slow.push(`${f} day ${i + 1}: ${o.how} ${o.min} min beside a ${w.min}-min walk`)); })); }
-    ok(!slow.length, `no way offered beside a walk of up to twice the walking limit is more than ${E.SLOWER_THAN_WALK} min slower than walking (${rides} rides with a walk; ${slow.slice(0, 3).join('; ')})`); }
+    ok(!slow.length, `no way offered beside a walk of up to twice the walking limit is more than ${E.SLOWER_THAN_WALK} min slower than walking (${rides} rides with a walk; ${slow.slice(0, 3).join('; ')})`);
+    // The way taken is never a bus or metro slower than the walk, for a traveler who walks little too (odd-trips stress test,
+    // Nov 22: Barcelona, 28 min by bus for 0.9 km beside a 16-20 min walk): it stays a choice.
+    const picked = []; let n2 = 0;
+    for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { let pl; try { const sn = JSON.parse(fs.readFileSync(path.join(dir, f))); sn.prefs = Object.assign({}, sn.prefs, { walk: 'low' }); pl = E.planTrip(E.applyPlaces(sn, places)); } catch (e) { continue; }
+      pl.forEach((p, i) => (p && p.items || []).forEach(x => { if (x.t !== 'ride' || !x.options || x.chosen || x.mine) return; const w = x.options.find(o => o.kind === 'walk'), pk = x.options.find(o => o.id === x.choice) || null;
+        if (!w) return; n2++; if (x.mode !== 'walk' && x.kind !== 'taxi' && x.kind !== 'walk' && (x.min || 0) > w.min && !x.options.some(o => o.kind === 'taxi' && o.min < x.min)) picked.push(`${f} day ${i + 1}: ${x.how || x.kind} ${x.min} min beside a ${w.min}-min walk`); })); }
+    ok(n2 > 50 && !picked.length, `walking little, no ride taken is a bus or metro slower than walking (${n2} rides; ${picked.slice(0, 3).join('; ')})`); }
   // ONE hours rule for places to eat and sights (Nov 19 fold): shut for a meal exactly when E.closedForDay says so over
   // the meal's hours, and a place that opens later is waited for by E.hoursFit, as a sight is.
   { const dinnerOnly = { closed: false, oh: { spans: [[18 * 60, 23 * 60]], last: null } }, late = { closed: false, oh: { spans: [[13 * 60, 23 * 60]], last: null } };

@@ -163,6 +163,11 @@
     // that much earlier, and says so. Never a plan that leaves after its own leave-by time.
     if (d.type === "embark" || d.type === "departure") {
       const bare = E.walkDay([], w, tr.estimate, null).end;
+      // Off a ship, plane or train the same day, the day can't start before it arrives: when the next one leaves too soon
+      // to reach it, the day says so and plans nothing (weekly ladder, Nov 22: a 10:00 am flight after a 7:00 am ship
+      // gave "Off the ship 5:30 am", before the ship was in).
+      if (bare > w.endBy && w.through) { const am = (E.MODES[d.thru.mode] || E.MODES.flight).label.toLowerCase(), nx = d.type === "embark" ? "the ship" : "your " + (E.MODES[d.mode] || E.MODES.flight).label.toLowerCase();
+        return Object.assign(E.fail(`This won't work as planned: your ${am} arrives at ${E.clock(E.toMin(d.thru.time))}, and getting off, the ride and the time ${nx} needs take until ${E.clock(bare)}, ${bare - w.endBy} min past the time to be there (${E.clock(w.endBy)}). Check both times on the Trip page.`), { tooTight: bare - w.endBy }); }
       if (bare > w.endBy) { const early = bare - w.endBy; w.plannedStart = w.start; w.start -= early; if (isFinite(w.sightFrom)) w.sightFrom -= early; w.leaveEarly = early; w.notes.push("leaveEarly"); }
     }
     return w;

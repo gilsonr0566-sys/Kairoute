@@ -311,7 +311,10 @@
       if (!pick) { const w = byKind("walk"), t = byKind("taxi");
         // With luggage (to the hotel on arrival, to the station, airport or ship from it) a walk is taken only when it is 10
         // minutes or less (Nov 20 review: 29 minutes on foot with suitcases).
-        pick = w && d <= lim && !(b.bags && w.min > E.BAGS_WALK) ? w : auto.length && (!t || E.publicWins(auto[0].min, t.min)) ? auto[0] : t || auto[0] || pubs[0] || w || opts[0]; }
+        // A bus or metro slower than walking the same way is never taken on its own: it stays a choice, and the taxi (or,
+        // with none, the walk) is the way (odd-trips stress test, Nov 22: "walks little" got a 28 min bus for a 16 min walk).
+        const quick = auto.filter(o => !w || o.min < w.min);
+        pick = w && d <= lim && !(b.bags && w.min > E.BAGS_WALK) ? w : quick.length && (!t || E.publicWins(quick[0].min, t.min)) ? quick[0] : t || quick[0] || (w && !(b.bags && w.min > E.BAGS_WALK) ? w : null) || auto[0] || pubs[0] || w || opts[0]; }
       // A way the guide names that the data doesn't have: said plainly, never planned as if it were known.
       const missing = d > 5 && note ? E.noteKinds(note).filter(k => !opts.some(o => o.kind === k || (k === "train" && (o.kind === "metro" || o.kind === "tram")))) : [];
       // Where each way's time comes from (Nov 19 review: an estimate must never read as a timetable): the timetable, a line
