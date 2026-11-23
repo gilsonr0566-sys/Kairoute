@@ -3,7 +3,7 @@
  "label": "Rome",
  "centre": {
   "lat": 41.8986,
-  "lng": 12.482058
+  "lng": 12.48244
  },
  "findings": [
   {
@@ -117,14 +117,6 @@
     "id": "wv~Q265384",
     "min": 30,
     "kind": "archaeological site or ancient city"
-   }
-  },
-  {
-   "k": "DUP",
-   "t": "San Paolo fuori le Mura = Basilica of Saint Paul Outside the Walls (same Wikidata Q231699)",
-   "x": {
-    "a": "wv~Q231699",
-    "b": "stpaulwalls-far"
    }
   },
   {
@@ -248,7 +240,7 @@
   },
   {
    "k": "INFO",
-   "t": "30 sights, 1 day trips/towns; must-see: St Peter's Basilica, Colosseum and Roman Forum, Pantheon; top by fame: St Peter's Basilica 0, Colosseum and Roman Forum 0, Pantheon 0, Trevi Fountain 0, Piazza Navona 0, San Giovanni in Laterano 0, San Paolo fuori le Mura 0, Palazzo della Cancelleria 0",
+   "t": "30 sights, 1 day trips/towns; must-see: St Peter's Basilica, Colosseum and Roman Forum, Pantheon; top by fame: St Peter's Basilica 0, Colosseum and Roman Forum 0, Pantheon 0, Trevi Fountain 0, Piazza Navona 0, San Giovanni in Laterano 0, Palazzo della Cancelleria 0, Olympic Stadium 0",
    "x": {}
   },
   {
@@ -418,33 +410,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "This is the cathedral church of Rome and first of the major basilicas. It's also the Pope's (as Bishop of Rome) Church. As such it ranks above all other churche",
-   "wdByName": true
-  },
-  {
-   "id": "wv~Q231699",
-   "name": "San Paolo fuori le Mura",
-   "local": "",
-   "lat": 41.858611,
-   "lng": 12.477222,
-   "minutes": 30,
-   "category": "Sight",
-   "kind": "",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": true,
-   "heritage": false,
-   "wd": "Q231699",
-   "src": [],
-   "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "Also known as St Paul Outside the Walls. This is on the outskirts of Rome in an otherwise drab modern neighborhood. The enormous basilica is a faithful reconstr",
    "wdByName": true
   },
   {
@@ -1060,6 +1025,33 @@
    "merged": [],
    "posDoubt": false,
    "summary": "Since 1871 this has been the French Embassy. This 16th-century palace contains an important fresco cycle by Annibale Carracci and houses a library of collection",
+   "wdByName": true
+  },
+  {
+   "id": "wv~Q874832",
+   "name": "Piazza Venezia",
+   "local": "",
+   "lat": 41.896,
+   "lng": 12.48244,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q874832",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "More of an enormous traffic circle than a piazza, but a good central location. The centerpiece is the enormous Vittorio Emanuele Monument (aka the Wedding Cake ",
    "wdByName": true
   },
   {
