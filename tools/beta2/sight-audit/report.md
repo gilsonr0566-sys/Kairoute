@@ -1,3 +1,40 @@
+## Barcelona, Spain (Barcelona)
+- POS Sitges [day trip] {Q15551 by name}: app is 0.38 km from Wikidata's point (not on the map by id)
+- NOID Santa Maria del Mar: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Sant Pau Recinte Modernista: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Bunkers del Carmel: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Gràcia squares: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Pont del Bisbe: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Montserrat monastery [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Girona old town [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Contemporary Art Gallery [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- LEN Barceloneta beach {Q1053014 by name}: 45 min, but a beach usually takes 60-300 min
+- FAME #1 best known nearby, "Barcelona Metro" (48 Wikipedia languages, Q237189), is not offered
+- FAME #2 best known nearby, "Torre Glòries" (40 Wikipedia languages, Q336246), is not offered
+- FAME #3 best known nearby, "German Pavilion, Barcelona" (30 Wikipedia languages, Q807915), is not offered
+- FAME must-see "La Rambla" is offered (La Rambla & La Boqueria market) but not marked must-see
+- INFO 25 sights, 6 day trips/towns; must-see: Sagrada Família, Park Güell, Casa Batlló, Gothic Quarter & Cathedral; top by fame: Sagrada Família 0, Park Güell 0, Casa Batlló 0, Casa Milà (La Pedrera) 0, Gothic Quarter & Cathedral 0, La Rambla & La Boqueria market 0, Museu Picasso 0, Santa Maria del Mar 0
+- INFO day trips: Montserrat monastery, Sitges, Girona old town, Tibidabo, Maricel Museum, Contemporary Art Gallery
+
+## Chania (Chania, built-in guide)
+- POS Souda Bay War Cemetery [day trip] {Q22919952 by name}: app is 1.52 km from Wikidata's point (not on the map by id)
+- NOID Venetian harbor and lighthouse: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Old town lanes and Topanas: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Municipal Market (Agora): built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Church of Saint Nicholas, Splantzia: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Firkas fortress and Maritime Museum: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- LEN Souda Bay War Cemetery [day trip] {Q22919952 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- FAME #1 best known nearby, "Battle of Crete" (45 Wikipedia languages, Q153316), is not offered
+- FAME must-see "Venetian Harbour|Old Venetian Harbour|Venetian port" is not offered
+- INFO 6 sights, 2 day trips/towns; must-see: Venetian harbor and lighthouse, Old town lanes and Topanas; top by fame: Venetian harbor and lighthouse 0, Old town lanes and Topanas 0, Municipal Market (Agora) 0, Church of Saint Nicholas, Splantzia 0, Firkas fortress and Maritime Museum 0, Etz Hayyim Synagogue 0
+- INFO day trips: Balos lagoon, Souda Bay War Cemetery
+
+## Perfect Day at CocoCay, Bahamas (Perfect Day at CocoCay, Bahamas, guide from sources)
+- NOID Harbour Beach: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- NOID Thrill Waterpark: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- NOID Harbor Lagoon: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- INFO 3 sights, 0 day trips/towns; must-see: none; top by fame: Harbour Beach 0, Thrill Waterpark 0, Harbor Lagoon 0
+
 ## Dubai, UAE (Dubai, UAE, guide from sources)
 - FAME #1 best known nearby, "Dubai Metro" (50 Wikipedia languages, Q83787), is not offered
 - FAME #2 best known nearby, "Emirates Office Tower" (35 Wikipedia languages, Q845182), is not offered
@@ -55,6 +92,19 @@
 - FAME #15 best known nearby, "King David Hotel bombing" (31 Wikipedia languages, Q1814446), is not offered
 - INFO 18 sights, 4 day trips/towns; must-see: Dome of the Rock, Al-Aqsa Mosque, Western Wall, Israel Museum, Church of the Holy Sepulchre, The Temple Institute, Holy Land, Calvary; top by fame: Al-Aqsa Mosque 103, Holy Land 91, Israel Museum 90, Dome of the Rock 87, Western Wall 84, Calvary 81, Church of the Holy Sepulchre 76, The Temple Institute 76
 - INFO day trips: Abu Ghosh, Tel Aviv, Church of Our Lady of the Covenant, The Benedictine monastery in Abu Ghosh
+
+## Heraklion (Heraklion, built-in guide)
+- POS Kali Limenes (Fair Havens) [day trip] {Q11818846 by name}: app is 1.39 km from Wikidata's point (not on the map by id)
+- NOT Palace of Knossos {Q9054457 by name}: Wikidata has an end date (closed, dissolved or demolished)
+- NOID Venetian harbor and Koules fortress: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Church of Saint Titus: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID 1866 Street market: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Dominican Church of St Peter: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Phaistos palace [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- LEN Lions Square and 25th August Street {Q6555912 by name}: 40 min, but a square usually takes 5-30 min
+- LEN Fortifications of Heraklion {Q20127741 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- INFO 11 sights, 2 day trips/towns; must-see: Palace of Knossos, Heraklion Archaeological Museum, Church of Saint Titus; top by fame: Palace of Knossos 0, Heraklion Archaeological Museum 0, Venetian harbor and Koules fortress 0, Lions Square and 25th August Street 0, Church of Saint Titus 0, Agios Minas Cathedral 0, 1866 Street market 0, Historical Museum of Crete 0
+- INFO day trips: Phaistos palace, Kali Limenes (Fair Havens)
 
 ## Istanbul, Turkey (Istanbul, Turkey, guide from sources)
 - POS Fatih Istanbul Mosque: app 41.01970,28.94970 is 8.31 km from the map's Fatih Mescidi (node/976474174, 41.00449,28.85270); Wikidata 8.32 km from the map
@@ -179,6 +229,22 @@
 - FAME must-see "Fort Charlotte" is not offered
 - INFO 6 sights, 0 day trips/towns; must-see: Ardastra Gardens, Zoo and Conservation Centre, National Art Gallery of The Bahamas, Cable Beach, Fort Fincastle; top by fame: Paradise Island 20, Ardastra Gardens, Zoo and Conservation Centre 5, National Art Gallery of The Bahamas 5, Cable Beach 5, Fort Fincastle 4, Pirates of Nassau 1
 
+## Reykjavik, Iceland (Reykjavik, Iceland, guide from sources)
+- POS Reykjavík Cathedral: app is 0.70 km from Wikidata's point (not on the map by id)
+- POS Hafnarfjörður [day trip]: app 64.06670,-21.95000 is 0.48 km from the map's Hafnarfjordur (node/2171372991, 64.06954,-21.95757); Wikidata 0.49 km from the map
+- NOID Hafnarfjörður Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Hafnarfjarðarkirkja [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Sankti Jósefskirkja [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Karmelklaustrið í Hafnarfirði [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Safnaðarheimili Fríkirkjunnar í Hafnarfirði [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Víðistaðatún [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Viti [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- LEN Reykjavík Botanic Garden: 40 min, but a art museum or gallery usually takes 45-240 min
+- LEN Hafnarborg [day trip] {Q15961654 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- FAME must-see "Harpa" is offered (Harpa) but not marked must-see
+- INFO 13 sights, 10 day trips/towns; must-see: Hallgrímskirkja, Icelandic Phallological Museum, Viðey; top by fame: Hallgrímskirkja 43, Icelandic Phallological Museum 41, Viðey 28, National Museum of Iceland 25, Imagine Peace Tower 23, Harpa 22, Landakotskirkja 21, Perlan 21
+- INFO day trips: Hafnarfjörður, Hafnarborg, Hafnarfjörður Museum, Hafnarfjarðarkirkja, Sankti Jósefskirkja, Karmelklaustrið í Hafnarfirði, Safnaðarheimili Fríkirkjunnar í Hafnarfirði, Hellisgerði, Víðistaðatún, Viti
+
 ## Santorini (Santorini, built-in guide)
 - NOID Fira caldera path: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Oia village: built-in sight with no Wikidata id and nothing of the name on the map nearby
@@ -187,4 +253,27 @@
 - FAME #1 best known nearby, "Minoan eruption" (34 Wikipedia languages, Q1144693), is not offered
 - FAME must-see "Akrotiri" is offered (Akrotiri prehistoric town) but not marked must-see
 - INFO 5 sights, 0 day trips/towns; must-see: Fira caldera path, Oia village; top by fame: Fira caldera path 0, Oia village 0, Akrotiri prehistoric town 0, Pyrgos village 0, Museum of Prehistoric Thera 0
+
+## Venice, Italy (Venice, Italy, guide from sources)
+- POS Padua [day trip] {Q617 by name}: app is 1.12 km from Wikidata's point (not on the map by id)
+- DUP Palazzo della Ragione ~ Palazzo del Bo' (182 m apart, same words)
+- NOID Santi Giovanni e Paolo Church: no Wikidata id and nothing of the name on the map nearby (from Wikidata (Wikipedia in many languages), national heritage register, Wikivoyage (English), Wikipedia in Italian)
+- NOID Cathedral of Mestre [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Bissuola Park [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Archaeological Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Saint Anthony's cathedral [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Astronomic Observatory [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Botanic Garden [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Eremitani Civic Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NAME Piazza Ferretto [day trip] {Q3902198 by name}: local name; Wikidata's English name is "Piazza Erminio Ferretto"
+- NAME Palazzo del Bo' [day trip] {Q3360829 by name}: local name; Wikidata's English name is "Bo Palace"
+- LEN Scrovegni Chapel [day trip] {Q963954 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- FAME #3 best known nearby, "St Mark's Campanile" (36 Wikipedia languages, Q754194), is not offered
+- FAME #4 best known nearby, "Horses of Saint Mark" (33 Wikipedia languages, Q1994701), is not offered
+- FAME #5 best known nearby, "Ponte dell'Accademia" (28 Wikipedia languages, Q52509), is not offered
+- FAME #6 best known nearby, "Ponte della Libertà" (26 Wikipedia languages, Q1134699), is not offered
+- FAME #7 best known nearby, "Portrait of the Four Tetrarchs" (26 Wikipedia languages, Q2570221), is not offered
+- FAME #8 best known nearby, "MOSE" (25 Wikipedia languages, Q770350), is not offered
+- INFO 31 sights, 15 day trips/towns; must-see: St Mark's Basilica, Doge's Palace, Santa Maria della Salute, Piazza San Marco, Bridge of Sighs, Rialto Bridge, Grand Canal, Murano; top by fame: St Mark's Basilica 65, Doge's Palace 60, Piazza San Marco 54, Grand Canal 54, Rialto Bridge 52, Murano 52, Bridge of Sighs 51, Santa Maria della Salute 46
+- INFO day trips: Mestre, Venice/Torcello, Padua, Cathedral of Mestre, Piazza Ferretto, Bissuola Park, Archaeological Museum, Church of Santa Fosca, Saint Anthony's cathedral, Scrovegni Chapel, Astronomic Observatory, Palazzo della Ragione, Palazzo del Bo', Botanic Garden, Eremitani Civic Museum
 
