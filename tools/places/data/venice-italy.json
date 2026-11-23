@@ -387,7 +387,8 @@
      "price": "",
      "wikidata": "Q3716364",
      "content": "",
-     "editions": 3
+     "editions": 3,
+     "en": "Duomo (Mestre)"
     },
     {
      "kind": "see",
@@ -649,7 +650,8 @@
      "price": "€3..0, reduced €1.50",
      "wikidata": "Q17199095",
      "content": "Collection of Greek and Roman finds, archaeological finds from the estuary from Paleo-Veneto and Etruscan periods.",
-     "editions": 6
+     "editions": 6,
+     "en": "Museo provinciale di Torcello"
     },
     {
      "kind": "see",
@@ -660,7 +662,8 @@
      "price": "",
      "wikidata": "Q3585411",
      "content": "Has the form of a Greek cross, which is surrounded by a semi-octagonal porticus.",
-     "editions": 5
+     "editions": 5,
+     "en": "Santa Fosca"
     }
    ],
    "foodDrink": [
@@ -692,7 +695,8 @@
      "price": "Free entrance",
      "wikidata": "Q810139",
      "content": "Saint Anthony's Basilica is the best-known tourist site in Padova - millions of pilgrims visit every year. Built immediately after \"The Saint's\" death in the 1200s, it houses his tomb and notable relics. The statues and crucifix on the main",
-     "editions": 38
+     "editions": 38,
+     "en": "Basilica of Saint Anthony of Padua"
     },
     {
      "kind": "see",
@@ -714,7 +718,8 @@
      "price": "",
      "wikidata": "Q3966414",
      "content": "Although the observatory was built after Galileo's time in Padua, you'll learn a lot about his significance for the research in Padua. You reach the top of the tower after a lecture of about one hour and can enjoy the view. ''Tickets at the",
-     "editions": 9
+     "editions": 9,
+     "en": "Astronomical Observatory of Padova"
     },
     {
      "kind": "see",
@@ -736,7 +741,8 @@
      "price": "",
      "wikidata": "Q3360829",
      "content": "",
-     "editions": 11
+     "editions": 11,
+     "en": "Bo Palace"
     },
     {
      "kind": "see",
@@ -748,7 +754,8 @@
      "wikidata": "Q598892",
      "content": "The world's oldest still operating botanic garden, operated by the University of Padua, and on the UNESCO World Heritage list since 1997. It is not large, but is subtly laid out to swallow groups of people and give the impression of solitud",
      "editions": 40,
-     "unesco": true
+     "unesco": true,
+     "en": "Padova botanical garden"
     },
     {
      "kind": "see",
@@ -759,7 +766,8 @@
      "price": "",
      "wikidata": "Q3867519",
      "content": "The museum is divided into an archeological section and a picture gallery, which has a very important collection with Tizian, Tintoretto, Giotto and Bellini among other important painters.",
-     "editions": 5
+     "editions": 5,
+     "en": "Civic Museums of Padua"
     }
    ],
    "foodDrink": [],
@@ -3493,7 +3501,8 @@
    "note": "",
    "editions": 13,
    "unesco": false,
-   "web": "http://www.parrocchiasangiobbe.it"
+   "web": "http://www.parrocchiasangiobbe.it",
+   "en": "San Giobbe"
   },
   {
    "name": "S. Michele in Isola",
@@ -3502,7 +3511,8 @@
    "wikidata": "Q1449262",
    "note": "",
    "editions": 14,
-   "unesco": false
+   "unesco": false,
+   "en": "San Michele in Isola"
   },
   {
    "name": "Santa Maria dei Miracoli",
@@ -3512,7 +3522,8 @@
    "note": "A perfect jewel box church, simple in form but ornamented with fine exterior marble facings.",
    "editions": 24,
    "unesco": false,
-   "web": "https://www.savevenice.org/project/church-of-santa-maria-dei-miracoli"
+   "web": "https://www.savevenice.org/project/church-of-santa-maria-dei-miracoli",
+   "en": "Santa Maria dei Miracoli, Venice"
   },
   {
    "name": "S. Giovanni Crisostomo",
@@ -3522,7 +3533,8 @@
    "note": "",
    "editions": 14,
    "unesco": false,
-   "web": "http://www.sangiovannicrisostomo.it"
+   "web": "http://www.sangiovannicrisostomo.it",
+   "en": "San Giovanni Grisostomo, Venice"
   },
   {
    "name": "San Giovanni e Paolo",
@@ -3532,7 +3544,8 @@
    "note": "A fine, huge Dominican church with the tombs of many Doges. It shares its piazza with the fine Renaissance façade of the Scuola San Marco and an equestrian statue of the mercenary captain Bartolomeo Colleoni (see below).",
    "editions": 28,
    "unesco": false,
-   "web": "https://santigiovanniepaolo.it/"
+   "web": "https://santigiovanniepaolo.it/",
+   "en": "Santi Giovanni e Paolo"
   },
   {
    "name": "Santa Maria della Pietà",
@@ -3551,7 +3564,8 @@
    "wikidata": "Q946542",
    "note": "",
    "editions": 20,
-   "unesco": false
+   "unesco": false,
+   "en": "San Francesco della Vigna"
   },
   {
    "name": "S. Giovanni in Bragora",
@@ -3561,7 +3575,8 @@
    "note": "",
    "editions": 16,
    "unesco": false,
-   "web": "https://sangiovannibattistabragora.it/"
+   "web": "https://sangiovannibattistabragora.it/",
+   "en": "San Giovanni in Bragora"
   },
   {
    "name": "S. Maria Formosa",
@@ -3570,7 +3585,8 @@
    "wikidata": "Q1813687",
    "note": "The first church dedicated to \"Mary of the Forms\" was built on this spot in the VII century, when the Virgin ordered bishop Magnus to erect one, appearing to him as an exceedingly shapely woman. The current building, planned by Codussi, dat",
    "editions": 17,
-   "unesco": false
+   "unesco": false,
+   "en": "Santa Maria Formosa"
   },
   {
    "name": "Basilica di San Pietro di Castello",
@@ -3580,7 +3596,8 @@
    "note": "Venice cathedral up to 1807, when the see was transferred to San Marco.",
    "editions": 20,
    "unesco": false,
-   "web": "http://www.patriarcatovenezia.it"
+   "web": "http://www.patriarcatovenezia.it",
+   "en": "San Pietro di Castello"
   },
   {
    "name": "S. Zaccaria",
@@ -3589,7 +3606,8 @@
    "wikidata": "Q794876",
    "note": "",
    "editions": 27,
-   "unesco": false
+   "unesco": false,
+   "en": "San Zaccaria"
   },
   {
    "name": "Museo Diocesano",
@@ -3599,7 +3617,8 @@
    "note": "Religious furniture and objects from now demolished churches and convents, one of the most appealing Romanesque cloisters of Venice.",
    "editions": 5,
    "unesco": false,
-   "web": "http://www.veneziaupt.org/home_page/museo_diocesano/00000031_Il_Museo_Diocesano._Storia__collezione_e_servizi.html"
+   "web": "http://www.veneziaupt.org/home_page/museo_diocesano/00000031_Il_Museo_Diocesano._Storia__collezione_e_servizi.html",
+   "en": "Museo diocesano d'arte sacra Sant'Apollonia"
   },
   {
    "name": "Museo Storico Navale",
@@ -3636,7 +3655,8 @@
    "wikidata": "Q1290662",
    "note": "Famous painting cycle by Vittore Carpaccio depicting the lives of St.George, Tryphon and Jerome.",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "en": "Scuola di San Giorgio degli Schiavoni"
   },
   {
    "name": "ASAC Library",
@@ -3659,7 +3679,8 @@
    "wikidata": "Q1093909",
    "note": "18th-century Dominican church on the Giudecca canal. The classical style building has a well-lit interior and is exceptional in preserving its original layout and Rococo decoration intact. The church and almost all its sculpture and paintin",
    "editions": 18,
-   "unesco": false
+   "unesco": false,
+   "en": "Gesuati"
   },
   {
    "name": "S. Maria della Salute",
@@ -3669,7 +3690,8 @@
    "note": "As a votive offering for the city's deliverance from the Black Plague, the church was designed in the then fashionable Baroque style. Construction began in 1631. Most of the objects of art housed in the church bear references to the Black D",
    "editions": 46,
    "unesco": false,
-   "web": "https://basilicasalutevenezia.it/"
+   "web": "https://basilicasalutevenezia.it/",
+   "en": "Santa Maria della Salute"
   },
   {
    "name": "Santa Maria del Carmelo church",
@@ -3678,7 +3700,8 @@
    "wikidata": "Q2780025",
    "note": "Large 14th-century Roman Catholic church.",
    "editions": 12,
-   "unesco": false
+   "unesco": false,
+   "en": "Santa Maria dei Carmini"
   },
   {
    "name": "SS. Redentore",
@@ -3687,7 +3710,8 @@
    "wikidata": "Q830807",
    "note": "",
    "editions": 32,
-   "unesco": false
+   "unesco": false,
+   "en": "Il Redentore"
   },
   {
    "name": "Punta della Dogana",
@@ -3724,7 +3748,8 @@
    "note": "Former residence of Italian industrialist ''Vittorio Cini'' who amassed large collection of Italian art. The gallery houses a collection of 15th and 16th cent paintings from Tuscany and Ferrara, period furniture, silver, ivory and ceramic o",
    "editions": 7,
    "unesco": false,
-   "web": "https://www.palazzocini.it"
+   "web": "https://www.palazzocini.it",
+   "en": "Palazzo Loredan Cini"
   },
   {
    "name": "The Peggy Guggenheim Museum",
@@ -3734,7 +3759,8 @@
    "note": "Offers a personal collection of modern art collected by Peggy Guggenheim. Peggy was an American married to modern artist Max Ernst, and funded a number of his contemporaries. The gallery includes a sculpture garden and works by Picasso, Kan",
    "editions": 24,
    "unesco": false,
-   "web": "https://www.guggenheim-venice.it/"
+   "web": "https://www.guggenheim-venice.it/",
+   "en": "Peggy Guggenheim Collection"
   },
   {
    "name": "Scuola Grande dei Carmini",
@@ -3790,7 +3816,8 @@
    "note": "Birthplace of Venice's most famous playwright. Museum, library and theater studies center. A MUVE museum.",
    "editions": 7,
    "unesco": false,
-   "web": "https://carlogoldoni.visitmuve.it/"
+   "web": "https://carlogoldoni.visitmuve.it/",
+   "en": "Casa di Goldoni"
   },
   {
    "name": "Leonardo da Vinci Museum Venice",
@@ -3850,7 +3877,8 @@
    "note": "Modern art collection, paintings of the 19th and 20th century. A MUVE museum.",
    "editions": 4,
    "unesco": false,
-   "web": "http://capesaro.visitmuve.it/en/home/"
+   "web": "http://capesaro.visitmuve.it/en/home/",
+   "en": "Galleria Internazionale d'Arte Moderna"
   },
   {
    "name": "Ca' Pesaro - Museum of Oriental Art",
@@ -3860,7 +3888,8 @@
    "note": "Beautiful palace housing the gallery of modern art focusing on Italian art in the 19th century as well as the Marco Polo Museum, a rich collection mainly of Asian exhibits (fabrics, clothes, armours, porcelain). A MUVE museum.",
    "editions": 27,
    "unesco": false,
-   "web": "https://capesaro.visitmuve.it/en/home"
+   "web": "https://capesaro.visitmuve.it/en/home",
+   "en": "Ca' Pesaro"
   },
   {
    "name": "Doge's Palace",
@@ -3880,7 +3909,8 @@
    "note": "The current tower dates from 1912; an exact replica of the previous tower which collapsed in 1902. The top of the tower offers great views of Venice and the lagoon.",
    "editions": 36,
    "unesco": false,
-   "web": "http://www.basilicasanmarco.it/basilica/campanile/"
+   "web": "http://www.basilicasanmarco.it/basilica/campanile/",
+   "en": "St Mark's Campanile"
   },
   {
    "name": "Clock tower",
@@ -3890,7 +3920,8 @@
    "note": "Having been closed for restoration for many years, the restored astronomical clock is now visible. The fascinating tour of the clock mechanism (and rooftop bell) can only be visited on a guided tour, in English: M-W at 10:00 and 11:00, on o",
    "editions": 22,
    "unesco": false,
-   "web": "http://torreorologio.visitmuve.it/"
+   "web": "http://torreorologio.visitmuve.it/",
+   "en": "St Mark's Clocktower"
   },
   {
    "name": "Ponte di Rialto",
@@ -3899,7 +3930,8 @@
    "wikidata": "Q52505",
    "note": "The bridge has become one of Venice's most recognizable icons and has a history that spans over 800 years. Today's Rialto Bridge was completed in 1591 and was used to replace a wooden bridge that collapsed in 1524.",
    "editions": 52,
-   "unesco": false
+   "unesco": false,
+   "en": "Rialto Bridge"
   },
   {
    "name": "Saint Mark's Basilica",
@@ -3909,7 +3941,8 @@
    "note": "Saint Mark's Basilica is on the Piazza San Marco and is one of the highlights of a visit to Venice. As with most churches in Italy, you must be dressed appropriately to be allowed in; this means no short skirts or bare shoulders. You are no",
    "editions": 65,
    "unesco": false,
-   "web": "http://www.basilicasanmarco.it/"
+   "web": "http://www.basilicasanmarco.it/",
+   "en": "St Mark's Basilica"
   },
   {
    "name": "S. Giuliano",
@@ -3919,7 +3952,8 @@
    "note": "",
    "editions": 12,
    "unesco": false,
-   "web": "https://salvadorstefano.it/"
+   "web": "https://salvadorstefano.it/",
+   "en": "San Zulian"
   },
   {
    "name": "Basilica San Giorgio Maggiore",
@@ -3929,7 +3963,8 @@
    "note": "Designed by Andrea Palladio and build 1566-1610. Very nice views of Venice from the bell tower.",
    "editions": 29,
    "unesco": false,
-   "web": "https://www.abbaziasangiorgio.it"
+   "web": "https://www.abbaziasangiorgio.it",
+   "en": "Church of San Giorgio Maggiore"
   },
   {
    "name": "S. Stefano",
@@ -3938,7 +3973,8 @@
    "wikidata": "Q974832",
    "note": "",
    "editions": 19,
-   "unesco": false
+   "unesco": false,
+   "en": "Santo Stefano, Venice"
   },
   {
    "name": "S. Salvatore",
@@ -3948,7 +3984,8 @@
    "note": "Includes the tomb of Caterina Cornaro, Queen of Cyprus (1454-1510).",
    "editions": 20,
    "unesco": false,
-   "web": "http://www.chiesasansalvador.it"
+   "web": "http://www.chiesasansalvador.it",
+   "en": "San Salvador"
   },
   {
    "name": "Correr Museum",
@@ -3958,7 +3995,8 @@
    "note": "Interesting collection of globes, starting from the 16th century. There is also an only library hall, an archeological museum of Roman antiques and an important picture gallery. The museum offers a tour of Venetian history. Remarkable paint",
    "editions": 22,
    "unesco": false,
-   "web": "http://correr.visitmuve.it/"
+   "web": "http://correr.visitmuve.it/",
+   "en": "Museo Correr"
   },
   {
    "name": "Palazzo Grassi",
@@ -3978,7 +4016,8 @@
    "note": "Collection of paintings and lamps. A MUVE museum.",
    "editions": 4,
    "unesco": false,
-   "web": "http://www.fortuny.visitmuve.it/en"
+   "web": "http://www.fortuny.visitmuve.it/en",
+   "en": "Museo Fortuny"
   },
   {
    "name": "Scala Contarini del Bovolo",
@@ -4002,7 +4041,8 @@
    "note": "Collection of ancient Greek and Roman sculptures, Egyptian, Assyrian and Babylonian artefacts.",
    "editions": 8,
    "unesco": false,
-   "web": "https://archeologicovenezia.cultura.gov.it/"
+   "web": "https://archeologicovenezia.cultura.gov.it/",
+   "en": "Museo Archeologico Nazionale, Venice"
   },
   {
    "name": "Marciana National Library",
@@ -4012,7 +4052,8 @@
    "note": "Buildings by Sansovino, most important collection of books in Venice.",
    "editions": 42,
    "unesco": false,
-   "web": "https://bibliotecanazionalemarciana.cultura.gov.it/"
+   "web": "https://bibliotecanazionalemarciana.cultura.gov.it/",
+   "en": "Biblioteca Nazionale Marciana"
   },
   {
    "name": "Lace Museum",
@@ -4042,7 +4083,8 @@
    "wikidata": "Q1332755",
    "note": "The summer residence of the Venetian patricians. The façade features large Gothic windows and Veneto-Byzantine patere and panels from the 12th and 13th centuries. It is one of the few palazzi which escaped the restructuring of the island in",
    "editions": 6,
-   "unesco": false
+   "unesco": false,
+   "en": "Palazzo da Mula"
   },
   {
    "name": "Glass Museum",

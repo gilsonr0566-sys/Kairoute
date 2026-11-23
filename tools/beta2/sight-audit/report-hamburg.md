@@ -2,12 +2,7 @@
 - POS Port of Hamburg: app is 1.38 km from Wikidata's point (not on the map by id)
 - POS Außenalster: app is 1.05 km from Wikidata's point (not on the map by id)
 - POS Wallanlagen [day trip] {Q907935 by name}: app is 0.35 km from Wikidata's point (not on the map by id)
-- POS Holstentor [day trip]: app is 59.08 km from Wikidata's point (not on the map by id)
 - DUP Buxtehude ~ Buxtehude Museum für Regionalgeschichte und Kunst (43 m apart, same words)
-- DUP Itzehoe ~ Kloster Itzehoe (224 m apart, same words)
-- NOT St. James' Church: Wikidata has an end date (closed, dissolved or demolished)
-- NOT St. Nicholas Church, Hamburg: Wikidata has an end date (closed, dissolved or demolished)
-- NOT St. Ansgar: Wikidata has an end date (closed, dissolved or demolished)
 - NOID Rathaus [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Roland [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Dom St. Petri [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
@@ -18,27 +13,21 @@
 - NOID St. Marien [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID The Dom [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID St. Petri [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
-- NOID St. Aegidien [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID St. Katharinen [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Behnhaus/Drägerhaus [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
-- FOLD Speicherstadt is part of HafenCity (Wikidata) but is a separate stop
-- FOLD Elbphilharmonie is part of HafenCity (Wikidata) but is a separate stop
-- FOLD International Maritime Museum Hamburg is part of HafenCity (Wikidata) but is a separate stop
-- FOLD Prototype Museum is part of HafenCity (Wikidata) but is a separate stop
-- FOLD Kesselhaus is part of HafenCity (Wikidata) but is a separate stop
-- LEN Hamburger Kunsthalle: 40 min, but a art museum or gallery usually takes 45-240 min
-- LEN Deichtorhallen: 40 min, but a art museum or gallery usually takes 45-240 min
-- LEN Kaiser-Wilhelm-Denkmal, Hamburg: 40 min, but a fountain, statue or monument usually takes 5-30 min
+- NOID Rathaus [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - LEN Gerhard-Marcks-Haus [day trip] {Q1511196 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
 - LEN Weserburg [day trip] {Q2563859 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
-- LEN Germanengrab [day trip] {Q1514083 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- LEN Holstentor [day trip] {Q321229 by name}: 30 min, but a castle or fortress usually takes 45-180 min
 - LEN Burgtor [day trip] {Q538276 by name}: 30 min, but a castle or fortress usually takes 45-180 min
 - LEN Heiligen-Geist-Hospital [day trip] {Q317608 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
 - FAME #1 best known nearby, "Der Spiegel" (65 Wikipedia languages, Q131478), is not offered
 - FAME #2 best known nearby, "Hamburg U-Bahn" (39 Wikipedia languages, Q6445), is not offered
 - FAME #4 best known nearby, "Bombing of Hamburg in World War II" (32 Wikipedia languages, Q316868), is not offered
+- FAME must-see "Elbphilharmonie" is not offered
+- FAME must-see "Speicherstadt" is not offered
 - FAME must-see "Miniatur Wunderland" is offered (Miniatur Wunderland) but not marked must-see
 - FAME must-see "St. Michael's Church|St Michael's Church|Michel" is not offered
-- INFO 47 sights, 44 day trips/towns; must-see: Speicherstadt, Hamburger Kunsthalle, Elbphilharmonie, Chilehaus, Volksparkstadion, Port of Hamburg, St. Pauli; top by fame: International Maritime Museum Hamburg 60, Speicherstadt 41, Elbphilharmonie 41, Chilehaus 35, Port of Hamburg 35, HafenCity 35, Hamburger Kunsthalle 34, Reeperbahn 31
-- INFO day trips: Bremen, Buxtehude, Itzehoe, Lübeck, Rathaus, Roland, Dom St. Petri, Böttcherstraße, Wallanlagen, Schnoor, Überseemuseum, Wuseum, Kunsthalle, Gerhard-Marcks-Haus, Wilhelm-Wagenfeld-Haus, Weserburg, St. Petri church, City hall, Buxtehude Museum für Regionalgeschichte und Kunst, Germanengrab, Nagelsche Fachwerkhäuser, Stadtkirche St. Laurentii, St.-Jürgen-Kapelle, St. Marien, The Dom, St. Petri, St. Jakobi, St. Aegidien, St. Katharinen, Holstentor, Burgtor, Heiligen-Geist-Hospital, Behnhaus/Drägerhaus, Willy Brandt House, Haus der Kaufmannschaft, Museumsquartier St. Annen, Buddenbrookhaus, Günter-Grass-Haus, Museumshafen, European Hansemuseum, Museum für Natur und Umwelt Lübeck, Kloster Itzehoe, Rathaus, Theaterfigurenmuseum Lübeck
+- INFO 48 sights, 39 day trips/towns; must-see: Hamburger Kunsthalle, Chilehaus, Volksparkstadion, Port of Hamburg; top by fame: International Maritime Museum Hamburg 60, St.-Pauli-Kirche 37, Chilehaus 35, Port of Hamburg 35, Hafenmuseum 35, Hamburger Kunsthalle 34, Reeperbahn 31, Miniatur Wunderland 30
+- INFO day trips: Bremen, Buxtehude, Lübeck, Lüneburg, Rathaus, Roland, Dom St. Petri, Böttcherstraße, Wallanlagen, Schnoor, Überseemuseum, Wuseum, Kunsthalle, Gerhard-Marcks-Haus, Wilhelm-Wagenfeld-Haus, Weserburg, St. Petri church, City hall, Buxtehude Museum für Regionalgeschichte und Kunst, St. Marien, The Dom, St. Petri, St. Jakobi, St. Aegidien, St. Katharinen, Holstentor, Burgtor, Heiligen-Geist-Hospital, Behnhaus/Drägerhaus, Rathaus, Willy Brandt House, Haus der Kaufmannschaft, Museumsquartier St. Annen, Buddenbrookhaus, Günter-Grass-Haus, Museumshafen, European Hansemuseum, Museum für Natur und Umwelt Lübeck, Theaterfigurenmuseum Lübeck
 

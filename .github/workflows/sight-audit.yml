@@ -8,6 +8,11 @@ on:
   schedule:
     - cron: "0 14 * * 0"
   workflow_dispatch:
+    inputs:
+      places:
+        description: 'Only these places, as a JSON list (e.g. ["kusadasi-tr"]); empty for all'
+        required: false
+        default: ''
   push:
     branches: ["claude/project-thread-65fiyt"]
     paths: ["tools/beta2/sight-audit.cjs", ".github/workflows/sight-audit.yml", "tools/beta2/sight-audit/run.txt"]
@@ -23,7 +28,7 @@ jobs:
       fail-fast: false
       max-parallel: 16
       matrix:
-        place: [istanbul, vienna, lisbon, barcelona, edinburgh, kyoto, lehavre, southampton, kotor, dubrovnik, juneau, ketchikan, grandturk, mykonos, pontadelgada, halfmooncay, haifa, reykjavik, venice, dubai, athens, santorini, heraklion, chania, kusadasi, messina, naples, rome, madrid, nassau, cococay, hamburg]
+        place: ${{ fromJSON(inputs.places != '' && inputs.places || '["istanbul","vienna","lisbon","barcelona","edinburgh","kyoto","lehavre","southampton","kotor","dubrovnik","juneau","ketchikan","grandturk","mykonos","pontadelgada","halfmooncay","haifa","reykjavik","venice","dubai","athens","santorini","heraklion","chania","kusadasi","messina","naples","rome","madrid","nassau","cococay","hamburg"]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:

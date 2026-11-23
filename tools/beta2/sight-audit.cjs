@@ -24,7 +24,9 @@ const PLACES = [
   ['grandturk', 'Grand Turk, Turks and Caicos', 'port'], ['mykonos', 'Mykonos, Greece', 'port'], ['pontadelgada', 'Ponta Delgada, Azores', 'port'], ['halfmooncay', 'Half Moon Cay, Bahamas', 'port'],
   ['haifa', 'Haifa (Jerusalem), Israel', 'port'], ['reykjavik', 'Reykjavik, Iceland', 'stay'], ['venice', 'Venice, Italy', 'stay'], ['dubai', 'Dubai, UAE', 'stay'],
   // The Greece trip's places (built-in guides plus their sources)
-  ['athens', 'Athens', 'stay'], ['santorini', 'Santorini', 'port'], ['heraklion', 'Heraklion', 'port'], ['chania', 'Chania', 'port'], ['kusadasi', 'Kusadasi', 'port'],
+  ['athens', 'Athens', 'stay'], ['santorini', 'Santorini', 'port'], ['heraklion', 'Heraklion', 'port'], ['chania', 'Chania', 'port'], ['kusadasi', 'Kusadasi', 'port'], ['kusadasi-tr', 'Kusadasi, Turkey', 'port'],
+  // Never in a test list (rule R-11 proof, Nov 23): a port and a city in each of five more languages and scripts.
+  ['antalya-tr', 'Antalya, Turkey', 'port'], ['split-hr', 'Split, Croatia', 'port'], ['thessaloniki-gr', 'Thessaloniki, Greece', 'port'], ['osaka-jp', 'Osaka, Japan', 'stay'], ['haifa-il', 'Haifa, Israel', 'port'],
   ['messina', 'Messina', 'port'], ['naples', 'Naples', 'port'], ['rome', 'Rome', 'port'], ['madrid', 'Madrid', 'stay'],
   // The Bahamas field test, and Hamburg (Lübeck must come up as a day trip)
   ['nassau', 'Nassau, Bahamas', 'port'], ['cococay', 'Perfect Day at CocoCay, Bahamas', 'port'], ['hamburg', 'Hamburg, Germany', 'stay'],
@@ -103,7 +105,7 @@ const sparql = q => getJ('https://query.wikidata.org/sparql?format=json&query=' 
 async function entities(ids) {
   const out = {};
   for (let i = 0; i < ids.length; i += 45) {
-    const j = await getJ('https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=claims|labels|sitelinks|descriptions&languages=en&ids=' + ids.slice(i, i + 45).join('|'));
+    const j = await getJ('https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=claims|labels|sitelinks|descriptions&ids=' + ids.slice(i, i + 45).join('|'));
     Object.assign(out, (j && j.entities) || {});
   }
   return out;
@@ -213,7 +215,10 @@ async function audit() {
       if (/^(the )?(museum|ancient theat(er|re)|church|castle|fort|tower|park|beach|square|harbou?r|old town|market|cathedral|chapel|palace|stadium|lighthouse|viewpoint)$/i.test(String(s.name).trim())) F.push(['NAME', `${tag}: a bare name that says what, not which one`, { id: s.id }]);
       if (/[^\u0000-ɏḀ-ỿ -⁯₠-⃏\s]/.test(s.name)) F.push(['NAME', `${tag}: not in English letters`, { id: s.id }]);
       const en = e && e.labels && e.labels.en && e.labels.en.value;
-      if (en && fold(en) !== fold(s.name) && !fold(s.name).includes(fold(en)) && !fold(en).includes(fold(s.name)) && /\b(palazzo|chiesa|iglesia|igreja|museo|museu|mus[ée]e|kirche|dom|schloss|camii|sarayı|cami|mosquée|église|basilique|praça|plaza|piazza|castello|castillo|torre|ponte|puerta|porta|jardin|giardino|parque|parco|fontana|fuente|palacio|pal[aá]cio|capela|cappella|igrexa|templo|tempio|saray|kule|köprü|kilisesi|mosque|moschee)\b/i.test(s.name)) F.push(['NAME', `${tag}: local name; Wikidata's English name is "${en}"`, { id: s.id, en }]);
+      // Rule R-11, any language: the shown name is one of the place's names in another language, not its English name
+      // (no word lists: Wikidata's own labels decide). A sight shown by what it is ("Museum", "Local sight") is fine.
+      { const other = e && e.labels ? Object.entries(e.labels).filter(([l]) => l !== 'en' && l !== 'mul' && !/^en-/.test(l)).map(([, v]) => fold(v.value)) : [];
+        if (other.includes(fold(s.name)) && (!en || fold(en) !== fold(s.name))) F.push(['NAME', `${tag}: shown under its local name${en ? '; English name "' + en + '"' : ', no English name in any source'}`, { id: s.id }]); }
       if (s.wd && !e) F.push(['NOID', `${tag}: Wikidata id ${s.wd} not found`, { id: s.id }]);
       // NOT: not a visit, or gone.
       if (e) {

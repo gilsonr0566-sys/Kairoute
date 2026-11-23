@@ -84,11 +84,28 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   E.placeOnly = s => E.bareName(s).split(",")[0].trim();
   // What the traveler put in brackets after a port: the place they mean to see from it ("Port (Site)" -> "Site").
   E.bracketPlace = s => { const m = String(s || "").match(/\(([^)]+)\)/); return m ? m[1].trim() : ""; };
+  // Japanese kana, read as written (Hepburn): station and shop names are often in kana alone. Kanji have no reading
+  // without a dictionary, so they are left to E.say's plain word (round 2 outside test, Nov 23: Japanese station and lunch names).
+  const KANA = {}; ("a i u e o ka ki ku ke ko sa shi su se so ta chi tsu te to na ni nu ne no ha hi fu he ho ma mi mu me mo ya - yu - yo ra ri ru re ro wa wi - we wo").split(" ")
+    .forEach((r, i) => { if (r !== "-") { KANA["あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもや_ゆ_よらりるれろわゐ_ゑを"[i]] = r; KANA["アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤ_ユ_ヨラリルレロワヰ_ヱヲ"[i]] = r; } });
+  Object.assign(KANA, { ん: "n", ン: "n", が: "ga", ぎ: "gi", ぐ: "gu", げ: "ge", ご: "go", ざ: "za", じ: "ji", ず: "zu", ぜ: "ze", ぞ: "zo", だ: "da", ぢ: "ji", づ: "zu", で: "de", ど: "do", ば: "ba", び: "bi", ぶ: "bu", べ: "be", ぼ: "bo", ぱ: "pa", ぴ: "pi", ぷ: "pu", ぺ: "pe", ぽ: "po",
+    ガ: "ga", ギ: "gi", グ: "gu", ゲ: "ge", ゴ: "go", ザ: "za", ジ: "ji", ズ: "zu", ゼ: "ze", ゾ: "zo", ダ: "da", ヂ: "ji", ヅ: "zu", デ: "de", ド: "do", バ: "ba", ビ: "bi", ブ: "bu", ベ: "be", ボ: "bo", パ: "pa", ピ: "pi", プ: "pu", ペ: "pe", ポ: "po", ヴ: "vu", "・": " ", "ー": "-" });
+  const SMALL = { ゃ: "ya", ゅ: "yu", ょ: "yo", ャ: "ya", ュ: "yu", ョ: "yo", ぁ: "a", ぃ: "i", ぅ: "u", ぇ: "e", ぉ: "o", ァ: "a", ィ: "i", ゥ: "u", ェ: "e", ォ: "o" };
+  const kanaOf = s => { let out = "";
+    for (let k = 0; k < s.length; k++) { const c = s[k], nx = s[k + 1];
+      if (c === "っ" || c === "ッ") { const r = KANA[nx]; out += r ? r[0] : ""; continue; }
+      if (c === "ー") { out += out.slice(-1); continue; }
+      const r = KANA[c]; if (r == null) { out += c; continue; }
+      if (nx && SMALL[nx]) { const y = SMALL[nx]; out += /^(shi|chi|ji)$/.test(r) ? r.slice(0, -1) + (y.length > 1 ? y.slice(1) : y) : /[aiueo]$/.test(r) && r.length > 1 ? r.slice(0, -1) + y : r + y; k++; continue; }
+      out += r; }
+    // Long vowels as English maps write them: Tokyo, Kyoto, ramen.
+    return out.replace(/ou|oo/g, "o").replace(/uu/g, "u").replace(/aa/g, "a").replace(/ee/g, "e").replace(/(^|\s)([a-z])/g, (m, a, b) => a + b.toUpperCase()); };
   E.latin = name => {
-    const s0 = String(name == null ? "" : name); if (!/[\u0370-\u03ff\u1f00-\u1fff\u0400-\u04ff]/.test(s0)) return s0;
+    const s0 = String(name == null ? "" : name); if (!/[\u0370-\u03ff\u1f00-\u1fff\u0400-\u04ff\u3040-\u30ff]/.test(s0)) return s0;
     const got = latinMemo.get(s0); if (got != null) return got; const r = latinOf(s0); if (latinMemo.size < 5000) latinMemo.set(s0, r); return r;
   };
-  const latinOf = s0 => {
+  const latinOf = s1 => {
+    const s0 = /[\u3040-\u30ff]/.test(s1) ? kanaOf(s1) : s1;
     const s = s0.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC");
     let out = "";
     for (let k = 0; k < s.length;) {
@@ -102,6 +119,16 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
     }
     return out;
   };
+  // A name or line of words the traveler can read: Greek, Cyrillic and kana put into Latin letters; anything still in
+  // another script (Hebrew, Arabic, kanji, Thai...) is never shown. A name gives way to the plain word given ("the stop",
+  // "Train"); in a sentence, the name after "to", "from" or "at" becomes "the stop", after "take" or "ride" "the line", and
+  // any other is left out (round 2 outside test, Nov 23: Hebrew train lines, Japanese station names).
+  const OTHER = /[^\u0000-\u024F\u1E00-\u1EFF\u2000-\u206F\u20A0-\u20CF]/;
+  E.say = (name, plain) => { const t = E.latin(name); if (!OTHER.test(t)) return t;
+    if (plain != null) { const left = t.replace(/[^\u0000-\u024F\u1E00-\u1EFF]+/g, " ").replace(/[()\[\]\-–,·:]+\s*$/g, "").replace(/\(\s*\)/g, "").replace(/\s+/g, " ").trim(); return /[A-Za-z]{3}/.test(left) ? left : plain; }
+    return t.replace(/(\b(?:to|from|at|towards|via|for|into)\s+)?([^\u0000-\u024F\u1E00-\u1EFF\s][^\u0000-\u024F\u1E00-\u1EFF]*(?:\s+[^\u0000-\u024F\u1E00-\u1EFF\s][^\u0000-\u024F\u1E00-\u1EFF]*)*)/gi,
+      (m, pre, run, at, all) => { const b = all.slice(0, at); return pre ? pre + "the stop" : /\b(take|ride|board|catch)\s+the\s+$/i.test(b) ? "line" : /\b(take|ride|board|catch)\s+$/i.test(b) ? "the line" : ""; })
+      .replace(/the stop (station|stop|pier)\b/gi, "the $1").replace(/\(\s*\)/g, "").replace(/\s+([,.;)])/g, "$1").replace(/\s{2,}/g, " ").trim(); };
   E.PAD_MAX = 45; // longest ride each way for a trip out added to fill a day in town // lunch on the go: bought and eaten on the way, minutes
   // A meal starts at most this long after its last orders (Nov 20 phone check: lunch at 3:47 pm after a day trip counted as
   // lunch). The leak report's "odd hour" is the same line.

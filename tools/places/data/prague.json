@@ -925,7 +925,8 @@
    "note": "The Astronomical Clock located on a side tower of the Old Town Hall (reasonably enough, on Old Town Square) is easy to find&mdash;just wait until a few minutes before the hour and look for a large group of tourists standing around waiting f",
    "editions": 47,
    "unesco": false,
-   "web": "http://www.orloj600let.cz/"
+   "web": "http://www.orloj600let.cz/",
+   "en": "Prague Astronomical Clock"
   },
   {
    "name": "Municipal House",
@@ -964,7 +965,8 @@
    "wikidata": "Q394832",
    "note": "The ''Anezsky klaster'' is the first Early Gothic building in Prague (founded 1234) - something notable in a city filled with amazingly well-preserved examples of Gothic architecture such as St Vitus, the Charles Bridge and the Powder Tower",
    "editions": 13,
-   "unesco": false
+   "unesco": false,
+   "en": "convent of St Agnes of Bohemia"
   },
   {
    "name": "Museum of Czech Cubism",
@@ -973,7 +975,8 @@
    "wikidata": "Q2717859",
    "note": "The Museum of Czech Cubism in the renovated House of the Black Madonna exhibits furniture suites, individual pieces, accessory furnishings and objects made of ceramic, glass and metals. It offers an overview of the foremost creative achieve",
    "editions": 18,
-   "unesco": false
+   "unesco": false,
+   "en": "House of the Black Madonna"
   },
   {
    "name": "Museum of Decorative Arts",
@@ -983,7 +986,8 @@
    "note": "This 17th century palazzo-style building houses examples of historical and contemporary crafts, as well as applied arts and design.",
    "editions": 11,
    "unesco": false,
-   "web": "http://www.upm.cz/"
+   "web": "http://www.upm.cz/",
+   "en": "Museum of Decorative Arts in Prague"
   },
   {
    "name": "Church of the Holy Spirit",
@@ -992,7 +996,8 @@
    "wikidata": "Q2282608",
    "note": "Baroque church",
    "editions": 8,
-   "unesco": false
+   "unesco": false,
+   "en": "Church of the Holy Spirit in Old Town, Prague"
   },
   {
    "name": "Pariska Street",
@@ -1053,7 +1058,8 @@
    "note": "This is not a single site but consists of four synagogues, the Old Jewish Cemetery and the Memorial Hall - entrance to all being covered by a single ticket. A combined ticket that includes the Old-New Synagogue can be obtained at a consider",
    "editions": 15,
    "unesco": false,
-   "web": "https://www.jewishmuseum.cz/"
+   "web": "https://www.jewishmuseum.cz/",
+   "en": "Jewish Museum in Prague"
   },
   {
    "name": "Maisel Synagogue",
@@ -1110,7 +1116,8 @@
    "wikidata": "Q20860076",
    "note": "The last service to the deceased members of the Prague Jewish Community was held here.",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "noEn": true
   },
   {
    "name": "Old-New Synagogue",
@@ -1120,7 +1127,8 @@
    "note": "The name sounds strange for a building from the 13th century but it was called 'New' to distinguish it from an even older synagogue. This was replaced by the Spanish Synagogue in the 17th century, when the Old-New Synagogue acquired its cur",
    "editions": 33,
    "unesco": false,
-   "web": "http://www.synagogue.cz/"
+   "web": "http://www.synagogue.cz/",
+   "en": "Old New Synagogue"
   },
   {
    "name": "Jewish Town Hall",
@@ -1176,7 +1184,8 @@
    "wikidata": "Q1535529",
    "note": "During the reign of Rudolf II, goldsmiths lived in a lively alleyway filled with tiny workshops, which were also their residence, hence its name. Tiny, cobblestoned walkway filled with brightly-painted little houses, where modern man has a ",
    "editions": 28,
-   "unesco": false
+   "unesco": false,
+   "en": "Golden Lane"
   },
   {
    "name": "Charles Bridge",
@@ -1201,7 +1210,8 @@
    "wikidata": "Q427604",
    "note": "Due to a housing crunch, most young Czechs don't move out of their parents' house until they marry (sometimes long after!) This lack of privacy leads to some very public displays of affection – what you see on the metro or trams won't compa",
    "editions": 28,
-   "unesco": false
+   "unesco": false,
+   "en": "Petřín"
   },
   {
    "name": "Petřín Lookout Tower",
@@ -1220,7 +1230,8 @@
    "wikidata": "Q22262465",
    "note": "A beautiful Baroque convent in the Lesser Town.",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Casa Santa"
   },
   {
    "name": "Strahov Monastery",
@@ -1259,7 +1270,8 @@
    "note": "A museum documenting the writings of the Czech Renaissance erudite, centering around the legacy of J.A. Comenius: traditions and challenges of the Czech culture and education. The story starts in the 9th century with early Christian literac",
    "editions": 1,
    "unesco": false,
-   "web": "http://www.npmk.cz/muzeum"
+   "web": "http://www.npmk.cz/muzeum",
+   "en": "Pedagogical museum of J. A. Comenius in Prague"
   },
   {
    "name": "Lobkowicz Palace",
@@ -1270,7 +1282,8 @@
    "editions": 6,
    "unesco": false,
    "web": "https://www.lobkowicz.cz/",
-   "posFrom": "wikidata"
+   "posFrom": "wikidata",
+   "en": "Lobkowitz Palace"
   },
   {
    "name": "Museum Kampa",
@@ -1306,7 +1319,8 @@
    "note": "Nature and history museum in the upper part of Wenceslas Square. The building was designed by prominent Czech neo-renaissance architect Josef Schulz in the years 1885 - 1891. In the older museum, there is an excellent permanent exhibition o",
    "editions": 41,
    "unesco": false,
-   "web": "https://www.nm.cz/"
+   "web": "https://www.nm.cz/",
+   "en": "National Museum in Prague"
   },
   {
    "name": "Dancing House",
@@ -1325,7 +1339,8 @@
    "wikidata": "Q11235374",
    "note": "Botanical garden of the Charles University with valuable outdoor exhibition and a collection of tropical plants in greenhouses.",
    "editions": 5,
-   "unesco": false
+   "unesco": false,
+   "en": "Botanic Garden of the Science Faculty, Charles University"
   },
   {
    "name": "Vyšehrad",
@@ -1361,7 +1376,8 @@
    "wikidata": "Q27910042",
    "note": "A simple brass plaque.",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Velvet Revolution monument at Národní street"
   },
   {
    "name": "Jubilee Synagogue",
@@ -1417,7 +1433,8 @@
    "note": "Nature and history museum in the upper part of Wenceslas Square. The building was designed by prominent Czech neo-renaissance architect Josef Schulz in the years 1885 - 1891. In the older museum, there is an excellent permanent exhibition o",
    "editions": 41,
    "unesco": false,
-   "web": "https://www.nm.cz/"
+   "web": "https://www.nm.cz/",
+   "en": "National Museum in Prague"
   },
   {
    "name": "Dancing House",
@@ -1436,7 +1453,8 @@
    "wikidata": "Q11235374",
    "note": "Botanical garden of the Charles University with valuable outdoor exhibition and a collection of tropical plants in greenhouses.",
    "editions": 5,
-   "unesco": false
+   "unesco": false,
+   "en": "Botanic Garden of the Science Faculty, Charles University"
   },
   {
    "name": "Vyšehrad",
@@ -1472,7 +1490,8 @@
    "wikidata": "Q27910042",
    "note": "A simple brass plaque.",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Velvet Revolution monument at Národní street"
   },
   {
    "name": "Jubilee Synagogue",
@@ -1556,7 +1575,8 @@
    "wikidata": "Q1535529",
    "note": "During the reign of Rudolf II, goldsmiths lived in a lively alleyway filled with tiny workshops, which were also their residence, hence its name. Tiny, cobblestoned walkway filled with brightly-painted little houses, where modern man has a ",
    "editions": 28,
-   "unesco": false
+   "unesco": false,
+   "en": "Golden Lane"
   },
   {
    "name": "Charles Bridge",
@@ -1581,7 +1601,8 @@
    "wikidata": "Q427604",
    "note": "Due to a housing crunch, most young Czechs don't move out of their parents' house until they marry (sometimes long after!) This lack of privacy leads to some very public displays of affection – what you see on the metro or trams won't compa",
    "editions": 28,
-   "unesco": false
+   "unesco": false,
+   "en": "Petřín"
   },
   {
    "name": "Petřín Lookout Tower",
@@ -1600,7 +1621,8 @@
    "wikidata": "Q22262465",
    "note": "A beautiful Baroque convent in the Lesser Town.",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Casa Santa"
   },
   {
    "name": "Strahov Monastery",
@@ -1639,7 +1661,8 @@
    "note": "A museum documenting the writings of the Czech Renaissance erudite, centering around the legacy of J.A. Comenius: traditions and challenges of the Czech culture and education. The story starts in the 9th century with early Christian literac",
    "editions": 1,
    "unesco": false,
-   "web": "http://www.npmk.cz/muzeum"
+   "web": "http://www.npmk.cz/muzeum",
+   "en": "Pedagogical museum of J. A. Comenius in Prague"
   },
   {
    "name": "Lobkowicz Palace",
@@ -1650,7 +1673,8 @@
    "editions": 6,
    "unesco": false,
    "web": "https://www.lobkowicz.cz/",
-   "posFrom": "wikidata"
+   "posFrom": "wikidata",
+   "en": "Lobkowitz Palace"
   },
   {
    "name": "Museum Kampa",
@@ -1709,7 +1733,8 @@
    "note": "The Astronomical Clock located on a side tower of the Old Town Hall (reasonably enough, on Old Town Square) is easy to find&mdash;just wait until a few minutes before the hour and look for a large group of tourists standing around waiting f",
    "editions": 47,
    "unesco": false,
-   "web": "http://www.orloj600let.cz/"
+   "web": "http://www.orloj600let.cz/",
+   "en": "Prague Astronomical Clock"
   },
   {
    "name": "Municipal House",
@@ -1748,7 +1773,8 @@
    "wikidata": "Q394832",
    "note": "The ''Anezsky klaster'' is the first Early Gothic building in Prague (founded 1234) - something notable in a city filled with amazingly well-preserved examples of Gothic architecture such as St Vitus, the Charles Bridge and the Powder Tower",
    "editions": 13,
-   "unesco": false
+   "unesco": false,
+   "en": "convent of St Agnes of Bohemia"
   },
   {
    "name": "Museum of Czech Cubism",
@@ -1757,7 +1783,8 @@
    "wikidata": "Q2717859",
    "note": "The Museum of Czech Cubism in the renovated House of the Black Madonna exhibits furniture suites, individual pieces, accessory furnishings and objects made of ceramic, glass and metals. It offers an overview of the foremost creative achieve",
    "editions": 18,
-   "unesco": false
+   "unesco": false,
+   "en": "House of the Black Madonna"
   },
   {
    "name": "Museum of Decorative Arts",
@@ -1767,7 +1794,8 @@
    "note": "This 17th century palazzo-style building houses examples of historical and contemporary crafts, as well as applied arts and design.",
    "editions": 11,
    "unesco": false,
-   "web": "http://www.upm.cz/"
+   "web": "http://www.upm.cz/",
+   "en": "Museum of Decorative Arts in Prague"
   },
   {
    "name": "Church of the Holy Spirit",
@@ -1776,7 +1804,8 @@
    "wikidata": "Q2282608",
    "note": "Baroque church",
    "editions": 8,
-   "unesco": false
+   "unesco": false,
+   "en": "Church of the Holy Spirit in Old Town, Prague"
   },
   {
    "name": "Pariska Street",
@@ -1837,7 +1866,8 @@
    "note": "This is not a single site but consists of four synagogues, the Old Jewish Cemetery and the Memorial Hall - entrance to all being covered by a single ticket. A combined ticket that includes the Old-New Synagogue can be obtained at a consider",
    "editions": 15,
    "unesco": false,
-   "web": "https://www.jewishmuseum.cz/"
+   "web": "https://www.jewishmuseum.cz/",
+   "en": "Jewish Museum in Prague"
   },
   {
    "name": "Maisel Synagogue",
@@ -1894,7 +1924,8 @@
    "wikidata": "Q20860076",
    "note": "The last service to the deceased members of the Prague Jewish Community was held here.",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "noEn": true
   },
   {
    "name": "Old-New Synagogue",
@@ -1904,7 +1935,8 @@
    "note": "The name sounds strange for a building from the 13th century but it was called 'New' to distinguish it from an even older synagogue. This was replaced by the Spanish Synagogue in the 17th century, when the Old-New Synagogue acquired its cur",
    "editions": 33,
    "unesco": false,
-   "web": "http://www.synagogue.cz/"
+   "web": "http://www.synagogue.cz/",
+   "en": "Old New Synagogue"
   },
   {
    "name": "Jewish Town Hall",

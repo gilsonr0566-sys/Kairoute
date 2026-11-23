@@ -322,7 +322,8 @@
    "wikidata": "Q83425",
    "note": "Most of the ''Piazza di San Pietro'' is actually an oval. There is a small, almost rectangular section immediately in front of the St Peter's and an opening to the Via della Conciliazione opposite the basilica.",
    "editions": 66,
-   "unesco": false
+   "unesco": false,
+   "en": "Saint Peter's Square"
   },
   {
    "name": "The Vatican Museum",
@@ -332,7 +333,8 @@
    "note": "One of the greatest art galleries in the world, the museum is most famous for its spiral staircase, the Raphael Rooms and the exquisitely decorated Sistine Chapel famous for Michelangelo's frescoes.",
    "editions": 65,
    "unesco": false,
-   "web": "http://www.museivaticani.va"
+   "web": "http://www.museivaticani.va",
+   "en": "Vatican Museums"
   },
   {
    "name": "Castel Sant'Angelo",
@@ -360,7 +362,8 @@
    "wikidata": "Q2047650",
    "note": "Wandering around the shopping and residential district of ''Prati'', close to the Vatican, you may notice rather a lot of lawyers' nameplates outside buildings. This is also Rome's legal district because of the proximity of the ''Palazzo di",
    "editions": 14,
-   "unesco": false
+   "unesco": false,
+   "en": "Palace of Justice"
   },
   {
    "name": "Ponte Sant'Angelo",
@@ -390,7 +393,8 @@
    "editions": 73,
    "unesco": false,
    "web": "https://www.sportesalute.eu/stadioolimpicotour.html",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Stadio Olimpico"
   },
   {
    "name": "Santa Passera",
@@ -409,7 +413,8 @@
    "note": "Porta San Sebastiano is a gate in the amazingly well-preserved Aurelian Walls. Inside and upstairs is a museum dedicated to the construction of the walls and their recent restoration. You can take a walk along the top of the walls. At the m",
    "editions": 6,
    "unesco": false,
-   "web": "http://www.museodellemuraroma.it/"
+   "web": "http://www.museodellemuraroma.it/",
+   "en": "Museo delle Mura"
   },
   {
    "name": "Tomb of Priscilla",
@@ -428,7 +433,8 @@
    "note": "Although started in the 2nd century, San Callisto has had many more recent burials, including 16 popes. The burial arcades are almost 20 km long.",
    "editions": 25,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Catacomb of Callixtus"
   },
   {
    "name": "The Catacombs of San Domitilla",
@@ -439,7 +445,8 @@
    "editions": 17,
    "unesco": false,
    "web": "http://www.domitilla.info/idx.htm?var1=docs/fr01.htm",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Catacombs of Domitilla"
   },
   {
    "name": "Basilica and catacombs of San Sebastiano",
@@ -450,7 +457,8 @@
    "editions": 27,
    "unesco": false,
    "web": "http://www.sansebastianofuorilemura.org/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "San Sebastiano fuori le mura"
   },
   {
    "name": "Fosse Ardeatine",
@@ -460,7 +468,8 @@
    "note": "This was the site of the slaughter in 1944 of 335 Italians, including many Jews from the Ghetto, in retaliation for a Partisan attack on German troops in Rome. The caves where the massacre took place are now a National Monument and Memorial",
    "editions": 22,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Ardeatine massacre"
   },
   {
    "name": "Jewish Catacombs",
@@ -470,7 +479,8 @@
    "note": "These are underneath a property known as Vigna Randanini. The catacombs are much smaller than the Christian catacombs and much less easy to visit. Groups are limited to twelve people at any one time and you need to take your own lighting!",
    "editions": 5,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Vigna Randanini"
   },
   {
    "name": "Caffarella Park",
@@ -480,7 +490,8 @@
    "note": "Caffarella Park covers an area of 339 ha and is part of the larger Appia Antica park. It contains both a working farm and numerous Roman ruins, some quite well preserved and is a great place for a stroll or cycle away from Rome’s traffic.",
    "editions": 6,
    "unesco": false,
-   "web": "https://www.caffarella.it"
+   "web": "https://www.caffarella.it",
+   "en": "Park of the Caffarella"
   },
   {
    "name": "Circus of Maxentius",
@@ -499,7 +510,8 @@
    "note": "The mausoleum of Cecilia Metella, who died in 69 BC, is the best preserved monument on the Appian Way and dominates the surroundings. In the Middle Ages it was transformed into a fortress and battlements were added. At that time there was c",
    "editions": 23,
    "unesco": false,
-   "web": "https://www.parcoarcheologicoappiaantica.it/"
+   "web": "https://www.parcoarcheologicoappiaantica.it/",
+   "en": "Tomb of Caecilia Metella"
   },
   {
    "name": "Capo di Bove",
@@ -519,7 +531,8 @@
    "note": "This impressive villa covers 23 hectares. It can be accessed from the Via Appia Nuova (Bus 118) or through Via Appia Antica 251. Parts can be seen from the Appian Way at around the 5th mile just after No 251. The villa was built by Maximus ",
    "editions": 14,
    "unesco": false,
-   "web": "https://www.parcoarcheologicoappiaantica.it/"
+   "web": "https://www.parcoarcheologicoappiaantica.it/",
+   "en": "Villa of the Quintilii"
   },
   {
    "name": "Casal Rotondo",
@@ -538,7 +551,8 @@
    "note": "This pleasant park contains very well-preserved ruins of two aqueducts and some of the original surface of the Roman Via Latina. Gets crowded on Sundays but almost empty the rest of the week during term time. Good place for joggers.",
    "editions": 12,
    "unesco": false,
-   "web": "http://www.parcoappiaantica.it/"
+   "web": "http://www.parcoappiaantica.it/",
+   "en": "Parco degli Acquedotti"
   },
   {
    "name": "Abbey of the three fountains (Abazzia delle tre fontane)",
@@ -549,7 +563,8 @@
    "editions": 18,
    "unesco": false,
    "closedForGood": true,
-   "web": "http://www.abbaziatrefontane.it"
+   "web": "http://www.abbaziatrefontane.it",
+   "en": "Tre Fontane Abbey"
   },
   {
    "name": "L. Pigorini National Museum of Prehistory and Ethnography",
@@ -559,7 +574,8 @@
    "note": "An ethnographic collection of around 60,000 pieces from European indigenous cultures. Documents evolution from the Palaeolithic age to the Iron Age.",
    "editions": 9,
    "unesco": false,
-   "web": "https://museocivilta.beniculturali.it/museo-pigorini/"
+   "web": "https://museocivilta.beniculturali.it/museo-pigorini/",
+   "en": "Pigorini National Museum of Prehistory and Ethnography"
   },
   {
    "name": "Museo della Civilta Romana (Museum of Rome's Civilization)",
@@ -570,7 +586,8 @@
    "editions": 18,
    "unesco": false,
    "closedForGood": true,
-   "web": "http://www.museociviltaromana.it/"
+   "web": "http://www.museociviltaromana.it/",
+   "en": "Museum of Roman Civilization"
   },
   {
    "name": "Rome's Planetarium",
@@ -580,7 +597,8 @@
    "note": "Regular shows plus an excellent astronomical museum.",
    "editions": 3,
    "unesco": false,
-   "web": "https://www.planetarioroma.it/"
+   "web": "https://www.planetarioroma.it/",
+   "en": "Astronomical Museum with Planetarium"
   },
   {
    "name": "Square Colosseum",
@@ -590,7 +608,8 @@
    "note": "Constructed around the 1940s as the centrepiece of the EUR, but unused for a long time. It was restored before 2015 when the luxury fashion label Fendi moved in.",
    "editions": 15,
    "unesco": false,
-   "web": "http://www.eurspa.it/it/asset-property/patrimonio/edifici-storici/palazzo-civilta-italiana"
+   "web": "http://www.eurspa.it/it/asset-property/patrimonio/edifici-storici/palazzo-civilta-italiana",
+   "en": "Palazzo della Civiltà Italiana"
   },
   {
    "name": "San Paolo fuori le Mura",
@@ -601,7 +620,8 @@
    "editions": 58,
    "unesco": true,
    "web": "http://www.vatican.va/various/basiliche/san_paolo/index_en.html",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Basilica of Saint Paul outside the Walls"
   },
   {
    "name": "Santa Passera",
@@ -620,7 +640,8 @@
    "note": "This delightful museum provides an interesting juxtaposition between the buildings and equipment of Rome's first electricity generating plant and the exhibits, which are mainly from excavations of Roman sites. A combined ticket with the mus",
    "editions": 7,
    "unesco": false,
-   "web": "http://www.centralemontemartini.org"
+   "web": "http://www.centralemontemartini.org",
+   "en": "Centrale Montemartini"
   },
   {
    "name": "Jubilee Church",
@@ -649,7 +670,8 @@
    "wikidata": "Q921585",
    "note": "It was immortalised in 1960 by the ''Federico Fellini'' film ''La Dolce Vita''. It is also the location of the US Embassy, in the massive Palazzo Margherita. Via Veneto went into a period of decline in the 1980s but has returned to populari",
    "editions": 23,
-   "unesco": false
+   "unesco": false,
+   "en": "via Veneto"
   },
   {
    "name": "Servian walls",
@@ -658,7 +680,8 @@
    "wikidata": "Q281330",
    "note": "Remains of the first city walls, built in the early 4th century BC and attributed to king Servius Tullius.",
    "editions": 37,
-   "unesco": false
+   "unesco": false,
+   "en": "Servian Wall"
   },
   {
    "name": "Capuchin Monastery",
@@ -668,7 +691,8 @@
    "note": "Built after 1631, the crypt of the church contains a macabre display - a series of chapels decorated with the bones of 3700 dead friars. The bones are glued to the walls and ceilings in bizarre and striking decorations.",
    "editions": 18,
    "unesco": false,
-   "web": "http://www.cappucciniviaveneto.it/"
+   "web": "http://www.cappucciniviaveneto.it/",
+   "en": "Santa Maria della Concezione dei Cappuccini"
   },
   {
    "name": "Le Quattro Fontane",
@@ -677,7 +701,8 @@
    "wikidata": "Q1217302",
    "note": "Four fountains from the time of Pope Sixtus V when much of Rome was redeveloped. A reclining deity is the theme of each sculpture. This is a busy intersection and if you don't look twice you may miss these exquisite examples of Roman mythol",
    "editions": 18,
-   "unesco": false
+   "unesco": false,
+   "en": "Quattro Fontane"
   },
   {
    "name": "Palazzo Massimo",
@@ -687,7 +712,8 @@
    "note": "A magnificent collection of ancient Roman sculptures, mosaics and wall paintings, including the famous paintings from the Imperial-era villa discovered under the Villa Farnesina, as well as the dining room from the Empress Livia's villa at ",
    "editions": 12,
    "unesco": false,
-   "web": "https://museonazionaleromano.beniculturali.it/palazzo-massimo/"
+   "web": "https://museonazionaleromano.beniculturali.it/palazzo-massimo/",
+   "en": "Palazzo Massimo alle Terme"
   },
   {
    "name": "Palazzo Barberini",
@@ -716,7 +742,8 @@
    "note": "Home of the President of the Italian Republic, and the Quirinal Gardens. Built in 1573 as a papal summer residence, and has since also served as the residence for the pope and later for the king of Italy.",
    "editions": 53,
    "unesco": false,
-   "web": "http://www.quirinale.it/"
+   "web": "http://www.quirinale.it/",
+   "en": "Quirinal Palace"
   },
   {
    "name": "San Carlo alle Quattro Fontane",
@@ -726,7 +753,8 @@
    "note": "A very small and beautiful church, the first design commission of Francesco Borromini.",
    "editions": 36,
    "unesco": false,
-   "web": "https://www.sancarlino.es/"
+   "web": "https://www.sancarlino.es/",
+   "en": "Saint Charles at the Four Fountains"
   },
   {
    "name": "Santa Maria degli Angeli",
@@ -736,7 +764,8 @@
    "note": "This church was built inside the former baths of Diocletian. Very light and airy inside. Note the unusual art on the outside doors. Around solar noon check out the sun's image on Francesco Bianchini's meridian line inside.",
    "editions": 33,
    "unesco": false,
-   "web": "http://www.santamariadegliangeliroma.it"
+   "web": "http://www.santamariadegliangeliroma.it",
+   "en": "Santa Maria degli Angeli e dei Martiri"
   },
   {
    "name": "Santa Maria della Vittoria",
@@ -767,7 +796,8 @@
    "editions": 6,
    "unesco": false,
    "web": "https://www.gov.uk/government/world/organisations/british-embassy-rome/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Embassy of the United Kingdom, Rome"
   },
   {
    "name": "Palazzo Colonna",
@@ -787,7 +817,8 @@
    "note": "It was built in 27 BCE, by Augustus' right hand man Marcus Agrippa, and later remodeled by the Emperor Hadrian (AD 125-128). This ancient temple was built as a temple to all the gods of the Roman state but has served as a Christian church s",
    "editions": 81,
    "unesco": false,
-   "web": "https://pantheonroma.org/"
+   "web": "https://pantheonroma.org/",
+   "en": "Pantheon"
   },
   {
    "name": "Largo di Torre Argentina",
@@ -796,7 +827,8 @@
    "wikidata": "Q1541068",
    "note": "Not, as commonly believed, named after the country but after the city of Strasbourg (''Argentoratum'' in Latin), from which came a courtesan of Pope Alexander VI who lived nearby. Four Roman Republican-era temples, Pompey's theater and a Ro",
    "editions": 21,
-   "unesco": false
+   "unesco": false,
+   "en": "largo di Torre Argentina"
   },
   {
    "name": "Temple of Hadrian",
@@ -855,7 +887,8 @@
    "note": "Between the Pantheon and Via del Corso. A stunning example of Baroque art. The ceiling frescoes are especially fine, including a trompe l'oeil dome by the master Andrea Pozzo.",
    "editions": 30,
    "unesco": false,
-   "web": "http://santignazio.gesuiti.it/"
+   "web": "http://santignazio.gesuiti.it/",
+   "en": "Sant'Ignazio Church"
   },
   {
    "name": "Sant'Agnese in Agone",
@@ -947,7 +980,8 @@
    "wikidata": "Q57710200",
    "note": "Small piazza about 20 m (65 ft) from Piazza Navona, behind the Brazilian Embassy. There is a statue named \"Pasquino\", according to a legend named after a tailor who used to work nearby and had a reputation for complaining. The statue has be",
    "editions": 1,
-   "unesco": false
+   "unesco": false,
+   "en": "Piazza di Pasquino (Rome)"
   },
   {
    "name": "Via Giulia",
@@ -956,7 +990,8 @@
    "wikidata": "Q782187",
    "note": "An example of urban planning that goes back to Pope Julius II, who, in 1508, envisioned it as a street that would connect all major government buildings. It is around a kilometer long and is in a straight line, an unusual feature for the ti",
    "editions": 16,
-   "unesco": false
+   "unesco": false,
+   "en": "via Giulia"
   },
   {
    "name": "Via de Coronari",
@@ -965,7 +1000,8 @@
    "wikidata": "Q1032187",
    "note": "In the Middle Ages pilgrims on their way to St. Peter's had to pass through the Via dei Coronari in order to cross the Tiber at Ponte St. Angelo. The street got its name from the people who sold rosaries to the pilgrims. It follows the anci",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "en": "Via dei Coronari"
   },
   {
    "name": "The Ghetto",
@@ -974,7 +1010,8 @@
    "wikidata": "Q527647",
    "note": "The Ghetto lies between the island in the River Tiber and the Theatre of Marcellus and includes Rome’s synagogue. It was established in 1555 as a result of a Papal Bull by Pope Paul IV that required all Jews to live in the area, considered ",
    "editions": 21,
-   "unesco": false
+   "unesco": false,
+   "en": "Roman Ghetto"
   },
   {
    "name": "Palazzo della Cancelleria",
@@ -1020,7 +1057,8 @@
    "wikidata": "Q20088659",
    "note": "The building is in one of the most hidden corners of the city center among Piazza Navona and Castel Sant'Angelo. It served as residence for the Orsini family. Nowadays it is private property and one can only glance at the courtyard and the ",
    "editions": 6,
-   "unesco": false
+   "unesco": false,
+   "en": "Palazzo Taverna, Rome"
   },
   {
    "name": "Palazzo Crivelli",
@@ -1063,7 +1101,8 @@
    "wikidata": "Q2157592",
    "note": "The Collegio Romano was a college of the Jesuit order. Many popes, cardinals and bishops were educated here. Since 1870 it has been a secular (non-monastic) school. The coat of arms on the doorway is that of Pope Gregory XIII (1572–1585). T",
    "editions": 12,
-   "unesco": false
+   "unesco": false,
+   "en": "Roman College"
   },
   {
    "name": "Hosteria dell'Orso",
@@ -1079,7 +1118,8 @@
    "wikidata": "Q655470",
    "note": "By Bernini, in the very centre of Piazza Navona. Incorporates an Egyptian obelisk and symbolises four of the world's great rivers (the Ganges, the Nile, the Danube and the Plata), representing the four continents known at the time.",
    "editions": 36,
-   "unesco": false
+   "unesco": false,
+   "en": "Four Rivers Fountain"
   },
   {
    "name": "Fontana del Moro",
@@ -1097,7 +1137,8 @@
    "wikidata": "Q1759793",
    "note": "A 19th-century addition to the square, made to balance the Fontana del Moro.",
    "editions": 14,
-   "unesco": false
+   "unesco": false,
+   "en": "Fountain of Neptune"
   },
   {
    "name": "Fontanella del Facchino",
@@ -1106,7 +1147,8 @@
    "wikidata": "Q3968656",
    "note": "Like Pasquino, the Facchino is one of the so-called \"speaking figures\" which are peculiar to Rome. He is looking out of the Banco di Roma building. The man depicted is holding a barrel in his hands and is carrying water. It is sometimes sai",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "en": "The Porter"
   },
   {
    "name": "Fontana delle Tartarughe",
@@ -1125,7 +1167,8 @@
    "note": "The museum is dedicated to Napoleon Bonaparte and his family. After Napoleon's death in 1821 the Pope gave permission to his family to settle down in Rome. His sister married Prince Camillo Borghese.",
    "editions": 5,
    "unesco": false,
-   "web": "http://www.museonapoleonico.it"
+   "web": "http://www.museonapoleonico.it",
+   "en": "Napoleonic Museum"
   },
   {
    "name": "Column of Marcus Aurelius",
@@ -1143,7 +1186,8 @@
    "wikidata": "Q740755",
    "note": "An ancient Egyptian obelisk brought to Rome in 10 BC.",
    "editions": 14,
-   "unesco": false
+   "unesco": false,
+   "en": "Obelisk of Montecitorio"
   },
   {
    "name": "Santa Maria Minerva Obelisk",
@@ -1152,7 +1196,8 @@
    "wikidata": "Q826635",
    "note": "One of Bernini's masterpieces, an obelisk on the back of an elephant.",
    "editions": 16,
-   "unesco": false
+   "unesco": false,
+   "en": "Elephant and Obelisk"
   },
   {
    "name": "Colosseum",
@@ -1181,7 +1226,8 @@
    "note": "If stones could talk: these hallowed ruins were the most powerful seat of government in the world. To stand in the political, legal and religious centre of the whole Roman Empire brings shivers down one's spine. It is the best way of imagin",
    "editions": 72,
    "unesco": false,
-   "web": "https://parcocolosseo.it/area/foro-romano/"
+   "web": "https://parcocolosseo.it/area/foro-romano/",
+   "en": "Roman Forum"
   },
   {
    "name": "Temple of Antoninus Pius and Faustina",
@@ -1190,7 +1236,8 @@
    "wikidata": "Q752555",
    "note": "Built in 141 AD and dedicated to the Empress Faustina; after her husband emperor Antoninus Pius died in 161 AD the temple was rededicated to the couple.",
    "editions": 33,
-   "unesco": false
+   "unesco": false,
+   "en": "Temple of Antoninus and Faustina"
   },
   {
    "name": "Basilica Aemilia",
@@ -1209,7 +1256,8 @@
    "wikidata": "Q1133288",
    "note": "Finished in 29 BC, marks the spot of Caesar's spontaneous cremation and Mark Antony's funeral speech, made famous by Shakespeare in his play ''Julius Caesar'' (\"Friends, Romans, Countrymen, lend me your ears ...\").",
    "editions": 31,
-   "unesco": false
+   "unesco": false,
+   "en": "Temple of Caesar"
   },
   {
    "name": "Arch of Titus",
@@ -1256,7 +1304,8 @@
    "wikidata": "Q874832",
    "note": "More of an enormous traffic circle than a piazza, but a good central location. The centerpiece is the enormous Vittorio Emanuele Monument (aka the Wedding Cake or the Typewriter) with the Capitoline hill next door. Mussolini used to harangu",
    "editions": 38,
-   "unesco": false
+   "unesco": false,
+   "en": "piazza Venezia"
   },
   {
    "name": "Vittorio Emanuele Monument",
@@ -1266,7 +1315,8 @@
    "note": "Built in honour of Victor Emmanuel, the first king of a unified Italy, this vast structure may appear to be solid white marble but actually contains many rooms inside. There are two permanent museums, one on Italian Reunification and one on",
    "editions": 43,
    "unesco": false,
-   "web": "https://vive.cultura.gov.it/it/"
+   "web": "https://vive.cultura.gov.it/it/",
+   "en": "Altare della Patria"
   },
   {
    "name": "Colle Oppio",
@@ -1275,7 +1325,8 @@
    "wikidata": "Q1036262",
    "note": "This is the attractive park on the hillside directly west of the Colosseum. Visible ruins in the area come from the '''Baths of Trajan'''. These baths were built on the top of the ruins of '''Domus Aurea''' - the Golden House of Nero (the C",
    "editions": 17,
-   "unesco": false
+   "unesco": false,
+   "en": "Oppian Hill"
   },
   {
    "name": "Trajan's Markets",
@@ -1285,7 +1336,8 @@
    "note": "On the other side of the Via dei Fori Imperiali to the Roman Forum. Well-preserved market area that doubled as a way of stopping the Quirinal Hill from collapsing. Below in the Forum is Trajan's Column, built in 113 with reliefs depicting t",
    "editions": 29,
    "unesco": false,
-   "web": "http://www.mercatiditraiano.it/"
+   "web": "http://www.mercatiditraiano.it/",
+   "en": "Trajan's Market"
   },
   {
    "name": "Mamertine Prison",
@@ -1314,7 +1366,8 @@
    "note": "A great little cathedral to visit, lovingly looked after by Irish Dominicans. There is an excavated older church below the medieval church you enter and a Mithraeum (temple to Mithras, whose cult was very popular with Roman soldiers from th",
    "editions": 28,
    "unesco": false,
-   "web": "http://www.basilicasanclemente.com/"
+   "web": "http://www.basilicasanclemente.com/",
+   "en": "Basilica of San Clemente"
   },
   {
    "name": "Santo Stefano Rotondo",
@@ -1353,7 +1406,8 @@
    "note": "This is one of the two main Jesuit churches in Rome, the other being the nearby Sant'Ignazio. The interior is Mannerist art on steroids. Simply astounding.",
    "editions": 42,
    "unesco": false,
-   "web": "http://www.chiesadelgesu.org/"
+   "web": "http://www.chiesadelgesu.org/",
+   "en": "Church of the Gesù"
   },
   {
    "name": "San Nicola in Carcere",
@@ -1373,7 +1427,8 @@
    "note": "According to the legendary passio, two brothers, John and Paul, who were officials at the imperial court, suffered martyrdom in 362 in their home on the Caelian hill, during the reign of emperor Flavius Claudius Julianus. This basilica dedi",
    "editions": 22,
    "unesco": false,
-   "web": "https://www.basilicassgiovanniepaolo.it/"
+   "web": "https://www.basilicassgiovanniepaolo.it/",
+   "en": "Basilica of Saints John and Paul on the Caelian Hill"
   },
   {
    "name": "Santa Prassede",
@@ -1403,7 +1458,8 @@
    "note": "The two museums are on opposite sides of the Piazza del Campidoglio, It is recommended to [http://www.ticketclic.it book tickets online]",
    "editions": 46,
    "unesco": false,
-   "web": "https://www.museicapitolini.org/"
+   "web": "https://www.museicapitolini.org/",
+   "en": "Capitoline Museums"
   },
   {
    "name": "Museo Capitolino",
@@ -1413,7 +1469,8 @@
    "note": "Built in the 17th century to a design based on an architectural sketch by Michelangelo. Highlights include the ancient Colossus of Constantine statue (the Colosseum was probably named for another giant statue, the Colossus of Nero which sto",
    "editions": 16,
    "unesco": false,
-   "web": "http://www.museicapitolini.org/sede/piazza_e_palazzi/palazzo_nuovo"
+   "web": "http://www.museicapitolini.org/sede/piazza_e_palazzi/palazzo_nuovo",
+   "en": "Palazzo Nuovo"
   },
   {
    "name": "Palazzo dei Conservatori",
@@ -1433,7 +1490,8 @@
    "editions": 8,
    "unesco": false,
    "closedForGood": true,
-   "web": "http://museopalazzovenezia.beniculturali.it/"
+   "web": "http://museopalazzovenezia.beniculturali.it/",
+   "en": "Museo di Palazzo Venezia"
   },
   {
    "name": "Palazzo Doria Pamphilj",
@@ -1443,7 +1501,8 @@
    "note": "Good collection of Renaissance and Baroque art, including by Velasquez, Titian, Raphael, and Bernini, all owned by the Doria Pamphilj family. Excellent audio guides really bring the paintings to life.",
    "editions": 26,
    "unesco": false,
-   "web": "https://www.doriapamphilj.it/roma/"
+   "web": "https://www.doriapamphilj.it/roma/",
+   "en": "Galleria Doria Pamphilj"
   },
   {
    "name": "Ara Pacis",
@@ -1463,7 +1522,8 @@
    "note": "This is a large tomb built by the Roman Emperor Augustus in 28 BC in the form of a stone ring covered by an earth mound. A brick wall, 87 m in diameter, carried an earth mound covered with cypresses. On top of the hill stood a bronze monume",
    "editions": 40,
    "unesco": false,
-   "web": "http://www.mausoleodiaugusto.it"
+   "web": "http://www.mausoleodiaugusto.it",
+   "en": "Mausoleum of Augustus"
   },
   {
    "name": "Catacombe di Priscilla",
@@ -1473,7 +1533,8 @@
    "note": "Underground burial place of an ancient Roman family and of seven early popes.",
    "editions": 18,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Catacomb of Priscilla"
   },
   {
    "name": "Santa Maria del Popolo",
@@ -1493,7 +1554,8 @@
    "note": "Baroque church more noted for its position at the top of the Spanish Steps than it is for the church. Backdrop for numerous movies including Audrey Hepburn and Gregory Peck in ''Roman Holiday''.",
    "editions": 32,
    "unesco": false,
-   "web": "https://trinitadeimonti.net/it/casa/"
+   "web": "https://trinitadeimonti.net/it/casa/",
+   "en": "Trinità dei Monti"
   },
   {
    "name": "Moschea di Roma",
@@ -1522,7 +1584,8 @@
    "note": "This church was built next to the mausoleum of Santa Costanza in the 7th century and is on top of catacombs. It is very unusual in that the floor level is at the level of the catacomb floor, and the street entrance is at the level of the se",
    "editions": 24,
    "unesco": false,
-   "web": "https://www.santagnese.net/"
+   "web": "https://www.santagnese.net/",
+   "en": "Sant'Agnese fuori le mura"
   },
   {
    "name": "Catacombs of St Agnese",
@@ -1532,7 +1595,8 @@
    "note": "Small catacombs that contained the remains of Saint Agnes",
    "editions": 11,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Catacombs of Saint Agnes"
   },
   {
    "name": "Piazza del Popolo",
@@ -1541,7 +1605,8 @@
    "wikidata": "Q824997",
    "note": "This is the largest square in Rome. It sometimes hosts pop concerts and is the focal point for Rome's New Year's Eve celebrations. The twin churches ''Santa Maria dei Miracoli'' (1681) and ''Santa Maria in Montesanto'' (1679) used to provid",
    "editions": 39,
-   "unesco": false
+   "unesco": false,
+   "en": "piazza del Popolo"
   },
   {
    "name": "Quartiere Coppedè (part of the neighborhood of ‘Trieste’)",
@@ -1550,7 +1615,8 @@
    "wikidata": "Q3927173",
    "note": "With its strange Liberty- style buildings with influence from the ''Art Nouveau'' of the 1920s this small bunch of blocks is one of the most interesting, and less known, landmarks of the city. A must see.",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "en": "Quartiere Coppedè"
   },
   {
    "name": "The Spanish Steps",
@@ -1559,7 +1625,8 @@
    "wikidata": "Q848072",
    "note": "A truly monumental stairway of 135 steps (similar to climbing eight flights of stairs), built with French funds between 1721 and 1725 in order to link the Bourbon Spanish embassy to the Holy See (still located in the piazza below), with the",
    "editions": 40,
-   "unesco": false
+   "unesco": false,
+   "en": "Spanish Steps"
   },
   {
    "name": "Piazza di Spagna",
@@ -1597,7 +1664,8 @@
    "note": "A magnificent patrician house with beautiful gardens. It was built by order of Cardinal Alessando Albani in 1743-1763 in order to accommodate his collection of art. The collection was taken care of by the Winkelmann, adviser and friend of t",
    "editions": 10,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Villa Albani"
   },
   {
    "name": "Villa Ada",
@@ -1647,7 +1715,8 @@
    "note": "The most extensive collection of Etruscan art and artifacts anywhere. Fantastic collection and well worth the admission charge. A difficult museum to find, but a lovely display in a beautiful villa setting.",
    "editions": 17,
    "unesco": false,
-   "web": "https://www.museoetru.it/"
+   "web": "https://www.museoetru.it/",
+   "en": "Villa Giulia"
   },
   {
    "name": "Galleria Nazionale d'Arte Moderna (GNAM)",
@@ -1657,7 +1726,8 @@
    "note": "An underrated way to see fantastic art made after the Renaissance. Mainly Italian artists, notably De Chirico, but Cézanne, Degas, Kandinsky, Man Ray, Modigliani, Monet, Pollock and Van Gogh are also represented.",
    "editions": 28,
    "unesco": false,
-   "web": "https://gnamc.cultura.gov.it/"
+   "web": "https://gnamc.cultura.gov.it/",
+   "en": "Galleria Nazionale d'Arte Moderna e Contemporanea di Roma"
   },
   {
    "name": "MAXXI",
@@ -1677,7 +1747,8 @@
    "note": "Rome's museum of contemporary art, housed in a former industrial complex. Rotating exhibitions, each one usually lasting about 4 months. The MACRO Testaccio exhibition space is located in [[Rome/Aventino-Testaccio",
    "editions": 16,
    "unesco": false,
-   "web": "https://www.museomacro.it/"
+   "web": "https://www.museomacro.it/",
+   "en": "Museum of Contemporary Art of Rome"
   },
   {
    "name": "Keats-Shelley Memorial House",
@@ -1697,7 +1768,8 @@
    "note": "",
    "editions": 8,
    "unesco": false,
-   "web": "http://www.casadigoethe.it"
+   "web": "http://www.casadigoethe.it",
+   "en": "Casa di Goethe"
   },
   {
    "name": "Museo delle Paste Alimentari",
@@ -1708,7 +1780,8 @@
    "editions": 2,
    "unesco": false,
    "web": "https://www.fondazionevincenzoagnesi.it/storia-del-museo/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Museum of pasta food"
   },
   {
    "name": "Bioparco",
@@ -1718,7 +1791,8 @@
    "note": "The renamed Rome Zoo, one of the oldest in Europe, founded in 1911. On the edge of the Borghese Gardens, a short, well-signposted walk from the Gallery. They try hard, but San Diego this isn't. If you are a regular zoo-goer you will be disa",
    "editions": 14,
    "unesco": false,
-   "web": "http://www.bioparco.it"
+   "web": "http://www.bioparco.it",
+   "en": "bioparco"
   },
   {
    "name": "Piazza del Popolo Obelisk",
@@ -1727,7 +1801,8 @@
    "wikidata": "Q568194",
    "note": "According to an inscription ''Emperor Augustus'' dedicated the obelisk to the sun in the 11th year of his consulate (10BC), after he had annexed Egypt to Rome. The obelisk is 24 m high. It was erected in Heliopolis in Egypt and was dedicate",
    "editions": 16,
-   "unesco": false
+   "unesco": false,
+   "en": "Flaminio Obelisk"
   },
   {
    "name": "Statue of Goethe",
@@ -1736,7 +1811,8 @@
    "wikidata": "Q1534099",
    "note": "",
    "editions": 4,
-   "unesco": false
+   "unesco": false,
+   "en": "Goethe monument in Rome"
   },
   {
    "name": "San Crisogono",
@@ -1806,7 +1882,8 @@
    "editions": 28,
    "unesco": false,
    "web": "https://www.barberinicorsini.org/",
-   "posFrom": "wikidata"
+   "posFrom": "wikidata",
+   "en": "Galleria Nazionale d'Arte Antica"
   },
   {
    "name": "Orto Botanico dell'Università di Roma \"La Sapienza\"",
@@ -1826,7 +1903,8 @@
    "note": "Permanent collection features paintings and drawings of Rome between the 18th and 20th centuries together with a fascinating black and white photo exhibition of Rome from 1950-80. Also offers rotating exhibitions, usually of the work of pho",
    "editions": 6,
    "unesco": false,
-   "web": "http://www.museodiromaintrastevere.it/"
+   "web": "http://www.museodiromaintrastevere.it/",
+   "en": "museo di Roma in Trastevere"
   },
   {
    "name": "Villa Sciarra",
@@ -1844,7 +1922,8 @@
    "wikidata": "Q303001",
    "note": "This is not, contrary to popular belief, one of the original seven hills that Rome was founded on. It is the second highest after Monte Mario, though, and offers incredible panoramic views of the city as long as the authorities remember to ",
    "editions": 32,
-   "unesco": false
+   "unesco": false,
+   "en": "Janiculum"
   },
   {
    "name": "San Pietro in Montorio",
@@ -1864,7 +1943,8 @@
    "note": "Designed by Bramante to mark the spot of St. Peter's martyrdom, this delightful miniature building is considered a masterpiece of Renaissance architecture. Open to the public.",
    "editions": 23,
    "unesco": false,
-   "web": "http://www.sanpietroinmontorio.it"
+   "web": "http://www.sanpietroinmontorio.it",
+   "en": "Tempietto"
   },
   {
    "name": "Fontana dell'Acqua Paola",
@@ -1882,7 +1962,8 @@
    "wikidata": "Q28375369",
    "note": "Strange to see a lighthouse on top of a hill. This was built in 1911 and was a gift to the city from Italians living in Argentina. From here you can continue down the hill, past Rome's largest and Italy's most important children's hospital,",
    "editions": 5,
-   "unesco": false
+   "unesco": false,
+   "en": "Faro di Roma"
   },
   {
    "name": "Parco Savello",
@@ -1891,7 +1972,8 @@
    "wikidata": "Q3763895",
    "note": "Parco Savello is the name of the grounds and orange grove next to the ''Santa Sabina'' church at the top of the Aventino and also where you have one of the best views of the city. Families gather here to sit under the dozens of orange trees",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "en": "Orange Garden"
   },
   {
    "name": "Basilica of Santa Sabina",
@@ -1901,7 +1983,8 @@
    "note": "A 5th-century basilica, simply and attractively decorated. The wooden door, of which 18 carved panels of scenes from the Bible survive, is believed to date from the church's construction.",
    "editions": 35,
    "unesco": false,
-   "web": "https://basilicasantasabina.it/"
+   "web": "https://basilicasantasabina.it/",
+   "en": "Basilica of Saint Sabina"
   },
   {
    "name": "Keyhole View",
@@ -1927,7 +2010,8 @@
    "wikidata": "Q3902429",
    "note": "In addition to Santa Maria in Cosmedin there is a lot to be seen around this piazza. Opposite the church is the round temple dedicated to Hercules Invictus (the Unconquered Hercules), and not far from that the rectangular Fortuna Virilis, b",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "en": "piazza Bocca della Verità"
   },
   {
    "name": "Circus Maximus",
@@ -1946,7 +2030,8 @@
    "wikidata": "Q1072271",
    "note": "A relaxing place to sit and recover from the exertions of sightseeing. Permanent collection plus annual competition.",
    "editions": 5,
-   "unesco": false
+   "unesco": false,
+   "en": "Rome Rose Garden"
   },
   {
    "name": "FAO",
@@ -1955,7 +2040,8 @@
    "wikidata": "Q3890078",
    "note": "The enormous building at the southeast end of the Circus Maximus is the headquarters of the UN Food and Agriculture Organization (FAO). From its roof are undoubtedly the best views of Rome, but you will need to know someone who works there ",
    "editions": 6,
-   "unesco": false
+   "unesco": false,
+   "en": "Palazzo FAO"
   },
   {
    "name": "The Celio",
@@ -1964,7 +2050,8 @@
    "wikidata": "Q216104",
    "note": "The Celian Hill is one of the seven hills of Rome. You immediately see the church of San Gregorio Magno. On this site monks were trained before setting off as missionaries to England at the end of the 6th century. Further up the hill is San",
    "editions": 45,
-   "unesco": false
+   "unesco": false,
+   "en": "Caelian Hill"
   },
   {
    "name": "Terme di Caracalla",
@@ -1973,7 +2060,8 @@
    "wikidata": "Q502098",
    "note": "Inaugurated in 217 AD and used until the 6th century. The baths were big enough for 1600 bathers at a time. Impressive and well-preserved. Used for operas in summer months (see [http://www.operaroma.it/en Opera di Roma] for details) and was",
    "editions": 43,
-   "unesco": false
+   "unesco": false,
+   "en": "Baths of Caracalla"
   },
   {
    "name": "San Saba",
@@ -1983,7 +2071,8 @@
    "note": "In the 8th and 9th century, San Saba was one of the most prestigious monasteries of Rome. The church has been built up over many centuries and contains a variety of architectural styles. Worth a look are the floor mosaics and some interesti",
    "editions": 17,
    "unesco": false,
-   "web": "http://sansaba.gesuiti.it"
+   "web": "http://sansaba.gesuiti.it",
+   "en": "San Saba, Rome"
   },
   {
    "name": "Servian Wall",
@@ -2003,7 +2092,8 @@
    "note": "Early Roman houses dating back to the 1st century, believed to be homes of early Christians. Well-preserved frescoes and a small museum.",
    "editions": 4,
    "unesco": false,
-   "web": "https://www.coopculture.it/it/poi/case-romane-del-celio/"
+   "web": "https://www.coopculture.it/it/poi/case-romane-del-celio/",
+   "en": "Roman houses of the Caelian"
   },
   {
    "name": "Sant'Anselmo all'Aventino",
@@ -2013,7 +2103,8 @@
    "note": "Home of the Abbot Primate of the Benedictine Confederation and Benedictine monks studying in Rome. Visit the monastic produce shop and listen to the best Gregorian chant in Rome during Vespers (19:15 each evening).",
    "editions": 13,
    "unesco": false,
-   "web": "https://www.collegiosantanselmo.com/chiesa/"
+   "web": "https://www.collegiosantanselmo.com/chiesa/",
+   "en": "Church of Sant'Anselmo all'Aventino, Rome"
   },
   {
    "name": "Isola Tiberina",
@@ -2023,7 +2114,8 @@
    "note": "This is the island in the middle of the Tiber River (Il Fiume Tevere) that separates Central Rome and Trastevere. It boasts both a major hospital, called Fatebenefratelli, and a small synagogue that was secretly used in the Second World War",
    "editions": 35,
    "unesco": false,
-   "web": "https://www.isolatiberina.org"
+   "web": "https://www.isolatiberina.org",
+   "en": "Tiber Island"
   },
   {
    "name": "Porta Capena",
@@ -2052,7 +2144,8 @@
    "note": "Behind the pyramid, entered by the Via Caio Cestio, is the Protestant Cemetery where the poet John Keats was buried in 1821 and Percy Bysshe Shelley's ashes were also buried after his drowning in 1822. Richard Dana, author of ''Two Years be",
    "editions": 20,
    "unesco": false,
-   "web": "http://www.cemeteryrome.it/"
+   "web": "http://www.cemeteryrome.it/",
+   "en": "Protestant Cemetery, Rome"
   },
   {
    "name": "Railway and tramcar museum",
@@ -2062,7 +2155,8 @@
    "note": "Small collection of railway carriages and related stuff. Really just for those with special interest in the topic. Entrance through the station if the main entrance is closed.",
    "editions": 9,
    "unesco": false,
-   "web": "https://www.atac.roma.it/media/atacikon/polo-museale"
+   "web": "https://www.atac.roma.it/media/atacikon/polo-museale",
+   "en": "Porta San Paolo Railway Museum"
   },
   {
    "name": "Santa Maria Maggiore",
@@ -2072,7 +2166,8 @@
    "note": "Built in the 9th century, this ancient basilica crowns the top of the Esquiline Hill. Tons of gold decorate the interior together with impressive mosaics (particularly when the floodlights are turned on), and there is a museum on the premis",
    "editions": 58,
    "unesco": false,
-   "web": "https://www.basilicasantamariamaggiore.va/it.html"
+   "web": "https://www.basilicasantamariamaggiore.va/it.html",
+   "en": "Basilica di Santa Maria Maggiore"
   },
   {
    "name": "San Giovanni in Laterano",
@@ -2082,7 +2177,8 @@
    "note": "This is the cathedral church of Rome and first of the major basilicas. It's also the Pope's (as Bishop of Rome) Church. As such it ranks above all other churches in the Roman Catholic Church, even above St. Peter's. Be sure to check out the",
    "editions": 63,
    "unesco": true,
-   "web": "https://www.basilicasangiovanni.va/"
+   "web": "https://www.basilicasangiovanni.va/",
+   "en": "Archbasilica of St. John Lateran"
   },
   {
    "name": "Santa Croce in Gerusalemme",
@@ -2092,7 +2188,8 @@
    "note": "It was constructed to hold relics of the Passion of Jesus. They include two thorns of his crown, part of a nail and three small wooden pieces of the Cross. The authenticity of these relics is much disputed, however.",
    "editions": 35,
    "unesco": false,
-   "web": "http://www.santacroceroma.it/"
+   "web": "http://www.santacroceroma.it/",
+   "en": "Basilica of the Holy Cross in Jerusalem"
   },
   {
    "name": "National Museum of Musical Instruments",
@@ -2111,7 +2208,8 @@
    "note": "This small museum records the liberation of Rome from German occupation during the Second World War. During the occupation the building was used as a prison. Stair lifts and chair lifts available for wheelchair users (call ahead).",
    "editions": 9,
    "unesco": false,
-   "web": "http://www.viatasso.eu/"
+   "web": "http://www.viatasso.eu/",
+   "en": "Museum of the Liberation of Rome"
   },
   {
    "name": "Porta Maggiore",
@@ -2147,7 +2245,8 @@
    "note": "Houses the tomb of St Lawrence. This basilica dates back to the 3rd century, when the area was already well populated. Surrounding it is Rome's cemetery, the Cimitero del Verano. San Lorenzo was damaged by Allied bombs in 1943 and the facad",
    "editions": 37,
    "unesco": false,
-   "web": "https://www.basilicasanlorenzofuorilemura.it/"
+   "web": "https://www.basilicasanlorenzofuorilemura.it/",
+   "en": "Basilica of Saint Lawrence Outside the Walls"
   },
   {
    "name": "Ara Pacis",
@@ -2167,7 +2266,8 @@
    "note": "This is a large tomb built by the Roman Emperor Augustus in 28 BC in the form of a stone ring covered by an earth mound. A brick wall, 87 m in diameter, carried an earth mound covered with cypresses. On top of the hill stood a bronze monume",
    "editions": 40,
    "unesco": false,
-   "web": "http://www.mausoleodiaugusto.it"
+   "web": "http://www.mausoleodiaugusto.it",
+   "en": "Mausoleum of Augustus"
   },
   {
    "name": "Catacombe di Priscilla",
@@ -2177,7 +2277,8 @@
    "note": "Underground burial place of an ancient Roman family and of seven early popes.",
    "editions": 18,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Catacomb of Priscilla"
   },
   {
    "name": "Santa Maria del Popolo",
@@ -2197,7 +2298,8 @@
    "note": "Baroque church more noted for its position at the top of the Spanish Steps than it is for the church. Backdrop for numerous movies including Audrey Hepburn and Gregory Peck in ''Roman Holiday''.",
    "editions": 32,
    "unesco": false,
-   "web": "https://trinitadeimonti.net/it/casa/"
+   "web": "https://trinitadeimonti.net/it/casa/",
+   "en": "Trinità dei Monti"
   },
   {
    "name": "Moschea di Roma",
@@ -2226,7 +2328,8 @@
    "note": "This church was built next to the mausoleum of Santa Costanza in the 7th century and is on top of catacombs. It is very unusual in that the floor level is at the level of the catacomb floor, and the street entrance is at the level of the se",
    "editions": 24,
    "unesco": false,
-   "web": "https://www.santagnese.net/"
+   "web": "https://www.santagnese.net/",
+   "en": "Sant'Agnese fuori le mura"
   },
   {
    "name": "Catacombs of St Agnese",
@@ -2236,7 +2339,8 @@
    "note": "Small catacombs that contained the remains of Saint Agnes",
    "editions": 11,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Catacombs of Saint Agnes"
   },
   {
    "name": "Piazza del Popolo",
@@ -2245,7 +2349,8 @@
    "wikidata": "Q824997",
    "note": "This is the largest square in Rome. It sometimes hosts pop concerts and is the focal point for Rome's New Year's Eve celebrations. The twin churches ''Santa Maria dei Miracoli'' (1681) and ''Santa Maria in Montesanto'' (1679) used to provid",
    "editions": 39,
-   "unesco": false
+   "unesco": false,
+   "en": "piazza del Popolo"
   },
   {
    "name": "Quartiere Coppedè (part of the neighborhood of ‘Trieste’)",
@@ -2254,7 +2359,8 @@
    "wikidata": "Q3927173",
    "note": "With its strange Liberty- style buildings with influence from the ''Art Nouveau'' of the 1920s this small bunch of blocks is one of the most interesting, and less known, landmarks of the city. A must see.",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "en": "Quartiere Coppedè"
   },
   {
    "name": "The Spanish Steps",
@@ -2263,7 +2369,8 @@
    "wikidata": "Q848072",
    "note": "A truly monumental stairway of 135 steps (similar to climbing eight flights of stairs), built with French funds between 1721 and 1725 in order to link the Bourbon Spanish embassy to the Holy See (still located in the piazza below), with the",
    "editions": 40,
-   "unesco": false
+   "unesco": false,
+   "en": "Spanish Steps"
   },
   {
    "name": "Piazza di Spagna",
@@ -2301,7 +2408,8 @@
    "note": "A magnificent patrician house with beautiful gardens. It was built by order of Cardinal Alessando Albani in 1743-1763 in order to accommodate his collection of art. The collection was taken care of by the Winkelmann, adviser and friend of t",
    "editions": 10,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Villa Albani"
   },
   {
    "name": "Villa Ada",
@@ -2351,7 +2459,8 @@
    "note": "The most extensive collection of Etruscan art and artifacts anywhere. Fantastic collection and well worth the admission charge. A difficult museum to find, but a lovely display in a beautiful villa setting.",
    "editions": 17,
    "unesco": false,
-   "web": "https://www.museoetru.it/"
+   "web": "https://www.museoetru.it/",
+   "en": "Villa Giulia"
   },
   {
    "name": "Galleria Nazionale d'Arte Moderna (GNAM)",
@@ -2361,7 +2470,8 @@
    "note": "An underrated way to see fantastic art made after the Renaissance. Mainly Italian artists, notably De Chirico, but Cézanne, Degas, Kandinsky, Man Ray, Modigliani, Monet, Pollock and Van Gogh are also represented.",
    "editions": 28,
    "unesco": false,
-   "web": "https://gnamc.cultura.gov.it/"
+   "web": "https://gnamc.cultura.gov.it/",
+   "en": "Galleria Nazionale d'Arte Moderna e Contemporanea di Roma"
   },
   {
    "name": "MAXXI",
@@ -2381,7 +2491,8 @@
    "note": "Rome's museum of contemporary art, housed in a former industrial complex. Rotating exhibitions, each one usually lasting about 4 months. The MACRO Testaccio exhibition space is located in [[Rome/Aventino-Testaccio",
    "editions": 16,
    "unesco": false,
-   "web": "https://www.museomacro.it/"
+   "web": "https://www.museomacro.it/",
+   "en": "Museum of Contemporary Art of Rome"
   },
   {
    "name": "Keats-Shelley Memorial House",
@@ -2401,7 +2512,8 @@
    "note": "",
    "editions": 8,
    "unesco": false,
-   "web": "http://www.casadigoethe.it"
+   "web": "http://www.casadigoethe.it",
+   "en": "Casa di Goethe"
   },
   {
    "name": "Museo delle Paste Alimentari",
@@ -2412,7 +2524,8 @@
    "editions": 2,
    "unesco": false,
    "web": "https://www.fondazionevincenzoagnesi.it/storia-del-museo/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Museum of pasta food"
   },
   {
    "name": "Bioparco",
@@ -2422,7 +2535,8 @@
    "note": "The renamed Rome Zoo, one of the oldest in Europe, founded in 1911. On the edge of the Borghese Gardens, a short, well-signposted walk from the Gallery. They try hard, but San Diego this isn't. If you are a regular zoo-goer you will be disa",
    "editions": 14,
    "unesco": false,
-   "web": "http://www.bioparco.it"
+   "web": "http://www.bioparco.it",
+   "en": "bioparco"
   },
   {
    "name": "Piazza del Popolo Obelisk",
@@ -2431,7 +2545,8 @@
    "wikidata": "Q568194",
    "note": "According to an inscription ''Emperor Augustus'' dedicated the obelisk to the sun in the 11th year of his consulate (10BC), after he had annexed Egypt to Rome. The obelisk is 24 m high. It was erected in Heliopolis in Egypt and was dedicate",
    "editions": 16,
-   "unesco": false
+   "unesco": false,
+   "en": "Flaminio Obelisk"
   },
   {
    "name": "Statue of Goethe",
@@ -2440,7 +2555,8 @@
    "wikidata": "Q1534099",
    "note": "",
    "editions": 4,
-   "unesco": false
+   "unesco": false,
+   "en": "Goethe monument in Rome"
   }
  ],
  "lifts": [],

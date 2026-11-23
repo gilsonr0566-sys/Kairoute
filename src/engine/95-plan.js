@@ -725,6 +725,25 @@
       }
       idx.forEach((i, k) => { out[i] = got.plans[k]; });
     }
-    return out;
+    return out.map(shownWords);
   };
+  // One last layer every shown word goes through, whatever source it came from (rule R-11, Nov 23: "the app is presented
+  // in the language that is selected"): Greek, Cyrillic and kana put into Latin letters; a name still in another script
+  // gives way to a plain word ("a local restaurant", "the stop"), never local script on screen.
+  const PLAIN = { meal: "a local restaurant", stop: "the sight", travel: "the stop" };
+  const WORDS = ["how", "label", "note", "why", "title", "travelNote", "where", "line", "say", "needs", "lunchNote"];
+  const NAMES = ["from", "to", "townName", "station", "at"];
+  const shownWords = p => {
+    if (!p || typeof p !== "object") return p;
+    const one = x => { if (!x || typeof x !== "object") return;
+      if (typeof x.name === "string") x.name = E.say(x.name, PLAIN[x.t] || "the stop");
+      if (typeof x.meal === "string") x.meal = E.say(x.meal, "Lunch");
+      WORDS.forEach(f => { if (typeof x[f] === "string") x[f] = E.say(x[f]); });
+      NAMES.forEach(f => { if (typeof x[f] === "string") x[f] = E.say(x[f], "the stop"); });
+      if (Array.isArray(x.steps)) x.steps = x.steps.map(t => typeof t === "string" ? E.say(t) : (one(t), t));
+      ["leg", "ride", "back"].forEach(f => one(x[f])); };
+    (p.items || []).forEach(one);
+    ["explain", "notes"].forEach(f => { if (Array.isArray(p[f])) p[f] = p[f].map(t => typeof t === "string" ? E.say(t) : t); });
+    if (Array.isArray(p.lunchOptions)) p.lunchOptions.forEach(one);
+    return p; };
 })(KEngine);

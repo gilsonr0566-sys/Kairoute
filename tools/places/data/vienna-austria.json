@@ -633,7 +633,8 @@
      "wikidata": "Q1483375",
      "content": "A good knowledge of German is helpful in understanding some of the humor presented here.",
      "editions": 2,
-     "unesco": false
+     "unesco": false,
+     "en": "Karikaturmuseum Krems"
     },
     {
      "kind": "see",
@@ -669,7 +670,8 @@
      "wikidata": "Q1716703",
      "content": "Established in 1880 for the Jewish community of Krems, the cemetery was abandoned in 1936 and now is a memorial under the auspices of Vienna Israelite Community. Located on the grounds is a 42m-long metal memorial by Hans Kupelwieser, engra",
      "editions": 2,
-     "unesco": false
+     "unesco": false,
+     "en": "Jüdischer Friedhof Krems"
     },
     {
      "kind": "see",
@@ -681,7 +683,8 @@
      "wikidata": "Q2091898",
      "content": "The oldest church in Krems. The earliest foundations date to the 13th century, while the current structure is from the late Gothic period of the early 16th century. The interior was remodeled during the Baroque era.",
      "editions": 4,
-     "unesco": false
+     "unesco": false,
+     "en": "Piarist church Krems"
     },
     {
      "kind": "see",
@@ -939,7 +942,8 @@
      "wikidata": "Q7303948",
      "content": "",
      "editions": 3,
-     "unesco": false
+     "unesco": false,
+     "en": "Red Crayfish Pharmacy"
     },
     {
      "kind": "see",
@@ -951,7 +955,8 @@
      "wikidata": "Q1744024",
      "content": "For a taste of '''visual arts''', pay a visit to the National Gallery at the embankment between Starý most and Nový most with permanent collections of Slovak and European medieval art pieces, although the temporary exhibitions tend to be fa",
      "editions": 22,
-     "unesco": false
+     "unesco": false,
+     "en": "Slovak National Gallery"
     },
     {
      "kind": "see",
@@ -963,7 +968,8 @@
      "wikidata": "Q913415",
      "content": "Bratislava City Gallery is also a good pick to see displays of historical fine arts, paintings and sculptures along with interesting temporary exhibitions.",
      "editions": 10,
-     "unesco": false
+     "unesco": false,
+     "en": "Bratislava City Gallery"
     },
     {
      "kind": "see",
@@ -975,7 +981,8 @@
      "wikidata": "Q1165115",
      "content": "If you like modern art better, pay a visit to the Danubiana Art Museum on the southern edge of Bratislava. It is about 20km from the city center, so too far to walk. Take bus nr 90 from the National Theater, a taxi, or drive. It is located ",
      "editions": 10,
-     "unesco": false
+     "unesco": false,
+     "en": "Danubiana, Meulensteen Art Museum"
     },
     {
      "kind": "see",
@@ -1029,7 +1036,8 @@
      "wikidata": "Q4958040",
      "content": "With a display of historical vehicles (automobiles, farm vehicles, bicycles, firefighting vehicles, railway, model ships and model buses) in the first railway station in the city, very close to the current Main Railway Station. Free parking",
      "editions": 5,
-     "unesco": false
+     "unesco": false,
+     "en": "Bratislava Transport Museum"
     },
     {
      "kind": "see",
@@ -1061,7 +1069,8 @@
      "wikidata": "Q239560",
      "content": "The largest and one of the oldest churches in Bratislava, situated below Bratislava Castle. The Gothic cathedral, formerly the coronation-church of several Hungarian kings, begun in 1204, and reconsecrated in 1445, was restored in 1861-80. ",
      "editions": 33,
-     "unesco": false
+     "unesco": false,
+     "en": "St. Martin's Cathedral, Bratislava"
     },
     {
      "kind": "see",
@@ -1073,7 +1082,8 @@
      "wikidata": "Q1450292",
      "content": "",
      "editions": 13,
-     "unesco": false
+     "unesco": false,
+     "en": "Franciscan Church"
     },
     {
      "kind": "see",
@@ -1085,7 +1095,8 @@
      "wikidata": "Q6188001",
      "content": "",
      "editions": 7,
-     "unesco": false
+     "unesco": false,
+     "en": "Jesuit Church, Bratislava"
     },
     {
      "kind": "see",
@@ -1197,7 +1208,8 @@
      "wikidata": "Q1553111",
      "content": "On the top of the hill behind the castle, overlooking the entire city. This is a monument in memory of Soviet casualties in the liberation battle of Bratislava in World War II. It is the highest place in the city, and thus the best place fo",
      "editions": 20,
-     "unesco": false
+     "unesco": false,
+     "en": "Slavín"
     },
     {
      "kind": "see",
@@ -1221,7 +1233,8 @@
      "wikidata": "Q1717975",
      "content": "This 51-m-high tower above the gate with its green copper roof is one of the best known and the oldest buildings in Bratislava. It was built in the 14th century as one of the four gates to the city.",
      "editions": 18,
-     "unesco": false
+     "unesco": false,
+     "en": "Michael's Gate"
     },
     {
      "kind": "see",
@@ -1233,7 +1246,8 @@
      "wikidata": "Q1870194",
      "content": "",
      "editions": 9,
-     "unesco": false
+     "unesco": false,
+     "en": "Laurinc Gate"
     },
     {
      "kind": "see",
@@ -1245,7 +1259,8 @@
      "wikidata": "Q4180493",
      "content": "",
      "editions": 11,
-     "unesco": false
+     "unesco": false,
+     "en": "Chatam Sofer Memorial"
     },
     {
      "kind": "see",
@@ -1257,7 +1272,8 @@
      "wikidata": "Q837291",
      "content": "A bridge over the Danube river, with its flying saucer-shaped structure housing a restaurant called [http://bratislava-slovakia.eu/places/sightseeing/ufo-tower \"UFO\"]. There is an observation deck on its roof, open from 10:00-23:00 daily, o",
      "editions": 36,
-     "unesco": false
+     "unesco": false,
+     "en": "Bridge of the Slovak National Uprising"
     },
     {
      "kind": "see",
@@ -3535,7 +3551,8 @@
    "note": "Yet another patchwork of architectural styles, but predominantly Gothic. None of the original construction remains, the oldest extant sections are the thirteenth century Giant Gate (''Riesentor'') and Towers of the Heathens (''Heidentürme''",
    "editions": 60,
    "unesco": false,
-   "web": "https://stephanskirche.at/"
+   "web": "https://stephanskirche.at/",
+   "en": "St. Stephen's Cathedral"
   },
   {
    "name": "Kaisergruft",
@@ -3545,7 +3562,8 @@
    "note": "Underneath the Kapuzinerkirche, this mausoleum houses the tombs of generations of Habsburg royalty.",
    "editions": 33,
    "unesco": false,
-   "web": "http://www.kapuzinergruft.com"
+   "web": "http://www.kapuzinergruft.com",
+   "en": "Imperial Crypt"
   },
   {
    "name": "Jesuitenkirche",
@@ -3555,7 +3573,8 @@
    "note": "Has one of the most elaborate Baroque interiors in Europe.",
    "editions": 15,
    "unesco": false,
-   "web": "http://www.jesuitenwien1.at"
+   "web": "http://www.jesuitenwien1.at",
+   "en": "Jesuit Church"
   },
   {
    "name": "Ruprechtskirche",
@@ -3565,7 +3584,8 @@
    "note": "Believed to be the oldest church in Vienna, although excavations around the foundations of two other churches (Stephansdom and Peterskirche) have challenged this view. Earliest mention of the church in historical records is in 1200; the cur",
    "editions": 13,
    "unesco": false,
-   "web": "https://www.ruprechtskirche.at/"
+   "web": "https://www.ruprechtskirche.at/",
+   "en": "St. Rupert's Church"
   },
   {
    "name": "Peterskirche",
@@ -3575,7 +3595,8 @@
    "note": "The church is believed to date back to the Middle Ages, and excavations suggest that the foundation may be far older than previously believed. The current structure was built during the Baroque period, and restored from 1998-2004 to return ",
    "editions": 20,
    "unesco": false,
-   "web": "http://www.peterskirche.at/"
+   "web": "http://www.peterskirche.at/",
+   "en": "St. Peter's Church"
   },
   {
    "name": "Maria am Gestade",
@@ -3601,7 +3622,8 @@
    "wikidata": "Q317701",
    "note": "The best part of the Hofburg and an absolute must. It contains the Habsburgs' collection of jewels, crowns, and other valuables, perhaps the best on the Continent. Second only to a tour of the Kunsthistorisches Museum, of which the Schatzka",
    "editions": 14,
-   "unesco": false
+   "unesco": false,
+   "en": "Imperial Treasury"
   },
   {
    "name": "New Palace",
@@ -3610,7 +3632,8 @@
    "wikidata": "Q1674603",
    "note": "The newest and largest section of the Imperial Palace. It contains the Welt Museum Wien, the Papyrus Museum, and three branches of the Museum of Fine Arts.",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "en": "Neue Burg"
   },
   {
    "name": "The House of Austrian History",
@@ -3620,7 +3643,8 @@
    "note": "The House of Austrian History is a modern museum located in the Hofburg complex that explores Austria’s history from the late 19th century to the present. Through multimedia exhibits and historical artefacts, it focuses on key events such a",
    "editions": 4,
    "unesco": false,
-   "web": "http://www.hdgoe.at/"
+   "web": "http://www.hdgoe.at/",
+   "en": "Haus der Geschichte Österreich"
   },
   {
    "name": "Prunksaal",
@@ -3629,7 +3653,8 @@
    "wikidata": "Q12207289",
    "note": "This magnificent historic library was designed by Johann Bernhard Fischer von Erlach and built in 1726. As well as the spectacular room itself, you can see temporary exhibitions on various historical subjects.",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "State Hall of the National Library of Austria"
   },
   {
    "name": "Globenmuseum",
@@ -3639,7 +3664,8 @@
    "note": "The only museum of its type in the world, this museum contains a collection of 650 globes of all types, as well as a collection of nearly 300,000 historic maps.",
    "editions": 11,
    "unesco": false,
-   "web": "https://www.onb.ac.at/museen/globenmuseum"
+   "web": "https://www.onb.ac.at/museen/globenmuseum",
+   "en": "Globe Museum"
   },
   {
    "name": "Esperantomuseum",
@@ -3649,7 +3675,8 @@
    "note": "Founded in 1927, this museum houses a library and museum with displays illustrating the development and grammar of the modern invented language Esperanto.",
    "editions": 21,
    "unesco": false,
-   "web": "https://www.onb.ac.at/museen/esperantomuseum"
+   "web": "https://www.onb.ac.at/museen/esperantomuseum",
+   "en": "Department of Planned Languages and Esperanto Museum"
   },
   {
    "name": "Albertina",
@@ -3668,7 +3695,8 @@
    "wikidata": "Q3785350",
    "note": "Yet another example of the gruesome divide-and-conquer burial strategy of the Habsburg dynasty. It is said that other dynasties waged countless wars to acquire new lands, but \"you, happy Austria, marry\". Even in death, the Habsburgs placate",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "en": "Herzgruft"
   },
   {
    "name": "Hofburgkapelle",
@@ -3677,7 +3705,8 @@
    "wikidata": "Q19285651",
    "note": "The original chapel of the Palace, built in Gothic style 1447-1449, was made over in Baroque style. On Sundays and Catholic holidays (of which the Austrians celebrate many), the Court Musicians perform here. This group is made up of members",
    "editions": 4,
-   "unesco": false
+   "unesco": false,
+   "en": "Court Chapel"
   },
   {
    "name": "Spanish Riding School",
@@ -3717,7 +3746,8 @@
    "note": "This museum was erected as a mirror to its twin museum, the Museum of Fine Arts. It exhibits various minerals, meteorites, fossils, stuffed animals, and skeleton reconstructions of dinosaurs and other. It also includes an anthropological se",
    "editions": 43,
    "unesco": false,
-   "web": "http://www.nhm-wien.ac.at/"
+   "web": "http://www.nhm-wien.ac.at/",
+   "en": "Natural History Museum, Vienna"
   },
   {
    "name": "Winterpalais des Prinzen Eugen",
@@ -3726,7 +3756,8 @@
    "wikidata": "Q874905",
    "note": "This Baroque palace was built as a residence for Prince Eugene of Savoy, and later used for the Court Treasury and Ministry of Finance. It now houses period furnishings and exhibits detailing the biography of the prince and the history of t",
    "editions": 11,
-   "unesco": false
+   "unesco": false,
+   "en": "Winter Palace of Prince Eugene"
   },
   {
    "name": "MAK",
@@ -3736,7 +3767,8 @@
    "note": "The museum has the MAK Design Shop and a study collection. The museum emphasises design and decorative arts, and has a huge furniture collection. Early 20th century, especially Vienna Secession, and modern design are very well represented, ",
    "editions": 27,
    "unesco": false,
-   "web": "https://www.mak.at"
+   "web": "https://www.mak.at",
+   "en": "MAK – Museum of Applied Arts"
   },
   {
    "name": "Haus der Musik",
@@ -3763,7 +3795,8 @@
    "note": "A gallery owned by the Academy of Fine Arts, to which Hitler applied to before he decided to change to politics. It offers some paintings by Rubens and Bosch. Most interesting are the Renaissance and medieval exponents.",
    "editions": 38,
    "unesco": false,
-   "web": "https://www.akbild.ac.at/"
+   "web": "https://www.akbild.ac.at/",
+   "en": "Academy of Fine Arts Vienna"
   },
   {
    "name": "Museum Postsparkasse",
@@ -3772,7 +3805,8 @@
    "wikidata": "Q877570",
    "note": "SIGNA, the owner of the Post Office Savings Bank building, runs the WAGNER:WERK Museum Postsparkasse. Opened by BAWAG P.S.K. in 2005, it's in the small banking hall. The museum and the main banking hall are open to visitors. At the post off",
    "editions": 16,
-   "unesco": false
+   "unesco": false,
+   "en": "Austrian Postal Savings Bank"
   },
   {
    "name": "Österreichisches Filmmuseum",
@@ -3782,7 +3816,8 @@
    "note": "A cinema for showing specially curated films and retrospective.",
    "editions": 4,
    "unesco": false,
-   "web": "http://www.filmmuseum.at/"
+   "web": "http://www.filmmuseum.at/",
+   "en": "Austrian Film Museum"
   },
   {
    "name": "Uhrenmuseum",
@@ -3791,7 +3826,8 @@
    "wikidata": "Q2474178",
    "note": "A collection of 3000 clocks of all types, including a prized 18th-century astronomical clock.",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "en": "Wien Museum. Uhrenmuseum"
   },
   {
    "name": "Bank Austria Kunstforum",
@@ -3801,7 +3837,8 @@
    "note": "This venue hosts special exhibits of internationally-renowned artists; past exhibits have displayed work by Egon Schiele, Oskar Kokoschka, Cézanne, Picasso, and Van Gogh.",
    "editions": 2,
    "unesco": false,
-   "closedForGood": true
+   "closedForGood": true,
+   "en": "Bank Austria Kunstforum Wien"
   },
   {
    "name": "Phantastenmuseum",
@@ -3811,7 +3848,8 @@
    "note": "An unusual museum dedicated to the work of the Vienna School of Fantastic Realism (''Wiener Schule des Phantastischen Realismus''), highlighting works by artists Ernst Fuchs, Arik Brauer, Rudolf Hausner, Wolfgang Hutter and Fritz Janschka. ",
    "editions": 2,
    "unesco": false,
-   "web": "http://www.palais-palffy.at"
+   "web": "http://www.palais-palffy.at",
+   "noEn": true
   },
   {
    "name": "Dommuseum",
@@ -3821,7 +3859,8 @@
    "note": "A collection of liturgical implements, illustrated manuscripts, altarpieces, and sculptures.",
    "editions": 2,
    "unesco": false,
-   "web": "http://www.dommuseum.at/"
+   "web": "http://www.dommuseum.at/",
+   "en": "Dom Museum Wien"
   },
   {
    "name": "Österreichisches Theatermuseum",
@@ -3831,7 +3870,8 @@
    "note": "Housed in the Baroque Lobkowitz Palace, this museum displays stage models, costumes, and props, with special temporary exhibits.",
    "editions": 4,
    "unesco": false,
-   "web": "http://www.theatermuseum.at"
+   "web": "http://www.theatermuseum.at",
+   "en": "Austrian Theatre Museum"
   },
   {
    "name": "MUSA Museum Startgalerie Artothek",
@@ -3841,7 +3881,8 @@
    "note": "Hosts special exhibits of contemporary Austrian art.",
    "editions": 2,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Wien Museum MUSA"
   },
   {
    "name": "Beethoven Pasqualatihaus",
@@ -3850,7 +3891,8 @@
    "wikidata": "Q1434092",
    "note": "This 18th-century building is atop the Mölker Bastei, one of the only remaining sections of the old city wall. For 8 years Beethoven lived in a 4th-floor apartment in this building, where he composed his 4th-8th symphonies as well as his op",
    "editions": 4,
-   "unesco": false
+   "unesco": false,
+   "en": "Pasqualati House"
   },
   {
    "name": "Jüdisches Museum Wien",
@@ -3860,7 +3902,8 @@
    "note": "A museum documenting the history of Vienna's substantial Jewish community which included Zweig, Freud, Herzl, Mahler, and Schoenberg. Three sites are available for one combined ticket: two museum sites and the main synagogue. Attached to th",
    "editions": 8,
    "unesco": false,
-   "web": "http://www.jmw.at/"
+   "web": "http://www.jmw.at/",
+   "en": "Jewish Museum Vienna"
   },
   {
    "name": "Jüdisches Museum Judenplatz",
@@ -3911,7 +3954,8 @@
    "note": "This museum houses a collection of artifacts from the Roman settlement of Vindobona, as Vienna was then known. There are Roman ruins in the cellar of the museum, first discovered during construction work in 1948, and for many years only acc",
    "editions": 2,
    "unesco": false,
-   "web": "https://www.wienmuseum.at/de/standorte/roemermuseum"
+   "web": "https://www.wienmuseum.at/de/standorte/roemermuseum",
+   "en": "Römermuseum Wien"
   },
   {
    "name": "Römische Baureste Am Hof",
@@ -3927,7 +3971,8 @@
    "wikidata": "Q1516408",
    "note": "A 13th-century subterranean chapel beneath the former Chapel of St Mary Magdalene (no longer standing, but outlines have been traced on the pavement directly south of Stephansdom). This chapel served as the tomb for a wealthy Viennese famil",
    "editions": 4,
-   "unesco": false
+   "unesco": false,
+   "en": "Vergilius Chapel"
   },
   {
    "name": "Heldenplatz",
@@ -3945,7 +3990,8 @@
    "wikidata": "Q472279",
    "note": "The remaining midsection of a medieval nail tree (Nagelbaum). Over the centuries hundreds of nails have been hammered in both in thanksgiving and for good luck. The tree figures in a number of local legends.",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "en": "Stock-im-Eisen-Platz"
   },
   {
    "name": "Parlamentsgebäude",
@@ -3955,7 +4001,8 @@
    "note": "The home of the two houses of Austrian Parliament. The building was designed by Theophil von Hansen in the Neoclassical style, and constructed between 1873 and 1883. [https://www.parlament.gv.at/ENGL/GEBF/FUEHRUNGEN/index.shtml Guided tours",
    "editions": 23,
    "unesco": false,
-   "web": "http://www.parlinkom.gv.at/"
+   "web": "http://www.parlinkom.gv.at/",
+   "en": "Austrian Parliament Building"
   },
   {
    "name": "Wiener Secession",
@@ -3964,7 +4011,8 @@
    "wikidata": "Q208208",
    "note": "Architect Josef Maria Olbrich built this Jugendstil (German-style Art Nouveau) building 1897-98 as a display space for artists working in the new Secession artistic movement. It is topped by a giant, frothy golden ball, lovingly called ''Kr",
    "editions": 50,
-   "unesco": false
+   "unesco": false,
+   "en": "Vienna Secession"
   },
   {
    "name": "Wiener Rathaus",
@@ -3974,7 +4022,8 @@
    "note": "Designed by Friedrich von Schmidt (the architect of the Cologne Cathedral) and completed in 1883, this is the most significant neo-Gothic building in Vienna, with a 103m-high clock tower. There is a very pleasant park with two fountains in ",
    "editions": 37,
    "unesco": false,
-   "web": "http://www.wien.gv.at/verwaltung/rathaus/index.html"
+   "web": "http://www.wien.gv.at/verwaltung/rathaus/index.html",
+   "en": "Vienna City Hall"
   },
   {
    "name": "Ankeruhr",
@@ -4002,7 +4051,8 @@
    "note": "The university was founded in 1365, and is the oldest university in the German-speaking area, as well as one of the largest in Europe with more than 90,000 students. It consists of 15 faculties amongst them are Law, Mathematics, Physics, Ps",
    "editions": 88,
    "unesco": false,
-   "web": "https://www.univie.ac.at/"
+   "web": "https://www.univie.ac.at/",
+   "en": "University of Vienna"
   },
   {
    "name": "Stadtpark",
@@ -4049,7 +4099,8 @@
    "note": "Contains recent Austrian and international art from the past two centuries. Viennese art from the early 20th century is well-represented in the permanent collection ''Vienna around 1900 and the Art of the Classical Modern'', and includes ma",
    "editions": 31,
    "unesco": false,
-   "web": "https://www.belvedere.at/"
+   "web": "https://www.belvedere.at/",
+   "en": "Belvedere"
   },
   {
    "name": "Unteres Belvedere",
@@ -4067,7 +4118,8 @@
    "editions": 8,
    "unesco": false,
    "web": "https://www.belvedere.at/besuch/belvedere-21",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Belvedere 21"
   },
   {
    "name": "KunstHausWien",
@@ -4098,7 +4150,8 @@
    "note": "This museum in a former depot houses a comprehensive collection of vintage vehicles explaining the history of Viennese public transport. The exhibits include horse-drawn streetcars from 1868, a steam tram set from 1885, many electric street",
    "editions": 3,
    "unesco": false,
-   "web": "http://www.wienerlinien.at/museum"
+   "web": "http://www.wienerlinien.at/museum",
+   "en": "Vienna Transport Museum Remise"
   },
   {
    "name": "Hundertwasserhaus",
@@ -4117,7 +4170,8 @@
    "wikidata": "Q177008",
    "note": "An imposing Soviet-style monument near Karlsplatz commemorates the Soviet victory in Vienna over the Nazi army.",
    "editions": 15,
-   "unesco": false
+   "unesco": false,
+   "en": "Soviet War Memorial"
   },
   {
    "name": "Arnold Schönberg Center",
@@ -4136,7 +4190,8 @@
    "wikidata": "Q695321",
    "note": "This historic cemetery was in use from 1784 until 1874. Mozart was buried here in an unmarked pauper's grave in 1791; the tombstone dates from a later period, after his grave was tentatively identified. The [http://www.bezirksmuseum.at/de/b",
    "editions": 15,
-   "unesco": false
+   "unesco": false,
+   "en": "St. Marx Cemetery"
   },
   {
    "name": "Botanischer Garten",
@@ -4146,7 +4201,8 @@
    "note": "Established in 1754 by Empress Maria Theresia as a garden for medicinal plants and granted to the University of Vienna, which has maintained it since. The gardens contain a number of rare plants, including alpine specimens.",
    "editions": 11,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Botanical Garden of the University of Vienna"
   },
   {
    "name": "Wien Museum Karlsplatz",
@@ -4156,7 +4212,8 @@
    "note": "A museum documenting Vienna's history. It is split into several branches with its main branch at Karlsplatz.",
    "editions": 11,
    "unesco": false,
-   "web": "https://www.wienmuseum.at"
+   "web": "https://www.wienmuseum.at",
+   "en": "Vienna Museum"
   },
   {
    "name": "Dritte Mann Museum",
@@ -4240,7 +4297,8 @@
    "wikidata": "Q1430002",
    "note": "Two previous churches were located here, the most recent a Baroque building from the 18th century, which despite massive popular protest was demolished in 1965 due to traffic considerations. The new steel and concrete church was designed by",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Florianikirche of 1725"
   },
   {
    "name": "Reumannhof",
@@ -4256,7 +4314,8 @@
    "wikidata": "Q28752712",
    "note": "Joseph Haydn spent the final twelve years of his life in this home, during which time he composed the oratorios ''The Creation'' and ''The Seasons''. The house has been a museum since 1899, and careful restoration has included the small gar",
    "editions": 1,
-   "unesco": false
+   "unesco": false,
+   "en": "Haydn-Haus"
   },
   {
    "name": "Haus des Meeres",
@@ -4295,7 +4354,8 @@
    "note": "Has a strict policy of not allowing big bags inside the museum. Even your cameras (unless they can be tucked inside a small carry bag) will have to be deposited outside. Has a self-service locker.",
    "editions": 18,
    "unesco": false,
-   "web": "https://www.mumok.at"
+   "web": "https://www.mumok.at",
+   "en": "Mumok"
   },
   {
    "name": "Kunsthalle Wien",
@@ -4315,7 +4375,8 @@
    "note": "Houses the largest furniture collection in the world. The exhibit displays furniture for all the Austrian emperors since Charles VI (the father of Maria Theresa), furniture by the Thonet Brothers, Jugendstil, and the Viennese Modernist move",
    "editions": 4,
    "unesco": false,
-   "web": "https://www.moebelmuseumwien.at/"
+   "web": "https://www.moebelmuseumwien.at/",
+   "en": "Imperial Furniture Museum"
   },
   {
    "name": "Palais Auersperg",
@@ -4378,7 +4439,8 @@
    "note": "Founded in 1895 and housed in the Schönborn Garden Palace, this museum is dedicated to preserving the traditional folk art of Austria and of central Europe, with rotating exhibits as well as a permanent display. There is a museum library an",
    "editions": 6,
    "unesco": false,
-   "web": "https://www.volkskundemuseum.at/"
+   "web": "https://www.volkskundemuseum.at/",
+   "en": "Austrian Museum of Folk Life and Folk Art"
   },
   {
    "name": "Liechtenstein Museum",
@@ -4398,7 +4460,8 @@
    "note": "Housed in a squat tower, which once was an insane asylum, the Narrenturm (''Fool's Tower''), this museum contains some of the dustier corners of the annals of medicine. You will find preserved hydrocephalic infants, wax castings of tertiary",
    "editions": 10,
    "unesco": false,
-   "web": "http://www.nhm-wien.ac.at/forschung/anthropologie/pathologisch-anatomische_sammlung_im_narrenturm"
+   "web": "http://www.nhm-wien.ac.at/forschung/anthropologie/pathologisch-anatomische_sammlung_im_narrenturm",
+   "en": "Narrenturm"
   },
   {
    "name": "Josephinum",
@@ -4418,7 +4481,8 @@
    "note": "One of the most important Neo-Gothic religious architectural sites in the world, constructed between 1856 and 1879. Stands on a large square on the location where an unsuccessful attempt to assassinate Emperor Franz Joseph took place in 185",
    "editions": 33,
    "unesco": false,
-   "web": "https://www.votivkirche.at/"
+   "web": "https://www.votivkirche.at/",
+   "en": "Votive Church"
   },
   {
    "name": "Spittelau Waste Incineration Plant",
@@ -4428,7 +4492,8 @@
    "note": "A waste incinerator may not be the usual item to attract a visitor's attention, but after the Viennese painter/architect Friedensreich Hundertwasser restyled the plant's façade in 1989 (following a fire in 1987), it has become a surprisingl",
    "editions": 7,
    "unesco": false,
-   "web": "https://www.wienenergie.at/privat/erleben/standorte/muellverwertungs-anlage-spittelau/"
+   "web": "https://www.wienenergie.at/privat/erleben/standorte/muellverwertungs-anlage-spittelau/",
+   "en": "Spittelau incinerator"
   },
   {
    "name": "Strudlhofstiege",
@@ -4446,7 +4511,8 @@
    "wikidata": "Q1437845",
    "note": "Designed by Otto Wagner between 1893 bis 1897, this is the architect's first religious structure and served as a model for his later ''Kirche am Steinhof''.",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "en": "John of Nepomuk chapel"
   },
   {
    "name": "Freud Museum",
@@ -4456,7 +4522,8 @@
    "note": "This small museum is in Freud's historic flat where he practiced psychoanalysis for almost his whole life. However, the collection is limited mostly to documents of various kinds relating to Freud's life. Almost all of the flat's contents, ",
    "editions": 18,
    "unesco": false,
-   "web": "https://www.freud-museum.at/en/"
+   "web": "https://www.freud-museum.at/en/",
+   "en": "Sigmund Freud Museum"
   },
   {
    "name": "Schubert Geburtshaus",
@@ -4472,7 +4539,8 @@
    "wikidata": "Q1117261",
    "note": "Vienna's oldest preserved Jewish cemetery, in use from the 16th century until 1784. In 1941 Nazi officials decided to raze the cemetery; in response a number of Viennese Jews removed 931 gravestones and buried them at the Zentralfriedhof. I",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "en": "Jewish cemetery in Roßau"
   },
   {
    "name": "Wurstelprater",
@@ -4492,7 +4560,8 @@
    "note": "An English engineering firm (Walter Basset) built the giant Ferris wheel from 1896-97. Others of the same era, built for world exhibitions and other parks in Chicago, London, Paris, etc. have long since been torn down. The Riesenrad has bec",
    "editions": 22,
    "unesco": false,
-   "web": "http://www.wienerriesenrad.com/en"
+   "web": "http://www.wienerriesenrad.com/en",
+   "en": "Wiener Riesenrad"
   },
   {
    "name": "Zeiss Planetarium Wien",
@@ -4503,7 +4572,8 @@
    "editions": 2,
    "unesco": false,
    "web": "http://www.planetarium-wien.at",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Vienna Zeiss Planetarium"
   },
   {
    "name": "Pratermuseum",
@@ -4519,7 +4589,8 @@
    "wikidata": "Q28651931",
    "note": "The 'Waltz King' lived in this elegant apartment from 1863 until 1870; his most famous piece 'An der schönen blauen Donau' (The Blue Danube) was composed during his time here. Included with the items on display is one of the composer's viol",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Johann Strauss Apartment"
   },
   {
    "name": "Wiener Kriminalmuseum",
@@ -4529,7 +4600,8 @@
    "note": "This museum is dedicated to the history of police and the justice system, from the Middle Ages until World War II. Exhibits relating to famous Viennese criminals are included.",
    "editions": 3,
    "unesco": false,
-   "web": "http://kriminalmuseum.at/"
+   "web": "http://kriminalmuseum.at/",
+   "en": "Vienna Crime Museum"
   },
   {
    "name": "Circus- und Clownmuseum",
@@ -4576,7 +4648,8 @@
    "wikidata": "Q1957355",
    "note": "This was public dormitory for men (''Männerwohnheim'') from 1905 to 2003. It is of interest as it was the residence of Adolf Hitler, the Nazi German dictator from 1910 to 1913 before he moved on to Munich.",
    "editions": 6,
-   "unesco": false
+   "unesco": false,
+   "en": "Meldemannstraße dormitory"
   },
   {
    "name": "Bezirksmuseum Brigittenau",
@@ -4586,7 +4659,8 @@
    "note": "This little museum tells the story of the district itself through pictures, views and models.",
    "editions": 3,
    "unesco": false,
-   "web": "http://www.bezirksmuseum.at/default/index.php?id=186"
+   "web": "http://www.bezirksmuseum.at/default/index.php?id=186",
+   "en": "District Museum Brigittenau"
   },
   {
    "name": "Brigittakirche",
@@ -4612,7 +4686,8 @@
    "note": "The 250 kW TRIGA Mark II reactor in the Viennese Prater started operation in 1962. The reactor is a training ground for International Atomic Energy Agency (IAEA) inspectors and neighbouring countries. The Atominstitut offers guided tours fo",
    "editions": 3,
    "unesco": false,
-   "web": "https://www.tuwien.at/phy/ati"
+   "web": "https://www.tuwien.at/phy/ati",
+   "en": "Atominstitute"
   },
   {
    "name": "Technisches Museum Wien",
@@ -4623,7 +4698,8 @@
    "editions": 21,
    "unesco": false,
    "web": "https://www.technischesmuseum.at/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Vienna Technical Museum"
   },
   {
    "name": "Kirche am Steinhof",
@@ -4651,7 +4727,8 @@
    "note": "One of Beethoven's many residences within the city. While living here he composed his Symphony No. 2 in D major (Op. 36), as well as several other works.",
    "editions": 4,
    "unesco": false,
-   "web": "https://www.wienmuseum.at/de/standorte/beethoven-museum"
+   "web": "https://www.wienmuseum.at/de/standorte/beethoven-museum",
+   "en": "House of the Heiligenstadt Testament"
   },
   {
    "name": "Türkenschanzpark",
@@ -4670,7 +4747,8 @@
    "note": "Dedicated to the patron saint of Vienna, this small church was established in 1679, and its current appearance dates to the first part of the 18th century. The building is on top of 425-m-high Leopoldsberg, with lovely views of Vienna and t",
    "editions": 4,
    "unesco": false,
-   "web": "http://www.leopoldsberg-kirche.at"
+   "web": "http://www.leopoldsberg-kirche.at",
+   "en": "Sankt Leopold auf dem Leopoldsberg"
   },
   {
    "name": "Grinzing Parish Church",

@@ -3253,7 +3253,7 @@ function famousTop(city, src) {
 // A local name in another script (Greek, Arabic, Japanese...) has no letters left after keyOf(), and an empty name
 // "matches" anything, so local names only count when they still have letters to compare.
 const hasKey = n => !!n && keyOf(n).length >= 3;
-const sameSight = (x, s) => nameMatch(x.name, s.name) || nameMatch(s.name, x.name) || !!(hasKey(x.local) && (nameMatch(x.local, s.name) || (hasKey(s.local) && keyOf(s.local) === keyOf(x.local)))) || !!(x.wd && s.wd && x.wd === s.wd);
+const sameSight = (x0, s0) => { const x = ownNamed(x0), s = ownNamed(s0); return nameMatch(x.name, s.name) || nameMatch(s.name, x.name) || !!(hasKey(x.local) && (nameMatch(x.local, s.name) || (hasKey(s.local) && keyOf(s.local) === keyOf(x.local)))) || !!(x.wd && s.wd && x.wd === s.wd); };
 function famousGaps(city, src) {
   const top = famousTop(city, src), bar = famousMustBar(top), all = allSites(city);
   return { top, bar, missing: top.filter(x => !all.some(s => sameSight(x, s))), hidden: (city.sites || []).filter(s => s.quick && top.some(x => sameSight(x, s))) };
@@ -4721,7 +4721,9 @@ const placeNames = x => { const n = String((x && x.name) || ""), alt = [...n.mat
 const placeKind = x => (PLACE_KIND.find(([, re]) => re.test(((x && x.name) || "") + " " + ((x && x.category) || ""))) || [""])[0];
 const isFeat = t => PLACE_PART.has(t) || PLACE_KIND.some(([, re]) => re.test(t));
 // How b relates to a: "same" (one place), "part" (b is a small part of a), or "".
-function placeRel(a, b) {
+// A sight shown by what it is ("Museum", "Local sight": no English name in any source) is matched by its own name.
+const ownNamed = s => s && s.localOnly && (s.srcName || s.local) ? Object.assign({}, s, { name: s.srcName || s.local }) : s;
+function placeRel(a, b) { a = ownNamed(a); b = ownNamed(b);
   if (!a || !b) return "";
   // Near-identical names count as one place only when neither has a telling word the other lacks: "Natural History
   // Museum of Crete" is not the "Historical Museum of Crete".

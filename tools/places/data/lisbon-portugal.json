@@ -445,7 +445,8 @@
      "wikidata": "Q599223",
      "content": "The National Palace of Mafra is probably the most striking Baroque monuments to be found in Portugal, its construction symbolizes the Absolutist rule of D. João V. The palace has some 1,200 rooms of which the most impressive is the Library,",
      "editions": 31,
-     "unesco": true
+     "unesco": true,
+     "en": "Palace of Mafra"
     },
     {
      "kind": "see",
@@ -456,7 +457,8 @@
      "price": "Free",
      "wikidata": "Q16268486",
      "content": "Built according to a plan by Johann Friedrich Ludwig . This basilica has a set of 6 identical organs, unique in the world ( 11,444 pipes ) and a carillon of 92 bells spread over two towers, the north chime being the work of the Liège founde",
-     "editions": 4
+     "editions": 4,
+     "en": "Basilica of Our Lady and Saint Anthony of Mafra"
     }
    ],
    "foodDrink": [
@@ -524,7 +526,8 @@
      "wikidata": "Q69513",
      "content": "Beautiful example of pseudo-Moorish Romantic architecture. You can walk there from Sintra in about an hour (uphill!) or catch a bus. You can see a good collection of furniture and the royal apartments. Tickets are sold on a timed basis. Arr",
      "editions": 41,
-     "unesco": true
+     "unesco": true,
+     "en": "Pena Palace"
     },
     {
      "kind": "see",
@@ -536,7 +539,8 @@
      "wikidata": "Q1049008",
      "content": "One of the highlights of Sintra not to be missed. Ruins of a castle built by the Moors from the 10th century onwards. Apparently, when Cascais was under the rule of Sintra, a huge fire would be lit here annually to remind the people of Casc",
      "editions": 22,
-     "unesco": true
+     "unesco": true,
+     "en": "Castle of the Moors"
     },
     {
      "kind": "see",
@@ -560,7 +564,8 @@
      "wikidata": "Q3175595",
      "content": "An old estate with a farmyard, giving you an opportunity to learn about traditional local farming. The estate was transformed into its current form by 19th-century British industrialist Francis Cook and his architect James Knowles Jr, and s",
      "editions": 16,
-     "unesco": true
+     "unesco": true,
+     "en": "Monserrate Palace"
     },
     {
      "kind": "see",
@@ -572,7 +577,8 @@
      "wikidata": "Q1129421",
      "content": "A secluded abbey where monks used to live in close contact with nature. Immersed in a wood, its crude and harsh style points out the importance of spirituality according to these friars and their strict Christian values. It has no electric ",
      "editions": 11,
-     "unesco": true
+     "unesco": true,
+     "en": "Convent of the Capuchos"
     },
     {
      "kind": "see",
@@ -2514,7 +2520,8 @@
    "note": "Portugal's impressive national art collection, including 14-19th century European painting, artefacts of Portuguese contact with the East and Africa and a collection of ecclesiastical treasures. Highlights include Dürer's St Jerome, Hierony",
    "editions": 26,
    "unesco": false,
-   "web": "http://www.mnarteantiga-ipmuseus.pt/"
+   "web": "http://www.mnarteantiga-ipmuseus.pt/",
+   "en": "National Museum of Ancient Art"
   },
   {
    "name": "Museu da Marioneta",
@@ -2530,7 +2537,8 @@
    "wikidata": "Q976850",
    "note": "This large cemetery is packed with majestic gravestones and mausoleums, separated by wide, pedestrian, tree-lined \"streets\". Many graves are marked with icons telling something about the person's role in historical Lisbon. A beautiful respi",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "en": "Prazeres Cemetery"
   },
   {
    "name": "Fundação Arpad Szenes / Vieira da Silva",
@@ -2540,7 +2548,8 @@
    "note": "This museum is installed in the restored 18th-century former Royal Silk Factory. Its permanent collection covers a wide time period of the works of 20th-century painters Arpad Szenes and Maria Helena Vieira da Silva, and regularly hosts exh",
    "editions": 2,
    "unesco": false,
-   "web": "http://fasvs.pt"
+   "web": "http://fasvs.pt",
+   "en": "Museu Arpad Szenes - Vieira da Silva"
   },
   {
    "name": "Aqueduto das Aguas Livres",
@@ -2563,7 +2572,8 @@
    "wikidata": "Q943407",
    "note": "A hidden gem. It was created several hundred years ago, by a King of Portugal at the time of the Discoveries. The story goes that this King wanted one of every type of plant in the world, and although that's unlikely, there is a huge collec",
    "editions": 9,
-   "unesco": false
+   "unesco": false,
+   "en": "Jardim Botânico de Lisboa"
   },
   {
    "name": "Miradouro da Senhora do Monte",
@@ -2594,7 +2604,8 @@
    "note": "Along the way from downtown to Saint George's Castle.",
    "editions": 5,
    "unesco": false,
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Ancient Roman theatre"
   },
   {
    "name": "Panteão Nacional",
@@ -2632,7 +2643,8 @@
    "note": "The permanent collection of the museum consists of the Berardo Collection, which is made up of modern and contemporary art, with major art movements like abstract expressionism, Abstraction-Création, action painting, body Art, constructivis",
    "editions": 11,
    "unesco": false,
-   "web": "http://www.museuberardo.com/"
+   "web": "http://www.museuberardo.com/",
+   "en": "Berardo Collection Museum"
   },
   {
    "name": "Museu Nacional dos Coches",
@@ -2643,7 +2655,8 @@
    "editions": 12,
    "unesco": false,
    "web": "http://museudoscoches.pt/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "National Coach Museum"
   },
   {
    "name": "Ponte 25 de Abril",
@@ -2652,7 +2665,8 @@
    "wikidata": "Q721152",
    "note": "This sister bridge of the San Francisco – Oakland Bay Bridge was designed by the same architect in 1966 to connect Lisbon with the Setubal peninsula across the Tagus (Tejo) River. Formerly known as the Salazar Bridge, it was renamed after t",
    "editions": 34,
-   "unesco": false
+   "unesco": false,
+   "en": "25 de Abril Bridge"
   },
   {
    "name": "Statue to Afonso de Albuquerque",
@@ -2676,7 +2690,8 @@
    "note": "A zoo that is fairly pricey, but has a variety of exotic animals featuring sea-lions and dolphins.",
    "editions": 13,
    "unesco": false,
-   "web": "http://www.zoo.pt"
+   "web": "http://www.zoo.pt",
+   "en": "Lisbon Zoo"
   },
   {
    "name": "Praça Marquês de Pombal",

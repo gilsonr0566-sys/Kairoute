@@ -1284,6 +1284,16 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   ok(Array.isArray(two.leaveTimes || lt) && (two.leaveTimes || lt).length === 3, `a kind's departures are read together (${JSON.stringify(two.leaveTimes || lt)})`);
   const kd = E.makeTravel({ walk: 'medium' }, null, null, null, (a, b) => [{ id: 'rail|A', min: 75, label: 'Train A', mode: 'rail', steps: ['A'], deps: [{ t: 1231 }], kindDeps: [{ t: 455, a: 5 }, { t: 515, a: 5 }, { t: 1231, a: 8 }] }], null).estimate({ lat: 41.9, lng: 12.5 }, { lat: 42.09, lng: 11.79 });
   ok(JSON.stringify(kd.leaveTimes) === '[450,510,1223]', `every departure of the kind the helper sends is read (${JSON.stringify(kd.leaveTimes)})`); }
+// Names in Latin letters only (round 2 outside test, Nov 23: Hebrew train lines, Japanese station and lunch names).
+{ const LAT = /^[\u0000-\u024F\u1E00-\u1EFF\u2000-\u206F\u20A0-\u20CF]*$/;
+  ok(E.latin('とうきょう') === 'Tokyo' && E.latin('シンジュク') === 'Shinjuku' && E.latin('ラーメン') === 'Ramen' && E.latin('きっさてん') === 'Kissaten', `kana are written in Latin letters (${E.latin('とうきょう')}, ${E.latin('シンジュク')}, ${E.latin('ラーメン')})`);
+  ok(E.say('銀座線', 'the stop') === 'the stop' && E.say('תל אביב מרכז', 'the stop') === 'the stop' && E.say('Tel Aviv HaShalom', 'x') === 'Tel Aviv HaShalom', 'a name with no Latin reading gives way to a plain word');
+  const st = ['Take 銀座線 from 渋谷 to 銀座', 'Train קו 1 to תל אביב מרכז', 'Walk 5 min to 新宿 station'].map(x => E.say(x));
+  ok(st.every(x => LAT.test(x)) && st[0] === 'Take the line from the stop to the stop' && st[2] === 'Walk 5 min to the station', `ride steps keep no other script (${st.join(' | ')})`);
+  ok(E.transitLabel({ mode: 'train', ref: 'קו 1' }) === 'Train' && E.transitLabel({ mode: 'subway', ref: 'G' }) === 'Metro G' && E.transitLabel({ mode: 'subway', ref: '7' }) === 'Metro Line 7', `a Hebrew line letter is left out of the line's label (${E.transitLabel({ mode: 'train', ref: 'קו 1' })})`);
+  const tr = E.makeTravel({ walk: 'medium' }, null, null, null, () => [{ id: 'rail|1', min: 40, label: 'רכבת ישראל', mode: 'rail', steps: ['Train רכבת from חיפה to תל אביב'] }], null).estimate({ lat: 32.8, lng: 35.0 }, { lat: 32.08, lng: 34.78 });
+  const shown = [tr.how].concat((tr.options || []).flatMap(o => [o.how].concat(o.steps || []))).filter(Boolean);
+  ok(shown.every(x => LAT.test(x)), `a ride's label and steps from the helper keep no other script (${shown.join(' | ')})`); }
 // Nov 23 ride check against real timetables: trains with no timetable (only how often they run) were planned with a
 // full gap of waiting, about 28 min longer than the real ride. Going out: half the gap plus boarding, the full gap kept
 // as "up to". On the way back to the ship (or a train or plane): the full gap, unchanged. With real departures: as sent.
