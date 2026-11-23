@@ -6,7 +6,7 @@
 'use strict';
 const fs = require('fs'), path = require('path'), os = require('os'), { spawnSync } = require('child_process');
 const ROOT = path.join(__dirname, '..', '..');
-const SAFETY = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'nan', 'back', 'order', 'start'];
+const SAFETY = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'nan', 'back', 'order', 'start'];
 let bad = 0; const fail = m => { bad++; console.log('FAIL no-warn ' + m); }, ok = m => console.log('ok   ' + m);
 // 1. workflows
 const wf = path.join(ROOT, '.github', 'workflows');
@@ -18,7 +18,7 @@ ok('no workflow warns a safety rule');
 // 2. the tools refuse
 const empty = path.join(os.tmpdir(), 'no-warn-empty.json'); fs.writeFileSync(empty, '[]');
 const run = (args) => spawnSync(process.execPath, args, { cwd: ROOT, encoding: 'utf8' });
-for (const k of ['gone', 'reach', 'leaveby', 'before', 'night', 'unverified']) {
+for (const k of ['gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait']) {
   const r = run([path.join('tools', 'truth', 'oracle.cjs'), '--trips', empty, '--warn', k]);
   if (r.status === 1 && /REFUSED --warn/.test(r.stdout)) ok(`independent check refuses --warn ${k}`); else fail(`independent check accepted --warn ${k} (exit ${r.status})`);
 }
