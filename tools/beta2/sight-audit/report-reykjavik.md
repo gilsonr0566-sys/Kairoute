@@ -1,6 +1,4 @@
 ## Reykjavik, Iceland (Reykjavik, Iceland, guide from sources)
-- POS Reykjavík Cathedral: app is 0.70 km from Wikidata's point (not on the map by id)
-- POS Hafnarfjörður [day trip]: app 64.06670,-21.95000 is 0.48 km from the map's Hafnarfjordur (node/2171372991, 64.06954,-21.95757); Wikidata 0.49 km from the map
 - NOID Hafnarfjörður Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Hafnarfjarðarkirkja [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Sankti Jósefskirkja [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby

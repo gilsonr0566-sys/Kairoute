@@ -2,27 +2,10 @@
  "name": "reykjavik",
  "label": "Reykjavik, Iceland",
  "centre": {
-  "lat": 64.14411,
+  "lat": 64.14666,
   "lng": -21.9327
  },
  "findings": [
-  {
-   "k": "POS",
-   "t": "Reykjavík Cathedral: app is 0.70 km from Wikidata's point (not on the map by id)",
-   "x": {
-    "d": 0.6995569544584863,
-    "id": "src-q1270853",
-    "wd": "Q1270853",
-    "app": [
-     64.14056,
-     -21.93583
-    ],
-    "wdpt": [
-     64.14666,
-     -21.93936
-    ]
-   }
-  },
   {
    "k": "LEN",
    "t": "Reykjavík Botanic Garden: 40 min, but a art museum or gallery usually takes 45-240 min",
@@ -30,27 +13,6 @@
     "id": "src-q894659",
     "min": 40,
     "kind": "art museum or gallery"
-   }
-  },
-  {
-   "k": "POS",
-   "t": "Hafnarfjörður [day trip]: app 64.06670,-21.95000 is 0.48 km from the map's Hafnarfjordur (node/2171372991, 64.06954,-21.95757); Wikidata 0.49 km from the map",
-   "x": {
-    "d": 0.48453024208442597,
-    "id": "hafnarfjor-ur-far",
-    "wd": "Q103725",
-    "app": [
-     64.0667,
-     -21.95
-    ],
-    "map": [
-     64.0695354,
-     -21.9575664
-    ],
-    "wdpt": [
-     64.066666666667,
-     -21.95
-    ]
    }
   },
   {
@@ -375,8 +337,8 @@
    "id": "src-q1270853",
    "name": "Reykjavík Cathedral",
    "local": "Dómkirkjan í Reykjavík",
-   "lat": 64.14056,
-   "lng": -21.93583,
+   "lat": 64.14666,
+   "lng": -21.93936,
    "minutes": 30,
    "category": "Church",
    "kind": "local",
@@ -398,7 +360,7 @@
    "travel": "",
    "parts": [],
    "merged": [],
-   "posDoubt": true,
+   "posDoubt": false,
    "summary": "The church beside the parliament is Reykjavík Cathedral, the mother church of the Church of Iceland, the country's national church and part of the Lutheran deno"
   },
   {
