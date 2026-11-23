@@ -41,17 +41,26 @@ const stops = [
   stop('Musei Testolini', ['art-museum', 'building', 'museum', 'structure'], 46, -0.3, -0.6),
   stop('Regional Museum of Testopolis', ['building', 'museum', 'structure'], 12, 1.8, -1.6),
   stop('Testopolis Sea Wall', ['structure'], 110, -2.4, 2.2),
+  // Names in the traveler's language, any language (rule R-11, Nov 23 Kusadasi): the encyclopedia's English name is shown;
+  // a place known only by a local name in every source is never offered.
+  stop('Testi Palace', ['building', 'palace', 'structure'], 14, 2.8, 0.6),
+  stop('Testkale Müzesi', ['building', 'museum', 'structure'], 9, -2.8, -0.6, { localName: true }),
+  stop('Plajı Testo', ['beach', 'feature'], 8, 3.2, 1.6, { localName: true }),
+  stop('Kadı Testesi', [], 6, 3.4, -1.4, { localName: true }),
+  stop('テスト寺', [], 6, -3.4, 1.4, { localName: true }),
 ];
 const guideSite = Object.assign({ id: 'wv~Q131', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
 // The guide's own museum, and the travel guide's listing of it under its Italian name 400 m off (Messina, Nov 23).
 const builtMuseum = Object.assign({ id: 'museo-t', name: 'Regional Museum of Testopolis', minutes: 75, category: 'Museum', builtin: true }, at(1.5, -1.6));
 const twinListing = Object.assign({ id: 'wv~Q132', name: 'Museo regionale di Testopolis', minutes: 60, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(1.8, -1.6));
+const palaceListing = Object.assign({ id: 'wv~Q134', name: 'Palazzo Testi', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(2.8, 0.6));
+const localListing = Object.assign({ id: 'wv~Q135', name: 'Testkale Müzesi', minutes: 60, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-2.8, -0.6));
 const fails = []; let n = 0;
 const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== undefined ? ' (got ' + JSON.stringify(got) + ')' : '')); };
 (async () => {
   const b = await chromium.launch(), pg = await b.newPage(); await pg.goto('file://' + file); await pg.waitForTimeout(1200);
   const sites = await pg.evaluate(a => { const c = { city: 'Testopolis', country: 'Testland', sites: JSON.parse(JSON.stringify(a.g)), farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, a.src);
-    return c.sites.map(s => ({ name: s.name, cat: s.category, min: s.minutes, quick: !!s.quick })); }, { src: { area: 'Testopolis', center: C, stops }, g: [guideSite, builtMuseum, twinListing] });
+    return c.sites.map(s => ({ name: s.name, cat: s.category, min: s.minutes, quick: !!s.quick, local: s.local })); }, { src: { area: 'Testopolis', center: C, stops }, g: [guideSite, builtMuseum, twinListing, palaceListing, localListing] });
   const get = nm => sites.find(s => s.name === nm);
   ok('a mosque is called a mosque', (get('Great Mosque') || {}).cat === 'Mosque', get('Great Mosque'));
   ok('a synagogue is called a synagogue', (get('Old Synagogue') || {}).cat === 'Synagogue', get('Old Synagogue'));
@@ -88,6 +97,10 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok('a holy place with thin data (Bethany) stays', !!get('Bethtest'));
   ok('a saint\'s name on a lift is no church ("Santa Justa Lift")', !!get('Santa Testa Lift') && get('Santa Testa Lift').cat !== 'Church', get('Santa Testa Lift'));
   ok('a travel-guide listing of a sight the guide already has, under its local name, is no second stop (Museo regionale / Regional Museum)', !get('Museo regionale di Testopolis') && sites.filter(s => /Regional Museum of Testopolis/i.test(s.name)).length === 1, sites.filter(s => /Testopolis/.test(s.name)));
+  ok("a travel-guide listing shows the place's English name, whatever the listing's language (Palazzo Testi > Testi Palace)", !!get('Testi Palace') && !get('Palazzo Testi'), sites.filter(s => /Testi/.test(s.name)));
+  { const loc = sites.filter(s => /Testkale|Plaj|Testesi|テスト/.test(s.local || '') || /Testkale|Plaj|Testesi|テスト/.test(s.name));
+    ok('a place with no English name in any source is shown by what it is in English, its own name beneath (Kusadasi, Nov 23)', loc.length >= 2 && loc.every(s => !/Testkale|Plaj|Testesi|テスト/.test(s.name) && /^(Museum|Beach|Local sight|[A-Z][a-z]+( or [a-z]+)?)$/.test(s.name) && s.local), loc.map(s => s.name + ' / ' + s.local));
+    ok('a place known only by a name in another script and of no known kind is not offered (it could not be told apart)', !sites.some(s => /テスト/.test(s.local || s.name)), loc.map(s => s.name + ' / ' + s.local)); }
   const rel = await pg.evaluate(() => window.__kairoutePlaceRel({ name: 'Holstentor', lat: 53.8662, lng: 10.6797 }, { name: 'Holstentor', lat: 53.55, lng: 9.99 })[0]);
   ok('the same name 59 km apart is two places (Holstentor in Lubeck is not one near Hamburg)', rel !== 'same', rel);
   ok('no source sight is called "Church" unless it is one', !sites.some(s => s.cat === 'Church' && /mosque|synagogue|shrine|-ji|-taisha/i.test(s.name)));

@@ -32,6 +32,10 @@ const MUTANTS = [
     was: "Lübeck's Holstentor took the id of a Hamburg place 59 km away (sight audit, Nov 23)" },
   { id: 'twin-listing-kept', from: 'city[k] = city[k].filter(s => !twin(s));', to: 'city[k] = city[k].filter(s => true);',
     was: '"Museo regionale di Messina" beside the "Regional Museum of Messina" (sight audit, Nov 23)' },
+  { id: 'local-only-name-shown', from: 'if (!en && x.localName && !srcSaysKind(x)) {', to: 'if (false) {',
+    was: 'Kusadasi: "Kadı Kalesi", "Halk Plajı" shown under their Turkish names: no English name in any source (Nov 23, rule R-11)' },
+  { id: 'listing-keeps-local-name', from: 'if (!s.srcName && x.name && !nonLatin(x.name) && keyOf(x.name) !== keyOf(s.name)) {', to: 'if (false) {',
+    was: 'Messina: "Palazzo Zanca" shown under its listing name though it has an English one (Nov 23, rule R-11)' },
 ];
 const html = fs.readFileSync(file, 'utf8'), tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'sight-mutants-'));
 const real = spawnSync('node', [CHECK, file], { encoding: 'utf8' });
