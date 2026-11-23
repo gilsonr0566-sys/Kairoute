@@ -24,6 +24,23 @@
    }
   },
   {
+   "k": "POS",
+   "t": "Águas Livres Aqueduct: app is 0.82 km from Wikidata's point (not on the map by id)",
+   "x": {
+    "d": 0.8164768390817123,
+    "id": "src-q623228",
+    "wd": "Q623228",
+    "app": [
+     38.7223,
+     -9.1591
+    ],
+    "wdpt": [
+     38.72666667,
+     -9.16666667
+    ]
+   }
+  },
+  {
    "k": "LEN",
    "t": "Botânico Garden of Lisboa: 40 min, but a art museum or gallery usually takes 45-240 min",
    "x": {
@@ -34,14 +51,39 @@
   },
   {
    "k": "POS",
-   "t": "Ericeira [day trip]: app is 0.45 km from Wikidata's point (not on the map by id)",
+   "t": "Mafra [day trip]: app 38.93333,-9.33333 is 0.60 km from the map's Mafra (node/25611738, 38.93698,-9.32824); Wikidata 0.60 km from the map",
    "x": {
-    "d": 0.45313366251673415,
+    "d": 0.5988175108976869,
+    "id": "mafra-far",
+    "wd": "Q986419",
+    "app": [
+     38.93333,
+     -9.33333
+    ],
+    "map": [
+     38.9369782,
+     -9.3282374
+    ],
+    "wdpt": [
+     38.933333333333,
+     -9.3333333333333
+    ]
+   }
+  },
+  {
+   "k": "POS",
+   "t": "Ericeira [day trip]: app 38.96670,-9.41670 is 0.39 km from the map's Ericeira (node/130035599, 38.96324,-9.41708); Wikidata 0.16 km from the map",
+   "x": {
+    "d": 0.38601425195817923,
     "id": "ericeira-far",
     "wd": "Q1351868",
     "app": [
      38.9667,
      -9.4167
+    ],
+    "map": [
+     38.9632411,
+     -9.4170802
     ],
     "wdpt": [
      38.962777777778,
@@ -456,8 +498,8 @@
    "id": "src-q623228",
    "name": "Águas Livres Aqueduct",
    "local": "Aqueduto das Águas Livres",
-   "lat": 38.72667,
-   "lng": -9.16667,
+   "lat": 38.7223,
+   "lng": -9.1591,
    "minutes": 10,
    "category": "Landmark",
    "kind": "local",
@@ -480,7 +522,7 @@
    "travel": "",
    "parts": [],
    "merged": [],
-   "posDoubt": false,
+   "posDoubt": true,
    "summary": "This is a historic aqueduct in the city of Lisbon, Portugal. It is one of the most remarkable examples of 18th-century Portuguese engineering, including the lar"
   },
   {
@@ -515,37 +557,6 @@
    "summary": "Started in 1582, this Mannerist monastery wasn't completed until 1629, following the reconstruction of a 1147 church under royal decree."
   },
   {
-   "id": "src-q2657972",
-   "name": "Estrela Basilica",
-   "local": "Basílica da Estrela",
-   "lat": 38.71333,
-   "lng": -9.16056,
-   "minutes": 30,
-   "category": "Church",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 18,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q2657972",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "national heritage register",
-    "Wikivoyage (English)",
-    "Wikipedia in Portuguese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "This Neoclassical and Baroque basilica, dedicated to the Sacred Heart of Jesus, was built in the late 1700s by Queen Maria I in fulfilment of a vow. The Queen i"
-  },
-  {
    "id": "src-q1470414",
    "name": "Carmo Convent",
    "local": "Convento do Carmo (Lisboa)",
@@ -575,6 +586,37 @@
    "merged": [],
    "posDoubt": false,
    "summary": "The hilltop church of the former convent of Carmo is a towering memorial of the 1755 earthquake, which made the roof of the church collapse, but the Gothic arch"
+  },
+  {
+   "id": "src-q2657972",
+   "name": "Estrela Basilica",
+   "local": "Basílica da Estrela",
+   "lat": 38.71333,
+   "lng": -9.16056,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 18,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q2657972",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in Portuguese"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "This Neoclassical and Baroque basilica, dedicated to the Sacred Heart of Jesus, was built in the late 1700s by Queen Maria I in fulfilment of a vow. The Queen i"
   },
   {
    "id": "src-q211262",
@@ -1044,7 +1086,7 @@
    "builtin": false,
    "famousFix": true,
    "far": true,
-   "travel": "Bus from Terreiro do Paço, about 110 min one way",
+   "travel": "Bus from Terreiro do Paço, about 95 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1072,9 +1114,11 @@
    "builtin": false,
    "famousFix": true,
    "far": true,
-   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "travel": "Metro from Pç. Comércio, about 80 min one way",
    "parts": [],
-   "merged": [],
+   "merged": [
+    "Sintra"
+   ],
    "posDoubt": false,
    "summary": "A beautiful UNESCO World Heritage site town 40 minutes by car/train from Lisbon."
   },
@@ -1155,7 +1199,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from Terreiro do Paço, about 110 min one way",
+   "travel": "Bus from Terreiro do Paço, about 95 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1184,7 +1228,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "travel": "Metro from Pç. Comércio, about 80 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1210,7 +1254,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "travel": "Metro from Pç. Comércio, about 80 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1236,7 +1280,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "travel": "Metro from Pç. Comércio, about 80 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1263,7 +1307,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "travel": "Metro from Pç. Comércio, about 80 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1289,7 +1333,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Metro from Terreiro do Paço, about 80 min one way",
+   "travel": "Metro from Pç. Comércio, about 80 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,

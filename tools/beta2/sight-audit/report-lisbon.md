@@ -1,6 +1,8 @@
 ## Lisbon, Portugal (Lisbon, Portugal, guide from sources)
 - POS 25 de Abril Bridge: app is 0.50 km from Wikidata's point (not on the map by id)
-- POS Ericeira [day trip]: app is 0.45 km from Wikidata's point (not on the map by id)
+- POS Águas Livres Aqueduct: app is 0.82 km from Wikidata's point (not on the map by id)
+- POS Mafra [day trip]: app 38.93333,-9.33333 is 0.60 km from the map's Mafra (node/25611738, 38.93698,-9.32824); Wikidata 0.60 km from the map
+- POS Ericeira [day trip]: app 38.96670,-9.41670 is 0.39 km from the map's Ericeira (node/130035599, 38.96324,-9.41708); Wikidata 0.16 km from the map
 - DUP Sintra ~ Sintra National Palace (40 m apart, same words)
 - NOID Basilica of Our Lady and St. Anthony [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Moorish Castle [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
