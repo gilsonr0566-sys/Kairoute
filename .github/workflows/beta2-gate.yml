@@ -38,6 +38,7 @@ jobs:
           node tools/beta2/snapshot.cjs
           node tools/beta2/noai-trips.cjs
           node tools/beta2/engine-test.cjs
+          node tools/beta2/hours-test.cjs
           node tools/beta2/leaks.cjs
           node tools/beta2/stress.cjs
       - name: Phone flow on the Beta 2 build
