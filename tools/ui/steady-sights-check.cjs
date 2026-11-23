@@ -123,6 +123,22 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
     else if (tripName === 'sample') check(`${size} sample: ${NDAYS} days with sights tried`, false, `only ${tried}`);
     else { console.log(`NOTE ${size} ${tripName}: not tested, no day with 2 or more sights to tick`); skipped.push(`${size} ${tripName}`); }
     check(`${size} ${tripName}: no errors in the app`, !errs.length, errs.slice(0, 2).join(' | '));
+    // Its own proof (R-28), once per run: with the planted bug "re-sort the list after a tap" switched on, this check
+    // must see the ticked card leave the finger. If it doesn't, the check is blind and the run fails.
+    if (tripName === TRIPS[0] && size === PICK[0] && !process.env.NO_PROOF) {
+      let caught = null;
+      for (const d of days) { await open(d.i); await settle();
+        const id = await p.evaluate(() => { const xs = [...document.querySelectorAll('#view .sitesmain label.site input[data-site]:not(:checked)')].filter(x => !x.closest('details:not([open]), .picksfold, .sorthold')); const x = xs[Math.floor(xs.length / 2)]; if (!x) return null; x.closest('[data-card]').scrollIntoView({ block: 'center' }); return x.dataset.site; });
+        if (!id) continue; await p.waitForTimeout(600);
+        const pt = await p.evaluate(id => { const b = document.querySelector(`input[data-site="${id}"]`).getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; }, id);
+        const before = await p.evaluate(SEEN); await p.evaluate(() => { window.__kairoutePlant = 'resort'; });
+        await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(300);
+        if (await p.evaluate(() => !!document.querySelector('.fitbox, .closedbox'))) { await p.evaluate(() => { window.__kairoutePlant = ''; const c = document.querySelector('.fitbox [data-act="fitcancel"], .closedbox [data-act="fitcancel"]'); if (c) c.click(); }); continue; }
+        const a = await p.evaluate(SEEN); await p.evaluate(() => { window.__kairoutePlant = ''; });
+        caught = !(id in a) || Math.abs(a[id] - before[id]) > 4;
+        await settle(); await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); if (x && x.checked) x.click(); }, id); await p.waitForTimeout(400); break; }
+      check(`proof: the planted bug "re-sort after a tap" is caught (${size} ${tripName})`, caught === true, caught === null ? 'NOT TESTED: no sight to tick for the proof' : 'the check did not see the card move: it is blind');
+    }
     await ctx.close();
   }
   await browser.close(); srv.close();

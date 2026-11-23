@@ -7744,7 +7744,9 @@ document.addEventListener("change", e => {
     delete d.autoEmpty; d.ownList = true; // the traveler's first tick or untick makes the list theirs
     if (t.checked) { d.anchor = id; delete d.cleared; }
     else { const ks = kidsOf({ id }, cityFor(d)).map(k => k.id); d.selected = d.selected.filter(x => x !== id && !ks.includes(x)); [id, ...ks].forEach(x => markMine(d, x, false)); if (d.anchor === id) d.anchor = null; if (!d.selected.length) d.cleared = true; } // a bigger sight comes off with what's inside it // unticking the last one: the day stays free
-    const back = cardSpot(id); save(); renderKeep(); back(); return; // the list never jumps (Richard, Nov 16); every change here is in the trip, which keys the plans
+    const back = cardSpot(id); save(); renderKeep(); back(); // the list never jumps (Richard, Nov 16); every change here is in the trip, which keys the plans
+    if (window.__kairoutePlant === "resort") { pickFrozen = null; renderKeep(); } // planted bug for the steady-sights check's own proof (R-28): re-sorting after a tap
+    return;
   }
   if (t.dataset && t.dataset.part) {
     const [sid, k] = t.dataset.part.split(":"), s = allSites(cityFor(day())).find(x => x.id === sid); if (!s || !s.parts) return;
