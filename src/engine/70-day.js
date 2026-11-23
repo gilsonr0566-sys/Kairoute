@@ -271,7 +271,7 @@
         for (const [ci, o] of cands.entries()) {
           if (far.length && near.length && !blockAtEnd(o)) continue;
           // Lunch only adds time, so an order already later or later at a last entry without lunch can't win.
-          const bare = walk(o, win, ctx); if (bare.over > cur.r.over || bare.late > cur.r.late) continue;
+          const bare = walk(o, win, ctx); if (bare.over > cur.r.over || bare.late > cur.r.late || (ci >= nMoves && bare.rideMin > cur.r.rideMin + 1)) continue;
           const c = withLunch(o, win, ctx), p = cost(c);
           // A reversed run is taken only when it rides no more than the order it replaces (it is there to undo a zig-zag).
           if (ci >= nMoves && c.r.rideMin > cur.r.rideMin + 1) continue;
