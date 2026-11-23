@@ -8,7 +8,7 @@
 // Wikipedia facts), and kept on the device.
 // The same rule runs for every city and every port, including gateway ports ("Civitavecchia (Rome)"): the sources
 // are asked for the city the day is really spent in.
-const SRC_KIND_CAP = { Church: 12, Museum: 12, Palace: 8 };
+const SRC_KIND_CAP = { Church: 12, Mosque: 12, Temple: 12, Shrine: 8, Museum: 12, Palace: 8 };
 const SRC_MAX_MAIN = 45, SRC_MAX_QUICK = 12, SRC_R = 8;
 // A big city's landmarks spread wider than its centre (a tower 11 km out): one famous the world over counts within this.
 const SRC_R_FAMED = 15;
@@ -54,6 +54,9 @@ const srcListed = x => !!(x.unesco || x.heritage || (x.src || []).some(t => /Wik
 function srcNotPlace(x) {
   // Gone: demolished or destroyed (the Bastille fortress, whose square is what is left to see).
   if (x.gone) return true;
+  // A listing of places, not a place: a whole whose parts are on the list themselves and lie kilometres apart
+  // ("Historic Monuments of Ancient Kyoto", 17 temples across the city; Nov 23 sight check). See srcMarkGroups.
+  if (x.isGroup) return true;
   if (!srcKnown(x)) return false;
   if (!srcHas2(x, SRC_PLACE_KINDS) && !srcHas2(x, /^(settlement|admin-area)$/)) return true;
   if (srcHas2(x, /^continent$/)) return true;
@@ -68,11 +71,14 @@ const srcNotSpot = x => srcNotPlace(x) || SRC_NEVER.test(x.name) || SRC_BUSINESS
 // What kind of stop a name describes: a typical visit length, a category and whether it is a walk-past stop.
 const SRC_KINDS = [
   [/museum|museo|musei|museu|mus[ée]e|gallery|galleria|galer[ií]a|pinacoteca|collection/i, "Museum", 90],
-  [/basilica|cathedral|duomo|cattedrale|catedral|church|chiesa|iglesia|esgl[ée]sia|chapel|cappella|oratory|monastery|convent|abbey|mosque|synagogue|temple of [A-Z]?|tempio/i, "Church", 30],
+  [/basilica|cathedral|duomo|cattedrale|catedral|church|chiesa|iglesia|esgl[ée]sia|chapel|cappella|oratory|monastery|convent|abbey/i, "Church", 30],
   [/catacomb/i, "Catacombs", 60],
+  // A mosque, a synagogue or a temple is called what it is on its card, never "Church" (Nov 23 sight check).
+  [/\b(mosque|camii|cami|masjid)\b/i, "Mosque", 30], [/\bsynagogue\b/i, "Synagogue", 30],
   // "Teatro di Marcello" is a ruin but "Teatro di San Carlo" an opera house: an Italian theatre's name alone says
   // nothing (Nov 22: San Carlo was shown as an ancient site); its kinds decide (srcKindOf), else it is a theatre.
   [/forum|foro|baths|terme|thermae|circus|circo|mausoleum|mausoleo|tomb|tomba|amphitheat|theatre of|ancient|archaeolog|acropolis|agora|ruins|domus|villa of|stadium of/i, "Ancient site", 60],
+  [/\b(shrine|jinja|jing[uū])\b|-taisha\b|-jing[uū]\b|-g[uū]\b/i, "Shrine", 45], [/\b(temple|tempio)\b|-ji\b|-dera\b|-d[oō]\b/i, "Temple", 45],
   [/palace|palazzo|palacio|palau|castle|castel|castillo|fortress|fort |citadel|villa/i, "Palace", 50],
   [/\b(teatro|theat(re|er)|opera house|staatsoper|concert hall)\b/i, "Theatre", 30],
   [/park|garden|giardino|jard[ií]n|parque|parco|botanic/i, "Park or garden", 40],
@@ -87,15 +93,16 @@ const srcQuick = (name, local) => srcKind(name, local)[1] === "Landmark";
 // is now an art museum (the Louvre) is a museum and a castle that is a museum is a castle.
 const SRC_KIND_FACTS = [
   // A church that was a Roman temple (the Pantheon) is visited as a church; a ruined temple (Olympian Zeus) as a ruin.
-  [/^art-museum$/, "Museum", 90], [/^(cathedral|mosque|synagogue|church|chapel|monastery)$/, "Church", 30], [/^(archaeological|ancient-city|amphitheatre|mausoleum|temple)$/, "Ancient site", 60],
+  [/^art-museum$/, "Museum", 90], [/^mosque$/, "Mosque", 30], [/^synagogue$/, "Synagogue", 30], [/^(cathedral|church|chapel|monastery)$/, "Church", 30], [/^(archaeological|ancient-city|amphitheatre|mausoleum)$/, "Ancient site", 60], [/^temple$/, "Temple", 45],
   [/^(castle|fortification|palace)$/, "Palace", 50], [/^(skyscraper|observation-deck|tower)$/, "Tower", 40], [/^museum$/, "Museum", 90], [/^(theatre|opera-house|concert-hall)$/, "Theatre", 30],
   [/^(zoo|aquarium|amusement-park)$/, "Zoo or park", 150], [/^(park|garden)$/, "Park or garden", 40], [/^market$/, "Market", 40], [/^beach$/, "Beach", 90], [/^square$/, "Square", 15],
   [/^(stadium|arena|sports-venue)$/, "Stadium", 45], [/^(bridge|statue|fountain|monument)$/, "Landmark", 10]];
-const srcKindOf = x => { const k = srcKnown(x) && SRC_KIND_FACTS.find(([re]) => x.kinds.some(t => re.test(t))); return k ? [null, k[1], k[2]] : srcKind(x.name, x.local); };
+// A Shinto shrine is a temple to the encyclopedia's class tree but a shrine to everyone visiting: its name says which.
+const srcKindOf = x => { const k = srcKnown(x) && SRC_KIND_FACTS.find(([re]) => x.kinds.some(t => re.test(t))); if (!k) return srcKind(x.name, x.local); const n = srcKind(x.name, x.local); return k[1] === "Temple" && n[1] === "Shrine" ? [null, "Shrine", k[2]] : [null, k[1], k[2]]; };
 // How long a visit takes grows with how much there is to see and how many people come to see it: a place written about
 // in 80+ languages (the Colosseum, Topkapı, the Louvre) has more rooms, more grounds and longer queues than the
 // same kind of place known in 20 (Nov 22 audit: Hagia Sophia, the Colosseum and the Tower of London were 40-minute visits).
-const SRC_FAME_LEN = { Landmark: [[40, 20]], Museum: [[120, 180], [80, 150], [50, 120]], Church: [[120, 75], [80, 60], [50, 45]], "Ancient site": [[80, 120], [60, 90]], Palace: [[80, 120], [50, 90]],
+const SRC_FAME_LEN = { Landmark: [[40, 20]], Museum: [[120, 180], [80, 150], [50, 120]], Church: [[120, 75], [80, 60], [50, 45]], Mosque: [[120, 75], [80, 60], [50, 45]], Synagogue: [[80, 60], [50, 45]], Temple: [[120, 90], [80, 75], [50, 60]], Shrine: [[80, 75], [40, 60]], "Ancient site": [[80, 120], [60, 90]], Palace: [[80, 120], [50, 90]],
   Tower: [[100, 75], [50, 60]], Theatre: [[80, 45]], Market: [[40, 60]], Catacombs: [[50, 75]] };
 const srcMinutes = (cat, base, sl) => { const b = (SRC_FAME_LEN[cat] || []).find(([at]) => (sl || 0) >= at); return b ? Math.max(base, b[1]) : base; };
 // The guide's own centre: the middle of its written sights (a gateway port's guide is about the city it serves).
@@ -156,8 +163,31 @@ const srcPartOf = (x, s, src) => {
   const r = srcReach(s); if (!r || x.lat == null || !isFinite(s.lat) || hav(x, s) > r || (x.sl || 0) >= srcFame(s, src)) return false;
   // A museum, church or palace across from a park or on a square is its own visit; inside a castle's or an
   // ancient site's grounds it is part of that visit.
-  return !/^(Museum|Church|Palace|Catacombs)$/.test(srcKind(x.name, x.local)[1]) || SRC_GROUNDS.test((s.category || "") + " " + s.name);
+  return !/^(Museum|Church|Mosque|Synagogue|Temple|Shrine|Palace|Catacombs)$/.test(srcKind(x.name, x.local)[1]) || SRC_GROUNDS.test((s.category || "") + " " + s.name);
 };
+// The whole a sight is part of, by the encyclopedia's own "part of" / "located in" (sent by the helper), when that whole
+// is a place on the list within a kilometre and one visited as a whole: a museum, a castle or fortress, an ancient site
+// (what is inside is seen in the same visit, however famous); a palace, church or monastery only when the part is the
+// lesser of the two (Big Ben is seen from outside the Palace of Westminster, and is the more famous). A park, island,
+// square or district is never a whole: the Eiffel Tower is not a part of the Champ de Mars.
+const SRC_WHOLE_ANY = /^(museum|art-museum|castle|fortification|archaeological|ancient-city)$/, SRC_WHOLE_LESSER = /^(palace|church|cathedral|chapel|monastery|mosque|temple|synagogue)$/;
+function srcMarkGroups(src) {
+  const stops = (src && src.stops) || [];
+  for (const w of stops) { if (!w.wd || w.lat == null) continue;
+    const parts = stops.filter(p => p !== w && Array.isArray(p.partOf) && p.partOf.includes(w.wd) && p.lat != null);
+    if (parts.length >= 2 && parts.some(p => hav(p, w) > 2)) w.isGroup = true; }
+}
+function srcWholeOf(s, src, all) {
+  const x = s.wd && ((src && src.stops) || []).find(y => y.wd === s.wd); if (!x || !Array.isArray(x.partOf) || !x.partOf.length) return null;
+  for (const id of x.partOf) {
+    const W = src.stops.find(y => y.wd === id); if (!W || W.lat == null || !isFinite(s.lat) || hav(W, s) > 1 || !srcKnown(W) || srcNotPlace(W)) continue;
+    // A tower beside a church or palace (St Mark's Campanile, Big Ben) is climbed or seen on its own.
+    if (!srcHas2(W, SRC_WHOLE_ANY) && !(srcHas2(W, SRC_WHOLE_LESSER) && (x.sl || 0) < (W.sl || 0) && !srcHas2(x, /^(tower|observation-deck|skyscraper)$/))) continue;
+    const on = all.find(o => o !== s && (o.wd === id || sameSight(o, W))); if (on) return on;
+  }
+  return null;
+}
+if (typeof window !== "undefined") window.__kairouteWholeOf = (s, src, all) => srcWholeOf(s, src, all);
 const srcHas = (all, x, area, src) => { const b = srcBare(x, area || "");
   return all.some(s => sameSight(x, s) || placeRel(x, s) || placeRel(s, x) || (b !== x && (sameSight(b, s) || placeRel(b, s) || placeRel(s, b))) || srcPartOf(x, s, src)); };
 // The full stories written for source sights, kept on this device (built-in guides aren't saved with the trip).
@@ -169,6 +199,7 @@ const srcDone = new WeakMap();
 function sourceSights(city, src) {
   if (!city || !src || !Array.isArray(src.stops) || srcDone.get(city) === src) return 0;
   srcDone.set(city, src);
+  srcMarkGroups(src);
   // Sights a saved guide got from the sources before names were put into English get theirs now.
   for (const s of allSites(city)) if (s.srcOnly && !s.enN) { const en = enSight({ name: s.name, local: s.local, sl: s.fame }, s.category); if (en) Object.assign(s, en); s.enN = 1; }
   // A sight a saved guide got from the sources takes the sources' checked point now (the helper cross-checks the travel
@@ -216,6 +247,10 @@ function sourceSights(city, src) {
     if (cap && own().filter(s => !s.quick && srcKind(s.name, s.local)[1] === kind).length >= cap) continue;
     city.sites.push(make(x, {})); n++;
   }
+  // A part of a bigger sight that is also on the list is seen in that visit, never a stop of its own (Nov 22 sight check:
+  // the Sistine Chapel apart from the Vatican Museums, the Temple of Athena Nike apart from the Acropolis).
+  { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).map(String)));
+    for (const st of city.sites.filter(s => s.srcOnly && s.wd && !mine.has(String(s.id)))) if (srcWholeOf(st, src, allSites(city))) { city.sites.splice(city.sites.indexOf(st), 1); if (n) n--; } }
   if (n) { try { console.info(`Kairoute added ${n} sights from the sources for ${city.city}`); } catch (e) {} }
   return n;
 }

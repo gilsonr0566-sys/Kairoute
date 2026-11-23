@@ -3126,6 +3126,9 @@ function fameMark(city, src) {
     // A lesser sight the guide named in the local language ("Chiesa di Montevergine", "Fontana Senatoria") is shown in
     // English, its local name beneath. Famous ones (by the sources) keep the name English speakers know.
     if (!s.srcName && (s.fame || 0) < EN_FAME) { const en = enNameOf(s.name, s.category, s.local); if (en) { s.srcName = s.name; s.local = s.local || s.name; s.name = en; } }
+    // A name the rules can't put into English ("Museo Nazionale della Magna Grecia": "Magna Grecia" is no common word)
+    // takes the encyclopedia's own English name for the same place, when the sources surely matched it.
+    if (!s.srcName && hit && s.wd && hit.wd === s.wd && EN_FOREIGN.test(s.name) && hit.name && !EN_FOREIGN.test(hit.name) && keyOf(hit.name) !== keyOf(s.name)) { s.srcName = s.name; s.local = s.local || s.name; s.name = hit.name; }
   }
   famousRepair(city, src);
   sourceSights(city, src);

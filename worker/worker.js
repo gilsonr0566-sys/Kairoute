@@ -1104,7 +1104,7 @@ async function sourcesData(label, env, ctx) {
   const ids = [...byId.keys()].slice(0, 200), chunks = []; for (let k = 0; k < ids.length; k += 50) chunks.push(ids.slice(k, k + 50));
   const answers = await Promise.all(chunks.map(part => {
     const V = `VALUES ?item { ${part.map(x => "wd:" + x).join(" ")} }`, H2 = { headers: { ...UA, accept: "application/sparql-results+json" } }, url = q => "https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q);
-    return Promise.all([getJ(url(`SELECT ?item ?h ?w ?loc ?lab ?sl ?wloc WHERE { ${V} OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item wikibase:sitelinks ?sl } OPTIONAL { ?item wdt:P361|wdt:P276 ?whole . ?whole wdt:P625 ?wloc } }`), 25000, H2),
+    return Promise.all([getJ(url(`SELECT ?item ?h ?w ?loc ?lab ?sl ?whole ?wloc WHERE { ${V} OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item wikibase:sitelinks ?sl } OPTIONAL { ?item wdt:P361|wdt:P276 ?whole . OPTIONAL { ?whole wdt:P625 ?wloc } } }`), 25000, H2),
       lang ? getJ(url(`SELECT ?item ?local WHERE { ${V} ?a schema:about ?item ; schema:isPartOf <https://${lang}.wikipedia.org/> ; schema:name ?local }`), 25000, H2) : null]).then(([a, b]) => ({ results: { bindings: [...((a && a.results.bindings) || []), ...((b && b.results.bindings) || [])] } })); }));
   lap("details");
   // What each place IS, from the encyclopedia's own facts (P31 "instance of", followed up its "subclass of" tree), so the
@@ -1137,6 +1137,8 @@ async function sourcesData(label, env, ctx) {
       if (b.lab && b.lab.value) x.name = b.lab.value;
       const m = b.loc && /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.loc.value); if (m && x.lat == null) { x.lat = +m[2]; x.lng = +m[1]; } if (m && !x.wdp) x.wdp = { lat: +m[2], lng: +m[1] };
       // The bigger place it is part of or stands in (an old town, a palace complex): a point far from it is wrong.
+      // Its ids too, so the app can fold a part into its whole's visit (the Sistine Chapel is seen in the Vatican Museums).
+      if (b.whole) { const wid = b.whole.value.split("/").pop(); if (/^Q\d+$/.test(wid)) { x.partOf = x.partOf || []; if (!x.partOf.includes(wid)) x.partOf.push(wid); } }
       const wm = b.wloc && /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.wloc.value); if (wm) { x.wholes = x.wholes || []; if (!x.wholes.some(w => w.lat === +wm[2] && w.lng === +wm[1])) x.wholes.push({ lat: +wm[2], lng: +wm[1] }); }
       if (b.web && !x.web) x.web = b.web.value; if (b.sl) x.sl = Math.max(x.sl, +b.sl.value);
       if (b.h) { if (b.h.value.endsWith("/Q9259")) { x.unesco = true; x.src.add(S.unesco); x.src.delete(S.heritage); } else if (!x.unesco) { x.heritage = true; x.src.add(S.heritage); } }
@@ -1159,7 +1161,7 @@ async function sourcesData(label, env, ctx) {
     x.lat = at.lat; x.lng = at.lng; if (at.posDoubt) x.posDoubt = true; if (at.from !== "listing") x.posFrom = at.from; }
   const near = x => x.lat == null || kmOf(x, center) <= 12;
   const stops = [...byId.values(), ...noId].filter(x => x.name && !/^Q\d+$/.test(x.name) && near(x) && fold(x.name) !== fold(area))
-    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined, posDoubt: x.posDoubt || undefined, posFrom: x.posFrom || undefined, kinds: x.kinds, gone: x.gone || undefined }))
+    .map(x => ({ name: x.name, local: x.local && x.local !== x.name ? x.local : undefined, wd: x.wd || undefined, lat: x.lat != null ? +(+x.lat).toFixed(5) : undefined, lng: x.lng != null ? +(+x.lng).toFixed(5) : undefined, sl: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, web: x.web, src: [...x.src], en: x.en || undefined, lc: x.lc || undefined, posDoubt: x.posDoubt || undefined, posFrom: x.posFrom || undefined, kinds: x.kinds, gone: x.gone || undefined, partOf: x.partOf && x.partOf.length ? x.partOf.slice(0, 6) : undefined }))
     .sort((a, b) => b.src.length - a.src.length || b.sl - a.sl).slice(0, 160);
   // A small place the guidebooks and the encyclopedia barely cover (a small island, a cruise line's private island,
   // a resort port): add the named tourist places the map knows nearby (beaches, attractions, water parks,

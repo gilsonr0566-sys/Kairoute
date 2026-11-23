@@ -112,7 +112,9 @@
     const isleFacts = r => { const s = isleOf(r); return !s ? {} : Object.assign({ travelNote: r.travelNote || s.travelNote || "", onIsle: s.id }, s.wish ? { insideWish: true } : {}, s.acrossWater ? { acrossWater: s.acrossWater } : {}, E.waterOnly(s) ? { access: s.access } : {}); };
     const mealAt = (e, len, extra) => Object.assign({ id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo: len === E.TO_GO, chosen: !!my.pick, fromMap: !!e.r.fromMap, packed: !!e.r.packed, travelNote: e.r.travelNote || "",
       oh: len === E.TO_GO ? null : ((ctx.eatFacts || {})[e.k] || {}).oh || null }, isleFacts(e.r), extra || {});
-    const ok = c => c.r.lateMeal <= E.MEAL_LATE && !c.r.items.some(x => x.shut) && c.r.late <= plain.late && c.r.over <= plain.over
+    // A lunch at a time the traveler set is kept like a booked table: at most 10 minutes late, never the hour an open lunch
+    // may slide (Nov 23: a longer castle visit pushed a 1:30 pm lunch to 1:54; the day now orders its stops around it).
+    const ok = c => c.r.lateMeal <= (L.pinned ? 10 : E.MEAL_LATE) && !c.r.items.some(x => x.shut) && c.r.late <= plain.late && c.r.over <= plain.over
       && (c.k === order.length || c.r.waits - plain.waits <= 45)
       && !(win.hard && !c.r.over && c.r.end > plain.end && win.endBy - c.r.end < E.FILL_MARGIN);
     let best = null, tried = 0;
