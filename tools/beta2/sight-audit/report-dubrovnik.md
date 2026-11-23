@@ -1,5 +1,4 @@
 ## Dubrovnik, Croatia (Dubrovnik, Croatia, guide from sources)
-- POS Cavtat [day trip]: app is 0.55 km from Wikidata's point (not on the map by id)
 - NOID Bukovac House Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Mausoleum of the Račić family [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - FAME #1 best known nearby, "Siege of Dubrovnik" (32 Wikipedia languages, Q815140), is not offered

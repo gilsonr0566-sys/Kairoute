@@ -75,7 +75,6 @@
 - INFO 9 sights, 0 day trips/towns; must-see: Burj Khalifa; top by fame: Burj Khalifa 140, Dubai Museum 26, Dubai Frame 22, Museum of the Future 22, Emirates Towers 21, Jumeirah Mosque 16, Grand Mosque 16, Al Bastakiya 12
 
 ## Dubrovnik, Croatia (Dubrovnik, Croatia, guide from sources)
-- POS Cavtat [day trip]: app is 0.55 km from Wikidata's point (not on the map by id)
 - NOID Bukovac House Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Mausoleum of the Račić family [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - FAME #1 best known nearby, "Siege of Dubrovnik" (32 Wikipedia languages, Q815140), is not offered
