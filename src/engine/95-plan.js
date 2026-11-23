@@ -637,6 +637,29 @@
       for (const [k, c] of Object.entries(all)) if (!keep[k] && idsOf(c).some(id => mine.has(id))) { keep[k] = c; idsOf(c).forEach(id => mine.add(id)); grew = true; } }
     return keep;
   };
+  // The ride choices that can touch a group of places: a choice holds for a ride between its two spots, or one close enough
+  // to it (E.nearRide, at most 5 km off at each end), and every ride the group plans is between places its own facts
+  // name. So a choice with an end more than 6 km from every spot in the group can't change its plans, and a ride chosen in
+  // one city no longer re-plans every other city of the trip (tap speed, Nov 23: a tick in Naples re-planned all 21 days).
+  // When the trip has choices but none here, one that matches no ride is kept, so the group is planned the same two-step
+  // way (plain rides first) as before.
+  const groupModes = (modes, sub) => {
+    const keys = Object.keys(modes); if (!keys.length) return modes;
+    const pts = []; const seen = new Set(), dig = (x, depth) => { if (!x || typeof x !== "object" || depth > 12 || seen.has(x)) return; seen.add(x);
+      if (Array.isArray(x)) { for (const y of x) dig(y, depth + 1); return; }
+      if (x.lat != null && x.lng != null && isFinite(+x.lat) && isFinite(+x.lng)) pts.push({ lat: +x.lat, lng: +x.lng });
+      for (const k in x) if (typeof x[k] === "object") dig(x[k], depth + 1); };
+    // (the trip-wide lists of road times, piers and ferry links name every city's spots: a ride from one of them starts at a
+    // place of the group's own, so only the group's own facts are read)
+    for (const k in sub) if (!["legModes", "legs", "piers", "ferryLinks", "transit", "old", "answers"].includes(k)) dig(sub[k], 1);
+    const kmLat = 6371 * Math.PI / 180, near = q => pts.some(p => Math.abs(p.lat - q.lat) * kmLat <= 6.5 && E.hav(p, q) <= 6);
+    const out = {}; let n = 0;
+    for (const k of keys) { const v = k.split(",").map(Number);
+      // (a key that isn't four numbers is matched only exactly: kept as it is)
+      if (!(v.length === 4 && v.every(isFinite)) || (near({ lat: v[0], lng: v[1] }) && near({ lat: v[2], lng: v[3] }))) { out[k] = modes[k]; n++; } }
+    if (!n) out["-"] = "-";
+    return out;
+  };
   E.planTrip = bucket => {
     const days = bucket.days || [], cities = bucket.cities || {}, out = new Array(days.length).fill(null);
     const ids = key => { const c = cities[key] || {}; return (c.sites || []).concat(c.farther || []).map(x => String(x.id)); };
@@ -653,6 +676,7 @@
       sub.days = idx.map(i => days[i].i != null ? days[i] : Object.assign({}, days[i], { i }));
       sub.cities = {}; gk.forEach(k => { if (cities[k]) sub.cities[k] = cities[k]; });
       sub.placeNotes = (bucket.placeNotes || []).filter(n => idx.some(i => n.day === (days[i].i != null ? days[i].i : i)));
+      if (bucket.legModes) sub.legModes = groupModes(bucket.legModes, sub);
       const sig = JSON.stringify(sub) + "|" + lines;
       const store = idx.some(i => days[i].alone) ? keptAlone : kept;
       let got = store.get(sig);

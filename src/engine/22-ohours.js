@@ -295,13 +295,23 @@
   // The checked entry for a place: the same name (or one of its other names) in the same town, or the same spot on the
   // map with nearly the same name. A sight next door with a name that only starts the same ("Old Fort Museum" beside
   // the Old Fort) never takes the other's hours.
-  const fold = x => String(x || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[’'`]/g, "").replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").replace(/^the /, "").trim();
+  // (each name folded once and kept: the hours are read for every sight on every plan, and a tick plans the trip again;
+  // tap speed, Nov 23)
+  const foldMemo = new Map(), fold = x => { const k = String(x || ""); let v = foldMemo.get(k); if (v === undefined) { if (foldMemo.size > 50000) foldMemo.clear(); foldMemo.set(k, v = fold0(k)); } return v; };
+  const fold0 = x => String(x || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[’'`]/g, "").replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").replace(/^the /, "").trim();
   const STOP = new Set(["the", "of", "and", "de", "di", "del", "la", "le", "st", "saint", "san", "santa"]);
   const toks = x => new Set(fold(x).split(" ").filter(w => w && !STOP.has(w)));
   const jac = (a, b) => { const A = toks(a), B = toks(b); if (!A.size || !B.size) return 0; let n = 0; A.forEach(w => { if (B.has(w)) n++; }); return n / (A.size + B.size - n); };
   let BYNAME = null;
+  // The same place (its name and spot) in the same town always finds the same entry, so each is looked up once per list.
+  let chMemo = new Map(), chList = null;
   E.checkedHoursFor = (place, city) => {
     const L = E.CHECKED_HOURS; if (!place || !Array.isArray(L) || !L.length) return null;
+    if (chList !== L) { chList = L; chMemo = new Map(); }
+    const mk = String(place.name) + "\u0000" + place.lat + "\u0000" + place.lng + "\u0000" + String(city); if (chMemo.has(mk)) return chMemo.get(mk);
+    if (chMemo.size > 20000) chMemo.clear(); const v = checkedFind(place, city, L); chMemo.set(mk, v); return v;
+  };
+  const checkedFind = (place, city, L) => {
     if (!BYNAME) { BYNAME = new Map(); L.forEach(c => [c.name].concat(c.aka || []).forEach(n => { const k = fold(n); if (k) (BYNAME.get(k) || BYNAME.set(k, []).get(k)).push(c); })); }
     const here = isFinite(+place.lat) && isFinite(+place.lng) && (+place.lat || +place.lng) ? { lat: +place.lat, lng: +place.lng } : null, town = fold(city);
     const near = (c, km) => here && c.lat != null ? E.hav(here, c) <= km : null;
