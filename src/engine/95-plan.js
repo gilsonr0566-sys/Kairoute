@@ -64,6 +64,9 @@
       const it = { t: x.t, id: x.t === "meal" ? null : x.id, name: x.name, at: x.at, min: x.min, bonus: false, along: false, meal: x.meal || null, late: x.late || 0 };
       if (x.wait) it.wait = x.wait; if (x.freeBefore) it.freeBefore = x.freeBefore; if (x.chosen) it.chosen = true; if (x.pinned) it.pinned = true; if (x.booked) it.booked = true;
       if (x.packed) it.packed = true; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
+      // What is known about a place to eat travels with it to the screen: found only on the map (no guide or review behind
+      // it), and whether its hours that day are known (Nov 22: never say more than the data says).
+      if (x.t === "meal" || x.t === "evening") { if (x.fromMap) it.fromMap = true; const fx = (fit.eatFacts || {})[E.eatKey(x.name || "")]; if (fx && (fx.closed || (fx.oh && fx.oh.spans && fx.oh.spans.length))) it.hoursKnown = true; }
       Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
@@ -113,7 +116,11 @@
   const ACT = /didn't fit|would arrive after|too late to see before|is closed on|Boats keep their own timetable|^Bring lunch|where you put it|lunch is back on board|no room for lunch|take a boat back/i, FREE = /^Free time|^Time left for|^Nothing left to plan/;
   // A place to eat named only as a kind of place ("Harbor-front tavernas", "Seafood restaurants on the quay") is a tip, never
   // a timed lunch at a real place (Fable review #13; Richard's lunch rule: a real place).
-  E.genericEat = n => { const t = String(n || "").trim(); return !t || (/\b(tavernas|restaurants|cafes|cafés|bars|eateries|stalls|kiosks|trattorias|bistros|pubs|food trucks|places to eat|spots|joints|street food)\b/i.test(t) && !/^[A-Z][\w'’.-]*\s*['’]s\b/.test(t) && !/\b(&|and)\b.*\b(bar|cafe|restaurant)\b$/i.test(t)); };
+  // A town's real places to eat: listed as a place to eat (not a café for a treat, a bar, a school or an embassy the guide
+  // lists elsewhere), named, readable, on the map within 3 km of the town (any distance when the town has no point).
+  E.townEats = (t, any) => (t && t.foodDrink || []).filter(x => x && x.kind === "eat" && x.name && !E.genericEat(x.name) && E.mealPlace({ name: x.name, cuisine: x.note || "" })
+    && (any ? true : isFinite(x.lat) && isFinite(x.lng) && (!isFinite(t.lat) || E.hav(x, t) <= 3)));
+  E.genericEat = n => { const t = String(n || "").trim(); return !t || (/\b(tavernas|restaurants|cafes|cafés|bars|eateries|stalls|kiosks|trattorias|trattorie|osterie|ristoranti|bistros|pubs|food trucks|places to eat|spots|joints|street food|lokantas|tascas|tabernas|ouzeries|izakayas|chiringuitos|snack bars|beach bars|food stalls|food court|hawker)\b/i.test(t) && !/^[A-Z][\w'’.-]*\s*['’]s\b/.test(t) && !/\b(&|and)\b.*\b(bar|cafe|restaurant)\b$/i.test(t)); };
   E.explainKind = t => FREE.test(t) ? "free" : ACT.test(t) ? "act" : "info";
   E.ASSUME_OPEN = 9 * 60; E.ASSUME_CLOSE = 17 * 60; // hours assumed for a sight that needs them when none are known
   // Richard, Nov 20: a sight inside a bigger visit the traveler picked (a house in an excavation site, a chapel in a museum
@@ -259,14 +266,16 @@
       // guide's suggestions); it is never a dinner idea.
       // Its places to eat that are on the map are planned by name, where they are (Nov 18, Richard's day on an island: "Lunch in
       // <town>", with no place named); a town whose guide gives none a spot keeps a lunch stop in its centre.
-      const townLunch = (city.farther || []).filter(t => !t.town && (t.foodDrink || []).length && isFinite(t.lat)).flatMap(t => {
-        const real = t.foodDrink.filter(x => x.kind === "eat" && isFinite(x.lat) && isFinite(x.lng) && E.hav(x, t) <= 3);
+      // Only a real place to eat counts (Nov 22 lunch audit: a guide's listings of universities, language schools and
+      // embassies made "Lunch in Tel Aviv" a lunch stop, and a lone tea house "Lunch in Uji"): with none, no made-up "Lunch in
+      // <town>" stop; the day takes a place to eat on the map there, or a lunch the traveler brings, said plainly.
+      const townLunch = (city.farther || []).filter(t => !t.town && E.townEats(t).length && isFinite(t.lat)).flatMap(t => {
+        const real = E.townEats(t);
         // The town's note is how to get there from where the day starts: a town beside it (a few minutes away) gives its
         // places to eat no note, or a ride to one from a far sight would read the near town's "5 minutes by taxi" and lose
         // the far sight's own time (Nov 19: back from a lagoon 1 h 30 min away, timed as a 55 min taxi to lunch by the port).
         const o = win.head[win.head.length - 1], tn = o && isFinite(o.lat) && E.hav(o, t) <= 5 ? "" : t.travelNote || "";
-        return real.length ? real.map(x => ({ name: x.name, lat: x.lat, lng: x.lng, kind: "restaurant", amenity: "restaurant", fromMap: !!x.fromMap, inTown: t.id, travelNote: tn }))
-          : [{ name: "Lunch in " + t.name, lat: t.lat, lng: t.lng, townLunch: t.id, travelNote: t.travelNote || "" }]; });
+        return real.map(x => ({ name: x.name, lat: x.lat, lng: x.lng, kind: "restaurant", amenity: "restaurant", cuisine: x.note || "", fromMap: !!x.fromMap, inTown: t.id, travelNote: tn })); });
       const ctx = { single: (byCity.get(d.city) || [i]).length === 1, tr, ledger, dayIdx: i, siteDay, eats: (city.restaurants || []).concat(townLunch).filter(r => !E.genericEat(r.name)).sort((a, b) => E.eatKey(a.name).localeCompare(E.eatKey(b.name))), eatFacts: d.eats || {}, mealPrefs: E.mealInput(d) };
       // May this day add a sight on its own? Not one used on another day, picked for another day, or in another
       // day's area, unless that day is already planned and left it over.
@@ -354,11 +363,11 @@
       const dinner = E.dinnerAfter(win, win.tail.length ? win.tail[win.tail.length - 1] : last, fit.r.end, ctx, new Set(fit.seq.filter(s => s.eatKey).map(s => s.eatKey)));
       // Out of town: the town itself (a sight inside it names its town), and what its travel guide lists to eat and drink,
       // tastings and local specialties first.
-      const outStop = fit.kept.find(k => k.far), townNear = s => (city.farther || []).filter(t => t !== s && !t.town && (t.foodDrink || []).length && isFinite(t.lat) && isFinite(s.lat) && E.hav(t, s) <= 3).sort((x, y) => E.hav(x, s) - E.hav(y, s) || E.byId(x, y))[0];
+      const outStop = fit.kept.find(k => k.far), townNear = s => (city.farther || []).filter(t => t !== s && !t.town && E.townEats(t).length && isFinite(t.lat) && isFinite(s.lat) && E.hav(t, s) <= 3).sort((x, y) => E.hav(x, s) - E.hav(y, s) || E.byId(x, y))[0];
       // A sight out of town is eaten near in its own town: the one it names, else the nearest town (3 km at most) whose
       // travel guide lists places to eat (an excavation site and the town beside it).
-      const outTown = outStop && (outStop.town ? (city.farther || []).find(t => String(t.id) === String(outStop.town)) || { name: outStop.townName } : (outStop.foodDrink || []).length ? outStop : townNear(outStop) || outStop);
-      const eatList = outTown ? (outTown.foodDrink || []).slice().sort((a, b) => (a.fromMap ? 1 : 0) - (b.fromMap ? 1 : 0) || (b.special ? 1 : 0) - (a.special ? 1 : 0)).slice(0, 3) : [];
+      const outTown = outStop && (outStop.town ? (city.farther || []).find(t => String(t.id) === String(outStop.town)) || { name: outStop.townName } : E.townEats(outStop).length ? outStop : townNear(outStop) || outStop);
+      const eatList = outTown ? E.townEats(outTown, true).slice().sort((a, b) => (a.fromMap ? 1 : 0) - (b.fromMap ? 1 : 0) || (b.special ? 1 : 0) - (a.special ? 1 : 0)).slice(0, 3) : [];
       const eatThere = eatList.map(x => x.name), fromMap = eatList.length && eatList.every(x => x.fromMap);
       // Who names them: the travel guide, or the map (places to eat beside the sight, with no review behind them).
       const suggests = fromMap ? "places to eat on the map beside it: " : "the travel guide suggests ";
@@ -369,6 +378,7 @@
       const lunchNote = !fit.kept.length ? null : fit.noLunch && outTown ? (fit.noLunch === "time" ? "No time for a sit-down lunch on this plan: grab lunch on the go in " : "Have lunch in ") + outTown.name + (eatThere.length ? ": " + suggests + E.listWords(eatThere) + (fromMap ? " (check reviews before you go)." : ".") : ": its places to eat aren't in the guide yet.") : fit.noLunch ? (fit.noLunch === "time" ? (win.hard ? (fit.kept.some(k => k.wish) ? "Your picks fill" : "Today's stops fill") + " the time ashore, so there's no room for lunch and still a safe margin to get back. Grab lunch on the go between stops" + (longVisit ? ", or spend less time at " + String(longVisit.name).split(",")[0] + " to make room." : ".") : "No time for a sit-down lunch on this plan: grab lunch on the go between stops.") : "No place to eat along the way at lunchtime: bring food or eat at a stop's own café.") : null;
       // Never quietly sure: where the map gives hours for this place's sights but not for some of today's stops, say so.
       { const m = (fit.seq || []).find(x => x.mealOf && x.fromMap); if (m) explain.push("Lunch at " + m.name + " is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go."); }
+      fit.eatFacts = ctx.eatFacts;
       const plan = shortForm(i, win, fit, autoIds, dinner, !!d.own);
       // The first stop not open yet: the day starts later and says so, instead of a wait at a locked door (Nov 20 review: 68
       // minutes at a chapel's door after leaving the ship at 7:30). Only when nothing fixed comes before it.

@@ -23,7 +23,16 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   // is a snack on the way, never the day's lunch or dinner. Read from what the guide says it serves, in any guide.
   const TREAT = /\b(doughnuts?|donuts?|loukoumades|ice ?cream|gelat[oi]|dessert|pastr(y|ies)|patisserie|bakery|cakes?|chocolate|crepes?|waffles?|coffee|espresso|tea ?room|juice|smoothie|sweets?|confection|treat)\b/i;
   const MEAL = /\b(taverna|restaurant|trattoria|osteria|bistro|brasserie|grill|meze|mezze|kitchen|dining|seafood|steak|pizza|pasta|tapas|lunch|dinner)\b/i;
-  E.mealPlace = r => { const said = r.cuisine ? String(r.cuisine) + " " + String(r.amenity || "") : [r.kind, r.amenity, r.why].filter(Boolean).join(" "); return !(TREAT.test(said) || /^(cafe|ice_cream|bakery|confectionery|pastry)$/i.test(String(r.amenity || r.kind || ""))) || MEAL.test(String(r.cuisine || "") + " " + String(r.amenity || "")); };
+  // The place's own name counts too (Nov 22 lunch audit: "Coffee Shop Vittoria", "Bar tabacchi Pappagone", "Muräne Café Bar
+  // Events" and a sherry bar were planned as lunch because the map gave no kind): a name that says drinks, coffee or a
+  // treat, and no meal, is not a lunch place.
+  const DRINKS = /\b(coffee|espresso|tabacchi|tabaccheria|sherry|wine ?bar|sherry ?bar|beer ?garden|brewery taproom|cocktails?|lounge|events|tea ?room|juice|smoothie|gelateria|pasticceria|bakery|patisserie|ice ?cream|donuts?|doughnuts?)\b/i;
+  E.mealPlace = r => { const said = r.cuisine ? String(r.cuisine) + " " + String(r.amenity || "") : [r.kind, r.amenity, r.why].filter(Boolean).join(" "), nm = String(r.name || "");
+    if (DRINKS.test(nm + " " + String(r.cuisine || "")) && !MEAL.test(nm + " " + String(r.cuisine || ""))) return false;
+    return !(TREAT.test(said) || /^(cafe|ice_cream|bakery|confectionery|pastry)$/i.test(String(r.amenity || r.kind || ""))) || MEAL.test(String(r.cuisine || "") + " " + String(r.amenity || "")); };
+  // A café or bar by name may serve a light lunch, but a restaurant nearby is the better lunch: the lunch search counts a
+  // café as farther away than it is.
+  E.cafeName = r => /\b(caf[eéè]s?|caff[eèé]|kafe|kafeneio|bar)\b/i.test(String((r && r.name) || "")) && !MEAL.test(String((r && r.name) || "") + " " + String((r && r.cuisine) || ""));
   // A name in Greek or Cyrillic letters, written in Latin letters by the standard fixed rules (Greek: ELOT 743, as on
   // Greek road and station signs; Cyrillic: the common English spelling), so a traveler reading English can read it
   // and match it to the signs ("Ζευγολατιό" is "Zevgolatio"). Names already in Latin letters pass through as they are.
