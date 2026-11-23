@@ -1,0 +1,416 @@
+{
+ "id": "girona",
+ "v": 1,
+ "city": "barcelona",
+ "title": "Day trip: Girona",
+ "match": {
+  "ids": [
+   "girona"
+  ],
+  "names": [
+   "girona",
+   "gerona"
+  ],
+  "wikidata": [
+   "Q7038"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "where": {
+   "label": "supported",
+   "says": "Girona is a provincial capital about 99 km northeast of Barcelona, where four rivers meet; much of its old quarter is preserved.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "at the confluence of the Ter, Onyar, Galligants, and Güell rivers",
+    "Since much of the old quarter of this ancient city has been preserved, Girona is a popular tourist destination. The city is located 99 km (62 mi) northeast of Barcelona."
+   ]
+  },
+  "oldtown": {
+   "label": "supported",
+   "says": "The old town stands on a steep hill east of the river Onyar; the newer part is on the plain to the west.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "The old town stands on the steep hill of the Caputxins to the east of the river Onyar, while the more modern section stands on the plains to the west."
+   ]
+  },
+  "bridge": {
+   "label": "supported",
+   "says": "The Pont de les Peixateries Velles is a metal lattice footbridge over the Onyar designed by Gustave Eiffel, with a good view of the riverside houses.",
+   "src": [
+    "wv-girona"
+   ],
+   "quote": [
+    "Pont de les Peixateries Velles spans the Onyar River, a metal lattice pedestrian bridge designed by Gustave Eiffel. It gives a good view of the houses huddled along it."
+   ]
+  },
+  "houses": {
+   "label": "supported",
+   "says": "The riverside houses date mostly from the 19th century; their facades were painted in a palette of 29 colors, realized in 1982, an idea from local artists late in the Franco years.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "The houses were built over many years from the 17th to 20th century, although most date to the 19th century and were not originally seen with the multicoloured appearance of today. The façades were painted and restored in a palette of 29 colours, an idea conceived during the later years of the Franco dictatorship by local artists Enric Ansesa and James J. Faixó and ultimately realized in 1982."
+   ]
+  },
+  "signal": {
+   "label": "supported",
+   "says": "Ansesa called the colors a 'great signal of change', remembering a 'Girona in black and white'.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "Ansesa has since related the symbolism of the colours as a \"great signal of change\" following the end of Francoism, contrasting this with the city of his youth which he described as a \"Girona in black and white"
+   ]
+  },
+  "roman": {
+   "label": "supported",
+   "says": "Girona is ancient Gerunda; the Romans built a citadel here. The Moors took it in 715 and Charlemagne retook it in 785.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "Girona is the ancient Gerunda, a city of the Ausetani. Later, the Romans built a citadel there, which was given the name of Gerunda. The Visigoths ruled in Girona until it was conquered by the Moors in 715. Charlemagne reconquered it in 785"
+   ]
+  },
+  "sieges": {
+   "label": "supported",
+   "says": "Girona has undergone twenty-five sieges; in 1809, besieged from May to December by 35,000 French troops, it held out until disease and famine forced surrender on 12 December.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "Girona has undergone twenty-five sieges throughout its history.",
+    "the city was besieged from May to December 1809 by 35,000 French Napoleonic troops",
+    "Girona held out obstinately under the leadership of Álvarez de Castro until disease and famine compelled it to capitulate on 12 December."
+   ]
+  },
+  "jews": {
+   "label": "supported",
+   "says": "The earliest evidence of a Jewish community dates to about 885; in the 12th century it flourished with one of Europe's most important Kabbalistic schools; Nahmanides was appointed Great Rabbi of Catalonia.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "The earliest documented evidence of a Jewish Catalan community in Girona dates to about 885.  The 12th century saw the Jewish community of Girona flourish, having one of the most important Kabbalistic schools in Europe. The Rabbi of Girona, Moshe ben Nahman Gerondi (better known as Nahmanides or Ramban) was appointed Great Rabbi of Catalonia."
+   ]
+  },
+  "forca": {
+   "label": "supported",
+   "says": "The Jewish homes and businesses were on the Call, Carrer de la Força near the cathedral.",
+   "src": [
+    "wv-girona"
+   ],
+   "quote": [
+    "their homes and businesses were on \"The Call\", C de la Força near the cathedral."
+   ]
+  },
+  "1492": {
+   "label": "supported",
+   "says": "In 1492 the remaining Jews had to choose conversion or expulsion; the quarter was then sealed off and new houses were built over the old.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "In 1492, at the culmination of a period of increasing repression, the remaining Jewish community in Girona was forced to choose between conversion and expulsion. After the expulsion of the Jews, the neighbourhood was sealed off and new houses were built over the old ones."
+   ]
+  },
+  "rediscovered": {
+   "label": "supported",
+   "says": "After Franco died in 1975, excavations found the home of Nahmanides; early 2000s excavations turned up 1,200 old documents.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "When the dictator Francisco Franco died in November 1975, interest in the region's cultural history was revived. Some of the old buildings were excavated leading to the discovery of the home of Nahmanides",
+    "Excavations in the early 2000s also turned up 1,200 old documents"
+   ]
+  },
+  "mezuzah": {
+   "label": "supported",
+   "says": "Rectangular indentations that once held a mezuzah can be seen at some doorways, such as an old building on Carrer de Sant Llorenç.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "A rectangular indentation that once held a mezuzah can be seen at the entrance of a number of buildings in the Call, such as the doorway of an old building on Carrer de Sant Llorenç."
+   ]
+  },
+  "museum": {
+   "label": "supported",
+   "says": "The Centre Bonastruc ça Porta on Carrer de la Força, site of a 15th-century synagogue, houses the Museum of Jewish History.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "The Centre Bonastruc ça Porta on Carrer de la Força is the site of a 15th century synagogue, and the building today hosts the Girona Museum of Jewish History"
+   ]
+  },
+  "steps": {
+   "label": "supported",
+   "says": "The cathedral is approached by a long, broad flight of stairs from Carrer de la Força; side streets avoid them.",
+   "src": [
+    "wv-girona",
+    "wp-girona"
+   ],
+   "quote": [
+    "The main entrance from C de la Força is up a long broad flight of stairs: approach from the side streets if you wish to avoid these.",
+    "It is approached in ninety steps."
+   ]
+  },
+  "nave": {
+   "label": "supported",
+   "says": "The cathedral's Gothic nave, 22.98 m wide, is the widest Gothic nave in the world and the second-widest of any church after St. Peter's.",
+   "src": [
+    "wp-girona-cathedral"
+   ],
+   "quote": [
+    "the widest Gothic nave in the world—22.98 m, and the second-widest of any church after that of St. Peter's Basilica"
+   ]
+  },
+  "mosque": {
+   "label": "supported",
+   "says": "An early Christian church here was made a mosque in 717 and reconsecrated in 908 after Charlemagne's Franks retook the city.",
+   "src": [
+    "wp-girona-cathedral"
+   ],
+   "quote": [
+    "A primitive Christian church existed here before the Islamic conquest of Iberia, after which it was converted into a mosque, in 717. The Franks reconquered the city in 785 under Charlemagne and the church was reconsecrated in 908."
+   ]
+  },
+  "tower": {
+   "label": "supported",
+   "says": "The older bell tower, named after Charlemagne, survives from the first Romanesque church and was begun in the early 11th century.",
+   "src": [
+    "wp-girona-cathedral"
+   ],
+   "quote": [
+    "The oldest one, named after Charlemagne, is the surviving one of the two originally flanking the first Romanesque church",
+    "Begun in the early 11th century"
+   ]
+  },
+  "tapestry": {
+   "label": "supported",
+   "says": "The cathedral museum's main attraction is the Tapestry of Creation, from the 11th or early 12th century.",
+   "src": [
+    "wp-girona-cathedral"
+   ],
+   "quote": [
+    "The museum's main attraction is the Tapestry of Creation, an 11th- or early-12th-century piece considered amongst the master works of Romanesque tapestry."
+   ]
+  },
+  "felix": {
+   "label": "tradition",
+   "says": "Sant Feliu holds the Gothic tomb of Narcissus, by tradition an early bishop of Girona; Feliu is St Felix, martyred in Girona in 304 AD.",
+   "src": [
+    "wp-girona",
+    "wv-girona"
+   ],
+   "quote": [
+    "a chapel dedicated to St. Narcissus, who according to tradition was one of the early bishops of the See of Girona",
+    "Feliu himself is St Felix, born in Scillium (nowadays in Tunisia) and martyred in Girona in 304 AD."
+   ]
+  },
+  "walls": {
+   "label": "supported",
+   "says": "The walls were first built by the Romans in the 1st century BC, rebuilt in the 14th century, and the eastern section was reconstructed in 1983-2003; you can walk them and climb the towers for panoramic views.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "The city wall of the old town was an important military construction built in Roman times in the 1st century BC. It was thoroughly rebuilt under the reign of Peter III the Ceremonious in the second half of the 14th century",
+    "a much larger section to the east and south which was reconstructed in the period 1983–2003. It is now possible to walk the walls and climb the towers, from which visitors can enjoy panoramic views of Girona and the surrounding countryside."
+   ]
+  },
+  "gironella": {
+   "label": "supported",
+   "says": "Torre Gironella is a watchtower at the highest point of the walls, with a good view.",
+   "src": [
+    "wv-girona"
+   ],
+   "quote": [
+    "Torre Gironella is referred to a \"castle\", but it's simply a watchtower at the highest point of the city walls, with a good view of town and gardens below."
+   ]
+  },
+  "thrones": {
+   "label": "supported",
+   "says": "Several scenes of season 6 of Game of Thrones were shot in Girona.",
+   "src": [
+    "wp-girona"
+   ],
+   "quote": [
+    "Several scenes of season 6 of Game of Thrones were shot in Girona."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The river",
+   "stand": "On the Eiffel footbridge, the Pont de les Peixateries Velles, looking along the river at the colored houses.",
+   "paras": [
+    {
+     "t": "Welcome to Girona, about 99 kilometers northeast of Barcelona. You're standing on a footbridge over the river Onyar, a metal lattice bridge designed by Gustave Eiffel. Across the water, the old town climbs a steep hill.",
+     "c": [
+      "where",
+      "bridge",
+      "oldtown"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Those houses along the river look timeless, but the colors are young. Most of the houses are from the 1800s. Local artists dreamed up the palette of 29 colors in the last years of the Franco dictatorship, and it was finally painted in 1982.",
+     "c": [
+      "houses"
+     ],
+     "level": 2
+    },
+    {
+     "t": "One of those artists, Enric Ansesa, called the colors a great signal of change. He remembered the city of his youth as a Girona in black and white.",
+     "c": [
+      "signal"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "A city that held out",
+   "stand": "Cross to the old town side and pause by the river before heading uphill.",
+   "paras": [
+    {
+     "t": "A quick word for your feet. The old town has slopes, lumpy cobblestones and steep stairs, so wear good shoes and take your time.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "This is an old city. It's the ancient Gerunda, where the Romans built a citadel. The Moors took it in 715, and Charlemagne won it back in 785.",
+     "c": [
+      "roman"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Girona has lived through twenty-five sieges. The most famous came in 1809. 35,000 of Napoleon's troops surrounded the city from May to December, and Girona held out until disease and famine forced it to surrender on 12 December.",
+     "c": [
+      "sieges"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Jewish quarter",
+   "stand": "On Carrer de la Força, the narrow street that leads toward the cathedral.",
+   "paras": [
+    {
+     "t": "This street, Carrer de la Força, was the heart of the Call, the Jewish quarter. The first record of Jews in Girona dates to about 885. By the 1100s the community was flourishing, with one of the most important schools of Kabbalah in Europe. Its great rabbi, Nahmanides, was appointed Great Rabbi of Catalonia.",
+     "c": [
+      "forca",
+      "jews"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Then came 1492. The remaining Jews were forced to choose between conversion and exile. After they left, the quarter was sealed off, and new houses were built right over the old ones.",
+     "c": [
+      "1492"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It stayed buried for centuries. After Franco died in 1975, interest in the past revived, and excavations found the home of Nahmanides. Digs in the early 2000s turned up 1,200 old documents. Along this street, the Centre Bonastruc ça Porta stands on the site of a 15th-century synagogue, and today it houses the Museum of Jewish History.",
+     "c": [
+      "rediscovered",
+      "museum"
+     ],
+     "level": 2
+    },
+    {
+     "t": "As you walk, look at the doorframes. On some buildings in the Call, for example an old doorway on Carrer de Sant Llorenç, there's a small rectangular groove where a mezuzah once hung.",
+     "c": [
+      "mezuzah"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The cathedral",
+   "stand": "At the foot of the cathedral stairs, looking up at the front.",
+   "paras": [
+    {
+     "t": "And here's the cathedral, up a long, broad flight of stairs. Take them slowly. If you'd rather skip them, you can come at it from the side streets.",
+     "c": [
+      "steps"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Inside is something you won't see anywhere else. The Gothic nave is 22.98 meters wide. That's the widest Gothic nave in the world, and only St. Peter's in Rome has a wider church nave of any kind.",
+     "c": [
+      "nave"
+     ],
+     "level": 1
+    },
+    {
+     "t": "This site has seen it all. An early Christian church here became a mosque in 717, and was consecrated as a church again in 908. The older bell tower, named after Charlemagne, was begun in the early 1000s. In the cathedral museum, look for the Tapestry of Creation, from the 11th or early 12th century.",
+     "c": [
+      "mosque",
+      "tower",
+      "tapestry"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Nearby is the church of Sant Feliu, Saint Felix, said to have been martyred in Girona in 304 AD. By tradition, Saint Narcissus was one of the city's early bishops, and his tomb is inside. And yes, Game of Thrones fans: several scenes of season 6 were shot in Girona.",
+     "c": [
+      "felix",
+      "thrones"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The walls",
+   "stand": "Up on the city walls, at a spot where you can look out over the rooftops.",
+   "paras": [
+    {
+     "t": "You can walk these walls and climb their towers. The Romans built the first wall in the 1st century BC. It was rebuilt in the 1300s, and much of this eastern stretch was rebuilt again between 1983 and 2003.",
+     "c": [
+      "walls"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Mind the edges and the steps up here, especially on the towers.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "For the best view, find Torre Gironella, a watchtower at the highest point of the walls.",
+     "c": [
+      "gironella"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Look down at those rooftops. Somewhere under them, a whole neighborhood was sealed away for centuries and then patiently uncovered. Cities forget. But people can choose to remember.",
+     "c": [
+      "1492",
+      "rediscovered"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

@@ -1,0 +1,435 @@
+{
+ "id": "la-rambla",
+ "v": 1,
+ "city": "barcelona",
+ "title": "La Rambla and Plaça de Catalunya",
+ "match": {
+  "ids": [
+   "rambla",
+   "catalunya"
+  ],
+  "names": [
+   "la rambla",
+   "las ramblas",
+   "les rambles",
+   "rambla",
+   "placa de catalunya",
+   "plaça de catalunya",
+   "plaza de cataluna",
+   "plaza de cataluña",
+   "boqueria",
+   "placa reial",
+   "plaça reial",
+   "liceu"
+  ],
+  "wikidata": [
+   "Q850593",
+   "Q822881"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "placa": {
+   "label": "supported",
+   "says": "Plaça de Catalunya is a large square generally considered the city centre, where the old city meets the 19th-century Eixample; it is known for its fountains, statues, the compass rose on the pavement, and pigeons.",
+   "src": [
+    "wp-placa-catalunya"
+   ],
+   "quote": [
+    "is a large square in central Barcelona that is generally considered to be both its city centre and the place where the old city (see Barri Gòtic and Raval, in Ciutat Vella) and the 19th century-built Eixample meet.",
+    "The plaza is especially known for its fountains and statues, the central compass rose (or \"wind rose\") on the pavement, its proximity to some of Barcelona's most popular attractions, and the flocks of pigeons that gather in the centre."
+   ]
+  },
+  "placa-history": {
+   "label": "supported",
+   "says": "The square was first laid out in 1902 and reshaped for the 1929 International Exposition; in May 2011 it was the main site of anti-government protests in Barcelona.",
+   "src": [
+    "wp-placa-catalunya"
+   ],
+   "quote": [
+    "It was urbanised for the first time in 1902 and was further modified in 1929, on the occasion of the 1929 Barcelona International Exposition",
+    "In May 2011 Plaça Catalunya was the main location where anti-government protests and sit ins were held in Barcelona"
+   ]
+  },
+  "rambla": {
+   "label": "supported",
+   "says": "La Rambla is a tree-lined pedestrian street of 1.2 km from Plaça de Catalunya to the Columbus Monument at the old port, between the Gothic Quarter to the east and El Raval to the west.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "A tree-lined pedestrian street, it stretches for 1.2 kilometres (3⁄4 mile) connecting  the Plaça de Catalunya in its center with the Christopher Columbus Monument at Port Vell. La Rambla forms the boundary between the neighbourhoods of the Barri Gòtic to the east and the El Raval to the west."
+   ]
+  },
+  "lorca": {
+   "label": "supported",
+   "says": "The poet Federico García Lorca called La Rambla \"the only street in the world which I wish would never end.\"",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "The Spanish poet Federico García Lorca once said that La Rambla was \"the only street in the world which I wish would never end.\""
+   ]
+  },
+  "stream": {
+   "label": "supported",
+   "says": "It was once a sewage-filled stream, usually dry; rambla, from the Arabic for sand, means a wadi. In 1440 the stream was diverted outside new walls and it slowly became a street.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "The course of La Rambla was originally a sewage-filled stream, usually dry",
+    "(Rambla, from the Arabic رمل 'sand', is Catalan for \"wadi\".",
+    "In 1440, the stream was diverted to run outside the new walls, and La Rambla gradually started turning into a street."
+   ]
+  },
+  "ripple": {
+   "label": "supported",
+   "says": "The paving design appears to ripple like water, a reminder of its origins as a watercourse.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "Its origins as a watercourse are reflected in the paving design, which appears to ripple like water."
+   ]
+  },
+  "names": {
+   "label": "supported",
+   "says": "It is really a series of shorter streets with different names, hence Les Rambles: Canaletes, Estudis, Sant Josep or the Flowers, Caputxins and Santa Mònica.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "La Rambla can be considered a series of shorter streets, each differently named, hence the plural form Les Rambles",
+    "Rambla de Canaletes – the site of the Font de Canaletes fountain",
+    "Rambla de Sant Josep (or de les Flors) – the site of an open-air flower market",
+    "Rambla dels Caputxins – the site of a former Capuchin monastery, now dominated by the Liceu opera-house"
+   ]
+  },
+  "canaletes": {
+   "label": "supported",
+   "says": "The Font de Canaletes is a fountain and popular meeting point.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "the Font de Canaletes, a fountain and popular meeting point"
+   ]
+  },
+  "trees": {
+   "label": "supported",
+   "says": "The first trees were planted in 1703; the plane trees have been the common tree since 1859.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "In 1703, the first of the trees lining La Rambla were planted.",
+    "the currently standing plane trees started to be the common tree from 1859"
+   ]
+  },
+  "slavery": {
+   "label": "disputed",
+   "says": "In the late 19th century some Catalans who had grown rich from the slave trade or slave plantations built mansions on streets like La Rambla; one historian says it was \"built on the backs of slaves\", which The Guardian called an exaggeration.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "During the late 19th century, many Catalans who had made their fortunes from trading in slaves or owning slave plantations in Spanish America returned to Barcelona",
+    "Several of them invested their newfound fortunes in constructing opulent mansions in areas such as La Rambla. German historian Michael Zeuske has argued that the street was \"built on the backs of slaves\", although The Guardian claimed that \"[this] is an exaggeration.\""
+   ]
+  },
+  "boqueria": {
+   "label": "supported",
+   "says": "La Boqueria market opens off the Rambla, on the site of the former Carmelite St. Joseph's monastery, and is one of the city's foremost tourist landmarks.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "the Carmelite St. Joseph's monastery, on the site of the current Boqueria market",
+    "The La Boqueria market opens off the Rambla and is one of the city's foremost tourist landmarks, housing a very diverse selection of goods."
+   ]
+  },
+  "boqueria-tip": {
+   "label": "supported",
+   "says": "Wikivoyage notes the Boqueria is closed Sundays and that near closing time sellers may offer a special price.",
+   "src": [
+    "wv-barcelona"
+   ],
+   "quote": [
+    "If you go near closing time (20:00) sellers will make you a special price (2 or 3 for €2). Closed Sundays."
+   ]
+  },
+  "miro": {
+   "label": "supported",
+   "says": "In the Pla de l'Os there is a 1971 pavement mosaic by Joan Miró.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "In the Pla de l'Os is a 1971 pavement mosaic by Joan Miró."
+   ]
+  },
+  "liceu": {
+   "label": "supported",
+   "says": "The Liceu, the opera house, opened here on 4 April 1847; from 1847 to 1989 it was the largest opera house in Europe by capacity, and it was rebuilt after fires in 1861 and 1994.",
+   "src": [
+    "wp-gran-teatre-liceu"
+   ],
+   "quote": [
+    "the Liceu opened at its current address on 4 April 1847. The theater was rebuilt after fires in 1861 and 1994",
+    "Between 1847 and 1989, the 2,338-seat Liceu was the largest opera house in Europe by capacity."
+   ]
+  },
+  "liceu-bomb": {
+   "label": "supported",
+   "says": "On 7 November 1893, opening night of the season, an anarchist threw two bombs into the stalls; about twenty people were killed.",
+   "src": [
+    "wp-gran-teatre-liceu"
+   ],
+   "quote": [
+    "On 7 November 1893, on the opening night of the season, an anarchist threw two bombs into the stalls. About twenty people were killed, and many more were injured."
+   ]
+  },
+  "reial": {
+   "label": "supported",
+   "says": "Plaça Reial is a lively 19th-century square with tall palm trees, reached by a short passage off the Rambla dels Caputxins; it stands on the site of a Capuchin convent demolished in 1835.",
+   "src": [
+    "wp-la-rambla-barcelona",
+    "wp-placa-reial"
+   ],
+   "quote": [
+    "One of the larger of these squares is the Plaça Reial, a lively 19th-century square with tall palm trees and street lamps designed by Antoni Gaudí, which opens down a short entrance passage off the Rambla dels Caputxins.",
+    "The original building on the site was the Capuchin convent of Santa Madrona, which was demolished in 1835."
+   ]
+  },
+  "gaudi-lamps": {
+   "label": "supported",
+   "says": "The square's lampposts were designed by Gaudí in 1878 and installed in 1879; they were among his first projects.",
+   "src": [
+    "wp-placa-reial",
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "The square's lampposts were designed by the Catalan architect Antoni Gaudí in 1878 and installed in 1879.",
+    "Gaudí's first projects were the lampposts he designed for the Plaça Reial in Barcelona"
+   ]
+  },
+  "columbus": {
+   "label": "supported",
+   "says": "At the southern end is the Columbus Monument and the old port, and near it the Royal Dockyards, which house a maritime museum.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "At the southern end of the Rambla is the Christopher Columbus Monument and the Port Vell, the old port of Barcelona, now largely given over to pleasure craft. Near to the port end of the Rambla are the Royal Dockyards (Catalan: Drassanes), which house a maritime museum"
+   ]
+  },
+  "attack": {
+   "label": "supported",
+   "says": "On 17 August 2017 a van was deliberately driven down La Rambla in a terrorist attack, causing 16 deaths and at least 300 injuries.",
+   "src": [
+    "wp-la-rambla-barcelona"
+   ],
+   "quote": [
+    "On 17 August 2017, many people were struck by a van deliberately driven down the sidewalk on La Rambla in a terrorist attack, causing 16 deaths and at least 300 injuries."
+   ]
+  },
+  "thieves": {
+   "label": "supported",
+   "says": "Wikivoyage warns that groups playing a betting game on a cardboard table on La Rambla are thieves, and that pickpocketing is the most pressing issue for visitors.",
+   "src": [
+    "wv-barcelona"
+   ],
+   "quote": [
+    "Avoid the groups of people supposedly betting on a game played on a cardboard table – they are thieves.",
+    "Pickpocketing is the most pressing issue for visitors to Barcelona."
+   ]
+  },
+  "cruise": {
+   "label": "supported",
+   "says": "Many cruise ships offer shuttle buses to the south end of La Rambla.",
+   "src": [
+    "wv-barcelona"
+   ],
+   "quote": [
+    "Many of them offer bus-shuttles to locations at the south end of La Rambla."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Plaça de Catalunya",
+   "stand": "Stand near the fountains in Plaça de Catalunya, with the top of La Rambla in view.",
+   "paras": [
+    {
+     "t": "This big square is Plaça de Catalunya, the place most people call the center of Barcelona, where the old city meets the newer Eixample. Look for the compass rose in the pavement, and, well, the pigeons.",
+     "c": [
+      "placa"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It's younger than it looks. The square was first laid out in 1902 and reshaped for the 1929 exhibition. And it's still the city's stage: in May 2011 it was the main site of Barcelona's anti-government protests.",
+     "c": [
+      "placa-history"
+     ],
+     "level": 3
+    },
+    {
+     "t": "One honest warning before we walk. Pickpockets are the biggest problem visitors face here. Keep your bag in front of you, and if you see a group betting on a cardboard table, walk on. They're thieves.",
+     "c": [
+      "thieves"
+     ],
+     "level": 1
+    }
+   ]
+  },
+  {
+   "name": "The top of La Rambla",
+   "stand": "Walk to the start of La Rambla and stop by the Font de Canaletes fountain.",
+   "paras": [
+    {
+     "t": "Here begins La Rambla, a tree-lined walk of 1.2 kilometers down to the old port. The Gothic Quarter lies on the east side, El Raval on the west.",
+     "c": [
+      "rambla"
+     ],
+     "level": 1
+    },
+    {
+     "t": "This fountain is the Font de Canaletes, a favorite place to meet. In fact La Rambla is really five streets in a row, each with its own name. That's why locals say Les Rambles. This first stretch is the Rambla de Canaletes.",
+     "c": [
+      "canaletes",
+      "names"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Look down at the paving. It ripples, like water. That's a nod to what this was: a stream bed. The word rambla comes from the Arabic for sand, and means a dry riverbed. In 1440 the stream was sent outside the new city walls, and slowly it became a street.",
+     "c": [
+      "ripple",
+      "stream"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The first trees were planted along here in 1703. The plane trees shading you now have been the main tree since 1859.",
+     "c": [
+      "trees"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Flowers and the Boqueria",
+   "stand": "Walk down past the flower stalls and stop at the entrance to the Boqueria market.",
+   "paras": [
+    {
+     "t": "This stretch is the Rambla de les Flors, named for its flower market. And opening off it here is La Boqueria, Barcelona's famous food market, built where a Carmelite monastery once stood.",
+     "c": [
+      "names",
+      "boqueria"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Wikivoyage says it's closed on Sundays, and if you come near closing time, the sellers may give you a special price. Check the hours before you go.",
+     "c": [
+      "boqueria-tip"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Now look down at the pavement in this stretch, at the spot called the Pla de l'Os. There's a mosaic by the painter Joan Miró, laid in 1971, right under people's feet.",
+     "c": [
+      "miro"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The Liceu",
+   "stand": "Continue down to the opera house, the Liceu, and look at its front from the middle of the promenade.",
+   "paras": [
+    {
+     "t": "This is the Liceu, Barcelona's opera house, opened here in 1847. For well over a century it was the biggest opera house in Europe, and it has burned and been rebuilt twice.",
+     "c": [
+      "liceu"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It has a darker memory too. On 7 November 1893, on the opening night of the season, an anarchist threw two bombs into the stalls. About twenty people died.",
+     "c": [
+      "liceu-bomb"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Plaça Reial",
+   "stand": "Turn off through the short passage on the Gothic Quarter side into Plaça Reial, and stand by one of the lampposts.",
+   "paras": [
+    {
+     "t": "Step into Plaça Reial, the Royal Square, with its tall palm trees and arcades. It went up in the 1800s on the site of a Capuchin convent, pulled down in 1835.",
+     "c": [
+      "reial"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Now look at the lamppost next to you. It's by Gaudí, one of his very first projects, designed in 1878 and installed in 1879.",
+     "c": [
+      "gaudi-lamps"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Down to the sea",
+   "stand": "Head back to La Rambla and walk down until you can see the Columbus column at the end.",
+   "paras": [
+    {
+     "t": "At the bottom stands the Columbus Monument, and beyond it the old port. If you came off a cruise ship, your shuttle may well have dropped you around here.",
+     "c": [
+      "columbus",
+      "cruise"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Not all of this street's money was clean. In the late 1800s, some Catalans who had grown rich from the slave trade, or from slave plantations in the Americas, came home and built grand houses on streets like this. One historian says La Rambla was built on the backs of slaves. Others disagree and call that an exaggeration.",
+     "c": [
+      "slavery"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And a moment of remembrance. On 17 August 2017, a van was deliberately driven down this promenade in a terrorist attack. Sixteen people died, and at least 300 were hurt.",
+     "c": [
+      "attack"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Turn around and look back up the long avenue of trees.",
+   "paras": [
+    {
+     "t": "A stream bed, then a street of monasteries, mansions, flower sellers and opera. The poet García Lorca called it the only street in the world he wished would never end. Look back up it now, full of people, and you can see what he meant.",
+     "c": [
+      "stream",
+      "lorca"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

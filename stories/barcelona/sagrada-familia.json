@@ -1,0 +1,613 @@
+{
+ "id": "sagrada-familia",
+ "v": 1,
+ "city": "barcelona",
+ "title": "Sagrada Família",
+ "match": {
+  "ids": [
+   "sagrada"
+  ],
+  "names": [
+   "sagrada familia",
+   "sagrada família",
+   "sagrada"
+  ],
+  "wikidata": [
+   "Q48435"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "The Sagrada Família is a Catholic basilica still under construction in the Eixample district, designed by Antoni Gaudí; it is the tallest church in the world.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "is a Catholic Basilica under construction in the Eixample district of Barcelona, Catalonia, Spain. Designed by the Spanish architect Antoni Gaudí, it is the tallest church"
+   ]
+  },
+  "tower": {
+   "label": "supported",
+   "says": "The central Tower of Jesus Christ was structurally complete on 20 February 2026 and blessed by Pope Leo XIV on 10 June 2026, the centenary of Gaudí's death; it is 172.5 m tall.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "The central Tower of Jesus Christ reached structural completion on 20 February 2026, when the final piece was installed, and it was inaugurated and blessed by Pope Leo XIV on 10 June 2026 during his visit to Spain, coinciding with the centenary of Gaudí's death. The tower, with a height of 172.5 m (566 ft), makes the Sagrada Família the world's tallest church."
+   ]
+  },
+  "not-cathedral": {
+   "label": "supported",
+   "says": "It is not Barcelona's cathedral; that is the Cathedral of the Holy Cross and Saint Eulalia.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Though sometimes described as a cathedral, the basilica is not the cathedral church of the Archdiocese of Barcelona; that title belongs to the Cathedral of the Holy Cross and Saint Eulalia."
+   ]
+  },
+  "bocabella": {
+   "label": "supported",
+   "says": "The church was inspired by a bookseller, José María Bocabella, as an expiatory temple funded entirely by donations.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Sagrada Família was inspired by a bookseller, José María Bocabella",
+    "It was to be an \"expiatory temple\", funded entirely by donations"
+   ]
+  },
+  "start": {
+   "label": "supported",
+   "says": "The crypt was begun on 19 March 1882, the feast of St. Joseph, to a Gothic revival design by Villar; in 1883 Gaudí took over and changed the design radically.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "The apse crypt of the church was begun on 19 March 1882, on the festival of St. Joseph, to the design of the architect Francisco de Paula del Villar, whose plan was for a Gothic revival church of a standard form.",
+    "The apse crypt was completed before Villar's resignation on 18 March 1883, when Antoni Gaudí assumed responsibility for its design, which he changed radically."
+   ]
+  },
+  "hurry": {
+   "label": "tradition",
+   "says": "Gaudí is said to have remarked: \"My client is not in a hurry.\"",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Gaudí is said to have remarked: \"My client is not in a hurry.\""
+   ]
+  },
+  "quarter": {
+   "label": "supported",
+   "says": "When Gaudí died in 1926, less than a quarter of the project was complete.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "At the time of his death in 1926, less than a quarter of the project was complete."
+   ]
+  },
+  "nativity": {
+   "label": "supported",
+   "says": "The Nativity façade, built between 1893 and 1936, was the first façade completed and bears the most direct Gaudí influence; it is dedicated to the birth of Jesus.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Constructed between 1893 and 1936, the Nativity façade was the first façade to be completed. Dedicated to the birth of Jesus",
+    "bears the most direct Gaudí influence"
+   ]
+  },
+  "nativity-sun": {
+   "label": "supported",
+   "says": "The Nativity façade faces the rising sun, a symbol for the birth of Christ.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "The façade faces the rising sun to the northeast, a symbol for the birth of Christ."
+   ]
+  },
+  "unesco": {
+   "label": "verified",
+   "says": "UNESCO lists Gaudí's work on the Nativity façade and the Crypt as part of the World Heritage property Works of Antoni Gaudí.",
+   "src": [
+    "unesco-gaudi"
+   ],
+   "quote": [
+    "Gaudí’s work on the Nativity façade and Crypt of La Sagrada Familia"
+   ]
+  },
+  "turtles": {
+   "label": "supported",
+   "says": "The three porticos are separated by two large columns, each resting on a turtle or tortoise (land and sea, symbols of time unchanging); two chameleons on either side symbolize change.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "the three porticos are separated by two large columns, and at the base of each lies a turtle or a tortoise (one to represent the land and the other the sea; each are symbols of time as something set in stone and unchangeable). In contrast to the figures of turtles and their symbolism, two chameleons can be found at either side of the façade and are symbolic of change."
+   ]
+  },
+  "porticos": {
+   "label": "supported",
+   "says": "Each portico represents a theological virtue, Hope, Faith and Charity; the Tree of Life rises above the door of Jesus in the portico of Charity, and a cypress tree symbolizes the tree of life.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "It is divided into three porticos, each of which represents a theological virtue (Hope, Faith and Charity). The Tree of Life rises above the door of Jesus in the portico of Charity.",
+    "it also has a cypress tree which symbolizes the tree of life"
+   ]
+  },
+  "nativity-why": {
+   "label": "supported",
+   "says": "Gaudí knew he would not finish the church; he began with the Nativity façade as the most attractive, believing a bare Passion façade first would have driven people away.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "He was well aware that he would not finish the church and that he would need to set an artistic and architectural example for others to follow.",
+    "He believed that if he had begun construction with the Passion Façade, one that would be hard and bare (as if made of bones), before the Nativity Façade, people would have withdrawn at the sight of it."
+   ]
+  },
+  "painted": {
+   "label": "supported",
+   "says": "Gaudí originally wanted every statue and figure on this façade painted.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Originally, Gaudí intended for this façade to be polychromed",
+    "He wanted every statue and figure to be painted."
+   ]
+  },
+  "sotoo": {
+   "label": "supported",
+   "says": "Some statues were destroyed in 1936 in the Spanish Civil War and later reconstructed by the Japanese artist Etsuro Sotoo.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Some of the statues were destroyed in 1936 during the Spanish Civil War, and subsequently were reconstructed by the Japanese artist Etsuro Sotoo."
+   ]
+  },
+  "interior": {
+   "label": "supported",
+   "says": "Inside, the plan is a Latin cross with five aisles; the central nave vaults reach forty-five meters, the central vault sixty, and the apse vault seventy-five.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "The church plan is that of a Latin cross with five aisles. The central nave vaults reach forty-five metres (148 feet)",
+    "The central vault reaches sixty metres (200 ft). The apse is capped by a hyperboloid vault reaching seventy-five metres (246 ft)."
+   ]
+  },
+  "columns": {
+   "label": "supported",
+   "says": "The columns branch to carry their load; the simplest start as a square, become an octagon, then sixteen-sided, and finally a circle.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Besides branching to support their load, their ever-changing surfaces are the result of the intersection of various geometric forms. The simplest example is that of a square base evolving into an octagon as the column rises, then a sixteen-sided form, and eventually to a circle."
+   ]
+  },
+  "no-flat": {
+   "label": "supported",
+   "says": "Essentially none of the interior surfaces are flat; there are no exact right angles in the church.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Essentially none of the interior surfaces are flat",
+    "There are no exact right angles to be seen inside or outside the church, and few straight lines in the design."
+   ]
+  },
+  "consecration": {
+   "label": "supported",
+   "says": "Pope Benedict XVI consecrated the church on 7 November 2010 before a congregation of 6,500, with 50,000 more outside.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "The church was consecrated by Pope Benedict XVI on 7 November 2010 in front of a congregation of 6,500 people. A further 50,000 people followed the consecration Mass from outside the basilica"
+   ]
+  },
+  "crypt-view": {
+   "label": "supported",
+   "says": "Gaps in the floor of the apse give a view into the crypt below, where Gaudí is buried.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "There are gaps in the floor of the apse, providing a view into the crypt below.",
+    "he is buried in the church's crypt"
+   ]
+  },
+  "tram": {
+   "label": "supported",
+   "says": "On 7 June 1926, on his daily walk to church for prayer and confession, Gaudí was struck by a tram; taken for a beggar, he did not get immediate help.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "On 7 June 1926, Gaudí took his daily walk to the Sant Felip Neri church for his habitual prayer and confession.",
+    "he was struck by a passing number 30 tram and lost consciousness. Assumed to be a beggar, the unconscious Gaudí did not receive immediate aid."
+   ]
+  },
+  "death": {
+   "label": "supported",
+   "says": "Gaudí died on 10 June 1926 aged 73; a large crowd said farewell in the crypt chapel. His gravestone says his ashes await the resurrection of the dead.",
+   "src": [
+    "wp-antoni-gaudi"
+   ],
+   "quote": [
+    "Gaudí died on 10 June 1926 at age 73. A large crowd gathered to bid farewell in the chapel of Our Lady of Mount Carmel in the crypt of the Sagrada Família.",
+    "henceforward the ashes of so great a man await the resurrection of the dead. May he rest in peace."
+   ]
+  },
+  "passion": {
+   "label": "supported",
+   "says": "The Passion façade is austere, carved with harsh straight lines to resemble the bones of a skeleton; Gaudí meant it to strike fear into the onlooker.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "the Passion Façade is austere, plain and simple, with ample bare stone, and is carved with harsh straight lines to resemble the bones of a skeleton.",
+    "Gaudí intended for this façade to strike fear into the onlooker."
+   ]
+  },
+  "passion-dates": {
+   "label": "supported",
+   "says": "Built to Gaudí's 1917 design, construction began in 1954, the steeples were finished in 1976, and from 1987 sculptors led by Josep Maria Subirachs carved the scenes; the designs are controversial.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "The Passion façade was built according to the design that Gaudi created in 1917. The construction began in 1954, and the steeples, built over the elliptical plan, were finished in 1976.",
+    "These controversial designs are the work of Josep Maria Subirachs.",
+    "in 1987 a team of sculptors, headed by Josep Maria Subirachs, began work sculpting the scenes and details of the façade"
+   ]
+  },
+  "passion-sun": {
+   "label": "supported",
+   "says": "The Passion façade faces the setting sun, symbol of the death of Christ, and stands on six inclined columns like strained muscles.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Facing the setting sun, indicative and symbolic of the death of Christ, the Passion Façade is supported by six large and inclined columns, designed to resemble strained muscles."
+   ]
+  },
+  "stations": {
+   "label": "supported",
+   "says": "The scenes climb in an S shape on three levels: Jesus' last night (Last Supper, the kiss of Judas), then Calvary with Veronica's veil, then death, burial and resurrection; a bronze figure on a bridge between two steeples represents the Ascension.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "The scenes sculpted into the façade may be divided into three levels, which ascend in an S form and reproduce the Stations of the Cross",
+    "The lowest level depicts scenes from Jesus' last night before the crucifixion, including the Last Supper, Kiss of Judas",
+    "The middle level portrays the Calvary, or Golgotha, of Christ, and includes The Three Marys, Saint Longinus, Saint Veronica, and a hollow-face illusion of Christ on the Veil of Veronica. In the third and final level the Death, Burial and the Resurrection of Christ can be seen. A bronze figure situated on a bridge creating a link between the steeples of Saint Bartholomew and Saint Thomas represents the Ascension of Jesus."
+   ]
+  },
+  "magic-square": {
+   "label": "supported",
+   "says": "The façade has a magic square whose rows and columns add up to 33.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "The façade contains a magic square",
+    "so the rows and columns add up to 33 instead of the standard 34 for a 4x4 magic square"
+   ]
+  },
+  "civil-war": {
+   "label": "supported",
+   "says": "In July 1936 anarchists set fire to the crypt and broke into the workshop, partially destroying Gaudí's plans; work later went on from saved material and plans reconstructed from publications and photographs.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "In July 1936, anarchists from the Iberian Anarchist Federation (Federación Anarquista Ibérica, or FAI) set fire to the crypt and broke their way into the workshop, partially destroying Gaudí's original plans.",
+    "which was able to go on with the material that was saved from Gaudí's workshop and that was reconstructed from published plans and photographs"
+   ]
+  },
+  "computers": {
+   "label": "supported",
+   "says": "Computer-aided design now lets stone be shaped off-site by machine, where in the 20th century it was carved by hand; it relies on private donations and visitors' tickets.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Computer-aided design technology has allowed stone to be shaped off-site by a computer numerical control milling machine, whereas in the 20th century the stone was carved by hand.",
+    "Money from tickets purchased by tourists is now used to pay for the work, and private donations are accepted."
+   ]
+  },
+  "halt": {
+   "label": "supported",
+   "says": "In 2008 some renowned Catalan architects argued for halting construction to respect Gaudí's original designs.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "In 2008, some renowned Catalan architects advocated halting construction to respect Gaudí's original designs"
+   ]
+  },
+  "spires": {
+   "label": "supported",
+   "says": "Gaudí planned eighteen spires: the Twelve Apostles, the four Evangelists, the Virgin Mary and, tallest, Jesus Christ; fourteen were complete as of 2026.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Gaudí's original design calls for a total of eighteen spires, representing in ascending order of height the Twelve Apostles, the four Evangelists, the Virgin Mary, and, tallest of all, Jesus Christ. Fourteen spires have been completed as of 2026"
+   ]
+  },
+  "montjuic": {
+   "label": "supported",
+   "says": "The central spire is lower than Montjuïc hill, because Gaudí believed his creation should not surpass God's.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "its total height (172.5 metres (566 ft)) is less than that of Montjuïc hill in Barcelona, as Gaudí believed that his creation should not surpass God's"
+   ]
+  },
+  "glory": {
+   "label": "supported",
+   "says": "The Glory façade, begun in 2002, faces south and will be the main entrance; its central doors carry the Our Father in Catalan, with \"Give us this day our daily bread\" in fifty languages.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "The largest and most striking of the façades will be the Glory Façade, on which construction began in 2002. The Façade faces south",
+    "It will be the principal façade and will offer access to the central nave.",
+    "These central doors bear the text of the Our Father prayer in Catalan in high relief, accompanied with the words \"Our Father\" and \"Give us this day our daily bread\" inscribed in fifty different languages."
+   ]
+  },
+  "steps": {
+   "label": "supported",
+   "says": "The way down from the towers is a very narrow spiral staircase of over 300 steps, with a posted caution for people with medical conditions.",
+   "src": [
+    "wp-sagrada-familia"
+   ],
+   "quote": [
+    "Descent is via a very narrow spiral staircase of over 300 steps. There is a posted caution for those with medical conditions."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Find a spot across the street where you can see the whole church, towers and all.",
+   "paras": [
+    {
+     "t": "So here it is. The Sagrada Família, the great basilica designed by Antoni Gaudí. It's still being built, and it's already the tallest church in the world.",
+     "c": [
+      "what"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The tallest tower, in the middle, is the Tower of Jesus Christ, 172.5 meters high. Pope Leo XIV blessed it on 10 June 2026, a hundred years to the day after Gaudí died.",
+     "c": [
+      "tower"
+     ],
+     "level": 1
+    },
+    {
+     "t": "One small thing people get wrong. This is not Barcelona's cathedral. That title belongs to the Cathedral of the Holy Cross and Saint Eulalia, down in the old town.",
+     "c": [
+      "not-cathedral"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The idea came from a bookseller, José María Bocabella. He wanted an expiatory temple, a church of atonement, paid for entirely by donations. Work began on 19 March 1882, the feast of Saint Joseph, with an ordinary Gothic revival design by another architect, Villar. In 1883 Gaudí took over, and he changed it radically.",
+     "c": [
+      "bocabella",
+      "start"
+     ],
+     "level": 2
+    },
+    {
+     "t": "People asked him why it was taking so long. He is said to have answered: \"My client is not in a hurry.\" When he died in 1926, less than a quarter of it was done.",
+     "c": [
+      "hurry",
+      "quarter"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Nativity façade",
+   "stand": "Walk around to the façade that faces the rising sun, crowded with carved figures, and stand back far enough to take it in.",
+   "paras": [
+    {
+     "t": "This is the Nativity façade, about the birth of Jesus. Built between 1893 and 1936, it's the part that carries Gaudí's own hand most directly. UNESCO lists it, with the crypt, as World Heritage.",
+     "c": [
+      "nativity",
+      "unesco"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It faces the rising sun, a symbol for the birth of Christ. And there are three doorways, for Hope, Faith and Charity. Above the door of Jesus, in the doorway of Charity, the Tree of Life rises up, in the form of a cypress tree.",
+     "c": [
+      "nativity-sun",
+      "porticos"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Now look down, to the bottom of the two big columns between the doorways. Each one rests on a turtle or a tortoise, one for the land and one for the sea, symbols of time that doesn't change. And at either side of the façade there's a chameleon, the symbol of change.",
+     "c": [
+      "turtles"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Why start here? Gaudí knew he would never finish this church. So he began with the warmest, most welcoming façade. He believed that if people had seen the hard, bare Passion side first, they would have turned away.",
+     "c": [
+      "nativity-why"
+     ],
+     "level": 3
+    },
+    {
+     "t": "He even wanted every statue painted, so the people would look as alive as the plants and animals. Some of these figures were destroyed in 1936, in the Spanish Civil War. The Japanese sculptor Etsuro Sotoo later made them again.",
+     "c": [
+      "painted",
+      "sotoo"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Inside",
+   "stand": "Once you're through the doors, step to one side, out of the flow of people, and look straight up.",
+   "paras": [
+    {
+     "t": "Take a moment. The plan is a Latin cross, with five aisles. The vaults over the nave reach forty-five meters, and the central vault sixty.",
+     "c": [
+      "interior"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Look at the columns around you. They branch as they rise, to carry the weight. The simplest ones start as a square, turn into an octagon, then a sixteen-sided shape, and end as a circle. And look for a flat surface. You'll struggle. There are no exact right angles anywhere in this church.",
+     "c": [
+      "columns",
+      "no-flat"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Even unfinished, this is a working church. Pope Benedict XVI consecrated it on 7 November 2010, with 6,500 people inside and some 50,000 more following outside.",
+     "c": [
+      "consecration"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Up at the far end, in the apse, there are gaps in the floor where you can look down into the crypt. That's where Gaudí is buried.",
+     "c": [
+      "crypt-view"
+     ],
+     "level": 3
+    },
+    {
+     "t": "His death is a sad story. On 7 June 1926 he was walking, as he did every day, to church for prayer and confession, and he was hit by a tram. He was so poorly dressed by then that people took him for a beggar, and he didn't get help right away. He died on 10 June, at 73. His gravestone says his ashes await the resurrection of the dead.",
+     "c": [
+      "tram",
+      "death"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Passion façade",
+   "stand": "Go around to the opposite side of the church and face the façade with the bare, bony stone figures.",
+   "paras": [
+    {
+     "t": "What a change. This is the Passion façade, about the death of Jesus. Bare stone, cut with harsh straight lines like the bones of a skeleton. Gaudí meant it to strike fear into you.",
+     "c": [
+      "passion"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It faces the setting sun, the symbol of Christ's death. Gaudí drew it in 1917, but work only began in 1954. From 1987 a team led by the sculptor Josep Maria Subirachs carved the scenes, and these figures have been controversial ever since.",
+     "c": [
+      "passion-sun",
+      "passion-dates"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Read it from the bottom, in an S shape. First Jesus' last night: the Last Supper, the kiss of Judas. In the middle, the road to Calvary, with Veronica's veil. Then his death, burial and resurrection at the top. And high up, on a bridge between two of the towers, a bronze figure shows the Ascension.",
+     "c": [
+      "stations"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Here's a puzzle to find. There's a magic square carved on this façade. Every row and column adds up to 33.",
+     "c": [
+      "magic-square"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Still being built",
+   "stand": "Stay where you can see the cranes and the newest towers.",
+   "paras": [
+    {
+     "t": "Gaudí planned eighteen spires: twelve for the apostles, four for the Evangelists, one for the Virgin Mary, and the tallest for Jesus Christ. Fourteen were finished as of 2026.",
+     "c": [
+      "spires"
+     ],
+     "level": 1
+    },
+    {
+     "t": "And that tallest tower stays lower than Montjuïc hill, because Gaudí believed his creation should not surpass God's.",
+     "c": [
+      "montjuic"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The war nearly ended it all. In July 1936 anarchists set fire to the crypt and broke into Gaudí's workshop, partially destroying his plans. The builders carried on with what was saved, and with plans pieced back together from publications and photographs.",
+     "c": [
+      "civil-war"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Not everyone wanted that. In 2008 some well-known Catalan architects argued it should stop, to respect what Gaudí really drew. Today computers shape the stone off-site, where it used to be carved by hand, and the work is paid for by donations and by visitors' tickets.",
+     "c": [
+      "halt",
+      "computers"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The main entrance isn't finished yet. The Glory façade, begun in 2002 on the south side, will be the front door. Its central doors carry the Our Father in Catalan, and the words \"Give us this day our daily bread\" in fifty languages.",
+     "c": [
+      "glory"
+     ],
+     "level": 3
+    },
+    {
+     "t": "If you've booked a tower, a word of warning. The way down is a very narrow spiral staircase, more than 300 steps, and there's a posted caution for anyone with a medical condition.",
+     "c": [
+      "steps"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Take one last look up at the towers before you go.",
+   "paras": [
+    {
+     "t": "Gaudí knew from the start that he would never see this finished. He built anyway, so that people he would never meet could carry it on. And they have.",
+     "c": [
+      "nativity-why"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

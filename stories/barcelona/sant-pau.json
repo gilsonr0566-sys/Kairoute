@@ -1,0 +1,421 @@
+{
+ "id": "sant-pau",
+ "v": 1,
+ "city": "barcelona",
+ "title": "Hospital de Sant Pau",
+ "match": {
+  "ids": [
+   "santpau"
+  ],
+  "names": [
+   "sant pau",
+   "santa creu i sant pau",
+   "recinte modernista"
+  ],
+  "wikidata": [
+   "Q507282"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "name": {
+   "label": "supported",
+   "says": "The full name is Hospital de la Santa Creu i Sant Pau, the Hospital of the Holy Cross and Saint Paul.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "English: Hospital of the Holy Cross and Saint Paul"
+   ]
+  },
+  "built": {
+   "label": "supported",
+   "says": "The complex was built between 1901 and 1930 and is one of the most prominent works of Lluís Domènech i Montaner.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "is a complex built between 1901 and 1930. It is one of the most prominent works of the Catalan modernisme architect Lluís Domènech i Montaner."
+   ]
+  },
+  "unesco": {
+   "label": "supported",
+   "says": "Together with the Palau de la Música Catalana it was declared a UNESCO World Heritage Site in 1997.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "Together with Palau de la Música Catalana, it was declared a UNESCO World Heritage Site in 1997."
+   ]
+  },
+  "largest": {
+   "label": "verified",
+   "says": "It is the largest hospital complex in the Modernista (Art Nouveau) style.",
+   "src": [
+    "unesco-palau-sant-pau",
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "The Hospital de Sant Pau is of great importance as the largest hospital complex in the Modernista style."
+   ]
+  },
+  "functioning": {
+   "label": "supported",
+   "says": "It was a fully functioning hospital until June 2009, when the new hospital opened next to it.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "It was a fully functioning hospital until June 2009, when the new hospital opened next to it."
+   ]
+  },
+  "founded": {
+   "label": "supported",
+   "says": "The Hospital de la Santa Creu was founded in 1401 when six small medieval hospitals merged.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "was founded in 1401 when six small medieval hospitals merged."
+   ]
+  },
+  "oldsite": {
+   "label": "supported",
+   "says": "The former buildings near the center date from the 15th century and now house an art school and the National Library of Catalonia.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "The hospital's former buildings near the center of Barcelona date from the 15th century, and now house an art school (Escola Massana) and the Biblioteca de Catalunya (National Library of Catalonia)."
+   ]
+  },
+  "paugil": {
+   "label": "supported",
+   "says": "\"Sant Pau\" was added to the name in honor of the banker Pau Gil, who paid for the new buildings.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "was added in honour of the banker, Pau Gil, who paid for the new buildings in the 20th century"
+   ]
+  },
+  "newbuild": {
+   "label": "supported",
+   "says": "With the city expanding and the medieval buildings worn out, a new hospital designed by Domènech was begun.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "With the expansion of the city and weariness of the medieval buildings, the construction of a new hospital designed by Lluís Domènech i Montaner began in 1902."
+   ]
+  },
+  "pavilions": {
+   "label": "supported",
+   "says": "Domènech devised an innovative plan of separate pavilions linked by underground passages, set in a large green space.",
+   "src": [
+    "wp-lluis-domenech-i-montaner",
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "devised a totally innovative solution based on isolated pavilions linked by underground passages",
+    "connected through long underground galleries within its large green space"
+   ]
+  },
+  "europe": {
+   "label": "supported",
+   "says": "Amid concern about health in big cities, Domènech studied hospitals in Paris, London, Belgium and France.",
+   "src": [
+    "wp-lluis-domenech-i-montaner"
+   ],
+   "quote": [
+    "The hospital project was informed by the growing concern at the time about health in the big cities. Domènech studied various solutions that had been used around Europe (Lariboisière Hospital in Paris, St. Thomas's in London, Brugmann in Laeken, Belgium and the military hospital in Toul, France)"
+   ]
+  },
+  "needs": {
+   "label": "verified",
+   "says": "UNESCO: Domènech found original, daring solutions to a modern hospital's needs: ventilation, hygiene, specialities.",
+   "src": [
+    "unesco-palau-sant-pau"
+   ],
+   "quote": [
+    "Here Domènech i Montaner found original, daring solutions to the problems posed by the needs of the contemporary hospital (ventilation, hygiene, specialities, interdisciplinary medicine, etc.)."
+   ]
+  },
+  "plan48": {
+   "label": "supported",
+   "says": "Domènech's original plan had 48 buildings, of which 27 were built.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "Domènech's original plan had 48 buildings, 27 of which were actually constructed."
+   ]
+  },
+  "stone": {
+   "label": "supported",
+   "says": "Domènech's sober brickwork is tempered by the warmth of Montjuïc stone.",
+   "src": [
+    "wp-lluis-domenech-i-montaner"
+   ],
+   "quote": [
+    "The sobriety of the brickwork so typical of Domènech's work is tempered by the warmth of the Montjuïc stone"
+   ]
+  },
+  "bold": {
+   "label": "verified",
+   "says": "UNESCO: the hospital is bold in design and decoration, yet perfectly adapted to the needs of the sick.",
+   "src": [
+    "unesco-palau-sant-pau"
+   ],
+   "quote": [
+    "The Hospital de Sant Pau is equally bold in its design and decoration, while at the same time perfectly adapted to the needs of the sick."
+   ]
+  },
+  "tiles": {
+   "label": "verified",
+   "says": "Damaged elements such as external tiles have been replaced with exact copies of the originals.",
+   "src": [
+    "unesco-palau-sant-pau"
+   ],
+   "quote": [
+    "Great care has been taken to replace damaged elements such as external tiles with exact copies of the originals."
+   ]
+  },
+  "award": {
+   "label": "supported",
+   "says": "The hospital won the Barcelona City Council's annual architecture award in 1913.",
+   "src": [
+    "wp-lluis-domenech-i-montaner"
+   ],
+   "quote": [
+    "The Palau de la Música Catalana and the Hospital de Sant Pau both won awards  in the annual architectural  competition organized by the Barcelona City Council, in 1905 and 1913 respectively."
+   ]
+  },
+  "newhosp": {
+   "label": "supported",
+   "says": "In 2003 a new hospital building went up to the north of the pavilions, and almost all departments moved there.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "In 2003, a new hospital building was erected to the north of Domènech i Montaner's Modernista pavilions, where almost all departments moved."
+   ]
+  },
+  "restoration": {
+   "label": "supported",
+   "says": "A meticulous restoration began in 2009; over 30 teams took part; the budget was 100 million euros; it reopened in 2014.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "A meticulous restoration of the complex began in 2009.",
+    "Over 30 teams of experts and architects took part in the restoration.",
+    "the project had a total budget of €100 million.",
+    "re-opened in 2014"
+   ]
+  },
+  "who": {
+   "label": "supported",
+   "says": "The buildings now also give workspace to organizations such as the WHO.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "the building also offers workspace to high-profile social organizations such as the WHO"
+   ]
+  },
+  "peremata": {
+   "label": "supported",
+   "says": "Avant-garde ideas Domènech first applied at the Institut Pere Mata, a hospital for the mentally ill in Reus, were later adopted and improved at Sant Pau.",
+   "src": [
+    "wp-lluis-domenech-i-montaner"
+   ],
+   "quote": [
+    "the avant-garde concepts applied in the  Institut Pere Mata were later adopted and improved on at the Hospital de Sant Pau.",
+    "the Institut Pere Mata, an institution for the mentally ill in Reus"
+   ]
+  },
+  "vault": {
+   "label": "supported",
+   "says": "Combining the Catalan vault with steel structures made large, clear spaces possible.",
+   "src": [
+    "wp-lluis-domenech-i-montaner"
+   ],
+   "quote": [
+    "With the combination of the Catalan vault and steel structures like those employed at the Tres Dragons and the Palau, large, clear spaces were made possible."
+   ]
+  },
+  "upkeep": {
+   "label": "verified",
+   "says": "UNESCO: the hospital has had continual maintenance since it was built; the Clock Tower was restored in 1985-1989.",
+   "src": [
+    "unesco-palau-sant-pau"
+   ],
+   "quote": [
+    "The Hospital de Sant Pau has been undergoing continual maintenance since it was built.",
+    "the Clock Tower in 1985–1989"
+   ]
+  },
+  "archive": {
+   "label": "supported",
+   "says": "The cultural center keeps a historical archive of the hospital and city, open to visitors, with a reading room.",
+   "src": [
+    "wp-hospital-la-santa-creu-i-san"
+   ],
+   "quote": [
+    "The cultural center also has a historical archive where records and documents of remarkable occurrences related to the hospital and the city can be found.",
+    "The archives are open to visitors and offer information to users and researchers with an information and reprographics service, in addition to a reading room."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Just inside the entrance, where you can see the first pavilions and the green space around them.",
+   "paras": [
+    {
+     "t": "Welcome to Sant Pau. Its full name is the Hospital of the Holy Cross and Saint Paul. It was built between 1901 and 1930, and it's one of the great works of the Catalan architect Lluís Domènech i Montaner. Together with his concert hall, the Palau de la Música, it became a UNESCO World Heritage Site in 1997.",
+     "c": [
+      "name",
+      "built",
+      "unesco"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Now, here's the thing to keep in mind as you look around. This was not a palace. It was a working hospital, right up until June 2009.",
+     "c": [
+      "functioning"
+     ],
+     "level": 1
+    },
+    {
+     "t": "UNESCO calls it the largest hospital complex in the Modernista style, which is Barcelona's own version of Art Nouveau.",
+     "c": [
+      "largest"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "An old hospital, a new home",
+   "stand": "Stay where you are, with the pavilions in front of you.",
+   "paras": [
+    {
+     "t": "The hospital itself is much older than these buildings. It was founded in 1401, when six small medieval hospitals merged. Its old home, near the center of the city, dates from the 1400s and now holds an art school and the National Library of Catalonia.",
+     "c": [
+      "founded",
+      "oldsite"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Over time the city grew, and the medieval buildings were worn out. So a new hospital was planned out here, and Domènech designed it.",
+     "c": [
+      "newbuild"
+     ],
+     "level": 2
+    },
+    {
+     "t": "And the name? The words Sant Pau, Saint Paul, were added in honor of a banker named Pau Gil, who paid for the new buildings.",
+     "c": [
+      "paugil"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "A garden town for the sick",
+   "stand": "Walk on among the pavilions and stop where you can see several of them at once.",
+   "paras": [
+    {
+     "t": "Look at the layout. Instead of one huge block, Domènech built separate pavilions, set in a large green space and linked by long passages underground.",
+     "c": [
+      "pavilions"
+     ],
+     "level": 1
+    },
+    {
+     "t": "He'd done his homework. At the time, people were worried about health in big cities, and Domènech studied hospitals in Paris, London, Belgium and elsewhere in France. UNESCO says he found daring answers to what a modern hospital needed: fresh air, hygiene, and separate specialties.",
+     "c": [
+      "europe",
+      "needs"
+     ],
+     "level": 2
+    },
+    {
+     "t": "This wasn't his first try, by the way. Domènech had already built a hospital for the mentally ill in Reus, the Institut Pere Mata, and the new ideas he tried there were carried over and improved here. And by combining the traditional Catalan vault with steel, he could give the rooms inside a feeling of size and light.",
+     "c": [
+      "peremata",
+      "vault"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Now look at the walls. The plain brickwork is typical of Domènech, and he warmed it with stone from Montjuïc. The decoration is bold, but it was all meant to serve the patients.",
+     "c": [
+      "stone",
+      "bold"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Those tiles have been looked after. When damaged ones had to be replaced, great care was taken to make exact copies of the originals.",
+     "c": [
+      "tiles"
+     ],
+     "level": 3
+    },
+    {
+     "t": "The dream was even bigger than what you see. Domènech's original plan had 48 buildings. In the end, 27 were built. And the city noticed: in 1913 the hospital won the city council's annual architecture award.",
+     "c": [
+      "plan48",
+      "award"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "A second life",
+   "stand": "Find a quiet spot in the shade, facing the nearest pavilion.",
+   "paras": [
+    {
+     "t": "In 2003 a new hospital building went up to the north of these pavilions, and almost all the departments moved there. Sant Pau stopped being a full hospital in June 2009, and that same year a careful restoration began.",
+     "c": [
+      "newhosp",
+      "functioning",
+      "restoration"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Over 30 teams of experts and architects worked on it, with a budget of 100 million euros, and the doors reopened to visitors in 2014. Some of the old wards are offices now, for organizations such as the World Health Organization. Fitting, isn't it?",
+     "c": [
+      "restoration",
+      "who"
+     ],
+     "level": 3
+    },
+    {
+     "t": "In a way, this place has always been cared for. UNESCO notes it has been maintained continually since it was built. The Clock Tower, for example, was restored between 1985 and 1989. And if you're curious about the hospital's long story, its historical archive is open to visitors, with a reading room.",
+     "c": [
+      "upkeep",
+      "archive"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Before you go, picture a patient here a century ago. Sick, maybe frightened, and looking out at gardens and colored tile. Someone decided that people who were ill deserved beauty too. That's a good idea to carry home.",
+     "c": [
+      "bold"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

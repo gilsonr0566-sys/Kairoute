@@ -1,0 +1,361 @@
+{
+ "id": "sitges",
+ "v": 1,
+ "city": "barcelona",
+ "title": "Day trip: Sitges",
+ "match": {
+  "ids": [
+   "sitges"
+  ],
+  "names": [
+   "sitges"
+  ],
+  "wikidata": [
+   "Q15551"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "where": {
+   "label": "supported",
+   "says": "Sitges is a town about 35 km southwest of Barcelona, between the Garraf Massif and the Mediterranean, known for its film festival, Carnival, beaches and LGBTQ+ tourism.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "is a town about 35 kilometres southwest of Barcelona, in Catalonia, Spain, renowned worldwide for its film festival, Carnival, and Catalan culture. Located between the Garraf Massif and the Mediterranean Sea, it is known for its beaches, nightspots, LGBTQ+ tourism, and historical sites."
+   ]
+  },
+  "name": {
+   "label": "supported",
+   "says": "The name is the Catalan word for silos or granaries; the old town center was probably built around the castle where the silos stood.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "The name of the town is simply the Catalan word sitges, plural of sitja, meaning 'silos', cisterns or granaries in English.",
+    "it is assumed that the original town center was built around the castle (the area of today's town hall) precisely where these storage structures were situated."
+   ]
+  },
+  "blanca": {
+   "label": "legend",
+   "says": "It is said the Romans called it Blanca subur, the white town.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "It is said that the romans called it \"Blanca subur\", the \"white town\""
+   ]
+  },
+  "beaches": {
+   "label": "supported",
+   "says": "Sitges has 17 beaches.",
+   "src": [
+    "wp-sitges",
+    "wv-sitges"
+   ],
+   "quote": [
+    "There are 17 beaches in Sitges",
+    "Sitges has 17 sand beaches."
+   ]
+  },
+  "church": {
+   "label": "supported",
+   "says": "A restaurant on the Passeig de la Ribera sits under the old church.",
+   "src": [
+    "wv-sitges"
+   ],
+   "quote": [
+    "Paseig de la Ribera (under the old church)"
+   ]
+  },
+  "cuba": {
+   "label": "supported",
+   "says": "From the late 18th to early 20th century, thousands of young people from Sitges settled in eastern Cuba; some founded big firms, like Facundo Bacardí, founder of Ron Bacardí.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "Between the late-18th century and the early-20th, the history of Sitges was dominated by its close links with Spain's overseas territories, most importantly Cuba. Thousands of youngsters from Sitges settled in Santiago de Cuba, Guantánamo and other areas in Eastern Cuba.",
+    "Some of them thrived and created big firms, like Facundo Bacardí, founder of Ron Bacardí"
+   ]
+  },
+  "americanos": {
+   "label": "supported",
+   "says": "Those who came home rich were called Americanos, known for planting palm trees at their Caribbean-looking houses; their legacy is still visible in the architecture.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "These were known as \"Americanos\", known for their habit of planting palm trees in their Caribbean-looking houses, smoking Cuban cigars and rum drinking. The americanos left a huge legacy in Sitges which can still be seen in its architecture"
+   ]
+  },
+  "chiringuito": {
+   "label": "supported",
+   "says": "Spain's first beach bar opened in Sitges in 1913, El Kiosket; in 1949 a journalist renamed it chiringuito, after a Cuban coffee strainer called a chiringo.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "The first beach bar in Spain opened in Sitges in 1913, called El Kiosket and renamed in 1949 \"chiringuito\" by the Spanish journalist César González Ruano, inspired by his experiences travelling Cuba where coffee was strained through a stocking called \"chiringo\".",
+    "it has created the name of every beach bar  in Spain \"Chiringuito\""
+   ]
+  },
+  "shoes": {
+   "label": "supported",
+   "says": "Spain's first mechanized shoe factory opened in Sitges in 1874; the tourist boom of the 1960s ended the shoe-making era.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "the first mechanized shoe factory in Spanish history was established in the town in 1874",
+    "The tourist boom of the 1960s ended the era of shoe making"
+   ]
+  },
+  "rusinol": {
+   "label": "supported",
+   "says": "Santiago Rusiñol, painter, writer and a leader of Catalan modernisme, set up his studio in Sitges in 1893; it is today the Cau Ferrat.",
+   "src": [
+    "wp-santiago-rusinol"
+   ],
+   "quote": [
+    "He was one of the leaders of the Catalan modernisme movement.",
+    "In 1893, he set up his studio in Sitges, which today stands as the Cau Ferrat."
+   ]
+  },
+  "festivals": {
+   "label": "supported",
+   "says": "Sitges became a modernist reference point; modernist festivals combining theater, poetry, painting and music were held there.",
+   "src": [
+    "wp-santiago-rusinol"
+   ],
+   "quote": [
+    "Sitges became a modernist reference point for artists, writers and musicians, including Rusiñol, and modernist festivals, combining theatre, poetry, painting and music were organized there."
+   ]
+  },
+  "caucollection": {
+   "label": "supported",
+   "says": "The Cau Ferrat Museum has a small Picasso, several El Grecos and works by Catalan modernists.",
+   "src": [
+    "wv-sitges"
+   ],
+   "quote": [
+    "This museum has a small Picasso, several el Grecos, and some small pieces by a range of Catalan modernists."
+   ]
+  },
+  "deering": {
+   "label": "supported",
+   "says": "The American collector Charles Deering kept an art collection in Sitges from 1910 to 1921 and built the Palau Maricel.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "American businessman, art collector, and philanthropist Charles Deering held an important art collection in Sitges between 1910 and 1921, where he built the impressive Palau Maricel (Maricel Palace)."
+   ]
+  },
+  "summer": {
+   "label": "supported",
+   "says": "After Rusiñol, wealthy Barcelona families built summer homes here, and Sitges gained an international reputation.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "Due to the wave of artists settling in the town in the wake of Santiago Rusiñol",
+    "wealthy families from Barcelona built summer residences in Sitges",
+    "Sitges acquired an  international reputation and attracted celebrities."
+   ]
+  },
+  "film": {
+   "label": "supported",
+   "says": "The Sitges Film Festival, devoted to fantasy and horror films, has been held every October since 1968.",
+   "src": [
+    "wv-sitges"
+   ],
+   "quote": [
+    "Sitges Film Festival. Annually held every October since 1968. Specialises a selection of international fantasy and horror films."
+   ]
+  },
+  "carnival": {
+   "label": "supported",
+   "says": "Carnival, celebrated for over a century, runs from Fat Thursday to the burial of the sardine on Ash Wednesday, with around forty floats and more than 2,000 participants.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "For over a century, Sitges has celebrated Carnestoltes, or Carnival",
+    "The festivities begin on Dijous Gras, or Fat Thursday, with King Carnestoltes' arrival. They continue until the burial of the sardine — late afternoon on Ash Wednesday.",
+    "Around forty floats with more than 2,000 participants fill Sitges."
+   ]
+  },
+  "malvasia": {
+   "label": "supported",
+   "says": "Malvasia, a sweet wine served with dessert, takes its name from the Greek port of Monemvasía; the Hospital Sant Joan Baptista still makes it, about 4,000 bottles a year, for charity.",
+   "src": [
+    "wv-sitges"
+   ],
+   "quote": [
+    "Malvasia is a delicate liquor wine served in Sitges, primarily with dessert. The name \"malvasia\" comes from the Peloponnesian port Monemvasía. In Sitges, the Hospital Sant Joan Baptista continues producing and marketing malvasia according to the traditional method from its own vines and within its own cellars. The proceeds go to charity. The annual production is approximately 4,000 bottles."
+   ]
+  },
+  "ancient": {
+   "label": "supported",
+   "says": "Human presence in Sitges goes back at least 50,000 years: Neanderthal bones and stone tools were found in La Cova del Gegant, a cave near the golf course.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "Human presence in Sitges dates back to at least 50,000 years",
+    "when neanderthal bones and stone tools were discovered in ‘La Cova del Gegant’, a cave near today's golf course"
+   ]
+  },
+  "colombia": {
+   "label": "supported",
+   "says": "In 1958 Colombian Liberal and Conservative leaders met in Sitges and signed the Declaration of Sitges, a peace treaty.",
+   "src": [
+    "wp-sitges"
+   ],
+   "quote": [
+    "In 1958, political leaders (Liberals and Conservatives) from the country of Colombia met in Sitges and signed a peace treaty, the \"Declaration of Sitges\""
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The seafront",
+   "stand": "On the Passeig de la Ribera, the seafront promenade, looking toward the old church above the promenade.",
+   "paras": [
+    {
+     "t": "Welcome to Sitges, about 35 kilometers southwest of Barcelona, squeezed between the Garraf hills and the Mediterranean. It's famous for its beaches, its film festival, its Carnival, and for welcoming LGBTQ+ visitors. That's the old church up there, above the promenade.",
+     "c": [
+      "where",
+      "church"
+     ],
+     "level": 1
+    },
+    {
+     "t": "On a sunny day the light off the sea is strong. Wear a hat, drink water, and find some shade now and then.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "The name is humble. Sitges simply means silos, or granaries, in Catalan, and the first town probably grew up around the castle where they stood. The story goes that the Romans called it Blanca subur, the white town.",
+     "c": [
+      "name",
+      "blanca"
+     ],
+     "level": 2
+    },
+    {
+     "t": "People have been here a very long time. Neanderthal bones and stone tools turned up in a cave near today's golf course, La Cova del Gegant, showing people in Sitges at least 50,000 years ago. And in 1958 this quiet resort even made history far away: Colombia's rival Liberal and Conservative leaders met here and signed a peace treaty, the Declaration of Sitges.",
+     "c": [
+      "ancient",
+      "colombia"
+     ],
+     "level": 3
+    },
+    {
+     "t": "There are 17 beaches in Sitges, so if this one's crowded, keep walking.",
+     "c": [
+      "beaches"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Cuba connection",
+   "stand": "Turn your back to the sea and look into the town.",
+   "paras": [
+    {
+     "t": "For over a century, this little town looked across the Atlantic. Thousands of young people from Sitges went to eastern Cuba. Some made fortunes there. One of them, Facundo Bacardí, founded Bacardí rum.",
+     "c": [
+      "cuba"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Those who came home rich were called the Americanos. They liked to plant palm trees by their Caribbean-looking houses, and you can still see their legacy in the town's buildings.",
+     "c": [
+      "americanos"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Here's a fun one. Spain's first beach bar opened here in 1913, called El Kiosket. In 1949 a journalist renamed it the chiringuito, after a cloth coffee strainer he'd seen in Cuba called a chiringo. Every beach bar in Spain is now a chiringuito.",
+     "c": [
+      "chiringuito"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Sitges made shoes, too. The first mechanized shoe factory in Spain opened here in 1874. It was tourism, booming in the 1960s, that finally ended the shoe-making era.",
+     "c": [
+      "shoes"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The painter's house",
+   "stand": "Outside the Cau Ferrat Museum in the old town.",
+   "paras": [
+    {
+     "t": "This is the Cau Ferrat, once the studio of Santiago Rusiñol, painter, writer and one of the leaders of Catalan modernisme. He set up here in 1893, and Sitges became a magnet for artists, writers and musicians, with festivals mixing theater, poetry, painting and music.",
+     "c": [
+      "rusinol",
+      "festivals"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Inside, look for a small Picasso and several paintings by El Greco, alongside works by Catalan modernists.",
+     "c": [
+      "caucollection"
+     ],
+     "level": 2
+    },
+    {
+     "t": "After the artists came the money. Wealthy Barcelona families built summer houses here, and the town became known abroad. The American collector Charles Deering kept his art in Sitges from 1910 to 1921, and built the Palau Maricel.",
+     "c": [
+      "summer",
+      "deering"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The party never really stopped. The film festival, devoted to fantasy and horror, has been held every October since 1968. And Carnival, celebrated for over a century, runs from Fat Thursday to the burial of the sardine on Ash Wednesday, with around forty floats and more than 2,000 people in the parades.",
+     "c": [
+      "film",
+      "carnival"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "A glass of malvasia",
+   "stand": "Back by the sea, wherever you'd like to sit for a moment.",
+   "paras": [
+    {
+     "t": "Before you leave, try the local malvasia, a sweet wine served with dessert. The name comes from Monemvasía, a port in Greece's Peloponnese. Here in Sitges an old hospital still makes it from its own vines, about 4,000 bottles a year, and the money goes to charity.",
+     "c": [
+      "malvasia"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Young people left this town for Cuba, and came home with palm trees. A painter came and set up his studio. Sitges has always been a place people arrive at and make their own. Maybe you will too.",
+     "c": [
+      "cuba",
+      "americanos",
+      "rusinol"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

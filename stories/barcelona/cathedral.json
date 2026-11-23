@@ -1,0 +1,421 @@
+{
+ "id": "cathedral",
+ "v": 1,
+ "city": "barcelona",
+ "title": "Barcelona Cathedral",
+ "match": {
+  "ids": [
+   "src-q17155"
+  ],
+  "names": [
+   "barcelona cathedral",
+   "catedral de barcelona",
+   "santa eulalia",
+   "santa eulàlia",
+   "santa creu",
+   "barri gotic",
+   "barri gòtic",
+   "gothic quarter",
+   "placa del rei",
+   "plaça del rei"
+  ],
+  "wikidata": [
+   "Q17155"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "The Cathedral of the Holy Cross and Saint Eulalia is the seat of the archbishop of Barcelona, built from the thirteenth to the fifteenth centuries, mostly in the fourteenth.",
+   "src": [
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "The Cathedral of the Holy Cross and Saint Eulalia (Catalan: Catedral de la Santa Creu i Santa Eulàlia), also known as Barcelona Cathedral, is the seat of the archbishop of Barcelona in Catalonia, Spain. The cathedral was constructed from the thirteenth to fifteenth centuries, with the principal work done in the fourteenth century."
+   ]
+  },
+  "gothic-start": {
+   "label": "supported",
+   "says": "The present Gothic cathedral was begun on 1 May 1298 on the foundations of earlier churches; the cloister was finished in 1448, about 150 years in all.",
+   "src": [
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "The present Gothic cathedral was started on the foundations of the previous churches on 1 May 1298.",
+    "The cloister was completed in 1448, making the total duration of construction 150 years."
+   ]
+  },
+  "facade": {
+   "label": "supported",
+   "says": "The neo-Gothic façade is much later, built between 1882 and 1913, over the plain exterior common to Catalan churches.",
+   "src": [
+    "wp-gothic-quarter-barcelona",
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "The façade of the Barcelona Cathedral: constructed between 1882 and 1913 by Josep Oriol Mestres and August Font i Carreras with a profusion of Gothic-style elements.",
+    "the neo-Gothic façade was constructed over the undistinguished exterior that was common to Catalan churches"
+   ]
+  },
+  "gargoyles": {
+   "label": "supported",
+   "says": "The façade is known for gargoyles on the roof and many other animals and mythical creatures.",
+   "src": [
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "Ornament of the cathedral facade is known for sculptural gargoyles on the roof along with many other animals and mythical creatures."
+   ]
+  },
+  "earlier": {
+   "label": "supported",
+   "says": "Before it stood a Romanesque cathedral, consecrated in 1058, and before that an early Christian church badly damaged by al-Mansur in 985.",
+   "src": [
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "This church was severely damaged by al-Mansur (Almanzor) during his attack on Barcelona in 985.",
+    "began construction of a Romanesque cathedral at the site; it was consecrated in November 1058"
+   ]
+  },
+  "museum-below": {
+   "label": "supported",
+   "says": "Remains of the early Christian and Visigothic bishop's complex, including a 4th-century baptistery, are shown underground in the Barcelona City History Museum.",
+   "src": [
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "Parts of an early Christian and Visigothic episcopal complex including the baptistery (fourth century)",
+    "are displayed in Barcelona City History Museum archaeological underground"
+   ]
+  },
+  "eulalia": {
+   "label": "supported",
+   "says": "Eulalia was a 13-year-old Christian girl martyred in Barcelona under the emperor Diocletian; she is a patron saint of the city.",
+   "src": [
+    "wp-eulalia-barcelona"
+   ],
+   "quote": [
+    "was a 13-year-old Roman Christian virgin who was martyred in Barcelona during the persecution of Christians in the reign of emperor Diocletian",
+    "She is a patron saint of Barcelona."
+   ]
+  },
+  "eulalia-dispute": {
+   "label": "disputed",
+   "says": "There is some dispute whether she is the same person as Eulalia of Mérida, whose story is similar.",
+   "src": [
+    "wp-eulalia-barcelona"
+   ],
+   "quote": [
+    "There is some dispute as to whether she is the same person as Eulalia of Mérida, whose story is similar."
+   ]
+  },
+  "confront": {
+   "label": "tradition",
+   "says": "In the Orthodox account, she confronted the governor Dacian over the persecution and was tortured to death.",
+   "src": [
+    "wp-eulalia-barcelona"
+   ],
+   "quote": [
+    "Eulalia left her home, entered the city, and publicly confronted the governor for the persecution of Christians. In response, Dacian ordered Eulalia to be stripped and tortured"
+   ]
+  },
+  "snow-barrel": {
+   "label": "tradition",
+   "says": "One story says a miraculous spring snowfall covered her; tradition says she was rolled in a barrel of knives, or glass, down the street now called Baixada de Santa Eulàlia.",
+   "src": [
+    "wp-barcelona-cathedral",
+    "wp-eulalia-barcelona"
+   ],
+   "quote": [
+    "One story says that she was exposed naked in the public square and a miraculous snowfall in mid-spring covered her nudity. The enraged Romans put her into a barrel with knives stuck into it and rolled it down a street (according to tradition, the one now called Baixada de Santa Eulàlia).",
+    "Eulalia is traditionally believed to have been placed in a barrel with shards of glass and rolled down the street named Baixada de Santa Eulàlia"
+   ]
+  },
+  "crypt": {
+   "label": "supported",
+   "says": "Her body was hidden in 713, recovered in 878, and in 1339 placed in an alabaster sarcophagus in the cathedral crypt; the raised high altar gives a view into the crypt.",
+   "src": [
+    "wp-eulalia-barcelona",
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "It was hidden in 713 during the Moorish invasion, and only recovered in 878. In 1339, it was relocated to an alabaster sarcophagus in the crypt",
+    "The high altar is raised, allowing a clear view into the crypt."
+   ]
+  },
+  "fleece": {
+   "label": "supported",
+   "says": "The choir stalls keep the coats of arms of the knights of the Golden Fleece; Charles V held a chapter of the order here in 1519.",
+   "src": [
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "The choir stalls retain the coats-of-arms of the knights of the Order of the Golden Fleece. In his first trip into Spain, Charles V selected Barcelona as the site of a chapter of his order.",
+    "were commissioned to prepare the sanctuary for the first sitting of the chapter in 1519"
+   ]
+  },
+  "lepanto": {
+   "label": "legend",
+   "says": "The Holy Christ of Lepanto crucifix leans; a Catalan legend says it rode on Juan of Austria's galley at the Battle of Lepanto in 1571 and leaned aside to dodge a cannonball.",
+   "src": [
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "The curved shape of the body, of Our Lord Jesus Christ on the Cross, is explained by a Catalan legend which holds that the cross was carried on the prow of the galley captained by Juan of Austria, half-brother of Spanish Philip II of Spain during the Battle of Lepanto in 1571. When a cannonball flew toward the cross, it leaned out of the way in order to avoid being hit, and has been inclined ever since."
+   ]
+  },
+  "tombs": {
+   "label": "supported",
+   "says": "The cathedral holds the tombs of Count Ramon Berenguer I and his wife Almodis, who began the Romanesque cathedral.",
+   "src": [
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "the cathedral contains the tombs of Saint Raymond of Penyafort, Count Ramon Berenguer I and his third wife Almodis de la Marche",
+    "In 1046, Count Ramon Berenguer I and his wife Almodis, together with Bishop Guislabert, began construction of a Romanesque cathedral at the site"
+   ]
+  },
+  "cloister": {
+   "label": "supported",
+   "says": "The cloister, finished in 1448, encloses the Well of the Geese.",
+   "src": [
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "The cloister, which encloses the Well of the Geese (Font de les Oques), was completed in 1448."
+   ]
+  },
+  "geese": {
+   "label": "tradition",
+   "says": "Thirteen white geese are kept in the cloister, the number explained by the belief that Eulalia was 13 when she died.",
+   "src": [
+    "wp-barcelona-cathedral"
+   ],
+   "quote": [
+    "The cathedral has a secluded Gothic cloister where 13 white geese are kept, the number explained by the assertion that Eulalia was 13 when she was martyred."
+   ]
+  },
+  "egg": {
+   "label": "supported",
+   "says": "At Corpus Christi an egg is set to dance on the jet of fountains, including in the cathedral cloister.",
+   "src": [
+    "wv-barcelona"
+   ],
+   "quote": [
+    "An egg shell is placed over the jet of water coming out of various fountains such that the egg \"magically dances\" over the water.",
+    "Cathedral's cloister"
+   ]
+  },
+  "quarter": {
+   "label": "supported",
+   "says": "The Gothic Quarter is the historic centre of the old city, with the remains of the Roman wall and a labyrinth of small streets opening into squares.",
+   "src": [
+    "wp-gothic-quarter-barcelona"
+   ],
+   "quote": [
+    "is the historic centre of the old city of Barcelona",
+    "includes the remains of the city's Roman wall and several notable medieval landmarks",
+    "The Barri Gòtic retains a labyrinthine street plan, with many small streets opening out into squares."
+   ]
+  },
+  "not-medieval": {
+   "label": "supported",
+   "says": "Despite its name, many of its Gothic landmarks are not medieval: in the late 19th and early 20th centuries the quarter was transformed by a massive restoration timed for the 1929 exhibition; the bridge over Carrer Bisbe was newly built in 1928.",
+   "src": [
+    "wp-gothic-quarter-barcelona"
+   ],
+   "quote": [
+    "Despite its name, a number of landmark Gothic buildings in the neighborhood do not date to the Middle Ages. Rather, in the late 19th and early 20th centuries, the quarter was completely transformed from a sombre neighborhood to a tourist attraction through a massive restoration project, timed to be completed for the 1929 International Exhibition.",
+    "The Flamboyant-style bridge that crosses Carrer Bisbe between the Palau de la Generalitat and the Cases dels Canonges: newly constructed 1928 by Joan Rubió."
+   ]
+  },
+  "padellas": {
+   "label": "supported",
+   "says": "Casa Padellàs, built around 1500 on another street, was moved to the Plaça del Rei in 1931 and is now the headquarters of the Barcelona City History Museum.",
+   "src": [
+    "wp-gothic-quarter-barcelona"
+   ],
+   "quote": [
+    "Casa Padellàs: currently the Barcelona City History Museum headquarters, the building was built circa 1500 on Carrer Mercaders, but it was moved to the Plaça del Rei in 1931 with its interior rebuilt."
+   ]
+  },
+  "scams": {
+   "label": "supported",
+   "says": "In the cathedral square, scammers dressed as mimes may approach tourists to grab belongings; the advice is not to approach them.",
+   "src": [
+    "wv-barcelona"
+   ],
+   "quote": [
+    "in the square where the Barcelona Cathedral is located, there are female scammers who dress up as mimes (with their face painted white) to rob tourists",
+    "The best option is not to approach them and go away in case they approach you."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The square",
+   "stand": "Stand in the open square in front of the cathedral, far enough back to see the whole front and its spire.",
+   "paras": [
+    {
+     "t": "This is Barcelona Cathedral, the Cathedral of the Holy Cross and Saint Eulalia, seat of the city's archbishop. It's Gothic, and most of it was built in the fourteenth century.",
+     "c": [
+      "what"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Here's a twist. The front you're looking at is far younger than the church. This neo-Gothic façade went up between 1882 and 1913, over a plain wall. Look up along the roofline for the gargoyles, animals and mythical creatures.",
+     "c": [
+      "facade",
+      "gargoyles"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Christians have worshipped on this spot for a very long time. The Gothic cathedral was begun on 1 May 1298 on top of older churches. A Romanesque cathedral stood here first, consecrated in 1058. Before that, an early Christian church, badly damaged when al-Mansur attacked the city in 985.",
+     "c": [
+      "gothic-start",
+      "earlier"
+     ],
+     "level": 2
+    },
+    {
+     "t": "A word of caution in this square. People dressed as mimes, faces painted white, sometimes approach tourists to grab their things. Don't stop. Just walk on.",
+     "c": [
+      "scams"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Saint Eulalia",
+   "stand": "Go inside and walk up the nave toward the high altar, until you can see down into the crypt beneath it.",
+   "paras": [
+    {
+     "t": "Under the high altar, in the crypt, lies Saint Eulalia, one of the city's patron saints. She was thirteen, a Christian girl, martyred here in Barcelona under the emperor Diocletian.",
+     "c": [
+      "eulalia",
+      "crypt"
+     ],
+     "level": 1
+    },
+    {
+     "t": "In one account, she walked into the city and confronted the Roman governor to his face for persecuting Christians, and he had her tortured to death. Tradition adds more: a miraculous snowfall in spring to cover her, and a barrel, with knives in one telling and broken glass in another, rolled down the street still called Baixada de Santa Eulàlia, Saint Eulalia's descent.",
+     "c": [
+      "confront",
+      "snow-barrel"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Her body was hidden in 713, during the Moorish invasion, found again in 878, and laid in this crypt, in an alabaster tomb, in 1339.",
+     "c": [
+      "crypt"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Historians aren't all sure she's a separate person from another Eulalia, of Mérida, whose story is very similar.",
+     "c": [
+      "eulalia-dispute"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The choir and the chapels",
+   "stand": "Find the choir stalls, and then the side chapels.",
+   "paras": [
+    {
+     "t": "See the coats of arms on the choir stalls? They belong to the knights of the Order of the Golden Fleece. The emperor Charles V held a meeting of the order right here in 1519.",
+     "c": [
+      "fleece"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Look for the side chapel of the Holy Christ of Lepanto. The figure on that crucifix leans to one side. A Catalan legend says it rode into the Battle of Lepanto in 1571 on the flagship of Juan of Austria, and bent aside to dodge a cannonball.",
+     "c": [
+      "lepanto"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Among the tombs here are Count Ramon Berenguer I and his wife Almodis, the couple who started the Romanesque cathedral nearly a thousand years ago.",
+     "c": [
+      "tombs"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The cloister",
+   "stand": "Go out into the cloister and find the fountain with the geese.",
+   "paras": [
+    {
+     "t": "Listen. Those are geese. Thirteen white geese live in this cloister, and tradition says it's one for each year of Eulalia's life.",
+     "c": [
+      "geese"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The cloister was finished in 1448, and it wraps around the Well of the Geese. At Corpus Christi, in spring, an egg is set dancing on the fountain's jet of water.",
+     "c": [
+      "cloister",
+      "egg"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The Gothic Quarter",
+   "stand": "Leave the cathedral and wander a few steps into the narrow lanes around it.",
+   "paras": [
+    {
+     "t": "You're in the Gothic Quarter, the old heart of Barcelona: a maze of little streets that open suddenly into squares, with pieces of the old Roman wall still standing.",
+     "c": [
+      "quarter"
+     ],
+     "level": 1
+    },
+    {
+     "t": "But don't take the name too literally. Much of what looks medieval here was restored, or simply built, in the late 19th and early 20th centuries, timed for the 1929 exhibition. That lacy stone bridge over Carrer del Bisbe looks ancient. It went up in 1928.",
+     "c": [
+      "not-medieval"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Just around the corner is the Plaça del Rei. One of its old houses, Casa Padellàs, built around 1500, was moved here in 1931 from another street. Today it's the City History Museum, and underground you can walk among remains of the early Christian church, with a baptistery from the 300s.",
+     "c": [
+      "padellas",
+      "museum-below"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Before you move on, look back at the cathedral spire above the rooftops.",
+   "paras": [
+    {
+     "t": "A grand Gothic church, a new front, a quarter partly rebuilt for visitors. And at the center of it all, a thirteen-year-old girl remembered for her courage, and geese that, by tradition, still count out her years.",
+     "c": [
+      "eulalia",
+      "geese"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}
