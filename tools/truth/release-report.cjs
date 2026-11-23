@@ -54,13 +54,19 @@ const allowed = (() => { try { return JSON.parse(read(path.join(ROOT, 'docs', 'q
 const badWarns = all.split('\n').map(l => /^WARN\s+([\w-]+)\s+(\d+)/.exec(l)).filter(Boolean).filter(m => { const a = allowed.find(w => w.rule === m[1]); return !a || !a.owner || !(a.until >= today); }).map(m => m[1]);
 // Spec v2 T8: an open S1 or P1 row in the escaped-bug ledger.
 const openSevere = escapes.filter(l => { const c = l.split('|').map(x => x.trim()); return /^(S1|P0|P1)\b/.test(c[5] || '') && /^\*\*Open/.test(c[8] || ''); }).map(l => l.split('|')[1].trim());
-const targetsMet = unverified === 0 && crit === 0 && notRun === 0 && s1Count === 0 && !nightlyHold && !badWarns.length && !openSevere.length;
+const live = process.env.LIVE || '';
+const range = live && sh(`git cat-file -t ${live}`) === 'commit' ? `${live}..HEAD` : '';
+// Spec v2 T7: every commit since the published build that touches the leave-by and way-back files has a review row in
+// docs/qa/reviews.md by a thread that did not write it. Unreviewed is NOT TESTED.
+const SAFETY_FILES = 'src/engine/30-window.js src/engine/10-travel.js src/engine/90-timeline.js src/engine/95-plan.js src/live.js';
+const reviewed = read(path.join(ROOT, 'docs', 'qa', 'reviews.md')).split('\n').map(l => (/^\|\s*([0-9a-f]{7,})\s*\|/.exec(l) || [])[1]).filter(Boolean);
+const safetyCommits = range ? sh(`git log --no-merges --format=%h ${range} -- ${SAFETY_FILES}`).split('\n').filter(Boolean) : null;
+const unreviewed = safetyCommits ? safetyCommits.filter(c => !reviewed.some(r => r.startsWith(c) || c.startsWith(r))) : ['(published build not known: cannot list the safety changes)'];
+const targetsMet = unverified === 0 && crit === 0 && notRun === 0 && !unreviewed.length && s1Count === 0 && !nightlyHold && !badWarns.length && !openSevere.length;
 const allPass = parts.every(k => needs[k] && needs[k].result === 'success');
 const ok = allPass && targetsMet;
 
 // ---- what changed since the published build
-const live = process.env.LIVE || '';
-const range = live && sh(`git cat-file -t ${live}`) === 'commit' ? `${live}..HEAD` : '';
 const corrections = range ? sh(`git log --no-merges --format='- %h %s' ${range}`).split('\n').filter(Boolean) : [];
 const testsAdded = range ? sh(`git diff --name-status ${range} -- tools docs/qa .github/workflows`).split('\n').filter(l => /^[AM]\s/.test(l) && /check|test|rules|oracle|mutants|gate|odd|flow|audit|truth|scenario|leaks|stress/i.test(l)) : [];
 const openEsc = escapes.filter(l => /\*\*Open\*\*|Partly|partly covered|\bGap\b/i.test(l)).map(l => { const c = l.split('|').map(x => x.trim()); return `- ${c[1]} ${c[4]} (${c[5]}): ${c[8].replace(/\*\*/g, '')}`; });
@@ -76,7 +82,15 @@ out.push(`## Release targets (each must be 0)`, ``, `| Target | Count | |`, `|--
   `| Also required (QA spec v2) | Count | |`, `|---|---|---|`,
   `| Nightly safety finding not yet fixed or cleared | ${nightlyHold} | ${nightlyHold ? 'NOT MET' : 'met'} |`,
   `| Warnings without an owner or past their date (docs/qa/warns.json) | ${badWarns.length} | ${badWarns.length ? 'NOT MET: ' + [...new Set(badWarns)].join(', ') : 'met'} |`,
+  `| Safety changes since the published build with no independent review (docs/qa/reviews.md) | ${unreviewed.length} | ${unreviewed.length ? 'NOT MET (not tested): ' + unreviewed.join(', ') : 'met'} |`,
   `| Open S1 or P1 rows in the escaped-bug ledger | ${openSevere.length} | ${openSevere.length ? 'NOT MET: ' + openSevere.join(', ') : 'met'} |`, ``, nightlyLine, ``);
+// Gate health (spec v2, T6): a part over 20 min, or fewer than half of the last 10 finished runs green, is a defect of the
+// gate itself (it gets a ledger row; it does not block this release on its own).
+const J = v => { try { return JSON.parse(process.env[v] || '[]'); } catch (e) { return []; } }, mins = (a, b) => (Date.parse(b) - Date.parse(a)) / 60000;
+const gRuns = J('GATE_RUNS'), tJobs = J('THIS_JOBS').filter(j => j.s && j.e && j.name !== 'Release report');
+const green = gRuns.filter(r => r.conclusion === 'success').length, slow = tJobs.filter(j => mins(j.s, j.e) > 20);
+out.push(`## Gate health`, ``, gRuns.length ? `- Last ${gRuns.length} finished gate runs: ${green} green, ${gRuns.filter(r => r.conclusion === 'failure').length} failed, ${gRuns.filter(r => r.conclusion === 'cancelled').length} cancelled.${green * 2 < gRuns.length ? ' **Below half green: a gate defect, record it in docs/qa/escapes.md.**' : ''}` : '- Run history not available.',
+  tJobs.length ? `- This run's parts: ${tJobs.map(j => `${j.name.split(':')[0]} ${Math.round(mins(j.s, j.e))} min`).join(', ')}; whole run ${Math.round(mins(tJobs.reduce((a, j) => j.s < a ? j.s : a, tJobs[0].s), tJobs.reduce((a, j) => j.e > a ? j.e : a, tJobs[0].e)))} min.${slow.length ? ' **Over 20 min: ' + slow.map(j => j.name.split(':')[0]).join(', ') + ' (a gate defect).**' : ''}` : '- Part times not available.', ``);
 out.push(`## 1. What was tested`, ``, `| Part | Result |`, `|---|---|`, ...parts.map(k => `| ${NAMES[k] || k} | ${word(needs[k] && needs[k].result)} |`), ``);
 out.push(`## 2. What was not tested`, ``, ...(parts.filter(k => !ran(k)).map(k => `- ${NAMES[k] || k}: ${word(needs[k] && needs[k].result)}`)), `- Known gaps, never tested by the gate (docs/qa/test-map.md):`, ...gaps.map(g => '  ' + g), `- AI answers at runtime: AI is off by Richard's rule, so they are not tested here. The recorded stories are checked at build time (factcheck.json), not in this gate.`, ``);
 out.push(`## 3-5. Counts`, ``, `- Gate parts: ${parts.filter(k => needs[k] && needs[k].result === 'success').length} passed, ${parts.filter(k => needs[k] && needs[k].result === 'failure').length} failed, ${parts.filter(k => !ran(k)).length} not tested (blocked, skipped or cancelled).`,

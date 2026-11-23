@@ -87,6 +87,13 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
   }
   const byOld = rows.filter(r => r.planted && r.old.length).length, byOracle = rows.filter(r => r.planted && r.oracle.length).length;
   console.log(`\nCaught by the older day checks: ${byOld} of ${list.length}. By the independent check: ${byOracle} of ${list.length}. Missed or not tested: ${missed}.`);
+  // Spec v2 T1: every safety rule of the independent check must be shown to bite by at least one planted defect in this
+  // run. A rule no planted defect raised is NOT TESTED (it might never fire), and blocks like a miss.
+  let uncovered = [];
+  if (!ONLY.length) { const SAFETY = ['gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait'];
+    const raised = new Set(rows.filter(r => r.planted).flatMap(r => r.oracle.map(x => String(x).split(' ')[0])));
+    uncovered = SAFETY.filter(k => !raised.has(k));
+    console.log(uncovered.length ? uncovered.map(k => `NOT TESTED coverage: no planted defect made the safety rule "${k}" fire`).join('\n') : `Every safety rule (${SAFETY.join(', ')}) was made to fire by a planted defect.`); }
   fs.rmSync(tmp, { recursive: true, force: true });
-  process.exitCode = missed ? 1 : 0;
+  process.exitCode = missed || uncovered.length ? 1 : 0;
 })();

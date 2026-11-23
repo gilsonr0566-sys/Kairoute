@@ -162,7 +162,8 @@
     // Two rules written with only a space between them ("Tu-Sa 12:00-15:00 Tu-Sa 18:00-22:00", common on the map) are read as
     // the opening_hours library and the mappers mean them: both apply (Nov 23, the independent lunch check found a lunch
     // at 11:45 at a place opening at noon, whose hours this reader had left unknown).
-    const h = String(text || "").trim().replace(/(\d{1,2}:\d{2}\+?)\s+(?=(?:Mo|Tu|We|Th|Fr|Sa|Su|PH)\b)/g, "$1, "); ctx = ctx || {};
+    const h = String(text || "").trim().replace(/(\d{1,2}:\d{2}\+?)\s+(?=(?:Mo|Tu|We|Th|Fr|Sa|Su|PH)\b)/g, "$1, ")
+      .replace(/(\d{1,2}:\d{2}\+?)\s+(?=\d{1,2}:\d{2})/g, "$1, "); ctx = ctx || {}; // "12:30-15:00 19:00-22:00": two spans, the comma left out (Nov 23 gate: Lisbon)
     if (!h || !ymd(iso)) return { known: false, why: "" };
     if (/^24\/7$/.test(h)) return { known: true, allDay: true, spans: [[0, 1440]] };
     const once = fl => {
