@@ -14,8 +14,11 @@ let fails = 0, checks = 0; const ok = (c, m) => { checks++; if (!c) { fails++; c
 const STORED = { rt1: 'travelers\' ratings', bz1: 'busy-hour reports', fp1: 'ferry timetables gathered by the schedule', ns1: 'nearby sights gathered list',
   s3: 'voice clips by text hash', sp1: 'AI answers by full prompt hash', xw1: 'AI write-ups by full input hash' };
 const files = fs.readdirSync(W).filter(f => f.endsWith('.js'));
-const numbered = new Set(); for (const f of files) for (const m of fs.readFileSync(path.join(W, f), 'utf8').matchAll(/["'`]([a-z]{1,4}\d+):/g)) numbered.add(m[1]);
-const hand = [...numbered].filter(k => !STORED[k]);
+const handKeys = texts => { const n = new Set(); for (const t of texts) for (const m of t.matchAll(/["'`]([a-z]{1,4}\d+):/g)) n.add(m[1]); return [[...n], [...n].filter(k => !STORED[k])]; };
+// Planted on every run: a hand-numbered answer key, the very thing that kept the Bastille standing, must be caught.
+{ const [, caught] = handKeys(['const key = "sr12:" + (await sha(label));']); ok(caught.length === 1 && caught[0] === 'sr12', `a planted hand-numbered key ("sr12:") is caught (${caught.join(', ') || 'missed'})`);
+  if (!caught.length) { console.log('worker-cache-check: BLIND'); process.exit(1); } }
+const [numberedList, hand] = handKeys(files.map(f => fs.readFileSync(path.join(W, f), 'utf8'))), numbered = new Set(numberedList);
 ok(!hand.length, `no hand-numbered answer keys outside the stored records (${[...numbered].join(', ')} all listed)` + (hand.length ? ': found ' + hand.join(', ') : ''));
 { const src = fs.readFileSync(path.join(W, 'worker.js'), 'utf8'), memo = /const MEMO_KEYS = \/\^\(([^)]*)\)/.exec(src), pre = [...src.matchAll(/codeKey\("([a-z]+)"/g)].map(m => m[1]);
   const ext = [...fs.readFileSync(path.join(W, 'extras.js'), 'utf8').matchAll(/codeKey\("([a-z]+)"/g)].map(m => m[1]), all = [...new Set([...pre, ...ext])];
