@@ -30,7 +30,7 @@ const pageText = p => p.evaluate(() => (document.querySelector('#view') || docum
 const proseText = p => p.evaluate(() => { const st = document.createElement('style'); st.textContent = '#view button, #view summary, #view a.btn, #view .ridechips, #view .tag, #view .badge { display: none !important; }'; document.head.appendChild(st); const t = (document.querySelector('#view') || document.body).innerText; st.remove(); return t; });
 // No screen claims certainty about getting back (Richard, Nov 20: liability, option 1). Kairoute's times are padded
 // estimates; the official time is the ship's, the airline's or the railway's.
-const CERTAIN = /guarantee|\b(we|kairoute) (promise|ensure)s?\b|you('ll| will) (never|not) miss|never (be late|miss (the|your))|always (be )?(on time|back in time)|(certain|sure) to make it|can't miss (the|your) (ship|train|flight)/i;
+const CERTAIN = /guarantee|\b(we|kairoute) (promise|ensure)s?\b|you('ll| will) (never|not) miss|never (be late|miss (the|your))|always (be )?(on time|back in time)|(certain|sure) to make it|can't miss (the|your) (ship|train|flight)|I('ll| will) (have|get) you back|so you're back aboard/i; // the tour's own voice too (Nov 22 first-timer check)
 const certain = t => (String(t).match(CERTAIN) || [''])[0];
 const H24 = /\b([01]\d|2[0-3]):[0-5]\d\b(?!\s?[ap]m)/, H12 = /\b(1[0-2]|[1-9]):[0-5]\d\s?(am|pm|AM|PM)\b/;
 // Sentences said twice on one screen (longer than a short label), with the place each was found.
@@ -118,11 +118,13 @@ function repeats(text) {
         const dt = m => { const d = Math.round(m); return d < 60 ? d + ' min' : Math.floor(d / 60) + ' h' + (d % 60 ? ' ' + d % 60 + ' min' : ''); };
         if (F.left >= 5 && s.left) ok(`Choose sights: same time left and day length (${dn})`, s.left.includes(dt(F.left)) && s.left.includes(dt(F.len)), `"${s.left}" vs ${dt(F.left)} left of ${dt(F.len)}`);
         ok(`no promise of getting back in time on Choose sights (${dn})`, !certain(s.text), `Choose sights says "${certain(s.text)}"`);
+        ok(`one word for a sight on Choose sights (${dn})`, !/\b(Change|Choose) stops\b/.test(s.text), `old words on Choose sights: "${(s.text.match(/\b(Change|Choose) stops\b/) || [''])[0]}"`);
         ok(`Choose sights has its own title (${dn})`, /Choose sights/.test(s.title), `title "${s.title}"`);
         const r2 = repeats(await proseText(p)); ok(`nothing said twice on Choose sights (${dn})`, !r2.length, `said twice: ${r2.slice(0, 3).map(x => '"' + x.slice(0, 80) + '"').join('; ')}`);
         // The Tour's map key is the Day plan's.
         await go(p, 'plan', i); const k1 = await p.evaluate(() => [...document.querySelectorAll('.mapbox .maplegend .lk')].map(x => x.dataset.kind).join(','));
         await go(p, 'tour', i); const k2 = await p.evaluate(() => [...document.querySelectorAll('.tourmap .maplegend .lk')].map(x => x.dataset.kind).join(','));
+        { const tt = await pageText(p); ok(`no promise of getting back in time in the Tour (${dn})`, !certain(tt), `the Tour says "${certain(tt)}"`); }
         if (k2 || /tourmap/.test(await p.content())) ok(`Tour map key = Day plan map key (${dn})`, k1 === k2, `Day plan key "${k1}" vs Tour key "${k2}"`);
         await p.evaluate(() => { const b = document.querySelector('[data-act="tourexit"], [data-act="exittour"]'); if (b) b.click(); });
       }
