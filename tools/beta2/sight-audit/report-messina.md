@@ -1,6 +1,6 @@
 ## Messina (Messina, built-in guide)
 - POS Regional Museum of Messina {Q1526140 by name}: app is 0.59 km from Wikidata's point (not on the map by id)
-- POS Reggio Calabria (ancient Rhegium) [day trip] {Q8471 by name}: app 38.11100,15.64700 is 1.04 km from the map's Reggio Calabria (node/67273280, 38.10354,15.63976); Wikidata 1.51 km from the map
+- POS Reggio Calabria (ancient Rhegium) [day trip] {Q8471 by name}: app is 0.46 km from Wikidata's point (not on the map by id)
 - POS Casa Cuseni [day trip] {Q48807438 by name}: app is 0.68 km from Wikidata's point (not on the map by id)
 - DUP Regional Museum of Messina = Museo regionale di Messina (same Wikidata Q1526140)
 - NOID Santissima Annunziata dei Catalani: built-in sight with no Wikidata id and nothing of the name on the map nearby

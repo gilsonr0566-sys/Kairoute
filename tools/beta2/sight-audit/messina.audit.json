@@ -91,18 +91,14 @@
   },
   {
    "k": "POS",
-   "t": "Reggio Calabria (ancient Rhegium) [day trip] {Q8471 by name}: app 38.11100,15.64700 is 1.04 km from the map's Reggio Calabria (node/67273280, 38.10354,15.63976); Wikidata 1.51 km from the map",
+   "t": "Reggio Calabria (ancient Rhegium) [day trip] {Q8471 by name}: app is 0.46 km from Wikidata's point (not on the map by id)",
    "x": {
-    "d": 1.0440575314923508,
+    "d": 0.4637963843067028,
     "id": "rhegium-far",
     "wd": "Q8471",
     "app": [
      38.111,
      15.647
-    ],
-    "map": [
-     38.1035389,
-     15.6397556
     ],
     "wdpt": [
      38.114438888889,

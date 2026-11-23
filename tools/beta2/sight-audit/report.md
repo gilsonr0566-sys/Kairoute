@@ -134,20 +134,26 @@
 ## Hamburg, Germany (Hamburg, Germany, guide from sources)
 - POS Port of Hamburg: app is 1.38 km from Wikidata's point (not on the map by id)
 - POS Außenalster: app is 1.05 km from Wikidata's point (not on the map by id)
+- POS Wallanlagen [day trip] {Q907935 by name}: app is 0.35 km from Wikidata's point (not on the map by id)
 - POS Holstentor [day trip]: app is 59.08 km from Wikidata's point (not on the map by id)
 - DUP Buxtehude ~ Buxtehude Museum für Regionalgeschichte und Kunst (43 m apart, same words)
+- DUP Itzehoe ~ Kloster Itzehoe (224 m apart, same words)
 - NOT St. James' Church: Wikidata has an end date (closed, dissolved or demolished)
 - NOT St. Nicholas Church, Hamburg: Wikidata has an end date (closed, dissolved or demolished)
 - NOT St. Ansgar: Wikidata has an end date (closed, dissolved or demolished)
+- NOID Rathaus [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Roland [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Dom St. Petri [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Kunsthalle [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID St. Petri church [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID City hall [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Buxtehude Museum für Regionalgeschichte und Kunst [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID St. Marien [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID The Dom [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID St. Petri [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID St. Aegidien [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID St. Katharinen [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Behnhaus/Drägerhaus [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
-- NOID Rathaus [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - FOLD Speicherstadt is part of HafenCity (Wikidata) but is a separate stop
 - FOLD Elbphilharmonie is part of HafenCity (Wikidata) but is a separate stop
 - FOLD International Maritime Museum Hamburg is part of HafenCity (Wikidata) but is a separate stop
@@ -156,6 +162,9 @@
 - LEN Hamburger Kunsthalle: 40 min, but a art museum or gallery usually takes 45-240 min
 - LEN Deichtorhallen: 40 min, but a art museum or gallery usually takes 45-240 min
 - LEN Kaiser-Wilhelm-Denkmal, Hamburg: 40 min, but a fountain, statue or monument usually takes 5-30 min
+- LEN Gerhard-Marcks-Haus [day trip] {Q1511196 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- LEN Weserburg [day trip] {Q2563859 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- LEN Germanengrab [day trip] {Q1514083 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
 - LEN Burgtor [day trip] {Q538276 by name}: 30 min, but a castle or fortress usually takes 45-180 min
 - LEN Heiligen-Geist-Hospital [day trip] {Q317608 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
 - FAME #1 best known nearby, "Der Spiegel" (65 Wikipedia languages, Q131478), is not offered
@@ -163,8 +172,8 @@
 - FAME #4 best known nearby, "Bombing of Hamburg in World War II" (32 Wikipedia languages, Q316868), is not offered
 - FAME must-see "Miniatur Wunderland" is offered (Miniatur Wunderland) but not marked must-see
 - FAME must-see "St. Michael's Church|St Michael's Church|Michel" is not offered
-- INFO 47 sights, 26 day trips/towns; must-see: Speicherstadt, Hamburger Kunsthalle, Elbphilharmonie, Chilehaus, Volksparkstadion, Port of Hamburg, St. Pauli; top by fame: International Maritime Museum Hamburg 60, Speicherstadt 41, Elbphilharmonie 41, Chilehaus 35, Port of Hamburg 35, HafenCity 35, Hamburger Kunsthalle 34, Reeperbahn 31
-- INFO day trips: Buxtehude, Lübeck, Lüneburg, St. Petri church, City hall, Buxtehude Museum für Regionalgeschichte und Kunst, St. Marien, The Dom, St. Petri, St. Jakobi, St. Aegidien, St. Katharinen, Holstentor, Burgtor, Heiligen-Geist-Hospital, Behnhaus/Drägerhaus, Rathaus, Willy Brandt House, Haus der Kaufmannschaft, Museumsquartier St. Annen, Buddenbrookhaus, Günter-Grass-Haus, Museumshafen, European Hansemuseum, Museum für Natur und Umwelt Lübeck
+- INFO 47 sights, 44 day trips/towns; must-see: Speicherstadt, Hamburger Kunsthalle, Elbphilharmonie, Chilehaus, Volksparkstadion, Port of Hamburg, St. Pauli; top by fame: International Maritime Museum Hamburg 60, Speicherstadt 41, Elbphilharmonie 41, Chilehaus 35, Port of Hamburg 35, HafenCity 35, Hamburger Kunsthalle 34, Reeperbahn 31
+- INFO day trips: Bremen, Buxtehude, Itzehoe, Lübeck, Rathaus, Roland, Dom St. Petri, Böttcherstraße, Wallanlagen, Schnoor, Überseemuseum, Wuseum, Kunsthalle, Gerhard-Marcks-Haus, Wilhelm-Wagenfeld-Haus, Weserburg, St. Petri church, City hall, Buxtehude Museum für Regionalgeschichte und Kunst, Germanengrab, Nagelsche Fachwerkhäuser, Stadtkirche St. Laurentii, St.-Jürgen-Kapelle, St. Marien, The Dom, St. Petri, St. Jakobi, St. Aegidien, St. Katharinen, Holstentor, Burgtor, Heiligen-Geist-Hospital, Behnhaus/Drägerhaus, Willy Brandt House, Haus der Kaufmannschaft, Museumsquartier St. Annen, Buddenbrookhaus, Günter-Grass-Haus, Museumshafen, European Hansemuseum, Museum für Natur und Umwelt Lübeck, Kloster Itzehoe, Rathaus, Theaterfigurenmuseum Lübeck
 
 ## Heraklion (Heraklion, built-in guide)
 - POS Kali Limenes (Fair Havens) [day trip] {Q11818846 by name}: app 34.93300,24.81500 is 1.20 km from the map's Kali Limenes (node/3784701989, 34.93176,24.80192); Wikidata 0.27 km from the map
@@ -284,8 +293,7 @@
 - INFO day trips: Mafra, Ericeira, Sintra, Convento de Mafra, Basilica of Our Lady and St. Anthony, Parque de Santa Marta, Pena National Palace, Moorish Castle, Sintra National Palace, Quintinha de Monserrate, Quinta da Regaleira
 
 ## Madrid (Madrid, built-in guide)
-- POS Nuevos Ministerios {Q2705508 by name}: app 40.44396,-3.69346 is 0.26 km from the map's Nuevos Ministerios (node/4998670036, 40.44584,-3.69170); Wikidata 0.05 km from the map
-- POS Casa de Campo {Q568579 by name}: app 40.42410,-3.75510 is 2.34 km from the map's Casa de Campo (node/5303127327, 40.40349,-3.76093); Wikidata 0.05 km from the map
+- POS Casa de Campo {Q568579 by name}: app is 2.39 km from Wikidata's point (not on the map by id)
 - POS Toledo [day trip] {Q5836 by name}: app is 0.67 km from Wikidata's point (not on the map by id)
 - NOT Fundación Juan March {Q29043218 by name}: Wikidata says it is an organization (family-run Spanish cultural heritage institution)
 - NOID Reina Sofía Museum (Guernica): built-in sight with no Wikidata id and nothing of the name on the map nearby
@@ -325,7 +333,7 @@
 
 ## Messina (Messina, built-in guide)
 - POS Regional Museum of Messina {Q1526140 by name}: app is 0.59 km from Wikidata's point (not on the map by id)
-- POS Reggio Calabria (ancient Rhegium) [day trip] {Q8471 by name}: app 38.11100,15.64700 is 1.04 km from the map's Reggio Calabria (node/67273280, 38.10354,15.63976); Wikidata 1.51 km from the map
+- POS Reggio Calabria (ancient Rhegium) [day trip] {Q8471 by name}: app is 0.46 km from Wikidata's point (not on the map by id)
 - POS Casa Cuseni [day trip] {Q48807438 by name}: app is 0.68 km from Wikidata's point (not on the map by id)
 - DUP Regional Museum of Messina = Museo regionale di Messina (same Wikidata Q1526140)
 - NOID Santissima Annunziata dei Catalani: built-in sight with no Wikidata id and nothing of the name on the map nearby
@@ -360,14 +368,14 @@
 
 ## Naples (Naples, built-in guide)
 - POS Spaccanapoli and the historic center {Q718973 by name}: app is 1.79 km from Wikidata's point (not on the map by id)
-- POS Pompeii [day trip] {Q43332 by name}: app is 0.45 km from Wikidata's point (not on the map by id)
-- POS Capri [day trip] {Q173292 by name}: app is 1.01 km from Wikidata's point (not on the map by id)
 - NOID Sansevero Chapel (Veiled Christ): built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Certosa e Museo di San Martino: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Royal Palace and National Museum of Capodimonte: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID National railway Museum of Pietrarsa: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Museum of Contemporary Art Donnaregina: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Neapolis Sotterrata: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Pompeii [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Capri [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Amphitheatre [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Great Palaestra [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID Small Port [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
