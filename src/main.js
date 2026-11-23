@@ -5151,7 +5151,9 @@ function renderView() {
   document.querySelector("header.top").hidden = full && !setv; // settings keep the navigation rail on tablets (only the rail shows)
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", setv ? String(t.dataset.act === "settings") : t.dataset.view === (view === "sites" ? "plan" : view) ? "true" : "false"));
   document.querySelector("header.top").classList.toggle("touring", view === "tour"); // more room for the tour; Exit tour brings the day list back
-  $view.className = full ? "full" : "wrap";
+  // Keeps "panes" until render() decides it again: dropping it for the moment the screen is drawn turned the view from
+  // a column into a block and back, and Chrome counted the whole screen as moving 57 px on every redraw (tablet, client feel test).
+  $view.className = full ? "full" : $view.classList.contains("panes") ? "wrap panes" : "wrap";
   if (full) { if (tourTimer) { clearInterval(tourTimer); tourTimer = null; } stopCountdownIfAny(); $view.innerHTML = FULL_VIEWS[view](); return; }
   document.getElementById("aiStatus").textContent = aiReady() ? "AI guide on" : "Your own guide, any city";
   // Speed: the day strip is redrawn only when it changed, and centred on the day after the screen is drawn
@@ -7572,7 +7574,8 @@ document.addEventListener("click", e => {
   const act = t.dataset.act;
   if (act === "gotit") { trip.bannerSeen = true; save(); render(); return; }
   if (act === "lobby" || act === "settings" || act === "privacy" || act === "terms") { if (view === "trip") readForm(); stopAudio(); save(); view = act; if (act === "privacy" || act === "terms") setSec = act; resetAsk = false; aiError = ""; render(); toTop(); return; }
-  if (act === "continue") { jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; render(); toTop(); return; }
+  if (act === "continue") { jumpToToday(trip); view = trip.tour && !trip.tour.left && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; // back into a tour only if the app closed during it, never after Exit tour (client feel test: reopening put the traveler back in the tour they had left)
+    render(); toTop(); return; }
   if (act === "film" || act === "filmreplay") { stopAudio(); playFilm(false); return; }
   if (act === "filmclose") { closeFilm(); return; }
   if (act === "mytrips") { if (view === "trip") readForm(); save(); view = "trips"; aiError = ""; render(); toTop(); return; }
@@ -7665,8 +7668,8 @@ document.addEventListener("click", e => {
     trip.days.splice(trip.active + 1, 0, nd); trip.active++; edited(); save(); render();
     return;
   }
-  if (act === "tourstart") { const d = day(); if (!trip.tour || trip.tour.dayId !== d.id) trip.tour = null; curTour(d); view = "tour"; save(); render(); toTop(); return; }
-  if (act === "tourexit") { stopAudio(); view = "plan"; render(); toTop(); return; }
+  if (act === "tourstart") { const d = day(); if (!trip.tour || trip.tour.dayId !== d.id) trip.tour = null; else delete trip.tour.left; curTour(d); view = "tour"; save(); render(); toTop(); return; }
+  if (act === "tourexit") { stopAudio(); if (trip.tour) { trip.tour.left = true; save(); } view = "plan"; render(); toTop(); return; }
   if (act === "tourpart") { tourPart(); return; }
   if (act === "nightdep") { const d = day(), v = t.dataset.v; if (d && (v === "morning" || v === "night")) { d.nightDep = v; edited(); save(); render(); } return; }
   if (act === "pointpick") { const d = day(), k = +t.dataset.idx; if (d && k >= 0) { d.pointIdx = k; d.pointPicked = true; delete d.pier; edited(); save(); render(); } return; }

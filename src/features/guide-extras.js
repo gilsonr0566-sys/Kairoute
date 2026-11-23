@@ -29,7 +29,10 @@ function gxGet(key, path, opts) {
   if (!freeAI || (gxFailed.get(key) || 0) > Date.now() || (typeof navigator !== "undefined" && navigator.onLine === false)) return null;
   if (gxPending.has(key)) return undefined;
   gxPending.add(key);
-  fetch(freeAI.url + path, opts && opts.body ? { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(opts.body) } : {})
+  // 20 s at most: a helper that never answers used to leave the card's spinner turning for good (client feel test on the
+  // live app, "More about today" on every day plan); the fallback (if any) and the failed-answer path then take over.
+  const sig = typeof AbortSignal !== "undefined" && AbortSignal.timeout ? { signal: AbortSignal.timeout(20000) } : {};
+  fetch(freeAI.url + path, Object.assign(opts && opts.body ? { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(opts.body) } : {}, sig))
     .then(r => r.ok ? r.json() : Promise.reject(r.status))
     .catch(st => opts && opts.fallback ? opts.fallback().then(v => v || Promise.reject(st), () => Promise.reject(st)) : Promise.reject(st))
     .then(v => { gxCache[key] = { v, t: Date.now() }; gxSaveCache(); gxRefresh(); })
