@@ -58,7 +58,7 @@ function rules(text, info = {}) {
   const asking = /Which (pier|port|airport|station|terminal)|couldn't be planned|not planned yet|Pick (the|your) |What time/i.test(raw);
   // ---- S1: ship, train and flight safety
   if (hard && stops.length && P.leaveBy == null && !asking) add('S1', 'leave-by shown', 'a ship, train or flight day with stops planned shows no LEAVE BY time');
-  if (P.leaveBy != null) stops.forEach(s => { const out2 = s.until != null ? s.until : s.leave; if (out2 != null && out2 > P.leaveBy + 1) add('S1', 'leave-by after a stop', `LEAVE BY ${clock(P.leaveBy)} but ${s.name} is planned to ${s.until != null ? 'stay until' : 'leave at'} ${clock(out2)}`); });
+  if (P.leaveBy != null) stops.filter(s => !/back on board|on board|aboard/i.test(s.name)).forEach(s => { const out2 = s.until != null ? s.until : s.leave; if (out2 != null && out2 > P.leaveBy + 1) add('S1', 'leave-by after a stop', `LEAVE BY ${clock(P.leaveBy)} but ${s.name} is planned to ${s.until != null ? 'stay until' : 'leave at'} ${clock(out2)}`); });
   const end = P.rows.find(r => r.key === 'E');
   const back = P.backBy != null ? P.backBy : end && end.by;
   if (end && back != null) { const lastRide = P.rides.filter(r => r.to === end).pop(), last = lastRide && lastRide.from;
