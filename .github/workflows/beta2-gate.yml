@@ -38,7 +38,7 @@ jobs:
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - run: sh build-beta2.sh
       - name: Code checks (secrets, syntax) and the engine's own rules
-        run: (node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs && node tools/beta2/sight-rules-check.cjs beta2-site/index.html && node tools/beta2/lunch-during-screen.cjs beta2-site/index.html && node tools/truth/sight-mutants.cjs beta2-site/index.html && node tools/truth/no-warn-check.cjs && node tools/truth/spec-check.cjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+        run: (node tools/static-check.cjs && node tools/sw-check.cjs && node tools/beta2/engine-static.cjs && node tools/places/where-check.cjs && node tools/beta2/sight-rules-check.cjs beta2-site/index.html && node tools/beta2/lunch-during-screen.cjs beta2-site/index.html && node tools/truth/sight-mutants.cjs beta2-site/index.html && node tools/truth/no-warn-check.cjs && node tools/truth/spec-check.cjs && node tools/truth/report-check.cjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Helper (AI switch, one AI gate, spend caps, other websites)
         if: always()
         run: (node tools/worker-check.mjs && node tools/worker-ai-gate.mjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
@@ -290,16 +290,26 @@ jobs:
           R: ${{ toJSON(needs) }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          # The published build, to list the corrections and the tests added since (its commit message names the build).
-          LIVE=$(git ls-remote https://github.com/gilsonr0566-sys/Kairoute-Beta2 HEAD >/dev/null 2>&1 && git clone -q --depth 1 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/pub && git -C /tmp/pub log -1 --format=%s | grep -oE "[0-9a-f]{7,}" | head -1 || true)
+          # The published build, to list the corrections and the tests added since: the Kairoute commit at the start of the
+          # published version.txt (the same file the publish step checks, spec v2 T4). A commit message is not read: a
+          # workflow-only commit on Kairoute-Beta2 names no build (Nov 23: the report said "published build not known").
+          LIVE=$(git clone -q --depth 1 https://github.com/gilsonr0566-sys/Kairoute-Beta2 /tmp/pub 2>/dev/null && tr -d '\n' < /tmp/pub/version.txt | cut -d- -f1 | grep -xE "[0-9a-f]{7,40}" || true)
           export LIVE
           # The latest finished nightly run: a safety finding there holds this release (spec v2, T2).
           NIGHTLY=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/truth-nightly.yml/runs?status=completed&per_page=1" --jq '.workflow_runs[0] | "\(.id) \(.html_url) \(.created_at)"' 2>/dev/null || true)
           if [ -n "$NIGHTLY" ]; then NID=${NIGHTLY%% *}; NIGHTLY_JOBS=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$NID/jobs" --jq '[.jobs[] | {name, conclusion}]' 2>/dev/null || echo '[]'); else NIGHTLY_JOBS='[]'; fi
           export NIGHTLY NIGHTLY_JOBS
-          node tools/truth/release-report.cjs parts > release-report.md || true
+          # Gate health (spec v2, T6): the last 10 finished gate runs, and this run's part times.
+          GATE_RUNS=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/beta2-gate.yml/runs?status=completed&per_page=10" --jq '[.workflow_runs[] | {conclusion, s: .run_started_at, e: .updated_at}]' 2>/dev/null || echo '[]')
+          THIS_JOBS=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs" --jq '[.jobs[] | {name, s: .started_at, e: .completed_at}]' 2>/dev/null || echo '[]')
+          export GATE_RUNS THIS_JOBS
+          rc=0; node tools/truth/release-report.cjs parts > release-report.md || rc=$?
           cat release-report.md >> "$GITHUB_STEP_SUMMARY"; cat release-report.md
-          grep -q "RELEASE OK" release-report.md
+          # Green only when the report itself says RELEASE OK as its recommendation AND exits 0. A plain search for the
+          # words passed every run: the "DO NOT RELEASE" report also says "publish only from a commit whose report says
+          # RELEASE OK" (Nov 23, run 45240727888 was green on DO NOT RELEASE). The publish step trusts this job.
+          [ "$rc" -eq 0 ] || { echo "Release report: DO NOT RELEASE (exit $rc)"; exit 1; }
+          grep -qx '## Release recommendation: \*\*RELEASE OK\*\*' release-report.md || { echo "Release report has no RELEASE OK recommendation line"; exit 1; }
       - uses: actions/upload-artifact@v4
         if: always()
         with: { name: release-report, path: release-report.md }

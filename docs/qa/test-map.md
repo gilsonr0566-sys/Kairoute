@@ -17,7 +17,7 @@ guards (a planted defect, or the old code).
 | R-007 Outside text run as code or as instructions | High | AI off; text escaped | inject-check; ai-honesty-check | None known |
 | R-008 Walking or access need ignored | High | "Walks little" pace | Odd trips (walk); stress | Step-free routes: NOT TESTED (no data source) |
 | R-009 A sight that isn't one (gone, a stadium, an office) | Medium | Wikidata kinds and "gone" from the helper | sight-rules-check (gate); sight audit (on demand) | The audit doesn't run on a schedule (E5, E6) |
-| R-010 The gate itself not running or not finishing | High | Parallel gate, release report, NOT TESTED blocks | The report job | Gate health (time, green rate) not yet tracked over time |
+| R-010 The gate itself not running or not finishing | High | Parallel gate, release report, NOT TESTED blocks | The report job | Tracked in every release report since Nov 23 (last 10 runs, part times; spec v2 T6) |
 
 ## Test catalog vs checks
 

@@ -460,7 +460,7 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
       days++; const m = p.items.find(x => x.t === 'meal' && x.meal === 'Lunch');
       // ...and open then: the day's facts, else the place's own map hours for that date (Nov 23 real-map check: Sorbillo at
       // 11:45 when it opens at noon, Han Gang at 12:03 when it opens at 1 pm).
-      if (m && !m.packed && !m.onBoard && !m.booked && !m.chosen) { const fx = E.eatFactsFor(d, c.restaurants)[E.eatKey(m.name)];
+      if (m && !m.packed && !m.onBoard && !m.booked && !m.chosen) { const fx = E.eatFactsFor(d, (c.restaurants || []).concat((c.farther || []).flatMap(t => (t.foodDrink || []).filter(x => x.kind === 'eat'))))[E.eatKey(m.name)];
         if (fx && E.closedForDay(fx, { start: m.at, endBy: m.at + m.min }, m.min)) shutAt.push(`${f} day ${i + 1}: ${m.name} at ${E.clock(m.at)} (${fx.mapHours || 'day facts'})`); }
       // None only when the plan says why, plainly (no time left before the ship; no place to eat known out there).
       if (!m && !(p.explain || []).some(t => /no room for lunch|no time for a sit-down lunch|no place to eat|places to eat aren't in the guide/i.test(t))) noLunch.push(`${f} day ${i + 1}`); else if (!m) said++; else if (/^Lunch in /.test(m.name) && (c.farther || []).some(t => ('Lunch in ' + t.name) === m.name && (t.foodDrink || []).some(x => x.kind === 'eat' && isFinite(x.lat) && E.hav(x, t) <= 3))) noLunch.push(`${f} day ${i + 1}: "${m.name}" names no place`); });
@@ -476,6 +476,13 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
         { X: { key: 'X', eatHours: [['Antonio Sorbillo', 40.8503, 14.255, 'Mo-Sa 12:00-15:30', 'restaurant'], ['Far Away Grill', 40.85, 14.255, 'Mo-Su 10:00-22:00', 'restaurant'], ['Barolo Wine', 40.85, 14.255, 'Mo-Su 18:00-23:00', 'bar']] } });
       const rs = b.cities.X.restaurants;
       ok(rs[0].hours === 'Mo-Sa 12:00-15:30' && !rs[1].hours && !rs[2].hours, 'a guide place to eat takes the map hours of the place with its name within 200 m (never a far one, never on a short name)'); }
+    // A nearby town's places to eat take their map hours too (Nov 23 release gate: Komokieras in Sitges at 11:45, opens 13:15).
+    { const b = E.applyPlaces({ cities: { X: { restaurants: [], farther: [{ id: 'tn', name: 'Townie', lat: 41.2372, lng: 1.8067 }] } }, days: [] },
+        { X: { key: 'X', towns: { tn: { foodDrink: [{ kind: 'eat', name: 'Komokieras', lat: 41.2372466, lng: 1.8067256 }] } }, eatHours: [['Komokieras', 41.23719, 1.80675, 'Th-Mo 13:15-15:30, 20:30-23:00; Tu off, We off', 'restaurant']] } });
+      const t = (b.cities.X.farther || []).find(x => x.id === 'tn'), r = t && (t.foodDrink || []).find(x => x.name === 'Komokieras');
+      const fx = r && E.eatFactsFor({ date: '2027-07-03' }, [r])[E.eatKey('Komokieras')];
+      ok(!!(r && r.hours && fx && fx.oh && JSON.stringify(fx.oh.spans[0]) === '[795,930]' && E.closedForDay(fx, { start: 705, endBy: 765 }, 60)),
+        "a nearby town's place to eat takes its map hours, so lunch there waits for it to open (Komokieras opens 13:15)"); }
     { const fx = E.eatFactsFor({ date: '2026-11-23', eats: {} }, [{ name: 'Noon Place', hours: 'Mo-Sa 12:00-15:30; Su off' }, { name: 'Sunday Shut', hours: 'Mo-Sa 12:00-15:00' }, { name: 'Odd', hours: 'Jun-Sep 12:00-15:00' }, { name: 'Junk', hours: 'ask the owner' }]);
       const sun = E.eatFactsFor({ date: '2026-11-22' }, [{ name: 'Noon Place', hours: 'Mo-Sa 12:00-15:30; Su off' }]);
       ok(fx[E.eatKey('Noon Place')] && JSON.stringify(fx[E.eatKey('Noon Place')].oh.spans) === '[[720,930]]' && sun[E.eatKey('Noon Place')].closed && fx[E.eatKey('Odd')] && fx[E.eatKey('Odd')].closed && !fx[E.eatKey('Junk')]
