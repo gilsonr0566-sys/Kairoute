@@ -32,6 +32,10 @@
 //   S2 clock     the clock runs backwards, or a time that is not a number
 //   S2 drift     a ride's two ends are not the places before and after it (the ride says one place, the card another)
 //   S2 slowride  a ride more than 3 times the road time a taxi would need and more than 45 min over it (absurd)
+//   S2 lunchshut a lunch at a place to eat whose own map opening hours (the raw OpenStreetMap text, read with the free
+//                opening_hours library, never the planner's reader) say it is shut when lunch starts, or open for less than
+//                20 min of it, on the day's date. A place whose hours are not on the map is not judged (unknown).
+//   S2 lunchlate a lunch at a place to eat starting after 3:30 pm (an hour past the usual last orders)
 // Usage (module): require('./oracle.cjs').checkDay(day, plan, ctx) -> [{rule, sev, msg}]
 // Usage (CLI):    node tools/truth/oracle.cjs [--trips odd.json] [--corpus] [--show 6] [--warn rule,rule]
 //                 --trips reads the file odd-trips.cjs --out writes; --corpus plans the saved test trips.
@@ -71,11 +75,41 @@ function earliest(d) {
   return null;
 }
 
+// Lunch, judged from the raw map data with a reader the planner doesn't use (Richard's testing directive, Nov 23: a check
+// must not agree with the planner just because it reads the planner's numbers). The opening_hours library is installed
+// by the gate; without it the rule says NOT TESTED instead of passing.
+let OHLib = null; try { OHLib = require('opening_hours'); } catch (e) { OHLib = null; }
+const STOP = /\b(the|restaurant|ristorante|restaurante|trattoria|taverna|cafe|bar|and)\b/g;
+const nameKey = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, ' ').replace(STOP, ' ').replace(/\s+/g, ' ').trim();
+const sameName = (a, b) => { a = nameKey(a); b = nameKey(b); return !!a && !!b && (a === b || (a.length >= 4 && b.length >= 4 && (a.includes(b) || b.includes(a)))); };
+function rawHours(x, P) {
+  if (!P || !pos(x)) return null;
+  const rows = [].concat((P.eatHours || []).map(e => ({ name: e[0], lat: e[1], lng: e[2], hours: e[3] })), (P.cityEats || []).map(e => ({ name: e.name, lat: e.lat, lng: e.lng, hours: e.hours })));
+  const hit = rows.filter(r => r.hours && pos(r) && hav(x, r) <= 0.2 && sameName(r.name, x.name)).sort((a, b) => hav(x, a) - hav(x, b))[0];
+  return hit ? hit.hours : null;
+}
+const lunchUntested = { n: 0 };
+function lunchRules(d, its, ctx, add) {
+  const meals = its.filter(x => x.t === 'meal' && (x.meal || 'Lunch') === 'Lunch' && !x.packed && !x.onBoard && !x.booked && !x.chosen && Number.isFinite(x.at));
+  for (const x of meals) {
+    if (x.at > 15 * 60 + 30) add('lunchlate', 'S2', `lunch at ${x.name} starts ${clk(x.at)}, more than an hour past the usual last orders`);
+    const P = ctx && ctx.places, h = rawHours(x, P); if (!h || !d.date) continue;
+    if (!OHLib) { lunchUntested.n++; continue; }
+    let oh; try { oh = new OHLib(h, { lat: x.lat, lon: x.lng, address: { country_code: '', state: '' } }, { mode: 0 }); } catch (e) { continue; } // hours the library can't read: unknown
+    const [Y, M, D] = d.date.split('-').map(Number), at = m => new Date(Y, M - 1, D, Math.floor(m / 60), m % 60);
+    let start; try { start = oh.getState(at(x.at)); } catch (e) { continue; }
+    let openMin = 0; const len = Math.max(1, x.min || 0); for (let m = x.at; m < x.at + len; m += 5) { try { if (oh.getState(at(m))) openMin += Math.min(5, x.at + len - m); } catch (e) {} }
+    if (!start || openMin < Math.min(20, len)) add('lunchshut', 'S2', `lunch at ${x.name} ${clk(x.at)}-${clk(x.at + len)} on ${d.date}: its map hours "${h}" say ${start ? 'open only ' + openMin + ' min of it' : 'shut when it starts'}`);
+  }
+}
+
 function checkDay(d, p, ctx) {
   const out = [], add = (rule, sev, msg) => out.push({ rule, sev, msg });
   if (!d || d.noShore || d.type === 'sea' || !p || p.error || !Array.isArray(p.items)) return out;
   const its = p.items, visits = its.filter(x => x.t === 'stop' || (x.t === 'meal' && !x.onBoard));
   const ends = x => x.at + (x.min || 0);
+  // ---- lunch: open when it starts, by its own raw map hours (ctx.places: the place's raw places file)
+  lunchRules(d, its, ctx, add);
   // ---- clock: numbers and order (arithmetic only)
   let t = null;
   its.forEach(x => {
@@ -189,11 +223,12 @@ if (require.main === module) {
   for (const { name, b } of trips) {
     let plans; try { plans = E.planTrip(E.applyPlaces(b, places)); } catch (e) { (found.error = (found.error || 0) + 1); (ex.error = ex.error || []).push(name + ': ' + e.message); continue; }
     b.days.forEach((d, i) => { days++; const p = plans[i]; if (p && p.items) planned++;
-      for (const f of checkDay(d, p)) { const k = f.rule; found[k] = (found[k] || 0) + 1; (ex[k] = ex[k] || []).push(`${f.sev} ${name} day ${i + 1} ${d.type}${d.mode && /arrival|departure/.test(d.type) ? '/' + d.mode : ''} ${d.city || ''}: ${f.msg}`); } });
+      for (const f of checkDay(d, p, { places: places[d.city] })) { const k = f.rule; found[k] = (found[k] || 0) + 1; (ex[k] = ex[k] || []).push(`${f.sev} ${name} day ${i + 1} ${d.type}${d.mode && /arrival|departure/.test(d.type) ? '/' + d.mode : ''} ${d.city || ''}: ${f.msg}`); } });
   }
   console.log(`Independent safety check: ${trips.length} trips, ${days} days, ${planned} planned`);
-  const order = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'about', 'physics', 'clock', 'drift', 'slowride'];
+  const order = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'about', 'physics', 'clock', 'drift', 'slowride', 'lunchshut', 'lunchlate'];
   for (const k of order) { const n = found[k] || 0; console.log(`${n ? (WARN.includes(k) ? 'WARN' : 'FAIL') : 'ok  '} ${k.padEnd(9)} ${n}`); (ex[k] || []).slice(0, SHOW).forEach(e => console.log('       ' + e)); }
+  if (lunchUntested.n) { console.log(`NOT TESTED lunchshut: ${lunchUntested.n} lunches with map hours not judged (the opening_hours library is not installed: npm i --no-save opening_hours@3.16.0)`); }
   if (process.env.ALL) fs.writeFileSync(process.env.ALL, JSON.stringify(ex, null, 1));
-  process.exitCode = order.some(k => found[k] && !WARN.includes(k)) ? 1 : 0;
+  process.exitCode = order.some(k => found[k] && !WARN.includes(k)) || lunchUntested.n ? 1 : 0;
 }

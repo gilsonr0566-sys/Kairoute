@@ -21,21 +21,25 @@ async function ask(q) {
   const rows = []; let found = 0, gone = 0, shut = 0, unknown = 0, notFound = 0, kindOff = 0;
   // One question per city (every lunch place there at once), so the whole list takes minutes, not hours.
   const byCity = new Map(); list.forEach(p => { if (!byCity.has(p.city)) byCity.set(p.city, []); byCity.get(p.city).push(p); });
-  const got = new Map();
-  for (const [city, ps] of byCity) {
+  // CHUNK/CHUNKS: this run checks every CHUNKS-th city starting at CHUNK (GitHub runs the chunks side by side, so a slow
+  // map server can't stop the whole check), and each city's rows are printed as soon as it is checked.
+  const CH = +(process.env.CHUNK || 0), CHS = +(process.env.CHUNKS || 1), at = m => E.clock(m);
+  const print = r => console.log(`${r.state.padEnd(30)} ${String(r.city).padEnd(28)} ${r.name}${r.mapName && r.mapName !== r.name ? ' (map: ' + r.mapName + ')' : ''} · ${r.date} ${at(r.at)} · ${r.amenity || ''}${r.cuisine ? '/' + r.cuisine : ''}${r.mealKind === false ? ' NOT A MEAL PLACE' : ''}${r.hours ? ' · "' + r.hours + '"' : ''}${r.m != null ? ' · ' + r.m + ' m' : ''}`);
+  let n = 0;
+  for (const [city, ps] of [...byCity].filter((x, k) => k % CHS === CH)) {
     const q = `[out:json][timeout:60];(${ps.map(p => `nwr(around:150,${p.lat},${p.lng})[name];`).join('')});out tags center;`;
     const j = await ask(q); await sleep(1500); console.error(city, ps.length, j ? (j.elements || []).length + ' map places' : 'NO ANSWER');
-    ps.forEach(p => got.set(p, j));
+    for (const p of ps) { n++; const before = rows.length; check(p, j); print(rows[before]); }
   }
-  for (const p of list) {
-    const j = got.get(p);
-    if (!j) { rows.push(Object.assign({}, p, { state: 'no answer' })); continue; }
+  list.length = n;
+  function check(p, j) {
+    if (!j) { rows.push(Object.assign({}, p, { state: 'no answer' })); return; }
     const near = e => { const la = e.lat != null ? e.lat : e.center && e.center.lat, ln = e.lon != null ? e.lon : e.center && e.center.lon; return E.hav(p, { lat: la, lng: ln }) <= 0.15; };
     const els = (j.elements || []).filter(e => e.tags && near(e) && [e.tags.name, e.tags['name:en'], e.tags['name:latin'], e.tags['int_name'], e.tags['old_name']].some(n => like(n, p.name)));
     const lat = e => e.lat != null ? e.lat : e.center && e.center.lat, lng = e => e.lon != null ? e.lon : e.center && e.center.lon;
     els.sort((a, b) => E.hav(p, { lat: lat(a), lng: lng(a) }) - E.hav(p, { lat: lat(b), lng: lng(b) }));
     const e = els[0];
-    if (!e) { notFound++; rows.push(Object.assign({}, p, { state: 'not on the map within 150 m' })); continue; }
+    if (!e) { notFound++; rows.push(Object.assign({}, p, { state: 'not on the map within 150 m' })); return; }
     found++;
     const t = e.tags, amen = t.amenity || t.shop || t.tourism || t.leisure || '', hours = t.opening_hours || '';
     const closedForGood = /^(yes|closed)$/i.test(t.disused || '') || !!t['disused:amenity'] || !!t['was:amenity'] || /permanently/i.test(t.note || '');
@@ -46,8 +50,6 @@ async function ask(q) {
     rows.push(Object.assign({}, p, { state: closedForGood ? 'closed for good on the map' : open === 'closed' ? 'shut at the planned time' : open === 'open' ? 'open at the planned time' : 'hours not on the map',
       osm: e.type + '/' + e.id, mapName: t.name, amenity: amen, cuisine: t.cuisine || '', hours, m: Math.round(E.hav(p, { lat: lat(e), lng: lng(e) }) * 1000), mealKind }));
   }
-  const at = m => E.clock(m);
-  for (const r of rows) console.log(`${r.state.padEnd(30)} ${String(r.city).padEnd(28)} ${r.name}${r.mapName && r.mapName !== r.name ? ' (map: ' + r.mapName + ')' : ''} · ${r.date} ${at(r.at)} · ${r.amenity || ''}${r.cuisine ? '/' + r.cuisine : ''}${r.mealKind === false ? ' NOT A MEAL PLACE' : ''}${r.hours ? ' · "' + r.hours + '"' : ''}${r.m != null ? ' · ' + r.m + ' m' : ''}`);
   console.log(`\n${list.length} places planned for lunch: ${found} found on the map by name, ${notFound} not found within 150 m; ${gone} marked closed for good; ${shut} shut at the planned time; ${unknown} with no readable hours; ${kindOff} not mapped as a place for a meal.`);
   fs.writeFileSync('lunch-verify-results.json', JSON.stringify(rows, null, 1));
 })();

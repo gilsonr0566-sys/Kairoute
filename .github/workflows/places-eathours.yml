@@ -24,9 +24,9 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        # The places not yet refreshed (Nov 23: the first run stopped at its time limit after 17), in three groups so each
-        # finishes well within the limit; a manual run with "only" set runs that one group.
-        group: ["paris", "hamburg|venice|prague|reykjavik|southampton|dubai", "dubrovnik|example cay|grand turk|half moon|jerusalem|juneau|ketchikan|kotor|nassau|cococay|ponta delgada"]
+        # Places to refresh, a group per job (Nov 23: Venice again, asked in smaller batches after its first try got nothing);
+        # a manual run with "only" set runs that one group.
+        group: ["venice"]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
