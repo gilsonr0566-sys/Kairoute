@@ -70,9 +70,11 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
 // Trip date: the timetable is asked for the trip's own date (a summer ferry shows only then), the answer marked with it;
 // when that date isn't published yet (nothing comes back) the next date of the same weekday kind is asked instead.
 { const realFetch = globalThis.fetch, asked = []; let empty = false;
-  const it = (h) => ({ startTime: `2027-07-12T0${h}:00:00Z`, endTime: `2027-07-12T0${h + 1}:30:00Z`, duration: 5400, legs: [{ mode: "FERRY", startTime: `2027-07-12T0${h}:00:00Z`, duration: 5400, routeShortName: "", agencyName: "NLG", from: { name: "Molo Beverello", tz: "Europe/Rome" }, to: { name: "Amalfi" } }] });
-  globalThis.fetch = async u => { const t = new URL(u).searchParams.get("time"); asked.push(t); return { ok: true, json: async () => ({ itineraries: empty && t.startsWith("2027-07-12") ? [] : [it(6), it(8)] }) }; };
-  const A = { lat: 40.8366, lng: 14.2563 }, B = { lat: 40.6327, lng: 14.6029 }, yr = new Date().getUTCFullYear() + 1, date = yr + "-07-12";
+  // A date 40 days ahead: inside the window operators publish (the helper doesn't ask beyond 120 days).
+  const date = new Date(Date.now() + 40 * 86400e3).toISOString().slice(0, 10);
+  const it = (h) => ({ startTime: `${date}T0${h}:00:00Z`, endTime: `${date}T0${h + 1}:30:00Z`, duration: 5400, legs: [{ mode: "FERRY", startTime: `${date}T0${h}:00:00Z`, duration: 5400, routeShortName: "", agencyName: "NLG", from: { name: "Molo Beverello", tz: "Europe/Rome" }, to: { name: "Amalfi" } }] });
+  globalThis.fetch = async u => { const t = new URL(u).searchParams.get("time"); asked.push(t); return { ok: true, json: async () => ({ itineraries: empty && t.startsWith(date) ? [] : [it(6), it(8)] }) }; };
+  const A = { lat: 40.8366, lng: 14.2563 }, B = { lat: 40.6327, lng: 14.6029 };
   const r = await timetableOptions(A, B, 1, date);
   ok(asked.length && asked.every(t => t.startsWith(date)), `timetable asked for the trip's own date (${asked[0]})`);
   ok(r.length && r.every(o => o.forDate === date && o.mode === "ferry"), "rides found for that date are marked with it");
