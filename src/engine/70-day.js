@@ -109,7 +109,7 @@
     const isles = order.filter(s => wet(s) && !s.mealOf && isFinite(s.lat)), land = win.head.concat(win.tail, order.filter(s => !wet(s) && !s.mealOf)).filter(p => p && isFinite(p.lat));
     const isleOf = r => { if (!isles.length || !isFinite(r.lat)) return null; let best = null, bd = Infinity; for (const s of isles) { const d = E.hav(s, r); if (d < bd) { bd = d; best = s; } }
       return land.every(p => E.hav(p, r) > bd) ? best : null; };
-    const isleFacts = r => { const s = isleOf(r); return !s ? {} : Object.assign({ travelNote: r.travelNote || s.travelNote || "", onIsle: s.id }, s.wish ? { insideWish: true } : {}, s.acrossWater ? { acrossWater: s.acrossWater } : {}, E.waterOnly(s) ? { access: s.access } : {}); };
+    const isleFacts = r => { const s = isleOf(r); return !s ? {} : Object.assign({ travelNote: r.travelNote || s.travelNote || "", onIsle: s.id }, s.wish && !s.guideWish ? { insideWish: true } : {}, s.acrossWater ? { acrossWater: s.acrossWater } : {}, E.waterOnly(s) ? { access: s.access } : {}); };
     const mealAt = (e, len, extra) => Object.assign({ id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo: len === E.TO_GO, chosen: !!my.pick, fromMap: !!e.r.fromMap, packed: !!e.r.packed, travelNote: e.r.travelNote || "",
       oh: len === E.TO_GO ? null : ((ctx.eatFacts || {})[e.k] || {}).oh || null }, isleFacts(e.r), extra || {});
     const ok = c => c.r.lateMeal <= E.MEAL_LATE && !c.r.items.some(x => x.shut) && c.r.late <= plain.late && c.r.over <= plain.over
@@ -161,7 +161,7 @@
         if (over < len) continue;
         for (const e of cands) {
           const build = cut => order.slice(0, k).concat([Object.assign({}, s, { minutes: s.minutes - cut, lunchIn: len, lunchCut: cut }),
-            mealAt(e, len, Object.assign({ inside: s.id, insideWish: !!s.wish, travelNote: e.r.travelNote || (E.byBoat(s.travelNote) || E.waterOnly(s) || s.acrossWater ? s.travelNote || "" : "") },
+            mealAt(e, len, Object.assign({ inside: s.id, insideWish: !!(s.wish && !s.guideWish), travelNote: e.r.travelNote || (E.byBoat(s.travelNote) || E.waterOnly(s) || s.acrossWater ? s.travelNote || "" : "") },
             s.acrossWater ? { acrossWater: s.acrossWater } : {}, E.waterOnly(s) && !E.byBoat(s.travelNote) ? { access: s.access } : {}))], order.slice(k + 1));
           if ((s.minutes || 0) - len < 45) continue;
           // First try: the visit loses the lunch itself; the walk shows as how much later the day ends. Then it loses that too.

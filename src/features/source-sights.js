@@ -29,7 +29,9 @@ const srcWorthyAt = need => need >= 2 ? srcWorthy : x => x && x.lat != null && /
   && (srcVisitable(x) || (x.src || []).some(t => /OpenStreetMap/.test(t)) || (x.sl || 0) >= 15);
 // Entries that are not one place to visit: a whole city or country, a district, transport, institutions.
 const SRC_NEVER = /\b(city|district|business area|ministerios|rione|quartiere|municipality|province|region|metro|subway|railway|station|airport|line|radio|embassy|bank|ministry|school|hospital|programme|organization|organisation)\b/i;
-const SRC_UNLESS_LISTED = /\b(stadium|stadio|estadio|university|universit[àa]|academy|parliament)\b/i; // a listed monument (Panathenaic Stadium) is a sight
+// A sports ground in any language (first-timer walk, Nov 22: a football stadium, named in German, planned as a must-see
+// with a 23 min taxi each way) is no sight unless listed; "arena" stays a sight, as many are Roman.
+const SRC_UNLESS_LISTED = /\b(stadium|stadion|stadio|stade|estadio|est[áa]dio|stadyumu?|university|universit[àa]|academy|parliament)\b/i; // a listed monument (Panathenaic Stadium) is a sight
 // Not a place a visitor goes in (competitor review, Nov 20: a stock exchange as a must-see, a plane crash as a sight, an office
 // tower as a 40 min visit): a business or an office, or an event rather than a place (unless it names its memorial or museum).
 // An office building is no stop unless it is a listed monument (the Chrysler Building) or World Heritage.

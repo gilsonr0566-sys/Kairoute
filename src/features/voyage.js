@@ -49,7 +49,7 @@ function voyChecks(o, plan) {
   return out;
 }
 function voyTimes(o, plan) {
-  if (o.type === "port") return `Ship docks ${o.portArrive}${o.tender ? " (tender port)" : ""} · all aboard ${o.allAboard}${plan ? ` · your plan has you back by ${fmt(Math.min(plan.end, plan.endBy))}` : ""}`;
+  if (o.type === "port") return `Ship docks ${o.portArrive}${o.tender ? " (tender port)" : ""} · all aboard ${o.allAboard}${plan && backByOf(o, plan) != null ? ` · your plan has you back by ${fmt(backByOf(o, plan))}` : ""}`;
   if (o.type === "arrival") return `${MODES[o.mode] ? MODES[o.mode].label : "Arrival"} arrives ${o.time}${plan ? ` · sightseeing ${fmt(plan.start)}–${fmt(plan.endBy)}` : ""}`;
   if (o.type === "departure" || o.type === "embark") return plan ? `Sightseeing ${fmt(plan.start)}–${fmt(plan.end)} · be at ${plan.w.deadlineWord || "the terminal"} by ${fmt(plan.endBy)}` : "";
   return plan ? `${fmt(plan.start)}–${fmt(plan.end)}` : "";

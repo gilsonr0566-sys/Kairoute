@@ -151,7 +151,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         // this ride, and the engine plans with it.
         if (x.from && x.to && x.options && x.options.length > 1) {
           leg.key = E.pairKey(x.pairFrom || x.from, x.pairTo || x.to); leg.choice = x.choice;
-          leg.choices = x.options.map(o => ({ id: o.id, label: o.how, min: o.min, kind: UIKIND[o.kind] || "car" }));
+          leg.choices = x.options.map(o => Object.assign({ id: o.id, label: o.how, min: o.min, kind: UIKIND[o.kind] || "car" }, o.kind !== "walk" && o.source !== "timetable" ? { est: true } : {})); // est: no timetable confirms its time
         }
         items.push({ type: "travel", leg, time: (items.length ? items[items.length - 1].time + (items[items.length - 1].dur || 0) : ep.start) }); return;
       }

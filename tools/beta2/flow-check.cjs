@@ -559,11 +559,11 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
     check('A city with several stations or airports asks which, gives no time on a guess, and plans the day once chosen', ok7, why); }
   // Not a sight, in any city (competitor review, Nov 20): a stock exchange, an office building, an event such as a crash. Listed
   // monuments and memorials stay. And no staff canteen as a place to eat.
-  { const r = await p.evaluate(() => { const no = ['Tokyo Stock Exchange', 'NTT Docomo Yoyogi Building', 'Bijlmer disaster', 'Shell Headquarters'].filter(n => !window.__kairouteNotSpot({ name: n }));
-      const yes = ['Senso-ji', 'Empire State Building|h', 'National Monument', 'Bijlmer disaster memorial'].map(n => n.split('|')).filter(([n, h]) => window.__kairouteNotSpot({ name: n, heritage: !!h })).map(x => x[0]);
+  { const r = await p.evaluate(() => { const no = ['Tokyo Stock Exchange', 'NTT Docomo Yoyogi Building', 'Bijlmer disaster', 'Shell Headquarters', 'Ernst-Happel-Stadion', 'Stade de France', 'Estádio da Luz'].filter(n => !window.__kairouteNotSpot({ name: n }));
+      const yes = ['Senso-ji', 'Empire State Building|h', 'National Monument', 'Bijlmer disaster memorial', 'Panathenaic Stadium|h', 'Verona Arena'].map(n => n.split('|')).filter(([n, h]) => window.__kairouteNotSpot({ name: n, heritage: !!h })).map(x => x[0]);
       const eat = ["Metropolitan Officers' Cafeteria", 'Staff canteen'].filter(n => !KEngine.notPublicEat({ name: n }));
       return { no, yes, eat }; });
-    check('A business, an office building or an event is never a sight; a monument or memorial is; a staff canteen is never a place to eat', !r.no.length && !r.yes.length && !r.eat.length,
+    check('A business, an office building, a sports ground or an event is never a sight; a monument or memorial is; a staff canteen is never a place to eat', !r.no.length && !r.yes.length && !r.eat.length,
       `taken as sights: ${r.no.join(', ') || 'none'}; refused: ${r.yes.join(', ') || 'none'}; canteens kept: ${r.eat.join(', ') || 'none'}`); }
   // The leave-by time on every fixed day leaves room for the ride back: leave-by plus the ride is never past the time to be
   // back (Round 1, Nov 20: Ketchikan's badge said leave by 12:15, the time to be back, with a 38 min ride after it).

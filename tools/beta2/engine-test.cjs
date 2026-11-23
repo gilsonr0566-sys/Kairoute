@@ -388,7 +388,13 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
   ok(go.first && go.first.at === 540, 'the boat out carries the first sailing the guide gives');
   const win = { start: 480, endBy: 1000, hard: true, head: [dock], tail: [dock] }, w = E.walkDay([Object.assign({ id: 'isle', name: 'Isle', minutes: 60 }, isle)], win, (a, b) => tb.estimate(a, b), null);
   const st = w.items.find(x => x.t === 'stop'), ri = w.items.filter(x => x.t === 'ride' && x.mode === 'boat')[0];
-  ok(st.at >= 540 + 40 && ri.wait > 0 && ri.firstBoat === 540, `nobody lands on the island before the first boat out could (landed ${E.clock(st.at)}, wait ${ri.wait})`); }
+  ok(st.at >= 540 + 40 && ri.wait > 0 && ri.firstBoat === 540, `nobody lands on the island before the first boat out could (landed ${E.clock(st.at)}, wait ${ri.wait})`);
+  // First-timer walk, Nov 22: an island only the guide suggested (the traveler ticked nothing) is never "planned because
+  // you chose it" on a boat no timetable confirms; the traveler's own pick is.
+  const walkAs = q => E.walkDay([Object.assign({ id: 'isle', name: 'Isle', minutes: 60 }, isle, q)], win, (a, b) => tb.estimate(a, b), null).items.filter(x => x.t === 'ride' && /boat|ferry/.test(x.mode + x.kind));
+  const mine = walkAs({ wish: true }), guide = walkAs({ wish: true, guideWish: true });
+  ok(!guide.some(b => /because you chose it/.test(b.note || '') || b.ownBoat), `a guide suggestion's boat is never said to be the traveler's choice (${JSON.stringify(guide.map(b => b.note || ''))})`);
+  ok(mine.length === 0 || mine.some(b => b.ownBoat) || mine.every(b => !b.note || !/isn't planned on its own/.test(b.note)), "the traveler's own island pick still keeps its boat"); }
 { let boats = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f))), ps = E.planTrip(s);
     ps.forEach((p, i) => p && p.items && p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1], c = s.cities[s.days[i].city] || {};
       const site = it => it && it.id != null && [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(it.id));
@@ -635,6 +641,11 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 // Nov 20 review (finding 5): a road time estimated from the distance never drops as the distance grows.
 { const tb = E.makeTravel({}, {}); let down = 0, prev = 0; for (let km = 1; km <= 300; km += 0.1) { const m = tb.road(km).min; if (m < prev) down++; prev = m; }
   ok(!down, `the road estimate never gets shorter for a longer ride (${down} drops from 1 to 300 km)`); }
+// First-timer walk, Nov 22: a 9:00 am train on a day set to start at 9:00 is this morning's: the day starts earlier to
+// reach it, with no time for sights (it was taken as the next morning's: sights all day, "free time 16 h 10 min").
+{ const tb = E.makeTravel({ walk: 'medium' }, {}), w = E.dayWindow(day({ type: 'departure', mode: 'train', time: '09:00', startTime: '09:00', point: air }), tb);
+  ok(!w.error && w.endBy < 9 * 60 && w.start < w.endBy && w.leaveEarly > 0, `a 9:00 am train: be at the station by ${E.clock(w.endBy)}, the day starts ${E.clock(w.start)} (${w.leaveEarly} min early)`);
+  ok(w.sightTo <= (w.sightFrom != null ? w.sightFrom : w.start) + 1 || w.sightTo - w.start < 30, `no sightseeing before a 9:00 am train (sights until ${E.clock(w.sightTo)})`); }
 // Nov 20 review (finding 8): a flight or all aboard after midnight is the next morning's; the day stays readable and no
 // clock prints a minus sign.
 { const tb = E.makeTravel({ walk: 'medium' }, {});

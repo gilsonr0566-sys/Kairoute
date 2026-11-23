@@ -305,7 +305,10 @@
           const on = ledger.sightDay(s.id);
           if (on != null && on !== i) { explain.push(s.name + " is planned on another day."); continue; }
           if (!E.allowed(s, prefs, siteDay(s.id), win)) { explain.push(s.name + " is closed or can't be visited this day."); continue; }
-          wishes.push(Object.assign({}, s, { wish: true }));
+          // A list that is only the guide's suggestions (the traveler ticked nothing: wantsOnly) is planned first all the
+          // same, but its sights are never the traveler's choice: an unconfirmed boat to one is not "planned because you
+          // chose it" (first-timer walk, Nov 22: a Château d'If boat nobody picked).
+          wishes.push(Object.assign({}, s, { wish: true }, d.wantsOnly && !d.own ? { guideWish: true } : {}));
         }
         // A day the traveler has made their own (they ticked or unticked its sights) is planned from their list only:
         // the app never picks in their place there, and a list they emptied is a free day. Spare time may still take an

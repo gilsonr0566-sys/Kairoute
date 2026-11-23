@@ -47,7 +47,9 @@ function engineBucket(withOld) {
   const cityOut = {}, dayOut = [], waterHomes = {};
   const siteFacts = (city, s) => ({
     id: s.id, name: s.name, lat: n(s.lat), lng: n(s.lng), minutes: n(s.minutes) || 30, floor: stopFloor(s) || 0,
-    mustSee: !!s.mustSee, quick: !!s.quick, far: !!s.far || (city.farther || []).includes(s), indoor: !!s.indoor,
+    // A guide built before a rule learned a kind of place is not a sight (a stadium named in another language) keeps it,
+    // but never as a must-see the day plans on its own; the traveler can still pick it.
+    mustSee: !!s.mustSee && !(s.srcOnly && typeof srcNotSpot === "function" && srcNotSpot(s)), quick: !!s.quick, far: !!s.far || (city.farther || []).includes(s), indoor: !!s.indoor,
     kind: s.kind || "", category: s.category || "", fame: fameW(s), unesco: !!s.unesco,
     religiousOk: religiousOk(s), srcOnly: !!s.srcOnly, hasGuide: !!s.guide, recommended: !!(s.unesco || (s.src || []).some(t => /Wikivoyage/.test(t))),
     likes: ints.reduce((a, w) => a + (((s.category || "") + " " + (s.summary || "")).toLowerCase().includes(w) ? 1 : 0), 0),
