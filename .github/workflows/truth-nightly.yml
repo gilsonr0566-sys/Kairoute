@@ -29,6 +29,7 @@ jobs:
         with: { ref: claude/project-thread-xrdp7v }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
+      - run: npm i --no-save opening_hours@3.16.0
       - name: Trips
         run: |
           SEED="${{ github.event.inputs.seed }}"; [ -n "$SEED" ] || SEED=$(date -u +%Y%m%d)

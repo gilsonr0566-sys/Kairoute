@@ -159,7 +159,10 @@
   // Read one opening_hours string for one date: { known, spans, closed, src } or { known: false, why }.
   // ctx: { holiday (true/false/undefined when the date's holiday status isn't known), lat, lng, offset }.
   E.readOsm = (text, iso, ctx) => {
-    const h = String(text || "").trim(); ctx = ctx || {};
+    // Two rules written with only a space between them ("Tu-Sa 12:00-15:00 Tu-Sa 18:00-22:00", common on the map) are read as
+    // the opening_hours library and the mappers mean them: both apply (Nov 23, the independent lunch check found a lunch
+    // at 11:45 at a place opening at noon, whose hours this reader had left unknown).
+    const h = String(text || "").trim().replace(/(\d{1,2}:\d{2}\+?)\s+(?=(?:Mo|Tu|We|Th|Fr|Sa|Su|PH)\b)/g, "$1, "); ctx = ctx || {};
     if (!h || !ymd(iso)) return { known: false, why: "" };
     if (/^24\/7$/.test(h)) return { known: true, allDay: true, spans: [[0, 1440]] };
     const once = fl => {
