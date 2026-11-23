@@ -284,8 +284,7 @@
 - INFO day trips: Mafra, Ericeira, Sintra, Convento de Mafra, Basilica of Our Lady and St. Anthony, Parque de Santa Marta, Pena National Palace, Moorish Castle, Sintra National Palace, Quintinha de Monserrate, Quinta da Regaleira
 
 ## Madrid (Madrid, built-in guide)
-- POS Nuevos Ministerios {Q2705508 by name}: app 40.44396,-3.69346 is 0.26 km from the map's Nuevos Ministerios (node/4998670036, 40.44584,-3.69170); Wikidata 0.05 km from the map
-- POS Casa de Campo {Q568579 by name}: app 40.42410,-3.75510 is 2.34 km from the map's Casa de Campo (node/5303127327, 40.40349,-3.76093); Wikidata 0.05 km from the map
+- POS Casa de Campo {Q568579 by name}: app is 2.39 km from Wikidata's point (not on the map by id)
 - POS Toledo [day trip] {Q5836 by name}: app is 0.67 km from Wikidata's point (not on the map by id)
 - NOT Fundación Juan March {Q29043218 by name}: Wikidata says it is an organization (family-run Spanish cultural heritage institution)
 - NOID Reina Sofía Museum (Guernica): built-in sight with no Wikidata id and nothing of the name on the map nearby
