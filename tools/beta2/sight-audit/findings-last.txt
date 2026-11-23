@@ -1,0 +1,410 @@
+athens | FAME | #1 best known nearby, "Athens Metro"
+athens | FAME | #3 best known nearby, "Athena Parthenos"
+athens | FAME | #4 best known nearby, "Athena Promachos"
+athens | FAME | #5 best known nearby, "Choragic Monument of Lysicrates"
+athens | FOLD | Ancient Agora
+athens | FOLD | Theatre of Dionysus
+athens | LEN | Monastiraki and the flea market
+athens | LEN | Theatre of Dionysus
+athens | NAME | Ancient Theater [day trip]
+athens | NAME | Museum [day trip]
+athens | NOID | Acropolis promenade
+athens | NOID | Agia Ekaterini
+athens | NOID | Ancient Theater [day trip]
+athens | NOID | Athens Cathedral and the Little Metropolis
+athens | NOID | Byzantine and Christian Museum
+athens | NOID | Delphi Stadium [day trip]
+athens | NOID | Museum [day trip]
+athens | NOID | Philopappos Hill
+athens | NOID | Sanctuary of Athena with the Tholos [day trip]
+athens | NOID | Temple of Apollo [day trip]
+athens | NOT | Ancient Corinth [day trip]
+athens | POS | Corinth Canal [day trip]
+barcelona | FAME | #1 best known nearby, "Barcelona Metro"
+barcelona | FAME | #2 best known nearby, "Torre Glòries"
+barcelona | FAME | #3 best known nearby, "German Pavilion, Barcelona"
+barcelona | FAME | must-see "La Rambla"
+barcelona | LEN | Barceloneta beach
+barcelona | NOID | Bunkers del Carmel
+barcelona | NOID | Contemporary Art Gallery [day trip]
+barcelona | NOID | Girona old town [day trip]
+barcelona | NOID | Gràcia squares
+barcelona | NOID | Montserrat monastery [day trip]
+barcelona | NOID | Pont del Bisbe
+barcelona | NOID | Sant Pau Recinte Modernista
+barcelona | NOID | Santa Maria del Mar
+barcelona | POS | Sitges [day trip]
+chania | FAME | #1 best known nearby, "Battle of Crete"
+chania | FAME | must-see "Venetian Harbour|Old Venetian Harbour|Venetian port"
+chania | LEN | Souda Bay War Cemetery [day trip]
+chania | NOID | Church of Saint Nicholas, Splantzia
+chania | NOID | Firkas fortress and Maritime Museum
+chania | NOID | Municipal Market
+chania | NOID | Old town lanes and Topanas
+chania | NOID | Venetian harbor and lighthouse
+chania | POS | Souda Bay War Cemetery [day trip]
+cococay | NOID | Harbor Lagoon
+cococay | NOID | Harbour Beach
+cococay | NOID | Thrill Waterpark
+dubai | FAME | #1 best known nearby, "Dubai Metro"
+dubai | FAME | #2 best known nearby, "Emirates Office Tower"
+dubai | FAME | #3 best known nearby, "Jumeirah Emirates Towers Hotel"
+dubai | FAME | #4 best known nearby, "Queen Elizabeth 2"
+dubai | FAME | #5 best known nearby, "Address Downtown"
+dubai | FAME | #6 best known nearby, "HHHR Tower"
+dubai | FAME | #7 best known nearby, "Al Yaqoub Tower"
+dubai | FAME | #8 best known nearby, "The Dubai Fountain"
+dubai | FAME | must-see "Dubai Creek"
+dubrovnik | FAME | #1 best known nearby, "Siege of Dubrovnik"
+dubrovnik | NOID | Bukovac House Museum [day trip]
+dubrovnik | NOID | Mausoleum of the Račić family [day trip]
+dubrovnik | POS | Cavtat [day trip]
+edinburgh | DUP | Glasgow
+edinburgh | FAME | #1 best known nearby, "Major General Sir Nils Olav III"
+edinburgh | FAME | #2 best known nearby, "Burke and Hare murders"
+edinburgh | LEN | Govan Stones [day trip]
+edinburgh | LEN | Linlithgow Palace [day trip]
+edinburgh | LEN | Royal Botanic Garden Edinburgh
+edinburgh | NOID | City Chambers [day trip]
+edinburgh | NOID | Hunterian Zoology Museum [day trip]
+edinburgh | NOID | Park Circus [day trip]
+edinburgh | NOID | St Andrews in the Square [day trip]
+edinburgh | NOID | The Museum of Piping [day trip]
+edinburgh | NOID | Willow Tea Rooms [day trip]
+edinburgh | NOID | [https
+edinburgh | NOT | Glasgow University [day trip]
+edinburgh | POS | Glasgow [day trip]
+edinburgh | POS | Linlithgow [day trip]
+grandturk | FAME | must-see "Cockburn Town"
+grandturk | FAME | must-see "Grand Turk Lighthouse"
+grandturk | NOID | Her Majesty's Prison
+grandturk | NOID | Palm Grove Sunset Cabana beach
+grandturk | NOID | Turks and Caicos National Museum
+haifa | FAME | #1 best known nearby, "Pentecost"
+haifa | FAME | #10 best known nearby, "Deir Yassin massacre"
+haifa | FAME | #11 best known nearby, "Jerusalem Light Rail"
+haifa | FAME | #12 best known nearby, "Victims of Acts of Terror Memorial"
+haifa | FAME | #13 best known nearby, "Kiss of Judas"
+haifa | FAME | #14 best known nearby, "Siege of Jerusalem"
+haifa | FAME | #15 best known nearby, "King David Hotel bombing"
+haifa | FAME | #2 best known nearby, "Solomon's Temple"
+haifa | FAME | #3 best known nearby, "crucifixion of Jesus"
+haifa | FAME | #4 best known nearby, "Biblical Hebrew"
+haifa | FAME | #5 best known nearby, "President of Israel"
+haifa | FAME | #6 best known nearby, "Siege of Jerusalem"
+haifa | FAME | #7 best known nearby, "via Dolorosa"
+haifa | FAME | #8 best known nearby, "Conquest of Jerusalem"
+haifa | FAME | #9 best known nearby, "Siege of Jerusalem"
+haifa | FOLD | Yad Vashem
+haifa | NOID | Church of Our Lady of the Covenant [day trip]
+haifa | NOID | The Benedictine monastery in Abu Ghosh [day trip]
+hamburg | DUP | Buxtehude
+hamburg | FAME | #1 best known nearby, "Der Spiegel"
+hamburg | FAME | #2 best known nearby, "Hamburg U-Bahn"
+hamburg | FAME | #4 best known nearby, "Bombing of Hamburg in World War II"
+hamburg | FAME | must-see "Elbphilharmonie"
+hamburg | FAME | must-see "Miniatur Wunderland"
+hamburg | FAME | must-see "Speicherstadt"
+hamburg | FAME | must-see "St. Michael's Church|St Michael's Church|Michel"
+hamburg | LEN | Burgtor [day trip]
+hamburg | LEN | Gerhard-Marcks-Haus [day trip]
+hamburg | LEN | Heiligen-Geist-Hospital [day trip]
+hamburg | LEN | Holstentor [day trip]
+hamburg | LEN | Weserburg [day trip]
+hamburg | NOID | Behnhaus/Drägerhaus [day trip]
+hamburg | NOID | Buxtehude Museum für Regionalgeschichte und Kunst [day trip]
+hamburg | NOID | City hall [day trip]
+hamburg | NOID | Dom St. Petri [day trip]
+hamburg | NOID | Kunsthalle [day trip]
+hamburg | NOID | Rathaus [day trip]
+hamburg | NOID | Roland [day trip]
+hamburg | NOID | St. Katharinen [day trip]
+hamburg | NOID | St. Marien [day trip]
+hamburg | NOID | St. Petri [day trip]
+hamburg | NOID | St. Petri church [day trip]
+hamburg | NOID | The Dom [day trip]
+hamburg | POS | Außenalster
+hamburg | POS | Port of Hamburg
+hamburg | POS | Wallanlagen [day trip]
+heraklion | LEN | Fortifications of Heraklion
+heraklion | LEN | Lions Square and 25th August Street
+heraklion | NOID | 1866 Street market
+heraklion | NOID | Church of Saint Titus
+heraklion | NOID | Dominican Church of St Peter
+heraklion | NOID | Phaistos palace [day trip]
+heraklion | NOID | Venetian harbor and Koules fortress
+heraklion | NOT | Palace of Knossos
+heraklion | POS | Kali Limenes
+istanbul | FAME | #1 best known nearby, "Fall of Constantinople"
+istanbul | FAME | #10 best known nearby, "Siege of Constantinople"
+istanbul | FAME | #11 best known nearby, "2022 Istanbul bombing"
+istanbul | FAME | #12 best known nearby, "Spice Bazaar"
+istanbul | FAME | #13 best known nearby, "2016 Istanbul bombing"
+istanbul | FAME | #14 best known nearby, "Siege of Constantinople"
+istanbul | FAME | #15 best known nearby, "Eurasia Tunnel"
+istanbul | FAME | #2 best known nearby, "Bosphorus Bridge"
+istanbul | FAME | #3 best known nearby, "Istanbul Metro"
+istanbul | FAME | #4 best known nearby, "Convention on preventing and combating violence against women and domestic violence"
+istanbul | FAME | #6 best known nearby, "Siege of Constantinople"
+istanbul | FAME | #8 best known nearby, "Galata Bridge"
+istanbul | FAME | #9 best known nearby, "Siege of Constantinople"
+istanbul | FAME | must-see "Basilica Cistern"
+istanbul | FAME | must-see "Galata Tower"
+istanbul | FAME | must-see "Grand Bazaar"
+juneau | FAME | must-see "Mendenhall Glacier"
+juneau | FAME | must-see "Mount Roberts Tramway"
+juneau | NOID | Alaskan Brewing Company Brewery Tour
+juneau | NOID | Juneau Arts & Humanities Council
+juneau | NOID | Upside-Down Forest
+juneau | NOT | Sealaska Heritage Institute
+juneau | POS | Goldbelt Tram
+ketchikan | FAME | must-see "Creek Street"
+ketchikan | NOID | Alaska Rainforest Sanctuary
+ketchikan | NOID | Tongass Historical Museum
+ketchikan | NOID | Tribal Fish Hatchery
+kotor | NOID | Castle of San Giovanni
+kotor | POS | Lovćen National Park
+kusadasi | FAME | must-see "House of the Virgin Mary"
+kusadasi | NOID | Ancient Ephesus
+kusadasi | NOID | Basilica of Saint John
+kusadasi | NOID | Pigeon Island castle
+kyoto | DUP | Ujigami Shrine
+kyoto | FAME | #1 best known nearby, "Historic Monuments of Ancient Kyoto"
+kyoto | FAME | #2 best known nearby, "Kyoto Municipal Subway"
+kyoto | FAME | #3 best known nearby, "Hōgen rebellion"
+kyoto | FAME | #4 best known nearby, "Honnō-ji Incident"
+kyoto | FAME | #5 best known nearby, "Battle of Toba-Fushimi"
+kyoto | FAME | must-see "Fushimi Inari"
+kyoto | LEN | Minakuchi Castle [day trip]
+lehavre | FAME | #1 best known nearby, "French"
+lehavre | FAME | #10 best known nearby, "Storming of the Bastille"
+lehavre | FAME | #11 best known nearby, "Winged Victory of Samothrace"
+lehavre | FAME | #12 best known nearby, "coup of 18 Brumaire"
+lehavre | FAME | #13 best known nearby, "Montparnasse Tower"
+lehavre | FAME | #14 best known nearby, "Liberation of Paris"
+lehavre | FAME | #15 best known nearby, "Pont Neuf"
+lehavre | FAME | #2 best known nearby, "November 2015 Paris attacks"
+lehavre | FAME | #3 best known nearby, "Paris Agreement"
+lehavre | FAME | #5 best known nearby, "Paris Métro"
+lehavre | FAME | #6 best known nearby, "Charlie Hebdo shooting"
+lehavre | FAME | #7 best known nearby, "St. Bartholomew's Day massacre"
+lehavre | FAME | #9 best known nearby, "2019 fire at Notre-Dame de Paris"
+lehavre | FOLD | Eiffel Tower
+lehavre | FOLD | Notre-Dame de Paris
+lehavre | LEN | Arc de Triomphe
+lehavre | LEN | Chartres Cathedral [day trip]
+lehavre | LEN | Jardin des plantes
+lehavre | NOID | Ch&acirc;teau de Chantilly [day trip]
+lehavre | NOID | Musée d'art figuratif contemporain [day trip]
+lehavre | NOID | Musée des pompiers [day trip]
+lehavre | NOID | Musée du Vitrail [day trip]
+lehavre | NOID | Saint-Denis Gate
+lehavre | POS | Chantilly [day trip]
+lehavre | POS | Chartres [day trip]
+lehavre | POS | Château de Fontainebleau [day trip]
+lehavre | POS | Forêt de Fontainebleau [day trip]
+lisbon | DUP | Sintra
+lisbon | FAME | #1 best known nearby, "Lisbon Metro"
+lisbon | FAME | #4 best known nearby, "Siege of Lisbon"
+lisbon | FAME | must-see "Castle of Saint George|São Jorge Castle"
+lisbon | LEN | Botânico Garden of Lisboa
+lisbon | NOID | Basilica of Our Lady and St. Anthony [day trip]
+lisbon | NOID | Moorish Castle [day trip]
+lisbon | NOID | Quintinha de Monserrate [day trip]
+lisbon | POS | 25 de Abril Bridge
+lisbon | POS | Ericeira [day trip]
+lisbon | POS | Mafra [day trip]
+lisbon | POS | Águas Livres Aqueduct
+madrid | FAME | #1 best known nearby, "Spanish"
+madrid | FAME | #10 best known nearby, "Torre PwC"
+madrid | FAME | #11 best known nearby, "Forest of Remembrance"
+madrid | FAME | #2 best known nearby, "Madrid Metro"
+madrid | FAME | #3 best known nearby, "2004 Madrid train bombings"
+madrid | FAME | #4 best known nearby, "Vicente Calderón Stadium"
+madrid | FAME | #5 best known nearby, "The Third of May 1808"
+madrid | FAME | #6 best known nearby, "Torre Moeve"
+madrid | FAME | #7 best known nearby, "Dos de Mayo Uprising"
+madrid | FAME | #8 best known nearby, "Siege of Madrid"
+madrid | FAME | #9 best known nearby, "Torre Picasso"
+madrid | FAME | must-see "Reina Sof"
+madrid | FAME | must-see "Retiro"
+madrid | LEN | Cuatro Torres
+madrid | LEN | Museo Nacional de Antropología
+madrid | LEN | Plaza Mayor and Puerta del Sol
+madrid | NAME | Cathedral [day trip]
+madrid | NAME | Museo Nacional de Ciencias Naturales
+madrid | NAME | Plaza Mayor and Puerta del Sol
+madrid | NOID | Basílica La Milagrosa
+madrid | NOID | Cathedral [day trip]
+madrid | NOID | Constitutional Tribunal
+madrid | NOID | El Escorial monastery [day trip]
+madrid | NOID | Iglesia de los Jesuitas [day trip]
+madrid | NOID | Iglesia del Salvador [day trip]
+madrid | NOID | Monastery of San Juan de los Reyes [day trip]
+madrid | NOID | Museum of the Army [day trip]
+madrid | NOID | Parque Madrid Río
+madrid | NOID | Real Ermita de San Antonio de la Florida
+madrid | NOID | Reina Sofía Museum
+madrid | NOID | The Alcazar [day trip]
+madrid | NOID | The Burial of the Count of Orgaz [day trip]
+madrid | NOT | Fundación Juan March
+madrid | POS | Casa de Campo
+madrid | POS | Nuevos Ministerios
+madrid | POS | Toledo [day trip]
+messina | DUP | Regional Museum of Messina
+messina | NAME | Chiesa di Montevergine
+messina | NAME | Fontana Falconieri
+messina | NAME | Museo Nazionale della Magna Grecia [day trip]
+messina | NAME | Museo regionale di Messina
+messina | NAME | Palazzo Corvaja [day trip]
+messina | NOID | Castello Aragonese [day trip]
+messina | NOID | Duomo
+messina | NOID | Fontana del Nettuno
+messina | NOID | Palazzo Badia Vecchia [day trip]
+messina | NOID | Palazzo dei Duchi di Santo Stefano [day trip]
+messina | NOID | Palazzo del Monte di Pietà
+messina | NOID | Piazza IX Aprile [day trip]
+messina | NOID | Porta Grazia di Messina
+messina | NOID | Santissima Annunziata dei Catalani
+messina | NOID | Torre dell'Orologio/ Porta di Mezzo, [day trip]
+messina | NOID | Villa de Pasquale
+messina | NOID | ex Chiesa di Santa Maria Alemanna
+messina | POS | Casa Cuseni [day trip]
+messina | POS | Reggio Calabria
+messina | POS | Regional Museum of Messina
+mykonos | FAME | must-see "Paraportiani"
+mykonos | NOID | Delos island [day trip]
+mykonos | NOID | Kato Mili windmills
+mykonos | NOID | Little Venice
+mykonos | NOID | Mykonos Town
+mykonos | NOID | Panagia Paraportiani church
+naples | FAME | #1 best known nearby, "Naples Metro"
+naples | FAME | must-see "Castel Nuovo"
+naples | FAME | must-see "National Archaeological Museum"
+naples | FOLD | Galleria Borbonica
+naples | LEN | Castel Capuano
+naples | LEN | Castel Nuovo
+naples | LEN | Castel Sant'Elmo
+naples | LEN | Castel dell'Ovo
+naples | LEN | Catacombe di San Gaudioso
+naples | LEN | Flavian Amphitheater [day trip]
+naples | LEN | House of the Faun [day trip]
+naples | LEN | House of the Tragic Poet [day trip]
+naples | LEN | House of the Vettii [day trip]
+naples | LEN | Piazza del Plebiscito and the Royal Palace
+naples | LEN | Porta Capuana
+naples | LEN | Rione Terra [day trip]
+naples | LEN | Villa dei Misteri [day trip]
+naples | NAME | Museo Civico Filangieri
+naples | NAME | Palazzo delle Arti
+naples | NAME | Piazza Torquato Tasso [day trip]
+naples | NOID | Amphitheatre [day trip]
+naples | NOID | Archeological Museum of the Sorrentine Peninsula [day trip]
+naples | NOID | Certosa e Museo di San Martino
+naples | NOID | Church of San Francesco [day trip]
+naples | NOID | Duomo
+naples | NOID | Great Palaestra [day trip]
+naples | NOID | Hotel Tramontano [day trip]
+naples | NOID | Museum of Contemporary Art Donnaregina
+naples | NOID | Museum of the Inlaid Wood [day trip]
+naples | NOID | National railway Museum of Pietrarsa
+naples | NOID | Neapolis Sotterrata
+naples | NOID | Piazza Vittoria [day trip]
+naples | NOID | Royal Palace and National Museum of Capodimonte
+naples | NOID | Sansevero Chapel
+naples | NOID | Small Port [day trip]
+naples | NOID | Via San Cesareo [day trip]
+naples | NOID | Villa Comunale [day trip]
+naples | NOID | Villa Pollio [day trip]
+naples | POS | Capri [day trip]
+naples | POS | Pompeii [day trip]
+naples | POS | Spaccanapoli and the historic center
+nassau | FAME | must-see "Fort Charlotte"
+nassau | FAME | must-see "Queen's Staircase"
+reykjavik | FAME | must-see "Harpa"
+reykjavik | LEN | Hafnarborg [day trip]
+reykjavik | LEN | Reykjavík Botanic Garden
+reykjavik | NOID | Hafnarfjarðarkirkja [day trip]
+reykjavik | NOID | Hafnarfjörður Museum [day trip]
+reykjavik | NOID | Karmelklaustrið í Hafnarfirði [day trip]
+reykjavik | NOID | Safnaðarheimili Fríkirkjunnar í Hafnarfirði [day trip]
+reykjavik | NOID | Sankti Jósefskirkja [day trip]
+reykjavik | NOID | Viti [day trip]
+reykjavik | NOID | Víðistaðatún [day trip]
+reykjavik | POS | Reykjavík Cathedral
+rome | FAME | #1 best known nearby, "European Convention on Human Rights"
+rome | FAME | #10 best known nearby, "Arch of Constantine"
+rome | FAME | #11 best known nearby, "Laocoön and His Sons"
+rome | FAME | #12 best known nearby, "Battle of the Milvian Bridge"
+rome | FAME | #13 best known nearby, "Campus Martius"
+rome | FAME | #14 best known nearby, "Capitoline Wolf"
+rome | FAME | #3 best known nearby, "Year of the Four Emperors"
+rome | FAME | #4 best known nearby, "The Creation of Adam"
+rome | FAME | #5 best known nearby, "Rome Statute of the International Criminal Court"
+rome | FAME | #6 best known nearby, "Great Fire of Rome"
+rome | FAME | #7 best known nearby, "Pietà"
+rome | FAME | #8 best known nearby, "Rome Metro"
+rome | FAME | #9 best known nearby, "The Last Judgment"
+rome | FAME | must-see "Trevi Fountain"
+rome | FAME | must-see "Vatican Museums|Sistine Chapel"
+rome | LEN | Arch of Titus
+rome | LEN | Circus Maximus
+rome | LEN | Column of Marcus Aurelius
+rome | LEN | Mausoleo di Augusto
+rome | LEN | Palatine Hill
+rome | LEN | Pantheon
+rome | LEN | Terme di Caracalla
+rome | NAME | Palazzo del Quirinale
+rome | NOID | Chiesa del Gesù
+rome | NOID | Olympic Stadium
+rome | NOID | The Celio
+rome | NOID | The Spanish Steps
+rome | NOID | The Vatican Museum
+rome | NOID | Vittorio Emanuele Monument
+santorini | FAME | #1 best known nearby, "Minoan eruption"
+santorini | FAME | must-see "Akrotiri"
+santorini | NOID | Akrotiri prehistoric town
+santorini | NOID | Fira caldera path
+santorini | NOID | Oia village
+santorini | NOID | Pyrgos village
+venice | DUP | Palazzo della Ragione
+venice | FAME | #3 best known nearby, "St Mark's Campanile"
+venice | FAME | #4 best known nearby, "Horses of Saint Mark"
+venice | FAME | #5 best known nearby, "Ponte dell'Accademia"
+venice | FAME | #6 best known nearby, "Ponte della Libertà"
+venice | FAME | #7 best known nearby, "Portrait of the Four Tetrarchs"
+venice | FAME | #8 best known nearby, "MOSE"
+venice | LEN | Scrovegni Chapel [day trip]
+venice | NAME | Palazzo del Bo' [day trip]
+venice | NAME | Piazza Ferretto [day trip]
+venice | NOID | Archaeological Museum [day trip]
+venice | NOID | Astronomic Observatory [day trip]
+venice | NOID | Bissuola Park [day trip]
+venice | NOID | Botanic Garden [day trip]
+venice | NOID | Cathedral of Mestre [day trip]
+venice | NOID | Eremitani Civic Museum [day trip]
+venice | NOID | Lace Museum [day trip]
+venice | NOID | Saint Anthony's cathedral [day trip]
+venice | NOID | Santi Giovanni e Paolo Church
+venice | POS | Padua [day trip]
+vienna | FAME | #1 best known nearby, "Battle of Vienna"
+vienna | FAME | #10 best known nearby, "2020 Vienna attacks"
+vienna | FAME | #11 best known nearby, "Vienna Basin"
+vienna | FAME | #12 best known nearby, "Vienna Convention on Consular Relations"
+vienna | FAME | #14 best known nearby, "meridian circle"
+vienna | FAME | #2 best known nearby, "Vienna Convention on Diplomatic Relations"
+vienna | FAME | #3 best known nearby, "Vienna Convention on the Law of Treaties"
+vienna | FAME | #4 best known nearby, "First Turkish Siege of Vienna"
+vienna | FAME | #5 best known nearby, "Vienna metro"
+vienna | FAME | #6 best known nearby, "Austrian State Treaty"
+vienna | FAME | #7 best known nearby, "Vienna New Year's Concert"
+vienna | FAME | #8 best known nearby, "Strategic Arms Limitation Talks"
+vienna | FAME | #9 best known nearby, "Vienna City Hall"
+vienna | LEN | Burgruine Rehberg [day trip]
+vienna | LEN | Kunsthalle Krems [day trip]
+vienna | LEN | Steiner Tor [day trip]
+vienna | NOID | Karikatur Museum Krems [day trip]
+vienna | POS | Baden [day trip]
+vienna | POS | Eisenstadt [day trip]
+vienna | POS | Krems [day trip]
+vienna | POS | Vienna Central Cemetery

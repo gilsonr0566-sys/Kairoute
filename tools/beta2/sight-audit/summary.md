@@ -1,0 +1,454 @@
+# Sight audit summary (2026-11-23)
+
+29 places. First summary: every finding counts as new.
+
+| Place | POS | NAME | DUP | NOT | NOID | FOLD | LEN | FAME |
+|---|---|---|---|---|---|---|---|---|
+| athens | 1 | 2 | 0 | 1 | 10 | 2 | 2 | 4 |
+| barcelona | 1 | 0 | 0 | 0 | 8 | 0 | 1 | 4 |
+| chania | 1 | 0 | 0 | 0 | 5 | 0 | 1 | 2 |
+| cococay | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 |
+| dubai | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 9 |
+| dubrovnik | 1 | 0 | 0 | 0 | 2 | 0 | 0 | 1 |
+| edinburgh | 2 | 0 | 1 | 1 | 7 | 0 | 3 | 2 |
+| grandturk | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 2 |
+| haifa | 0 | 0 | 0 | 0 | 2 | 1 | 0 | 15 |
+| hamburg | 3 | 0 | 1 | 0 | 13 | 0 | 5 | 7 |
+| heraklion | 1 | 0 | 0 | 1 | 5 | 0 | 2 | 0 |
+| istanbul | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 16 |
+| juneau | 1 | 0 | 0 | 1 | 3 | 0 | 0 | 2 |
+| ketchikan | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 1 |
+| kotor | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
+| kusadasi | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 1 |
+| kyoto | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 6 |
+| lehavre | 4 | 0 | 0 | 0 | 5 | 2 | 3 | 13 |
+| lisbon | 4 | 0 | 1 | 0 | 3 | 0 | 1 | 3 |
+| madrid | 3 | 3 | 0 | 1 | 13 | 0 | 3 | 13 |
+| messina | 3 | 5 | 1 | 0 | 12 | 0 | 0 | 0 |
+| mykonos | 0 | 0 | 0 | 0 | 5 | 0 | 0 | 1 |
+| naples | 3 | 3 | 0 | 0 | 18 | 1 | 13 | 3 |
+| nassau | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 |
+| reykjavik | 1 | 0 | 0 | 0 | 7 | 0 | 2 | 1 |
+| rome | 0 | 1 | 0 | 0 | 6 | 0 | 7 | 15 |
+| santorini | 0 | 0 | 0 | 0 | 4 | 0 | 0 | 2 |
+| venice | 1 | 2 | 1 | 0 | 9 | 0 | 1 | 6 |
+| vienna | 4 | 0 | 0 | 0 | 1 | 0 | 3 | 13 |
+| **all** | **35** | **16** | **6** | **5** | **151** | **6** | **48** | **144** |
+
+## New since the last summary (411)
+
+- athens: POS Corinth Canal [day trip] {Q182873 by name}: app is 1.10 km from Wikidata's point (not on the map by id)
+- athens: NOT Ancient Corinth [day trip] {Q1363688 by name}: Wikidata has an end date (closed, dissolved or demolished)
+- athens: NOID Athens Cathedral and the Little Metropolis: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- athens: NOID Acropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou): built-in sight with no Wikidata id and nothing of the name on the map nearby
+- athens: NOID Agia Ekaterini (St Catherine's Church): built-in sight with no Wikidata id and nothing of the name on the map nearby
+- athens: NOID Byzantine and Christian Museum: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- athens: NOID Philopappos Hill: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- athens: NOID Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- athens: NOID Ancient Theater [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- athens: NOID Temple of Apollo [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- athens: NOID Delphi Stadium [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- athens: NOID Sanctuary of Athena with the Tholos [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- athens: NAME Museum [day trip]: a bare name that says what, not which one
+- athens: NAME Ancient Theater [day trip]: a bare name that says what, not which one
+- athens: FOLD Ancient Agora is part of Monastiraki and the flea market (Wikidata) but is a separate stop
+- athens: FOLD Theatre of Dionysus is part of Acropolis and Parthenon (Wikidata) but is a separate stop
+- athens: LEN Monastiraki and the flea market {Q1235440 by name}: 45 min, but a square usually takes 5-30 min
+- athens: LEN Theatre of Dionysus {Q1227044 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- athens: FAME #1 best known nearby, "Athens Metro" (53 Wikipedia languages, Q336488), is not offered
+- athens: FAME #3 best known nearby, "Athena Parthenos" (31 Wikipedia languages, Q2070605), is not offered
+- athens: FAME #4 best known nearby, "Athena Promachos" (27 Wikipedia languages, Q755221), is not offered
+- athens: FAME #5 best known nearby, "Choragic Monument of Lysicrates" (26 Wikipedia languages, Q1160691), is not offered
+- barcelona: POS Sitges [day trip] {Q15551 by name}: app is 0.38 km from Wikidata's point (not on the map by id)
+- barcelona: NOID Santa Maria del Mar: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- barcelona: NOID Sant Pau Recinte Modernista: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- barcelona: NOID Bunkers del Carmel: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- barcelona: NOID Gràcia squares: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- barcelona: NOID Pont del Bisbe: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- barcelona: NOID Montserrat monastery [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- barcelona: NOID Girona old town [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- barcelona: NOID Contemporary Art Gallery [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- barcelona: LEN Barceloneta beach {Q1053014 by name}: 45 min, but a beach usually takes 60-300 min
+- barcelona: FAME #1 best known nearby, "Barcelona Metro" (48 Wikipedia languages, Q237189), is not offered
+- barcelona: FAME #2 best known nearby, "Torre Glòries" (40 Wikipedia languages, Q336246), is not offered
+- barcelona: FAME #3 best known nearby, "German Pavilion, Barcelona" (30 Wikipedia languages, Q807915), is not offered
+- barcelona: FAME must-see "La Rambla" is offered (La Rambla & La Boqueria market) but not marked must-see
+- chania: POS Souda Bay War Cemetery [day trip] {Q22919952 by name}: app is 1.52 km from Wikidata's point (not on the map by id)
+- chania: NOID Venetian harbor and lighthouse: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- chania: NOID Old town lanes and Topanas: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- chania: NOID Municipal Market (Agora): built-in sight with no Wikidata id and nothing of the name on the map nearby
+- chania: NOID Church of Saint Nicholas, Splantzia: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- chania: NOID Firkas fortress and Maritime Museum: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- chania: LEN Souda Bay War Cemetery [day trip] {Q22919952 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- chania: FAME #1 best known nearby, "Battle of Crete" (45 Wikipedia languages, Q153316), is not offered
+- chania: FAME must-see "Venetian Harbour|Old Venetian Harbour|Venetian port" is not offered
+- cococay: NOID Thrill Waterpark: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- cococay: NOID Harbour Beach: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- cococay: NOID Harbor Lagoon: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- dubai: FAME #1 best known nearby, "Dubai Metro" (50 Wikipedia languages, Q83787), is not offered
+- dubai: FAME #2 best known nearby, "Emirates Office Tower" (35 Wikipedia languages, Q845182), is not offered
+- dubai: FAME #3 best known nearby, "Jumeirah Emirates Towers Hotel" (33 Wikipedia languages, Q1049027), is not offered
+- dubai: FAME #4 best known nearby, "Queen Elizabeth 2" (31 Wikipedia languages, Q1244204), is not offered
+- dubai: FAME #5 best known nearby, "Address Downtown" (27 Wikipedia languages, Q677823), is not offered
+- dubai: FAME #6 best known nearby, "HHHR Tower" (27 Wikipedia languages, Q1470076), is not offered
+- dubai: FAME #7 best known nearby, "Al Yaqoub Tower" (26 Wikipedia languages, Q1808295), is not offered
+- dubai: FAME #8 best known nearby, "The Dubai Fountain" (26 Wikipedia languages, Q2384491), is not offered
+- dubai: FAME must-see "Dubai Creek" is not offered
+- dubrovnik: POS Cavtat [day trip]: app is 0.55 km from Wikidata's point (not on the map by id)
+- dubrovnik: NOID Bukovac House Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- dubrovnik: NOID Mausoleum of the Račić family [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- dubrovnik: FAME #1 best known nearby, "Siege of Dubrovnik" (32 Wikipedia languages, Q815140), is not offered
+- edinburgh: POS Linlithgow [day trip]: app is 0.43 km from Wikidata's point (not on the map by id)
+- edinburgh: POS Glasgow [day trip] {Q4093 by name}: app is 1.10 km from Wikidata's point (not on the map by id)
+- edinburgh: DUP Glasgow ~ Glasgow School of Art (241 m apart, same words)
+- edinburgh: NOT Glasgow University [day trip]: Wikidata says it is a university, an organization, a company, a business (university in Glasgow, Scotland, United Kingdom, founded in 1451)
+- edinburgh: NOID City Chambers [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- edinburgh: NOID St Andrews in the Square [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- edinburgh: NOID Willow Tea Rooms [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- edinburgh: NOID The Museum of Piping [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- edinburgh: NOID Park Circus [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- edinburgh: NOID [https://www.glasgow.gov.uk/index.aspx Kelvingrove Park] [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- edinburgh: NOID Hunterian Zoology Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- edinburgh: LEN Royal Botanic Garden Edinburgh: 40 min, but a art museum or gallery usually takes 45-240 min
+- edinburgh: LEN Linlithgow Palace [day trip] {Q564868 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- edinburgh: LEN Govan Stones [day trip] {Q42887850 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- edinburgh: FAME #1 best known nearby, "Major General Sir Nils Olav III" (40 Wikipedia languages, Q1144606), is not offered
+- edinburgh: FAME #2 best known nearby, "Burke and Hare murders" (26 Wikipedia languages, Q1288729), is not offered
+- grandturk: NOID Her Majesty's Prison: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- grandturk: NOID Turks and Caicos National Museum: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- grandturk: NOID Palm Grove Sunset Cabana beach: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)
+- grandturk: FAME must-see "Grand Turk Lighthouse" is offered (Grand Turk) but not marked must-see
+- grandturk: FAME must-see "Cockburn Town" is not offered
+- haifa: NOID Church of Our Lady of the Covenant [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- haifa: NOID The Benedictine monastery in Abu Ghosh [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- haifa: FOLD Yad Vashem is part of Mount Herzl (Wikidata) but is a separate stop
+- haifa: FAME #1 best known nearby, "Pentecost" (119 Wikipedia languages, Q39864), is not offered
+- haifa: FAME #2 best known nearby, "Solomon's Temple" (69 Wikipedia languages, Q223644), is not offered
+- haifa: FAME #3 best known nearby, "crucifixion of Jesus" (69 Wikipedia languages, Q51636), is not offered
+- haifa: FAME #4 best known nearby, "Biblical Hebrew" (52 Wikipedia languages, Q1982248), is not offered
+- haifa: FAME #5 best known nearby, "President of Israel" (49 Wikipedia languages, Q327948), is not offered
+- haifa: FAME #6 best known nearby, "Siege of Jerusalem" (49 Wikipedia languages, Q456993), is not offered
+- haifa: FAME #7 best known nearby, "via Dolorosa" (48 Wikipedia languages, Q214077), is not offered
+- haifa: FAME #8 best known nearby, "Conquest of Jerusalem" (43 Wikipedia languages, Q815161), is not offered
+- haifa: FAME #9 best known nearby, "Siege of Jerusalem" (41 Wikipedia languages, Q844886), is not offered
+- haifa: FAME #10 best known nearby, "Deir Yassin massacre" (41 Wikipedia languages, Q1126268), is not offered
+- haifa: FAME #11 best known nearby, "Jerusalem Light Rail" (39 Wikipedia languages, Q403269), is not offered
+- haifa: FAME #12 best known nearby, "Victims of Acts of Terror Memorial" (37 Wikipedia languages, Q2916616), is not offered
+- haifa: FAME #13 best known nearby, "Kiss of Judas" (32 Wikipedia languages, Q10289604), is not offered
+- haifa: FAME #14 best known nearby, "Siege of Jerusalem" (31 Wikipedia languages, Q815154), is not offered
+- haifa: FAME #15 best known nearby, "King David Hotel bombing" (31 Wikipedia languages, Q1814446), is not offered
+- hamburg: POS Port of Hamburg: app is 1.38 km from Wikidata's point (not on the map by id)
+- hamburg: POS Außenalster: app is 1.05 km from Wikidata's point (not on the map by id)
+- hamburg: POS Wallanlagen [day trip] {Q907935 by name}: app is 0.35 km from Wikidata's point (not on the map by id)
+- hamburg: DUP Buxtehude ~ Buxtehude Museum für Regionalgeschichte und Kunst (43 m apart, same words)
+- hamburg: NOID Rathaus [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID Roland [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID Dom St. Petri [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID Kunsthalle [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID St. Petri church [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID City hall [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID Buxtehude Museum für Regionalgeschichte und Kunst [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID St. Marien [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID The Dom [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID St. Petri [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID St. Katharinen [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID Behnhaus/Drägerhaus [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: NOID Rathaus [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- hamburg: LEN Gerhard-Marcks-Haus [day trip] {Q1511196 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- hamburg: LEN Weserburg [day trip] {Q2563859 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- hamburg: LEN Holstentor [day trip] {Q321229 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- hamburg: LEN Burgtor [day trip] {Q538276 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- hamburg: LEN Heiligen-Geist-Hospital [day trip] {Q317608 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- hamburg: FAME #1 best known nearby, "Der Spiegel" (65 Wikipedia languages, Q131478), is not offered
+- hamburg: FAME #2 best known nearby, "Hamburg U-Bahn" (39 Wikipedia languages, Q6445), is not offered
+- hamburg: FAME #4 best known nearby, "Bombing of Hamburg in World War II" (32 Wikipedia languages, Q316868), is not offered
+- hamburg: FAME must-see "Elbphilharmonie" is not offered
+- hamburg: FAME must-see "Speicherstadt" is not offered
+- hamburg: FAME must-see "Miniatur Wunderland" is offered (Miniatur Wunderland) but not marked must-see
+- hamburg: FAME must-see "St. Michael's Church|St Michael's Church|Michel" is not offered
+- heraklion: POS Kali Limenes (Fair Havens) [day trip] {Q11818846 by name}: app is 1.39 km from Wikidata's point (not on the map by id)
+- heraklion: NOT Palace of Knossos {Q9054457 by name}: Wikidata has an end date (closed, dissolved or demolished)
+- heraklion: NOID Venetian harbor and Koules fortress: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- heraklion: NOID Church of Saint Titus: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- heraklion: NOID 1866 Street market: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- heraklion: NOID Dominican Church of St Peter: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- heraklion: NOID Phaistos palace [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- heraklion: LEN Lions Square and 25th August Street {Q6555912 by name}: 40 min, but a square usually takes 5-30 min
+- heraklion: LEN Fortifications of Heraklion {Q20127741 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- istanbul: FAME #1 best known nearby, "Fall of Constantinople" (80 Wikipedia languages, Q160077), is not offered
+- istanbul: FAME #2 best known nearby, "Bosphorus Bridge" (58 Wikipedia languages, Q4484), is not offered
+- istanbul: FAME #3 best known nearby, "Istanbul Metro" (55 Wikipedia languages, Q498172), is not offered
+- istanbul: FAME #4 best known nearby, "Convention on preventing and combating violence against women and domestic violence" (54 Wikipedia languages, Q1697391), is not offered
+- istanbul: FAME #6 best known nearby, "Siege of Constantinople" (47 Wikipedia languages, Q27900), is not offered
+- istanbul: FAME #8 best known nearby, "Galata Bridge" (39 Wikipedia languages, Q81523), is not offered
+- istanbul: FAME #9 best known nearby, "Siege of Constantinople" (38 Wikipedia languages, Q1750892), is not offered
+- istanbul: FAME #10 best known nearby, "Siege of Constantinople" (37 Wikipedia languages, Q399482), is not offered
+- istanbul: FAME #11 best known nearby, "2022 Istanbul bombing" (36 Wikipedia languages, Q115193912), is not offered
+- istanbul: FAME #12 best known nearby, "Spice Bazaar" (34 Wikipedia languages, Q668641), is not offered
+- istanbul: FAME #13 best known nearby, "2016 Istanbul bombing" (33 Wikipedia languages, Q22039066), is not offered
+- istanbul: FAME #14 best known nearby, "Siege of Constantinople" (32 Wikipedia languages, Q312268), is not offered
+- istanbul: FAME #15 best known nearby, "Eurasia Tunnel" (32 Wikipedia languages, Q5411040), is not offered
+- istanbul: FAME must-see "Grand Bazaar" is offered (Grand Bazaar) but not marked must-see
+- istanbul: FAME must-see "Basilica Cistern" is offered (Basilica Cistern) but not marked must-see
+- istanbul: FAME must-see "Galata Tower" is offered (Galata Tower) but not marked must-see
+- juneau: POS Goldbelt Tram: app is 0.82 km from Wikidata's point (not on the map by id)
+- juneau: NOT Sealaska Heritage Institute: Wikidata says it is an organization (nonprofit organization in Juneau, United States)
+- juneau: NOID Juneau Arts & Humanities Council: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English))
+- juneau: NOID Alaskan Brewing Company Brewery Tour: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- juneau: NOID Upside-Down Forest: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- juneau: FAME must-see "Mendenhall Glacier" is not offered
+- juneau: FAME must-see "Mount Roberts Tramway" is not offered
+- ketchikan: NOID Tongass Historical Museum: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English))
+- ketchikan: NOID Tribal Fish Hatchery: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English))
+- ketchikan: NOID Alaska Rainforest Sanctuary: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- ketchikan: FAME must-see "Creek Street" is not offered
+- kotor: POS Lovćen National Park: app is 5.82 km from Wikidata's point (not on the map by id)
+- kotor: NOID Castle of San Giovanni: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- kusadasi: NOID Ancient Ephesus: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- kusadasi: NOID Basilica of Saint John: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- kusadasi: NOID Pigeon Island castle: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- kusadasi: FAME must-see "House of the Virgin Mary" is offered (House of the Virgin Mary) but not marked must-see
+- kyoto: DUP Ujigami Shrine ~ Uji Shrine (132 m apart, same words)
+- kyoto: LEN Minakuchi Castle [day trip] {Q2969895 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- kyoto: FAME #1 best known nearby, "Historic Monuments of Ancient Kyoto" (41 Wikipedia languages, Q874027), is not offered
+- kyoto: FAME #2 best known nearby, "Kyoto Municipal Subway" (36 Wikipedia languages, Q728081), is not offered
+- kyoto: FAME #3 best known nearby, "Hōgen rebellion" (26 Wikipedia languages, Q842357), is not offered
+- kyoto: FAME #4 best known nearby, "Honnō-ji Incident" (25 Wikipedia languages, Q169598), is not offered
+- kyoto: FAME #5 best known nearby, "Battle of Toba-Fushimi" (25 Wikipedia languages, Q1193959), is not offered
+- kyoto: FAME must-see "Fushimi Inari" is offered (Fushimi Inari-taisha) but not marked must-see
+- lehavre: POS Chantilly [day trip]: app is 1.51 km from Wikidata's point (not on the map by id)
+- lehavre: POS Chartres [day trip]: app is 1.06 km from Wikidata's point (not on the map by id)
+- lehavre: POS Château de Fontainebleau [day trip] {Q201428 by name}: app is 0.84 km from Wikidata's point (not on the map by id)
+- lehavre: POS Forêt de Fontainebleau [day trip] {Q1293678 by name}: app is 1.66 km from Wikidata's point (not on the map by id)
+- lehavre: NOID Saint-Denis Gate: no Wikidata id and nothing of the name on the map nearby (from Wikidata (Wikipedia in many languages))
+- lehavre: NOID Ch&acirc;teau de Chantilly [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- lehavre: NOID Musée du Vitrail [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- lehavre: NOID Musée d'art figuratif contemporain [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- lehavre: NOID Musée des pompiers [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- lehavre: FOLD Eiffel Tower is part of Champ de Mars (Wikidata) but is a separate stop
+- lehavre: FOLD Notre-Dame de Paris is part of île de la Cité (Wikidata) but is a separate stop
+- lehavre: LEN Arc de Triomphe: 20 min, but a museum usually takes 30-180 min
+- lehavre: LEN Jardin des plantes: 40 min, but a art museum or gallery usually takes 45-240 min
+- lehavre: LEN Chartres Cathedral [day trip] {Q180274 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- lehavre: FAME #1 best known nearby, "French" (353 Wikipedia languages, Q150), is not offered
+- lehavre: FAME #2 best known nearby, "November 2015 Paris attacks" (101 Wikipedia languages, Q21479779), is not offered
+- lehavre: FAME #3 best known nearby, "Paris Agreement" (90 Wikipedia languages, Q21707860), is not offered
+- lehavre: FAME #5 best known nearby, "Paris Métro" (82 Wikipedia languages, Q50716), is not offered
+- lehavre: FAME #6 best known nearby, "Charlie Hebdo shooting" (75 Wikipedia languages, Q18718876), is not offered
+- lehavre: FAME #7 best known nearby, "St. Bartholomew's Day massacre" (74 Wikipedia languages, Q163891), is not offered
+- lehavre: FAME #9 best known nearby, "2019 fire at Notre-Dame de Paris" (62 Wikipedia languages, Q63167656), is not offered
+- lehavre: FAME #10 best known nearby, "Storming of the Bastille" (62 Wikipedia languages, Q6539), is not offered
+- lehavre: FAME #11 best known nearby, "Winged Victory of Samothrace" (54 Wikipedia languages, Q216402), is not offered
+- lehavre: FAME #12 best known nearby, "coup of 18 Brumaire" (51 Wikipedia languages, Q620965), is not offered
+- lehavre: FAME #13 best known nearby, "Montparnasse Tower" (48 Wikipedia languages, Q323767), is not offered
+- lehavre: FAME #14 best known nearby, "Liberation of Paris" (48 Wikipedia languages, Q696835), is not offered
+- lehavre: FAME #15 best known nearby, "Pont Neuf" (45 Wikipedia languages, Q335277), is not offered
+- lisbon: POS 25 de Abril Bridge: app is 0.50 km from Wikidata's point (not on the map by id)
+- lisbon: POS Águas Livres Aqueduct: app is 0.82 km from Wikidata's point (not on the map by id)
+- lisbon: POS Mafra [day trip]: app 38.93333,-9.33333 is 0.60 km from the map's Mafra (node/25611738, 38.93698,-9.32824); Wikidata 0.60 km from the map
+- lisbon: POS Ericeira [day trip]: app 38.96670,-9.41670 is 0.39 km from the map's Ericeira (node/130035599, 38.96324,-9.41708); Wikidata 0.16 km from the map
+- lisbon: DUP Sintra ~ Sintra National Palace (40 m apart, same words)
+- lisbon: NOID Basilica of Our Lady and St. Anthony [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- lisbon: NOID Moorish Castle [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- lisbon: NOID Quintinha de Monserrate [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- lisbon: LEN Botânico Garden of Lisboa: 40 min, but a art museum or gallery usually takes 45-240 min
+- lisbon: FAME #1 best known nearby, "Lisbon Metro" (44 Wikipedia languages, Q746032), is not offered
+- lisbon: FAME #4 best known nearby, "Siege of Lisbon" (31 Wikipedia languages, Q815177), is not offered
+- lisbon: FAME must-see "Castle of Saint George|São Jorge Castle" is offered (Castle of Saint George) but not marked must-see
+- madrid: POS Nuevos Ministerios {Q2705508 by name}: app 40.44396,-3.69346 is 0.26 km from the map's Nuevos Ministerios (node/4998670036, 40.44584,-3.69170); Wikidata 0.05 km from the map
+- madrid: POS Casa de Campo {Q568579 by name}: app 40.42410,-3.75510 is 2.34 km from the map's Casa de Campo (node/5303127327, 40.40349,-3.76093); Wikidata 0.05 km from the map
+- madrid: POS Toledo [day trip] {Q5836 by name}: app is 0.67 km from Wikidata's point (not on the map by id)
+- madrid: NOT Fundación Juan March {Q29043218 by name}: Wikidata says it is an organization (family-run Spanish cultural heritage institution)
+- madrid: NOID Reina Sofía Museum (Guernica): built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID Real Ermita de San Antonio de la Florida: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID Parque Madrid Río: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID Basílica La Milagrosa: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID Constitutional Tribunal: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID El Escorial monastery [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID Cathedral [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID Iglesia de los Jesuitas [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID Iglesia del Salvador [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID The Burial of the Count of Orgaz [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID Monastery of San Juan de los Reyes [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID The Alcazar [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NOID Museum of the Army [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- madrid: NAME Plaza Mayor and Puerta del Sol {Q1123493 by name}: local name; Wikidata's English name is "Main Square"
+- madrid: NAME Museo Nacional de Ciencias Naturales {Q1966699 by name}: local name; Wikidata's English name is "National Museum of Natural Sciences"
+- madrid: NAME Cathedral [day trip]: a bare name that says what, not which one
+- madrid: LEN Plaza Mayor and Puerta del Sol {Q1123493 by name}: 40 min, but a square usually takes 5-30 min
+- madrid: LEN Cuatro Torres {Q503109 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- madrid: LEN Museo Nacional de Antropología {Q29538755 by name}: 60 min, but a fountain, statue or monument usually takes 5-30 min
+- madrid: FAME #1 best known nearby, "Spanish" (351 Wikipedia languages, Q1321), is not offered
+- madrid: FAME #2 best known nearby, "Madrid Metro" (55 Wikipedia languages, Q191987), is not offered
+- madrid: FAME #3 best known nearby, "2004 Madrid train bombings" (49 Wikipedia languages, Q213531), is not offered
+- madrid: FAME #4 best known nearby, "Vicente Calderón Stadium" (48 Wikipedia languages, Q207626), is not offered
+- madrid: FAME #5 best known nearby, "The Third of May 1808" (45 Wikipedia languages, Q1091086), is not offered
+- madrid: FAME #6 best known nearby, "Torre Moeve" (33 Wikipedia languages, Q519568), is not offered
+- madrid: FAME #7 best known nearby, "Dos de Mayo Uprising" (31 Wikipedia languages, Q181146), is not offered
+- madrid: FAME #8 best known nearby, "Siege of Madrid" (26 Wikipedia languages, Q685062), is not offered
+- madrid: FAME #9 best known nearby, "Torre Picasso" (26 Wikipedia languages, Q1364394), is not offered
+- madrid: FAME #10 best known nearby, "Torre PwC" (25 Wikipedia languages, Q651643), is not offered
+- madrid: FAME #11 best known nearby, "Forest of Remembrance" (25 Wikipedia languages, Q833213), is not offered
+- madrid: FAME must-see "Retiro" is offered (Retiro Park) but not marked must-see
+- madrid: FAME must-see "Reina Sof" is offered (Reina Sofía Museum (Guernica)) but not marked must-see
+- messina: POS Regional Museum of Messina {Q1526140 by name}: app is 0.59 km from Wikidata's point (not on the map by id)
+- messina: POS Reggio Calabria (ancient Rhegium) [day trip] {Q8471 by name}: app is 0.46 km from Wikidata's point (not on the map by id)
+- messina: POS Casa Cuseni [day trip] {Q48807438 by name}: app is 0.68 km from Wikidata's point (not on the map by id)
+- messina: DUP Regional Museum of Messina = Museo regionale di Messina (same Wikidata Q1526140)
+- messina: NOID Santissima Annunziata dei Catalani: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NOID Palazzo del Monte di Pietà: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NOID ex Chiesa di Santa Maria Alemanna: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NOID Fontana del Nettuno: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NOID Porta Grazia di Messina: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NOID Villa de Pasquale: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NOID Piazza IX Aprile [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NOID Torre dell'Orologio/ Porta di Mezzo, [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NOID Palazzo Badia Vecchia [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NOID Palazzo dei Duchi di Santo Stefano [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NOID Duomo (Cathedral) [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NOID Castello Aragonese [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- messina: NAME Museo regionale di Messina {Q1526140 by name}: local name; Wikidata's English name is "Regional museum of Messina"
+- messina: NAME Chiesa di Montevergine {Q28669610 by name}: local name; Wikidata's English name is "Sant'Eustochia"
+- messina: NAME Fontana Falconieri {Q48806154 by name}: local name; Wikidata's English name is "Falconieri fountain"
+- messina: NAME Palazzo Corvaja [day trip] {Q3889942 by name}: local name; Wikidata's English name is "Corvaja Palace"
+- messina: NAME Museo Nazionale della Magna Grecia [day trip] {Q519204 by name}: local name; Wikidata's English name is "National Museum of Magna Græcia"
+- mykonos: NOID Mykonos Town (Chora) lanes: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- mykonos: NOID Kato Mili windmills: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- mykonos: NOID Little Venice: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- mykonos: NOID Panagia Paraportiani church: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- mykonos: NOID Delos island [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- mykonos: FAME must-see "Paraportiani" is offered (Panagia Paraportiani church) but not marked must-see
+- naples: POS Spaccanapoli and the historic center {Q718973 by name}: app is 1.79 km from Wikidata's point (not on the map by id)
+- naples: POS Pompeii [day trip] {Q43332 by name}: app is 0.45 km from Wikidata's point (not on the map by id)
+- naples: POS Capri [day trip] {Q173292 by name}: app is 1.01 km from Wikidata's point (not on the map by id)
+- naples: NOID Sansevero Chapel (Veiled Christ): built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Certosa e Museo di San Martino: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Royal Palace and National Museum of Capodimonte: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID National railway Museum of Pietrarsa: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Museum of Contemporary Art Donnaregina: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Neapolis Sotterrata: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Amphitheatre [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Great Palaestra [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Small Port [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Villa Pollio [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Hotel Tramontano [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Archeological Museum of the Sorrentine Peninsula [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Museum of the Inlaid Wood [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Duomo (Cathedral) [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Church of San Francesco [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Via San Cesareo [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Villa Comunale [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NOID Piazza Vittoria [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- naples: NAME Museo Civico Filangieri {Q3867775 by name}: local name; Wikidata's English name is "Filangieri Civic Museum"
+- naples: NAME Palazzo delle Arti {Q1228306 by name}: local name; Wikidata's English name is "Museo PAN"
+- naples: NAME Piazza Torquato Tasso [day trip] {Q2332531 by name}: local name; Wikidata's English name is "Piazza Tasso"
+- naples: FOLD Galleria Borbonica is part of Napoli Sotteranea (Wikidata) but is a separate stop
+- naples: LEN Piazza del Plebiscito and the Royal Palace {Q1047594 by name}: 40 min, but a square usually takes 5-30 min
+- naples: LEN Castel dell'Ovo {Q645041 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- naples: LEN Castel Capuano {Q858940 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- naples: LEN Porta Capuana {Q834089 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- naples: LEN Catacombe di San Gaudioso {Q3663202 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- naples: LEN Castel Nuovo {Q781219 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- naples: LEN Castel Sant'Elmo {Q1048627 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- naples: LEN House of the Vettii [day trip] {Q1590855 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- naples: LEN House of the Faun [day trip] {Q1547308 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- naples: LEN House of the Tragic Poet [day trip] {Q4177608 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- naples: LEN Villa dei Misteri [day trip] {Q1241298 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- naples: LEN Flavian Amphitheater [day trip] {Q662766 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- naples: LEN Rione Terra [day trip] {Q3936300 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- naples: FAME #1 best known nearby, "Naples Metro" (36 Wikipedia languages, Q747184), is not offered
+- naples: FAME must-see "National Archaeological Museum" is offered (National Archaeological Museum) but not marked must-see
+- naples: FAME must-see "Castel Nuovo" is offered (Castel Nuovo) but not marked must-see
+- nassau: FAME must-see "Queen's Staircase" is not offered
+- nassau: FAME must-see "Fort Charlotte" is not offered
+- reykjavik: POS Reykjavík Cathedral: app is 0.70 km from Wikidata's point (not on the map by id)
+- reykjavik: NOID Hafnarfjörður Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- reykjavik: NOID Hafnarfjarðarkirkja [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- reykjavik: NOID Sankti Jósefskirkja [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- reykjavik: NOID Karmelklaustrið í Hafnarfirði [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- reykjavik: NOID Safnaðarheimili Fríkirkjunnar í Hafnarfirði [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- reykjavik: NOID Víðistaðatún [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- reykjavik: NOID Viti [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- reykjavik: LEN Reykjavík Botanic Garden: 40 min, but a art museum or gallery usually takes 45-240 min
+- reykjavik: LEN Hafnarborg [day trip] {Q15961654 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- reykjavik: FAME must-see "Harpa" is offered (Harpa) but not marked must-see
+- rome: NOID Olympic Stadium: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- rome: NOID The Vatican Museum: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- rome: NOID The Celio: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- rome: NOID Vittorio Emanuele Monument: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- rome: NOID Chiesa del Gesù: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- rome: NOID The Spanish Steps: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- rome: NAME Palazzo del Quirinale {Q223079 by name}: local name; Wikidata's English name is "Quirinal Palace"
+- rome: LEN Pantheon {Q99309 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- rome: LEN Palatine Hill {Q200642 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- rome: LEN Circus Maximus {Q207808 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- rome: LEN Terme di Caracalla {Q502098 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- rome: LEN Arch of Titus {Q723887 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- rome: LEN Mausoleo di Augusto {Q770847 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- rome: LEN Column of Marcus Aurelius {Q265384 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- rome: FAME #1 best known nearby, "European Convention on Human Rights" (76 Wikipedia languages, Q183191), is not offered
+- rome: FAME #3 best known nearby, "Year of the Four Emperors" (62 Wikipedia languages, Q470596), is not offered
+- rome: FAME #4 best known nearby, "The Creation of Adam" (61 Wikipedia languages, Q500242), is not offered
+- rome: FAME #5 best known nearby, "Rome Statute of the International Criminal Court" (60 Wikipedia languages, Q838958), is not offered
+- rome: FAME #6 best known nearby, "Great Fire of Rome" (58 Wikipedia languages, Q215231), is not offered
+- rome: FAME #7 best known nearby, "Pietà" (57 Wikipedia languages, Q235242), is not offered
+- rome: FAME #8 best known nearby, "Rome Metro" (54 Wikipedia languages, Q237480), is not offered
+- rome: FAME #9 best known nearby, "The Last Judgment" (51 Wikipedia languages, Q567861), is not offered
+- rome: FAME #10 best known nearby, "Arch of Constantine" (49 Wikipedia languages, Q5786), is not offered
+- rome: FAME #11 best known nearby, "Laocoön and His Sons" (47 Wikipedia languages, Q465762), is not offered
+- rome: FAME #12 best known nearby, "Battle of the Milvian Bridge" (46 Wikipedia languages, Q339321), is not offered
+- rome: FAME #13 best known nearby, "Campus Martius" (44 Wikipedia languages, Q242839), is not offered
+- rome: FAME #14 best known nearby, "Capitoline Wolf" (43 Wikipedia languages, Q408623), is not offered
+- rome: FAME must-see "Trevi Fountain" is offered (Trevi Fountain) but not marked must-see
+- rome: FAME must-see "Vatican Museums|Sistine Chapel" is not offered
+- santorini: NOID Fira caldera path: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- santorini: NOID Oia village: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- santorini: NOID Akrotiri prehistoric town: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- santorini: NOID Pyrgos village: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- santorini: FAME #1 best known nearby, "Minoan eruption" (34 Wikipedia languages, Q1144693), is not offered
+- santorini: FAME must-see "Akrotiri" is offered (Akrotiri prehistoric town) but not marked must-see
+- venice: POS Padua [day trip] {Q617 by name}: app is 1.12 km from Wikidata's point (not on the map by id)
+- venice: DUP Palazzo della Ragione ~ Palazzo del Bo' (182 m apart, same words)
+- venice: NOID Santi Giovanni e Paolo Church: no Wikidata id and nothing of the name on the map nearby (from Wikidata (Wikipedia in many languages), national heritage register, Wikivoyage (English), Wikipedia in Italian)
+- venice: NOID Lace Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- venice: NOID Cathedral of Mestre [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- venice: NOID Bissuola Park [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- venice: NOID Archaeological Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- venice: NOID Saint Anthony's cathedral [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- venice: NOID Astronomic Observatory [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- venice: NOID Botanic Garden [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- venice: NOID Eremitani Civic Museum [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- venice: NAME Piazza Ferretto [day trip] {Q3902198 by name}: local name; Wikidata's English name is "Piazza Erminio Ferretto"
+- venice: NAME Palazzo del Bo' [day trip] {Q3360829 by name}: local name; Wikidata's English name is "Bo Palace"
+- venice: LEN Scrovegni Chapel [day trip] {Q963954 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- venice: FAME #3 best known nearby, "St Mark's Campanile" (36 Wikipedia languages, Q754194), is not offered
+- venice: FAME #4 best known nearby, "Horses of Saint Mark" (33 Wikipedia languages, Q1994701), is not offered
+- venice: FAME #5 best known nearby, "Ponte dell'Accademia" (28 Wikipedia languages, Q52509), is not offered
+- venice: FAME #6 best known nearby, "Ponte della Libertà" (26 Wikipedia languages, Q1134699), is not offered
+- venice: FAME #7 best known nearby, "Portrait of the Four Tetrarchs" (26 Wikipedia languages, Q2570221), is not offered
+- venice: FAME #8 best known nearby, "MOSE" (25 Wikipedia languages, Q770350), is not offered
+- vienna: POS Vienna Central Cemetery: app is 0.36 km from Wikidata's point (not on the map by id)
+- vienna: POS Krems [day trip]: app is 0.80 km from Wikidata's point (not on the map by id)
+- vienna: POS Baden [day trip]: app is 0.53 km from Wikidata's point (not on the map by id)
+- vienna: POS Eisenstadt [day trip]: app is 0.69 km from Wikidata's point (not on the map by id)
+- vienna: NOID Karikatur Museum Krems [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- vienna: LEN Steiner Tor [day trip] {Q2340516 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- vienna: LEN Kunsthalle Krems [day trip] {Q1792410 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- vienna: LEN Burgruine Rehberg [day trip] {Q19960786 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- vienna: FAME #1 best known nearby, "Battle of Vienna" (65 Wikipedia languages, Q200855), is not offered
+- vienna: FAME #2 best known nearby, "Vienna Convention on Diplomatic Relations" (53 Wikipedia languages, Q659717), is not offered
+- vienna: FAME #3 best known nearby, "Vienna Convention on the Law of Treaties" (50 Wikipedia languages, Q239768), is not offered
+- vienna: FAME #4 best known nearby, "First Turkish Siege of Vienna" (48 Wikipedia languages, Q207576), is not offered
+- vienna: FAME #5 best known nearby, "Vienna metro" (48 Wikipedia languages, Q209400), is not offered
+- vienna: FAME #6 best known nearby, "Austrian State Treaty" (42 Wikipedia languages, Q306535), is not offered
+- vienna: FAME #7 best known nearby, "Vienna New Year's Concert" (42 Wikipedia languages, Q339152), is not offered
+- vienna: FAME #8 best known nearby, "Strategic Arms Limitation Talks" (37 Wikipedia languages, Q623994), is not offered
+- vienna: FAME #9 best known nearby, "Vienna City Hall" (37 Wikipedia languages, Q686468), is not offered
+- vienna: FAME #10 best known nearby, "2020 Vienna attacks" (37 Wikipedia languages, Q101095813), is not offered
+- vienna: FAME #11 best known nearby, "Vienna Basin" (32 Wikipedia languages, Q688715), is not offered
+- vienna: FAME #12 best known nearby, "Vienna Convention on Consular Relations" (31 Wikipedia languages, Q700855), is not offered
+- vienna: FAME #14 best known nearby, "meridian circle" (29 Wikipedia languages, Q364882), is not offered
+
+## Gone since the last summary (0)
+
+None.
