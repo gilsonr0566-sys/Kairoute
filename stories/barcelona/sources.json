@@ -172,6 +172,16 @@
   {
    "key": "wp-tibidabo-amusement-park",
    "wiki": "Tibidabo Amusement Park"
+  },
+  {
+   "key": "kjv-matthew4",
+   "url": "https://bible-api.com/matthew%204%3A8-10?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "kjv-luke4",
+   "url": "https://bible-api.com/luke%204%3A5-8?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
   }
  ]
 }
