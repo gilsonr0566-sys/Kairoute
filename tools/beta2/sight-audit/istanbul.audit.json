@@ -7,27 +7,6 @@
  },
  "findings": [
   {
-   "k": "POS",
-   "t": "Fatih Istanbul Mosque: app 41.01970,28.94970 is 8.31 km from the map's Fatih Mescidi (node/976474174, 41.00449,28.85270); Wikidata 8.32 km from the map",
-   "x": {
-    "d": 8.312979325503116,
-    "id": "src-q756189",
-    "wd": "Q756189",
-    "app": [
-     41.0197,
-     28.9497
-    ],
-    "map": [
-     41.0044905,
-     28.8526953
-    ],
-    "wdpt": [
-     41.019722,
-     28.949722
-    ]
-   }
-  },
-  {
    "k": "FAME",
    "t": "#1 best known nearby, \"Fall of Constantinople\" (80 Wikipedia languages, Q160077), is not offered",
    "x": {

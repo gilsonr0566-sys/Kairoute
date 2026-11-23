@@ -1,5 +1,4 @@
 ## Istanbul, Turkey (Istanbul, Turkey, guide from sources)
-- POS Fatih Istanbul Mosque: app 41.01970,28.94970 is 8.31 km from the map's Fatih Mescidi (node/976474174, 41.00449,28.85270); Wikidata 8.32 km from the map
 - FAME #1 best known nearby, "Fall of Constantinople" (80 Wikipedia languages, Q160077), is not offered
 - FAME #2 best known nearby, "Bosphorus Bridge" (58 Wikipedia languages, Q4484), is not offered
 - FAME #3 best known nearby, "Istanbul Metro" (55 Wikipedia languages, Q498172), is not offered
