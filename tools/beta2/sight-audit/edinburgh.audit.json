@@ -17,28 +17,19 @@
   },
   {
    "k": "POS",
-   "t": "Linlithgow [day trip]: app is 0.43 km from Wikidata's point (not on the map by id)",
+   "t": "Dunbar [day trip] {Q1002133 by name}: app is 0.61 km from Wikidata's point (not on the map by id)",
    "x": {
-    "d": 0.4250257743287807,
-    "id": "linlithgow-far",
-    "wd": "Q1016911",
+    "d": 0.6095032078799799,
+    "id": "dunbar-far",
+    "wd": "Q1002133",
     "app": [
-     55.9791,
-     -3.6105
+     56.00272,
+     -2.5169
     ],
     "wdpt": [
-     55.975277777778,
-     -3.6105555555556
+     55.998333333333,
+     -2.5227777777778
     ]
-   }
-  },
-  {
-   "k": "LEN",
-   "t": "Linlithgow Palace [day trip] {Q564868 by name}: 30 min, but a castle or fortress usually takes 45-180 min",
-   "x": {
-    "id": "linlithgow-far~Q564868",
-    "min": 30,
-    "kind": "castle or fortress"
    }
   },
   {
@@ -64,7 +55,7 @@
   },
   {
    "k": "INFO",
-   "t": "day trips: Linlithgow, Falkirk, Gullane, Linlithgow Palace, Callendar House",
+   "t": "day trips: Falkirk, Gullane, North Berwick, Dunbar, Callendar House",
    "x": {}
   }
  ],
@@ -349,7 +340,7 @@
    "lat": 55.9256,
    "lng": -3.1409,
    "minutes": 50,
-   "category": "Palace",
+   "category": "Castle or fort",
    "kind": "local",
    "quick": false,
    "mustSee": false,
@@ -497,7 +488,7 @@
    "lat": 55.9451,
    "lng": -3.186,
    "minutes": 30,
-   "category": "Church",
+   "category": "Mosque",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -518,34 +509,6 @@
    "merged": [],
    "posDoubt": false,
    "summary": "Stately mosque and minaret completed in 1998 in a modern variant of Turkish style. You can generally look in between prayer times."
-  },
-  {
-   "id": "linlithgow-far",
-   "name": "Linlithgow",
-   "local": "",
-   "lat": 55.9791,
-   "lng": -3.6105,
-   "minutes": 180,
-   "category": "Day trip",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "Q1016911",
-   "src": [
-    "Wikivoyage (English)"
-   ],
-   "srcOnly": false,
-   "builtin": false,
-   "famousFix": true,
-   "far": true,
-   "travel": "Train from Edinburgh, about 55 min one way",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "has a ruined Palace, abode of Mary, Queen of Scots."
   },
   {
    "id": "falkirk-far",
@@ -569,7 +532,7 @@
    "builtin": false,
    "famousFix": true,
    "far": true,
-   "travel": "Train from Edinburgh, about 60 min one way",
+   "travel": "Train from Edinburgh, about 65 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -604,30 +567,60 @@
    "summary": "has an excellent beach, backed by sand-hills and a great golf course. The Museum of Flight is a few miles inland."
   },
   {
-   "id": "linlithgow-far~Q564868",
-   "name": "Linlithgow Palace",
+   "id": "north-berwick-far",
+   "name": "North Berwick",
    "local": "",
-   "lat": 55.9785,
-   "lng": -3.60111,
-   "minutes": 30,
-   "category": "Sight",
+   "lat": 56.0582,
+   "lng": -2.717,
+   "minutes": 180,
+   "category": "Day trip",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
    "fame": 0,
    "unesco": false,
    "heritage": false,
-   "wd": "Q564868",
-   "src": [],
+   "wd": "Q1012054",
+   "src": [
+    "Wikivoyage (English)"
+   ],
    "srcOnly": false,
-   "builtin": true,
-   "famousFix": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Train from Edinburgh, about 65 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "is a fishing village near the sea-bird reserve of Bass Rock and the 14th century Tantallon Castle."
+  },
+  {
+   "id": "dunbar-far",
+   "name": "Dunbar",
+   "local": "",
+   "lat": 56.00272,
+   "lng": -2.5169,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 2,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q1002133",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
    "far": true,
    "travel": "Train from Edinburgh, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "",
+   "summary": "is a charming harbour town, birthplace of conservationist John Muir.",
    "wdByName": true
   },
   {
@@ -650,7 +643,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Edinburgh, about 60 min one way",
+   "travel": "Train from Edinburgh, about 65 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
