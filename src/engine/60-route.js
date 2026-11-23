@@ -27,15 +27,23 @@
   function heuristic(stops, from, to, cost) {
     const n = stops.length, F = n, T = n + 1, pt = k => k === F ? from : k === T ? to : stops[k];
     const C = []; for (let a = 0; a <= T; a++) { C.push(new Float64Array(T + 1)); for (let b = 0; b < n; b++) if (a !== b && a !== T) C[a][b] = cost(pt(a), stops[b]); if (to && a < n) C[a][T] = cost(stops[a], to); }
-    const pc = seq => { let c = 0, p = F; for (const s of seq) { c += C[p][s]; p = s; } if (to) c += C[p][T]; return c; };
     const left = stops.map((s, i) => i).sort((a, b) => E.byId(stops[a], stops[b])), seq = []; let p = F;
     while (left.length) { let bi = 0, bc = Infinity; left.forEach((s, i) => { const c = C[p][s]; if (c < bc - 1e-9) { bc = c; bi = i; } }); p = left[bi]; seq.push(p); left.splice(bi, 1); }
-    let improved = true, guard = 0;
+    // Each try is costed in place, adding the same rides in the same order as the whole path would (the same sums to the
+    // last digit): the part before the reversed run is the current path's own running total, and once the total is past the
+    // current path's cost (rides never cost less than nothing) the try can't win (planning time, Nov 23).
+    let neg = false; for (const row of C) for (const v of row) if (v < 0) neg = true;
+    const pre = new Float64Array(n + 1); let cur = 0;
+    const sums = () => { let c = 0, q = F; pre[0] = 0; for (let k = 0; k < n; k++) { c += C[q][seq[k]]; q = seq[k]; pre[k + 1] = c; } cur = to ? c + C[q][T] : c; };
+    const tryCost = (i, j, lim) => { let c = pre[i], q = i ? seq[i - 1] : F;
+      for (let k = i; k < n; k++) { const s = k <= j ? seq[i + j - k] : seq[k]; c += C[q][s]; q = s; if (!neg && c >= lim) return Infinity; }
+      if (to) c += C[q][T]; return c; };
+    let improved = true, guard = 0; sums();
     while (improved && guard++ < 200) {
       improved = false;
       for (let i = 0; i < seq.length - 1; i++) for (let j = i + 1; j < seq.length; j++) {
-        const cand = seq.slice(0, i).concat(seq.slice(i, j + 1).reverse(), seq.slice(j + 1));
-        if (pc(cand) < pc(seq) - 1e-9) { seq.splice(0, seq.length, ...cand); improved = true; }
+        const lim = cur - 1e-9;
+        if (tryCost(i, j, lim) < lim) { const cand = seq.slice(0, i).concat(seq.slice(i, j + 1).reverse(), seq.slice(j + 1)); seq.splice(0, seq.length, ...cand); sums(); improved = true; }
       }
     }
     return seq.map(k => stops[k]);

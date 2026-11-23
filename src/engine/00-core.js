@@ -4,8 +4,8 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
 (function (E) {
   const R = x => x * Math.PI / 180;
   // Straight-line km between two places.
-  E.hav = (a, b) => { const dLa = R(b.lat - a.lat), dLo = R(b.lng - a.lng);
-    const h = Math.sin(dLa / 2) ** 2 + Math.cos(R(a.lat)) * Math.cos(R(b.lat)) * Math.sin(dLo / 2) ** 2; return 2 * 6371 * Math.asin(Math.sqrt(h)); };
+  E.hav = (a, b) => { const dLa = (b.lat - a.lat) * Math.PI / 180, dLo = (b.lng - a.lng) * Math.PI / 180;
+    const h = Math.sin(dLa / 2) ** 2 + Math.cos(a.lat * Math.PI / 180) * Math.cos(b.lat * Math.PI / 180) * Math.sin(dLo / 2) ** 2; return 2 * 6371 * Math.asin(Math.sqrt(h)); };
   // "09:30" -> 570. Anything else is NaN, never a guess.
   // A clock time, never with a minus sign: past midnight reads as the next morning's time (Nov 20 review).
   // The app may set its own clock format (24-hour or am/pm, from the traveler's setting); the engine's own text is am/pm.
