@@ -295,6 +295,10 @@ jobs:
           NIGHTLY=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/truth-nightly.yml/runs?status=completed&per_page=1" --jq '.workflow_runs[0] | "\(.id) \(.html_url) \(.created_at)"' 2>/dev/null || true)
           if [ -n "$NIGHTLY" ]; then NID=${NIGHTLY%% *}; NIGHTLY_JOBS=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$NID/jobs" --jq '[.jobs[] | {name, conclusion}]' 2>/dev/null || echo '[]'); else NIGHTLY_JOBS='[]'; fi
           export NIGHTLY NIGHTLY_JOBS
+          # Gate health (spec v2, T6): the last 10 finished gate runs, and this run's part times.
+          GATE_RUNS=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/beta2-gate.yml/runs?status=completed&per_page=10" --jq '[.workflow_runs[] | {conclusion, s: .run_started_at, e: .updated_at}]' 2>/dev/null || echo '[]')
+          THIS_JOBS=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs" --jq '[.jobs[] | {name, s: .started_at, e: .completed_at}]' 2>/dev/null || echo '[]')
+          export GATE_RUNS THIS_JOBS
           node tools/truth/release-report.cjs parts > release-report.md || true
           cat release-report.md >> "$GITHUB_STEP_SUMMARY"; cat release-report.md
           grep -q "RELEASE OK" release-report.md
