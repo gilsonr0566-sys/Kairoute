@@ -359,6 +359,12 @@
           if (picks.length) explain.push("A day trip to " + (place.townName || place.name) + ": the main sights of " + String(city.name || "this place").split(",")[0] + " fit on your other days.");
         }
         if (!d.own && (!picks || !picks.length)) picks = wishes.length ? wishes : autoPicks(pool, win, ctx);
+        // A day with a set list of stops (a group day: the stops the group's owner has, d.only, in their order, d.order) is
+        // planned from that list only. Each phone knows different ride times, so a day picked again here could take more or
+        // fewer sights than the owner's (Nov 23 outside test): every member must see the owner's stops. A stop that can't
+        // be visited safely here still drops, as on any day; nothing is added.
+        if (Array.isArray(d.only)) { const w = new Map(wishes.map(s => [String(s.id), s]));
+          picks = d.only.map(id => w.get(String(id)) || pool.find(s => String(s.id) === String(id))).filter(Boolean); }
         autoIds = new Set(wishes.length ? [] : picks.map(s => String(s.id)));
       }
       // Straight from the plane to the ship (under 3 h left with a safe margin): no sightseeing at all, the app's or the
@@ -544,7 +550,7 @@
       const cityNow = guides[d.city] || {};
       const unused = (cityNow.sites || []).some(s => ledger.sightFree(s.id, i) && !was.kept.some(k => String(k.id) === String(s.id)));
       let now = null;
-      if (was.spare >= 30 && unused) {
+      if (was.spare >= 30 && unused && !Array.isArray(d.only)) { // a day with a set list of stops takes no more
         now = planDay(i, was);
         if (!(keepsAll(now) && now.kept.length > was.kept.length)) { undo(now); if (was.plan && was.plan.suggest && now.plan && now.plan.suggest) now.plan.suggest.forEach(x => { if (!was.plan.suggest.some(y => String(y.id) === String(x.id))) was.plan.suggest.push(x); }); now = null; } // what would fit, seen with the other days planned
       }
