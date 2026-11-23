@@ -29,7 +29,19 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
       if (w && !w.error && st.length >= 3) { const from = w.head[w.head.length - 1], to = w.tail.length ? w.tail[0] : null;
         const best = E.bestOrder(st.slice().sort(E.byId), from, to, tr.min), cost = seq => E.pathCost(seq, from, to, tr.min);
         const extra = Math.round(cost(st) - cost(best));
-        if (extra > 20 && !st.some(x => x.far)) add('cross', f, `day ${i}: ${extra} min more travel than the best order (${st.map(x => x.name).join(' > ')}; best: ${best.map(x => x.name).join(' > ')})`); } }
+        // The best order for travel alone may miss a sight's opening hours or the time to be back (Nov 23: a museum
+        // that shuts at 3 pm put last); then the extra travel has its reason and isn't a leak.
+        const bySite = x => [].concat(city.sites || [], city.farther || []).find(y => String(y.id) === String(x.id)) || Object.assign({}, x, { minutes: x.min });
+        // The day's lunch takes time too: the order is walked with the plan's own lunch length put after whichever stop
+        // brings it nearest midday (a museum reached after lunch may then be shut).
+        const meal = p.items.find(x => x.t === 'meal'), mealMin = meal ? Math.max(30, meal.min || meal.minutes || 60) : 0;
+        const walk = seq => E.walkDay(seq, w, tr.estimate, id => (d.sites || {})[id] || null), score = r => r.late * 1000 + r.over;
+        const fits = seq => { try { const ss = seq.map(bySite); if (!mealMin) return score(walk(ss));
+          let bestR = null; for (let k = 1; k <= ss.length; k++) { const prev = ss[k - 1], lunch = { id: '__lunch', name: 'lunch', lat: prev.lat, lng: prev.lng, minutes: mealMin, indoor: true };
+            const r = walk(ss.slice(0, k).concat([lunch], ss.slice(k))), at = (r.items.find(x => x.t === 'stop' && x.id === '__lunch') || {}).at;
+            if (at != null && at >= 690 && at <= 900) { const sc = score(r); if (bestR == null || sc < bestR) bestR = sc; } }
+          return bestR == null ? score(walk(ss)) : bestR; } catch (e) { return 0; } };
+        if (extra > 20 && !st.some(x => x.far) && fits(best) <= fits(st)) add('cross', f, `day ${i}: ${extra} min more travel than the best order (${st.map(x => x.name).join(' > ')}; best: ${best.map(x => x.name).join(' > ')})`); } }
     // Restaurants: lunch between 11:30 and 15:00, dinner from 17:30; a meal stop near the way; a place not repeated.
     p.items.forEach((x, k) => { if (x.t !== 'meal' && x.t !== 'evening') return; const lunch = (x.meal || 'Lunch') === 'Lunch' && x.t === 'meal';
       if (lunch && (x.at < 690 || x.at > E.MEALS[0].to + E.MEAL_LATE)) add('mealTime', f, `day ${i}: lunch at ${E.clock(x.at)} (${x.name})`);
