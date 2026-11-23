@@ -1,8 +1,9 @@
 // English names for places (Nov 23 class rule, Richard: "the app is presented in the language that is selected to view
-// it in"). For every Wikidata id: the English label, else the English Wikipedia title (without its bracketed part),
+// it in"). For every Wikidata id: the English Wikipedia title (without its bracketed part: the name English readers
+// know, "Temple of Apollo"), else the English label,
 // else the one name Wikidata gives for every language ("mul"). An id with none of these has no English name: a place
 // the app knows only by a local-language name, whatever the language, which it never shows as a sight's name.
-// enNames(ids) -> Map id -> { en, from }  (from: "label" | "enwiki" | "mul"; no entry: no English name)
+// enNames(ids) -> Map id -> { en, from }  (from: "enwiki" | "label" | "mul"; no entry: no English name)
 // CLI: node tools/places/en-names.cjs  -> writes en/noEn on the places files' listed sights and tools/beta2/en-names.json
 'use strict';
 const fs = require('fs'), path = require('path');
@@ -20,8 +21,10 @@ async function enNames(ids) {
       OPTIONAL { ?a schema:about ?item ; schema:isPartOf <https://en.wikipedia.org/> ; schema:name ?wt } }`);
     if (!j) throw new Error('Wikidata did not answer: English names unknown, nothing written');
     for (const b of j.results.bindings) { const id = b.item.value.split('/').pop(), had = out.get(id);
-      const pick = b.en ? { en: b.en.value, from: 'label' } : b.wt ? { en: b.wt.value.replace(/\s*\([^)]*\)\s*$/, ''), from: 'enwiki' } : b.mul ? { en: b.mul.value, from: 'mul' } : null;
-      if (pick && (!had || (had.from !== 'label' && pick.from === 'label'))) out.set(id, pick); }
+      const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
+      const pick = b.wt ? { en: b.wt.value.replace(/\s*\([^)]*\)\s*$/, ''), from: 'enwiki' } : b.en ? { en: cap(b.en.value), from: 'label' } : b.mul ? { en: cap(b.mul.value), from: 'mul' } : null;
+      const rank = { enwiki: 3, label: 2, mul: 1 };
+      if (pick && (!had || rank[pick.from] > rank[had.from])) out.set(id, pick); }
     await sleep(1200); }
   out.asked = list; return out; }
 // The names a place has in other languages, in Latin letters (other scripts fail the gate on their own): what a shown
