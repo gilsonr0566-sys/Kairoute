@@ -40,6 +40,7 @@ const stops = [
   stop('Santa Testa Lift', [], 26, 0.9, 0.9),
   stop('Musei Testolini', ['art-museum', 'building', 'museum', 'structure'], 46, -0.3, -0.6),
   stop('Regional Museum of Testopolis', ['building', 'museum', 'structure'], 12, 1.8, -1.6),
+  stop('Testopolis Sea Wall', ['structure'], 110, -2.4, 2.2),
 ];
 const guideSite = Object.assign({ id: 'wv~Q131', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
 // The guide's own museum, and the travel guide's listing of it under its Italian name 400 m off (Messina, Nov 23).
@@ -66,6 +67,11 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok('an organisation is no sight', !get('National Assembly'));
   ok('a continent is no sight', !get('continental Europe'));
   ok('an arena no travel guide lists is no sight', !get('City Arena'));
+  // The rule itself, on a famous stadium no travel guide or heritage list names (a list of 30 can drop a lesser one for other reasons).
+  const np = await pg.evaluate(() => [window.__kairouteNotPlace({ name: 'Testopolis Stadium', kinds: ['building', 'stadium', 'structure'], sl: 120, src: ['Wikidata (Wikipedia in many languages)'] }),
+    window.__kairouteNotPlace({ name: 'Old Testopolis Stadium', kinds: ['archaeological', 'stadium'], sl: 40, src: ['Wikidata (Wikipedia in many languages)'] })]);
+  ok('a famous football stadium no guide lists is no sight (first-timer walk, Nov 22)', np[0] === true, np);
+  ok('an ancient stadium is a sight', np[1] === false, np);
   ok('a village is no sight in a city list', !get('Fishing Village'));
   ok('a demolished building is no sight', !get('Demolished Gate'));
   ok('a world heritage listing of places kilometres apart is no stop of its own', !get('Historic Monuments of Testopolis'));
@@ -73,6 +79,7 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok('a bell tower beside its church is climbed on its own, not folded into the church', !!get('Bell Campanile'));
   ok("a travel-guide listing's museum takes its kind and a museum's visit length from the facts", (get('Musei Testolini') || {}).cat === 'Museum' && (get('Musei Testolini') || {}).min >= 90, get('Musei Testolini'));
   ok('a cistern named "Basilica" is no church: facts known but no kind of ours makes it a plain Sight', (get('Basilica Cistern') || {}).cat === 'Sight', get('Basilica Cistern'));
+  ok('a world-famous sight of no kind of ours still gets a long visit, never a flat 40 minutes (Fable gap 11)', (get('Testopolis Sea Wall') || {}).min >= 90, get('Testopolis Sea Wall'));
   ok('a fort is called a castle or fort, never a palace', (get('Fort Testa') || {}).cat === 'Castle or fort', get('Fort Testa'));
   ok('a word the encyclopedia calls a term, not a place, is no stop (the Holy Land)', !get('Holy Testland'));
   ok('a peninsula or region is no stop', !get('Testland Peninsula'));
