@@ -166,13 +166,14 @@
   },
   "mosaic": {
    "label": "supported",
-   "says": "The Alexander Mosaic, a floor mosaic from the House of the Faun in Pompeii, usually dated about 120-100 BC, shows Alexander the Great fighting Darius III of Persia.",
+   "says": "The Alexander Mosaic, a floor mosaic from the House of the Faun in Pompeii, usually dated about 120-100 BC and now displayed on a wall, shows Alexander the Great fighting Darius III of Persia.",
    "src": [
     "wp-alexander-mosaic",
     "wp-mann"
    ],
    "quote": [
     "is a Roman floor mosaic originally from the House of the Faun in Pompeii, Italy.",
+    "The Alexander Mosaic is now displayed on a wall",
     "It is typically dated between c. 120 and 100 BC and depicts a battle between the armies of Alexander the Great and Darius III of Persia."
    ]
   },
@@ -359,7 +360,7 @@
      "level": 3
     },
     {
-     "t": "One honest note before we go in. Collections move. In recent years some of the biggest Farnese sculptures, sometimes even the Farnese Bull, have been shown at the Capodimonte museum across the city, and the Alexander Mosaic has been under restoration, with a full-size facsimile in its place. If something isn't where you expect it, ask a guard.",
+     "t": "One honest note before we go in. Collections move. In recent years some of the biggest Farnese sculptures, sometimes even the Farnese Bull, have been shown at the Capodimonte museum across the city, and the Alexander Mosaic has been under restoration, with a facsimile covering its place. If something isn't where you expect it, ask a guard.",
      "c": [
       "moved"
      ],
@@ -378,7 +379,7 @@
    "stand": "In the hall of the great Farnese sculptures, in front of the huge marble group with the bull.",
    "paras": [
     {
-     "t": "This is the Farnese Bull, the largest single sculpture yet recovered from the ancient world. It stands more than 4 meters high and weighs 21.8 tonnes.",
+     "t": "If it's here today, this is the Farnese Bull, the largest single sculpture yet recovered from the ancient world. It stands more than 4 meters high and weighs 21.8 tonnes.",
      "c": [
       "bull-size"
      ],
@@ -425,10 +426,10 @@
   },
   {
    "name": "The Alexander Mosaic",
-   "stand": "In the mosaic rooms, in front of the great battle scene, or its full-size facsimile during restoration.",
+   "stand": "In the mosaic rooms, in front of the great battle scene, or the facsimile that covers its place if it is still being restored.",
    "paras": [
     {
-     "t": "This is the Alexander Mosaic, from the floor of the House of the Faun in Pompeii, usually dated to around 120 to 100 BC. It shows Alexander the Great charging the Persian king, Darius the Third. It's traditionally believed to be the Battle of Issus.",
+     "t": "This is the Alexander Mosaic, from the floor of the House of the Faun in Pompeii, usually dated to around 120 to 100 BC. It once lay on a floor; here it hangs on the wall. It shows Alexander the Great charging the Persian king, Darius the Third. It's traditionally believed to be the Battle of Issus.",
      "c": [
       "mosaic",
       "issus"
@@ -458,7 +459,7 @@
      "level": 2
     },
     {
-     "t": "It's probably a copy of a lost Greek painting from the late 300s or early 200s BC, perhaps by Philoxenus of Eretria, or Apelles. It was rediscovered in 1831 and brought to Naples in September 1843. Since 2005, a modern copy has lain in the House of the Faun.",
+     "t": "It's probably a copy of a Greek painting from the late 300s or early 200s BC, perhaps by Philoxenus of Eretria, or Apelles. It was rediscovered in 1831 and brought to Naples in September 1843. Since 2005, a modern copy has lain in the House of the Faun.",
      "c": [
       "original",
       "found"
@@ -479,7 +480,7 @@
      "level": 1
     },
     {
-     "t": "From one great villa at Herculaneum, the Villa of the Papyri, come bronzes: a seated Hermes, a sprawling drunken satyr, and a pair of wonderfully lively runners. And the Herculaneum papyri themselves, scrolls carbonized by the eruption and found after 1752.",
+     "t": "Look elsewhere in the museum for the bronzes from one great villa at Herculaneum, the Villa of the Papyri: a seated Hermes, a sprawling drunken satyr, and a pair of wonderfully lively runners. The villa takes its name from the scrolls found there after 1752, carbonized by the eruption.",
      "c": [
       "papyri"
      ],
@@ -520,7 +521,7 @@
    "stand": "Wherever you'd like to end, ideally back near the mosaics.",
    "paras": [
     {
-     "t": "Remember, the Alexander Mosaic lay on a floor where its owner received guests; it was the first thing a visitor saw. That's the thing about this museum. So much here was once part of someone's home, until one day in 79 AD, life stopped. Carry that with you to Pompeii.",
+     "t": "Remember, the Alexander Mosaic lay on a floor where its owner received guests; it was the first thing a visitor saw on entering that room. That's the thing about this museum. So much here was once part of someone's home, until one day in 79 AD, life stopped. Carry that with you to Pompeii.",
      "c": [
       "floor",
       "frescoes"

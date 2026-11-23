@@ -17,7 +17,7 @@
    "Q662766"
   ]
  },
- "checked": "2026-11-22",
+ "checked": "2026-11-23",
  "claims": {
   "founding": {
    "label": "supported",
@@ -123,7 +123,7 @@
   },
   "caligula": {
    "label": "supported",
-   "says": "In 37 AD Caligula had a floating bridge of trading ships built over two miles from Puteoli to Baiae and rode his horse across it.",
+   "says": "Caligula had a floating bridge of trading ships built over two miles from Puteoli to Baiae and rode his horse across it.",
    "src": [
     "wp-pozzuoli"
    ],
@@ -331,7 +331,7 @@
      "level": 1
     },
     {
-     "t": "Think about that word, brethren. Paul is a traveler on his way to Rome, and there are already believers here to take him in. This was a city of many peoples: Greeks, Jews, Nabataeans, Phoenician merchants, and early Christians.",
+     "t": "Think about that word, brethren. Paul is on his way to Rome, and there are already brethren, fellow believers, here to take him in. This was a city of many peoples: Greeks, Jews, Nabataeans, Phoenician merchants, and early Christians.",
      "c": [
       "acts-14",
       "people"
@@ -339,7 +339,7 @@
      "level": 2
     },
     {
-     "t": "Acts keeps a few small details. The ship had wintered on an island, and its sign was Castor and Pollux, the twin gods of sailors. And after his week here, when the believers in Rome heard he was coming, they walked out to meet him as far as Appii Forum and The three taverns. Acts says that when Paul saw them, he thanked God, and took courage.",
+     "t": "Acts keeps a few small details. The ship had wintered on an island, and its sign was Castor and Pollux. And after his week here, when the brethren heard he was coming, they came out to meet him as far as Appii Forum and The three taverns. Acts says that when Paul saw them, he thanked God, and took courage.",
      "c": [
       "acts-11",
       "acts-15"
@@ -363,7 +363,7 @@
      "level": 3
     },
     {
-     "t": "Two more things this bay gave the world. The local volcanic sand, pozzolana, the dust of Puteoli, was the secret of Roman concrete, the stuff of the Pantheon's dome in Rome. And in 37 AD the emperor Caligula strung together a floating bridge of trading ships, over two miles long, from here across to Baiae, and rode his horse over it.",
+     "t": "Two more things this bay gave the world. The local volcanic sand, pozzolana, the dust of Puteoli, was the secret of Roman concrete, the stuff of the Pantheon's dome in Rome. And the ancient writers say the emperor Caligula once strung together a floating bridge of trading ships, over two miles long, from here across to Baiae, and rode his horse over it.",
      "c": [
       "pozzolana",
       "caligula"
@@ -377,7 +377,7 @@
    "stand": "Where you can look over the Macellum, the Roman market square with three tall marble columns.",
    "paras": [
     {
-     "t": "Down there is the city's symbol. People call it the Temple of Serapis, but it was really the Roman food market, the macellum. A statue of the god Serapis found there gave it the wrong name.",
+     "t": "In front of you is the city's symbol. People call it the Temple of Serapis, but it was really the Roman food market, the macellum. A statue of the god Serapis found there gave it the wrong name.",
      "c": [
       "symbol",
       "macellum"
@@ -427,7 +427,7 @@
      "level": 2
     },
     {
-     "t": "It isn't only ancient history. From 1982 to 1984 the ground here rose by almost 2 meters. Tens of thousands of people had to leave their homes; accounts differ between 30,000 and 36,000. And it was moving again in 2023 and in late 2026.",
+     "t": "It isn't only ancient history. From 1982 to 1984 the seabed in the bay rose by almost 2 meters. Tens of thousands of people had to leave their homes; accounts differ between 30,000 and 36,000. And the ground here is still restless today; the earthquakes came back in 2023 and since.",
      "c": [
       "uplift-80s",
       "recent"
@@ -441,7 +441,7 @@
    "stand": "Inside the Flavian Amphitheater, on the edge of the arena floor.",
    "paras": [
     {
-     "t": "This is the Flavian Amphitheater, the third-largest Roman amphitheater in Italy. Only the Colosseum in Rome and the one at Capua are bigger. It could hold up to 50,000 people.",
+     "t": "This is the Flavian Amphitheater, the third-largest Roman amphitheater in Italy. Only the Colosseum in Rome and the one at Capua are bigger. By one count it could hold up to 50,000 people.",
      "c": [
       "amph-size"
      ],
@@ -468,7 +468,7 @@
      "level": 2
     },
     {
-     "t": "Local tradition holds that in 305 two Christians were thrown to the wild beasts in this arena: Proculus, now patron saint of Pozzuoli, and Januarius, San Gennaro, patron saint of Naples. The tradition says the beasts left them alone, and they were beheaded nearby, at the Solfatara crater.",
+     "t": "Local tradition holds that in 305 two Christians were thrown to the wild beasts in this arena: Proculus, now patron saint of Pozzuoli, and Januarius, San Gennaro, patron saint of Naples. The tradition says they survived the beasts, and were beheaded nearby, at the Solfatara crater.",
      "c": [
       "amph-saints"
      ],
@@ -488,7 +488,7 @@
    "stand": "On your way out, look back toward the bay.",
    "paras": [
     {
-     "t": "In time, Rome built a closer port at Ostia, and Puteoli began to fade. But for a week, this busy harbor was where a traveler named Paul came ashore and found friends waiting. Sometimes that is all a place needs to be remembered for.",
+     "t": "In time, the emperors enlarged the port of Ostia, closer to Rome, and Puteoli began to fade. But for a week, this busy harbor was where a man named Paul came ashore and found friends. Sometimes that is all a place needs to be remembered for.",
      "c": [
       "decline",
       "acts-14"

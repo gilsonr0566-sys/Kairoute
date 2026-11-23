@@ -16,7 +16,7 @@
    "Q2165460"
   ]
  },
- "checked": "2026-11-22",
+ "checked": "2026-11-23",
  "claims": {
   "island": {
    "label": "supported",
@@ -345,7 +345,7 @@
   },
   "lizard": {
    "label": "supported",
-   "says": "A blue lizard lives only on the outer stack, Scopolo.",
+   "says": "A blue lizard is endemic to the outer stack, Scopolo.",
    "src": [
     "wp-faraglioni"
    ],
@@ -398,7 +398,7 @@
      "level": 2
     },
     {
-     "t": "Where does the name come from? Nobody knows for sure. It may be Greek for wild boar, or Latin for goats. Boar fossils have turned up on the island, which helps the Greek idea. And in Greek myth, this was the island of the sirens.",
+     "t": "Where does the name come from? Nobody knows for sure. It may be Greek for wild boar, or Latin for goats. Boar fossils have turned up on the island, which helps the Greek idea. And in one telling of the Greek myth, this was the island of the sirens.",
      "c": [
       "name",
       "sirens"
@@ -409,10 +409,10 @@
   },
   {
    "name": "The Blue Grotto",
-   "stand": "In the rowboat at the cave mouth, lying back as the boatman tells you.",
+   "stand": "At Marina Grande or by the cave, while you wait your turn for a rowboat.",
    "paras": [
     {
-     "t": "This is the Blue Grotto. The opening is only about a meter high at low tide, which is why you're lying flat while the boatman pulls the boat in on a chain. Inside, the sunlight comes up from an opening under the water, and the red is filtered out, so the whole cave glows blue.",
+     "t": "This is the Blue Grotto. The opening is only about a meter high at low tide, which is why you'll lie flat while the boatman pulls the boat in on a chain. Inside, the sunlight comes up from an opening under the water, and the red is filtered out, so the whole cave glows blue.",
      "c": [
       "bg-entry",
       "bg-light"
@@ -426,7 +426,7 @@
      "cue": true
     },
     {
-     "t": "Try this, if you can reach the water. Things placed in it look silver, and your own hand will seem to glow. The cave often closes when the tide or the waves are up, so if you got in today, you were lucky.",
+     "t": "Once you're inside and the boatman says it's fine, dip a hand in the water. Things placed in it look silver, and your own hand will seem to glow. The cave often closes when the tide or the waves are up, so if you got in today, you were lucky.",
      "c": [
       "bg-silver",
       "bg-closes"
@@ -441,7 +441,7 @@
      "level": 2
     },
     {
-     "t": "Later, sailors and islanders kept away. The cave was said to be full of witches and monsters. Then in 1826 a local fisherman, Angelo Ferraro, rowed two German visitors in, the writer August Kopisch and the painter Ernst Fries, and their account made it famous. Though an old Neapolitan song from the 1700s shows the locals knew it all along.",
+     "t": "In the 1700s, sailors and islanders kept away. The cave was said to be home to witches and monsters. Then in 1826 a local fisherman, Angelo Ferraro, took two German visitors to the cave, the writer August Kopisch and the painter Ernst Fries, and after their visit the wider world discovered it. Though an old Neapolitan song from the 1700s shows the locals knew it all along.",
      "c": [
       "bg-witches",
       "bg-1826"
@@ -484,7 +484,7 @@
    "stand": "At the top of Monte Tiberio, at the entrance to the ruins of Villa Jovis.",
    "paras": [
     {
-     "t": "This is Villa Jovis, the Villa of Jupiter, the largest of the twelve villas the emperor Tiberius built on Capri. In AD 27 he moved here for good, and he ruled the Roman Empire from this island until he died in AD 37.",
+     "t": "This is Villa Jovis, the Villa of Jupiter, the largest of the twelve villas that, according to the Roman historian Tacitus, the emperor Tiberius built on Capri. In AD 27 he moved here for good, and he ruled the Roman Empire from this island until he died in AD 37.",
      "c": [
       "jovis",
       "tiberius"
@@ -492,7 +492,7 @@
      "level": 1
     },
     {
-     "t": "You'll have earned this view. The only way up is on foot, about two kilometers uphill from town, so bring water and take it slowly on the steps and the slopes.",
+     "t": "You'll have earned this view. The only way up is on foot, about two kilometers uphill from town, so bring water and take the climb slowly.",
      "c": [
       "jovis-walk"
      ],
@@ -544,14 +544,14 @@
      "level": 1
     },
     {
-     "t": "The one joined to the island is Stella, 109 meters high. The middle one is Mezzo, 82 meters. The outer one is Scopolo, 106 meters.",
+     "t": "Stella, joined to the island, is 109 meters high; Mezzo is 82; and Scopolo, also called Fuori, 106.",
      "c": [
       "faraglioni"
      ],
      "level": 2
     },
     {
-     "t": "Look at the outer rock and think small. A blue lizard lives there and nowhere else. And the word faraglione perhaps comes from the old Greek and Latin words for a lighthouse.",
+     "t": "On Scopolo, think small. A rare blue lizard is found on that rock. And the word faraglione perhaps comes from the old Greek and Latin words for a lighthouse.",
      "c": [
       "lizard",
       "faro-word"
@@ -565,9 +565,10 @@
    "stand": "Before you head back down to the harbor, find one last spot looking out to sea.",
    "paras": [
     {
-     "t": "Take one more look. An emperor came here to hide from the world and govern it at the same time. Today the island belongs to whoever is standing still long enough to look.",
+     "t": "Take one more look. An emperor came here, perhaps to hide from the world, and governed it from this island all the same. Today the island belongs to whoever is standing still long enough to look.",
      "c": [
-      "tiberius"
+      "tiberius",
+      "jovis-why"
      ],
      "level": 1
     }

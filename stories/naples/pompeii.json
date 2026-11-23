@@ -15,7 +15,7 @@
    "Q43332"
   ]
  },
- "checked": "2026-11-22",
+ "checked": "2026-11-23",
  "claims": {
   "buried": {
    "label": "supported",
@@ -412,7 +412,7 @@
   },
   "resin": {
    "label": "supported",
-   "says": "The technique is still used, now with clear resin, which lasts longer and does not destroy the bones.",
+   "says": "Clear resin has been used instead of plaster because it is more durable and does not destroy the bones.",
    "src": [
     "wp-pompeii"
    ],
@@ -530,7 +530,7 @@
      "level": 3
     },
     {
-     "t": "Now look to the west side of the square. The Basilica, just west of the Forum, was the most important public building in town. Justice was handed out there, and business was done there too. North of it, on the same western side, is the Temple of Apollo. It holds the oldest remains found in Pompeii, some going back to 575 BC.",
+     "t": "On the west side of the Forum stood the Basilica. It was the most important public building in town. Justice was handed out there, and business was done there too. North of it, on the same western side, is the Temple of Apollo. It holds some of the oldest remains found here, going back to 575 BC.",
      "c": [
       "basilica",
       "apollo"
@@ -552,7 +552,7 @@
    "stand": "Stay in the Forum, in a patch of shade if you can find one.",
    "paras": [
     {
-     "t": "So what happened here? The only eyewitness account comes from a 17-year-old, Pliny the Younger, watching from across the bay. Here in town, pumice rained down for about 18 hours, and most people got away. Then scorching clouds of ash and gas swept through.",
+     "t": "So what happened here? The only eyewitness account that survives comes from a 17-year-old, Pliny the Younger, watching from across the bay. Here in town, pumice rained down for about 18 hours, and most people got away. Then, in the night or early the next day, fast, scorching clouds of ash came down from the volcano.",
      "c": [
       "pliny-witness",
       "phases"
@@ -560,7 +560,7 @@
      "level": 1
     },
     {
-     "t": "Pliny watched from Misenum, about 29 kilometers, or 18 miles, away. He saw a dense cloud rise above the mountain that, in his words, \"more closely resembled a pine-tree than anything else.\" And a study published in 2010 found that heat, not suffocation, was the main killer here.",
+     "t": "Pliny watched from Misenum, about 29 kilometers, or 18 miles, away. He saw a dense cloud rise above the mountain that, in his words, \"more closely resembled a pine-tree than anything else.\" And a study published in 2010 concluded that heat, not suffocation, was the main killer here.",
      "c": [
       "pliny-witness",
       "pine",
@@ -569,7 +569,7 @@
      "level": 2
     },
     {
-     "t": "His uncle, Pliny the Elder, commanded the Roman fleet at Misenum. He launched the galleys to take people off the coast. When his helmsman urged him to turn back, he said, \"Fortune favors the brave,\" and sailed on to Stabiae. He never came home. His nephew blamed poisonous fumes, but a stroke or a heart attack is more likely; nobody knows for sure. His body was found the next day without injuries.",
+     "t": "His uncle, Pliny the Elder, commanded the Roman fleet at Misenum. He launched the galleys to take people off the coast. When his helmsman urged him to turn back, he said, \"Fortune favors the brave,\" and sailed on to Stabiae. He never came home. His nephew blamed poisonous fumes, but a stroke or a heart attack is more likely; nobody knows for sure. His body was found the next day with no apparent injuries.",
      "c": [
       "uncle",
       "uncle-death"
@@ -577,14 +577,14 @@
      "level": 2
     },
     {
-     "t": "The part of his letters I always remember is this. His mother begged him to leave her behind and save himself. Instead he took her hand and led her away as best he could, through ash he compared to a blanket of snow.",
+     "t": "The part of his letters I always remember is this. His mother begged him to leave her behind and save himself. Instead he took her hand and led her away as best he could. Afterwards he wrote that the ash lay like a blanket of snow.",
      "c": [
       "mother"
      ],
      "level": 3
     },
     {
-     "t": "Two odd things about those letters. He wrote them some 25 years later, for the historian Tacitus. And Pompeii itself is never mentioned in them. Still, his description was so exact that volcanologists call this kind of eruption \"Plinian.\"",
+     "t": "Two odd things about those letters. He wrote them some 25 years later, for the historian Tacitus. And Pompeii itself is never mentioned in them. Still, volcanologists honor his account by calling eruptions like this one \"Plinian.\"",
      "c": [
       "pliny-witness",
       "not-mentioned",
@@ -593,7 +593,7 @@
      "level": 3
     },
     {
-     "t": "And the date? UNESCO gives the 24th of August, 79. But the copies of Pliny's letter may have been corrupted over the centuries, and in 2018 archaeologists found a charcoal scribble here reading October 17. Scholars still argue about it, because nobody knows which day that note was talking about.",
+     "t": "And the date? UNESCO gives the 24th of August, 79. But the copies of Pliny's letter may have been corrupted over the centuries, and in 2018 archaeologists found a charcoal scribble dated to what we would call October 17. Scholars still argue about it, because nobody knows which day that note was talking about.",
      "c": [
       "date"
      ],
@@ -641,7 +641,7 @@
   },
   {
    "name": "The plaster casts",
-   "stand": "Go to the plaster casts of the victims: some are kept in the Forum Granary, others in the Garden of the Fugitives on the south-east side of the site.",
+   "stand": "Go to the plaster casts of the victims: some are kept in the Forum Granary, back near the Forum, and others in the Garden of the Fugitives on the south-east side of the site.",
    "paras": [
     {
      "t": "These are the people of Pompeii, or rather the spaces they left. Giuseppe Fiorelli, who took charge here in 1863, realized that the hollows in the ash were left by bodies that had decayed. Plaster was poured in, and when the ash was cleared away, there was the shape of a person at the moment of death.",
@@ -652,7 +652,7 @@
      "level": 1
     },
     {
-     "t": "Please go gently here. Many casts still hold the person's bones. And the twisted poses are not signs of a long struggle; scientists explain them as a spasm caused by the shock of extreme heat. Today, a clear resin is used instead of plaster, because it lasts longer and doesn't destroy the bones.",
+     "t": "Please go gently here. Many casts still hold the person's bones. And the twisted poses are not signs of a long struggle; scientists explain them as a spasm caused by the shock of extreme heat. Clear resin has also been used, because it lasts longer and doesn't destroy the bones.",
      "c": [
       "bones",
       "spasm",
@@ -661,7 +661,7 @@
      "level": 2
     },
     {
-     "t": "In the Garden of the Fugitives, the casts lie where the people fell, and some of them are children. Only about 1,150 bodies have been found here in all. Most people did get away.",
+     "t": "In the Garden of the Fugitives, the casts lie where the people fell, and some of them are children. About 1,150 bodies have been found so far, which suggests most people got away.",
      "c": [
       "casts-where",
       "bodies",
@@ -670,7 +670,7 @@
      "level": 2
     },
     {
-     "t": "Fiorelli did something else you've been using all day. He divided the city into nine regions and blocks, and numbered the doorways of the houses. Archaeologists still use those addresses.",
+     "t": "Fiorelli also gave the city its addresses. He divided it into nine regions, split those into blocks, and numbered the doorways of the houses. Archaeologists still use those addresses.",
      "c": [
       "address"
      ],
@@ -690,7 +690,7 @@
    "stand": "On your way out, pause in any quiet doorway along the street.",
    "paras": [
     {
-     "t": "Pompeii is famous for how it ended. But try to walk out remembering how it lived: slogans for an election that was coming, bakeries with their ovens, and a young man holding his mother's hand in the dark. Ordinary days, a lot like ours.",
+     "t": "Pompeii is famous for how it ended. But try to walk out remembering how it lived: slogans for an election that was coming, bakeries with their ovens, and, across the bay, a young man leading his mother by the hand. Ordinary days, a lot like ours.",
      "c": [
       "election",
       "bakeries",

@@ -160,12 +160,13 @@
   },
   "tobias": {
    "label": "supported",
-   "says": "The almost life-size silver group of Tobias and the Angel (1797) in the Treasure chapel was made from Sanmartino's designs.",
+   "says": "The almost life-size silver group of Tobias and the Angel (1797) in the Treasure chapel was made from designs by Sanmartino, whose most famous work is the Veiled Christ (1753).",
    "src": [
     "wp-sammartino"
    ],
    "quote": [
-    "After Sanmartino’s death, the same del Giudice silversmiths executed the almost life-size group of Tobias and the Angel (1797; Naples Cathedral, Royal Chapel of the Treasure of St. Januarius) after his designs."
+    "After Sanmartino’s death, the same del Giudice silversmiths executed the almost life-size group of Tobias and the Angel (1797; Naples Cathedral, Royal Chapel of the Treasure of St. Januarius) after his designs.",
+    "His most famous work is the Veiled Christ (1753) in Sansevero Chapel in Naples."
    ]
   },
   "museum": {
@@ -180,12 +181,13 @@
   },
   "blood-vial": {
    "label": "tradition",
-   "says": "Three times a year the faithful gather to witness the liquefaction of what is claimed to be his blood.",
+   "says": "Three times a year the faithful gather to witness the liquefaction of what is claimed to be his blood, kept in two sealed small ampoules.",
    "src": [
     "wp-gennaro"
    ],
    "quote": [
-    "the faithful gather three times a year in Naples Cathedral to witness the liquefaction of what is claimed to be a sample of his blood kept in a sealed ampoule."
+    "the faithful gather three times a year in Naples Cathedral to witness the liquefaction of what is claimed to be a sample of his blood kept in a sealed ampoule.",
+    "The blood is stored in two hermetically sealed small ampoules"
    ]
   },
   "blood-dates": {
@@ -254,7 +256,7 @@
   },
   "science": {
    "label": "disputed",
-   "says": "Explanations are disputed: one hypothesis is a gel that liquefies when moved; a biologist in 2010 argued there is blood but no miracle; a historian argues for a thermal cause.",
+   "says": "Explanations are disputed: one hypothesis is a gel that liquefies when moved; a Naples biologist in 2010 tested a different old blood relic (from Camaldoli) that also changed phase, and concluded there is blood but no miracle; a historian argues for a thermal cause.",
    "src": [
     "wp-gennaro",
     "wp-duomo-na"
@@ -262,7 +264,8 @@
    "quote": [
     "A recent hypothesis by Garlaschelli & al. is that the vial contains a thixotropic gel. In such a substance viscosity increases if left unstirred and decreases if stirred or moved.",
     "He concluded, \"there's blood, no miracle\".",
-    "In 2010, Giuseppe Geraci",
+    "In 2010, Giuseppe Geraci, a professor in the Department of Molecular Biology at Naples' Frederick II University, conducted an experiment on a vial containing old blood—a relic dating to the 18th century from the Eremo di Camaldoli",
+    "Geraci showed that the Camaldoli relic also contains blood that can change its solid-liquid phase by shaking.",
     "which, according to him, has a thermal origin"
    ]
   },
@@ -333,17 +336,17 @@
  "parts": [
   {
    "name": "The front",
-   "stand": "Across Via Duomo from the cathedral, where you can take in the whole front.",
+   "stand": "On the sidewalk across the street from the cathedral, where you can take in the whole front.",
    "paras": [
     {
-     "t": "This is the cathedral of Naples. Officially it's the Cathedral of the Assumption of Mary, but everyone calls it the cathedral of San Gennaro, Saint Januarius, the city's patron saint.",
+     "t": "This is the cathedral of Naples. Officially it's the Cathedral of the Assumption of Mary, but it's widely known as the cathedral of San Gennaro, Saint Januarius, the city's patron saint.",
      "c": [
       "names"
      ],
      "level": 1
     },
     {
-     "t": "The church itself is Gothic. King Charles the First of Anjou commissioned it, and it was finished in the early 1300s under King Robert, the same Robert who built Santa Chiara. The front you see is newer, reworked in the late 1800s by Enrico Alvino, but the main doorway is from the 1400s, with sculptures by Tino da Camaino.",
+     "t": "The church itself is Gothic. King Charles the First of Anjou commissioned it, and it was finished in the early 1300s under King Robert, the same Robert who built Santa Chiara. The front you see is newer, reworked in the late 1800s by Enrico Alvino, but the main doorway is from the 1400s, and it includes sculptures by Tino da Camaino.",
      "c": [
       "built",
       "robert-sc",
@@ -359,6 +362,12 @@
      "level": 3
     },
     {
+     "t": "The street out front carries traffic. Stay on the sidewalk while you look.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
      "t": "This is a working church. If a Mass is on, keep your voice low and stay toward the back.",
      "c": [],
      "level": 1,
@@ -371,7 +380,7 @@
    "stand": "Step inside and stop in the nave, facing the main altar.",
    "paras": [
     {
-     "t": "So who was Januarius? Honestly, very little is known. No records from his own lifetime survive. Later sources and legend say he was a bishop, martyred in the persecution under the emperor Diocletian, which ended in 305.",
+     "t": "So who was Januarius? Honestly, very little is known. No records from his own lifetime survive. Later sources and legend say he was a bishop, martyred in the Great Persecution under the emperor Diocletian, who retired in 305.",
      "c": [
       "gen-life"
      ],
@@ -399,7 +408,7 @@
      "level": 2
     },
     {
-     "t": "Naples turns to him in hard times. By tradition, he was called on to stop the eruption of Vesuvius in 1631, and the lava, heading for the towns, slowed down.",
+     "t": "Naples turns to him in hard times. By tradition, he was called on to stop the eruption of Vesuvius in 1631, and, the tradition goes, the lava heading for the towns slowed down.",
      "c": [
       "vesuvius"
      ],
@@ -409,17 +418,17 @@
   },
   {
    "name": "The Chapel of the Treasure",
-   "stand": "At the entrance to the Royal Chapel of the Treasure of San Gennaro, looking through the bronze railing.",
+   "stand": "At the entrance to the Royal Chapel of the Treasure of San Gennaro.",
    "paras": [
     {
-     "t": "This is the Royal Chapel of the Treasure of San Gennaro. The bronze railing in front of you is by Cosimo Fanzago. Inside are frescoes by Domenichino and Giovanni Lanfranco, and a rich high altar by Francesco Solimena.",
+     "t": "This is the Royal Chapel of the Treasure of San Gennaro. Look for the bronze railing by Cosimo Fanzago. Inside are frescoes by Domenichino and Giovanni Lanfranco, and a rich high altar by Francesco Solimena.",
      "c": [
       "treasure-chapel"
      ],
      "level": 1
     },
     {
-     "t": "The treasure is a collection of gifts gathered over seven centuries, from popes, kings, emperors and ordinary people. And it's been kept, not by the clergy, but by the Deputation, a secular body set up in 1527 by a vote of the city of Naples. According to the experts who studied it, it's worth more than the crowns of Queen Elizabeth the Second and the Tsar of Russia.",
+     "t": "The treasure is a collection of gifts gathered over seven centuries, from popes, kings, emperors and ordinary people. And it's been kept, not by the clergy, but by the Deputation, a secular body set up in 1527 by a vote of the city of Naples. According to one group of experts who studied it, it's worth more than the crowns of the late Queen Elizabeth the Second and the Tsar of Russia.",
      "c": [
       "deputation",
       "value"
@@ -447,7 +456,7 @@
    "stand": "Stay near the Treasure chapel, or find a seat in the nave.",
    "paras": [
     {
-     "t": "And now the famous part. The cathedral keeps what is believed to be the blood of San Gennaro, sealed in a small vial. Three times a year it's brought out: on the Saturday before the first Sunday in May, on September 19, and on December 16. Usually, the dried blood appears to turn liquid. And legend says that if it fails, disaster will fall on Naples.",
+     "t": "And now the famous part. Naples keeps what is believed to be the blood of San Gennaro, sealed in two small vials. Three times a year it's brought out: on the Saturday before the first Sunday in May, on September 19, and on December 16. Usually, the dried blood appears to turn liquid. And legend says that if it fails, disaster will fall on Naples.",
      "c": [
       "blood-vial",
       "blood-dates",
@@ -471,7 +480,7 @@
      "level": 3
     },
     {
-     "t": "So what's actually in it? Nobody knows for sure. The Church has never made an official statement, and it doesn't allow the vials to be opened. Some researchers suggest a gel that turns liquid when it's moved. A biologist in 2010 concluded there's blood, but no miracle. A historian argues it's all about temperature. Scholars still disagree.",
+     "t": "So what's actually in it? Nobody knows for sure. The Church has never made an official statement, and it doesn't allow the vials to be opened. Some researchers suggest a gel that turns liquid when it's moved. A biologist in Naples tested a different old blood relic in 2010, saw the same kind of change, and concluded: there's blood, no miracle. A historian argues it's all about temperature. Scholars still disagree.",
      "c": [
       "church",
       "science"
@@ -493,7 +502,7 @@
    "stand": "Find the way into Santa Restituta, the older church reached from inside the cathedral.",
    "paras": [
     {
-     "t": "This is Santa Restituta, the original early Christian church here, older than the cathedral around it. The cathedral also keeps an early Christian baptistery, with mosaics from the 300s.",
+     "t": "This is Santa Restituta, the original early Christian church, next to the cathedral and reached from inside it. The cathedral also keeps an early Christian baptistery, with mosaics from the 300s.",
      "c": [
       "restituta",
       "baptistery"

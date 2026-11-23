@@ -45,7 +45,7 @@
   },
   "murat": {
    "label": "supported",
-   "says": "In the first years of the 19th century Murat, King of Naples and Napoleon's brother-in-law, planned square and building as a tribute to Napoleon; after Napoleon's fall the restored Bourbon Ferdinand finished it as a church.",
+   "says": "In the first years of the 19th century Murat, King of Naples and Napoleon's brother-in-law, planned square and building as a tribute to Napoleon; after Napoleon's fall the restored Bourbon Ferdinand continued the construction but converted it into a church.",
    "src": [
     "wp-plebiscito",
     "wv-naples"
@@ -275,7 +275,7 @@
      "level": 1
     },
     {
-     "t": "But the square was planned for an emperor. In the first years of the 1800s, Joachim Murat, King of Naples and Napoleon's brother-in-law, laid it out as a tribute to Napoleon. Then Napoleon fell, the Bourbons came back, and King Ferdinand finished the building, but as a church.",
+     "t": "But the square was planned for an emperor. In the first years of the 1800s, Joachim Murat, King of Naples and Napoleon's brother-in-law, planned it as a tribute to Napoleon. Then Napoleon fell, the Bourbons came back, and King Ferdinand carried on the building, but turned it into a church.",
      "c": [
       "murat"
      ],
@@ -340,7 +340,7 @@
      "level": 2
     },
     {
-     "t": "Those niches were once open arches. Fontana gave the palace a portico along its whole length, so people could walk under cover in bad weather. But after the Masaniello revolt, and because the pillars were being crushed, the arches were walled up in 1753, to a design by Luigi Vanvitelli.",
+     "t": "Those niches were once open arches. Fontana gave the palace a portico along its whole length, so people could walk under cover in bad weather. But the pillars were being crushed, and in 1753 the arches were walled up, to a design by Luigi Vanvitelli.",
      "c": [
       "arches"
      ],
@@ -366,15 +366,21 @@
   },
   {
    "name": "The opera house and the Galleria",
-   "stand": "Walk to the Teatro San Carlo, beside the palace.",
+   "stand": "Walk to the Teatro San Carlo, beside the palace, watching the traffic as you leave the square.",
    "paras": [
     {
-     "t": "This is the Teatro San Carlo, part of the royal palace complex. It opened on November 4, 1737, for the king's name day. It's the oldest continuously active opera house in Europe.",
+     "t": "This is the Teatro San Carlo, part of the royal palace complex. It opened on November 4, 1737, for the king's name day. It's said to be the oldest continuously active opera house in Europe.",
      "c": [
       "sancarlo",
       "sancarlo-old"
      ],
      "level": 1
+    },
+    {
+     "t": "Once you leave the square, there's traffic again. Use the crossings and keep to the sidewalk.",
+     "c": [],
+     "level": 1,
+     "cue": true
     },
     {
      "t": "Rossini and Donizetti both ran it for years, and Donizetti's Lucia di Lammermoor had its first production here. The theater even connects straight into the palace, through two vestibules, one of them private.",
@@ -398,7 +404,7 @@
    "stand": "Come back to the middle of the square.",
    "paras": [
     {
-     "t": "Think about this square for a moment. It was planned to glorify an emperor, finished as a church, spent years as a parking lot, and it's named after a vote. Today it belongs to the people walking across it, you included.",
+     "t": "Think about this square for a moment. It was planned to glorify an emperor, turned into a church, spent years as a parking lot, and it's named after a vote. Today it belongs to the people walking across it, you included.",
      "c": [
       "murat",
       "parking",

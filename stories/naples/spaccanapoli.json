@@ -328,7 +328,7 @@
   },
   "domenico": {
    "label": "supported",
-   "says": "San Domenico Maggiore is a Gothic church founded in 1283 over a 10th-century church; its monastery was the first seat of the University of Naples, where Thomas Aquinas returned to teach theology in 1272, and Giordano Bruno lived there.",
+   "says": "San Domenico Maggiore is a Gothic church founded in 1283 incorporating a 10th-century church; Thomas Aquinas taught theology there in 1272, and Giordano Bruno lived there.",
    "src": [
     "wv-naples"
    ],
@@ -345,6 +345,16 @@
    ],
    "quote": [
     "The sacristy houses a series of 45 sepulchres of members of the royal Aragonese family, including that of King Ferdinand I."
+   ]
+  },
+  "sanmartino-famous": {
+   "label": "supported",
+   "says": "Sanmartino's most famous work is the Veiled Christ (1753) in the Sansevero Chapel.",
+   "src": [
+    "wp-sammartino"
+   ],
+   "quote": [
+    "His most famous work is the Veiled Christ (1753) in Sansevero Chapel in Naples."
    ]
   },
   "duomo-end": {
@@ -374,7 +384,7 @@
    "stand": "In the middle of Piazza del Gesù Nuovo, beside the tall carved spire, facing the church with the studded stone front.",
    "paras": [
     {
-     "t": "Welcome to the old heart of Naples, a UNESCO World Heritage Site since 1995. The street that runs past Santa Chiara, across the square, is Spaccanapoli. The name literally means Naples splitter.",
+     "t": "Welcome to the old center of Naples, a UNESCO World Heritage Site since 1995. The street that runs past Santa Chiara, across the square, is Spaccanapoli. The name literally means Naples splitter.",
      "c": [
       "unesco-1995",
       "square",
@@ -392,7 +402,7 @@
      "level": 3
     },
     {
-     "t": "Look up at the spire. It's the Guglia dell'Immacolata, the tallest and most ornate of three plague columns in Naples. It is said it was built to ask the Virgin Mary for protection from the plague. It took its time, too: begun in the 1600s, and finished only in 1750, after decades of pauses.",
+     "t": "Look up at the spire. It's the Guglia dell'Immacolata, the tallest and most ornate of three plague columns in Naples. Tradition says it was built to ask the Virgin Mary for protection from the plague. It took its time, too: begun in the 1600s, and finished only in 1750, after decades of pauses.",
      "c": [
       "guglia",
       "guglia-why"
@@ -408,7 +418,7 @@
      "level": 2
     },
     {
-     "t": "If you step inside, turn around once you're through the door. On the inside of the front wall is a huge painting, The Expulsion of Heliodorus from the Temple, by Francesco Solimena, from 1725. And in the chapel of the Visitation, under the altar, lies a doctor: Saint Joseph Moscati, who taught at the University of Naples and was head physician of the hospital of the Incurables. He died in 1927, and Pope John Paul the Second made him a saint in 1987.",
+     "t": "If you step inside, turn around once you're through the door. On the inside of the front wall is a great Baroque painting, The Expulsion of Heliodorus from the Temple, by Francesco Solimena, from 1725. And in the chapel of the Visitation, under the altar, lies a doctor: Saint Joseph Moscati, who taught at the University of Naples and was head physician of the hospital of the Incurables. He died in 1927, and Pope John Paul the Second made him a saint in 1987.",
      "c": [
       "gesu-solimena",
       "moscati"
@@ -425,7 +435,7 @@
   },
   {
    "name": "Santa Chiara",
-   "stand": "Cross the square to the plain stone front of Santa Chiara, diagonally across from Gesù Nuovo.",
+   "stand": "Leave the square by Via Benedetto Croce and go through the gateway to the front of Santa Chiara, diagonally across from Gesù Nuovo.",
    "paras": [
     {
      "t": "Santa Chiara looks severe after the Gesù. It's Gothic, built by King Robert of Naples and his queen, Sancha of Majorca. The exact dates differ from one account to another: 1310 to 1328 in one, 1313 to 1340 in another. Either way, it was the largest church of the Poor Clares ever built.",
@@ -444,7 +454,7 @@
      "level": 2
     },
     {
-     "t": "Almost everything you see in here is a rebuilding. In 1943, Allied bombing and the fire that followed wrecked the church. It was brought back to a Gothic look by a restoration finished in 1953, and that restoration is still argued over. But for Naples, rebuilding Santa Chiara became the symbol of the city's rebirth.",
+     "t": "Much of what you see in here is a rebuilding. In 1943, Allied bombing and the fire that followed destroyed part of the church and much of its decoration. It was brought back to a Gothic look by a restoration finished in 1953, and that restoration is still argued over. But for Naples, rebuilding Santa Chiara became the symbol of the city's rebirth.",
      "c": [
       "sc-war",
       "sc-rebirth"
@@ -452,7 +462,7 @@
      "level": 3
     },
     {
-     "t": "In the side chapels are royal tombs: Francis the Second, Bourbon king of Naples, and his queen, Maria Sophie. And there's a quieter grave: Salvo D'Acquisto, a carabiniere who gave his life to save 22 civilian hostages during the Nazi occupation. He's remembered as a national hero.",
+     "t": "In the side chapels are royal tombs: the Bourbon king Francis the Second, and his queen, Maria Sophie. And there's a quieter grave: Salvo D'Acquisto, a carabiniere who gave his life to save 22 civilian hostages during the Nazi occupation. He's remembered as a national hero.",
      "c": [
       "sc-dacquisto"
      ],
@@ -473,7 +483,7 @@
    "stand": "Walk east along Via Benedetto Croce and stop where you can look straight down the length of the street.",
    "paras": [
     {
-     "t": "Look down the street. See how straight it is, in a city of small, irregular alleys? You're walking on a Greek plan. The rectangular grid of ancient Neapolis, the New City, can still be traced, and it still gives the old center its basic shape.",
+     "t": "Look down the street. Spaccanapoli is long and narrow, and it crosses the old center from east to west, in a city of small, irregular alleys. Around you, the rectangular grid of ancient Greek Neapolis, the New City, can still be traced, and it still gives the old center its basic shape.",
      "c": [
       "maze",
       "grid"
@@ -507,7 +517,8 @@
     {
      "t": "The numbers in this old core are hard to take in. More than 200 historic churches. Their story is tied to artists like Giotto, Caravaggio, Donatello and Giuseppe Sanmartino. You can meet Sanmartino's most famous piece, the Veiled Christ, in the Sansevero Chapel.",
      "c": [
-      "churches-200"
+      "churches-200",
+      "sanmartino-famous"
      ],
      "level": 3
     }
@@ -518,7 +529,7 @@
    "stand": "In Piazza San Domenico Maggiore, facing the church.",
    "paras": [
     {
-     "t": "This is San Domenico Maggiore, a Gothic church founded in 1283, on top of a smaller church from the 10th century. Its monastery was the first home of the University of Naples. The great theologian Thomas Aquinas, once a monk here, came back to teach theology in 1272. The philosopher Giordano Bruno lived here too.",
+     "t": "This is San Domenico Maggiore, a Gothic church founded in 1283 around a smaller church from the 10th century. The great theologian Thomas Aquinas taught theology in the monastery here in 1272, and the philosopher Giordano Bruno lived here too.",
      "c": [
       "domenico"
      ],
@@ -535,7 +546,7 @@
   },
   {
    "name": "Via Duomo",
-   "stand": "Keep walking east until the street meets the wide cross street, Via Duomo, and turn to look back the way you came.",
+   "stand": "Keep walking east until the street meets the major cross street, Via Duomo. Stop on the sidewalk and turn to look back the way you came.",
    "paras": [
     {
      "t": "Here at Via Duomo, our street changes its name to Via Vicaria Vecchia and loses much of its character. So this is a good place to turn around and look back.",
@@ -545,7 +556,13 @@
      "level": 2
     },
     {
-     "t": "UNESCO says what makes Naples special isn't only its monuments. It's that the city kept living in them: the same street pattern, the same buildings, many of the same everyday uses. Greek settlers drew this line. And for all the centuries since, the people of Naples have simply kept walking it.",
+     "t": "Via Duomo carries traffic. Stay on the sidewalk, and don't stop in the crossing.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    },
+    {
+     "t": "UNESCO says what makes Naples special isn't only its monuments. It's that the city kept living in them: the same street pattern, the same buildings, many of the same everyday uses. Greek settlers drew the grid of this old center. And the people of Naples have kept walking it ever since.",
      "c": [
       "living",
       "grid"

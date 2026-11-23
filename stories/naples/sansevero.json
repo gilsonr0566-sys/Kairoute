@@ -381,7 +381,7 @@
    "stand": "In the narrow street outside the chapel entrance, out of the way of the line.",
    "paras": [
     {
-     "t": "This modest building is the Sansevero Chapel, properly the Chapel of Santa Maria della Pietà. Inside are almost thirty works of art, and one of them is the Veiled Christ. It's a small place, which is why the line here can be longer than at other sights in Naples.",
+     "t": "This is the Sansevero Chapel, properly the Chapel of Santa Maria della Pietà. Inside are almost thirty works of art, and one of them is the Veiled Christ. It's a small place, which is why the line here can be longer than at other sights in Naples.",
      "c": [
       "where",
       "thirty",
@@ -399,7 +399,7 @@
      "level": 2
     },
     {
-     "t": "Neapolitans also call it the Pietatella. The story goes that an unjustly arrested prisoner spotted a painting of the Virgin Mary, a Pietà, here, and the name grew from that painting. The tale was written down in 1623.",
+     "t": "It's also called the Pietatella. The story goes that an unjustly arrested prisoner spotted a painting of the Virgin Mary, a Pietà, here, and the name grew from that painting. The tale was written down in 1623.",
      "c": [
       "pietatella"
      ],
@@ -458,7 +458,7 @@
      "level": 2
     },
     {
-     "t": "Other sculptors were stunned. Antonio Canova tried to acquire it, and said he would gladly give ten years of his life to have made something as good. As for Sanmartino, he was born in Naples in 1720, and little is known about his early life. This is his first dated work, and it launched his career.",
+     "t": "The sculptor Antonio Canova tried to acquire it, and said he would gladly give ten years of his life to have made something as good. As for Sanmartino, he was born in Naples in 1720, and little is known about his early life. This is his first dated work, and it helped launch his career.",
      "c": [
       "canova",
       "sanmartino",
@@ -480,7 +480,7 @@
      "level": 1
     },
     {
-     "t": "The Veiled Christ shows the influence of this veiled Modesty. Now find the Release from Deception, Il Disinganno, by Francesco Queirolo of Genoa, a monument to Raimondo's father. Look for the fisherman's net, carved entirely from marble.",
+     "t": "The Veiled Christ shows the influence of this veiled Modesty. Now find the Release from Deception, Il Disinganno, by Francesco Queirolo of Genoa, a monument to Raimondo's father. Look for the fisherman's net, carved in marble.",
      "c": [
       "influence",
       "disinganno"
@@ -491,7 +491,7 @@
   },
   {
    "name": "The prince's chapel",
-   "stand": "Stand in the middle of the nave and look up at the ceiling.",
+   "stand": "Stand beside the Veiled Christ again and look up at the ceiling.",
    "paras": [
     {
      "t": "Above you is the Glory of Paradise, painted by Francesco Maria Russo in 1749.",
@@ -508,7 +508,7 @@
      "level": 2
     },
     {
-     "t": "Raimondo was a restless mind. Among his inventions were coloured fireworks, and a carriage with wood and cork horses that could travel on land and on water. He led the Masonic lodge of Naples until the Church excommunicated him. Pope Benedict the Fourteenth later lifted that, probably thanks to his family's influence. Before he died he destroyed his own scientific archive, and his descendants, under threat of excommunication, destroyed the rest.",
+     "t": "Raimondo was a restless mind. Among his inventions were colored fireworks, and a carriage with wood and cork horses that could travel on land and on water. He led the Masonic lodge of Naples until the Church excommunicated him. Pope Benedict the Fourteenth later lifted that, probably thanks to his family's influence. Before he died he destroyed his own scientific archive, and his descendants, under threat of excommunication, destroyed the rest.",
      "c": [
       "inventions",
       "excomm",
@@ -527,7 +527,7 @@
   },
   {
    "name": "The anatomical machines",
-   "stand": "Down in the basement, in front of the two standing figures.",
+   "stand": "Down in the basement, in front of the two figures.",
    "paras": [
     {
      "t": "Take the steps down slowly. And a word of warning: what's down here is unsettling.",
@@ -543,7 +543,7 @@
      "level": 1
     },
     {
-     "t": "Naples told dark stories about the prince. The legend said he could make blood out of nothing, and even copy the miracle of San Gennaro's blood. Many Neapolitans believed these two were his servant and a pregnant woman, injected while alive. The latest research says otherwise: there's no sign of injection, and the vessels are made of beeswax, iron wire and silk. Even so, nobody knows exactly how they were made.",
+     "t": "Naples told dark stories about the prince. The legend said he could make blood out of nothing, and even copy the miracle of San Gennaro's blood. Many Neapolitans believed these two were his servant and a pregnant woman, whose veins had been injected with some substance. The latest research says otherwise: there's no sign of injection, and the vessels are made of beeswax, iron wire and silk. Even so, nobody knows exactly how they were made.",
      "c": [
       "rai-legends",
       "am-belief",
