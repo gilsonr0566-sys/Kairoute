@@ -370,7 +370,9 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
       if (!sd || !(sd.closed || (sd.oh && sd.oh.spans && !sd.oh.spans.length)) || d.locked) return; // only picks the map says are shut that day
       const j = ps.findIndex((p, k) => k !== i && p && p.items && p.items.some(x => x.t === 'stop' && String(x.id) === String(id)));
       const name = ((s.cities[d.city].sites || []).find(x => String(x.id) === String(id)) || {}).name;
-      ok(j >= 0 && (ps[i].explain || []).some(e => e.startsWith(name + ' is closed on')), `${name}, shut on its day, is planned on another day of the stay and the plan says so`); })); } }
+      // (Nov 22: or, when that day is already full, the plan says it didn't fit there either; never "planned on" a day without it.)
+      const said = (ps[i].explain || []).find(e => e.startsWith(name + ' is closed on')) || '';
+      ok(j >= 0 ? /so it's planned on/.test(said) : /didn't fit on/.test(said), `${name}, shut on its day, is planned on another day of the stay (or said not to fit there), and the plan says so truly (${said})`); })); } }
 
 // ---- Across water: a place reached by boat is reached by boat, its crossing the guide's own time plus the pier, never a taxi.
 { const tb = E.makeTravel({ walk: 'medium' }, {}), port = { lat: 37.46, lng: 25.326 }, isle = { lat: 37.396, lng: 25.268, travelNote: 'About 30 to 40 minutes each way by boat from the old harbor.' };
@@ -718,9 +720,9 @@ if (fs.existsSync(dir)) for (const f of fs.readdirSync(dir).filter(f => f.endsWi
 { let marked = 0, silent = 0, dawn = 0; for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) { const s = JSON.parse(fs.readFileSync(path.join(dir, f)));
     E.planTrip(s).forEach((p, i) => { if (!p || !p.items || p.safe) return; const d = s.days[i], c = s.cities[d.city] || {};
       for (const x of p.items.filter(x => x.t === 'stop')) { const sx = (c.sites || []).find(y => String(y.id) === String(x.id)); if (!sx) continue; const sd = (d.sites || {})[x.id];
-        if (E.needsHours(sx) && !(sd && (sd.closed || sd.allDay || (sd.oh && sd.oh.spans && sd.oh.spans.length)))) { if (x.hoursUnknown && (p.explain || []).some(t => /Opening hours aren't known/.test(t))) marked++; else silent++;
+        if (E.needsHours(sx) && !(sd && (sd.closed || sd.allDay || (sd.oh && sd.oh.spans && sd.oh.spans.length)))) { if (x.hoursUnknown && x.hours && x.hours.unknown && (p.explain || []).some(t => /(Opening|Sunday) hours not confirmed/.test(t))) marked++; else silent++;
           // Nov 20 review (finding 7): and never planned at dawn or late on a guess (9 to 5), unless the traveler set the order.
-          if (!d.order && (x.at < E.ASSUME_OPEN || x.at + x.min > E.ASSUME_CLOSE)) { dawn++; if (dawn <= 3) ok(false, `${f} day ${i}: ${x.name}, hours unknown, planned at ${E.clock(x.at)}`); } } } }); }
+          const pw = (x.hours && x.hours.planned) || [E.ASSUME_OPEN, E.ASSUME_CLOSE]; if (!d.order && (x.at < pw[0] || x.at + x.min > pw[1])) { dawn++; if (dawn <= 3) ok(false, `${f} day ${i}: ${x.name}, hours unknown, planned at ${E.clock(x.at)}`); } } } }); }
   ok(marked > 0 && !silent && !dawn, `unknown opening hours are said, never read as open, and kept to 9 to 5 (${marked} stops marked, ${silent} silent, ${dawn} outside)`);
   ok(E.needsHours({ tags: ['indoor'] }) && E.needsHours({ tags: ['inside-or-out'] }) && !E.needsHours({ tags: ['open-air'] }) && !E.needsHours({ far: true, tags: ['indoor'] }), 'one rule from the tags decides which sights need hours'); }
 ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable('נתי- מזנון המשק') && !E.readable('東京'), 'a place to eat named only in another script is not readable');
@@ -735,7 +737,9 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   const old = ['Dome of the Rock', 'Al-Aqsa Mosque', 'Western Wall'].map(n => ids.indexOf(n)), museum = Math.min(...['Israel Museum', 'Bible Lands Museum'].map(n => ids.indexOf(n)).filter(k => k >= 0));
   // (Nov 20: with unknown hours kept to 9 to 5 the museums may come first; what counts is that each side of town is visited once.)
   const mus = ['Israel Museum', 'Bible Lands Museum'].map(n => ids.indexOf(n)).filter(k => k >= 0), museumLast = Math.max(...mus);
-  ok(old.every(k => k >= 0) && (old.every(k => k < museum) || old.every(k => k > museumLast)), `the Old City sights together, never split by the museums across town (got ${ids.join(' > ')})`); } }
+  // (Nov 23: on a Saturday the Temple Mount is shut by its official hours, so only the Old City sights planned count.)
+  const oldIn = old.filter(k => k >= 0);
+  ok(oldIn.length >= 1 && (oldIn.every(k => k < museum) || oldIn.every(k => k > museumLast)), `the Old City sights together, never split by the museums across town (got ${ids.join(' > ')})`); } }
 // Road times from the map: two trips out across a gulf are timed by the road, not the straight line.
 { const PD = path.join(__dirname, '..', 'places', 'data'), places = {}; if (fs.existsSync(PD)) for (const g of fs.readdirSync(PD).filter(g => g.endsWith('.json'))) { const q = JSON.parse(fs.readFileSync(path.join(PD, g))); places[q.key] = q; }
   const s = E.applyPlaces(JSON.parse(fs.readFileSync(path.join(dir, 'athens-booked.json'))), places), far = id => s.cities.athens.farther.find(x => x.id === id);

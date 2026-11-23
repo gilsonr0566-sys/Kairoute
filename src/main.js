@@ -238,7 +238,7 @@ const guideVoice = () => { const g = guideOf(); return { model: "kokoro", speake
 const GUIDE_PACE = 1; // the recordings are made at a guide's pace (Kokoro speed 0.95), so they play as recorded
 const ACCESS = [["none", "No special needs"], ["limited", "Limited walking"], ["wheelchair", "Wheelchair or scooter"], ["kids", "Young kids or a stroller"]];
 const DOWS = ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"];
-function closedOn(s, iso) { if (!s.closed || !iso) return false; const dow = DOWS[new Date(iso + "T12:00:00Z").getUTCDay()]; return s.closed.toLowerCase().includes(dow.toLowerCase()); }
+function closedOn(s, iso) { return !!(s && s.closed && iso && siteClosed(s, iso)); } // the one hours reader (features/live.js)
 function addDays(iso, n) { const dt = new Date(iso + "T12:00:00Z"); dt.setUTCDate(dt.getUTCDate() + n); return dt.toISOString().slice(0, 10); }
 const SAMPLE_ID = "sample-sunprincess-2027";
 function sampleTrip() {
@@ -1574,30 +1574,9 @@ function pickRestaurant(city, a, b, style, used) {
 // OpenStreetMap opening hours ("Mo-Fr 12:00-15:00,19:00-23:00; Su off") read for the actual weekday of the
 // plan. Only clear answers count: anything this reader doesn't fully understand (months, holidays, "sunrise")
 // gives "unknown", and the plan then says to check the hours rather than claiming it's open.
-const OH_DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-function ohState(hours, iso, minute) {
-  const h = String(hours || "").trim(); if (!h || !iso) return null;
-  if (/^24\/7$/.test(h)) return "open";
-  if (/\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|week|sunrise|sunset|dawn|dusk|easter)\b|"|\[|SH\b/i.test(h)) return null;
-  const dow = new Date(iso + "T12:00:00Z").getUTCDay(), prevDow = (dow + 6) % 7;
-  const dayIn = (sel, d) => sel.split(",").some(part => { part = part.trim(); if (part === "PH") return false; const m = /^(Su|Mo|Tu|We|Th|Fr|Sa)(?:-(Su|Mo|Tu|We|Th|Fr|Sa))?$/.exec(part); if (!m) throw 0;
-    const a = OH_DAYS.indexOf(m[1]), b = m[2] ? OH_DAYS.indexOf(m[2]) : a; return a <= b ? d >= a && d <= b : d >= a || d <= b; });
-  let state = null; // later rules override earlier ones for the days they name
-  try {
-    for (let rule of h.split(";")) {
-      rule = rule.trim().replace(/\s*,\s*PH\b|\bPH\s*,\s*/g, ""); if (!rule) continue;
-      if (/^PH\b/.test(rule)) continue;
-      const m = /^((?:(?:Su|Mo|Tu|We|Th|Fr|Sa)(?:-(?:Su|Mo|Tu|We|Th|Fr|Sa))?)(?:\s*,\s*(?:Su|Mo|Tu|We|Th|Fr|Sa)(?:-(?:Su|Mo|Tu|We|Th|Fr|Sa))?)*)?\s*(.*)$/.exec(rule);
-      const sel = m[1] || "Mo-Su", rest = m[2].trim();
-      const today = dayIn(sel, dow), yday = dayIn(sel, prevDow);
-      if (/^(off|closed)$/i.test(rest)) { if (today) state = "closed"; continue; }
-      const spans = (rest || "00:00-24:00").split(",").map(x => { const t = /^(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})\+?$/.exec(x.trim()); if (!t) throw 0; return [+t[1] * 60 + +t[2], +t[3] * 60 + +t[4]]; });
-      if (today) state = spans.some(([a, b]) => b > a ? minute >= a && minute < b : minute >= a) ? "open" : "closed";
-      if (yday && spans.some(([a, b]) => b <= a && minute < b)) state = "open"; // open past midnight from the day before
-    }
-  } catch (e) { return null; }
-  return state || "closed"; // days no rule names are closed days
-}
+// Is a place open at this minute of this date? "open", "closed" or null (not known): the one reader (dayHours,
+// features/live.js over the engine's part 2b/2c), with the place's holidays and calendar rules.
+function ohState(place, iso, minute) { const r = dayHours(typeof place === "string" ? { hours: place } : place, iso); if (!r.known) return null; return r.spans.some(([a, b]) => minute >= a && minute < b) ? "open" : "closed"; }
 let planDate = null;
 // With no forecast yet (trips months away), the usual summer climate decides: an open-air ruin or park in the
 // Mediterranean summer is best seen before the midday heat and the tour-bus crowds (Pompeii first, the shady town
@@ -1611,7 +1590,7 @@ function climateHeat(p, t, len) {
 const MEAL_CHECK = { Lunch: [750, 810], Dinner: [1170, 1230] }; // 12:30 and 13:30; 19:30 and 20:30
 const hoursOf = r => (r && (r.hours || ((/Hours listed: (.*?)\. Check/.exec(r.why || "") || [])[1]))) || "";
 // "closed" only when the listed hours say it's shut at both usual times for that meal on the plan's date.
-function mealShut(r, label, iso) { const t = MEAL_CHECK[label] || MEAL_CHECK.Lunch, h = hoursOf(r); if (!h || r.booked) return false; return t.every(m => ohState(h, iso || planDate, m) === "closed"); }
+function mealShut(r, label, iso) { const t = MEAL_CHECK[label] || MEAL_CHECK.Lunch, h = hoursOf(r); if (!h || r.booked) return false; const p = Object.assign({}, r, { hours: h }); return t.every(m => ohState(p, iso || planDate, m) === "closed"); }
 // No backtracking (Richard, Nov 16: Athens went 1 -> 6 north for lunch, then back south to 7, then across town and
 // back): a route whose legs cross each other doubles back on itself. Each crossing costs as much as an hour, so a
 // crowd or heat preference never wins over a clean loop, while opening hours, meals and the ship still do.
@@ -1832,9 +1811,11 @@ function checksCard(d, city, plan) {
     else if (!stops.some(s => s.src)) add("unk", "Today's stops have not been checked against outside sources: each comes from the travel guide or the map only.");
     else add("warn", `${conf.length} of ${stops.length} stops are named by two or more sources. Fewer sources for: ${esc(one.map(s => s.name).join(", "))}.`); }
   // Squares, parks, hills, streets and neighborhoods are open-air and always open: no hours to confirm.
-  const openAir = s => /square|park|garden|hill|neighbo|street|promenade|old town|quarter|district|beach|viewpoint|harbou?r|waterfront|bridge/i.test((s.category || "") + " " + s.name);
-  const noHours = stops.filter(s => !s.hours && !s.far && !openAir(s));
-  if (stops.length) add(noHours.length ? "warn" : "ok", noHours.length ? `Opening hours not confirmed for ${esc(noHours.map(s => s.name).join(", "))}. Check the official website before you go.` : "Opening hours listed for every stop.");
+  // One rule with the plan (Nov 22): Beta 2's stops carry the hours the plan used (unknown = assumed and said); the
+  // old planner's stops count as unknown when their hours can't be read for the date.
+  const items = (plan.stops || []).filter(s => !s.mealOf && (s.place || s).name);
+  const noHours = items.filter(it => it.hours ? it.hours.unknown : !(it.place || it).far && !isOpenAir(it.place || it) && !siteWindow(it.place || it, d.date, city) && !siteClosed(it.place || it, d.date, city)).map(it => it.place || it);
+  if (stops.length) add(noHours.length ? "warn" : "ok", noHours.length ? `Opening hours not confirmed for ${esc(noHours.map(s => s.name).join(", "))}. Check the official website before you go.` : "Opening hours listed for every stop" + ((n => n ? ` (${n} checked on the place's official website)` : "")(items.filter(it => it.hours && /^official website/.test(it.hours.src || "")).length)) + ".");
   const closed = plan.closedToday || []; if (closed.length) add("warn", `Closed on this day, so left out: ${esc(closed.map(s => s.name).join(", "))}.`);
   liveChecks(d, plan, add);
   const meals = plan.items.filter(x => (x.type === "meal" || x.type === "evening") && x.place && !x.place.generic && !x.place.booked);
@@ -1842,7 +1823,7 @@ function checksCard(d, city, plan) {
     const all = meals.flatMap(x => [x.place].concat(x.place.alts || [])), rated = all.filter(r => { const g = gOf(r); return g && g.state === "ok" && g.rating; });
     if (gNoKey) add("unk", "Google ratings are not switched on yet, so restaurants are checked by traveler guidebooks, the map and Kairoute travelers only.");
     else add(rated.length === all.length ? "ok" : "warn", `${rated.length} of ${all.length} restaurants offered have a Google rating of ${G_MIN.toFixed(1)} or better${rated.length < all.length ? "; the rest have no rating yet, so check reviews" : ""}.`);
-    const lab = x => (x.meal && x.meal.label) || "Dinner", known = meals.filter(x => hoursOf(x.place)), open = known.filter(x => MEAL_CHECK[lab(x)].some(m => ohState(hoursOf(x.place), d.date, m) === "open"));
+    const lab = x => (x.meal && x.meal.label) || "Dinner", known = meals.filter(x => hoursOf(x.place)), open = known.filter(x => MEAL_CHECK[lab(x)].some(m => ohState(Object.assign({}, x.place, { hours: hoursOf(x.place) }), d.date, m) === "open"));
     add(known.length === meals.length && open.length === meals.length ? "ok" : "warn", known.length ? `${open.length} of ${meals.length} meal stops list hours that say they're open on this day.${known.length < meals.length ? " The others list no hours: check before you go." : ""}` : "No restaurant here lists its hours on the map. Check they're open on the day.");
   }
   if (d.type === "port" && d.allAboard) add(plan.over ? "warn" : "ok", `Back at the ship by ${fmt(backByOf(d, plan))}, ${dur(shipToPort(d, d.allAboard) - backByOf(d, plan))} before all aboard (${esc(d.allAboard)}). Being on board on time is your responsibility: confirm the all-aboard time with your cruise line on the day, as it can change.`);

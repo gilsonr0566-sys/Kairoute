@@ -1,0 +1,3017 @@
+[
+ {
+  "place": "Athens",
+  "name": "Acropolis",
+  "aliases": [
+   "Acropolis",
+   "Acropolis and Parthenon"
+  ],
+  "lat": 37.9715,
+  "lng": 23.7257,
+  "opening_hours": "Apr 01-Aug 31: Mo-Su 08:00-20:00; Sep 01-Sep 15: Mo-Su 08:00-19:30; Sep 16-Sep 30: Mo-Su 08:00-19:00; Oct 01-Oct 15: Mo-Su 08:00-18:30; Oct 16-Oct 31: Mo-Su 08:00-18:00; Nov 01-Mar 31: Mo-Su 08:00-17:00; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing (e.g. 19:40 in Jul); 16:40 in winter",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Timed-entry tickets (hourly slots) mandatory since 2023; entry only in booked slot. Graduated Sep/Oct closing times. Ministry routinely closes Acropolis (and sometimes other Athens open-air sites) 12:00-17:00 on heatwave days (e.g. July 2024, July 2025) - announced day-of.",
+  "source_url": "https://www.hh.gr/en/destinations/acropolis-of-athens/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Athens",
+  "name": "Acropolis Museum",
+  "aliases": [
+   "Acropolis Museum"
+  ],
+  "lat": 37.9684,
+  "lng": 23.7285,
+  "opening_hours": "Apr 01-Oct 31: Mo 09:00-17:00, Tu-Th 09:00-20:00, Fr 09:00-22:00, Sa-Su 09:00-20:00; Nov 01-Mar 31: Mo-Th 09:00-17:00, Fr 09:00-22:00, Sa-Su 09:00-20:00; Dec 24,Dec 31 09:00-15:00; Jan 01,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2027 Apr 30 12:00-18:00; 2027 May 01 off",
+  "last_entry": "30 min before closing (16:30 / 19:30 / 21:30)",
+  "notes": "Closed 1 Jan, Orthodox Easter Sunday, 1 May, 25-26 Dec. Reduced: 24 & 31 Dec 09:00-15:00; Orthodox Good Friday 12:00-18:00; Holy Saturday 08:00-15:00. OPEN on 25 March (free admission). Open until midnight on August full moon and European Night of Museums. Not a Ministry ephorate site (own foundation) so it does NOT close 25 March like other Greek sites. Mondays close early (17:00) even in summer. Timed tickets. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://archaeologicalmuseums.culture.gov.gr/en/museum/5df34af3deca5e2d79e8c1d1",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Athens",
+  "name": "Ancient Agora",
+  "aliases": [
+   "Ancient Agora",
+   "Ancient Agora"
+  ],
+  "lat": 37.9747,
+  "lng": 23.7223,
+  "opening_hours": "Apr 01-Aug 31: Mo-Su 08:00-20:00; Sep 01-Sep 15: Mo-Su 08:00-19:30; Sep 16-Sep 30: Mo-Su 08:00-19:00; Oct 01-Oct 15: Mo-Su 08:00-18:30; Oct 16-Oct 31: Mo-Su 08:00-18:00; Nov 01-Mar 31: Mo-Su 08:00-17:00; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing (e.g. 19:40 in Jul)",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Includes Stoa of Attalos museum and Temple of Hephaestus. Stoa of Attalos museum opens only at 10:00 on Tuesdays (site itself 08:00). Occasional Sunday closures for restoration works (e.g. 7 and 21 Dec 2025). Heatwave midday closures possible. NB: OSM 'easter' keyword is W",
+  "source_url": "https://www.hh.gr/en/destinations/ancient-agora/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Athens",
+  "name": "National Archaeological Museum",
+  "aliases": [
+   "National Archaeological Museum",
+   "National Archaeological Museum"
+  ],
+  "lat": 37.989,
+  "lng": 23.7327,
+  "opening_hours": "Apr 01-Oct 31: Mo,We-Su 08:00-20:00, Tu 13:00-20:00; Nov 01-Mar 31: Mo,We-Su 08:30-15:30, Tu 13:00-20:00; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. TUESDAY opens only at 13:00 year-round (morning closed). Ad-hoc changes e.g. 17 Nov 2026 open 08:30-13:00. Secondary ticket sites quote a May 4-Nov 15 summer season - ignore, ministry page says 1 Apr-31 Oct. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTH",
+  "source_url": "https://archaeologicalmuseums.culture.gov.gr/en/museum/5df34af3deca5e2d79e8c150/national-archaeological-museum",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Athens",
+  "name": "Temple of Olympian Zeus",
+  "aliases": [
+   "Temple of Olympian Zeus",
+   "Temple of Olympian Zeus and Hadrian's Arch"
+  ],
+  "lat": 37.9693,
+  "lng": 23.7331,
+  "opening_hours": "Apr 01-Aug 31: Mo-Su 08:00-20:00; Sep 01-Sep 15: Mo-Su 08:00-19:30; Sep 16-Sep 30: Mo-Su 08:00-19:00; Oct 01-Oct 15: Mo-Su 08:00-18:30; Oct 16-Oct 31: Mo-Su 08:00-18:00; Nov 01-Mar 31: Mo-Su 08:30-15:30; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing (e.g. 19:40 in Jul)",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Winter hours: hh.gr page says 08:00-15:00, Ministry winter 2026-27 decision (as reported by dnews.gr 23 Oct 2026) says 08:30-15:30 - safest window is 08:30-15:00. Hadrian's Arch is outside the fence (always visible). NB: OSM 'easter' keyword is Western Easter; Greek closur",
+  "source_url": "https://www.hh.gr/en/destinations/olympieion/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Athens",
+  "name": "Roman Agora",
+  "aliases": [
+   "Roman Agora",
+   "Roman Agora and Tower of the Winds"
+  ],
+  "lat": 37.9744,
+  "lng": 23.7263,
+  "opening_hours": "Apr 01-Aug 31: Mo-Su 08:00-20:00; Sep 01-Sep 15: Mo-Su 08:00-19:30; Sep 16-Sep 30: Mo-Su 08:00-19:00; Oct 01-Oct 15: Mo-Su 08:00-18:30; Oct 16-Oct 31: Mo-Su 08:00-18:00; Nov 01-Mar 31: Mo-Su 08:30-15:30; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing (e.g. 19:40 in Jul)",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Includes Tower of the Winds. Winter hours conflict: hh.gr 08:00-15:00 vs Ministry 2026-27 winter decision 08:30-15:30 - safest 08:30-15:00. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://www.hh.gr/en/destinations/roman-agora/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Athens",
+  "name": "Byzantine and Christian Museum",
+  "aliases": [
+   "Byzantine and Christian Museum",
+   "Byzantine and Christian Museum"
+  ],
+  "lat": 37.9755,
+  "lng": 23.7445,
+  "opening_hours": "Mo,We-Su 08:30-15:30; Tu off; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "15:10 (20 min before closing)",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Closed every TUESDAY. Same short hours (08:30-15:30) year-round; no summer extension. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://www.hh.gr/en/destinations/byzantine-christian-museum/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Athens",
+  "name": "Athens Cathedral",
+  "aliases": [
+   "Athens Cathedral",
+   "Athens Cathedral and the Little Metropolis"
+  ],
+  "lat": 37.9752,
+  "lng": 23.7298,
+  "opening_hours": "Mo-Su 07:00-19:00",
+  "last_entry": "none (free entry)",
+  "notes": "unknown - normally open, busy with services on major feasts Active Orthodox cathedral: Sunday Divine Liturgy approx 07:30/08:30-10:30 - tourists should not sightsee during it; also during weddings/funerals and major feasts (Easter week, 25 Mar Te Deum). Modest dress (shoulders and knees covered). No official visitor hours published by the Archdiocese. Secondary sources vary: santorinidave says 05:30-19:30 daily; others 07:00-19:00. Conservative window used.",
+  "source_url": "https://santorinidave.com/athens-metropolitan-cathedral",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": false
+ },
+ {
+  "place": "Athens",
+  "name": "Ancient Corinth",
+  "aliases": [
+   "Ancient Corinth",
+   "Ancient Corinth",
+   "Ancient Corinth archaeological site"
+  ],
+  "lat": 37.9057,
+  "lng": 22.88,
+  "opening_hours": "Apr 01-Apr 30: Mo-Su 08:00-19:00; May 01-Aug 31: Mo-Su 08:00-20:00; Sep 01-Sep 15: Mo-Su 08:00-19:30; Sep 16-Sep 30: Mo-Su 08:00-19:00; Oct 01-Oct 15: Mo-Su 08:00-18:30; Oct 16-Oct 31: Mo-Su 08:00-18:00; Nov 01-Mar 31: Mo,We-Su 08:30-15:30; Nov 01-Mar 31: Tu off; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing (e.g. 19:40 in Jul)",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Site + museum. Closed TUESDAYS in winter (Nov-Mar). April closes 19:00 not 20:00. Acrocorinth is a separate site with shorter hours. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://www.hh.gr/en/destinations/ancient-corinth/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Athens",
+  "name": "Delphi archaeological site",
+  "aliases": [
+   "Delphi archaeological site",
+   "Delphi",
+   "Ancient Delphi"
+  ],
+  "lat": 38.4824,
+  "lng": 22.501,
+  "opening_hours": "Apr 01-Aug 31: Mo-Su 08:00-20:00; Sep 01-Sep 15: Mo-Su 08:00-19:30; Sep 16-Sep 30: Mo-Su 08:00-19:00; Oct 01-Oct 15: Mo-Su 08:00-18:30; Oct 16-Oct 31: Mo-Su 08:00-18:00; Nov 01-Mar 31: Mo-Su 08:30-15:30; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing (e.g. 19:40 in Jul)",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Day trip (~2.5h each way). Ticket combined with museum. Winter site hours 08:30-15:30. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://www.hh.gr/en/destinations/delphi/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Athens",
+  "name": "Delphi Archaeological Museum",
+  "aliases": [
+   "Delphi Archaeological Museum"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Apr 01-Aug 31: Mo,We-Su 08:00-20:00, Tu 10:00-17:00; Sep 01-Oct 31: Mo,We-Su 08:00-18:00, Tu 10:00-17:00; Nov 01-Mar 31: Mo-Su 08:30-15:30; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Museum opens late and closes early on TUESDAYS in summer (10:00-17:00). Sep/Oct closing assumed to follow graduated reduction - safest 18:00. Ministry page lists no Tuesday exception in winter; some sources say Tuesday closures - unconfirmed. NB: OSM 'easter' keyword is We",
+  "source_url": "https://archaeologicalmuseums.gr/en/museum/5df34af3deca5e2d79e8c17a/archaeological-museum-of-delphi",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Athens",
+  "name": "Temple of Poseidon at Sounion",
+  "aliases": [
+   "Temple of Poseidon at Sounion",
+   "Temple of Poseidon at Sounion"
+  ],
+  "lat": 37.6503,
+  "lng": 24.0246,
+  "opening_hours": "Mo-Su 09:30-sunset; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before sunset",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Opens 09:30 (not 08:00) and closes at SUNSET year-round (approx 20:50 in early July, approx 17:10 in Dec). Very popular at sunset. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://www.hh.gr/en/destinations/sounion/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Heraklion",
+  "name": "Palace of Knossos",
+  "aliases": [
+   "Palace of Knossos",
+   "Palace of Knossos"
+  ],
+  "lat": 35.2979,
+  "lng": 25.1631,
+  "opening_hours": "Apr 01-Aug 31: Mo-Su 08:00-20:00; Sep 01-Sep 15: Mo-Su 08:00-19:30; Sep 16-Sep 30: Mo-Su 08:00-19:00; Oct 01-Oct 15: Mo-Su 08:00-18:30; Oct 16-Oct 31: Mo-Su 08:00-18:00; Nov 01-Mar 31: Mo-Su 08:00-17:00; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing (e.g. 19:40 in Jul)",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Combined ticket with Heraklion Archaeological Museum available. Cruise-day crowds 10:00-13:00. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://www.hh.gr/en/destinations/knossos/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Heraklion",
+  "name": "Heraklion Archaeological Museum",
+  "aliases": [
+   "Heraklion Archaeological Museum",
+   "Heraklion Archaeological Museum"
+  ],
+  "lat": 35.339,
+  "lng": 25.137,
+  "opening_hours": "Apr 01-Oct 31: Mo,Tu,Th-Su 08:00-20:00, We 13:00-20:00; Nov 01-Mar 31: Mo,Tu,Th-Su 08:30-15:30, We 10:00-17:00; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. WEDNESDAY opens late (13:00 in summer, 10:00 in winter). Ministry page does not list Tuesday hours explicitly; normally open. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://archaeologicalmuseums.culture.gov.gr/en/museum/5df34af3deca5e2d79e8c157/archaeological-museum-of-heraklion",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Heraklion",
+  "name": "Church of Saint Titus",
+  "aliases": [
+   "Church of Saint Titus",
+   "Church of Saint Titus"
+  ],
+  "lat": 35.3399,
+  "lng": 25.135,
+  "opening_hours": "Mo-Su 08:00-sunset",
+  "last_entry": "none (free)",
+  "notes": "Active Orthodox church (holds skull relic of St Titus); avoid Sunday morning liturgy (~07:30-10:30) and services; modest dress. No official schedule found; secondary source says 08:00 until sunset. Some sources mention a midday closure ~13:00-17:00 - unconfirmed.",
+  "source_url": "https://www.travel-crete.gr/ru/travelguide/agios-titos-heraklion",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": false
+ },
+ {
+  "place": "Chania",
+  "name": "Archaeological Museum of Chania",
+  "aliases": [
+   "Archaeological Museum of Chania"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Apr 01-Oct 31: Mo,We-Su 08:00-20:00; Nov 01-Mar 31: Mo,We-Su 08:30-15:30; Tu off; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Closed every TUESDAY. Housed in the restored San Francesco church (new museum building in Halepa also exists - confirm which is open). NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://archaeologicalmuseums.gr/en/museum/5df34af3deca5e2d79e8c161/archaeological-museum-of-chania",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Chania",
+  "name": "Maritime Museum of Crete",
+  "aliases": [
+   "Maritime Museum of Crete (Firkas fortress)"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "May 01-Oct 31: Mo-Fr 09:00-18:00; Nov 01-Apr 30: Mo-Fr 09:00-14:00; Sa,Su unknown",
+  "last_entry": "unknown",
+  "notes": "Only weekday hours found (secondary). Weekend opening unconfirmed - treat weekends as unknown. Firkas fortress courtyard itself is generally freely accessible during the day.",
+  "source_url": "https://www.gtp.gr/directory/maritimemuseumofcrete",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Santorini",
+  "name": "Akrotiri",
+  "aliases": [
+   "Akrotiri",
+   "Akrotiri prehistoric town"
+  ],
+  "lat": 36.3517,
+  "lng": 25.4033,
+  "opening_hours": "Apr 01-Aug 31: Tu,We,Fr-Su 08:00-20:00; Sep 01-Sep 15: Tu,We,Fr-Su 08:00-19:30; Sep 16-Sep 30: Tu,We,Fr-Su 08:00-19:00; Oct 01-Oct 15: Tu,We,Fr-Su 08:00-18:30; Oct 16-Oct 31: Tu,We,Fr-Su 08:00-18:00; Apr 01-Oct 31: Mo,Th 08:30-15:30; Nov 01-Mar 31: Mo,We-Su 08:30-15:30; Nov 01-Mar 31: Tu off; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. MONDAYS and THURSDAYS close at 15:30 even in summer. Closed TUESDAYS in winter. Note: cyclades.culture.gov.gr summer table shows 08:00-18:00 on long days while hh.gr and the 2026 decision (atlantea.news) say 08:00-20:00 - safest close 18:00. NB: OSM 'easter' keyword is Wes",
+  "source_url": "https://www.hh.gr/en/destinations/akrotiri/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Santorini",
+  "name": "Museum of Prehistoric Thera",
+  "aliases": [
+   "Museum of Prehistoric Thera",
+   "Museum of Prehistoric Thera"
+  ],
+  "lat": 36.4155,
+  "lng": 25.432,
+  "opening_hours": "Mo,We-Su 08:30-15:30; Tu off; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "15:10",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Closed every TUESDAY, year-round. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://cyclades.culture.gov.gr/en/hours-prices/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Santorini",
+  "name": "Ancient Thera",
+  "aliases": [
+   "Ancient Thera",
+   "Ancient Thera archaeological site"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Apr 01-Oct 31: Mo,Tu,Th-Su 08:30-15:30; Apr 01-Oct 31: We off; Mar: Mo,Tu,Th-Su 08:30-15:30; Mar: We off; Nov: Fr-Su 08:30-15:30; Nov: Mo-Th off; Dec-Feb: off \"by appointment only\"; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "15:10",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Closed WEDNESDAYS (summer and March); November Fri-Sun only; Dec-Feb by appointment only. Hilltop site reached by steep road from Kamari. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://www.hh.gr/en/destinations/ancient-thera/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Mykonos",
+  "name": "Archaeological Museum of Mykonos",
+  "aliases": [
+   "Archaeological Museum of Mykonos",
+   "Archaeological Museum of Mykonos"
+  ],
+  "lat": 37.45,
+  "lng": 25.32972,
+  "opening_hours": "Apr 01-Oct 31: Mo,We-Su 09:00-16:00; Nov 01-Mar 31: Mo,We-Su 08:30-15:30; Tu off; Jan 01,Mar 25,May 01,May 02,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing",
+  "notes": "Cyclades Ephorate lists 25-26 Dec, 1 Jan, 25 Mar, 1 May, 2 May and Orthodox Easter Sunday as closed. Closed every TUESDAY. NB: OSM 'easter' keyword is Western Easter; Greek closure is ORTHODOX Easter, so dates are listed explicitly.",
+  "source_url": "https://cyclades.culture.gov.gr/en/hours-prices/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q4785417",
+  "holidays_known": false
+ },
+ {
+  "place": "Mykonos",
+  "name": "Delos",
+  "aliases": [
+   "Delos (island site + museum)",
+   "Delos island",
+   "Delos archaeological site",
+   "Island of Delos"
+  ],
+  "lat": 37.396,
+  "lng": 25.268,
+  "opening_hours": "Apr 01-Aug 31: Mo-Su 08:00-20:00; Sep 01-Sep 15: Mo-Su 08:00-19:30; Sep 16-Sep 30: Mo-Su 08:00-19:00; Oct 01-Oct 15: Mo-Su 08:00-18:30; Oct 16-Oct 31: Mo-Su 08:00-18:00; Nov 01-Nov 30: Mo-Su 08:00-16:00; Dec 01-Mar 31: off; Jan 01,Mar 25,May 01,Dec 25,Dec 26 off; 2026 Apr 12 off; 2027 May 02 off; 2028 Apr 16 off",
+  "last_entry": "20 min before closing",
+  "notes": "1 Jan, 25 Mar, 1 May, Orthodox Easter Sunday (2026-04-12, 2027-05-02, 2028-04-16), 25 and 26 Dec. Orthodox Good Friday (2027-04-30) reduced to 12:00-17:00 and Holy Saturday 08:30-15:30 per Ministry decision for 2026 (FEK B 1615/23.03.2026). Open normal hours on 6 Jan, Clean Monday, Easter Monday, Whit Monday, 15 Aug, 28 Oct. Cyclades Ephorate also lists 2 May. CLOSED ENTIRELY 1 Dec - 31 Mar (written request only). Reachable only by boat from Mykonos Old Port (~30-45 min); site ticket excludes ferry; boat timetable effectively sets visit window (first boats ~09:00-10:00, last return mid/late af",
+  "source_url": "https://www.hh.gr/en/destinations/delos/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Mykonos",
+  "name": "Aegean Maritime Museum",
+  "aliases": [
+   "Aegean Maritime Museum",
+   "Aegean Maritime Museum"
+  ],
+  "lat": 37.4453,
+  "lng": 25.3284,
+  "opening_hours": "Apr 01-Oct 31: Mo-Su 10:30-13:00,18:30-21:00; Nov 01-Mar 31: unknown",
+  "last_entry": "unknown",
+  "notes": "Private museum; split hours with a long MIDDAY CLOSURE 13:00-18:30. Winter schedule unknown (likely closed or by appointment). Secondary source only.",
+  "source_url": "https://www.gtp.gr/AegeanMaritimeMuseum",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q15178241",
+  "holidays_known": false
+ },
+ {
+  "place": "Kusadasi",
+  "name": "Ancient Ephesus",
+  "aliases": [
+   "Ancient Ephesus",
+   "Ancient Ephesus"
+  ],
+  "lat": 37.9395,
+  "lng": 27.341,
+  "opening_hours": "Apr 01-Sep 30: Mo-Su 08:30-19:30; Oct 01-Mar 31: Mo-Su 08:00-18:00; 2026 Mar 20 13:00-19:30; 2026 May 27 13:00-19:30",
+  "last_entry": "ticket office closes 30-60 min before closing (summer 18:15-19:00 depending on year/gate; winter 17:30)",
+  "notes": "Ministry (KTB) museums and sites open only from 13:00 on the FIRST day of Ramazan Bayramı and Kurban Bayramı (approx 2027-03-09 or 03-10 and 2027-05-16 or 05-17 - lunar, verify yearly; 2026 were 03-20 and 05-27). Otherwise open every day incl. 1 Jan, 23 Apr, 19 May, 29 Oct. Summer hours differ between official sources: muze.gov.tr info sheet 08:00-19:30 (gişe 19:00); Izmir directorate 2025 table 08:30 opening, gişe 18:15; bestephesustours 2027 08:00-20:00 (Upper Gate box office 18:00, Lower Gate 19:00). Window used = intersection 08:30-19:30. Winter 1 Oct 2026-1 Apr 2027: 08:00-18:00, gişe 17:",
+  "source_url": "https://izmir.ktb.gov.tr/TR-77092/izmir-ili-muze-ve-oren-yerleri-ziyaret-saatleri.html",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Kusadasi",
+  "name": "Ephesus Terrace Houses",
+  "aliases": [
+   "Ephesus Terrace Houses",
+   "Terrace Houses"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Apr 01-Sep 30: Mo-Su 09:00-18:30; Oct 01-Mar 31: Mo-Su 09:00-17:00; 2026 Mar 20 13:00-17:00; 2026 May 27 13:00-17:00",
+  "last_entry": "winter ticket office 16:30; summer ~18:00",
+  "notes": "Ministry (KTB) museums and sites open only from 13:00 on the FIRST day of Ramazan Bayramı and Kurban Bayramı (approx 2027-03-09 or 03-10 and 2027-05-16 or 05-17 - lunar, verify yearly; 2026 were 03-20 and 05-27). Otherwise open every day incl. 1 Jan, 23 Apr, 19 May, 29 Oct. Inside Ephesus; needs separate ticket on top of Ephesus ticket. Opens later (09:00) and closes earlier than main site. Winter hours official (Izmir directorate 2026-27); summer hours secondary (bestephesustours).",
+  "source_url": "https://izmir.ktb.gov.tr/TR-77092/izmir-ili-muze-ve-oren-yerleri-ziyaret-saatleri.html",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Kusadasi",
+  "name": "House of the Virgin Mary",
+  "aliases": [
+   "House of the Virgin Mary",
+   "House of the Virgin Mary"
+  ],
+  "lat": 37.9118,
+  "lng": 27.3333,
+  "opening_hours": "Apr 01-Sep 30: Mo-Su 08:30-18:00; Oct 01-Mar 31: Mo-Su 08:30-17:00",
+  "last_entry": "summer 17:30; winter 17:00",
+  "notes": "unknown (not a Ministry museum; normally open daily) Catholic shrine and pilgrimage site; Holy Mass held daily (morning) and Sunday ~10:30 - visitors can still enter but should be quiet; modest dress. Run by the Catholic Association/Selçuk municipality, not the Ministry (Müzekart not valid). No official hours page found; secondary.",
+  "source_url": "https://www.bestephesustours.com/ephesus-opening-hours.html",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": false
+ },
+ {
+  "place": "Kusadasi",
+  "name": "Basilica of Saint John",
+  "aliases": [
+   "Basilica of Saint John",
+   "Basilica of Saint John"
+  ],
+  "lat": 37.953,
+  "lng": 27.368,
+  "opening_hours": "Apr 01-Sep 30: Mo-Su 08:30-19:00; Oct 01-Mar 31: Mo-Su 08:30-17:30; 2026 Mar 20 13:00-19:00; 2026 May 27 13:00-19:00",
+  "last_entry": "summer 18:30; winter 17:30 (official) / 17:30 for 08:00-18:00 schedule",
+  "notes": "Ministry (KTB) museums and sites open only from 13:00 on the FIRST day of Ramazan Bayramı and Kurban Bayramı (approx 2027-03-09 or 03-10 and 2027-05-16 or 05-17 - lunar, verify yearly; 2026 were 03-20 and 05-27). Otherwise open every day incl. 1 Jan, 23 Apr, 19 May, 29 Oct. Official turkishmuseums.com: summer 08:30-19:00 (gişe 18:30), winter 08:30-17:30. Izmir directorate 2026-27 winter table says 08:00-18:00 (gişe 17:30) - window used is intersection. Ayasuluk Castle part only 09:00-16:00.",
+  "source_url": "https://turkishmuseums.com/museum/detail/2099-izmir-st-jean-monument/2099/4",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Kusadasi",
+  "name": "Ephesus Museum",
+  "aliases": [
+   "Ephesus Museum (Selçuk)",
+   "Ephesus Archaeological Museum"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Apr 01-Sep 30: Mo-Su 08:30-20:00; Oct 01-Mar 31: Mo-Su 08:30-17:30; 2026 Mar 20 13:00-20:00; 2026 May 27 13:00-20:00",
+  "last_entry": "summer 19:30; winter 17:00",
+  "notes": "Ministry (KTB) museums and sites open only from 13:00 on the FIRST day of Ramazan Bayramı and Kurban Bayramı (approx 2027-03-09 or 03-10 and 2027-05-16 or 05-17 - lunar, verify yearly; 2026 were 03-20 and 05-27). Otherwise open every day incl. 1 Jan, 23 Apr, 19 May, 29 Oct. Izmir directorate 2025 summer table: ticket office until 20:00, visits to 21:00* (night museum). Winter 2026-27: 08:30-17:30, gişe 17:00.",
+  "source_url": "https://izmir.ktb.gov.tr/TR-77092/izmir-ili-muze-ve-oren-yerleri-ziyaret-saatleri.html",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Messina",
+  "name": "Messina Cathedral and astronomical clock",
+  "aliases": [
+   "Messina Cathedral and astronomical clock",
+   "Messina Cathedral and the astronomical clock"
+  ],
+  "lat": 38.1925,
+  "lng": 15.5545,
+  "opening_hours": "Mo-Su 08:30-12:30,16:00-19:00",
+  "last_entry": "n/a (free); clock-tower climb 10:00-13:00 in July",
+  "notes": "Clock tower and treasury closed 25 Dec; treasury also 1 Nov. Active cathedral: tourist visits not allowed during Mass (esp. Sunday mornings); opening times 'can be changed at any time due to religious functions'. Clock show: daily at 12:00 noon, about 12 minutes, seen from Piazza Duomo (free, outdoors) - plan arrival by 11:50. Clock tower interior (paid, messinarte.it): July every day 10:00-13:00 (some dates to 15:30); January Tue 11:00-17:00, Sat-Sun 11:00-13:00 only; closes in rain/strong wind. Treasury: July Mon-Sat 10:00-13:00. Cathedral nave hours are NOT officially published - window giv",
+  "source_url": "https://www.messinarte.it/opening-hours/",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": true
+ },
+ {
+  "place": "Messina",
+  "name": "MuMe Regional Museum of Messina",
+  "aliases": [
+   "MuMe Regional Museum of Messina",
+   "Regional Museum of Messina"
+  ],
+  "lat": 38.215,
+  "lng": 15.559,
+  "opening_hours": "Tu-Sa 09:00-19:00; Su 09:00-13:00; Mo off",
+  "last_entry": "unknown (typically 30-60 min before closing)",
+  "notes": "Closed MONDAYS; Sunday mornings only. Hours from Italia.it (national tourism portal) - museum's own page not reachable.",
+  "source_url": "https://www.italia.it/it/sicilia/messina/luoghi-della-cultura/mume---museo-regionale-interdisciplinare-di-messina",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Naples",
+  "name": "Sansevero Chapel",
+  "aliases": [
+   "Sansevero Chapel",
+   "Sansevero Chapel (Veiled Christ)"
+  ],
+  "lat": 40.8494,
+  "lng": 14.2547,
+  "opening_hours": "We-Mo 09:00-19:00; Tu off",
+  "last_entry": "18:30 (30 min before closing)",
+  "notes": "unknown (typically closed or reduced on 25 Dec and 1 Jan - unconfirmed) Closed TUESDAYS (in summer some Tuesdays are opened extraordinarily, e.g. every Tuesday in Aug 2026). Timed online booking strongly recommended - sells out. Official site not fetchable; hours from napolike.it.",
+  "source_url": "https://www.napolike.it/cappella-sansevero-cristo-velato-guida",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Naples",
+  "name": "National Archaeological Museum of Naples",
+  "aliases": [
+   "National Archaeological Museum of Naples (MANN)",
+   "National Archaeological Museum"
+  ],
+  "lat": 40.8536,
+  "lng": 14.2505,
+  "opening_hours": "Mo,We-Su 09:00-19:30; Tu off; Dec 25 off; Jan 01 off",
+  "last_entry": "18:30 (ticket office closes)",
+  "notes": "25 Dec, 1 Jan typically closed (MiC standard; page lists none); MANN is often OPEN on Easter, Easter Monday, 2 Jun, 15 Aug with events. Closed every TUESDAY.",
+  "source_url": "https://cultura.gov.it/luogo/museo-archeologico-nazionale-di-napoli-1",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Naples",
+  "name": "Naples Cathedral",
+  "aliases": [
+   "Naples Cathedral",
+   "Naples Cathedral and the Chapel of San Gennaro"
+  ],
+  "lat": 40.8525,
+  "lng": 14.2597,
+  "opening_hours": "Mo,Th,Su 08:30-13:30,16:30-19:30; Tu,We,Fr,Sa 08:30-13:30,14:30-19:30",
+  "last_entry": "n/a (free)",
+  "notes": "Active cathedral: avoid Masses (Sunday mornings); on San Gennaro liquefaction days (Sat before 1st Sun of May, 19 Sep, 16 Dec) huge crowds and restricted access. MIDDAY CLOSURE 13:30-14:30 (or to 16:30 on Mon/Thu/Sun). Treasure Museum of San Gennaro is separate with its own hours/ticket.",
+  "source_url": "https://www.italia.it/it/campania/napoli/duomo",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": false
+ },
+ {
+  "place": "Naples",
+  "name": "Royal Palace of Naples",
+  "aliases": [
+   "Royal Palace of Naples",
+   "Palazzo Reale",
+   "Royal Palace (Naples)"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Th-Tu 09:00-20:00; We off",
+  "last_entry": "19:00",
+  "notes": "Not listed; frequently OPEN on holidays (1 Jan, 1 May, 15 Aug, 8 Dec special openings announced). Closed every WEDNESDAY. Hanging garden guided visits suspended 15 Jun-15 Sep (heat).",
+  "source_url": "https://cultura.gov.it/luogo/palazzo-reale-di-napoli-1",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "holidays_known": false
+ },
+ {
+  "place": "Naples",
+  "name": "Pompeii",
+  "aliases": [
+   "Pompeii",
+   "Pompeii",
+   "Pompeii Archaeological Park",
+   "Ancient Pompeii",
+   "Pompeii ruins",
+   "Parco Archeologico di Pompei",
+   "Pompei"
+  ],
+  "lat": 40.7489,
+  "lng": 14.4848,
+  "opening_hours": "Mar 16-Oct 14: Mo-Su 09:00-19:00; Oct 15-Mar 15: Mo-Su 09:00-17:00; Jan 01,Dec 25 off",
+  "last_entry": "17:30 summer; 15:30 winter",
+  "notes": "Closed 1 Jan and 25 Dec (unless otherwise communicated). Open every day otherwise (no weekly closure for main site; satellite sites Oplontis/Stabiae close Tuesdays). Free first Sunday of month (very crowded, nominative tickets). Daily visitor cap ~20,000 with nominative timed tickets since 2025.",
+  "source_url": "https://pompeiisites.org/en/visiting-info/timetables-and-tickets/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Naples",
+  "name": "Herculaneum",
+  "aliases": [
+   "Herculaneum",
+   "Herculaneum Archaeological Park",
+   "Ancient Herculaneum",
+   "Herculaneum ruins",
+   "Ercolano"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mar 16-Oct 14: Mo-Su 08:30-19:30; Oct 15-Mar 15: Mo-Su 08:30-17:00; Dec 25 off",
+  "last_entry": "18:00 summer; 15:30 winter (must leave area by 19:00 / 16:40)",
+  "notes": "Closed 25 Dec only; open 1 Jan 2026 with usual hours. No weekly closing day per official page (some older guides say Wednesday closure - outdated).",
+  "source_url": "https://ercolano.cultura.gov.it/biglietti/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Rome",
+  "name": "Vatican Museums and Sistine Chapel",
+  "aliases": [
+   "Vatican Museums and Sistine Chapel",
+   "Vatican Museums",
+   "Sistine Chapel",
+   "Vatican Museums and the Sistine Chapel",
+   "Musei Vaticani"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Sa 08:00-20:00; Su off; Su[-1] 09:00-14:00; Jan 01,Jan 06,Feb 11,Mar 19,May 01,Jun 29,Aug 14,Aug 15,Nov 01,Dec 08,Dec 25,Dec 26 off; easter +1 day off; easter off; Dec 24,Dec 31 08:00-15:00",
+  "last_entry": "18:00 (Mon-Sat); 12:30 on last Sunday; 13:00 on 24/31 Dec",
+  "notes": "Closed: 1 Jan, 6 Jan, 11 Feb, 19 Mar, Easter Monday (2027: 29 Mar), 1 May, 29 Jun, 14-15 Aug, 1 Nov, 8 Dec, 25-26 Dec. Last-Sunday free opening is cancelled if it falls on Easter Sunday, 29 Jun, 25, 26 or 31 Dec. Closed ALL SUNDAYS except the last Sunday of the month (09:00-14:00, free, very crowded). Galleries clear 30 min before closing. Official 2026-27 PDF calendar shows some days with 08:00-18:00 hours - check calendar for specific dates. Occasional temporary closures of Sistine Chapel for events (e.g. evenings). Timed tickets.",
+  "source_url": "https://www.museivaticani.va/content/museivaticani-mobile/en/info/orari-musei-vaticani.html",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Rome",
+  "name": "St Peter's Basilica",
+  "aliases": [
+   "St Peter's Basilica",
+   "St Peter's Basilica"
+  ],
+  "lat": 41.9022,
+  "lng": 12.4539,
+  "opening_hours": "Mar 29-Oct 25: Mo-Su 07:00-20:00; Oct 26-Mar 28: Mo-Su 07:00-19:00; We 07:00-12:30 \"closed during papal general audience when held in the square\"",
+  "last_entry": "unknown (queue for security closes before closing time); dome last 18:00 summer / 17:00 winter",
+  "notes": "Access restricted during major papal liturgies (Christmas, Easter, Holy Week, 29 Jun Sts Peter & Paul), conclaves and state events. Working basilica: Masses all day (Sundays 07,08,09,10:30,12:30,13,16,17,18). WEDNESDAY morning general audience (approx 09:00-12:00, in square from spring to autumn) usually closes the basilica to tourists until it ends. Sunday 12:00 Angelus crowds. Strict dress code (shoulders/knees covered). Official 2026-27: 1 Jun-25 Oct 2026 07:00-20:00; 26 Oct 2026-28 Mar 2027 07:00-19:00. Dome 07:00-18:00 summer, 07:30-17:00 winter. Wednesday-audience closure is from practic",
+  "source_url": "https://www.basilicasanpietro.va/it/orari",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": true
+ },
+ {
+  "place": "Rome",
+  "name": "Colosseum and Roman Forum/Palatine",
+  "aliases": [
+   "Colosseum and Roman Forum/Palatine",
+   "Colosseum and Roman Forum"
+  ],
+  "lat": 41.8902,
+  "lng": 12.4922,
+  "opening_hours": "Mar 29-Aug 31: Mo-Su 08:30-19:15; Sep 01-Sep 30: Mo-Su 08:30-19:00; Oct 01-Oct 24: Mo-Su 08:30-18:30; Oct 25-Feb 15: Mo-Su 08:30-16:30; Feb 16-Mar 15: Mo-Su 08:30-17:00; Mar 16-Mar 28: Mo-Su 08:30-17:30; Jan 01,Dec 25 off",
+  "last_entry": "1 hour before closing (18:15 in July)",
+  "notes": "Closed 1 Jan and 25 Dec only. Changes over to summer on the LAST SUNDAY OF MARCH and to winter on the LAST SUNDAY OF OCTOBER (dates above approximate those). Timed, nominative tickets; Colosseum entry only in booked slot. Free first Sunday of month. Conflict: rome.info lists a 2026 schedule where the Colosseum itself closes earlier (Oct 1-24 17:30, from 25 Oct 15:30) than the Forum - treat Colosseum winter last entry as 14:30 to be safe. Official colosseo.it not fetchable.",
+  "source_url": "https://www.archeoroma.org/sites/colosseum/opening-hours",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": true
+ },
+ {
+  "place": "Rome",
+  "name": "Pantheon",
+  "aliases": [
+   "Pantheon",
+   "Pantheon"
+  ],
+  "lat": 41.8986,
+  "lng": 12.4769,
+  "opening_hours": "Mo-Su 09:00-19:00; Jan 01,Dec 25 off",
+  "last_entry": "18:30",
+  "notes": "Closed 1 Jan and 25 Dec (except special openings); other holidays (e.g. 15 Aug) often have special hours. It is a consecrated church (Santa Maria ad Martyres): Mass on Saturdays 17:00 and Sundays/holy days 10:30 - tourist entry suspended during Mass. Paid timed entry (EUR 5) since July 2023. Religious services may change visiting hours.",
+  "source_url": "https://www.pantheonroma.com/openings-info/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": false
+ },
+ {
+  "place": "Rome",
+  "name": "Borghese Gallery",
+  "aliases": [
+   "Borghese Gallery",
+   "Galleria Borghese",
+   "Borghese Gallery and Museum"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Tu-Su 09:00-19:00; Mo off; Jan 01,Dec 25 off",
+  "last_entry": "17:45 (last 30-min slot); visitors leave from 18:50",
+  "notes": "Closed 1 Jan and 25 Dec. Often OPEN on holiday Mondays (e.g. Easter Monday, 15 Aug). Closed MONDAYS. Compulsory reservation; entry slots every 30 min with max 2-hour visit.",
+  "source_url": "https://galleriaborghese.cultura.gov.it/en/visita/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Barcelona",
+  "name": "Sagrada Família",
+  "aliases": [
+   "Sagrada Família",
+   "Sagrada Família"
+  ],
+  "lat": 41.4036,
+  "lng": 2.1744,
+  "opening_hours": "Nov-Feb: Mo-Sa 09:00-18:00, Su 10:30-18:00; Mar,Oct: Mo-Fr 09:00-19:00, Sa 09:00-18:00, Su 10:30-19:00; Apr-Sep: Mo-Fr 09:00-20:00, Sa 09:00-18:00, Su 10:30-20:00; Dec 25,Dec 26,Jan 01,Jan 06 09:00-14:00",
+  "last_entry": "unknown (timed tickets; entry only in booked slot)",
+  "notes": "Reduced hours 09:00-14:00 on 25 & 26 Dec, 1 & 6 Jan. 24/31 Dec not stated. Basilica in use: Sunday opens only at 10:30 because of the 09:00 International Mass; hours 'may occasionally be modified due to special events inside the Basilica' (liturgies, papal/major celebrations). Dress code (shoulders/knees). SATURDAYS close at 18:00 even in summer (vs 20:00 Mon-Fri/Sun). Towers have separate slots and close in bad weather. Gaudí House Museum (in Park Güell) temporarily closed.",
+  "source_url": "https://sagradafamilia.org/en/opening-hours",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": false
+ },
+ {
+  "place": "Barcelona",
+  "name": "Park Güell",
+  "aliases": [
+   "Park Güell",
+   "Park Güell"
+  ],
+  "lat": 41.4145,
+  "lng": 2.1527,
+  "opening_hours": "Jan 01-Mar 30: Mo-Su 09:30-18:00; Mar 31-Jun 30: Mo-Su 09:30-19:30; Jul 01-Aug 31: Mo-Su 09:00-19:30; Sep 01-Oct 28: Mo-Su 09:30-19:30; Oct 29-Dec 31: Mo-Su 09:30-17:30",
+  "last_entry": "entry within 30 min of booked slot; last slot about 1 h before closing (unconfirmed)",
+  "notes": "Open all year per official site; no holiday closures listed. Monumental Zone is gated with timed tickets. Official page currently (Nov) says tourist hours 09:30-17:30 and 07:00-09:30 / 18:00-22:00 reserved for residents. Seasonal table is from barcelona-tickets.com (secondary, has internal inconsistencies). May close in high winds/storms.",
+  "source_url": "https://parkguell.barcelona/en/planning-your-visit/prices-and-times",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": true
+ },
+ {
+  "place": "Barcelona",
+  "name": "Casa Batlló",
+  "aliases": [
+   "Casa Batlló",
+   "Casa Batlló"
+  ],
+  "lat": 41.3917,
+  "lng": 2.165,
+  "opening_hours": "Mo-Su 08:30-22:30",
+  "last_entry": "21:30 (ticket office 21:00)",
+  "notes": "Open every day of the year (official). Timed tickets; private events can occasionally restrict areas.",
+  "source_url": "https://www.casabatllo.es/en/visit/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": true
+ },
+ {
+  "place": "Barcelona",
+  "name": "Casa Milà",
+  "aliases": [
+   "Casa Milà (La Pedrera)",
+   "Casa Milà (La Pedrera)"
+  ],
+  "lat": 41.3954,
+  "lng": 2.162,
+  "opening_hours": "Feb 26-Nov 01: Mo-Su 09:00-20:30; Nov 02-Feb 25: Mo-Su 09:00-18:30; Dec 26-Jan 03: Mo-Su 09:00-20:30; Jan 01 11:00-20:30; Dec 25 off; 2026 Jul 06 off; 2026 Sep 07 off; 2027 Jan 11-2027 Jan 17 off",
+  "last_entry": "unknown (shown at booking)",
+  "notes": "Closed 25 Dec. One-off maintenance closures: 6 Jul 2026, 7 Sep 2026, 11-17 Jan 2027 (2027 summer equivalents not yet published). SURPRISE: closes for whole days for maintenance (e.g. Monday 6 July 2026, Monday 7 Sept 2026, a full week in Jan 2027) - expect similar ad-hoc dates in 2027. Night visit separate (summer 20:40-22:20).",
+  "source_url": "https://www.lapedrera.com/en/practical-information/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": true
+ },
+ {
+  "place": "Barcelona",
+  "name": "Museu Picasso",
+  "aliases": [
+   "Museu Picasso",
+   "Museu Picasso"
+  ],
+  "lat": 41.3852,
+  "lng": 2.181,
+  "opening_hours": "Tu-Su 10:00-19:00; Mo off; Jan 01,May 01,Jun 24,Dec 25 off; Dec 24,Dec 31 10:00-14:00",
+  "last_entry": "18:30 (ticket office closes 30 min before)",
+  "notes": "Closed Mondays and 1 Jan, 1 May, 24 Jun (Sant Joan), 25 Dec; 24 & 31 Dec 10:00-14:00. Closed MONDAYS and on 24 JUNE (Sant Joan holiday). A secondary site claims summer hours 09:00-20:00/21:00 - not on official page. Free Thursday evenings / first Sunday.",
+  "source_url": "https://museupicassobcn.cat/en/plan-your-visit/buy-tickets-and-opening-hours",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Barcelona",
+  "name": "Palau de la Música Catalana",
+  "aliases": [
+   "Palau de la Música Catalana",
+   "Palau de la Música Catalana"
+  ],
+  "lat": 41.3875,
+  "lng": 2.1753,
+  "opening_hours": "Mo-Su 09:00-15:30",
+  "last_entry": "tours start between 09:00 and 15:30 (~50 min each); last tour start time varies by language",
+  "notes": "Interior only by guided tour (timed, language-specific). Rehearsals/concerts can cancel or alter tours; stage access subject to availability. Some seasons (e.g. Easter, July-August) historically extended to 18:00 - unconfirmed.",
+  "source_url": "https://www.palaumusica.cat/en/visits/guided-tour_1174259",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": false
+ },
+ {
+  "place": "Barcelona",
+  "name": "Barcelona Cathedral",
+  "aliases": [
+   "Barcelona Cathedral",
+   "Cathedral of Barcelona",
+   "Cathedral of the Holy Cross and Saint Eulalia"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Fr 09:30-18:30; Sa 09:30-17:15; Su 14:00-17:00; PH 14:00-17:00; Dec 25 off",
+  "last_entry": "unknown (approx 30 min before closing)",
+  "notes": "Sundays and religious holidays only 14:00-17:00 for visits; 25 Dec no visits; Saturdays and eves of holy days close 17:15. Mornings on Sundays/holy days reserved for worship (Masses) - no tourist visits before 14:00. Free worship-only entry at other times; dress code. Paid 'cultural visit' (EUR 14) includes rooftop/choir. Hours from the City of Barcelona agenda (secondary; cathedral site catedralbcn.org not fetched).",
+  "source_url": "https://agenda500.barcelona.cat/en/detall/santa-esglesia-catedral-basilica-de-barcelona_92086000934.html",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": true
+ },
+ {
+  "place": "Barcelona",
+  "name": "Santa Maria del Mar",
+  "aliases": [
+   "Santa Maria del Mar",
+   "Santa Maria del Mar"
+  ],
+  "lat": 41.3838,
+  "lng": 2.182,
+  "opening_hours": "Mo-Sa 10:00-18:00; Su 13:00-18:00",
+  "last_entry": "unknown",
+  "notes": "Sunday mornings reserved for worship - cultural visits only from 13:00; visits may be modified for liturgical events (weddings, funerals, feasts). Rooftop/tower guided visits Thu-Sun at times to be confirmed; cancelled in heavy rain. Hours from City of Barcelona agenda (secondary).",
+  "source_url": "https://agenda500.barcelona.cat/en/detall/visites-a-santa-maria-del-mar_99400477080.html",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": false
+ },
+ {
+  "place": "Madrid",
+  "name": "Prado Museum",
+  "aliases": [
+   "Prado Museum",
+   "Prado Museum"
+  ],
+  "lat": 40.4138,
+  "lng": -3.6921,
+  "opening_hours": "Mo-Sa 10:00-20:00; Su,PH 10:00-19:00; Jan 06,Dec 24,Dec 31 10:00-14:00; Jan 01,May 01,Dec 25 off",
+  "last_entry": "unknown (galleries cleared ~10 min before close); ticket office from 09:45",
+  "notes": "Closed 1 Jan, 1 May, 25 Dec. Reduced 10:00-14:00 on 6 Jan, 24 Dec, 31 Dec. Free entry Mon-Sat 18:00-20:00 and Sun/holidays 17:00-19:00 (very long queues). Source is esmadrid.com (Madrid city tourism; prado site not fetchable).",
+  "source_url": "https://www.esmadrid.com/node/69327",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Madrid",
+  "name": "Royal Palace of Madrid",
+  "aliases": [
+   "Royal Palace of Madrid",
+   "Royal Palace"
+  ],
+  "lat": 40.418,
+  "lng": -3.7143,
+  "opening_hours": "Apr-Sep: Mo-Sa 10:00-19:00; Oct-Mar: Mo-Sa 10:00-18:00; Su,PH 10:00-16:00; Dec 24,Dec 31 10:00-15:00; Jan 01,Jan 06,May 01,Dec 25 off",
+  "last_entry": "1 hour before closing (18:00 summer weekdays, 17:00 winter weekdays, 15:00 Sundays)",
+  "notes": "Closed 1 Jan, 6 Jan, 1 May, 25 Dec; closes 15:00 on 24 & 31 Dec. SUNDAYS close at 16:00 year-round. Can CLOSE AT SHORT NOTICE FOR OFFICIAL STATE ACTS (list published on patrimonionacional.es). Free Mon-Thu last 2 hours for EU residents. Hours confirmed in Patrimonio Nacional visit resolution (Dec 2025).",
+  "source_url": "https://www.patrimonionacional.es/sites/default/files/documents/20251216_resolucion_regimen_visita_firmada_0_26.pdf",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "holidays_known": true
+ },
+ {
+  "place": "Madrid",
+  "name": "Reina Sofía Museum",
+  "aliases": [
+   "Reina Sofía Museum",
+   "Reina Sofía Museum (Guernica)"
+  ],
+  "lat": 40.4086,
+  "lng": -3.6943,
+  "opening_hours": "Mo,We-Sa 10:00-21:00; Su 10:00-14:30; Tu off",
+  "last_entry": "30 min before closing (20:30; 14:00 Sun)",
+  "notes": "unknown - holiday closures not confirmed from official page (commonly reported: 1 & 6 Jan, 1 & 15 May, 9 Nov, 24, 25, 31 Dec - unverified). Closed TUESDAYS. Sunday closes 14:30. Free Mon, Wed-Sat 19:00-21:00 and Sun 12:30-14:30; free all day 18 Apr, 18 May, 12 Oct, 6 Dec.",
+  "source_url": "https://cms.museoreinasofia.es/sites/default/files/Visita/espanol.pdf",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Kotor",
+  "name": "Kotor Fortifications",
+  "aliases": [
+   "Kotor Fortifications (San Giovanni walls)",
+   "Fortifications of Kotor"
+  ],
+  "lat": 42.42489,
+  "lng": 18.77104,
+  "opening_hours": "Mar 01-Apr 30: Mo-Su 08:00-18:00; May 01-Sep 30: Mo-Su 07:00-20:00; Oct 01-Nov 30: Mo-Su 08:00-17:00; Dec-Feb: off \"booths closed, climb at own risk\"",
+  "last_entry": "unknown",
+  "notes": "Ticket booths (EUR 15 in 2026) staffed: Mar-Apr 08:00-18:00; May-Sep from 07:00 (closing time not stated - 20:00 is an assumption from typical reports); Oct-Nov 08:00-17:00; Dec-Feb unstaffed. Walls officially off-limits after 22:00. Strenuous 1,350-step climb; avoid midday heat. Municipality has no published official schedule found; secondary.",
+  "source_url": "https://easybalkantransfers.com/blog/kotor-fortress-hike-guide/",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "wikidata": "Q12907852",
+  "holidays_known": false
+ },
+ {
+  "place": "Kotor",
+  "name": "Maritime Museum of Montenegro",
+  "aliases": [
+   "Maritime Museum of Montenegro",
+   "Maritime Museum of Montenegro in Kotor"
+  ],
+  "lat": 42.4252,
+  "lng": 18.77136,
+  "opening_hours": "Mo-Fr 09:00-18:00 (summer) / 09:00-15:00 (winter); Sa,PH 09:00-13:00; Su unknown",
+  "last_entry": "unknown",
+  "notes": "Holidays: 09:00-13:00 (same as Saturday). SATURDAYS and holidays mornings only (09:00-13:00). Summer/winter changeover dates not published (assume Apr/May-Oct). Sunday status not stated - treat as unknown/closed.",
+  "source_url": "https://www.museummaritimum.com/english/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q16677924",
+  "holidays_known": true
+ },
+ {
+  "place": "Dubrovnik",
+  "name": "City Walls",
+  "aliases": [
+   "City Walls",
+   "Dubrovnik City Walls",
+   "Walls of Dubrovnik",
+   "City Walls of Dubrovnik"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Jan 01-Mar 31: Mo-Su 09:00-15:00; Apr 01-Apr 30: Mo-Su 08:00-18:30; May 01-May 31: Mo-Su 08:00-19:00; Jun 01-Aug 05: Mo-Su 08:00-19:30; Aug 06-Aug 31: Mo-Su 08:00-19:00; Sep 01-Sep 14: Mo-Su 08:00-18:30; Sep 15-Sep 30: Mo-Su 08:00-18:00; Oct 01-Oct 14: Mo-Su 08:00-17:30; Oct 15-Oct 31: Mo-Su 08:00-17:00; Nov 01-Dec 31: Mo-Su 09:00-15:00; Dec 25 off",
+  "last_entry": "closing time = last admission; circuit takes 1.5-2 h, so start by ~17:30 in July",
+  "notes": "Closed 25 Dec only. Ticket also valid for Fort Lovrijenac. May close in storms/strong bora. Official citywallsdubrovnik.hr was bot-protected; table from absolute-croatia.com (2026).",
+  "source_url": "https://www.absolute-croatia.com/dubrovnik/attractions/city-walls",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": true
+ },
+ {
+  "place": "Dubrovnik",
+  "name": "Rector's Palace",
+  "aliases": [
+   "Rector's Palace (Cultural History Museum)",
+   "Rector's Palace, Dubrovnik"
+  ],
+  "lat": 42.64028,
+  "lng": 18.11083,
+  "opening_hours": "Mar 22-Oct 31: Th-Tu 09:00-18:00; Nov 01-Mar 21: Th-Tu 09:00-16:00; We off; Jan 01,Feb 03,Dec 25 off",
+  "last_entry": "unknown (approx 30 min before closing)",
+  "notes": "Dubrovnik Museums closed on Christmas (25 Dec), New Year (1 Jan) and Feast of St Blaise (3 Feb). SURPRISE: closed every WEDNESDAY, year-round. Also closed 3 Feb (St Blaise, city patron).",
+  "source_url": "https://dumus.hr/en/plan-a-visit/hours-of-work",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "wikidata": "Q2497590",
+  "holidays_known": true
+ },
+ {
+  "place": "Dubrovnik",
+  "name": "Franciscan Monastery and Old Pharmacy Museum",
+  "aliases": [
+   "Franciscan Monastery and Old Pharmacy Museum",
+   "Franciscan Monastery",
+   "Franciscan Monastery, Dubrovnik"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Apr-Oct: Mo-Su 09:00-18:00; Nov-Mar: Mo-Su 09:00-14:00",
+  "last_entry": "unknown",
+  "notes": "Working Franciscan friary; church closed to sightseers during services. Winter closing conflicts between sources (Time Out 14:00 from late Oct to late Mar; croatiatraveller 17:00) - safest 14:00. No official page found.",
+  "source_url": "https://www.timeout.com/croatia/museums/franciscan-monastery-old-pharmacy-museum",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Dubrovnik",
+  "name": "Dubrovnik Cathedral",
+  "aliases": [
+   "Dubrovnik Cathedral (and Treasury)",
+   "Dubrovnik Cathedral"
+  ],
+  "lat": 42.6399,
+  "lng": 18.1104,
+  "opening_hours": "Apr 04-Nov 01: Mo-Sa 09:00-17:00, Su,PH 11:00-17:00; Nov 02-Apr 03: Mo-Sa 10:00-12:00,15:00-17:00, Su,PH 11:00-12:00,15:00-17:00",
+  "last_entry": "unknown",
+  "notes": "Masses: weekdays 07:30 & 18:00; Sundays 09:00, 10:00, 18:00 (Jul-Aug no morning Mass, evening 20:00). Sightseeing paused/limited during Mass; treasury opens only 11:00 on Sundays. Hours given are for the Treasury (paid); nave usually free outside services. Winter has a MIDDAY CLOSURE 12:00-15:00. Secondary source.",
+  "source_url": "https://www.absolute-croatia.com/dubrovnik/attractions/cathedral-and-treasury",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q584428",
+  "holidays_known": false
+ },
+ {
+  "place": "Istanbul",
+  "name": "Hagia Sophia – tourist visiting area",
+  "aliases": [
+   "Hagia Sophia (Ayasofya-i Kebir Camii) – tourist visiting area",
+   "Hagia Sophia"
+  ],
+  "lat": 41.0085,
+  "lng": 28.9799,
+  "opening_hours": "Mo-Th,Sa,Su 09:00-19:00; Fr 14:30-19:00",
+  "last_entry": "30 min before closing (secondary; ~18:30)",
+  "notes": "No fixed closed days. On the first day(s) of Ramazan Bayramı (2027: Mar 9) and Kurban Bayramı (2027: May 16) mornings are taken by Eid prayers; tourist access restricted then (unknown exact hours). Active mosque since 2020. Foreign visitors enter via the separate 'visiting area' (upper gallery, €25 ticket since 15 Jan 2024); ground floor is for worshippers. Tourist access paused around each of the five daily prayers (~ up to 60-90 min, worst at noon/Dhuhr ~13:00-14:00 in May). Friday: closed to tourists until ~14:30 for Friday prayer. Headscarf for women, modest dress. No official operator web",
+  "source_url": "https://www.hagiasophia.com/hagia-sophia-opening-hours ; https://www.lonelyplanet.com/articles/istanbul-hagia-sophia-entry-rules",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "mosque",
+  "wikidata": "Q12506",
+  "holidays_known": false
+ },
+ {
+  "place": "Istanbul",
+  "name": "Blue Mosque",
+  "aliases": [
+   "Blue Mosque (Sultan Ahmed Mosque)",
+   "Sultan Ahmed Mosque"
+  ],
+  "lat": 41.00539,
+  "lng": 28.97682,
+  "opening_hours": "Mo-Th,Sa,Su 08:30-19:00; Fr 14:30-19:00",
+  "last_entry": "unknown (closes to visitors roughly at sunset/evening prayer)",
+  "notes": "None fixed; Eid mornings (2027: Mar 9, May 16) reserved for prayer. Closed to tourists for ~60-90 min around each of the five daily prayers (times shift daily; check Diyanet). Friday noon prayer is the longest closure (reopens ~14:30). Modest dress, headscarf for women. Free entry, no official web page with hours (operated by Diyanet; secondary source only). Hours approximate: 'roughly 08:30 until sunset except prayer times'.",
+  "source_url": "https://istanbul.com/blue-mosque",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "mosque",
+  "wikidata": "Q80541",
+  "holidays_known": false
+ },
+ {
+  "place": "Istanbul",
+  "name": "Süleymaniye Mosque",
+  "aliases": [
+   "Süleymaniye Mosque",
+   "Süleymaniye Mosque"
+  ],
+  "lat": 41.01611,
+  "lng": 28.96389,
+  "opening_hours": "Mo-Th,Sa,Su 09:00-18:00; Fr 14:30-18:00",
+  "last_entry": "unknown",
+  "notes": "None fixed; Eid mornings reserved for prayer. Closed to tourists during the five daily prayers (~45-90 min each); Friday closed until after midday prayer (~14:30). No official page with hours (Diyanet). Hours approximate from secondary guides; closing ~ dusk prayer. Tomb of Süleyman (türbe) in the courtyard is separately run: 08:30-20:00 in summer 2026, closed Mondays (Istanbul Directorate of Culture list).",
+  "source_url": "https://istanbul.com/suleymaniye-mosque",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "mosque",
+  "wikidata": "Q178643",
+  "holidays_known": false
+ },
+ {
+  "place": "Istanbul",
+  "name": "Topkapı Palace",
+  "aliases": [
+   "Topkapı Palace",
+   "Topkapı Palace"
+  ],
+  "lat": 41.013,
+  "lng": 28.984,
+  "opening_hours": "We-Mo 09:00-17:30; Tu off; Jan 01 off",
+  "last_entry": "Ticket office 09:00-17:00",
+  "notes": "Closed New Year's Day and the 1st day of Ramazan Bayramı (2027: Tue Mar 9 – a Tuesday anyway). Open on 1st day of Kurban Bayramı (2027: Sun May 16) and on Apr 23, May 1, May 19, Jul 15, Aug 30, Oct 29. Now run by the National Palaces Administration (Milli Saraylar). Harem and Hagia Irene need a combined/separate ticket. Summer night tours (2026: Saturdays 20:30-22:30, Jun 13–Sep 13). Page states the visit window '09:00-17:30'; closing time of grounds not separately stated. Page also says palaces close when a public/religious holiday coincides with an open day (wording ambiguous) – verify for b",
+  "source_url": "https://www.millisaraylar.gov.tr/Lokasyon/2/Topkapi-Sarayi",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "wikidata": "Q170495",
+  "holidays_known": false
+ },
+ {
+  "place": "Istanbul",
+  "name": "Basilica Cistern",
+  "aliases": [
+   "Basilica Cistern (Yerebatan Sarnıcı)",
+   "Basilica Cistern"
+  ],
+  "lat": 41.0084,
+  "lng": 28.97792,
+  "opening_hours": "Apr-Oct 09:00-19:00; Nov-Mar 09:00-18:00",
+  "last_entry": "unknown",
+  "notes": "None published; open 7 days a week. Run by İBB Kültür AŞ; its old site yerebatan.com now redirects to kultur.istanbul with no hours. New seasonal hours (winter 09:00-18:00 from 15 Nov 2026; summer 09:00-19:00 Apr 1–Oct 31) reported in Nov 2026 news. Separate-ticket evening sessions have existed in the past (19:30-22:00) – unconfirmed for 2027.",
+  "source_url": "https://www.alomaliye.com/2026/11/03/yerebatan-sarnicinda-ziyaret-saatleri-degisiyor/",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q216511",
+  "holidays_known": false
+ },
+ {
+  "place": "Istanbul",
+  "name": "Dolmabahçe Palace",
+  "aliases": [
+   "Dolmabahçe Palace",
+   "Dolmabahçe Palace"
+  ],
+  "lat": 41.03944,
+  "lng": 29.00167,
+  "opening_hours": "Tu-Su 09:00-17:30; Mo off; Jan 01 off; 2027 Mar 09 off; 2027 May 16 off",
+  "last_entry": "Ticket office closes 17:00",
+  "notes": "Closed New Year's Day, 1st day of Ramazan Bayramı (2027: Mar 9), 1st day of Kurban Bayramı (2027: Sun May 16). Open Apr 23, May 1, May 19, Jul 15, Aug 30, Oct 29 and other bayram days. National Palaces Administration. Visit window shown as 09:00-17:30; ticket office 09:00-17:00.",
+  "source_url": "https://www.millisaraylar.gov.tr/Lokasyon/3/Dolmabahce-Sarayi",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "wikidata": "Q274141",
+  "holidays_known": false
+ },
+ {
+  "place": "Istanbul",
+  "name": "Istanbul Archaeology Museums",
+  "aliases": [
+   "Istanbul Archaeology Museums",
+   "Istanbul Archaeology Museums"
+  ],
+  "lat": 41.01167,
+  "lng": 28.98139,
+  "opening_hours": "May-Sep 09:00-21:00; Apr 09:00-19:00; Oct-Mar 09:00-18:30",
+  "last_entry": "Ticket office closes 17:30 under base schedule (1 h before closing presumably in summer; unconfirmed)",
+  "notes": "Ministry museums typically close on the morning (until 13:00) of the 1st day of Ramazan and Kurban Bayramı (2027: Mar 9, May 16) – unconfirmed. Muze.gov.tr base schedule: 09:00-18:30, 'open every day', ticket sales end 17:30. Ministry 2026 tourism-season extension: closes 21:00 from 1 May–1 Oct, 19:00 from 1 Apr–1 May (re-decided each year; 2027 extension not yet published). Ministry museums may open only at 13:00 on the 1st day of religious bayrams (unconfirmed).",
+  "source_url": "https://muze.gov.tr/muze-detay?sectionId=IAR01&distId=IAR ; https://kvmgm.ktb.gov.tr/TR-451147/2026-turizm-sezonunda-ziyaret-saatleri.html",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q636978",
+  "holidays_known": false
+ },
+ {
+  "place": "Istanbul",
+  "name": "Galata Tower",
+  "aliases": [
+   "Galata Tower",
+   "Galata Tower"
+  ],
+  "lat": 41.02563,
+  "lng": 28.97415,
+  "opening_hours": "Apr-Oct 08:30-23:00; Nov-Mar 10:00-20:00",
+  "last_entry": "Ticket office: 1 hour before closing (summer 22:00 per 2026 list; ktb page says 23:00 with closing 24:00; winter 19:00)",
+  "notes": "None listed (open every day). Ministry of Culture museum. ktb.gov.tr page: 1 Apr–1 Nov 08:30-24:00 (ticket office until 23:00), 1 Nov–1 Apr 10:00-20:00 (ticket office until 19:00); 2026 directorate list gives summer 08:30-23:00 – the stricter 23:00 used here. Long queues.",
+  "source_url": "https://istanbul.ktb.gov.tr/EN-307578/galata-kulesi.html",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q91274",
+  "holidays_known": false
+ },
+ {
+  "place": "Vienna",
+  "name": "Schönbrunn Palace",
+  "aliases": [
+   "Schönbrunn Palace (state rooms)",
+   "Schönbrunn Palace"
+  ],
+  "lat": 48.18479,
+  "lng": 16.31227,
+  "opening_hours": "Apr-Jun 08:30-17:30; Jul-Aug 08:30-18:00; Sep 01-Nov 02 08:30-17:30; Nov 03-Mar 31 08:30-17:00; Dec 05-Dec 08,Dec 12-Dec 13,Dec 19-Dec 20,Dec 25-Jan 06 08:30-17:30",
+  "last_entry": "45 minutes before closing (e.g. 16:45 in May)",
+  "notes": "None – 'open daily, including public holidays'. Dec 24 standard winter hours (08:30-17:00) presumably. Visits by timed ticket; slots sell out in high season. Gardens open longer (from 06:30). Extended winter dates are for 2026/27.",
+  "source_url": "https://schoenbrunn.at/en/visitor-information/opening-times",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "wikidata": "Q131330",
+  "holidays_known": true
+ },
+ {
+  "place": "Vienna",
+  "name": "Upper Belvedere",
+  "aliases": [
+   "Upper Belvedere",
+   "Belvedere"
+  ],
+  "lat": 48.1934,
+  "lng": 16.38052,
+  "opening_hours": "Mo-Su 09:00-18:00",
+  "last_entry": "30 minutes before closing (17:30)",
+  "notes": "None listed; Dec 24/31 hours unknown (often shortened). Lower Belvedere: Mo-Su 10:00-18:00. Belvedere 21: closed Mondays (open on holiday Mondays), Thu late to 21:00. Upper Belvedere previously had Friday late opening – not listed now.",
+  "source_url": "https://www.belvedere.at/en/visit",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q211818",
+  "holidays_known": false
+ },
+ {
+  "place": "Vienna",
+  "name": "St. Stephen's Cathedral",
+  "aliases": [
+   "St. Stephen's Cathedral (Stephansdom)",
+   "St. Stephen's Cathedral"
+  ],
+  "lat": 48.20843,
+  "lng": 16.37326,
+  "opening_hours": "Mo-Sa 09:00-11:30,13:00-16:30; Su,PH 13:00-16:30",
+  "last_entry": "Tourist visit ends 16:30; South Tower last climb 18:15, North Tower last ascent 18:30",
+  "notes": "On Sundays and public holidays no tourist visits in the morning (services). Cathedral Museum (Dom Museum) closed on holidays. Outside tourist hours the nave is for worship only (free entry to rear part and for prayer/services but no sightseeing). 'Reductions may occur due to liturgical or organisational circumstances.' Catacombs guided only: Mo-Sa 10:00-16:30, Su/PH 13:30-16:30. Towers open daily 09:00-19:00 (ticket site says North Tower Apr-Dec Mo-Th until 21:30). English cathedral tour 10:30 Mo-Fr. Austrian PH in May 2027: May 1, Ascension May 6, Whit Monday May 17, Corpus Christi May 27.",
+  "source_url": "https://stephanskirche.at/info.php?setLang=en ; https://tickets.stephansdom-wien.at/tickets/de/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q5943",
+  "holidays_known": true
+ },
+ {
+  "place": "Vienna",
+  "name": "Kunsthistorisches Museum",
+  "aliases": [
+   "Kunsthistorisches Museum",
+   "Kunsthistorisches Museum"
+  ],
+  "lat": 48.20388,
+  "lng": 16.3616,
+  "opening_hours": "Mo-We,Fr-Su 10:00-18:00; Th 10:00-21:00; Dec 24 10:00-15:00",
+  "last_entry": "Rooms cleared 15 min before closing; last entry not stated",
+  "notes": "No full-day closures listed; open on holidays (2026/27 list: Dec 6, 8, 25-28, Jan 1, Jan 6 10:00-18:00; Dec 24 10:00-15:00; Dec 31 10:00-21:00). Now 'open daily' – the former Monday closure (Sep–May) is no longer listed. Some rooms closed (24, 14, IX).",
+  "source_url": "https://khm.at/en/visit/besucherinformation/hours-admission/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q95569",
+  "holidays_known": true
+ },
+ {
+  "place": "Vienna",
+  "name": "Albertina",
+  "aliases": [
+   "Albertina",
+   "Albertina"
+  ],
+  "lat": 48.20472,
+  "lng": 16.36833,
+  "opening_hours": "Mo,Tu,Th,Sa,Su 10:00-18:00; We,Fr 10:00-21:00",
+  "last_entry": "unknown",
+  "notes": "Not stated (open daily); holiday hours unknown. Albertina Modern (Karlsplatz) daily 10:00-18:00.",
+  "source_url": "https://www.albertina.at/en/easy-page",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q371908",
+  "holidays_known": false
+ },
+ {
+  "place": "Vienna",
+  "name": "Hofburg – Imperial Apartments, Sisi Museum & Silver Collection",
+  "aliases": [
+   "Hofburg – Imperial Apartments, Sisi Museum & Silver Collection",
+   "Hofburg Palace",
+   "Hofburg"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Su,PH 09:00-17:30",
+  "last_entry": "16:30",
+  "notes": "Open on public holidays. Dec 24/31 hours unknown. Redesigned Sisi Museum reopened 19 Nov 2026; until 18 Nov 2026 the museum ran reduced 10:00-16:30. Post-reopening hours per homepage 'daily 9 am - 5.30 pm, last admission 4.30 pm'; summer (Jul-Aug) extension historically to 18:00 – unconfirmed for 2027.",
+  "source_url": "https://www.sisimuseum-hofburg.at/en/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "holidays_known": false
+ },
+ {
+  "place": "Lisbon",
+  "name": "Jerónimos Monastery",
+  "aliases": [
+   "Jerónimos Monastery (cloister)",
+   "Jerónimos Monastery"
+  ],
+  "lat": 38.69832,
+  "lng": -9.20665,
+  "opening_hours": "Tu-Su 09:30-17:30; Mo off; Jan 01,easter,May 01,Jun 13,Dec 25 off",
+  "last_entry": "17:00",
+  "notes": "Closed Mondays and 1 Jan, Easter Sunday (2027: Mar 28), 1 May, 13 Jun (Lisbon municipal holiday, St Anthony), 25 Dec. Church of Santa Maria de Belém (free, separate entrance) is an active parish church: tourist visits not allowed during Mass (notably Sunday mornings); church hours unknown. Operated by Museus e Monumentos de Portugal (MMP); its site museusemonumentos.pt could not be read (no per-site hours exposed). Summer (May–Sep) extension to 18:00 has existed in past years – unconfirmed. Strikes in national museums occur occasionally (e.g. Oct 2025).",
+  "source_url": "https://www.visitlisboa.com/pt-pt/locais/mosteiro-dos-jeronimos",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q272781",
+  "holidays_known": true
+ },
+ {
+  "place": "Lisbon",
+  "name": "Belém Tower",
+  "aliases": [
+   "Belém Tower",
+   "Belém Tower"
+  ],
+  "lat": 38.69139,
+  "lng": -9.21583,
+  "opening_hours": "Tu-Su 09:30-17:30; Mo off; Jan 01,easter,May 01,Jun 13,Dec 25 off",
+  "last_entry": "17:00; timed entry every 30 min, max 60 per slot / 900 per day",
+  "notes": "Closed Mondays and 1 Jan, Easter Sunday (2027: Mar 28), 1 May, 13 Jun, 25 Dec. Was CLOSED for restoration from April 2025 to 26/27 May 2026; reopened with timed half-hourly slots (09:30-17:30, last entry 17:00 per Sábado May 2026). MMP official page unreadable.",
+  "source_url": "https://www.visitlisboa.com/pt-pt/locais/torre-de-belem ; https://www.sabado.pt/gps/detalhe/torre-de-belem-reabre-a-brilhar-e-com-novo-sistema-de-entradas-para-reduzir-filas",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q215003",
+  "holidays_known": true
+ },
+ {
+  "place": "Lisbon",
+  "name": "Castle of São Jorge",
+  "aliases": [
+   "Castle of São Jorge",
+   "Castle of Saint George"
+  ],
+  "lat": 38.71389,
+  "lng": -9.13333,
+  "opening_hours": "Mar-Oct 09:00-21:00; Nov-Feb 09:00-18:00; Jan 01,May 01,Dec 24,Dec 25,Dec 31 off",
+  "last_entry": "30 min before closing (20:30 summer, 17:30 winter); walls/towers may close 18:00-21:00 depending on daylight in summer, 17:30 in winter",
+  "notes": "Closed 1 Jan, 1 May, 24, 25 and 31 Dec (page elsewhere says 31 Dec open until 13:00, last entry 12:30 – conflicting). Run by EGEAC (City of Lisbon). Camera Obscura by guided tour only, weather dependent. Strikes occasionally disrupt.",
+  "source_url": "https://castelodesaojorge.pt/en/plan-your-visit/schedules/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "wikidata": "Q636780",
+  "holidays_known": true
+ },
+ {
+  "place": "Lisbon",
+  "name": "National Azulejo Museum",
+  "aliases": [
+   "National Azulejo (Tile) Museum",
+   "National Azulejo Museum"
+  ],
+  "lat": 38.7244,
+  "lng": -9.11389,
+  "opening_hours": "off",
+  "last_entry": "n/a",
+  "notes": "When open (normal pattern): Tu-Su 10:00-18:00, last entry 17:15; closed Mondays, 1 Jan, Easter Sunday, 1 May, 13 Jun, 25 Dec. CLOSED FOR RENOVATION since 1 November 2025 (PRR-funded works on facades, towers, cloister, church tiling). No reopening date announced as of Aug 2026 news; status for May 2027 unknown – treat as closed unless reopening announced. Normal-pattern hours if reopened: 'Tu-Su 10:00-18:00; Mo off'.",
+  "source_url": "https://visitlisboa.com/en/places/national-tile-museum ; https://www.dnoticias.pt/2026/8/13/502375-mnaa-e-museu-da-terra-de-miranda-com-reabertura-prevista-para-o-ultimo-trimestre/",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q2313815",
+  "holidays_known": true
+ },
+ {
+  "place": "Lisbon",
+  "name": "Calouste Gulbenkian Museum",
+  "aliases": [
+   "Calouste Gulbenkian Museum",
+   "Calouste Gulbenkian Museum"
+  ],
+  "lat": 38.73667,
+  "lng": -9.15417,
+  "opening_hours": "Mo,We-Su 10:00-18:00; Tu off; Jan 01,easter,May 01,Dec 24,Dec 25 off",
+  "last_entry": "17:30",
+  "notes": "Closed Tuesdays and 1 Jan, Easter Sunday (2027: Mar 28), 1 May, 24 and 25 Dec. Founder's Collection. Centro de Arte Moderna (CAM) same hours plus Saturday late opening to 21:00, also closed Tuesdays. Garden open longer.",
+  "source_url": "https://gulbenkian.pt/museu/en/visit ; https://gulbenkian.pt/en/useful-information/opening-ours",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q211262",
+  "holidays_known": true
+ },
+ {
+  "place": "Lisbon",
+  "name": "National Coach Museum",
+  "aliases": [
+   "National Coach Museum",
+   "National Coach Museum"
+  ],
+  "lat": 38.69778,
+  "lng": -9.19972,
+  "opening_hours": "Tu-Su 10:00-18:00; Mo off; Jan 01,easter,May 01,Jun 13,Dec 24,Dec 25 off",
+  "last_entry": "17:30",
+  "notes": "Closed Mondays and 1 Jan, Easter Sunday, 1 May, 13 Jun, 24 and 25 Dec. Hours are for the main (new) building. The historic Picadeiro Real (Royal Riding School) annex has been CLOSED for works since 29 Sep 2025 (reopening unknown). Operator MMP official page unreadable.",
+  "source_url": "https://www.visitlisboa.com/pt-pt/locais/museu-nacional-dos-coches",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q1659559",
+  "holidays_known": true
+ },
+ {
+  "place": "Edinburgh",
+  "name": "Edinburgh Castle",
+  "aliases": [
+   "Edinburgh Castle",
+   "Edinburgh Castle"
+  ],
+  "lat": 55.9487,
+  "lng": -3.20073,
+  "opening_hours": "Apr-Sep 09:30-18:00; Oct 01-Dec 23 09:30-17:00; Dec 24 09:30-16:00; Dec 25,Dec 26 off; Dec 27-Dec 31 09:30-17:00; Jan 01 11:00-17:00; Jan 02-Mar 31 09:30-17:00",
+  "last_entry": "1 hour before closing (17:00 Apr-Sep, 16:00 Oct-Mar, 15:00 on Dec 24)",
+  "notes": "Closed 25 and 26 December; 1 January opens 11:00. Historic Environment Scotland. Timed tickets, often sold out in August. Castle may close for adverse weather; individual museums (War Memorial, regimental museums) can close for events. During the Royal Edinburgh Military Tattoo (August) the castle keeps its day hours per the official page (Esplanade grandstands up).",
+  "source_url": "https://www.edinburghcastle.scot/plan-your-visit/opening-times",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "wikidata": "Q212065",
+  "holidays_known": true
+ },
+ {
+  "place": "Edinburgh",
+  "name": "Palace of Holyroodhouse",
+  "aliases": [
+   "Palace of Holyroodhouse",
+   "Holyrood Palace"
+  ],
+  "lat": 55.9527,
+  "lng": -3.17229,
+  "opening_hours": "Nov-Mar Th-Mo 09:30-16:30; Apr-Jun Th-Mo 09:30-18:00; Jul-Sep Mo-Su 09:30-18:00; Oct Th-Mo 09:30-18:00",
+  "last_entry": "16:30 (summer, 30 Mar–31 Oct); 15:15 (winter)",
+  "notes": "Closed when the King is in residence or for official events – mainly 'Holyrood Week' (late June/early July; 2026 excluded dates 26 Jun–4 Jul) plus other ad-hoc dates (in 2024: 29 Mar, 16–25 May, 27 Jun–5 Jul). 2027 closure list not yet published. Usually closed 25–26 Dec. Royal Collection Trust. Closed Tuesdays and Wednesdays except July, August, September (open daily then). Exact 2027 closure dates: unknown. Aug 10-11 2027 should be open (open daily in August).",
+  "source_url": "https://col.rct.uk/visit/palace-of-holyroodhouse",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "wikidata": "Q505950",
+  "holidays_known": false
+ },
+ {
+  "place": "Edinburgh",
+  "name": "St Giles' Cathedral",
+  "aliases": [
+   "St Giles' Cathedral",
+   "St Giles' Cathedral"
+  ],
+  "lat": 55.94944,
+  "lng": -3.19083,
+  "opening_hours": "Apr-Oct Mo-Fr 09:00-19:00, Sa 09:00-17:00, Su 13:00-17:00; Nov-Mar Mo-Sa 09:00-17:00, Su 13:00-17:00",
+  "last_entry": "unknown",
+  "notes": "Not stated; Christmas Day/Eve hours given only in the church calendar. Working church: Sunday mornings reserved for worship (visitors from 13:00). Short prayer service 12:00-12:10 Mon-Sat (silence, no photos). Access may be restricted without notice for services, funerals, state events (check calendar). Free entry (donation).",
+  "source_url": "https://www.stgilescathedral.org.uk/visit/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q1547466",
+  "holidays_known": false
+ },
+ {
+  "place": "Edinburgh",
+  "name": "National Museum of Scotland",
+  "aliases": [
+   "National Museum of Scotland",
+   "National Museum of Scotland"
+  ],
+  "lat": 55.94694,
+  "lng": -3.19,
+  "opening_hours": "Mo-Su 10:00-17:00; Dec 25 off; Dec 26,Jan 01 12:00-17:00",
+  "last_entry": "unknown",
+  "notes": "Closed 25 December; 26 Dec and 1 Jan open 12:00-17:00. Free entry.",
+  "source_url": "https://www.nms.ac.uk/national-museum-of-scotland",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q1633842",
+  "holidays_known": true
+ },
+ {
+  "place": "Edinburgh",
+  "name": "Royal Yacht Britannia",
+  "aliases": [
+   "Royal Yacht Britannia",
+   "HMY Britannia"
+  ],
+  "lat": 55.98213,
+  "lng": -3.1773,
+  "opening_hours": "Apr-Oct 09:30-18:00; Nov-Mar 10:00-17:00; Dec 24 10:00-16:30; Dec 25,Jan 01 off",
+  "last_entry": "16:00 (Apr-Oct); 15:00 (Nov-Mar); 14:30 on 24 Dec",
+  "notes": "Closed 25 December and 1 January (open 363 days). Occasional early closures for private events (e.g. 15 Dec: last admission 12:00, close 14:00). At Ocean Terminal, Leith. Dec 24 closing time inferred from last entry 14:30 – unconfirmed.",
+  "source_url": "https://www.royalyachtbritannia.co.uk/visit/opening-hours/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q1529544",
+  "holidays_known": true
+ },
+ {
+  "place": "Paris",
+  "name": "Louvre Museum",
+  "aliases": [
+   "Louvre Museum",
+   "Louvre Museum"
+  ],
+  "lat": 48.86111,
+  "lng": 2.33583,
+  "opening_hours": "Mo,Th,Sa,Su 09:00-18:00; We,Fr 09:00-21:00; Tu off; Jan 01,May 01,Dec 25 off",
+  "last_entry": "1 hour before closing (17:00; 20:00 on Wed/Fri); rooms cleared 30 min before closing",
+  "notes": "Closed every Tuesday and on 1 Jan, 1 May, 25 Dec; open on other public holidays unless a Tuesday. Timed reservation strongly recommended (mandatory 19 Dec 2026–4 Jan 2027). Cour Carrée currently closed. Opening may be delayed/rooms closed on short notice (strikes, staff shortages). Note: 2027-05-04 is a Tuesday = CLOSED.",
+  "source_url": "https://www.louvre.fr/visiter/horaires-tarifs?tab=musee-du-louvre",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q19675",
+  "holidays_known": true
+ },
+ {
+  "place": "Paris",
+  "name": "Musée d'Orsay",
+  "aliases": [
+   "Musée d'Orsay",
+   "Musée d'Orsay"
+  ],
+  "lat": 48.85997,
+  "lng": 2.32653,
+  "opening_hours": "Tu,We,Fr-Su 09:30-18:00; Th 09:30-21:45; Mo off; May 01,Dec 25 off",
+  "last_entry": "17:00 (Thursday: 21:00 presumably)",
+  "notes": "Closed every Monday and on 1 May and 25 December (1 Jan apparently open – unconfirmed). Official site musee-orsay.fr could not be fetched; data from regional tourist board (Paris Region). Thursday nocturne to 21:45.",
+  "source_url": "https://www.visitparisregion.com/fr/musee-d-orsay",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q23402",
+  "holidays_known": false
+ },
+ {
+  "place": "Paris",
+  "name": "Eiffel Tower",
+  "aliases": [
+   "Eiffel Tower",
+   "Eiffel Tower"
+  ],
+  "lat": 48.8583,
+  "lng": 2.29448,
+  "opening_hours": "Jan 01-Jun 14 09:30-23:45; Jun 15-Sep 06 09:00-00:45; Sep 07-Dec 31 09:30-23:45",
+  "last_entry": "Summit last lift ~1 h before closing (about 22:30 normally, 23:00 in summer); 2nd floor last lift ~23:00 (midnight in summer)",
+  "notes": "Open every day of the year; 14 July closed/partially closed (fireworks) per Paris Region tourist board. Official toureiffel.paris could not be fetched; summer exact dates and summit times vary by year. Summit can close for wind/weather or crowding; strikes (SETE staff) have closed the tower at short notice in the past.",
+  "source_url": "https://www.toureiffel.paris/en/news/events/enjoying-eiffel-tower-august ; https://www.visitparisregion.com/fr/tour-eiffel ; https://www.paristickets.com/fr/eiffel-tower/timings-opening-hours/",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q243",
+  "holidays_known": true
+ },
+ {
+  "place": "Paris",
+  "name": "Sainte-Chapelle",
+  "aliases": [
+   "Sainte-Chapelle",
+   "Sainte Chapelle"
+  ],
+  "lat": 48.85537,
+  "lng": 2.34503,
+  "opening_hours": "Apr-Sep 09:00-19:00; Oct-Mar 09:00-17:00; Jan 01,May 01,Dec 25 off",
+  "last_entry": "30 minutes before closing",
+  "notes": "Closed 1 January, 1 May, 25 December. Centre des Monuments Nationaux. Inside the Palais de Justice – security queue; timed tickets. May close exceptionally (official events).",
+  "source_url": "https://www.sainte-chapelle.fr/visiter/informations-pratiques/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q193193",
+  "holidays_known": true
+ },
+ {
+  "place": "Paris",
+  "name": "Arc de Triomphe",
+  "aliases": [
+   "Arc de Triomphe",
+   "Arc de Triomphe"
+  ],
+  "lat": 48.87378,
+  "lng": 2.29504,
+  "opening_hours": "Apr-Sep Mo,We-Su 10:00-23:00, Tu 11:00-23:00; Oct-Mar Mo,We-Su 10:00-22:30, Tu 11:00-22:30; Jan 01,May 01,May 08,Jul 14,Nov 11,Dec 25 off",
+  "last_entry": "45 minutes before closing",
+  "notes": "Closed 1 Jan, 1 May, 8 May (VE Day), 14 July, 11 Nov (Armistice), 25 Dec. Also closes/opens late for official ceremonies at the Tomb of the Unknown Soldier. CMN; official site could not be fetched – Paris Region tourist board data. Opens 11:00 on Tuesdays.",
+  "source_url": "https://www.visitparisregion.com/fr/arc-de-triomphe",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q64436",
+  "holidays_known": false
+ },
+ {
+  "place": "Paris",
+  "name": "Notre-Dame Cathedral",
+  "aliases": [
+   "Notre-Dame Cathedral",
+   "Notre-Dame de Paris"
+  ],
+  "lat": 48.853,
+  "lng": 2.3498,
+  "opening_hours": "Mo-We,Fr 07:50-19:00; Th 07:50-22:00; Sa,Su 08:15-19:30",
+  "last_entry": "30 minutes before closing",
+  "notes": "No closures listed; major feasts (Christmas, Easter) bring liturgy-dominated access. Active cathedral: free entry; visitors share space with Masses (separate queue for worshippers 20 min before each service). Visitor circulation may be restricted during big celebrations. Reopened Dec 2024. Free timed slot reservation possible via official site only. Towers have their own (CMN) hours and ticketing – not included.",
+  "source_url": "https://www.notredamedeparis.fr/en/?p=4906",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q2981",
+  "holidays_known": false
+ },
+ {
+  "place": "Paris",
+  "name": "Panthéon",
+  "aliases": [
+   "Panthéon",
+   "Panthéon"
+  ],
+  "lat": 48.8462,
+  "lng": 2.34611,
+  "opening_hours": "Apr-Sep 10:00-18:30; Oct-Mar 10:00-18:00; Jan 01,May 01,Dec 25 off",
+  "last_entry": "17:45 (summer); ticket office closes 45 min before closing (winter ~17:15)",
+  "notes": "Closed 1 Jan, 1 May, 25 Dec. Opens at 12:00 on the first working Monday of each month. Panorama (colonnade) visits Apr–Sep only at set times (10:15, 11:00, 14:30, 15:30, 16:30). CMN official site could not be fetched.",
+  "source_url": "https://www.visitparisregion.com/fr/pantheon",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q188856",
+  "holidays_known": true
+ },
+ {
+  "place": "Paris",
+  "name": "Les Invalides",
+  "aliases": [
+   "Les Invalides (Musée de l'Armée, Napoleon's Tomb)",
+   "Les Invalides"
+  ],
+  "lat": 48.855,
+  "lng": 2.3125,
+  "opening_hours": "Mo-Su 10:00-18:00; Jan 01,May 01,Dec 25 off",
+  "last_entry": "unknown (ticket desks close before 18:00); first-Friday nocturne last access 21:30",
+  "notes": "Closed 1 January, 1 May, 25 December. Cathédrale Saint-Louis-des-Invalides is an active (military diocese) church – Sunday Mass mornings. Nocturne first Friday of each month 18:00-22:00. Place Vauban entrance only 14:00-18:00. The older 'closed first Monday of the month' rule no longer appears.",
+  "source_url": "https://musee-armee.fr/fileadmin/user_upload/Documents/Agenda/Agenda-armee_Nov_Juillet_2025.pdf",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q188977",
+  "holidays_known": true
+ },
+ {
+  "place": "Paris",
+  "name": "Sacré-Cœur Basilica",
+  "aliases": [
+   "Sacré-Cœur Basilica",
+   "Sacré-Cœur"
+  ],
+  "lat": 48.88665,
+  "lng": 2.34295,
+  "opening_hours": "Mo-Su 06:30-22:30",
+  "last_entry": "Basilica unknown; Dome last admission 17:00",
+  "notes": "None; closes at midnight (later) on the first Thursday of each month (night adoration). Perpetual adoration; masses several times a day – silence, no photography; circulation restricted near the choir during services. Free basilica. Dome climb (paid): 10:15-17:30 (seasonal variation, midday staff break, closes for weather/maintenance).",
+  "source_url": "https://www.sacre-coeur-montmartre.com/english/visit/ ; https://www.sacre-coeur-montmartre.com/en/info-and-visits/the-dome-tour/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q28785",
+  "holidays_known": true
+ },
+ {
+  "place": "Southampton",
+  "name": "SeaCity Museum",
+  "aliases": [
+   "SeaCity Museum",
+   "SeaCity Museum"
+  ],
+  "lat": 50.908,
+  "lng": -1.408,
+  "opening_hours": "Mo-Sa 10:00-16:30; Su 11:00-16:00",
+  "last_entry": "unknown",
+  "notes": "Not stated on the official page (Southampton museums normally close 25–26 Dec and 1 Jan – unconfirmed). New hours from 1 Oct 2026 (Southampton City Council).",
+  "source_url": "https://seacitymuseum.co.uk/visit/about/opening-times/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q7439809",
+  "holidays_known": false
+ },
+ {
+  "place": "Southampton",
+  "name": "Tudor House and Garden",
+  "aliases": [
+   "Tudor House and Garden",
+   "Southampton Tudor House and Garden"
+  ],
+  "lat": 50.8996,
+  "lng": -1.4059,
+  "opening_hours": "Mo,Tu,Th-Sa 10:00-16:30; Su 11:00-16:00; We off",
+  "last_entry": "unknown",
+  "notes": "Not stated (likely 25–26 Dec, 1 Jan – unconfirmed). Closed Wednesdays. Southampton City Council museum.",
+  "source_url": "https://tudorhouseandgarden.com",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q7569167",
+  "holidays_known": false
+ },
+ {
+  "place": "Winchester",
+  "name": "Winchester Cathedral",
+  "aliases": [
+   "Winchester Cathedral"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Sa 09:00-17:00; Su 12:30-15:00",
+  "last_entry": "30 minutes before closing",
+  "notes": "25 Dec open for services only; 24 Dec 09:00-12:30,14:30-16:30; frequent ad-hoc reduced hours for services/concerts/events (published on homepage). Working cathedral: Sunday mornings for worship only (visitors 12:30-15:00). Parts (East End) close during services/funerals; Choral Evensong daily late afternoon. Admission charged for visitors; check the 'changes to opening hours' list for the visit date.",
+  "source_url": "https://www.winchester-cathedral.org.uk",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": true
+ },
+ {
+  "place": "Salisbury",
+  "name": "Salisbury Cathedral & Magna Carta",
+  "aliases": [
+   "Salisbury Cathedral & Magna Carta",
+   "Salisbury Cathedral"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Sa 10:00-17:00; Su 12:30-16:00",
+  "last_entry": "15:45 Mon-Sat, 15:00 Sun (last bookable entry); Chapter House/Magna Carta Mo-Sa 10:30-16:30, Su 13:00-16:00",
+  "notes": "Some Sundays closed to sightseeing entirely due to worship (e.g. Advent Sunday 29 Nov 2026); Christmas/Easter periods restricted. Early closures for events (e.g. Sarum Lights). Living church: Sunday mornings worship only; sightseeing may be suspended for services. Check closures list before travel.",
+  "source_url": "https://www.salisburycathedral.org.uk/visitor-opening-hours/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": true
+ },
+ {
+  "place": "Venice",
+  "name": "St Mark's Basilica",
+  "aliases": [
+   "St Mark's Basilica",
+   "St Mark's Basilica"
+  ],
+  "lat": 45.43444,
+  "lng": 12.33972,
+  "opening_hours": "Mo-Sa 09:30-17:00; Jun-Oct Su,PH 14:00-17:00; Nov-May Su,PH 14:00-16:30",
+  "last_entry": "15 min before closing (Mo-Sa 16:45; Su 16:15 Nov-Jun / 16:45 Jun-Oct)",
+  "notes": "On Sundays and religious holidays (e.g. Easter, Apr 25 St Mark, Pentecost, Christmas, Assumption Aug 15) closed to tourists in the morning; major feasts may close more. Sunday & holiday mornings reserved for liturgy – no tourist visits until 14:00. During services the basilica is closed to visitors; the Museum/Loggia dei Cavalli may stay open with its own ticket. Modest dress, no bags. Official Procuratoria site (basilicasanmarco.it) blocked automated access; ticket site lists no hours. Hours from secondary guide. 2027-05-16 is Pentecost Sunday – afternoon only. Evening visits 19:30-22:00 by t",
+  "source_url": "https://www.invenicetoday.com/tour/chiese/San-Marco/Basilica-di-San-Marco.htm ; https://www.basilicasanmarco.it/wp-content/uploads/2026/04/10-Regolamento-di-accesso.pdf",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q172988",
+  "holidays_known": false
+ },
+ {
+  "place": "Venice",
+  "name": "Doge's Palace",
+  "aliases": [
+   "Doge's Palace",
+   "Doge's Palace"
+  ],
+  "lat": 45.43367,
+  "lng": 12.34042,
+  "opening_hours": "Apr-Oct 09:00-19:00; Nov-Mar 09:00-18:00; Dec 25,Jan 01 10:00-21:00; Dec 26,Jan 02 09:00-21:00",
+  "last_entry": "1 hour before closing (18:00 summer, 17:00 winter)",
+  "notes": "No closed dates listed (open 25 Dec and 1 Jan from 10:00 in 2026/27). MUVE (Fondazione Musei Civici). Check 'Announcements' for extraordinary changes.",
+  "source_url": "https://palazzoducale.visitmuve.it/en/pianifica-la-tua-visita/opening-times",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "wikidata": "Q189883",
+  "holidays_known": true
+ },
+ {
+  "place": "Venice",
+  "name": "Gallerie dell'Accademia",
+  "aliases": [
+   "Gallerie dell'Accademia",
+   "Gallerie dell'Accademia"
+  ],
+  "lat": 45.43108,
+  "lng": 12.32814,
+  "opening_hours": "Tu-Su 09:00-19:00; Mo off",
+  "last_entry": "18:00 (ticket sales end)",
+  "notes": "Typically closed 1 Jan and 25 Dec (state museum) – the official page refers to an 'Opening calendar'; not confirmed. The official page lists only 'Tuesday to Sunday 9:00-19:00'. The traditional Monday morning opening (08:15-14:00) is NOT listed any more – Monday status unconfirmed; treat as closed. Museum temporarily closed until 24 Nov 2026. First Sunday of month free (Domenica al museo).",
+  "source_url": "https://www.gallerieaccademia.it/en/plan-your-visit",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q338330",
+  "holidays_known": false
+ },
+ {
+  "place": "Venice",
+  "name": "Basilica dei Frari",
+  "aliases": [
+   "Basilica dei Frari",
+   "Frari",
+   "Santa Maria Gloriosa dei Frari",
+   "Frari Basilica"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Sa 09:00-18:00; Su,PH 13:00-18:00",
+  "last_entry": "17:30",
+  "notes": "Not listed. No visits during liturgical celebrations; hours may vary with liturgy; Sunday/holiday mornings worship only. Official leaflet dated 2023 (latest found).",
+  "source_url": "https://www.basilicadeifrari.it/wp-content/uploads/2023/10/INGLESE-2023.pdf",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": false
+ },
+ {
+  "place": "Venice",
+  "name": "Peggy Guggenheim Collection",
+  "aliases": [
+   "Peggy Guggenheim Collection",
+   "Peggy Guggenheim Collection"
+  ],
+  "lat": 45.43082,
+  "lng": 12.33154,
+  "opening_hours": "Mo,We-Su 10:00-18:00; Tu off; Dec 25 off",
+  "last_entry": "17:00",
+  "notes": "Closed Tuesdays and 25 December.",
+  "source_url": "https://www.guggenheim-venice.it/en/visit/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q1049033",
+  "holidays_known": true
+ },
+ {
+  "place": "Venice",
+  "name": "Museo Correr",
+  "aliases": [
+   "Museo Correr",
+   "Correr Museum"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Apr-Oct 10:00-18:00; Nov-Mar 10:00-17:00; Dec 25,Dec 26,Jan 01,Jan 02 10:00-21:00",
+  "last_entry": "1 hour before closing",
+  "notes": "No closed days listed. MUVE. Room III closed for maintenance since Oct 2025. Ticket shared with Doge's Palace (St Mark's Square museums).",
+  "source_url": "https://correr.visitmuve.it/en/pianifica-la-tua-visita/opening-times",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Reykjavik",
+  "name": "Hallgrímskirkja",
+  "aliases": [
+   "Hallgrímskirkja (church & tower)",
+   "Hallgrímskirkja"
+  ],
+  "lat": 64.14194,
+  "lng": -21.92694,
+  "opening_hours": "Sep-May 10:00-17:00; Jun-Aug 09:00-20:00; Sep-May Su 10:00-10:30,12:30-17:00; Jun-Aug Su 09:00-10:30,12:30-20:00; Dec 24,Dec 25,Jan 01 off; Dec 31 10:00-12:00",
+  "last_entry": "Tower: 16:45 in winter (16:30 on some days), 19:45 in summer",
+  "notes": "Closed to visitors (services only) 24 Dec, 25 Dec, 1 Jan; Good Friday closed (2027: Mar 26); Easter Sunday open only 12:30-17:00; 31 Dec 10:00-12:00. December Sundays shortened. Lutheran parish church: church and tower closed ~10:30-12:30 on Sundays (11:00 service), also around services on Easter Monday, Ascension (2027: May 6), Whit Monday. Tower closed during first-Saturday 12:00 organ concerts (Sep–Jun) and some evening services/concerts. Summer season dates approx. 20 May–31 Aug (2024 dates: May 20–Aug 31; winter from Sep 1); exact 2027 start unknown – Jun-Aug used. Winter church hours 10:",
+  "source_url": "https://www.hallgrimskirkja.is/en-gb/opnunartimar",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q271466",
+  "holidays_known": true
+ },
+ {
+  "place": "Reykjavik",
+  "name": "National Museum of Iceland",
+  "aliases": [
+   "National Museum of Iceland",
+   "National Museum of Iceland"
+  ],
+  "lat": 64.1419,
+  "lng": -21.94811,
+  "opening_hours": "Mo-Su 10:00-17:00",
+  "last_entry": "unknown",
+  "notes": "None published on the official page (historically closed 24–25 Dec, 31 Dec afternoon, 1 Jan, Easter Sunday – unconfirmed). Official site now says 'open daily 10:00-17:00' with no seasonal variation; the older rule 'closed Mondays 16 Sep–30 Apr' is no longer stated – but not explicitly withdrawn. For 19–20 Jan 2027 (Tue/Wed) open either way.",
+  "source_url": "https://www.thjodminjasafn.is/english/for-visitors/opening-hours-and-prices/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q626963",
+  "holidays_known": false
+ },
+ {
+  "place": "Reykjavik",
+  "name": "Perlan – Wonders of Iceland",
+  "aliases": [
+   "Perlan – Wonders of Iceland",
+   "Perlan"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Su 09:00-21:00",
+  "last_entry": "unknown",
+  "notes": "Holiday hours (24, 25, 31 Dec, 1 Jan) not published – likely shortened; unknown. Exhibition hours; planetarium show times separate.",
+  "source_url": "https://www.perlan.is/en-gb/openinghours",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Reykjavik",
+  "name": "Harpa Concert Hall",
+  "aliases": [
+   "Harpa Concert Hall",
+   "Harpa"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo,Tu 10:00-18:00; We-Sa 10:00-20:00; Su 10:00-18:00",
+  "last_entry": "n/a (free public areas); box office 10:00-18:00, longer on event nights",
+  "notes": "Holiday hours published as news each December; unknown. Public foyer free; concert halls only on guided tours/events (tour times on harpa.is/en/guided-tours).",
+  "source_url": "https://www.harpa.is/en/opening-hours",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": false
+ },
+ {
+  "place": "Ponta Delgada",
+  "name": "Carlos Machado Museum",
+  "aliases": [
+   "Carlos Machado Museum (Santo André, Santa Bárbara & Sacred Art centres)",
+   "Carlos Machado Museum"
+  ],
+  "lat": 37.7433,
+  "lng": -25.6675,
+  "opening_hours": "Apr-Sep Tu-Su,PH 10:00-18:00; Oct-Mar Tu-Su,PH 09:30-17:30; Mo off",
+  "last_entry": "30 min before closing (17:30 summer, 17:00 winter)",
+  "notes": "Open on public holidays ('Tuesday to Sunday and public holidays'); specific closure dates (25 Dec, 1 Jan) not stated. Regional museum of the Azores Government, 3 sites. The Azorean Autonomy Centre (4th site) is Mo-Fr 10:00-17:00 plus last Sunday of month 15:00-18:00, closed on holidays. If a holiday falls on a Monday, unclear whether open (OSM rule above opens it – verify).",
+  "source_url": "https://museucarlosmachado.azores.gov.pt/en/horario",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Prague",
+  "name": "Prague Castle",
+  "aliases": [
+   "Prague Castle (historic buildings circuit)",
+   "Prague Castle"
+  ],
+  "lat": 50.09,
+  "lng": 14.4,
+  "opening_hours": "Apr-Oct 09:00-17:00; Nov-Mar 09:00-16:00",
+  "last_entry": "unknown for buildings (cathedral last entry 16:40 summer / 15:40 winter)",
+  "notes": "Not listed (open daily); state events may close parts at short notice – see 'current closures' page. See St Vitus Cathedral. Castle grounds/courtyards open 06:00-22:00 daily (free). Castle gardens (Royal Garden, Stag Moat, South Gardens) closed 13 Nov – 28 Feb. Old Royal Palace, St George's Basilica, Golden Lane on the ticket circuit.",
+  "source_url": "https://hrad.cz/en/prague-castle-for-visitors/opening-hours",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "wikidata": "Q193369",
+  "holidays_known": false
+ },
+ {
+  "place": "Prague",
+  "name": "St Vitus Cathedral",
+  "aliases": [
+   "St Vitus Cathedral",
+   "St. Vitus Cathedral"
+  ],
+  "lat": 50.09083,
+  "lng": 14.40056,
+  "opening_hours": "Apr-Oct Mo-Sa 09:00-17:00, Su 12:00-17:00; Nov-Mar Mo-Sa 09:00-16:00, Su 12:00-16:00",
+  "last_entry": "16:40 (summer) / 15:40 (winter)",
+  "notes": "Ad-hoc closures for religious services, state funerals, inaugurations and events (monthly closure lists on hrad.cz). Sunday mornings reserved for Mass (tourists from 12:00). No tours during services; also closures on major feasts. Paid tourist route (Prague Castle ticket). Free small zone at the entrance.",
+  "source_url": "https://hrad.cz/en/prague-castle-for-visitors/opening-hours ; https://www.katedralasvatehovita.cz/en/for-visitors/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q5949",
+  "holidays_known": true
+ },
+ {
+  "place": "Prague",
+  "name": "Jewish Museum in Prague",
+  "aliases": [
+   "Jewish Museum in Prague (Pinkas, Maisel, Klausen, Spanish synagogues, Old Jewish Cemetery)",
+   "Jewish Museum",
+   "Pinkas Synagogue",
+   "Spanish Synagogue",
+   "Maisel Synagogue",
+   "Old Jewish Cemetery",
+   "Klausen Synagogue"
+  ],
+  "lat": 50.0889,
+  "lng": 14.4177,
+  "opening_hours": "Jan 02-Mar 31 09:00-16:30; Apr 09:00-18:00; May-Aug 09:00-19:00; Sep 01-Oct 17 09:00-18:00; Oct 18-Dec 31 09:00-16:30; Jan 01 11:00-16:30; Dec 24 09:00-14:00; Sa off; 2027 Apr 22,2027 Apr 23,2027 Apr 28,2027 Apr 29,2027 Jun 11,2027 Oct 03,2027 Oct 11,2027 Oct 17,2027 Oct 24 off",
+  "last_entry": "unknown",
+  "notes": "Closed every Saturday (Shabbat) and on Jewish holidays. 2026 published: Apr 2, 3, 8, 9 (Pesach), May 22 (Shavuot), Sep 13 (Rosh Hashanah), Sep 21 (Yom Kippur), Sep 27 (Sukkot), Oct 4 (Simchat Torah). 2027 list not yet published – computed equivalents (unconfirmed): Apr 22, 23, 28, 29 (Pesach), Jun 11 (Shavuot), Oct 2*–3 (Rosh Hashanah), Oct 11 (Yom Kippur), Oct 16*–17 (Sukkot), Oct 23*–24 (Shemini Atzeret/Simchat Torah) (* = Saturday anyway). Shabbat and Jewish holidays closed. Seasonal date boundaries are those of 2026 (seasons reused annually with small shifts).",
+  "source_url": "https://www.jewishmuseum.cz/en/info/visit/opening-hours/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "synagogue",
+  "holidays_known": false
+ },
+ {
+  "place": "Prague",
+  "name": "Old-New Synagogue",
+  "aliases": [
+   "Old-New Synagogue",
+   "Old New Synagogue"
+  ],
+  "lat": 50.09,
+  "lng": 14.41861,
+  "opening_hours": "Jan 02-Mar 31 09:00-17:00; Apr 09:00-18:00; May-Aug 09:00-19:00; Sep 01-Oct 17 09:00-18:00; Oct 18-Dec 31 09:00-17:00; Jan 01 11:00-17:00; Dec 24 09:00-14:00; Sa off; 2027 Apr 22,2027 Apr 23,2027 Apr 28,2027 Apr 29,2027 Jun 11,2027 Oct 03,2027 Oct 11,2027 Oct 17,2027 Oct 24 off",
+  "last_entry": "unknown",
+  "notes": "Closed Saturdays and Jewish holidays (same list as Jewish Museum; 2027 dates computed, unconfirmed). Active synagogue (Prague Jewish Community): closes about 1 hour before Shabbat begins on Fridays (i.e. Friday closing earlier in winter, e.g. ~15:00 in December) and before holidays; closed during services. Men must cover heads. Separate ticket from the Jewish Museum circuit.",
+  "source_url": "https://www.jewishmuseum.cz/en/info/visit/opening-hours/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "synagogue",
+  "wikidata": "Q443107",
+  "holidays_known": false
+ },
+ {
+  "place": "Prague",
+  "name": "Old Town Hall Tower",
+  "aliases": [
+   "Old Town Hall Tower (Astronomical Clock)",
+   "Old Town Hall",
+   "Prague Astronomical Clock",
+   "Astronomical Clock",
+   "Old Town Hall and Astronomical Clock"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Jan-Mar Mo 11:00-19:00, Tu-Su 10:00-19:00; Apr-Dec Mo 11:00-20:00, Tu-Su 09:00-20:00",
+  "last_entry": "unknown",
+  "notes": "Not listed (Dec 24 likely shortened – unknown). Operated by Prague City Tourism. Clock show on the facade hourly 09:00-23:00 (outdoors, free).",
+  "source_url": "https://prague.eu/en/objevujte/old-town-hall-tower",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": false
+ },
+ {
+  "place": "Hamburg",
+  "name": "Miniatur Wunderland",
+  "aliases": [
+   "Miniatur Wunderland",
+   "Miniatur Wunderland"
+  ],
+  "lat": 53.54382,
+  "lng": 9.98894,
+  "opening_hours": "Mo-Su 09:30-18:00",
+  "last_entry": "Timed tickets; last slot unknown",
+  "notes": "Open 365 days a year (Dec 24 hours not stated). Hours vary day by day: 09:30-18:00 is the stated MINIMUM daily window; often longer (to 20:00-22:00, Tuesdays and weekends/holidays later, sometimes 08:00 starts). Daily calendar published only ~2 months ahead (tickets bookable up to 10 Jan 2027 as of Nov 2026). Advance timed tickets recommended.",
+  "source_url": "https://www.miniatur-wunderland.com/visit/open/overview/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q685524",
+  "holidays_known": false
+ },
+ {
+  "place": "Hamburg",
+  "name": "Elbphilharmonie Plaza",
+  "aliases": [
+   "Elbphilharmonie Plaza",
+   "Elbphilharmonie"
+  ],
+  "lat": 53.54142,
+  "lng": 9.98419,
+  "opening_hours": "Mo-Su 10:00-24:00",
+  "last_entry": "unknown (free timed Plaza ticket; available on site or online for a small fee)",
+  "notes": "Not stated; Plaza can close at short notice for events/overcrowding/weather. Concert halls only for concerts or guided tours.",
+  "source_url": "https://elbphilharmonie.de/en/visit",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q673223",
+  "holidays_known": false
+ },
+ {
+  "place": "Hamburg",
+  "name": "St. Michaelis – church, tower, crypt",
+  "aliases": [
+   "St. Michaelis (Michel) – church, tower, crypt",
+   "St. Michael's Church",
+   "St. Michaelis",
+   "St. Michael's Church, Hamburg",
+   "Hauptkirche St. Michaelis"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Sa 09:00-18:00; Su 12:30-18:00",
+  "last_entry": "Tower and crypt: 30 minutes before closing",
+  "notes": "unknown; church not visitable during services and events (concerts, e.g. Christmas period). Sunday morning service (10:00) – church closed to sightseeing until ~12:30 (official page on a Sunday showed church 11:30-11:45 and 12:30-18:00; tower & crypt 10:00-18:00 on Sunday). Closed to visitors during services/concerts. Hamburg Tourism lists 09:00-18:00 daily year-round; official site (Cloudflare-protected) could only be read for a Sunday. Seasonal variation (e.g. longer summer hours) unconfirmed.",
+  "source_url": "https://www.st-michaelis.de/en/michel-visit/visit-saint-michaels ; https://www.hamburg-tourism.de/sehen-erleben/sehenswuerdigkeiten/st-michaelis-kirche-michel",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": false
+ },
+ {
+  "place": "Hamburg",
+  "name": "Hamburger Kunsthalle",
+  "aliases": [
+   "Hamburger Kunsthalle",
+   "Hamburger Kunsthalle"
+  ],
+  "lat": 53.555,
+  "lng": 10.00306,
+  "opening_hours": "Tu,We,Fr-Su 10:00-18:00; Th 10:00-21:00; Mo off; Dec 24 off; Dec 31 10:00-15:00; Jan 01 12:00-18:00",
+  "last_entry": "unknown",
+  "notes": "Closed Mondays and 24 Dec; 31 Dec 10:00-15:00; 1 Jan 12:00-18:00; open on other holidays (3 Oct, 31 Oct, 25–26 Dec 10:00-18:00). Holiday Mondays (Easter/Whit Monday) unknown.",
+  "source_url": "https://www.hamburger-kunsthalle.de/en/opening-hours",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q169542",
+  "holidays_known": false
+ },
+ {
+  "place": "Hamburg",
+  "name": "Museum für Hamburgische Geschichte",
+  "aliases": [
+   "Museum für Hamburgische Geschichte (Hamburg Museum)",
+   "Museum für Hamburgische Geschichte"
+  ],
+  "lat": 53.55111,
+  "lng": 9.97306,
+  "opening_hours": "off",
+  "last_entry": "n/a",
+  "notes": "Entirely closed. CLOSED FOR MODERNISATION since early 2024; no reopening date on official page; Hamburg Tourism says 'closed until end of 2027' / 'expected until end of 2028'. Closed for all May 2027 test dates.",
+  "source_url": "https://www.shmh.de/museum-fuer-hamburgische-geschichte/ ; https://www.hamburg-tourism.de/sehen-erleben/veranstaltungen/veranstaltungsorte/museum-fuer-hamburgische-geschichte/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q665171",
+  "holidays_known": true
+ },
+ {
+  "place": "Jerusalem",
+  "name": "Temple Mount / Haram esh-Sharif",
+  "aliases": [
+   "Temple Mount / Haram esh-Sharif (non-Muslim visitors, compound only)",
+   "Temple Mount",
+   "Dome of the Rock",
+   "Al-Aqsa Mosque",
+   "Haram esh-Sharif"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Apr-Sep Su-Th 07:30-11:00,13:30-14:30; Oct-Mar Su-Th 07:30-10:00,12:30-13:30; Fr,Sa off",
+  "last_entry": "queue at Mughrabi Gate closes before the end of each window; arrive well before",
+  "notes": "Closed to non-Muslims on Muslim holidays (Eid al-Fitr, Eid al-Adha) and often during the last 10 days of Ramadan; may close without notice for security reasons; Jewish holidays can bring heavy crowds/closures. Non-Muslims enter only via the Mughrabi Gate (ramp next to Western Wall plaza). Non-Muslims may NOT enter the Dome of the Rock or Al-Aqsa Mosque interiors (closed to non-Muslims since 2000). Modest dress, no non-Muslim prayer or religious items. Sources disagree slightly on times (CICTS summer Su-Th 07:30-11:00/13:30-14:30, winter 07:30-10:00/12:30-13:30; touristisrael lists Mo-Th only).",
+  "source_url": "https://www.cicts.org/en/updated-opening-hours-holy-places-tourist-sites-holy-land",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "holidays_known": false
+ },
+ {
+  "place": "Jerusalem",
+  "name": "Dome of the Rock / Al-Aqsa Mosque",
+  "aliases": [
+   "Dome of the Rock / Al-Aqsa Mosque (interiors)"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "off",
+  "last_entry": "",
+  "notes": "Interiors open to Muslims only; non-Muslims may only walk the compound during Temple Mount visiting hours. Planner should never schedule an interior visit for non-Muslim travellers; plan the compound (Temple Mount entry) instead.",
+  "source_url": "https://www.touristisrael.com/temple-mount/",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "mosque",
+  "holidays_known": false
+ },
+ {
+  "place": "Jerusalem",
+  "name": "Western Wall",
+  "aliases": [
+   "Western Wall (Kotel plaza)",
+   "Western Wall"
+  ],
+  "lat": 31.77695,
+  "lng": 35.23425,
+  "opening_hours": "24/7",
+  "last_entry": "",
+  "notes": "Never closed. On Shabbat and Jewish holidays photography, phones and smoking are forbidden at the plaza; very crowded Friday evening. Separate men's and women's sections; modest dress, men cover heads. No photography/electronics on Shabbat (Fri sunset - Sat nightfall). Western Wall Tunnels are a separate ticketed tour (by reservation, not on Shabbat). Open-air plaza with security checks at entrances. Western Wall Tunnels tour: Su-Th by reservation, Fr morning, closed Shabbat.",
+  "source_url": "https://english.thekotel.org/",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "synagogue",
+  "wikidata": "Q134821",
+  "holidays_known": true
+ },
+ {
+  "place": "Jerusalem",
+  "name": "Church of the Holy Sepulchre",
+  "aliases": [
+   "Church of the Holy Sepulchre",
+   "Church of the Holy Sepulchre"
+  ],
+  "lat": 31.77844,
+  "lng": 35.22975,
+  "opening_hours": "Apr-Sep 05:00-20:45; Oct 05:00-20:00; Nov-Feb 04:00-19:00; Mar 04:00-19:30",
+  "last_entry": "unknown (doors locked at closing by the Muslim keyholder families)",
+  "notes": "Open daily including Saturday. Very crowded / access restricted during Orthodox and Catholic Holy Week and Easter (Holy Fire Saturday). Modest dress (shoulders/knees covered). Tomb (Aedicule) access pauses during liturgies. Saturday is fine. Christian Information Centre is the de-facto official publisher of holy-place hours.",
+  "source_url": "https://cicts.org/sites/default/files/2026-08/opening_hours_jerusalem_26.08.2026.doc",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q187702",
+  "holidays_known": true
+ },
+ {
+  "place": "Jerusalem",
+  "name": "Tower of David Museum",
+  "aliases": [
+   "Tower of David Museum",
+   "Tower of David"
+  ],
+  "lat": 31.77611,
+  "lng": 35.22778,
+  "opening_hours": "Su-Th 09:00-16:00; Fr unknown; Sa 09:00-14:00",
+  "last_entry": "ticket office closes 1h before closing",
+  "notes": "Shortened hours on holiday eves; Yom Kippur closed; special holiday hours published on tod.org.il. Hours from secondary source (official site did not render hours). Open Saturday (one of few). Night show (The Night Spectacular) runs evenings, not Fri night.",
+  "source_url": "https://www.touristisrael.com/tower-of-david-museum/413/",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q1177765",
+  "holidays_known": true
+ },
+ {
+  "place": "Jerusalem",
+  "name": "Israel Museum",
+  "aliases": [
+   "Israel Museum",
+   "Israel Museum"
+  ],
+  "lat": 31.7725,
+  "lng": 35.20417,
+  "opening_hours": "Su,Mo,We,Th 10:00-17:00; Tu 16:00-21:00; Fr 10:00-14:00; Sa 10:00-17:00",
+  "last_entry": "unknown",
+  "notes": "Holiday eves 10:00-14:00; Yom Kippur closed. Open Saturday; Saturday tickets historically must be bought in advance (no on-site sales on Shabbat). Tuesday hours vary by source (16:00-21:00 vs 10:00-21:00). Secondary source; official imj.org.il not reachable.",
+  "source_url": "https://www.meer.com/israelmuseum/en",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q46815",
+  "holidays_known": true
+ },
+ {
+  "place": "Jerusalem",
+  "name": "Yad Vashem",
+  "aliases": [
+   "Yad Vashem (Holocaust History Museum)",
+   "Yad Vashem"
+  ],
+  "lat": 31.77442,
+  "lng": 35.17725,
+  "opening_hours": "Su-Th 09:00-16:00; Fr 09:00-13:00; Sa off; PH off",
+  "last_entry": "1 hour before closing (15:00 Su-Th, 12:00 Fr/holiday eves)",
+  "notes": "Closed Saturdays and Jewish holidays (e.g. Rosh Hashana, Yom Kippur, Sukkot first/last day, Passover first/last day, Shavuot); holiday eves 09:00-13:00. Children under 10 not admitted to the History Museum. CLOSED Saturday May 15 2027 (Shabbat; also Shavuot 2027 starts Jun 10-11, not relevant). Hours subject to security situation/Home Front Command. CICTS Aug 2026 note says visits must be reserved in advance and lists reduced Su&Mo 9-16 hours during the security situation.",
+  "source_url": "https://www.yadvashem.org/visiting/opening-hours",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q156591",
+  "holidays_known": true
+ },
+ {
+  "place": "Jerusalem",
+  "name": "Bible Lands Museum",
+  "aliases": [
+   "Bible Lands Museum",
+   "Bible Lands Museum"
+  ],
+  "lat": 31.77495,
+  "lng": 35.20248,
+  "opening_hours": "Su-Tu,Th 10:00-17:00; We 10:00-21:00; Fr 10:00-14:00; Sa off",
+  "last_entry": "unknown",
+  "notes": "Holiday eves likely 10:00-14:00; closed Jewish holidays (unknown details). Occasional special Saturday openings announced on site. Closed Saturday May 15 2027 (no regular Saturday hours).",
+  "source_url": "https://www.blmj.org/en/visit/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q126130",
+  "holidays_known": false
+ },
+ {
+  "place": "Jerusalem",
+  "name": "Dormition Abbey",
+  "aliases": [
+   "Dormition Abbey",
+   "Dormition Abbey"
+  ],
+  "lat": 31.7722,
+  "lng": 35.2289,
+  "opening_hours": "Mo-Sa 08:00-17:00; Su 12:30-17:00",
+  "last_entry": "unknown",
+  "notes": "Visits paused during services. Modest dress.",
+  "source_url": "https://cicts.org/sites/default/files/2026-08/opening_hours_jerusalem_26.08.2026.doc",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q1245538",
+  "holidays_known": true
+ },
+ {
+  "place": "Jerusalem",
+  "name": "Church of All Nations / Gethsemane",
+  "aliases": [
+   "Church of All Nations (Basilica of the Agony) / Gethsemane",
+   "Church of All Nations",
+   "Garden of Gethsemane",
+   "Gethsemane"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Apr-Sep 07:30-18:00; Oct-Mar 07:30-17:00",
+  "last_entry": "10 minutes before closing",
+  "notes": "Modest dress; silence. Grotto of Gethsemane (Apostles) closes midday: Apr-Sep 07:30-12:00,14:30-18:00; Oct-Mar 07:30-12:00,14:30-17:00. Open Saturdays.",
+  "source_url": "https://cicts.org/sites/default/files/2026-08/opening_hours_jerusalem_26.08.2026.doc",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "holidays_known": false
+ },
+ {
+  "place": "Jerusalem",
+  "name": "Garden Tomb",
+  "aliases": [
+   "Garden Tomb",
+   "The Garden Tomb"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Th,Sa 09:00-13:00; Fr,Su off",
+  "last_entry": "unknown",
+  "notes": "Closed Fridays AND Sundays (surprising). Reduced hours (pre-2023 it was ~08:30-17:30 with lunch break); check before visit. Open Saturday.",
+  "source_url": "https://gardentomb.com",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": false
+ },
+ {
+  "place": "Dubai",
+  "name": "Jumeirah Mosque",
+  "aliases": [
+   "Jumeirah Mosque (guided visit, SMCCU / Dubai Cultural Intelligence)",
+   "Jumeirah Mosque"
+  ],
+  "lat": 25.23397,
+  "lng": 55.2655,
+  "opening_hours": "Sa-Th 10:00-11:15,14:00-15:15; Fr off",
+  "last_entry": "Visits are guided sessions only: 10:00 and 14:00 (sign-in from 30 min before). Session length ~75 min (approx).",
+  "notes": "Closed Fridays. Ramadan/Eid schedule changes not published (unknown); historically only the 10:00 session runs in Ramadan. Non-Muslims only via the guided session; modest dress (abaya/scarf provided), shoes off. Do not plan walk-in visits outside 10:00 / 14:00 tours. Jul 20 2027 = Tuesday, Jul 21 = Wednesday: open.",
+  "source_url": "https://www.jumeirahmosque.ae/?p=434",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "mosque",
+  "wikidata": "Q2298717",
+  "holidays_known": false
+ },
+ {
+  "place": "Abu Dhabi",
+  "name": "Sheikh Zayed Grand Mosque",
+  "aliases": [
+   "Sheikh Zayed Grand Mosque",
+   "Sheikh Zayed Mosque"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Th,Sa,Su 09:00-21:00; Fr 09:00-12:00,14:30-21:00",
+  "last_entry": "20:30 (Fri morning session last entry 11:30)",
+  "notes": "Ramadan days 1-20: 09:00-18:00 and 21:30-01:00 (Fri 14:30-18:00, 21:30-01:00); Ramadan last 10 days: 09:00-18:00 (Fri 14:30-18:00). Eid hours not published (unknown). Closed to visitors during Friday midday prayer (12:00-14:30). Modest dress (women: full-length loose clothes + headscarf). Free entry but online booking required.",
+  "source_url": "https://szgmc.gov.ae/en/worshippers/en-to-visiting-hours",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "mosque",
+  "holidays_known": false
+ },
+ {
+  "place": "Dubai",
+  "name": "Dubai Frame",
+  "aliases": [
+   "Dubai Frame",
+   "Dubai Frame"
+  ],
+  "lat": 25.23553,
+  "lng": 55.30032,
+  "opening_hours": "Mo-Su 08:00-21:00",
+  "last_entry": "unknown (approx 1h before close per secondary sources)",
+  "notes": "Open all year including weekends and public holidays. Hours may vary during Ramadan and public holidays. Official page footer dated 2021; some secondary sources say 09:00-21:00.",
+  "source_url": "https://dubaiframe.ae/en/plan-your-visit",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q20386392",
+  "holidays_known": false
+ },
+ {
+  "place": "Dubai",
+  "name": "Museum of the Future",
+  "aliases": [
+   "Museum of the Future",
+   "Museum of the Future"
+  ],
+  "lat": 25.21912,
+  "lng": 55.2821,
+  "opening_hours": "off \"temporarily closed since 2026-09-01; reopening announced for 2027 (Q1 2027 per Gulf News), date not confirmed\"",
+  "last_entry": "",
+  "notes": "CLOSED for revamp from Sep 1 2026; reopening 'in 2027' with new experiences. Before closure: daily 10:00-21:30, last entry 19:30 (secondary). Whether it is open on Jul 20-21 2027 is UNKNOWN; planner must not assume open without a confirmed reopening date.",
+  "source_url": "https://museumofthefuture.ae/en/plan-your-visit",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q22948398",
+  "holidays_known": false
+ },
+ {
+  "place": "Dubai",
+  "name": "Al Shindagha Museum",
+  "aliases": [
+   "Al Shindagha Museum",
+   "Shindagha Museum"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Su 10:00-20:00",
+  "last_entry": "19:00",
+  "notes": "none listed; Ramadan hours may change (unknown).",
+  "source_url": "https://alshindagha.dubaiculture.gov.ae/en/PlanYourVisit/Pages/default.aspx",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Dubai",
+  "name": "Burj Khalifa - At the Top",
+  "aliases": [
+   "Burj Khalifa - At the Top",
+   "Burj Khalifa",
+   "At the Top"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "unknown \"timed tickets; Dubai Mall lists Mo-Fr 09:00-23:00, Sa,Su 05:00-24:00 (sunrise slots)\"",
+  "last_entry": "45 minutes before closing",
+  "notes": "Open daily; extended late hours in Ramadan; may close for New Year's Eve fireworks prep (Dec 31 afternoon). Hours vary by season/sunrise; Dubai Mall directory shows weekdays 09:00-23:00 and weekends from 05:00. Official atthetop.ae not checked. Planner should treat roughly 09:00-22:00 as safe.",
+  "source_url": "https://thedubaimall.com/en/shop/at-the-top-burj-khalifa-1",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": false
+ },
+ {
+  "place": "Kyoto",
+  "name": "Kinkaku-ji",
+  "aliases": [
+   "Kinkaku-ji (Rokuon-ji)",
+   "Kinkaku-ji Temple"
+  ],
+  "lat": 35.0395,
+  "lng": 135.7285,
+  "opening_hours": "Mo-Su 09:00-17:00",
+  "last_entry": "17:00 is the ticket cut-off per common sources (grounds empty shortly after)",
+  "notes": "No closing days. Pavilion interior not open; view from pond path. Open-every-day temple. Official site shosoku-ji network (shokoku-ji.jp) not fetched; consistent across secondary sources.",
+  "source_url": "https://www.shokoku-ji.jp/en/kinkakuji/",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q270983",
+  "holidays_known": true
+ },
+ {
+  "place": "Kyoto",
+  "name": "Kiyomizu-dera",
+  "aliases": [
+   "Kiyomizu-dera",
+   "Kiyomizu-dera"
+  ],
+  "lat": 34.99483,
+  "lng": 135.785,
+  "opening_hours": "Mo-Su 06:00-18:00; Jul-Aug 06:00-18:30 (closing varies by season/events)",
+  "last_entry": "unknown",
+  "notes": "No closing days. Special night openings (spring cherry blossom, summer Sennichi-mairi, autumn) extend to ~21:00 on announced dates. Official site confirms 06:00 opening and seasonal closing but the 2026 closing table was empty; 18:00 / 18:30 summer closing from secondary sources. Apr 6-7 2027 may fall in spring night viewing (dates set yearly).",
+  "source_url": "https://www.kiyomizudera.or.jp/en/location",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q221716",
+  "holidays_known": true
+ },
+ {
+  "place": "Kyoto",
+  "name": "Fushimi Inari Taisha",
+  "aliases": [
+   "Fushimi Inari Taisha",
+   "Fushimi Inari-taisha"
+  ],
+  "lat": 34.9672,
+  "lng": 135.77339,
+  "opening_hours": "24/7",
+  "last_entry": "",
+  "notes": "None. Extremely crowded Jan 1-3 (Hatsumode). Shrine grounds and torii trail always open, free. Prayer/amulet office (juyosho) approx 07:00-18:00 / 08:30-16:30 varies; mountain trail unlit at night.",
+  "source_url": "https://inari.jp/en/",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q714828",
+  "holidays_known": true
+ },
+ {
+  "place": "Kyoto",
+  "name": "Ginkaku-ji",
+  "aliases": [
+   "Ginkaku-ji (Jisho-ji)",
+   "Ginkaku-ji Temple"
+  ],
+  "lat": 35.02667,
+  "lng": 135.79833,
+  "opening_hours": "Mar-Nov 08:30-17:00; Dec-Feb 09:00-16:30",
+  "last_entry": "unknown",
+  "notes": "No closing days.",
+  "source_url": "https://www.japan-guide.com/e/e3907.html",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q257473",
+  "holidays_known": true
+ },
+ {
+  "place": "Kyoto",
+  "name": "Ryoan-ji",
+  "aliases": [
+   "Ryoan-ji",
+   "Ryōan-ji Temple"
+  ],
+  "lat": 35.03444,
+  "lng": 135.71833,
+  "opening_hours": "Mar-Nov 08:00-17:00; Dec-Feb 08:30-16:30",
+  "last_entry": "unknown",
+  "notes": "No closing dates.",
+  "source_url": "https://japan-guide.com/e/e3909.html",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q587371",
+  "holidays_known": true
+ },
+ {
+  "place": "Kyoto",
+  "name": "Nijo Castle",
+  "aliases": [
+   "Nijo Castle (Nijo-jo)",
+   "Nijō Castle"
+  ],
+  "lat": 35.01417,
+  "lng": 135.7475,
+  "opening_hours": "Mo-Su 08:45-17:00; Dec 29-Dec 31 off",
+  "last_entry": "16:00 (castle ticket); Ninomaru-goten Palace reception until 16:10; Honmaru-goten reception 09:30-16:00 (web reservation required)",
+  "notes": "Castle closed Dec 29-31. Ninomaru-goten Palace closed every Tuesday in Jan, Jul, Aug and Dec, plus Dec 26-28 and Jan 1-3 (if that Tuesday is a national holiday, palace open and closed the next day). Honmaru-goten closed 3rd Monday of each month and the following day, plus Dec 26-28, Jan 1-3. Tuesdays-closed rule only affects the Ninomaru Palace interior in Jan/Jul/Aug/Dec, NOT the castle grounds. April 6 2027 (Tue) fine.",
+  "source_url": "https://nijo-jocastle.city.kyoto.lg.jp/guide/annai/?lang=en",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "wikidata": "Q1013399",
+  "holidays_known": true
+ },
+ {
+  "place": "Kyoto",
+  "name": "Kyoto National Museum",
+  "aliases": [
+   "Kyoto National Museum",
+   "Kyoto National Museum"
+  ],
+  "lat": 34.98999,
+  "lng": 135.77312,
+  "opening_hours": "Tu-Th,Sa,Su 09:30-17:00; Fr 09:30-20:00; Mo off \"special exhibitions 09:00-17:30, Fr to 20:00; if Monday is a holiday open Mon and closed Tue; Dec 28-Jan 1 closed\"",
+  "last_entry": "30 min before closing",
+  "notes": "Closed Mondays (or Tuesday after a Monday holiday); New Year Dec 28-Jan 1; ad-hoc closures (e.g. Apr 17 2026). IMPORTANT: Mar 24 - Apr 18 2027 only the museum garden and outdoor exhibits are open; GALLERIES CLOSED (exhibition changeover before 2027 Kano special exhibition). So on Apr 6-7 2027 the galleries are closed.",
+  "source_url": "https://www.kyohaku.go.jp/eng/visit/info",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q147286",
+  "holidays_known": true
+ },
+ {
+  "place": "Kyoto",
+  "name": "Kyoto Imperial Palace",
+  "aliases": [
+   "Kyoto Imperial Palace (Kyoto Gosho)",
+   "Kyoto Imperial Palace"
+  ],
+  "lat": 35.02528,
+  "lng": 135.76222,
+  "opening_hours": "Apr-Aug Tu-Su 09:00-17:00; Mar,Sep Tu-Su 09:00-16:30; Oct-Feb Tu-Su 09:00-16:00; Mo off; Dec 28-Jan 4 off \"if Monday is a national holiday, open Mon and closed Tue\"",
+  "last_entry": "40 min before closing (16:20 Apr-Aug, 15:50 Mar/Sep, 15:20 Oct-Feb)",
+  "notes": "Closed Mondays (Tuesday if Monday is a holiday), Dec 28-Jan 4, and on days of Imperial Court functions/state guest visits. Free, no reservation needed; security check at Seishomon gate. Kyoto Gyoen park around it is open 24h.",
+  "source_url": "https://japan-guide.com/e/e3917.html",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "palace",
+  "wikidata": "Q1202239",
+  "holidays_known": true
+ },
+ {
+  "place": "Kyoto",
+  "name": "Sanjusangen-do",
+  "aliases": [
+   "Sanjusangen-do",
+   "Sanjūsangen-dō Temple"
+  ],
+  "lat": 34.98788,
+  "lng": 135.77171,
+  "opening_hours": "Apr 01-Nov 15 08:30-17:00; Nov 16-Mar 31 09:00-16:00",
+  "last_entry": "30 min before closing",
+  "notes": "No closing days. No photography inside the hall; shoes off.",
+  "source_url": "https://japan-guide.com/e/e3900.html",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q653319",
+  "holidays_known": true
+ },
+ {
+  "place": "Kyoto",
+  "name": "To-ji",
+  "aliases": [
+   "To-ji",
+   "Tō-ji Temple"
+  ],
+  "lat": 34.98056,
+  "lng": 135.74778,
+  "opening_hours": "Mo-Su 08:00-17:00",
+  "last_entry": "16:30",
+  "notes": "No closing days. Grounds open from 05:00; halls (Kondo/Kodo) 08:00-17:00. Pagoda interior only during special openings. Kobo-san flea market on the 21st of each month (very crowded).",
+  "source_url": "https://www.japan-guide.com/e/e3919.html",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q1046403",
+  "holidays_known": true
+ },
+ {
+  "place": "Juneau",
+  "name": "Alaska State Museum",
+  "aliases": [
+   "Alaska State Museum (Andrew P. Kashevaroff Building)",
+   "Alaska State Centennial Museum"
+  ],
+  "lat": 58.30025,
+  "lng": -134.41528,
+  "opening_hours": "May-Sep Tu-Su 09:00-16:30, Mo 13:00-16:30; Oct-Apr Tu-Sa 10:00-16:00; PH off",
+  "last_entry": "unknown",
+  "notes": "Closed on major State and Federal holidays (e.g. Memorial Day, Jul 4, Labor Day). Jun 15 2027 is not a holiday (Juneteenth Jun 19 is a federal holiday). Official lam.alaska.gov/asm-info shows only 'Tuesday-Saturday 10 am-4 pm' (winter); summer hours from Travel Juneau listing (summer begins May 1). Older (2018) official release said summer 09:00-17:00 daily. Jun 15 2027 = Tuesday -> 09:00-16:30.",
+  "source_url": "https://www.traveljuneau.com/listing/alaska-state-museum/43624/",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q1426502",
+  "holidays_known": true
+ },
+ {
+  "place": "Juneau",
+  "name": "Goldbelt Tram",
+  "aliases": [
+   "Goldbelt Tram (Mount Roberts Tramway)",
+   "Goldbelt Tram"
+  ],
+  "lat": 58.2968,
+  "lng": -134.401,
+  "opening_hours": "unknown \"normally cruise season ~May-Sep, daily, hours vary with ship schedule; CLOSED since 2026-04-30\"",
+  "last_entry": "",
+  "notes": "Seasonal only (cruise season, roughly early May - late Sep); closed in winter. SURPRISE: the tram has been closed since an Apr 30 2026 accident that injured two employees; operator site (Nov 2026) says 'temporarily closed as assessments continue'; KTOO reported closure 'indefinitely'. Status for Jun 15 2027 UNKNOWN. Lower-terminal lobby open daily 08:00-18:00. Hours normally vary daily and are weather-dependent.",
+  "source_url": "https://www.goldbelttram.com/goldbelt-tram-update/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q1263944",
+  "holidays_known": false
+ },
+ {
+  "place": "Juneau",
+  "name": "St. Nicholas Russian Orthodox Church",
+  "aliases": [
+   "St. Nicholas Russian Orthodox Church",
+   "St. Nicholas Russian Orthodox Church"
+  ],
+  "lat": 58.30322,
+  "lng": -134.40898,
+  "opening_hours": "May-Sep Mo-Sa 09:00-19:00, Su 10:00-19:00; Oct-Apr off \"winter by appointment\"",
+  "last_entry": "unknown",
+  "notes": "Visits paused during services (Sunday Divine Liturgy 10:00, Saturday Vigil 17:00). Active parish: respect services; small donation/fee for tour. Summer 2026 hours; summer season dates not stated (assume cruise season).",
+  "source_url": "https://stnicholasjuneau.org/gift-store-visitors-center/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "church",
+  "wikidata": "Q421512",
+  "holidays_known": true
+ },
+ {
+  "place": "Juneau",
+  "name": "Alaska State Capitol",
+  "aliases": [
+   "Alaska State Capitol",
+   "Alaska State Capitol"
+  ],
+  "lat": 58.30219,
+  "lng": -134.41047,
+  "opening_hours": "Mo-Fr 08:00-17:00; Sa,Su,PH off \"building hours approximate; free guided tours Jun 1-Sep 25 Mo-Fr 13:30 and 15:00\"",
+  "last_entry": "",
+  "notes": "No tours on holidays (2026: Jun 19, Jul 3, Sep 7). Closed weekends. Free Capitol tours run by Juneau-Douglas City Museum, weekdays 13:30-14:30 and 15:00-16:00, sign up in lobby; building general hours are weekday business hours (unknown exact, secondary). Jun 15 2027 = Tuesday: tours available.",
+  "source_url": "https://juneau.org/wp-content/uploads/2026/06/JDCM-2026-All-Tour-Schedules-UPDATED.pdf",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q2095370",
+  "holidays_known": true
+ },
+ {
+  "place": "Juneau",
+  "name": "Mendenhall Glacier Visitor Center",
+  "aliases": [
+   "Mendenhall Glacier Visitor Center"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "May-Sep Mo-Su 09:00-18:00; Nov-Mar Fr,Sa 10:00-16:00; Apr,Oct unknown \"intermittent\"; PH off in winter",
+  "last_entry": "unknown",
+  "notes": "Winter: closed on federal holidays. April and October: open intermittently. Trails and viewpoints (Nugget Falls trail, Photo Point) are outdoors and accessible beyond VC hours. 2025 staffing cuts caused reduced operations; check. Recreation area fee in summer.",
+  "source_url": "https://fs.usda.gov/r10/tongass/recreation/mendenhall-glacier-interpretive-visitor-center",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": true
+ },
+ {
+  "place": "Ketchikan",
+  "name": "Totem Heritage Center",
+  "aliases": [
+   "Totem Heritage Center",
+   "Totem Heritage Center"
+  ],
+  "lat": 55.3426,
+  "lng": -131.634,
+  "opening_hours": "May-Sep Mo-Su 08:00-17:00; Oct-Apr Mo-Fr 13:00-17:00",
+  "last_entry": "unknown",
+  "notes": "Winter: weekends by appointment only; holiday closures unknown (city facility, likely closed on major holidays in winter). Cruise-season (May-Sep) hours vs winter hours differ sharply.",
+  "source_url": "https://www.ketchikan.gov/museum-faqs",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q3532720",
+  "holidays_known": false
+ },
+ {
+  "place": "Ketchikan",
+  "name": "Tongass Historical Museum",
+  "aliases": [
+   "Tongass Historical Museum",
+   "Tongass Historical Museum"
+  ],
+  "lat": 55.34251,
+  "lng": -131.64357,
+  "opening_hours": "May-Sep Mo-Su 08:00-17:00; Oct-Apr Tu-Fr 13:00-17:00, Sa 10:00-17:00",
+  "last_entry": "unknown",
+  "notes": "Winter: Sun/Mon closed (appointment only). Holiday closures unknown.",
+  "source_url": "https://www.ketchikan.gov/museum-faqs",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Ketchikan",
+  "name": "Southeast Alaska Discovery Center",
+  "aliases": [
+   "Southeast Alaska Discovery Center",
+   "Southeast Alaska Discovery Center"
+  ],
+  "lat": 55.3406,
+  "lng": -131.644,
+  "opening_hours": "May 01-Sep 30 Mo-Su 09:00-17:00; Oct-Apr unknown \"likely closed/limited\"; PH off",
+  "last_entry": "unknown",
+  "notes": "Closed on federal holidays (Juneteenth Jun 19 2027 is a Saturday; observed Fri Jun 18). Off-season hours not published on page.",
+  "source_url": "https://fs.usda.gov/r10/tongass/offices/southeast-alaska-discovery-center",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q16946986",
+  "holidays_known": true
+ },
+ {
+  "place": "Ketchikan",
+  "name": "Saxman Totem Park",
+  "aliases": [
+   "Saxman Totem Park",
+   "Saxman Totem Park"
+  ],
+  "lat": 55.3197,
+  "lng": -131.595,
+  "opening_hours": "unknown \"open year-round outdoor park; Beaver Clan House/carving center and dance performances mainly on cruise-ship days in summer\"",
+  "last_entry": "",
+  "notes": "Visit Ketchikan says open year-round, reachable by car/bus/walk (2.5 mi south); hours/admission not published. Cultural program typically via tours.",
+  "source_url": "https://www.visitktn.com/plan/places-to-discover/saxman-totem-park/",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q18331580",
+  "holidays_known": false
+ },
+ {
+  "place": "Nassau",
+  "name": "Fort Fincastle",
+  "aliases": [
+   "Fort Fincastle",
+   "Fort Fincastle"
+  ],
+  "lat": 25.07361,
+  "lng": -77.33861,
+  "opening_hours": "Mo-Su 08:00-16:00",
+  "last_entry": "guided tours run 08:00-16:00",
+  "notes": "unknown (likely closed Christmas Day). Admission by donation; Bahamas Ministry of Tourism listing.",
+  "source_url": "https://bahamas.com/vendor/fort-fincastle",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "ruins",
+  "wikidata": "Q5471144",
+  "holidays_known": false
+ },
+ {
+  "place": "Nassau",
+  "name": "Queen's Staircase",
+  "aliases": [
+   "Queen's Staircase"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "unknown \"open-air public staircase, freely accessible; daylight recommended\"",
+  "last_entry": "",
+  "notes": "none Open-air public monument with no gate; adjacent to Fort Fincastle. Treat as always accessible in daylight.",
+  "source_url": "https://bahamas.com/natural-wonders/fort-fincastle",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": true
+ },
+ {
+  "place": "Nassau",
+  "name": "Ardastra Gardens, Zoo & Conservation Centre",
+  "aliases": [
+   "Ardastra Gardens, Zoo & Conservation Centre",
+   "Ardastra Gardens, Zoo and Conservation Centre"
+  ],
+  "lat": 25.0759,
+  "lng": -77.3617,
+  "opening_hours": "Mo-Su 09:00-17:00; Dec 25,Dec 26,Jan 01 off",
+  "last_entry": "16:00",
+  "notes": "Closed Christmas Day, Boxing Day, New Year's Day. Daily flamingo shows.",
+  "source_url": "https://www.bahamas.com/vendor/ardastra-gardens-zoo-and-conservation-centre",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "wikidata": "Q4025978",
+  "holidays_known": true
+ },
+ {
+  "place": "Nassau",
+  "name": "National Art Gallery of The Bahamas",
+  "aliases": [
+   "National Art Gallery of The Bahamas (NAGB)",
+   "National Art Gallery of The Bahamas"
+  ],
+  "lat": 25.0754,
+  "lng": -77.3473,
+  "opening_hours": "Tu-Su 10:00-17:00; Mo off",
+  "last_entry": "unknown",
+  "notes": "Holiday closures not published (likely closed on major public holidays; unknown). Closed Mondays (confirmed). Jan 12-14 2027 (Tue-Thu) open.",
+  "source_url": "https://nagb.org.bs/faq",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q2912593",
+  "holidays_known": false
+ },
+ {
+  "place": "Nassau",
+  "name": "Pirates of Nassau Museum",
+  "aliases": [
+   "Pirates of Nassau Museum",
+   "Pirates of Nassau"
+  ],
+  "lat": 25.07739,
+  "lng": -77.34458,
+  "opening_hours": "Mo-Sa 08:30-17:30; Su 09:00-14:00",
+  "last_entry": "30 min before closing",
+  "notes": "",
+  "source_url": "https://www.bahamas.com/vendor/pirates-nassau",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "wikidata": "Q67142794",
+  "holidays_known": false
+ },
+ {
+  "place": "Nassau",
+  "name": "John Watling's Distillery",
+  "aliases": [
+   "John Watling's Distillery (Buena Vista Estate)",
+   "John Watlings Distillery"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "Mo-Su 10:00-18:00",
+  "last_entry": "unknown",
+  "notes": "Free tours; rum academy bookable separately.",
+  "source_url": "https://www.bahamas.com/vendor/john-watlings-distillery-ltd",
+  "source_kind": "official",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": false
+ },
+ {
+  "place": "Grand Turk",
+  "name": "Turks & Caicos National Museum",
+  "aliases": [
+   "Turks & Caicos National Museum (Grand Turk)",
+   "Turks and Caicos National Museum"
+  ],
+  "lat": 21.47133,
+  "lng": -71.1474,
+  "opening_hours": "unknown \"typically 09:00-13:00 on days a cruise ship is in port\"",
+  "last_entry": "unknown",
+  "notes": "Schedule is built around cruise arrivals; official tcmuseum.org page was behind a bot check. Older schedules: Mon-Fri 9-4, Sat 9-1 (unverified). Only plan 09:00-13:00 on cruise days.",
+  "source_url": "https://www.visittci.com/grand-turk/national-museum",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "museum",
+  "holidays_known": false
+ },
+ {
+  "place": "Grand Turk",
+  "name": "Grand Turk Lighthouse",
+  "aliases": [
+   "Grand Turk Lighthouse"
+  ],
+  "lat": null,
+  "lng": null,
+  "opening_hours": "unknown \"outdoor grounds; tower interior not normally open\"",
+  "last_entry": "",
+  "notes": "Lighthouse grounds (with snack bar/zipline operator on cruise days) at north tip of island; no published official hours. Reached by taxi/tour.",
+  "source_url": "https://www.afar.com/places/grand-turk-lighthouse-cockburn-town",
+  "source_kind": "secondary",
+  "checked": "2026-11-22",
+  "kind": "other",
+  "holidays_known": false
+ }
+]
