@@ -38,11 +38,12 @@
   },
   "two": {
    "label": "supported",
-   "says": "Fira has two history museums; this one tells the story of Bronze Age Akrotiri.",
+   "says": "Fira has two history museums; this one tells the story of Bronze Age Akrotiri, the other is the Archaeological Museum of Thera.",
    "src": [
     "wv-santorini"
    ],
    "quote": [
+    "and the Archaeological Museum of Thera",
     "Confusingly, Fira has two different history museums: the Museum of Prehistoric Thera, which tells the story of the ancient Bronze Age settlement at Akrotiri"
    ]
   },
@@ -149,7 +150,7 @@
   },
   "reconstructed": {
    "label": "supported",
-   "says": "Frescoes are often shown with large sections reconstructed by archaeologists, recognizable by their smooth texture.",
+   "says": "The usual version of the Boxer Fresco has large sections reconstructed by archaeologists, recognizable by their smooth texture.",
    "src": [
     "wp-thera-frescoes"
    ],
@@ -263,7 +264,7 @@
  "parts": [
   {
    "name": "Arrival",
-   "stand": "Outside the entrance, with the cathedral beside you.",
+   "stand": "Outside the museum entrance.",
    "paras": [
     {
      "t": "This is the Museum of Prehistoric Thera. It tells the story of the Bronze Age town at Akrotiri, the town buried by the volcano, and it holds a very large number of finds from digs all over Santorini.",
@@ -282,7 +283,7 @@
      "level": 2
     },
     {
-     "t": "Don't mix it up with Fira's other museum, the Archaeological Museum. This is the prehistoric one.",
+     "t": "Don't mix it up with Fira's other museum, the Archaeological Museum of Thera. This is the prehistoric one.",
      "c": [
       "two"
      ],
@@ -303,7 +304,7 @@
      "level": 2
     },
     {
-     "t": "Most of what you'll see here comes from Akrotiri, where the great modern excavation was begun by Spyridon Marinatos in 1967, under the Archaeological Society of Athens.",
+     "t": "Much of what you'll see here comes from Akrotiri, where the great modern excavation was begun by Spyridon Marinatos in 1967, under the Archaeological Society of Athens.",
      "c": [
       "marinatos",
       "society",
@@ -368,16 +369,9 @@
      "level": 1
     },
     {
-     "t": "I can't promise which paintings are on display today, but here's what the excavators found at Akrotiri: two antelopes, a fisherman holding his catch, a fleet of boats with leaping dolphins, and girls gathering saffron for a seated woman, perhaps a goddess.",
+     "t": "We don't know which paintings are on display today, so ask the staff. But here's what the excavators found at Akrotiri: two antelopes, a fisherman holding his catch, a fleet of boats with leaping dolphins, and girls gathering saffron for a seated woman, perhaps a goddess.",
      "c": [
       "scenes"
-     ],
-     "level": 2
-    },
-    {
-     "t": "A tip for looking: on many frescoes, large parts have been filled in by archaeologists. You can spot the reconstructed sections by their smooth texture.",
-     "c": [
-      "reconstructed"
      ],
      "level": 2
     },
@@ -390,9 +384,10 @@
      "level": 3
     },
     {
-     "t": "One famous painting shows two young boys wearing boxing gloves and belts, a little over life-size. Was it a real fight, or just sport? Nobody knows.",
+     "t": "One famous painting shows two young boys wearing boxing gloves and belts, a little over life-size, wherever it hangs today. The version usually shown has large sections reconstructed by archaeologists, which you can tell by their smooth texture. Was it a real fight, or just sport? Nobody knows.",
      "c": [
       "boxers",
+      "reconstructed",
       "boxers-unknown"
      ],
      "level": 3
@@ -411,7 +406,7 @@
      "level": 2
     },
     {
-     "t": "So Akrotiri's treasure isn't gold. It's a swallow on a jug, two boys in boxing gloves, a girl gathering saffron. Somehow, that tells us more about these people than gold could.",
+     "t": "So Akrotiri's real treasure isn't gold. It's a swallow on a jug, two boys in boxing gloves, a girl gathering saffron. Somehow, that tells us more about these people than gold could.",
      "c": [],
      "level": 1,
      "cue": true

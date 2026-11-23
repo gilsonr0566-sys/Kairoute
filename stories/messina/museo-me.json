@@ -132,16 +132,6 @@
     "Messina was probably the first Sicilian city to host Byzantine artisans skilled in inlay work"
    ]
   },
-  "rooms": {
-   "label": "supported",
-   "says": "The museum has rooms named after Antonello and his school, the Flemish, and Caravaggio.",
-   "src": [
-    "wp-museo-me"
-   ],
-   "quote": [
-    "the rooms named after Antonello and his school, the Flemish, Caravaggio"
-   ]
-  },
   "antonello": {
    "label": "estimate",
    "says": "Antonello da Messina, an Early Renaissance painter, was born in Messina around 1429-1431.",
@@ -346,14 +336,7 @@
      "level": 1
     },
     {
-     "t": "One thing before we go in. On 15 August 2026, thieves took three panels of Antonello da Messina's San Gregorio Polyptych, and another of his panels, in an overnight heist. I can't tell you whether they've come back, so some of what I describe may not be on the wall today.",
-     "c": [
-      "theft2026"
-     ],
-     "level": 1
-    },
-    {
-     "t": "The museum itself is a survivor. It first opened in 1806, in its founders' words, to end the despoliation of art. In 1908 the building collapsed in the earthquake, and some works were lost. The major pieces were brought indoors; the rest waited in makeshift shelters and out on the open esplanade.",
+     "t": "The museum itself is a survivor. It first opened in 1806, to end, as the phrase went, the despoliation of art. In 1908 the building collapsed in the earthquake, and some works were lost. The major pieces were brought indoors; the rest waited in makeshift shelters and out on the open esplanade.",
      "c": [
       "origins",
       "collapse"
@@ -361,7 +344,7 @@
      "level": 2
     },
     {
-     "t": "Then came the long wait for a proper home. Until 2017 the collection lived in a former silk mill. Work on this new building began in 1984, and it only opened fully on June 17, 2017. Along the way, in 1951, someone discovered that paintings had been stolen and replaced with fakes.",
+     "t": "Then came the long wait for a proper home. Until 2017 the collection lived in a former silk mill. Building work began in 1984, and the museum only opened fully on June 17, 2017. Along the way, in 1951, someone discovered that paintings had been stolen and replaced with fakes.",
      "c": [
       "silkmill",
       "fakes"
@@ -395,25 +378,39 @@
      "level": 2
     },
     {
-     "t": "And look for the colored marble inlay panels, gathered here from the city's churches after 1908. Messina was probably the first Sicilian city to host Byzantine artisans skilled in this kind of inlay.",
+     "t": "And look for the colored marble inlay panels, gathered here from the city's churches after 1908. Centuries earlier, Messina was probably the first Sicilian city to host Byzantine artisans skilled in this kind of inlay.",
      "c": [
       "marble",
       "inlay"
      ],
      "level": 3
+    },
+    {
+     "t": "Before we get to Antonello, a word of warning. Wikipedia reports that on August 15, 2026, three panels of Antonello da Messina's San Gregorio Polyptych, and another panel attributed to him, were stolen from this museum overnight. We don't know whether they've come back, so ask the staff what's on display today.",
+     "c": [
+      "theft2026"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The museum's director at the time, Marisa Mercurio, called it a great loss for the museum, for the city, the community and the art world.",
+     "c": [
+      "theft-words"
+     ],
+     "level": 2
     }
    ]
   },
   {
    "name": "Antonello da Messina",
-   "stand": "In the rooms named after Antonello and his school.",
+   "stand": "In the Antonello room; ask the staff if you can't find it.",
    "paras": [
     {
-     "t": "Antonello da Messina is this city's own painter of the early Renaissance, born here around 1429 to 1431. His San Gregorio Polyptych, from 1473, is the Antonello to look for here.",
+     "t": "Antonello da Messina is this city's own painter of the early Renaissance, born here around 1429 to 1431. His San Gregorio Polyptych, from 1473, is the Antonello this museum is known for, though some of its panels were reported stolen in 2026, so you may find gaps.",
      "c": [
-      "rooms",
       "antonello",
-      "polyptych"
+      "polyptych",
+      "theft2026"
      ],
      "level": 1
     },
@@ -438,22 +435,15 @@
       "venice"
      ],
      "level": 3
-    },
-    {
-     "t": "After the theft, the museum's director, Marisa Mercurio, called it a great loss for the museum, for the city, the community and the art world.",
-     "c": [
-      "theft-words"
-     ],
-     "level": 2
     }
    ]
   },
   {
    "name": "Neptune and Scylla",
-   "stand": "In front of Montorsoli's marble statues of Neptune and Scylla.",
+   "stand": "At Montorsoli's Scylla; ask the staff where it's shown.",
    "paras": [
     {
-     "t": "These are by Montorsoli, the sculptor of the fountains by the cathedral and on Via Garibaldi. Here is his original Neptune from the Fountain of Neptune, and his Scylla.",
+     "t": "This Scylla is by Montorsoli, the sculptor of the fountains by the cathedral and on Via Garibaldi. The museum also lists the original of his Neptune fountain, so look for that too.",
      "c": [
       "montorsoli"
      ],
@@ -524,14 +514,14 @@
    "stand": "Anywhere quiet before the exit.",
    "paras": [
     {
-     "t": "Keep an eye out for two paintings that echo the cathedral square: Mattia Preti's Madonna of the Letter, and a canvas called Orion, Founder of Messina.",
+     "t": "Keep an eye out for two paintings that echo the cathedral square: Mattia Preti's Madonna of the Letter, and a painting called Orion, Founder of Messina.",
      "c": [
       "echoes"
      ],
      "level": 3
     },
     {
-     "t": "So much in this building was dug out of rubble, sheltered, moved and, more than once, stolen. Every piece still on these walls is here because people refused to let it go.",
+     "t": "So much in this building was dug out of rubble, sheltered, moved and, more than once, stolen. What's on these walls is here because people kept digging it out and putting it back.",
      "c": [
       "rescued",
       "collapse",

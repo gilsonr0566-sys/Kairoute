@@ -4,149 +4,281 @@
  "city": "messina",
  "title": "Taormina",
  "match": {
-  "ids": ["taormina"],
-  "names": ["taormina"],
-  "wikidata": ["Q199952", "Q747484", "Q642924"]
+  "ids": [
+   "taormina"
+  ],
+  "names": [
+   "taormina"
+  ],
+  "wikidata": [
+   "Q199952",
+   "Q747484",
+   "Q642924"
+  ]
  },
  "checked": "2026-11-23",
  "claims": {
   "where": {
    "label": "supported",
-   "says": "Taormina is on Sicily's east coast; the old town is about 250 metres above the sea.",
-   "src": ["wp-taormina"],
-   "quote": ["on the east coast of the island of Sicily", "The site of the old town is about 250 metres (820 ft) above the sea"]
+   "says": "Taormina is on Sicily's east coast; the old town is about 250 metres above the sea by one account, around 200 m by another.",
+   "src": [
+    "wp-taormina",
+    "wv-taormina"
+   ],
+   "quote": [
+    "on the east coast of the island of Sicily",
+    "The site of the old town is about 250 metres (820 ft) above the sea",
+    "Perched on a natural terrace of Monte Tauro at around 200 m above sea level"
+   ]
   },
   "tourist": {
    "label": "supported",
    "says": "Taormina has drawn tourists since the 19th century; after Italian unification it attracted well-off visitors from northern Europe and became known as a welcoming haven for gay men and artists.",
-   "src": ["wp-taormina"],
-   "quote": ["Taormina has been a tourist destination since the 19th century.", "After Italian unification, Taormina began to attract well-off tourists from northern Europe, and it became known as a welcoming haven for gay men and artists."]
+   "src": [
+    "wp-taormina"
+   ],
+   "quote": [
+    "Taormina has been a tourist destination since the 19th century.",
+    "After Italian unification, Taormina began to attract well-off tourists from northern Europe, and it became known as a welcoming haven for gay men and artists."
+   ]
   },
   "early": {
    "label": "supported",
    "says": "Taormina's history goes back before the first Greek colony on Sicily in 734 BC; the Greeks called it Tauromenion, in Latin Tauromenium.",
-   "src": ["wp-taormina"],
-   "quote": ["Taormina's history dates to before Ancient Greece established its first colony on Sicily in 734 BCE", "the Greek name for the city was Tauroménion", "later Latinized to Tauromenium"]
+   "src": [
+    "wp-taormina"
+   ],
+   "quote": [
+    "Taormina's history dates to before Ancient Greece established its first colony on Sicily in 734 BCE",
+    "the Greek name for the city was Tauroménion",
+    "later Latinized to Tauromenium"
+   ]
   },
   "pancras": {
    "label": "tradition",
    "says": "Pancras is said to have been sent to Sicily by Saint Peter in 40 AD as the first bishop of Tauromenium.",
-   "src": ["wp-taormina"],
-   "quote": ["Pancras of Taormina, sent to Sicily in 40 AD by Saint Peter as first Bishop of Tauromenium"]
+   "src": [
+    "wp-taormina"
+   ],
+   "quote": [
+    "Pancras of Taormina, sent to Sicily in 40 AD by Saint Peter as first Bishop of Tauromenium"
+   ]
   },
   "bombing": {
    "label": "supported",
    "says": "In World War II Taormina was a German headquarters; on July 9, 1943, the feast of its patron Pancras, it suffered two Allied bombing raids.",
-   "src": ["wp-taormina"],
-   "quote": ["During World War II, it was the headquarters of the German Wehrmacht command, and on July 9, 1943, the feast day of its patron saint, Bishop Pancras, Taormina suffered two devastating bombing raids by Allied aircraft"]
+   "src": [
+    "wp-taormina"
+   ],
+   "quote": [
+    "During World War II, it was the headquarters of the German Wehrmacht command, and on July 9, 1943, the feast day of its patron saint, Bishop Pancras, Taormina suffered two devastating bombing raids by Allied aircraft"
+   ]
   },
   "hot": {
    "label": "supported",
    "says": "It can get very hot and busy in July and August; crowds thin in the evenings.",
-   "src": ["wv-taormina"],
-   "quote": ["It can get very hot and busy during July and August, but the crowds melt away in the evenings."]
+   "src": [
+    "wv-taormina"
+   ],
+   "quote": [
+    "It can get very hot and busy during July and August, but the crowds melt away in the evenings."
+   ]
   },
   "theatre": {
    "label": "supported",
    "says": "A Greek (Hellenistic) theatre stood here from around the 3rd century BC and was rebuilt under Roman rule; it is the second largest in Sicily after Syracuse.",
-   "src": ["wp-taormina-theatre", "wp-taormina"],
-   "quote": ["A Hellenistic theatre stood at Taormina from around the third century BC.", "Under Roman rule, the theatre was rebuilt", "this theatre is the second largest of its kind in Sicily (after that of Syracuse)"]
+   "src": [
+    "wp-taormina-theatre",
+    "wp-taormina"
+   ],
+   "quote": [
+    "A Hellenistic theatre stood at Taormina from around the third century BC.",
+    "Under Roman rule, the theatre was rebuilt",
+    "this theatre is the second largest of its kind in Sicily (after that of Syracuse)"
+   ]
   },
   "theatre-roman": {
    "label": "disputed",
    "says": "It is mostly brick and so probably Roman, on a Greek plan, perhaps rebuilt on Greek foundations; the Roman rebuilding was probably around the time of Hadrian or Trajan.",
-   "src": ["wp-taormina", "wp-taormina-theatre"],
-   "quote": ["is built for the most part of brick, and is therefore probably from Roman times, though its plan and arrangement are in accordance with those of Greek theatres", "probably around the time of Hadrian or Trajan"]
+   "src": [
+    "wp-taormina",
+    "wp-taormina-theatre"
+   ],
+   "quote": [
+    "is built for the most part of brick, and is therefore probably from Roman times, though its plan and arrangement are in accordance with those of Greek theatres",
+    "probably around the time of Hadrian or Trajan"
+   ]
   },
   "stage": {
    "label": "supported",
    "says": "The back wall of the stage building survives in uncommon condition; most original seats are gone, but the wall around the seating survives.",
-   "src": ["wp-taormina"],
-   "quote": ["Most of the original seats have disappeared, but the wall that surrounded the whole cavea is preserved, and the proscenium with the back wall of the scena and its appendages, of which only traces remain in most ancient theatres, are preserved in an uncommon state of integrity."]
+   "src": [
+    "wp-taormina"
+   ],
+   "quote": [
+    "Most of the original seats have disappeared, but the wall that surrounded the whole cavea is preserved, and the proscenium with the back wall of the scena and its appendages, of which only traces remain in most ancient theatres, are preserved in an uncommon state of integrity."
+   ]
   },
   "size": {
    "label": "disputed",
    "says": "Its diameter is given as 109 metres by one article and 107 metres by another.",
-   "src": ["wp-taormina", "wp-taormina-theatre"],
-   "quote": ["With a diameter of 109 metres", "The ancient theatre had a diameter of 107 metres"]
+   "src": [
+    "wp-taormina",
+    "wp-taormina-theatre"
+   ],
+   "quote": [
+    "With a diameter of 109 metres",
+    "The ancient theatre had a diameter of 107 metres"
+   ]
   },
   "capacity": {
    "label": "estimate",
    "says": "It could hold around 10,000 spectators.",
-   "src": ["wp-taormina-theatre"],
-   "quote": ["could hold around 10,000 spectators"]
+   "src": [
+    "wp-taormina-theatre"
+   ],
+   "quote": [
+    "could hold around 10,000 spectators"
+   ]
   },
   "arena": {
    "label": "supported",
    "says": "In the 3rd century AD it was remodelled, the orchestra turned into an arena and the stage removed; surviving fragments show rich Corinthian decoration.",
-   "src": ["wp-taormina-theatre", "wp-taormina"],
-   "quote": ["It was remodelled in the third century AD, with the orchestra turned into an arena and the stage removed.", "From the fragments of architectural decorations still extant it has been determined that these were of the Corinthian order, and richly ornamented."]
+   "src": [
+    "wp-taormina-theatre",
+    "wp-taormina"
+   ],
+   "quote": [
+    "It was remodelled in the third century AD, with the orchestra turned into an arena and the stage removed.",
+    "From the fragments of architectural decorations still extant it has been determined that these were of the Corinthian order, and richly ornamented."
+   ]
   },
   "festival": {
    "label": "supported",
    "says": "The theatre hosts opera, plays and concerts, and the annual Taormina Film Festival.",
-   "src": ["wp-taormina", "wp-taormina-theatre"],
-   "quote": ["it is frequently used for operatic and theatrical performances and concerts", "Today, the theatre is used as a venue for the annual Taormina Film Festival."]
+   "src": [
+    "wp-taormina",
+    "wp-taormina-theatre"
+   ],
+   "quote": [
+    "it is frequently used for operatic and theatrical performances and concerts",
+    "Today, the theatre is used as a venue for the annual Taormina Film Festival."
+   ]
   },
   "piazza": {
    "label": "supported",
    "says": "Piazza IX Aprile has a balcony facing the sea and Mount Etna; on clear days Etna is visible to the south.",
-   "src": ["wv-taormina"],
-   "quote": ["Piazza IX Aprile. A square with a balcony facing the Mediterranean Sea and Mount Etna.", "on clear days, Mount Etna to the south"]
+   "src": [
+    "wv-taormina"
+   ],
+   "quote": [
+    "Piazza IX Aprile. A square with a balcony facing the Mediterranean Sea and Mount Etna.",
+    "on clear days, Mount Etna to the south"
+   ]
   },
   "unesco-etna": {
    "label": "verified",
    "says": "UNESCO: Etna is the highest Mediterranean island mountain and the most active stratovolcano in the world; its eruptive history goes back 500,000 years, with at least 2,700 years documented.",
-   "src": ["unesco-etna"],
-   "quote": ["Mount Etna is the highest Mediterranean island mountain and the most active stratovolcano in the world. The eruptive history of the volcano can be traced back 500,000 years and at least 2,700 years of this activity has been documented."]
+   "src": [
+    "unesco-etna"
+   ],
+   "quote": [
+    "Mount Etna is the highest Mediterranean island mountain and the most active stratovolcano in the world. The eruptive history of the volcano can be traced back 500,000 years and at least 2,700 years of this activity has been documented."
+   ]
   },
   "etna-height": {
    "label": "supported",
    "says": "Etna's height was 3,403 m in September 2024, varying with summit eruptions; it was added to the UNESCO list in June 2013.",
-   "src": ["wp-etna"],
-   "quote": ["with a current height (September 2024) of 3,403 m (11,165 ft), though this varies with summit eruptions", "In June 2013, it was added to the list of UNESCO World Heritage Sites."]
+   "src": [
+    "wp-etna"
+   ],
+   "quote": [
+    "with a current height (September 2024) of 3,403 m (11,165 ft), though this varies with summit eruptions",
+    "In June 2013, it was added to the list of UNESCO World Heritage Sites."
+   ]
   },
   "etna-myth": {
    "label": "legend",
    "says": "In myth Hephaestus (Vulcan) had his forge under Etna, and Zeus trapped the monster Typhon beneath it.",
-   "src": ["wp-etna"],
-   "quote": ["According to both Roman and Greek mythology, Vulcan/Hephaestus, the god of blacksmithing, had his forge under Mount Etna.", "In Greek mythology, the deadly monster Typhon was trapped under this mountain by Zeus"]
+   "src": [
+    "wp-etna"
+   ],
+   "quote": [
+    "According to both Roman and Greek mythology, Vulcan/Hephaestus, the god of blacksmithing, had his forge under Mount Etna.",
+    "In Greek mythology, the deadly monster Typhon was trapped under this mountain by Zeus"
+   ]
   },
   "etna-2026": {
    "label": "supported",
    "says": "A new eruptive phase began at the Voragine crater on 6 August 2026, with lava fountains and ash that disrupted flights at Catania.",
-   "src": ["wp-etna"],
-   "quote": ["A new eruptive phase began at Etna's Voragine crater on 6 August 2026, with Strombolian activity that intensified into lava fountains and abundant ash emissions.", "forcing hundreds of flights at Catania-Fontanarossa Airport to be cancelled or rerouted"]
+   "src": [
+    "wp-etna"
+   ],
+   "quote": [
+    "A new eruptive phase began at Etna's Voragine crater on 6 August 2026, with Strombolian activity that intensified into lava fountains and abundant ash emissions.",
+    "forcing hundreds of flights at Catania-Fontanarossa Airport to be cancelled or rerouted"
+   ]
   },
   "isola": {
    "label": "supported",
    "says": "Isola Bella, the Pearl of the Ionian Sea, is a small island just south of Taormina, seen below the town; a narrow path often links it to the beach.",
-   "src": ["wp-isola-bella", "wp-taormina", "wv-taormina"],
-   "quote": ["Isola Bella (Sicilian: Ìsula Bedda) is a small island near Taormina", "Also known as the Pearl of the Ionian Sea", "There is a narrow path that often connects the island to the mainland beach.", "Just south of Taormina is the Isola Bella", "This is the tiny tombolo island seen below, now a nature reserve."]
+   "src": [
+    "wp-isola-bella",
+    "wp-taormina",
+    "wv-taormina"
+   ],
+   "quote": [
+    "Isola Bella (Sicilian: Ìsula Bedda) is a small island near Taormina",
+    "Also known as the Pearl of the Ionian Sea",
+    "There is a narrow path that often connects the island to the mainland beach.",
+    "Just south of Taormina is the Isola Bella",
+    "This is the tiny tombolo island seen below, now a nature reserve."
+   ]
   },
   "isola-history": {
    "label": "supported",
    "says": "Ferdinand I gave the island to Taormina in 1806; in 1890 Florence Trevelyan bought it, built a small house and imported exotic plants; in 1990 the Region of Sicily bought it after a bankruptcy and made it a nature reserve.",
-   "src": ["wp-isola-bella"],
-   "quote": ["King Ferdinand I of the Two Sicilies gifted the island to the nearby town of Taormina in 1806. The island was in 1890 bought from the town by Trevelyan, who built a small house facing the sea and imported exotic plants, which thrived in the Mediterranean climate.", "until the owner went bankrupt, and auctioned the island in 1990", "until 1990, when it was bought by the Region of Sicily and turned into a nature reserve"]
+   "src": [
+    "wp-isola-bella"
+   ],
+   "quote": [
+    "King Ferdinand I of the Two Sicilies gifted the island to the nearby town of Taormina in 1806. The island was in 1890 bought from the town by Trevelyan, who built a small house facing the sea and imported exotic plants, which thrived in the Mediterranean climate.",
+    "until the owner went bankrupt, and auctioned the island in 1990",
+    "until 1990, when it was bought by the Region of Sicily and turned into a nature reserve"
+   ]
   },
   "trevelyan": {
    "label": "supported",
    "says": "Florence Trevelyan, an English conservationist, created the town gardens (Parco Duca di Cesarò); she settled and married here and is buried in Castelmola.",
-   "src": ["wv-taormina"],
-   "quote": ["Parco Duca di Cesarò (Villa Comunale)", "The gardens are the creation of Florence Trevelyan (1852-1907), an English conservationist who also bought Isola Bella. She settled and married here and is buried in nearby Castelmola."]
+   "src": [
+    "wv-taormina"
+   ],
+   "quote": [
+    "Parco Duca di Cesarò (Villa Comunale)",
+    "The gardens are the creation of Florence Trevelyan (1852-1907), an English conservationist who also bought Isola Bella. She settled and married here and is buried in nearby Castelmola."
+   ]
   },
   "falcon": {
    "label": "supported",
    "says": "The reserve's fauna includes the peregrine falcon.",
-   "src": ["wp-isola-bella"],
-   "quote": ["Its fauna includes the lizard Podarcis siculus medemi, Audouin's gull (Larus audouinii) and the peregrine falcon"]
+   "src": [
+    "wp-isola-bella"
+   ],
+   "quote": [
+    "Its fauna includes the lizard Podarcis siculus medemi, Audouin's gull (Larus audouinii) and the peregrine falcon"
+   ]
   },
   "beach": {
    "label": "supported",
    "says": "The beach is sharp volcanic shingle; the beaches are reached by an aerial tramway built in 1992.",
-   "src": ["wv-taormina", "wp-taormina"],
-   "quote": ["the beach is sharp volcanic shingle", "Its beaches on the Ionian Sea, including that of Isola Bella, are accessible via an aerial tramway built in 1992"]
+   "src": [
+    "wv-taormina",
+    "wp-taormina"
+   ],
+   "quote": [
+    "the beach is sharp volcanic shingle",
+    "Its beaches on the Ionian Sea, including that of Isola Bella, are accessible via an aerial tramway built in 1992"
+   ]
   }
  },
  "parts": [
@@ -155,23 +287,33 @@
    "stand": "On the main street of the old town, somewhere out of the flow of people.",
    "paras": [
     {
-     "t": "Welcome to Taormina. The old town sits about 250 meters above the sea, on Sicily's east coast, and people have come here as tourists since the 1800s. You'll soon see why.",
-     "c": ["where", "tourist"],
+     "t": "Welcome to Taormina. The old town sits roughly 200 to 250 meters above the sea, on Sicily's east coast, and people have come here as tourists since the 1800s. You'll soon see why.",
+     "c": [
+      "where",
+      "tourist"
+     ],
      "level": 1
     },
     {
      "t": "Its history reaches back before the first Greek colony on Sicily, in 734 BC. The Greeks called it Tauromenion; in Latin it became Tauromenium.",
-     "c": ["early"],
+     "c": [
+      "early"
+     ],
      "level": 2
     },
     {
      "t": "After Italy was unified, well-off travelers from northern Europe found it, and it became known as a welcoming haven for gay men and artists.",
-     "c": ["tourist"],
+     "c": [
+      "tourist"
+     ],
      "level": 3
     },
     {
      "t": "Its patron is Saint Pancras. Tradition says Saint Peter sent him to Sicily in AD 40 as the first bishop here; that's tradition, not something the Bible tells. And on his feast day, July 9, 1943, with the German command headquartered in town, Allied planes bombed Taormina twice.",
-     "c": ["pancras", "bombing"],
+     "c": [
+      "pancras",
+      "bombing"
+     ],
      "level": 3
     }
    ]
@@ -182,32 +324,46 @@
    "paras": [
     {
      "t": "This is the ancient theatre. A Greek theatre stood here from around the third century BC, and the Romans rebuilt it. It's the second largest of its kind in Sicily, after the one at Syracuse.",
-     "c": ["theatre"],
+     "c": [
+      "theatre"
+     ],
      "level": 1
     },
     {
      "t": "Careful on the old steps and stone. And in July and August it can get very hot and busy, so carry water and look for shade.",
-     "c": ["hot"],
+     "c": [
+      "hot"
+     ],
      "level": 1
     },
     {
      "t": "So how Greek is it? Most of what stands is brick, so it's probably Roman work, laid out on a Greek plan. The Roman rebuilding probably came around the time of the emperors Trajan or Hadrian.",
-     "c": ["theatre-roman"],
+     "c": [
+      "theatre-roman"
+     ],
      "level": 2
     },
     {
      "t": "Look at the stage end. The back wall of the stage building survives, which is rare: in most ancient theatres only traces are left. Most of the original seats are gone, but the wall around the seating is still there.",
-     "c": ["stage"],
+     "c": [
+      "stage"
+     ],
      "level": 2
     },
     {
      "t": "It's big. One source gives its diameter as 107 meters, another as 109; sources differ. It could hold around 10,000 people.",
-     "c": ["size", "capacity"],
+     "c": [
+      "size",
+      "capacity"
+     ],
      "level": 3
     },
     {
-     "t": "In the third century AD the Romans turned the orchestra into an arena and removed the stage. Fragments of the decoration show it was richly ornamented, in the Corinthian style. And it's still a stage today: opera, plays and concerts, and every year the Taormina Film Festival.",
-     "c": ["arena", "festival"],
+     "t": "In the third century AD the Romans turned the orchestra into an arena and took the stage out, though the wall behind it still stands. Fragments of the decoration show it was richly ornamented, in the Corinthian style. And it's still a stage today: opera, plays and concerts, and every year the Taormina Film Festival.",
+     "c": [
+      "arena",
+      "festival"
+     ],
      "level": 3
     }
    ]
@@ -218,22 +374,33 @@
    "paras": [
     {
      "t": "From this balcony you look out over the sea and, on a clear day, to Mount Etna in the south. UNESCO calls it the most active stratovolcano in the world.",
-     "c": ["piazza", "unesco-etna"],
+     "c": [
+      "piazza",
+      "unesco-etna"
+     ],
      "level": 1
     },
     {
-     "t": "Its height was measured at 3,403 meters in September 2024, but that changes with eruptions at the summit. Its eruptive history goes back 500,000 years, and people have recorded its activity for at least 2,700 years.",
-     "c": ["etna-height", "unesco-etna"],
+     "t": "Its height was given as 3,403 meters in September 2024, but that changes with eruptions at the summit. Its eruptive history goes back 500,000 years, and people have recorded its activity for at least 2,700 years.",
+     "c": [
+      "etna-height",
+      "unesco-etna"
+     ],
      "level": 2
     },
     {
      "t": "The ancients had their own explanations. In myth, the blacksmith god Hephaestus, Vulcan to the Romans, kept his forge under the mountain, and Zeus trapped the monster Typhon beneath it.",
-     "c": ["etna-myth"],
+     "c": [
+      "etna-myth"
+     ],
      "level": 2
     },
     {
-     "t": "It's very much awake. A new eruptive phase began at the Voragine crater on 6 August 2026, with lava fountains and ash that cancelled or rerouted hundreds of flights at Catania. Etna joined UNESCO's World Heritage list in June 2013.",
-     "c": ["etna-2026", "etna-height"],
+     "t": "Wikipedia records that a new eruptive phase began at the Voragine crater on August 6, 2026, with lava fountains and ash that cancelled or rerouted hundreds of flights at Catania. Etna joined UNESCO's World Heritage list in June 2013.",
+     "c": [
+      "etna-2026",
+      "etna-height"
+     ],
      "level": 3
     }
    ]
@@ -244,27 +411,41 @@
    "paras": [
     {
      "t": "Down below is Isola Bella, a small island just south of Taormina, called the Pearl of the Ionian Sea. A narrow path often links it to the beach.",
-     "c": ["isola"],
+     "c": [
+      "isola"
+     ],
      "level": 1
     },
     {
-     "t": "King Ferdinand the First gave the island to Taormina in 1806. In 1890 Florence Trevelyan, an English conservationist, bought it, built a small house facing the sea, and brought in exotic plants, which thrived.",
-     "c": ["isola-history", "trevelyan"],
+     "t": "King Ferdinand gave the island to Taormina in 1806. In 1890 Florence Trevelyan, an English conservationist, bought it, built a small house facing the sea, and brought in exotic plants, which thrived.",
+     "c": [
+      "isola-history",
+      "trevelyan"
+     ],
      "level": 2
     },
     {
      "t": "She left her mark up here too: the town's public gardens, the Parco Duca di Cesarò, are her creation. She settled and married here, and she's buried in nearby Castelmola.",
-     "c": ["trevelyan"],
+     "c": [
+      "trevelyan"
+     ],
      "level": 3
     },
     {
-     "t": "In 1990, after a later owner went bankrupt, the Region of Sicily bought the island and made it a nature reserve. Keep an eye on the sky: the reserve's wildlife includes the peregrine falcon. If you go down, there's an aerial tramway, built in 1992, but the beach is sharp volcanic shingle.",
-     "c": ["isola-history", "falcon", "beach"],
+     "t": "In 1990, after a later owner went bankrupt, the Region of Sicily bought the island and made it a nature reserve. Keep an eye on the sky: the reserve's wildlife includes the peregrine falcon. If you go down, there's a cable car to the beaches, but the beach here is sharp volcanic shingle.",
+     "c": [
+      "isola-history",
+      "falcon",
+      "beach"
+     ],
      "level": 3
     },
     {
      "t": "People have looked out from this hill since before the first Greek colony on Sicily: Greeks, Romans, a long parade of travelers, and now you. The view that drew all of them is the one in front of you.",
-     "c": ["early", "tourist"],
+     "c": [
+      "early",
+      "tourist"
+     ],
      "level": 1
     }
    ]

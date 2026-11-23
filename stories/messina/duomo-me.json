@@ -454,7 +454,7 @@
    "stand": "In the cathedral square, facing the front of the cathedral.",
    "paras": [
     {
-     "t": "This is Messina Cathedral, consecrated in 1197 under the Normans. But almost everything you see was rebuilt in the twentieth century, after the earthquake of 1908 and the bombs of World War Two.",
+     "t": "This is Messina Cathedral, built by the Normans and consecrated in 1197. But most of what you see was rebuilt in the twentieth century, after the earthquake of 1908 and the bombs of World War Two.",
      "c": [
       "norman",
       "rebuilt"
@@ -505,7 +505,7 @@
      "level": 3
     },
     {
-     "t": "The design came from Francesco Maurolico, a Renaissance historian and mathematician from Messina. In his plan, Orion stands for the Emperor Charles the Fifth, a master of the sea and the restorer of Messina. Maurolico also identified the remains of a temple of Orion near this cathedral. One guidebook adds that Montorsoli had studied under Michelangelo.",
+     "t": "The design came from Francesco Maurolico, a Renaissance historian and mathematician from Messina. In his plan, Orion stands for the Emperor Charles the Fifth, a master of the sea and the restorer of Messina. Maurolico also claimed to have identified the remains of a temple of Orion near this cathedral. One guidebook adds that Montorsoli had studied under Michelangelo.",
      "c": [
       "fountain",
       "maurolico"
@@ -519,7 +519,7 @@
    "stand": "Turn back to face the front of the cathedral.",
    "paras": [
     {
-     "t": "Early in the morning of 28 December 1908, an earthquake hit the strait. Around 120,000 people died. Of this cathedral, only the outer walls, the Gothic portal and an apse were left standing.",
+     "t": "Early in the morning of December 28, 1908, an earthquake hit the strait. Around 120,000 people died. Of this cathedral, only the outer walls, the Gothic portal and an apse were left standing.",
      "c": [
       "quake",
       "quake-toll",
@@ -553,7 +553,7 @@
      "level": 3
     },
     {
-     "t": "A small mercy: up in the tower hang two older bells, cast by Micheal Salicula in 1400. They were saved from the earthquake of 1908.",
+     "t": "A small mercy: the tower also has two older bells, cast by Michael Salicula in 1400. They were saved from the earthquake of 1908.",
      "c": [
       "bells1400"
      ],
@@ -566,7 +566,7 @@
    "stand": "Step back into the square and face the side of the bell tower that looks onto the square.",
    "paras": [
     {
-     "t": "This bell tower holds Messina's astronomical clock, built in Strasbourg in 1933. It's considered the largest and most complex of its kind in the world.",
+     "t": "This bell tower holds Messina's astronomical clock, built by the Ungerer company of Strasbourg in 1933. It's considered the largest and most complex of its kind in the world.",
      "c": [
       "clock-made",
       "clock-largest"
@@ -687,7 +687,7 @@
      "level": 3
     },
     {
-     "t": "Now let me keep Scripture and tradition apart. The Bible does reach this strait. Across the water is Reggio Calabria, which in Latin was Rhegium, and the apostle Paul passed through it in AD 61, on his last voyage toward Rome. Acts, chapter twenty-eight, puts it like this: \"we fetched a compass, and came to Rhegium: and after one day the south wind blew.\"",
+     "t": "Now let me keep Scripture and tradition apart. The Bible does reach this strait. Across the water is Reggio Calabria, which in Latin was Rhegium, and the apostle Paul passed through it on his last voyage toward Rome. Acts, chapter twenty-eight, verse thirteen, puts it like this: \"And from thence we fetched a compass, and came to Rhegium: and after one day the south wind blew, and we came the next day to Puteoli.\"",
      "c": [
       "reggio",
       "paul-rhegium",

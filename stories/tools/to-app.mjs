@@ -7,7 +7,14 @@ const cities = fs.readdirSync("stories").filter(c => fs.existsSync(`stories/${c}
 // The trip city names a story's place can go by (the stop must also match the sight's own names). Default: the folder.
 const CITY = { athens: "Athens|Piraeus", heraklion: "Heraklion|Iraklion|Iraklio", chania: "Chania|Hania|Souda",
   santorini: "Santorini|Thira|Fira", mykonos: "Mykonos", kusadasi: "Kusadasi|Kuşadası|Ephesus|Selcuk|Selçuk|Izmir",
-  messina: "Messina|Taormina", naples: "Naples|Napoli|Pompeii|Sorrento|Capri|Pozzuoli|Salerno", rome: "Rome|Roma|Civitavecchia|Vatican" };
+  messina: "Messina|Taormina", naples: "Naples|Napoli|Pompeii|Sorrento|Capri|Pozzuoli|Salerno", rome: "Rome|Roma|Civitavecchia|Vatican",
+  istanbul: "Istanbul|İstanbul", vienna: "Vienna|Wien", lisbon: "Lisbon|Lisboa|Sintra", barcelona: "Barcelona",
+  edinburgh: "Edinburgh|Leith|South Queensferry|Rosyth", kyoto: "Kyoto|Kyōto|Osaka", paris: "Paris|Le Havre|Versailles",
+  southampton: "Southampton|Salisbury|Winchester|Portsmouth", kotor: "Kotor|Perast", dubrovnik: "Dubrovnik|Gruž|Cavtat",
+  juneau: "Juneau", ketchikan: "Ketchikan", grandturk: "Grand Turk|Cockburn Town", pontadelgada: "Ponta Delgada|São Miguel|Azores",
+  halfmooncay: "Half Moon Cay|Little San Salvador", jerusalem: "Jerusalem|Haifa|Tel Aviv|Jaffa|Ashdod",
+  reykjavik: "Reykjav[ií]k", venice: "Venice|Venezia|Mestre", dubai: "Dubai", nassau: "Nassau|Paradise Island",
+  cococay: "CocoCay|Coco Cay|Little Stirrup Cay" };
 const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const out = [], say = fs.existsSync("stories/say.json") ? JSON.parse(fs.readFileSync("stories/say.json", "utf8")) : [];
 // Each city's own pronunciations (stories/<city>/say-add.json) join the shared list; the first spelling of a word wins.

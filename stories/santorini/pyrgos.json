@@ -18,12 +18,11 @@
  "claims": {
   "name": {
    "label": "supported",
-   "says": "Pyrgos Kallistis means Beauty Tower; Pyrgos alone means Tower.",
+   "says": "Pyrgos means Tower.",
    "src": [
     "wp-pyrgos"
    ],
    "quote": [
-    "lit. 'Beauty Tower'",
     "lit. 'Tower'"
    ]
   },
@@ -221,7 +220,7 @@
    "stand": "At the foot of the village, where the lanes start to climb toward the top of the hill.",
    "paras": [
     {
-     "t": "Welcome to Pyrgos. The name means Tower, and its full name, Pyrgos Kallistis, means Beauty Tower. The village wraps around this hill like an amphitheater, and it's one of the places on Santorini least spoiled by tourism.",
+     "t": "Welcome to Pyrgos. The name means Tower. The village wraps around this hill like an amphitheater, and it's one of the places on Santorini least spoiled by tourism.",
      "c": [
       "name",
       "hill",
@@ -293,7 +292,7 @@
      "level": 2
     },
     {
-     "t": "Most of these castles had a goulas, a tall rectangular tower. It was a lookout and a last refuge, with thick walls, iron gates and murder holes, the openings for dropping things on attackers.",
+     "t": "Most of these castles had a goulas, a tall rectangular tower. It was a lookout and a last refuge, with thick walls, iron gates and murder holes, the openings for dropping things on attackers. Whether one stood here at Pyrgos, we don't know.",
      "c": [
       "goulas"
      ],
@@ -313,7 +312,7 @@
      "level": 1
     },
     {
-     "t": "Here's something you might not guess. Most of Santorini is volcanic, but under it lies a small, older island that isn't. That old rock comes to the surface in just a few places, and Pyrgos is one of them. You're standing on the island before the volcano.",
+     "t": "Here's something you might not guess. Most of Santorini is volcanic, but under it lies a small, older island that isn't. That old rock comes to the surface in several places, and the Pyrgos area is one of them. Around here, you're close to the island that came before the volcano.",
      "c": [
       "basement"
      ],
@@ -328,7 +327,7 @@
      "level": 2
     },
     {
-     "t": "In the last years of Ottoman rule it was one of the most important monastic centers in the Cyclades. And in 1822, during the Greek War of Independence, sixteen of its monks, led by their abbot, Gerasimos Mavrommatis, declared in writing their support for the revolt.",
+     "t": "In the last years of Ottoman rule the monastery was one of the most important monastic centers in the Cyclades. And in 1822, during the Greek War of Independence, sixteen of its monks, led by their abbot, Gerasimos Mavrommatis, declared in writing their support for the revolt.",
      "c": [
       "monastery-1800s",
       "monks"

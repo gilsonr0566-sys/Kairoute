@@ -23,16 +23,16 @@
   {
    "id": "ephesus",
    "title": "Ancient Ephesus",
-   "claims": 48,
+   "claims": 50,
    "minutes": {
-    "1": 2,
-    "2": 5.6,
+    "1": 2.2,
+    "2": 5.7,
     "3": 8.3
    },
    "labels": {
-    "supported": 28,
+    "supported": 29,
     "verified": 3,
-    "disputed": 4,
+    "disputed": 5,
     "legend": 1,
     "estimate": 2,
     "scripture": 10

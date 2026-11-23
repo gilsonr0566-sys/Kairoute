@@ -98,7 +98,7 @@
   },
   "population": {
    "label": "disputed",
-   "says": "Older estimates of up to 225,000 people are now seen as unrealistic; recent estimates are far lower.",
+   "says": "Older estimates of up to 225,000 people are now seen as unrealistic; recent estimates differ widely, one giving 33,600 to 56,000.",
    "src": [
     "wp-ephesus"
    ],
@@ -239,12 +239,13 @@
   },
   "celsus": {
    "label": "supported",
-   "says": "The library was commissioned in the 110s by the consul Aquila as a funerary monument for his father Celsus, former proconsul of Asia.",
+   "says": "The library was commissioned in the 110s by the consul Aquila as a funerary monument for his father Celsus, former proconsul of Asia, and finished after Aquila's death.",
    "src": [
     "wp-celsus"
    ],
    "quote": [
-    "The building was commissioned in the years 110s CE by a consul of the Roman Empire, Tiberius Julius Aquila Polemaeanus, as a funerary monument for his father Tiberius Julius Celsus Polemaeanus, former proconsul of Asia"
+    "The building was commissioned in the years 110s CE by a consul of the Roman Empire, Tiberius Julius Aquila Polemaeanus, as a funerary monument for his father Tiberius Julius Celsus Polemaeanus, former proconsul of Asia",
+    "completed during the reign of the Roman Emperor Hadrian, sometime after Aquila's death"
    ]
   },
   "celsus-tomb": {
@@ -503,6 +504,29 @@
     "\"chapter\":20,\"verse\":38,\"text\":\"Sorrowing most of all for the words which he spake, that they should see his face no more. And they accompanied him unto the ship."
    ]
   },
+  "church-mary": {
+   "label": "disputed",
+   "says": "The Church of Mary is near the lower gate and is the likely site of the 431 council.",
+   "src": [
+    "wv-ephesus",
+    "wp-council-eph"
+   ],
+   "quote": [
+    "Church of Mary (Meryem Kilisesi) (near the lower gate)",
+    "It's the likely site of the Third Ecumenical Council of 431 AD",
+    "It met from 22 June to 31 July 431 at the Church of Mary in Ephesus in Anatolia."
+   ]
+  },
+  "paul-left": {
+   "label": "supported",
+   "says": "Paul left Ephesus after a silversmith incited a crowd against his preaching.",
+   "src": [
+    "wp-paul-eph"
+   ],
+   "quote": [
+    "Paul left Ephesus after a silversmith incited a large crowd against his preaching"
+   ]
+  },
   "council": {
    "label": "supported",
    "says": "The Council of Ephesus met in 431 at the Church of Mary, condemned Nestorius and declared Mary Theotokos.",
@@ -578,7 +602,7 @@
      "level": 2
     },
     {
-     "t": "Around you is the upper city: a market square, the scrappy remains of the Baths of Varius, a colonnaded walkway, and the Odeon, a little roofed theater for plays and concerts, with seats for about 1,500 people. A rich citizen and his wife built it around 150 AD.",
+     "t": "Around you is the upper city: a market square, the scrappy remains of the Baths of Varius, a colonnaded walkway, and the Odeon, a little roofed theater for plays and concerts, with seats for about 1,500 people. A citizen named Publius Vedius Antoninus and his wife built it around 150 AD.",
      "c": [
       "upper",
       "odeon"
@@ -586,7 +610,7 @@
      "level": 3
     },
     {
-     "t": "How many people lived here? Older books said up to 225,000. Scholars today call that unrealistic. Mountains, the coast and the quarries hemmed the city in, and recent estimates are far lower, well under a hundred thousand.",
+     "t": "How many people lived here? Older books said up to 225,000. Scholars today call that unrealistic. Mountains, the coast and the quarries hemmed the city in. Recent estimates differ widely; one puts the population between 33,600 and 56,000.",
      "c": [
       "population"
      ],
@@ -599,7 +623,7 @@
    "stand": "At the Gate of Hercules, at the top of the marble street that slopes away downhill.",
    "paras": [
     {
-     "t": "This is Curetes Street, the main boulevard of the ancient city, running downhill all the way to the Library of Celsus.",
+     "t": "This is Curetes Street, the main boulevard of the ancient city, leading downhill toward the library.",
      "c": [
       "curetes"
      ],
@@ -670,7 +694,7 @@
      "cue": true
     },
     {
-     "t": "And everyone else? On the main street, by a monument called the Octagon, is the public latrine, a marble 48-seater. Only the people in these houses and a handful of other very rich families had their own toilets. The latrine was roofed, and used water from the baths ran beneath the seats.",
+     "t": "And everyone else? Farther along the main street, by a monument called the Octagon, is the public latrine, a marble 48-seater. Only the people in these houses and a handful of other very rich families had their own toilets. The latrine was roofed, and used water from the baths ran beneath the seats.",
      "c": [
       "latrine"
      ],
@@ -680,10 +704,10 @@
   },
   {
    "name": "The Library of Celsus",
-   "stand": "At the foot of Curetes Street, in the little square in front of the library steps, facing the two-story façade.",
+   "stand": "At the foot of Curetes Street, in front of the library steps, facing the two-story façade.",
    "paras": [
     {
-     "t": "And here it is, the Library of Celsus. A Roman consul named Aquila built it in the 110s as a monument to his father, Celsus, a former governor of Asia. Celsus himself lies in a marble sarcophagus in a crypt beneath it.",
+     "t": "And here it is, the Library of Celsus. A Roman consul named Aquila ordered it in the 110s as a monument to his father, Celsus, a former governor of Asia. It was finished after Aquila's own death. Celsus himself lies in a marble sarcophagus in a crypt beneath it.",
      "c": [
       "celsus",
       "celsus-tomb"
@@ -725,10 +749,10 @@
   },
   {
    "name": "The Great Theater",
-   "stand": "Follow Marble Street north from the library to the Great Theater, and stand at the bottom, looking up at the seats.",
+   "stand": "Walk on from the library to the Great Theater, and stand at the bottom, looking up at the seats.",
    "paras": [
     {
-     "t": "This is the Great Theater. Acts, chapter nineteen, tells how the whole city was filled with confusion, and a crowd rushed with one accord into the theatre, dragging two of Paul's companions, Gaius and Aristarchus. And all with one voice, about the space of two hours, they cried out, Great is Diana of the Ephesians.",
+     "t": "This is the Great Theater. Acts, chapter nineteen, tells how the whole city was filled with confusion, and a crowd rushed with one accord into the theatre, having caught two of Paul's companions, Gaius and Aristarchus. Later, all with one voice, about the space of two hours, they cried out, Great is Diana of the Ephesians.",
      "c": [
       "a19-28",
       "a19-34"
@@ -744,7 +768,7 @@
      "level": 2
     },
     {
-     "t": "How did the riot start? Acts says Paul preached here in the synagogue for three months, then daily in the school of one Tyrannus for two years, so that all they which dwelt in Asia heard the word.",
+     "t": "How did the riot start? Acts says Paul preached in this city, in the synagogue for three months, then daily in the school of one Tyrannus for two years, so that all they which dwelt in Asia heard the word.",
      "c": [
       "a19-1",
       "a19-8"
@@ -752,7 +776,7 @@
      "level": 2
     },
     {
-     "t": "Then a silversmith named Demetrius, who made silver shrines for Diana, the goddess the Greeks called Artemis, gathered the craftsmen. Sirs, he said, ye know that by this craft we have our wealth. This Paul says they be no gods, which are made with hands. Not only our trade is in danger, but the temple of the great goddess Diana.",
+     "t": "Then a silversmith named Demetrius, who made silver shrines for Diana, the goddess the Greeks called Artemis, gathered the craftsmen. Sirs, he said, ye know that by this craft we have our wealth. This Paul hath persuaded and turned away much people, saying that they be no gods, which are made with hands. Not only this our craft is in danger, but also that the temple of the great goddess Diana should be despised.",
      "c": [
       "a19-24",
       "diana"
@@ -797,14 +821,16 @@
     {
      "t": "Paul left Ephesus after the riot. Later, Acts, chapter twenty, says, he sent from Miletus to Ephesus and called the elders of the church. He told them they would see his face no more, and reminded them of the words of the Lord Jesus: It is more blessed to give than to receive. And they all wept sore, and fell on Paul's neck, and kissed him, and accompanied him unto the ship.",
      "c": [
+      "paul-left",
       "a20"
      ],
      "level": 2
     },
     {
-     "t": "The street is the Arcadiane, named for the emperor Arcadius, who reigned from 395 to 408 and rebuilt it as a grand avenue to impress arrivals. Near the lower gate are the ruins of the Church of Mary. In 431, about 250 bishops met there for the Council of Ephesus, condemned the teaching of Nestorius, and declared Mary Theotokos, the Mother of God.",
+     "t": "The street is the Arcadiane, named for the emperor Arcadius, who reigned from 395 to 408 and rebuilt it as a grand avenue to impress arrivals. Near the lower gate is the Church of Mary, probably where the Council of Ephesus met in 431. About 250 bishops condemned the teaching of Nestorius and declared Mary Theotokos, the Mother of God.",
      "c": [
       "arcadiane",
+      "church-mary",
       "council",
       "council-size"
      ],
@@ -816,10 +842,10 @@
       "seven-churches",
       "rev2"
      ],
-     "level": 2
+     "level": 1
     },
     {
-     "t": "Take a last look down this street, toward a sea you can't see anymore. Harbors fill with silt. Hearts drift too. That old letter still asks every visitor the same quiet question: what was your first love?",
+     "t": "Take a last look down this street before you go. And carry that letter's question with you: what was your first love, and have you left it?",
      "c": [],
      "level": 1,
      "cue": true

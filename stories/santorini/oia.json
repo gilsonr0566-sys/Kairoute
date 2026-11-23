@@ -240,12 +240,12 @@
   },
   "castle": {
    "label": "supported",
-   "says": "At the top of Oia is the ruined castle, seat of the Argyri family under the Venetians, with a full 360-degree view; it is also called Fort Londsa.",
+   "says": "Oia's ruined castle serves as a lookout with a complete 360-degree view; it is also called Fort Londsa.",
    "src": [
     "wp-oia"
    ],
    "quote": [
-    "At the pinnacle of Oia is the ruined castle, which was the seat of the Argyri family under the Venetians and serves as a lookout point with a complete 360-degree view. It is also called Fort Londsa."
+    "serves as a lookout point with a complete 360-degree view. It is also called Fort Londsa."
    ]
   },
   "castle-system": {
@@ -292,7 +292,7 @@
   },
   "sanudo": {
    "label": "supported",
-   "says": "Venetian rule began when Marco Sanudo founded the Duchy of Naxos in 1207; Oia's castle, Agios Nikolaos, was one of five local citadels.",
+   "says": "Venetian rule began when Marco Sanudo founded the Duchy of Naxos in 1207; Oia's Agios Nikolaos was one of five local citadels.",
    "src": [
     "wp-oia"
    ],
@@ -517,7 +517,7 @@
    "stand": "Walk to the end of the village, near the ruined castle, and find a spot facing west over the water.",
    "paras": [
     {
-     "t": "This is Oia's ruined castle, Fort Londsa, a lookout over the whole caldera.",
+     "t": "This is Oia's ruined castle, Fort Londsa, a lookout with a view all the way around.",
      "c": [
       "castle"
      ],

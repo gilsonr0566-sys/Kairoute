@@ -36,6 +36,26 @@
     "The settlement was destroyed during the Theran eruption sometime in the 16th century BC, and was buried in volcanic ash, which helped preserve its fine frescoes."
    ]
   },
+  "age": {
+   "label": "estimate",
+   "says": "The great eruption struck Santorini about 3,600 years ago.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "struck the island about 3,600 years ago"
+   ]
+  },
+  "museum-fira": {
+   "label": "supported",
+   "says": "The Museum of Prehistoric Thera is in Fira.",
+   "src": [
+    "wv-santorini"
+   ],
+   "quote": [
+    "Fira has two different history museums: the Museum of Prehistoric Thera"
+   ]
+  },
   "canopy": {
    "label": "supported",
    "says": "The whole site is covered with a giant canopy, so it can be visited even in the hot summer months.",
@@ -140,12 +160,12 @@
   },
   "water": {
    "label": "supported",
-   "says": "Pipes with running water and water closets at Akrotiri are the oldest such utilities discovered; twin pipes suggest hot and cold water, probably geothermal.",
+   "says": "Akrotiri had pipes with running water and water closets; twin pipes suggest hot and cold water, probably geothermal.",
    "src": [
     "wp-santorini"
    ],
    "quote": [
-    "Pipes with running water and water closets found at Akrotiri are the oldest such utilities discovered.",
+    "Pipes with running water and water closets found at Akrotiri",
     "The pipes run in twin systems, indicating that Therans used both hot and cold water supplies.",
     "The origin of the hot water they circulated in the town probably was geothermal"
    ]
@@ -349,7 +369,7 @@
   },
   "tunnel": {
    "label": "supported",
-   "says": "The remains were buried under about 150 feet of pumice; Marinatos tunnelled in from a gully.",
+   "says": "The remains were buried under about 46 metres of pumice; Marinatos tunnelled in from a gully.",
    "src": [
     "wp-marinatos"
    ],
@@ -422,12 +442,12 @@
   },
   "goat": {
    "label": "supported",
-   "says": "In 2018 a small shrine with a marble figurine of a woman was found in the House of the Thrania, near Xeste 3, where a golden goat was found in 1999.",
+   "says": "In 2018 a small shrine with a marble figurine of a woman was found in the House of the Thrania.",
    "src": [
     "wp-akrotiri"
    ],
    "quote": [
-    "In October 2018, a small shrine with a marble figurine of a woman was discovered in the \"House of the Thrania\" which is located near Xeste 3, where a golden goat was found in 1999."
+    "In October 2018, a small shrine with a marble figurine of a woman was discovered in the \"House of the Thrania\""
    ]
   },
   "atlantis": {
@@ -448,9 +468,10 @@
    "stand": "Just inside the covered site, at the first point where you can look down over the buried streets.",
    "paras": [
     {
-     "t": "Welcome to Akrotiri, a Bronze Age town buried in volcanic ash in the 1500s BC. Like Pompeii, it's remarkably well preserved.",
+     "t": "Welcome to Akrotiri, a Bronze Age town buried in volcanic ash about 3,600 years ago. Like Pompeii, it's remarkably well preserved.",
      "c": [
       "buried",
+      "age",
       "pompeii"
      ],
      "level": 1
@@ -518,7 +539,7 @@
      "level": 1
     },
     {
-     "t": "This was a sophisticated place: paved streets and an extensive drainage system. And here's the remarkable bit. Pipes with running water and water closets found at Akrotiri are the oldest such utilities ever discovered. The pipes run in pairs, which suggests both hot and cold water. The hot water probably came from the volcano itself.",
+     "t": "This was a sophisticated place: paved streets and an extensive drainage system. There were pipes with running water, and water closets. And here's the remarkable bit: the pipes run in pairs, which suggests both hot and cold water. The hot water probably came from the volcano itself.",
      "c": [
       "streets",
       "water"
@@ -554,7 +575,7 @@
      "level": 1
     },
     {
-     "t": "Scholars think the volcano gave a few months' warning. Earthquakes may have damaged the town first. People left in a hurry, carrying only their most valuable things, and that's why so much pottery stayed behind.",
+     "t": "Scholars think the volcano gave a few months' warning. Earthquakes may have damaged the town first. They had time to get out, but not to take much: only their most valuable things. That's why so much pottery stayed behind.",
      "c": [
       "warning",
       "took"
@@ -562,7 +583,7 @@
      "level": 2
     },
     {
-     "t": "There's even evidence that survivors came back afterward, to recover their belongings and perhaps to bury their dead. What happened to them after that, nobody knows.",
+     "t": "There's even evidence that survivors came back afterward, to recover their belongings and perhaps to bury their dead.",
      "c": [
       "returned"
      ],
@@ -582,18 +603,18 @@
    "stand": "Stand where you have a good view of the larger houses.",
    "paras": [
     {
-     "t": "The ash also saved its wall paintings, far better preserved than those from Knossos on Crete. Many finds are now in the Museum of Prehistoric Thera, in Fira.",
+     "t": "The ash also saved its wall paintings, far better preserved than those from Knossos on Crete. They're no longer on these walls: the finds were taken to a museum away from the site, the Museum of Prehistoric Thera, in Fira.",
      "c": [
       "buried",
       "frescoes-why",
-      "museum"
+      "museum",
+      "museum-fira"
      ],
      "level": 1
     },
     {
      "t": "Their scenes are full of life: two antelopes, a man holding a catch of fish, a flotilla of boats with leaping dolphins, and girls gathering saffron for a seated woman, perhaps a goddess.",
      "c": [
-      "colors",
       "scenes"
      ],
      "level": 2
@@ -636,7 +657,7 @@
      "level": 3
     },
     {
-     "t": "He came with a theory: that this eruption had destroyed the Minoan palace civilization on Crete. He wanted to test it. The town lay under about 150 feet of pumice, so he tunnelled in from a gully.",
+     "t": "Marinatos came with a theory: that this eruption had destroyed the Minoan palace civilization on Crete. He wanted to test it. The town lay under about 46 meters of pumice, so he tunneled in from a gully.",
      "c": [
       "theory",
       "tunnel"
@@ -644,7 +665,7 @@
      "level": 2
     },
     {
-     "t": "Within five days of starting on 24 May, he hit walls in the Minoan style, with forty local pumice miners helping him dig.",
+     "t": "Within five days of starting on 24 May, he found the remains of a building in the Minoan style, with forty local pumice miners helping him dig.",
      "c": [
       "five-days"
      ],
@@ -674,14 +695,14 @@
      "level": 2
     },
     {
-     "t": "He was first buried on the site, near where he died. His grave was later moved outside the ruins.",
+     "t": "Marinatos was first buried on the site, near where he died. His grave was later moved outside the ruins.",
      "c": [
       "grave"
      ],
      "level": 3
     },
     {
-     "t": "Work has not always been easy. In 2005 a new protective roof collapsed just before it was finished, killing one visitor, and the site stayed closed until April 2012. But the finds keep coming: a golden goat in 1999, and in 2018 a small shrine with a marble figurine of a woman.",
+     "t": "Work has not always been easy. In 2005 a new protective roof collapsed just before it was finished, killing one visitor, and the site stayed closed until April 2012. And discoveries go on: in 2018, a small shrine with a marble figurine of a woman.",
      "c": [
       "collapse",
       "goat"

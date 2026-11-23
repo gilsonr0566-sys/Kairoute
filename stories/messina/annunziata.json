@@ -76,8 +76,8 @@
    ]
   },
   "neptune": {
-   "label": "supported",
-   "says": "It was built on the ruins of an older temple dedicated to Neptune.",
+   "label": "tradition",
+   "says": "It is said to stand on the ruins of an older temple dedicated to Neptune.",
    "src": [
     "wp-annunziata"
    ],
@@ -162,13 +162,13 @@
      "level": 1
     },
     {
-     "t": "If you go down to it, take the steps slowly and watch your footing.",
+     "t": "If you go down to it, go slowly and watch your footing.",
      "c": [],
      "level": 2,
      "cue": true
     },
     {
-     "t": "It's a Norman church. The Normans held Messina from 1060, and most accounts date this church to the 1100s. One puts it a little later, from the late 1100s into the 1200s. Accounts differ on the detail.",
+     "t": "It's a Norman church. The Normans held Messina from 1060, and the church is usually dated to the 1100s; one listing says the late 1100s into the 1200s, so sources differ slightly.",
      "c": [
       "norman",
       "rulers",
@@ -177,7 +177,7 @@
      "level": 2
     },
     {
-     "t": "And the ground under it is older still. The church was built on the ruins of an earlier temple dedicated to Neptune.",
+     "t": "And the ground under it may be older still. It is said to stand on the ruins of an older temple of Neptune.",
      "c": [
       "neptune"
      ],
@@ -204,7 +204,7 @@
      "level": 2
     },
     {
-     "t": "Why such a mix? Think of who had ruled here before the Normans came. Messina was Byzantine from 535, then, in the Islamic period, under the Aghlabids and the Fatimids, then Byzantine again from 1038. A builder here could borrow from all of them.",
+     "t": "Why such a mix? Think of who had ruled here before the Normans came. Messina was Byzantine from 535, then, in the Islamic period, under the Aghlabids and the Fatimids, then Byzantine again from 1038. That's the mix you see in the walls.",
      "c": [
       "rulers",
       "mix"
@@ -232,14 +232,14 @@
      "level": 2
     },
     {
-     "t": "The Catalans left more than a name. In the days before 15 August, two giant statues on horseback, Mata and Grifone, are paraded through the streets. In legend they're the founders of the city, and the giants themselves come from the old Catalan tradition of processional giants.",
+     "t": "One more Catalan echo in Messina: in the days before August 15, two giant statues on horseback, Mata and Grifone, are paraded through the streets. In legend they're the founders of the city, and the giants come from the old Catalan tradition of processional giants.",
      "c": [
       "giants"
      ],
      "level": 3
     },
     {
-     "t": "The city around you was rebuilt from 1912, mostly in the Liberty style. This little church is far older than all of it. It simply stayed where it was, a few steps down, while Messina rose up around it.",
+     "t": "The city around you was rebuilt from 1912, mostly in the Liberty style. This little church is far older than all of it. It simply stayed where it was, three meters down, while Messina rose up around it.",
      "c": [
       "rebuild1912",
       "below",
