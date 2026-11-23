@@ -345,12 +345,12 @@
   },
   "sun": {
    "label": "supported",
-   "says": "The UV index is extreme all year; dehydration and sunburn are the most common health problems.",
+   "says": "The sun burns even when the breeze feels cool; dehydration and sunburn are the most common health problems.",
    "src": [
     "wv-santorini"
    ],
    "quote": [
-    "which is considered extreme",
+    "the sun burns regardless",
     "Dehydration is, together with sunburns, the most common health issue encountered on Santorini."
    ]
   },
@@ -387,7 +387,7 @@
      "level": 1
     },
     {
-     "t": "It winds along the rim of the caldera. Oia has a nickname, the Eagle's Nest. Out over the water you can see the two volcanic islands, Palia and Nea Kameni, and the island of Therasia.",
+     "t": "The lane winds along the rim of the caldera. Oia has a nickname, the Eagle's Nest. Out over the water you can see the two volcanic islands, Palia and Nea Kameni, and the island of Therasia.",
      "c": [
       "main-street",
       "eagle"
@@ -452,7 +452,7 @@
    "stand": "Find a place along the lane where you can look down at the houses dug into the cliff below.",
    "paras": [
     {
-     "t": "In 1956 an earthquake destroyed part of the town. Parts of the ground here fell into the sea.",
+     "t": "In 1956 an earthquake destroyed part of the town. At Oia, parts of the ground fell into the sea.",
      "c": [
       "quake",
       "quake-oia"
@@ -467,7 +467,7 @@
      "level": 2
     },
     {
-     "t": "Then, in 1976, Oia was taken into a national program to preserve traditional villages, led by the architect Aris Konstantinidis. The simple seamen's houses on the cliff edge became guest houses, hotels and restaurants. The work won the Europa Nostra Prize in 1979.",
+     "t": "But help was already on its way. In 1976, Oia was taken into a program of the Greek National Tourism Organisation to preserve traditional villages, under Aris Konstantinidis. The simple seamen's houses on the cliff edge became guest houses, hotels and restaurants. The work won the Europa Nostra Prize in 1979.",
      "c": [
       "1976",
       "prize"
@@ -497,7 +497,7 @@
      "level": 1
     },
     {
-     "t": "Many of these cave houses were homes for the ships' crews. And why so white? Nobody knows for sure which reason came first. One explanation is practical: lime wash helps rainwater run off the roofs to be collected. Another is simply that it looks beautiful. And there's a story that under Ottoman rule Greeks couldn't fly their flag, so in Oia they painted the whole town white in defiance.",
+     "t": "Many of these cave houses were homes for the ships' crews. And why so white? Explanations differ. One is practical: lime wash helps rainwater run off the roofs to be collected. Another is simply that it looks beautiful. And there's a story that under Ottoman rule Greeks couldn't fly their flag, so in Oia they painted the whole town white in defiance.",
      "c": [
       "white"
      ],
@@ -514,17 +514,17 @@
   },
   {
    "name": "The castle and the sunset",
-   "stand": "Walk to the end of the village, near the ruined castle at its highest point, and find a spot facing west over the water.",
+   "stand": "Walk to the end of the village, near the ruined castle, and find a spot facing west over the water.",
    "paras": [
     {
-     "t": "This is Oia's ruined castle, Fort Londsa, once the seat of the Argyri family under the Venetians.",
+     "t": "This is Oia's ruined castle, Fort Londsa, a lookout over the whole caldera.",
      "c": [
       "castle"
      ],
      "level": 1
     },
     {
-     "t": "It was part of the same Venetian defense system as the castle at Pyrgos, and once one of the strongest fortresses on the island. The Venetian age here began in 1207, when Marco Sanudo founded the Duchy of Naxos, and Oia's castle, called Agios Nikolaos, was one of five local citadels.",
+     "t": "It was part of the same Venetian defense system as the castle at Pyrgos, and once one of the strongest fortresses on the island. The Venetian age here began in 1207, when Marco Sanudo founded the Duchy of Naxos, and Oia was home to one of the island's five local citadels.",
      "c": [
       "castle-system",
       "sanudo"
@@ -539,7 +539,7 @@
      "level": 2
     },
     {
-     "t": "North of the castle, steep stairs lead down to the little harbor of Ammoudi, about 300 steps. It's a long way back up, so save your legs if the day is hot, and carry water. The sun here is extreme, and dehydration and sunburn are the island's most common health problems.",
+     "t": "North of the castle, steep stairs lead down to the little harbor of Ammoudi, about 300 steps. It's a long way back up, so save your legs if the day is hot, and carry water. The sun here is strong, and dehydration and sunburn are the island's most common health problems.",
      "c": [
       "ammoudi",
       "sun"
@@ -554,7 +554,7 @@
      "level": 3
     },
     {
-     "t": "And this is where Oia gathers at sunset. For a few seconds, the white houses and the whole caldera catch the colors of the setting sun.",
+     "t": "And at sunset, all of Oia fills with people. For a few seconds, the white houses and the whole caldera catch the colors of the setting sun.",
      "c": [
       "sunset"
      ],
@@ -567,7 +567,7 @@
    "stand": "Stay where you are, facing the water.",
    "paras": [
     {
-     "t": "Look around at all these strangers from everywhere, standing together on the old walls and going quiet for the same few seconds. That shared quiet may be the best thing Oia gives anyone.",
+     "t": "Look around at all these strangers from everywhere, standing together by the old walls and going quiet for the same few seconds. That shared quiet may be the best thing Oia gives anyone.",
      "c": [],
      "level": 1,
      "cue": true

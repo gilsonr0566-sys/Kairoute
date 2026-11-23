@@ -502,7 +502,7 @@
      "level": 2
     },
     {
-     "t": "People were living on this hill long before any palace, from around 7000 BC. At its height the palace covered about 20,000 square meters, several stories high. One count puts it at over 1,000 interlocking rooms.",
+     "t": "People were living on this hill long before any palace, from around 7000 BC. The palace covered about 20,000 square meters, several stories high. One count puts it at over 1,000 interlocking rooms.",
      "c": [
       "settle",
       "size",
@@ -525,7 +525,7 @@
      "level": 1
     },
     {
-     "t": "It was rebuilt bigger and grander, and that second palace was the height of Minoan Knossos. Around 1450 BC it was partly destroyed again. It kept going, but Mycenaean Greek influence grew stronger. A great fire is usually dated to about 1350 BC, though when the palace finally came to an end, archaeologists still argue.",
+     "t": "It was rebuilt bigger and grander, and that second palace was the height of Minoan Knossos. Then, around 1450 BC, it was partly destroyed again. It kept going, but Mycenaean Greek influence grew stronger. A great fire is usually dated to about 1350 BC, though when the palace finally came to an end, archaeologists still argue.",
      "c": [
       "quake1700",
       "height",
@@ -546,7 +546,7 @@
   },
   {
    "name": "The storerooms",
-   "stand": "Walk along the west side of the palace to where you can look down into the long, narrow storerooms.",
+   "stand": "Walk along the west side of the palace to where you can see the long, narrow storerooms.",
    "paras": [
     {
      "t": "These long, narrow rooms are the magazines, the palace storerooms. They held huge clay jars called pithoi, for oil, grain, wine and other goods.",
@@ -563,7 +563,7 @@
      "level": 2
     },
     {
-     "t": "This wing is also where modern digging began. A merchant from Heraklion, Minos Kalokairinos, uncovered part of the west wing and found storerooms full of big jars. That was in 1878, or 1877 by another account. Ottoman authorities soon made him stop.",
+     "t": "This wing is also where modern digging began. A merchant from Heraklion, Minos Kalokairinos, uncovered part of the west wing and found storerooms full of big jars. That was in 1878 and 1879, or 1877 by another account. Ottoman authorities soon made him stop.",
      "c": [
       "kalok"
      ],
@@ -638,7 +638,7 @@
    "stand": "Find a spot where you can see one of the rebuilt columns.",
    "paras": [
     {
-     "t": "See how those columns get narrower toward the bottom? That's the Minoan shape. But what you're looking at is concrete: a reconstruction made for the archaeologist Arthur Evans.",
+     "t": "See how those columns get narrower toward the bottom? That's the Minoan shape. But what you're looking at is a modern reconstruction. The archaeologist Arthur Evans rebuilt parts of this palace using reinforced concrete.",
      "c": [
       "columns",
       "concrete"
@@ -653,7 +653,7 @@
      "level": 3
     },
     {
-     "t": "Evans was a British archaeologist who bought the land here with private money and began digging in 1900. He uncovered most of the palace. He also gave this whole civilization its name, Minoan, after the mythical King Minos.",
+     "t": "Evans was a British archaeologist who bought the land here with private money and began digging in 1900. He uncovered most of the palace. He also made the name Minoan stick for this whole civilization, after the mythical King Minos.",
      "c": [
       "evans",
       "minoan"
@@ -684,7 +684,7 @@
    "stand": "Walk to the North Entrance of the palace, where a plaster relief of a bull is shown.",
    "paras": [
     {
-     "t": "Bulls are everywhere at Knossos. Here at the North Entrance, a painted plaster relief shows one.",
+     "t": "Bulls turn up again and again at Knossos. Here at the North Entrance, a painted plaster relief shows one.",
      "c": [
       "northbull"
      ],
@@ -698,7 +698,7 @@
      "level": 2
     },
     {
-     "t": "The most famous is the Bull-Leaping Fresco. It was once high up on the east wall of the palace, on an upper floor. A figure goes over the bull upside down. How they did it, and why, nobody knows for sure, even a century after the discovery.",
+     "t": "The most completely restored is the Bull-Leaping Fresco. It was once high up on the east wall of the palace, on an upper floor. In these scenes, a leaper goes over the bull upside down. How they did it, and why, nobody knows for sure, even a century after the discovery.",
      "c": [
       "bullfresco"
      ],
@@ -726,7 +726,7 @@
      "level": 3
     },
     {
-     "t": "So was this palace the Labyrinth? Evans thought so. Some scholars link the word labyrinth with labrys, the double axe, but that's debated. And you can see how a building of courts, corridors, stairways and levels could grow, in Greek memory, into a maze. Not everyone agrees, though. One Oxford geographer says Evans's idea must be treated skeptically.",
+     "t": "So was this palace the Labyrinth? Evans suggested so. Some scholars link the word labyrinth with labrys, the double axe, but that's debated. And you can see how a building of courts, corridors, stairways and levels could grow, in Greek memory, into a maze. Not everyone agrees, though. One Oxford geographer says Evans's idea must be treated skeptically.",
      "c": [
       "labrys",
       "evanslab"

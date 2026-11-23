@@ -121,6 +121,17 @@
     "finally given over to direct Venetian rule in 1390."
    ]
   },
+  "ottoman": {
+   "label": "supported",
+   "says": "Barbarossa attacked Mykonos in 1537 and it became part of the Ottoman Empire from 1537 to 1830.",
+   "src": [
+    "wp-mykonos"
+   ],
+   "quote": [
+    "In 1537, while the Venetians still reigned, Mykonos was attacked by Hayreddin Barbarossa",
+    "Mykonos thus became part of the Ottoman Empire for almost three centuries, from 1537 to 1830."
+   ]
+  },
   "wheat": {
    "label": "supported",
    "says": "They were mainly used to mill wheat and were an important source of income.",
@@ -233,7 +244,7 @@
      "cue": true
     },
     {
-     "t": "Look at their shape. Each one is round and white, with a pointed roof and very small windows, and the roofs are capped with wood and straw. Now notice which way they face. Most windmills on the island face north, because that's where the strongest wind comes from most of the year.",
+     "t": "Look at their shape. Each one is round and white, with a pointed roof and very small windows, and the roofs are capped with wood and straw. Most windmills on the island face north, because that's where the strongest wind comes from most of the year.",
      "c": [
       "shape",
       "north"
@@ -241,7 +252,7 @@
      "level": 2
     },
     {
-     "t": "There are 16 windmills on Mykonos today, and seven of them stand on this one hill. You can see them from every corner of town, and they're the first thing you see coming into the harbor of Alefkandra below.",
+     "t": "There are 16 windmills on Mykonos today, and seven of them are on this hill in Chora, Wikipedia says. They stand out above the town, and they're the first thing you see coming into the harbor of Alefkandra below.",
      "c": [
       "count",
       "seen"
@@ -263,10 +274,11 @@
      "level": 1
     },
     {
-     "t": "Most of them were built by the Venetians in the 1500s. Venice had ruled Mykonos directly since 1390. But the building didn't stop with them. New mills were still going up into the early 20th century. In those days this island was a great producer of wheat and bread.",
+     "t": "Most of them were built by the Venetians in the 1500s. Venice had ruled Mykonos directly since 1390, until the Ottomans took the island in 1537. But the building didn't stop with them. New mills were still going up into the early 20th century. Once, Wikivoyage says, this island was a great producer of wheat and bread.",
      "c": [
       "built",
       "venetian",
+      "ottoman",
       "bread"
      ],
      "level": 2
@@ -300,14 +312,14 @@
    "stand": "Turn to face the sea and the waterfront houses below.",
    "paras": [
     {
-     "t": "From here you look over Little Venice. This is the most popular place on the island to watch the sun go down.",
+     "t": "From here you look over Little Venice. Wikivoyage calls this the most popular place on the island to watch the sun go down.",
      "c": [
       "sunset"
      ],
      "level": 1
     },
     {
-     "t": "Off the coast near the mills, look for Camel Rock. It's named for its shape, like a camel sitting in the shallow blue and green water.",
+     "t": "Somewhere off this coast, near the mills, is a formation called Camel Rock. It's named for its shape, like a camel sitting in the shallow blue and green water.",
      "c": [
       "camel"
      ],
@@ -321,11 +333,17 @@
      "level": 3
     },
     {
-     "t": "When you're ready, the stairs lead down from the windmills into Little Venice. Take them slowly; the steps can be steep and worn.",
+     "t": "When you're ready, the stairs lead down from the windmills into Little Venice.",
      "c": [
       "stairs"
      ],
      "level": 2
+    },
+    {
+     "t": "Take the steps slowly. They can be steep and worn.",
+     "c": [],
+     "level": 2,
+     "cue": true
     },
     {
      "t": "Nobody built these to be pretty. They were built for wheat and bread, and for a living. Yet here we all are, at the end of the day, watching them against the sky.",

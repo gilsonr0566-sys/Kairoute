@@ -388,7 +388,7 @@
    "stand": "In Manto Square on the harbor front, facing her bust.",
    "paras": [
     {
-     "t": "Welcome to Mykonos Town. Islanders call it Chora, which simply means the Town. And the larger-than-life bust in this square is the woman it's named for: Manto Mavrogenous, a heroine of the Greek War of Independence. She was extremely wealthy, and she gave her fortune to the cause.",
+     "t": "Welcome to Mykonos Town. Islanders call it Chora, which simply means the Town. And the larger-than-life bust in this square is the woman this square is named for: Manto Mavrogenous, a heroine of the Greek War of Independence. She was extremely wealthy, and she gave her fortune to the cause.",
      "c": [
       "chora-name",
       "manto-square",
@@ -421,10 +421,16 @@
      "level": 2
     },
     {
-     "t": "It cost her more than money. She sold some of her jewelry to equip 200 men, and she was despised even by her own mother for the choices she made. After the war, Ioannis Kapodistrias gave her the rank of Lieutenant General. Greece became independent in 1830, and she died on Paros in July 1848. From 1988 to 2001, her face was on the two-drachma coin.",
+     "t": "It cost her more than money. She sold some of her jewelry to equip 200 men. And she was despised even by her own mother for the choices she made.",
      "c": [
       "manto-jewels",
-      "manto-mother",
+      "manto-mother"
+     ],
+     "level": 3
+    },
+    {
+     "t": "After the war, Ioannis Kapodistrias gave her the rank of Lieutenant General. Greece became independent in 1830. She died on Paros in July 1848. And from 1988 to 2001, her face was on the two-drachma coin.",
+     "c": [
       "manto-rank",
       "independent",
       "manto-death",
@@ -446,7 +452,7 @@
    "stand": "Stroll along the harbor front, with the water beside you.",
    "paras": [
     {
-     "t": "Keep an eye out along the water. Mykonos has a mascot, a pelican named Petros, and he can sometimes be found at the waterfront, or even up in town.",
+     "t": "Keep an eye out along the water. Mykonos has a mascot, a pelican called Petros, and today's Petros can sometimes be found at the waterfront, or even up in town.",
      "c": [
       "petros-where",
       "petros-mascot"
@@ -471,7 +477,7 @@
      "level": 3
     },
     {
-     "t": "If you do meet him, enjoy the moment, but give him space. He's a wild bird, not a pet.",
+     "t": "If you do meet him, enjoy the moment, but give him space.",
      "c": [],
      "level": 2,
      "cue": true
@@ -497,7 +503,7 @@
      "cue": true
     },
     {
-     "t": "Notice how many little churches you pass. Wikivoyage counts about 400 on the island. One reason, for many years islanders had to build a church on their land before they could build a house.",
+     "t": "Notice how many little churches you pass. Wikivoyage counts about 400 on the island. The usual explanation is that for many years islanders had to build a church on their land before they could build a house.",
      "c": [
       "churches-400",
       "churches-why"
@@ -512,7 +518,7 @@
      "level": 2
     },
     {
-     "t": "Some history in these walls. Mykonos came under direct Venetian rule in 1390. Barbarossa's Ottoman fleet attacked in 1537. And right up to the end of the 18th century this was a trading town, drawing newcomers from nearby islands, and drawing pirates too, raid after raid. In June 1794, British and French warships even fought a battle in the island's main harbor.",
+     "t": "Some history in these walls. Mykonos came under direct Venetian rule in 1390. Barbarossa's Ottoman fleet attacked in 1537. And right up to the end of the 18th century this was a trading town, drawing newcomers from nearby islands, and drawing pirates too, raid after raid. In June 1794, British and French ships even fought a battle in the island's main harbor.",
      "c": [
       "venetian",
       "ottoman",
@@ -522,7 +528,7 @@
      "level": 3
     },
     {
-     "t": "Even the name is a puzzle, and nobody knows for sure. One old theory says it comes from an ancient Greek word that roughly means a pile of stones. Another ties it to a mythological hero named Mykonos. And myth said the great battle between Zeus and the Giants was fought here, and that the big rocks all over the island are the giants themselves, turned to stone.",
+     "t": "Even the name is a puzzle, and nobody knows for sure. One theory says it comes from an ancient Greek word that roughly means a pile of stones. Another ties it to a mythological hero named Mykonos. And myth said the great battle between Zeus and the Giants was fought here, and that the big rocks all over the island are the giants themselves, turned to stone.",
      "c": [
       "name",
       "giants"
@@ -550,7 +556,7 @@
      "level": 2
     },
     {
-     "t": "So as you wander on, remember the rule about churches: build one for your saint before you build a home for yourself. Whatever you believe, that tells you what these islanders put first.",
+     "t": "So as you wander on, remember what's said about the churches here: a church first, then a house. True or not, there are a great many of them. If a door is open, step inside for a quiet minute, away from the crowds.",
      "c": [
       "churches-why"
      ],

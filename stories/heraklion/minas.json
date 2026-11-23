@@ -145,14 +145,14 @@
      "level": 2
     },
     {
-     "t": "Building it took a long time. The foundation stone was laid in 1862, on a garden bought from a Turk, to designs by Athanasios Moussis. Work stopped during the Cretan Revolution of 1866 to 1869, started again in 1883, and was finished in 1895.",
+     "t": "Building it took a long time. The foundation stone was laid in 1862, on a garden bought from a Turkish owner, to designs by Athanasios Moussis. Work stopped during the Cretan Revolution of 1866 to 1869, started again in 1883, and was finished in 1895.",
      "c": [
       "build"
      ],
      "level": 2
     },
     {
-     "t": "Take in the shape. It's laid out as a cross, with a central dome, and there are two bell towers, at the northeast and southeast corners. The whole church is 43.2 meters long and 29.5 meters wide.",
+     "t": "Take in the shape. It's laid out as a cross, with a central dome, and there are two bell towers. The whole church is 43.2 meters long and 29.5 meters wide.",
      "c": [
       "form"
      ],
@@ -191,7 +191,7 @@
      "level": 1
     },
     {
-     "t": "Titus brings the Bible into this church. Paul's letter to Titus, in the King James Version, says: \"For this cause left I thee in Crete, that thou shouldest set in order the things that are wanting, and ordain elders in every city.\" That's Scripture. Church tradition honors Titus as Bishop of Crete, and a saint.",
+     "t": "Titus brings the Bible into this church. Paul's letter to Titus, chapter 1, verse 5, in the King James Version, says: \"For this cause left I thee in Crete, that thou shouldest set in order the things that are wanting, and ordain elders in every city, as I had appointed thee.\" That's Scripture. Church tradition honors Titus as Bishop of Crete, and a saint.",
      "c": [
       "titus5",
       "titustrad"

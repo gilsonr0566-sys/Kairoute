@@ -40,7 +40,7 @@
   },
   "edge": {
    "label": "supported",
-   "says": "Fira's whitewashed houses are built on the edge of the caldera, 400 metres high, on the western edge of the island.",
+   "says": "Fira's whitewashed houses are built on the edge of the caldera, on the western edge of the island.",
    "src": [
     "wp-fira"
    ],
@@ -50,7 +50,7 @@
   },
   "view": {
    "label": "supported",
-   "says": "From Fira you see the 18 km caldera from Cape Akrotiri in the south to Cape Agios Nikolaos in the north, with Nea Kameni at the center and Thirassia.",
+   "says": "From Fira you see the caldera from Cape Akrotiri in the south to Cape Agios Nikolaos in the north, with Nea Kameni at the center and Thirassia.",
    "src": [
     "wp-fira"
    ],
@@ -112,23 +112,25 @@
   },
   "sun": {
    "label": "supported",
-   "says": "The UV index is extreme all year; avoid the sun in the hottest hours; dehydration and sunburn are the most common health problems.",
+   "says": "The sun burns even when the sea breeze feels cool; avoid the sun in the hottest hours; dehydration and sunburn are the most common health problems.",
    "src": [
     "wv-santorini"
    ],
    "quote": [
-    "which is considered extreme",
+    "Don't be deceived by the cool sea breeze that lowers the temperature, the sun burns regardless.",
     "Avoid going out into the sun during the hottest hours of the day",
     "Dehydration is, together with sunburns, the most common health issue encountered on Santorini."
    ]
   },
   "eruption": {
    "label": "estimate",
-   "says": "One of the largest eruptions in recorded history struck about 3,600 years ago, leaving a water-filled caldera.",
+   "says": "About 3,600 years ago one of the largest eruptions in human history struck, leaving a water-filled caldera.",
    "src": [
-    "wp-santorini"
+    "wp-santorini",
+    "wp-minoan-eruption"
    ],
    "quote": [
+    "the eruption was one of the largest volcanic events in human history",
     "One of the largest volcanic eruptions in recorded history struck the island about 3,600 years ago, leaving a large water-filled caldera surrounded by deep volcanic ash deposits."
    ]
   },
@@ -194,13 +196,14 @@
    ]
   },
   "crete": {
-   "label": "supported",
-   "says": "The eruption sent tsunamis of 35 to 150 m that devastated the north coast of Crete, 110 km away.",
+   "label": "disputed",
+   "says": "Tsunamis struck the north coast of Crete, 110 km away; height estimates vary widely (35 to 150 m in one figure, 9 m at Palaikastro in another).",
    "src": [
     "wp-minoan-eruption"
    ],
    "quote": [
-    "The eruption also generated 35 to 150 m (115 to 492 ft) high tsunamis that devastated the northern coastline of Crete, 110 km (68 mi) away."
+    "The eruption also generated 35 to 150 m (115 to 492 ft) high tsunamis that devastated the northern coastline of Crete, 110 km (68 mi) away.",
+    "9 meter high tsunamis swept over coastal sites such as Palaikastro"
    ]
   },
   "kameni-name": {
@@ -225,12 +228,22 @@
   },
   "cassius": {
    "label": "supported",
-   "says": "The Roman historian Cassius Dio recorded in 47 CE that a small islet, hitherto unknown, appeared close to Thera.",
+   "says": "The Roman historian Cassius Dio recorded, under the year 47 CE, that a small islet, hitherto unknown, appeared close to Thera.",
    "src": [
     "wp-nea-kameni"
    ],
    "quote": [
     "The Roman historian Cassius Dio records in the year 47 CE \"This year a small islet, hitherto unknown, made an appearance close to the island of Thera.\""
+   ]
+  },
+  "cassius-which": {
+   "label": "disputed",
+   "says": "Cassius Dio's islet may have been Palea Kameni.",
+   "src": [
+    "wp-nea-kameni"
+   ],
+   "quote": [
+    "Cassius' report may refer to Palaia Kameni."
    ]
   },
   "cedrenus": {
@@ -431,7 +444,7 @@
    "stand": "On the caldera path in the center of Fira, at a low wall with a clear view out over the water. Stay on the path side of the wall.",
    "paras": [
     {
-     "t": "Here we are, on the rim of a volcano. Fira is Santorini's capital, and its white houses sit right on the edge of the caldera, the great flooded crater in front of you, some 400 meters high.",
+     "t": "Here we are, on the rim of a volcano. Fira is Santorini's capital, and its white houses sit right on the edge of the caldera, the great flooded crater in front of you.",
      "c": [
       "capital",
       "edge"
@@ -446,7 +459,7 @@
      "level": 1
     },
     {
-     "t": "And the sun here is fierce, even when the breeze feels cool. Wikivoyage calls the UV extreme all year, and says dehydration and sunburn are the most common health problems on the island. So keep drinking water, and find shade in the middle of the day.",
+     "t": "And the sun here is fierce, even when the breeze feels cool. Dehydration and sunburn are the most common health problems on the island. So keep drinking water, and find shade in the middle of the day.",
      "c": [
       "sun"
      ],
@@ -466,14 +479,14 @@
    "stand": "Stay at the wall, looking straight out to sea across the caldera.",
    "paras": [
     {
-     "t": "Look out across the water. The caldera runs about 18 kilometers, from Cape Akrotiri far to your left to Cape Agios Nikolaos far to your right. The dark island in the middle is Nea Kameni.",
+     "t": "Look out across the water. The caldera stretches from Cape Akrotiri far to your left to Cape Agios Nikolaos far to your right. The dark island in the middle is Nea Kameni.",
      "c": [
       "view"
      ],
      "level": 1
     },
     {
-     "t": "Beyond it, the long island across the water is Thirassia. And if there are big cruise ships out there, they're anchored in the small harbor between Nea Kameni and Fira.",
+     "t": "Across the water is the island of Thirassia. And if there are big cruise ships out there, they're anchored in the small harbor between Nea Kameni and Fira.",
      "c": [
       "view",
       "ships"
@@ -494,7 +507,7 @@
    "stand": "Keep the open water in front of you.",
    "paras": [
     {
-     "t": "How did this happen? About 3,600 years ago, one of the largest volcanic eruptions in recorded history struck this island, and left behind this huge bowl, flooded by the sea.",
+     "t": "How did this happen? About 3,600 years ago, one of the largest volcanic eruptions in human history struck this island, and left behind this huge bowl, flooded by the sea.",
      "c": [
       "eruption"
      ],
@@ -516,7 +529,7 @@
      "level": 3
     },
     {
-     "t": "On Santorini, the white ash and pumice it threw out lies up to 60 meters thick, right on top of the old ground. Tsunamis between 35 and 150 meters high devastated the north coast of Crete, 110 kilometers away.",
+     "t": "On Santorini, the white ash and pumice it threw out lies up to 60 meters thick, right on top of the old ground. Tsunamis struck the north coast of Crete, 110 kilometers away. How high they were, scholars still debate; the estimates vary widely.",
      "c": [
       "tephra",
       "crete"
@@ -567,15 +580,16 @@
      "level": 1
     },
     {
-     "t": "People watched it happen. The first of these islands broke the surface in 197 BC. In the year 47, the Roman historian Cassius Dio wrote: \"This year a small islet, hitherto unknown, made an appearance close to the island of Thera.\"",
+     "t": "People watched it happen. The first of the Kameni islands broke the surface in 197 BC. Writing about the year 47, the Roman historian Cassius Dio recorded: \"This year a small islet, hitherto unknown, made an appearance close to the island of Thera.\" His islet may have been Palea Kameni.",
      "c": [
       "kameni-197",
-      "cassius"
+      "cassius",
+      "cassius-which"
      ],
      "level": 3
     },
     {
-     "t": "In the summer of 727, the writer George Cedrenus describes \"a vapour like an oven's fire\" boiling up for days from the sea, \"and the whole place burned like fire.\" People read it as a sign from God against the worship of icons, and Emperor Leo the Third used it to justify his campaign against them.",
+     "t": "A later writer, George Cedrenus, describes how in the summer of 727 \"a vapour like an oven's fire\" boiled up for days from the sea, \"and the whole place burned like fire.\" People read it as a sign from God against the worship of icons, and Emperor Leo the Third used it to justify his campaign against them.",
      "c": [
       "cedrenus",
       "iconoclasm"
@@ -583,7 +597,7 @@
      "level": 3
     },
     {
-     "t": "The island you see took shape in 1707, when an undersea volcano broke the surface. The last small eruption was in 1950. It's quiet now, but steam and carbon dioxide still rise from the active crater, and scientists watch it closely.",
+     "t": "The island you see began to take its present shape in 1707, when an undersea volcano broke the surface. The last small eruption was in 1950. It's quiet now, but steam and carbon dioxide still rise from the active crater, and scientists watch it closely.",
      "c": [
       "1707",
       "1950",
@@ -622,7 +636,7 @@
      "level": 3
     },
     {
-     "t": "Below us, a zigzag footpath and a steep cable car link the town to the port. The path is 588 steps, winding, narrow in places, with low walls, and the donkeys won't step aside for you. Go slowly, and keep to the wall side.",
+     "t": "Below us, a zigzag footpath and a steep cable car link the town to the port. The path is 588 steps, winding, narrow in places, with low walls, and the donkeys won't step aside for you. Go slowly, and give the donkeys room.",
      "c": [
       "access",
       "steps"

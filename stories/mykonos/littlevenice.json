@@ -46,7 +46,7 @@
    ]
   },
   "date": {
-   "label": "disputed",
+   "label": "supported",
    "says": "Accounts differ on age: Wikipedia says the first of these houses was built in the mid-18th century; Wikivoyage calls them medieval.",
    "src": [
     "wp-mykonos",
@@ -170,14 +170,14 @@
      "cue": true
     },
     {
-     "t": "They're two and three stories high, and from the water they stand like a wall above the sea. Pick out the colorful wooden balconies, each one a little different.",
+     "t": "They're two and three stories high and stand like a wall above the sea. Pick out the colorful wooden balconies.",
      "c": [
       "wall"
      ],
      "level": 2
     },
     {
-     "t": "How old are they? Accounts differ. Wikipedia says the first of these houses went up in the mid-18th century. Wikivoyage calls them medieval.",
+     "t": "How old are they? The first went up in the mid-18th century, though you'll see them loosely called medieval.",
      "c": [
       "date"
      ],
@@ -187,7 +187,7 @@
   },
   {
    "name": "Captains and pirates",
-   "stand": "Find a spot where you can see the little doors at the bottom of the houses, down by the water.",
+   "stand": "Stay where you can see the foot of the houses, where the walls meet the water.",
    "paras": [
     {
      "t": "These houses first belonged to rich merchants and sea captains. Down at the bottom, little doors opened straight onto the sea and into storage below.",
@@ -205,7 +205,7 @@
      "level": 2
     },
     {
-     "t": "It wasn't a wild idea for its time. Up to the end of the 18th century, Mykonos was a thriving trading town, and pirates raided it again and again. Trade and piracy sailed the same waters.",
+     "t": "It wasn't a wild idea for its time. Up to the end of the 18th century, Mykonos was a thriving trading town, and pirates raided it again and again.",
      "c": [
       "trading"
      ],
@@ -218,7 +218,7 @@
    "stand": "Turn and look back up the hill toward the windmills.",
    "paras": [
     {
-     "t": "Up on the hill above the harbor stand the windmills. Today many of these old houses are bars, cafes, little shops and galleries.",
+     "t": "Up on the hill above the harbor stand the windmills. Today some of these old houses are bars, cafes, little shops and galleries.",
      "c": [
       "windmills",
       "now"
@@ -233,7 +233,7 @@
      "level": 2
     },
     {
-     "t": "The waterfront wasn't always this lively. Island trade faded in the late 19th century, especially after the Corinth Canal opened in 1904, and many Mykonians left to find work, many of them in the United States. Then the visitors came. In the 1960s, the international jet set discovered Mykonos, and by the 2000s it was one of the most expensive islands in Greece.",
+     "t": "The waterfront wasn't always this lively. The island's economy faded in the late 19th century, especially after the Corinth Canal opened, and many Mykonians left to find work, many of them in the United States. Then the visitors came. In the 1960s, the international jet set discovered Mykonos, and by the 2000s it was one of the most expensive islands in Greece.",
      "c": [
       "decline",
       "jetset"

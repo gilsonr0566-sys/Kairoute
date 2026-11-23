@@ -165,7 +165,7 @@
   },
   {
    "name": "Saint Mark's Basilica",
-   "stand": "Face the church with the columned porch across the square from the fountain.",
+   "stand": "Face the church with the columned porch, facing the fountain.",
    "paras": [
     {
      "t": "That church with the porch of columns is the Basilica of Saint Mark. The Venetians built it in 1239, in Gothic style, for the Duke and his officials.",
@@ -176,7 +176,7 @@
      "level": 1
     },
     {
-     "t": "During the long Ottoman siege, its bell tower served as an observation post, and its bells rang every time the bombardment began.",
+     "t": "During the long war with the Ottomans, its bell tower served as an observation post, and its bells rang every time the bombardment began.",
      "c": [
       "bells"
      ],
@@ -201,17 +201,17 @@
   },
   {
    "name": "The Loggia",
-   "stand": "Walk the short way from the square to the Venetian Loggia.",
+   "stand": "Walk from the square along Twenty-Fifth of August Street to the Venetian Loggia.",
    "paras": [
     {
-     "t": "This elegant building is the Venetian Loggia, on 25th August Street, right next to Lions Square. It's a Renaissance building from 1626 to 1628, made as a meeting place for the city.",
+     "t": "This elegant building is the Venetian Loggia, on 25th August Street, right next to Lions Square. It's a Renaissance building, first built from 1626 to 1628 as a meeting place for the city.",
      "c": [
       "loggia"
      ],
      "level": 1
     },
     {
-     "t": "Stand here for a minute and watch the people pass. Venetians, Ottomans and modern Cretans have all gathered around those same lions. Cities change hands. Meeting places stay.",
+     "t": "Stand here for a minute and watch the people pass. Venetians, Ottomans and modern Cretans have all walked this street. Cities change hands. Meeting places stay.",
      "c": [
       "square",
       "mosque"

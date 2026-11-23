@@ -217,7 +217,7 @@
    "stand": "At the top of the site, where you can look down over the palace ruins.",
    "paras": [
     {
-     "t": "This is Phaistos, a Minoan palace and town on a hill in south central Crete, about 62 kilometers south of Heraklion. It was one of the 3 largest cities of Minoan Crete, along with Knossos and Malia.",
+     "t": "This is Phaistos, a Minoan palace and town on a hill in south central Crete, about 62 kilometers from Heraklion. It was one of the 3 largest cities of Minoan Crete, along with Knossos and Malia.",
      "c": [
       "what",
       "big3"
@@ -231,7 +231,7 @@
      "cue": true
     },
     {
-     "t": "We call it a palace, but it was much more than a royal home. Like other Minoan palaces, it had many uses: religion and politics, storage, housing, even a theater.",
+     "t": "We call it a palace, but it was much more than a royal home. Like other Minoan palaces, it seems to have had many uses: religion and politics, storage, housing, even a theater.",
      "c": [
       "palaceword"
      ],
@@ -259,14 +259,14 @@
      "level": 1
     },
     {
-     "t": "It was destroyed and rebuilt three times in about three centuries, each new palace shifting slightly east of the first. Then, around 1400 BC, it was destroyed for good. A large earthquake may have been the cause.",
+     "t": "It was destroyed and rebuilt three times in about three centuries, each new palace shifting slightly east of the first. Then, around 1400 BC by one dating, it was destroyed for good. A large earthquake may have been the cause.",
      "c": [
       "rebuilt"
      ],
      "level": 2
     },
     {
-     "t": "That's partly why finds are scarce here: the Minoans thoroughly cleared away the old ruins before they rebuilt. The town lived on into Greek times, with its own coins, until the Gortynians destroyed it around the end of the 3rd century BC.",
+     "t": "That's partly why finds are scarce here: the Minoans thoroughly cleared away the old ruins before they rebuilt. People lived here again in Greek times, and the town struck its own coins, until the Gortynians destroyed it around the end of the 3rd century BC.",
      "c": [
       "clean",
       "gortyn"
@@ -288,7 +288,7 @@
      "level": 1
     },
     {
-     "t": "From here, two staircases led up through large doors into the main entrance hall. The palace rose in levels: the theater and shrines at the bottom, then rooms for servants and guests, then the royal apartments, and at the top the Hall of the State, with balconies looking out over it all.",
+     "t": "From here, two staircases led up through large doors into the main entrance hall. The palace rose in levels. The theater and shrines were at the bottom, then rooms for servants and guests. Above them were the royal apartments, and at the top the Hall of the State, with balconies looking out over it all.",
      "c": [
       "theater",
       "levels"
@@ -309,7 +309,7 @@
      "level": 1
     },
     {
-     "t": "On the northern side of the palace, in a basement room, the Phaistos Disc was found in 1908, together with a Linear A tablet. It's now in the archaeological museum in Heraklion. And in the southern part of the palace, excavators found a temple to the goddess Rhea, built later, after the Geometric age.",
+     "t": "By the northern edge of the palace, in a basement room, the Phaistos Disc was found in 1908, together with a Linear A tablet. It's now in the archaeological museum in Heraklion. And in the southern part of the palace, excavators found a temple to the goddess Rhea, built later, after the Geometric age.",
      "c": [
       "disc",
       "rhea"
@@ -330,14 +330,14 @@
    "stand": "Find a quiet spot at the edge of the hill, looking out.",
    "paras": [
     {
-     "t": "The Greeks told stories about this place. According to the historian Diodorus, King Minos founded Phaistos, along with Knossos and Kydonia. Others said the founder was Phaestos, a son of Hercules. And Homer, in the Iliad, calls it well populated.",
+     "t": "The Greeks told stories about this place. In legend, according to the historian Diodorus, King Minos founded Phaistos, along with Knossos and Kydonia. Others said the founder was Phaestos, a son of Hercules, in one telling. And Homer, in the Iliad, calls it well populated.",
      "c": [
       "myth"
      ],
      "level": 2
     },
     {
-     "t": "Look out from here for a moment. The people who lived in these rooms looked at the same mountains. We can't read their writing, and we don't know their names. But we know they chose a beautiful place to live.",
+     "t": "Look out from here for a moment. The people who lived in these rooms looked at the same mountains. We can't read their writing. But we know they chose a beautiful place to live.",
      "c": [
       "north",
       "lina"

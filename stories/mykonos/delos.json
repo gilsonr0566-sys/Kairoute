@@ -70,38 +70,6 @@
     "Bring plenty of water."
    ]
   },
-  "mounds": {
-   "label": "disputed",
-   "says": "From the Sacred Harbor you can see three conical mounds that marked landscapes sacred to a goddess, presumably Athena.",
-   "src": [
-    "wp-delos"
-   ],
-   "quote": [
-    "From its Sacred Harbour are visible the three conical mounds that have identified landscapes sacred to a goddess (presumably Athena)."
-   ]
-  },
-  "agora": {
-   "label": "supported",
-   "says": "The Agora of the Competaliasts, by the Sacred Harbor, still has the postholes for market awnings in its paving.",
-   "src": [
-    "wp-delos"
-   ],
-   "quote": [
-    "The Hellenistic Agora of the Competaliasts by the Sacred Harbour retains the postholes for market awnings in its stone paving."
-   ]
-  },
-  "settled": {
-   "label": "verified",
-   "says": "The island was first settled in the third millennium BC.",
-   "src": [
-    "unesco-delos",
-    "wp-delos"
-   ],
-   "quote": [
-    "The island was first settled in the third millennium BC.",
-    "it has been inhabited since the third millennium BC"
-   ]
-  },
   "sanctuary": {
    "label": "verified",
    "says": "Apollo's sanctuary existed at least from the 9th century BC and peaked in the Archaic and Classical periods, when it became Pan-Hellenic.",
@@ -122,16 +90,6 @@
     "Apollo's sanctuary attracted pilgrims from all over Greece and Delos was a prosperous trading port."
    ]
   },
-  "three-temples": {
-   "label": "supported",
-   "says": "There are three temples dedicated to Apollo.",
-   "src": [
-    "wv-delos"
-   ],
-   "quote": [
-    "The temples of Apollo: the three temples dedicated to Apollo;"
-   ]
-  },
   "kouros": {
    "label": "supported",
    "says": "Beside the Temple of the Delians stood a colossal kouros of Apollo from the 6th century BC; parts of the torso and pelvis remain in place, a hand is in the local museum and a foot in the British Museum.",
@@ -140,16 +98,6 @@
    ],
    "quote": [
     "The Temple of the Delians, dedicated to Apollo, is a classic example of the Doric order. Beside the temple, once stood a colossal kouros of Apollo, only parts of which remain. Dating to the sixth century BC, parts of the upper torso and pelvis remain in situ, a hand is kept at the local museum, and a foot is in the British Museum."
-   ]
-  },
-  "feast": {
-   "label": "verified",
-   "says": "The feast of the Delians was held every four years in May until 316 BC, with athletic, horse and music contests, dances, plays and banquets.",
-   "src": [
-    "unesco-delos"
-   ],
-   "quote": [
-    "The feast of the Delians, which was celebrated every four years in the month of May until 316 BC, included gymnastic, equestrian and musical competitions, Archaic Age dances, theatrical productions and banquets."
    ]
   },
   "league-what": {
@@ -171,6 +119,16 @@
    "quote": [
     "the congresses being held in the temple",
     "The league's common treasury was kept here as well until 454 BC, when Pericles removed it to Athens."
+   ]
+  },
+  "league-temple": {
+   "label": "supported",
+   "says": "The league's congresses were held within the sanctuary of the Temple of Apollo on Delos.",
+   "src": [
+    "wp-delian-league"
+   ],
+   "quote": [
+    "where congresses were held within the sanctuary of the Temple of Apollo"
    ]
   },
   "league-iron": {
@@ -205,26 +163,6 @@
     "These first took place in the 6th century BC, directed by the tyrant Pisistratus, who ordered that all graves within sight of the temple be dug up and the bodies moved to another nearby island.",
     "In the fifth century BC, during the sixth year of the Peloponnesian War and under instruction from the Delphic Oracle, the entire island was purged of all dead bodies.",
     "so that no one should be allowed to be buried or give birth on the island due to its sacred importance"
-   ]
-  },
-  "rhenia": {
-   "label": "supported",
-   "says": "A narrow channel separates Delos from Rhenia, where there is an important burial ground.",
-   "src": [
-    "wv-delos"
-   ],
-   "quote": [
-    "A narrow channel separates Delos from the island of Rhenia, where there is an important burial ground."
-   ]
-  },
-  "necropolis": {
-   "label": "supported",
-   "says": "The necropolis of Delos was on Rhenia in Classical and Hellenistic times.",
-   "src": [
-    "wp-myk-museum"
-   ],
-   "quote": [
-    "The necropolis of Delos was located on Rhenia during Classical and Hellenistic times."
    ]
   },
   "lions": {
@@ -449,11 +387,12 @@
   },
   "sack": {
    "label": "verified",
-   "says": "Delos was attacked and looted twice, in 88 BC by Mithridates and in 69 BC by the pirates of Athenodorus; then it declined and was gradually abandoned.",
+   "says": "Its prosperity and friendship with Rome led to its destruction: Delos was attacked and looted twice, in 88 BC by Mithridates and in 69 BC by the pirates of Athenodorus; then it declined and was gradually abandoned.",
    "src": [
     "unesco-delos"
    ],
    "quote": [
+    "The prosperity of the island and the friendly relations with the Romans were the main cause of its destruction.",
     "Delos was attacked and looted twice: in 88 BC by Mithridates, the King of Pontus, an enemy of the Romans, and later, in 69 BC, by the pirates of Athenodorus, an ally of Mithridates. Since then, the island fell rapidly into decline and was gradually abandoned."
    ]
   },
@@ -560,20 +499,12 @@
       "excavations"
      ],
      "level": 3
-    },
-    {
-     "t": "From this harbor, look for three cone-shaped hills. They once marked land sacred to a goddess, probably Athena. And near the harbor, in the paving of the old Agora of the Competaliasts, you can still find the holes where posts held up the market awnings.",
-     "c": [
-      "mounds",
-      "agora"
-     ],
-     "level": 3
     }
    ]
   },
   {
    "name": "The Sanctuary of Apollo",
-   "stand": "Walk inland along the Sacred Way into the sanctuary, among the temple foundations.",
+   "stand": "Walk inland from the harbor into the Sanctuary of Apollo, among the temple foundations.",
    "paras": [
     {
      "t": "This was Apollo's sanctuary. It drew pilgrims from all over Greece, and around it Delos grew into a prosperous trading port.",
@@ -583,11 +514,9 @@
      "level": 1
     },
     {
-     "t": "People were living on Delos as far back as the third millennium BC. Apollo's sanctuary was here at least from the 9th century BC. Its high point came in the Archaic and Classical periods, when all of Greece came to share it. There are three temples to Apollo here.",
+     "t": "The sanctuary was here at least from the 9th century BC, and it was at its height in the Archaic and Classical periods.",
      "c": [
-      "settled",
-      "sanctuary",
-      "three-temples"
+      "sanctuary"
      ],
      "level": 3
     },
@@ -599,23 +528,16 @@
      "level": 2
     },
     {
-     "t": "Every four years, in May, Delos held a great feast, with athletic, horse and music contests, dances, plays and banquets. It ran until 316 BC.",
-     "c": [
-      "feast"
-     ],
-     "level": 3
-    },
-    {
-     "t": "This is also where the Delian League began, in 478 BC: an alliance of Greek cities, somewhere between 150 and 330 of them, led by Athens, to keep fighting Persia. They met right here in the temple. To seal it, members dropped lumps of iron into the sea, a sign that the alliance was meant to be permanent.",
+     "t": "This is also where the Delian League began, in 478 BC: an alliance of Greek cities, led by Athens, to keep fighting Persia. Its congresses met in the sanctuary of Apollo's temple. Members dropped lumps of iron into the sea, a sign that the alliance was meant to be permanent.",
      "c": [
       "league-what",
-      "league-here",
+      "league-temple",
       "league-iron"
      ],
      "level": 2
     },
     {
-     "t": "The league's shared treasury was kept here too, until 454 BC, when Pericles moved it to Athens. Athens spent the money on its navy, and on art and buildings for the city. What began as an alliance came to be called the Athenian Empire.",
+     "t": "The league's treasury was kept here until 454 BC, when Pericles moved it to Athens. Athens spent the money on its navy, and on art and buildings for the city.",
      "c": [
       "league-here",
       "league-money"
@@ -623,11 +545,9 @@
      "level": 3
     },
     {
-     "t": "The Athenians also wanted the island ritually pure. In the 6th century BC, the tyrant Pisistratus had every grave in sight of the temple dug up and moved. In the fifth century BC the whole island was cleared of the dead. And a decree said no one could be buried here, or give birth here. In Classical and Hellenistic times, the cemetery of Delos lay across the narrow channel, on the island of Rhenia.",
+     "t": "Delos was also made ritually pure. In the fifth century BC the whole island was cleared of the dead, and a decree said no one could be buried here, or give birth here.",
      "c": [
-      "purify",
-      "rhenia",
-      "necropolis"
+      "purify"
      ],
      "level": 3
     }
@@ -638,22 +558,24 @@
    "stand": "At the Terrace of the Lions, facing the row of marble lions.",
    "paras": [
     {
-     "t": "Here are the famous lions of Delos. The people of Naxos gave this terrace to Apollo shortly before 600 BC. There were once nine to twelve of these crouching, snarling marble guardians along the Sacred Way.",
+     "t": "Here are the famous lions of Delos, given to Apollo by the people of Naxos shortly before 600 BC. What stands here now are exact copies; the originals are in the museum.",
      "c": [
-      "lions"
+      "lions",
+      "lions-replicas"
      ],
      "level": 1
     },
     {
-     "t": "One thing to know: these are exact copies. The north wind was wearing the marble away, so the originals were moved into the museum, and replicas took their place out here. Only seven of the original lions survive.",
+     "t": "There were once nine to twelve of these crouching, snarling marble guardians along the Sacred Way. To protect the marble from the north wind, the originals were moved indoors. Only seven of the original lions survive.",
      "c": [
+      "lions",
       "lions-replicas",
       "lions-seven"
      ],
      "level": 2
     },
     {
-     "t": "Picture the whole row, like an Egyptian avenue of sphinxes. And one of the missing lions? It was carried off, and today it stands over the main gate of the Venetian Arsenal.",
+     "t": "Picture the whole row, like an Egyptian avenue of sphinxes. One of the missing lions was carried off, and today it stands over the main gate of the Venetian Arsenal, in Venice.",
      "c": [
       "lions-sphinx",
       "lions-arsenal"
@@ -667,7 +589,7 @@
    "stand": "Beside the round, dry hollow of the Sacred Lake.",
    "paras": [
     {
-     "t": "This round hollow was the Sacred Lake. And here, myth says, Leto gave birth to the twins Apollo and Artemis, after a long, hard labor.",
+     "t": "This round hollow was the Sacred Lake. Near this lake, myth says, Leto labored before giving birth to the twins Apollo and Artemis.",
      "c": [
       "myth-lake",
       "myth-leto"
@@ -683,7 +605,7 @@
      "level": 2
     },
     {
-     "t": "For nine days and nine nights, the myth says, she suffered near this lake. The goddess of childbirth, Eileithyia, was kept away, up on Olympus with Hera. On the ninth day the messenger goddess Iris won her over with a necklace and brought her here.",
+     "t": "For nine days and nine nights, the myth says, she suffered near this lake. The goddess of childbirth, Eileithyia, was not there. Unaware, she was up on Olympus with Hera. On the ninth day the messenger goddess Iris won her over with a necklace and brought her here.",
      "c": [
       "myth-lake",
       "myth-eileithyia"
@@ -714,8 +636,28 @@
    ]
   },
   {
+   "name": "The museum",
+   "stand": "Inside the site museum, if it's open, in front of the original lions.",
+   "paras": [
+    {
+     "t": "Here, out of the wind, are the original Naxian lions.",
+     "c": [
+      "lions-replicas"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Not everything found on Delos is here, though. A large share of the finds is in the National Archaeological Museum in Athens.",
+     "c": [
+      "museum"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
    "name": "The merchant town",
-   "stand": "Among the walls of the ancient houses, on the paved lanes of the old town.",
+   "stand": "Among the walls of the ancient houses.",
    "paras": [
     {
      "t": "Now the other Delos: a boom town. After 167 BC Delos became a free port, and the trade of the eastern Mediterranean poured in. An ancient writer called it the greatest commercial center of the whole world.",
@@ -741,7 +683,7 @@
      "level": 2
     },
     {
-     "t": "People came from everywhere, and they brought their gods. There were temples to Sarapis, Isis and Anubis, to Syrian gods, and even a synagogue near the stadium. Exactly who worshiped in it, scholars have debated; it was once believed to be Samaritan. Inscriptions do record a community calling itself the Israelites on Delos, who made offerings to Mount Gerizim. Delos is also where an inscription honoring Herod the Great, King of Judaea, was found, and another honoring his son, Herod Antipas.",
+     "t": "People came from everywhere, and they brought their gods: temples to Sarapis, Isis and Anubis, to Syrian gods, and even a synagogue near the stadium. Nobody's sure about that building; its ruins were once believed to be a Samaritan synagogue. Separately, inscriptions record a community calling itself the Israelites on Delos. And an inscription honoring Herod the Great, King of Judaea, was found here.",
      "c": [
       "foreign-gods",
       "synagogue",
@@ -753,38 +695,18 @@
    ]
   },
   {
-   "name": "The museum",
-   "stand": "Inside the site museum, in front of the original lions.",
-   "paras": [
-    {
-     "t": "Here, out of the wind, are the original Naxian lions.",
-     "c": [
-      "lions-replicas"
-     ],
-     "level": 1
-    },
-    {
-     "t": "The museum is known for its statues from across the site, but it doesn't hold everything. A large share of the finds from Delos is in the National Archaeological Museum in Athens.",
-     "c": [
-      "museum"
-     ],
-     "level": 3
-    }
-   ]
-  },
-  {
    "name": "The end of Delos, and the view",
-   "stand": "On Mount Kynthos, or wherever you can look back over the ruins to the sea.",
+   "stand": "Wherever you can look back over the ruins to the sea, or on Mount Kynthos if you climb it.",
    "paras": [
     {
-     "t": "All this wealth made Delos a target. It was attacked and looted twice: in 88 BC by Mithridates, King of Pontus, and in 69 BC by pirates allied with him. After that it declined, and was slowly abandoned.",
+     "t": "Its wealth, and its friendship with Rome, made Delos a target. It was attacked and looted twice: in 88 BC by Mithridates, King of Pontus, and in 69 BC by pirates allied with him. After that it declined, and was slowly abandoned.",
      "c": [
       "sack"
      ],
      "level": 1
     },
     {
-     "t": "Later the island became a quarry. Temple columns were burnt for lime, and the houses were left in ruins. When did the last people leave? Nobody knows exactly: UNESCO says the island was uninhabited from the 7th century AD, Wikipedia says abandoned around the 8th.",
+     "t": "Later the island became a quarry, its temple columns burnt for lime. The last people left somewhere around the 7th or 8th century AD; the sources differ.",
      "c": [
       "quarry",
       "abandoned"

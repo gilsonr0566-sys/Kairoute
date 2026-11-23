@@ -218,14 +218,14 @@
      "level": 1
     },
     {
-     "t": "Mind your footing out here. If waves are breaking over the base of the breakwater, wait for a gap and then move quickly.",
+     "t": "Mind your footing out here. If waves are breaking over the breakwater, don't go out along it. Stay by the fortress.",
      "c": [
       "mole"
      ],
      "level": 1
     },
     {
-     "t": "Venice bought this city in 1204 and called it Candia. To hold it, the Venetians built a giant wall with seven bastions, and a fortress in the harbor. This one.",
+     "t": "Venice bought its claim to this city in 1204 and called it Candia. To hold it, over the centuries that followed, the Venetians built a giant wall with seven bastions, and a fortress in the harbor. This one.",
      "c": [
       "venice"
      ],
@@ -267,7 +267,7 @@
      "level": 3
     },
     {
-     "t": "If you get up to the parapet, look out to sea toward the islet of Dia. Jacques Cousteau found many sunken remains of Cretan sea trade out there. On the northern part of the fort is a lighthouse tower; the first lighthouse here went up under Egyptian rule, between 1830 and 1840.",
+     "t": "If you get up to the parapet, look out to sea toward the islet of Dia. Jacques Cousteau found many sunken remains of Cretan sea trade out there. On the northern part of the fort is a lighthouse tower; a lighthouse was built here under Egyptian rule, between 1830 and 1840.",
      "c": [
       "view",
       "light"
@@ -288,7 +288,7 @@
      "level": 1
     },
     {
-     "t": "The fort didn't do as well as its builders hoped. Ottoman guns easily put its firepower out of action. In the end, on 27 September 1669, the Venetian commander, Francesco Morosini, with only 3,600 fit men left, accepted terms and surrendered.",
+     "t": "The fort didn't count for much in the siege. Ottoman guns easily put its firepower out of action. In the end, on 27 September 1669, the Venetian commander, Francesco Morosini, with only 3,600 fit men left, accepted terms and surrendered.",
      "c": [
       "neutral",
       "fall"
@@ -314,7 +314,7 @@
   },
   {
    "name": "Closing",
-   "stand": "Walk a little way out along the breakwater, then turn and look back at the fortress and the city.",
+   "stand": "If the sea is calm, walk a little way out along the breakwater and look back; if not, stay where you are and look back at the fortress.",
    "paras": [
     {
      "t": "The Ottomans changed little here, adding some battlements. They built a small fort on the land side, Little Koules, but it was torn down in 1936, when the city was being modernized. Today the fortress is restored and open to visitors.",
@@ -332,7 +332,7 @@
      "level": 3
     },
     {
-     "t": "From out here the fort looks small against the city. But for 21 years, it was part of a defense that people would not give up. Take a moment before you walk back.",
+     "t": "Look at the fort against the city. For 21 years, it was part of a defense that people would not give up. Take a moment before you walk back.",
      "c": [
       "siege"
      ],

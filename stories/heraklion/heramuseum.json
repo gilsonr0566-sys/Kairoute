@@ -234,14 +234,14 @@
   },
   "bullscene": {
    "label": "supported",
-   "says": "Three figures and a bull shown at full gallop; one figure is upside down over the bull's back.",
+   "says": "Three figures; the bull is drawn as if at full gallop; a male youth is shown on the bull.",
    "src": [
     "wp-bull-leaping"
    ],
    "quote": [
     "Depicted are three individuals",
     "which means he is intended to be at full gallop",
-    "one upside-down over the bull's back"
+    "a male youth shown balancing on the bull"
    ]
   },
   "bullwho": {
@@ -345,7 +345,7 @@
    "stand": "Outside the museum entrance, where you can see the front of the building.",
    "paras": [
     {
-     "t": "This is the Heraklion Archaeological Museum, one of the largest museums in Greece, and the best in the world for Minoan art. It holds the great majority of the finds from the palace at Knossos and other Minoan sites on Crete.",
+     "t": "This is the Heraklion Archaeological Museum, one of the largest museums in Greece, and often called the best in the world for Minoan art. It holds the great majority of the finds from the palace at Knossos and other Minoan sites on Crete.",
      "c": [
       "what",
       "knfinds"
@@ -361,13 +361,14 @@
      "level": 2
     },
     {
-     "t": "If your time is short, look for three things first: the Phaistos Disc, the snake goddesses, and the bull-leaping fresco.",
-     "c": [],
-     "level": 2,
-     "cue": true
+     "t": "If your time is short, look for three highlights first: the Phaistos Disc, the Snake Goddess figures, and the Bull-Leaping Fresco.",
+     "c": [
+      "bullhere"
+     ],
+     "level": 2
     },
     {
-     "t": "The building is worth a glance too. It's a modernist design by the architect Patroklos Karantinos, hired in 1935, and it came through the bombing of the German invasion in 1941. Inside, look for the multicolored veined marble. It echoes the painted imitation marble on Minoan palace walls.",
+     "t": "The building is worth a glance too. It's a modernist design by the architect Patroklos Karantinos, hired in 1935, and it came through the bombing of the German invasion in 1941. Look for the multicolored veined marble in the building. It echoes the painted imitation marble on Minoan palace walls.",
      "c": [
       "building",
       "marble"
@@ -403,7 +404,7 @@
      "level": 2
     },
     {
-     "t": "Because it's so unusual, some scholars once suspected a forgery. Archaeologists now generally accept it as genuine. Even its date is uncertain: one scholar puts it between 1850 and 1600 BC, another after 1400.",
+     "t": "Because it's so unusual, some scholars once suspected a forgery. Archaeologists now generally accept it as genuine. Even its date is uncertain: one scholar puts it between 1850 and 1600 BC, another after 1400 BC.",
      "c": [
       "discreal",
       "discdate"
@@ -425,7 +426,7 @@
      "level": 1
     },
     {
-     "t": "They're made of faience, a crushed quartz paste that fires to a bright, glassy finish. Now look carefully, because a lot of what you see was restored. The larger figure was missing everything below the waist. The smaller one had no head; Evans and one of his restorers made the head you see today.",
+     "t": "They're made of faience, a crushed quartz paste that fires to a bright, glassy finish. Now look carefully, because a lot of what you see was restored. The larger figure was missing everything below the waist, and more. The smaller one had no head; Evans and one of his restorers made the head you see today.",
      "c": [
       "faience",
       "restored"
@@ -450,10 +451,10 @@
   },
   {
    "name": "The frescoes",
-   "stand": "In the Hall of the Frescoes, in front of the panel of the leaping bull.",
+   "stand": "Among the frescoes, in front of the panel of the leaping bull.",
    "paras": [
     {
-     "t": "Here is the Bull-Leaping Fresco from Knossos, one of the museum's highlights. Three figures, and a bull at full gallop. One figure is upside down over the bull's back.",
+     "t": "Here is the Bull-Leaping Fresco from Knossos, one of the museum's highlights. Three figures and a bull, drawn with its legs stretched out as if at full gallop. A young man is over the bull's back.",
      "c": [
       "bullhere",
       "bullscene"
@@ -461,7 +462,7 @@
      "level": 1
     },
     {
-     "t": "Minoan artists painted women pale and men dark. So here you have two women, one at each end, and a young man on the bull. The woman in front holds the horns. And remember, this is the most completely restored of several panels. There are more fragments than made it into this famous reconstruction.",
+     "t": "By the accepted convention of Minoan art, women are painted pale and men dark. So by that convention, the figures are read as two women, one at each end, and a young man on the bull. The woman in front holds the horns. And remember, this is the most completely restored of several panels. There are more fragments than made it into this famous reconstruction.",
      "c": [
       "bullwho",
       "bullpieces"
@@ -476,7 +477,7 @@
      "level": 2
     },
     {
-     "t": "While you're among the frescoes from Knossos and Hagia Triada, look for the one nicknamed La Parisienne. A French art historian thought she looked like the Parisian women of the day, and the name stuck.",
+     "t": "In the fresco rooms nearby, look for the one nicknamed La Parisienne. A French art historian thought she looked like the Parisian women of the day, and the name stuck.",
      "c": [
       "frescohall",
       "parisienne"
@@ -490,7 +491,7 @@
    "stand": "On your way out, wherever you can pause for a moment.",
    "paras": [
     {
-     "t": "The museum's story runs on into Greek and Roman sculpture. And Crete appears in the Bible too. In the book of Acts, the ship carrying the apostle Paul sailed under Crete, over against Salmone, and came unto a place which is called The fair havens. There, Acts says, with sailing now dangerous, Paul admonished them.",
+     "t": "The museum's story runs on into Greek and Roman sculpture. And Crete appears in the Bible too. Acts chapter 27, in the King James Version, tells of the voyage of the apostle Paul. It says they \"sailed under Crete, over against Salmone,\" and \"came unto a place which is called The fair havens.\" There, with sailing now dangerous, Paul admonished them.",
      "c": [
       "roman",
       "acts7",
@@ -500,7 +501,7 @@
      "level": 3
     },
     {
-     "t": "Think about what you've seen. Many of these people wrote in a script we still can't read. What they left us is bulls, goddesses and one clay disc. And somehow, standing here, they don't feel like strangers.",
+     "t": "Think about what you've seen. They left writing we still can't read. What they left us is bulls, figures with snakes, and one clay disc. And somehow, standing here, they don't feel like strangers.",
      "c": [
       "lina",
       "disc"

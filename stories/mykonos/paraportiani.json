@@ -168,7 +168,7 @@
    "stand": "In the open space beside the church, where you can take in its whole shape.",
    "paras": [
     {
-     "t": "This soft, white, almost sculpted building is Panagia Paraportiani, the Church of Our Lady. Its odd, lovable shape has made it one of the most photographed places in the world.",
+     "t": "This soft, white, almost sculpted building is Panagia Paraportiani, the Church of Our Lady. Its odd, lovable shape, Wikipedia says, makes it one of the most photographed places in the world.",
      "c": [
       "panagia",
       "famous"
@@ -176,20 +176,20 @@
      "level": 1
     },
     {
-     "t": "The whitewash can be dazzling in full sun. Sunglasses help, and the stone underfoot can be uneven, so look down now and then as you circle it.",
+     "t": "The whitewash can be dazzling in full sun. Sunglasses help, and the stone underfoot can be uneven, so look down now and then as you move along.",
      "c": [],
      "level": 2,
      "cue": true
     },
     {
-     "t": "Wikivoyage goes further: of all the churches on Mykonos, it calls this the most impressive, a true Byzantine jewel.",
+     "t": "Wikivoyage goes further: of all the churches on Mykonos, it calls this the most impressive.",
      "c": [
       "jewel"
      ],
      "level": 2
     },
     {
-     "t": "And there's a lot of competition. Mykonos is crowded with churches, because for many years islanders had to build a church on their land before they could build a house. Among all of them, this is the one everyone photographs.",
+     "t": "And there's a lot of competition. Mykonos is crowded with churches. The usual explanation is that for many years islanders had to build a church on their land before they could build a house. Wikivoyage calls this one the most photographed of them all.",
      "c": [
       "churches-why",
       "jewel"
@@ -200,7 +200,7 @@
   },
   {
    "name": "Five churches in one",
-   "stand": "Walk slowly around the outside, looking up at the upper level.",
+   "stand": "Move along the outside as far as the path allows, looking up at the upper level.",
    "paras": [
     {
      "t": "Here's the secret of that shape. It isn't one church, it's five, joined together. Four sit at ground level, and the fifth is built on top of them.",
@@ -210,14 +210,14 @@
      "level": 1
     },
     {
-     "t": "The four below are dedicated to Saint Eustathios, Saint Sozon, the Saints Anargyroi, and Saint Anastasia. They form the base, and the fifth church rests above them. As you walk around, see if you can tell where one ends and the next begins.",
+     "t": "The four below are dedicated to Saint Eustathios, Saint Sozon, the Saints Anargyroi, and Saint Anastasia. They form the base, and the fifth church rests above them. As you move along, see if you can tell where one ends and the next begins.",
      "c": [
       "five"
      ],
      "level": 2
     },
     {
-     "t": "It went up slowly. Construction began in 1425 and wasn't finished until the 17th century, around 200 years of work.",
+     "t": "It went up slowly. Construction began in 1425 and wasn't finished until the 17th century, around 200 years from start to finish.",
      "c": [
       "dates",
       "two-hundred"
@@ -240,7 +240,7 @@
      "level": 1
     },
     {
-     "t": "A gate into what? A medieval castle. Here's how it came about. In 1204, when Constantinople fell in the Fourth Crusade, Mykonos was taken by Andrea Ghisi. The castle was built here in 1207 by the Ghisi family, who controlled the island at the time.",
+     "t": "A gate into what? A medieval castle. Here's how it came about. After Constantinople fell in the Fourth Crusade in 1204, Mykonos passed to Andrea Ghisi. The castle was built here in 1207 by the Ghisi family, who controlled the island at the time.",
      "c": [
       "ghisi-1204",
       "castle"
@@ -262,7 +262,7 @@
      "level": 3
     },
     {
-     "t": "Think of the people who laid the first stones here in 1425. The work took around two hundred years. They never saw it finished. Neither did their children. They built it anyway, for those who would come after. Maybe that's why it still feels so cared for.",
+     "t": "The first stones were laid here in 1425, and the last around two hundred years later. Whoever started it never saw the shape you're looking at now.",
      "c": [
       "dates",
       "two-hundred"
