@@ -5,7 +5,7 @@ const { chromium } = require('playwright'); const path = require('path');
 (async () => { const b = await chromium.launch(); const p = await (await b.newContext({ viewport: { width: 1280, height: 900 } })).newPage(); const errs = []; let fails = 0; const ok = (c, m) => { console.log((c ? 'ok   ' : 'FAIL ') + m); if (!c) fails++; }; p.on('pageerror', e => errs.push(e.message));
   await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
   await p.goto('file://' + path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.html'))); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(500);
-  await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+  await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
   for (const i of [19, 20, 21]) { await p.evaluate(i => window.__kairouteGo('sites', i), i); await p.waitForTimeout(600); }
   const b0 = await p.evaluate(() => window.__kairouteLater(20)); ok(b0.booked && !b0.hint, 'a dated city shows no days hint'); ok(!(await p.locator('.daysfit').count()), 'no days hint on screen for a booked city');
   // Shorten day 21 (index 20) to 2 hours and accept: picks come off -> If you come back

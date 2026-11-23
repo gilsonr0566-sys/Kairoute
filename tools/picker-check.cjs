@@ -15,7 +15,7 @@ const { chromium } = require('playwright'); const path = require('path');
     const p = await b.newPage({ viewport: vp }); const errs = []; p.on('pageerror', e => errs.push(e.message));
     await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
     await p.goto('file://' + path.resolve(process.argv[2] || path.join(__dirname, '..', 'index.html'))); await p.evaluate(() => localStorage.setItem('kairoute.intro1', '1')); await p.reload(); await p.waitForTimeout(600);
-    await p.getByText('Continue trip').click(); await p.waitForTimeout(400);
+    await p.locator('[data-act=continue]').click(); await p.waitForTimeout(400);
     const days = (await p.evaluate(() => window.__kairouteDays())).filter(d => d.city && d.type !== 'sea');
     for (let w = 0; w < 300 && !(await p.evaluate(() => window.__kairouteSeedDone())); w++) await p.waitForTimeout(100); // every day's starting picks made first
     const open = async i => { await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); await p.waitForTimeout(80); await p.evaluate(i => window.__kairouteAt(i, 'sites'), i); for (let w = 0; w < 80 && await p.evaluate(() => window.__kairouteFitPending()); w++) await p.waitForTimeout(50); await p.waitForTimeout(150); };

@@ -12,7 +12,8 @@ const ESIM_STORE = "kairoute.esimDemo1";
 let esimOpen = null; // the open sheet: { step: "plans" | "checkout" | "done", gb, phones }
 const esimMem = () => { try { return JSON.parse(localStorage.getItem(ESIM_STORE) || "{}") || {}; } catch (e) { return {}; } };
 const esimKeep = m => { try { localStorage.setItem(ESIM_STORE, JSON.stringify(m)); } catch (e) {} };
-const esimOn = () => appSet.partners !== "off";
+// A demo of partner offers (made-up plans and prices) shows only when the traveler turns it on in Settings > Display.
+const esimOn = () => appSet.partners === "on";
 
 // Countries where one regional plan works (the common "Europe" eSIM coverage).
 const ESIM_EUROPE = new Set(["albania", "austria", "belgium", "bosnia and herzegovina", "bulgaria", "croatia", "cyprus", "czechia", "czech republic", "denmark", "estonia", "finland", "france", "germany", "gibraltar", "greece", "hungary", "iceland", "ireland", "italy", "latvia", "liechtenstein", "lithuania", "luxembourg", "malta", "monaco", "montenegro", "netherlands", "north macedonia", "norway", "poland", "portugal", "romania", "san marino", "serbia", "slovakia", "slovenia", "spain", "sweden", "switzerland", "turkey", "türkiye", "united kingdom", "uk", "england", "scotland", "vatican city"]);

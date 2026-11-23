@@ -12,7 +12,7 @@ const { chromium } = require('playwright'); const fs = require('fs');
     localStorage.setItem('wayside.trip2', JSON.stringify({ id: 't-mem', name: 'Corpus Christi weekend', style: 'mix', active: 0, days: [day(0), day(1)], lodging: {}, journal: {}, prefs: { pace: 'moderate', walk: 'medium', interests: [], travelers: '', access: 'none', party: 2, lang: 'English' } }));
   });
   await p.reload(); await p.waitForTimeout(3000);
-  await p.click('text=Continue trip').catch(() => {}); await p.waitForTimeout(500);
+  await p.click('[data-act=continue]').catch(() => {}); await p.waitForTimeout(500);
   await p.click('#tab-plan').catch(() => {}); await p.waitForTimeout(500);
   const btn = await p.$('text=/Build the .* guide/');
   if (btn) { await btn.click(); const t0 = Date.now(); while (Date.now() - t0 < 300000) { await p.waitForTimeout(3000); if (!/Building the .* guide ·|Writing the|Asking your guide|Checking every place/.test(await p.innerText('#view'))) break; } }

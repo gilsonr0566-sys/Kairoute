@@ -15,7 +15,7 @@ const NAMES = (process.env.NAMES || "Roman Agora|Corinth Canal|Hadrian's Library
     try {
       await p.goto(URL); await p.waitForFunction(() => window.__kairouteAt && window.__kairouteAiReady, null, { timeout: 120000 });
       if (tag === "phone") console.log("Version", await p.evaluate(() => fetch("version.txt", { cache: "no-store" }).then(r => r.text()).catch(() => "?")));
-      await p.getByText("Continue trip").click({ timeout: 15000 }).catch(() => {});
+      await p.locator('[data-act=continue]').click({ timeout: 15000 }).catch(() => {});
       await p.waitForFunction(() => window.__kairouteAiReady(), null, { timeout: 90000 }).catch(() => {});
       ok(await p.evaluate(() => window.__kairouteAiReady()), `${tag}: AI guide is ready`);
       // The sights list on every Athens day: no pick stays ticked when it isn't on the plan, the count matches,
