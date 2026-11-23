@@ -4,7 +4,7 @@ Plain-words overview of the whole checking process as it stands today, including
 is marked:
 
 - **RUNNING**: built and running now.
-- **BUILT**: written and tested, starts running once the build thread merges it into the Beta 2 branch (agreed for today).
+- **BUILT**: written, tested, and switched on today (merged into the Beta 2 branch at 10:54 am Central). The release check's first full run on the Beta 2 branch is going now, and the nightly run fires for the first time tonight.
 - **PLANNED**: not built yet.
 
 ## Why it changed
@@ -62,8 +62,7 @@ before anyone says "it's live". **RUNNING** (the live check)
 
 ### Every night, 1:30 am Central
 
-**BUILT**, and it starts on the nightly schedule once the file is on the repository's main branch (handed to the build
-thread).
+**BUILT**, and it fires for the first time tonight.
 
 - **1,000 new unusual trips** from a new seed each night, through both the old checks and the independent checker. The
   seed and every trip are kept, so any failure can be replayed exactly.
