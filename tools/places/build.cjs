@@ -55,11 +55,16 @@ async function roadWithoutFerry(a, b) {
   if (!j || j.code !== 'Ok' || !j.routes || !j.routes[0]) return j && j.code === 'NoRoute' ? false : null;   // null: unknown
   return !j.routes[0].legs.some(l => (l.steps || []).some(st => st.mode === 'ferry'));
 }
-async function islandsFor(centre, towns) {
-  const c = await islandOf(centre), out = { centre: c, towns: {} };
-  for (const t of towns) { const ti = await islandOf(t); await sleep(1500);
-    if (!ti || (c && c.id === ti.id)) { out.towns[t.id] = { island: ti, across: false }; continue; }
-    const road = await roadWithoutFerry(centre, t); out.towns[t.id] = { island: ti, across: road === false, road }; }
+// The place's own sights too (Nov 23 live recheck: Lokrum, an island off the old town, planned as "Taxi or car 16 min"
+// whenever the traveler's phone couldn't reach the busy map server for its own water check): asked here once, kept in the
+// place file, so the app knows a sight is across the water offline and without asking.
+async function islandsFor(centre, towns, sights) {
+  const c = await islandOf(centre), out = { centre: c, towns: {}, sites: {} };
+  const one = async (t, into) => { const ti = await islandOf(t); await sleep(1500);
+    if (!ti || (c && c.id === ti.id)) { into[t.id] = { island: ti, across: false }; return; }
+    const road = await roadWithoutFerry(centre, t); into[t.id] = { island: ti, across: road === false, road }; };
+  for (const t of towns) await one(t, out.towns);
+  for (const t of sights || []) await one(t, out.sites);
   return out;
 }
 // ---- Wikidata
@@ -460,8 +465,8 @@ async function buildPlace(t) {
         const pts = [{ name: 'centre', lat: centre.lat, lng: centre.lng }].concat((saved.ports || []).filter(p => p.cruise || p.kind).slice(0, 2).map(p => ({ name: p.name, lat: p.lat, lng: p.lng })), (t.farther || []).filter(x => isFinite(x.lat) && hav(centre, x) <= 250).map(x => ({ name: x.id, lat: x.lat, lng: x.lng })))
           .filter((x, k, a) => isFinite(x.lat) && a.findIndex(y => hav(x, y) < 0.5) === k).slice(0, 40);
         fresh.roads = await roadsBetween(pts); console.log(`   ${fresh.roads.length} road times between ${pts.length} points`); }
-      if (refresh.includes('islands')) { fresh.islands = await islandsFor(centre, (t.farther || []).filter(x => isFinite(x.lat) && !x.town));
-        console.log(`   on ${fresh.islands.centre ? fresh.islands.centre.name : 'no mapped island'}; across the water: ${Object.entries(fresh.islands.towns).filter(([, v]) => v.across).map(([k]) => k).join(', ') || 'none'}`); }
+      if (refresh.includes('islands')) { fresh.islands = await islandsFor(centre, (t.farther || []).filter(x => isFinite(x.lat) && !x.town), (t.sites || []).filter(x => isFinite(x.lat)));
+        console.log(`   on ${fresh.islands.centre ? fresh.islands.centre.name : 'no mapped island'}; across the water: ${Object.entries(Object.assign({}, fresh.islands.towns, fresh.islands.sites)).filter(([, v]) => v.across).map(([k]) => k).join(', ') || 'none'}`); }
       if (refresh.includes('lifts')) { fresh.lifts = await liftsNear(centre, 15); console.log(`   ${fresh.lifts.length} cable cars or funiculars`); }
       if (refresh.includes('ports') && t.port && !t.hasPorts) {
         const r = await portPoints(t.port, centre, !!t.island); fresh.ports = r.ports; fresh.missing = r.missing; fresh.portQuery = Object.assign({}, t.port, { island: !!t.island });

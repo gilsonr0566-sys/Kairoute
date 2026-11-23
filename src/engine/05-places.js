@@ -49,6 +49,10 @@
         // The official website, where the sight's own tickets are sold (the Book tickets link starts from it).
         if (f.web && !s.web) s.web = f.web;
       }
+      // A sight of the place across the water from it, from the map (asked when the place file was built): reached by boat,
+      // whether or not the traveler's phone can reach the map's server for its own water check (Nov 23: an island off the
+      // old town planned as a taxi ride). The on-device check can still add more; it never removes what the file says.
+      for (const s of city.sites || []) { const isl = P.islands && P.islands.sites && P.islands.sites[s.id]; if (isl && isl.across && !s.acrossWater) s.acrossWater = (isl.island && isl.island.name) || true; }
       // A thin guide (under 8 sights): the travel guide's own best-known sights for the place join it, unless already there (same
       // name, or within 150 m) or closed for good.
       if ((city.sites || []).length < 8 && (P.guideSights || []).length) {

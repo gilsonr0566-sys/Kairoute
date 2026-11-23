@@ -1279,4 +1279,10 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   ok(back.min >= out.min + 30, `the way back to the ship is planned at least the half gap longer than the same ride out (${back.min} vs ${out.min})`);
   ok(tt.wait === 63 && tt.waitMax == null, 'an answer with real departures keeps its own wait (the timeline waits for the real next one)');
   ok(E.expectWait(Object.assign(ans()[0], { wait: 20 }), false).wait === 20, 'never a longer wait than the helper sent'); }
+// Nov 23 live recheck (outside tester, f01): an island sight off the old town planned as "Taxi or car 16 min" whenever the
+// phone's own water check couldn't reach the busy map server. The place file now says which sights are across the water.
+{ const b0 = { cities: { 'Test Harbour': { city: 'Test Harbour', sites: [{ id: 'isle1', name: 'Isle Garden', lat: 42.62, lng: 18.12 }, { id: 'town1', name: 'Town Gate', lat: 42.64, lng: 18.11 }], farther: [] } }, days: [] };
+  const P = { 'Test Harbour': { islands: { centre: null, towns: {}, sites: { isle1: { island: { id: '1', name: 'Isle' }, across: true }, town1: { island: null, across: false } } } } };
+  const out = E.applyPlaces(b0, P), ss = out.cities['Test Harbour'].sites;
+  ok(ss[0].acrossWater === 'Isle' && !ss[1].acrossWater && !b0.cities['Test Harbour'].sites[0].acrossWater, `a sight the place file puts across the water is reached by boat, offline (${ss[0].acrossWater} / ${ss[1].acrossWater})`); }
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);
