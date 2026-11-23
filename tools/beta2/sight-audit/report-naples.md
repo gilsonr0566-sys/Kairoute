@@ -1,0 +1,45 @@
+## Naples (Naples, built-in guide)
+- POS Spaccanapoli and the historic center {Q718973 by name}: app is 1.79 km from Wikidata's point (not on the map by id)
+- POS Pompeii [day trip] {Q43332 by name}: app is 0.45 km from Wikidata's point (not on the map by id)
+- POS Capri [day trip] {Q173292 by name}: app is 1.01 km from Wikidata's point (not on the map by id)
+- NOID Sansevero Chapel (Veiled Christ): built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Certosa e Museo di San Martino: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Royal Palace and National Museum of Capodimonte: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID National railway Museum of Pietrarsa: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Museum of Contemporary Art Donnaregina: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Neapolis Sotterrata: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Amphitheatre [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Great Palaestra [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Small Port [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Villa Pollio [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Hotel Tramontano [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Archeological Museum of the Sorrentine Peninsula [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Museum of the Inlaid Wood [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Duomo (Cathedral) [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Church of San Francesco [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Via San Cesareo [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Villa Comunale [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Piazza Vittoria [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NAME Museo Civico Filangieri {Q3867775 by name}: local name; Wikidata's English name is "Filangieri Civic Museum"
+- NAME Palazzo delle Arti {Q1228306 by name}: local name; Wikidata's English name is "Museo PAN"
+- NAME Piazza Torquato Tasso [day trip] {Q2332531 by name}: local name; Wikidata's English name is "Piazza Tasso"
+- FOLD Galleria Borbonica is part of Napoli Sotteranea (Wikidata) but is a separate stop
+- LEN Piazza del Plebiscito and the Royal Palace {Q1047594 by name}: 40 min, but a square usually takes 5-30 min
+- LEN Castel dell'Ovo {Q645041 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- LEN Castel Capuano {Q858940 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- LEN Porta Capuana {Q834089 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- LEN Catacombe di San Gaudioso {Q3663202 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- LEN Castel Nuovo {Q781219 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- LEN Castel Sant'Elmo {Q1048627 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- LEN House of the Vettii [day trip] {Q1590855 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- LEN House of the Faun [day trip] {Q1547308 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- LEN House of the Tragic Poet [day trip] {Q4177608 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- LEN Villa dei Misteri [day trip] {Q1241298 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- LEN Flavian Amphitheater [day trip] {Q662766 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- LEN Rione Terra [day trip] {Q3936300 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- FAME #1 best known nearby, "Naples Metro" (36 Wikipedia languages, Q747184), is not offered
+- FAME must-see "National Archaeological Museum" is offered (National Archaeological Museum) but not marked must-see
+- FAME must-see "Castel Nuovo" is offered (Castel Nuovo) but not marked must-see
+- INFO 30 sights, 31 day trips/towns; must-see: Spaccanapoli and the historic center, Sansevero Chapel (Veiled Christ); top by fame: Spaccanapoli and the historic center 0, Sansevero Chapel (Veiled Christ) 0, Naples Cathedral and the Chapel of San Gennaro 0, Piazza del Plebiscito and the Royal Palace 0, National Archaeological Museum 0, Castel dell'Ovo 0, Certosa e Museo di San Martino 0, Royal Palace and National Museum of Capodimonte 0
+- INFO day trips: Pompeii, Capri, Sorrento, Pozzuoli (ancient Puteoli), Amphitheatre, Great Palaestra, House of the Vettii, House of the Faun, Temple of Apollo, Lupanar, House of the Ancient Hunt, House of the Tragic Poet, Villa dei Misteri, Shrine of the Virgin of the Rosary of Pompei, Small Port, Villa Pollio, Hotel Tramontano, Archeological Museum of the Sorrentine Peninsula, Museum of the Inlaid Wood, Duomo (Cathedral), Church of San Francesco, Basilica di Sant'Antonino, Piazza Torquato Tasso, Via San Cesareo, Sedil Dominova, Villa Comunale, Piazza Vittoria, Flavian Amphitheater, Macellum of Pozzuoli, Rione Terra, Pozzuoli Cathedral
+

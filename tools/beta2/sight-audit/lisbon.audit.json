@@ -24,23 +24,6 @@
    }
   },
   {
-   "k": "POS",
-   "t": "Águas Livres Aqueduct: app is 0.82 km from Wikidata's point (not on the map by id)",
-   "x": {
-    "d": 0.8164768390817123,
-    "id": "src-q623228",
-    "wd": "Q623228",
-    "app": [
-     38.7223,
-     -9.1591
-    ],
-    "wdpt": [
-     38.72666667,
-     -9.16666667
-    ]
-   }
-  },
-  {
    "k": "LEN",
    "t": "Botânico Garden of Lisboa: 40 min, but a art museum or gallery usually takes 45-240 min",
    "x": {
@@ -51,23 +34,26 @@
   },
   {
    "k": "POS",
-   "t": "Ericeira [day trip]: app 38.96670,-9.41670 is 0.39 km from the map's Ericeira (node/130035599, 38.96324,-9.41708); Wikidata 0.16 km from the map",
+   "t": "Ericeira [day trip]: app is 0.45 km from Wikidata's point (not on the map by id)",
    "x": {
-    "d": 0.38601425195817923,
+    "d": 0.45313366251673415,
     "id": "ericeira-far",
     "wd": "Q1351868",
     "app": [
      38.9667,
      -9.4167
     ],
-    "map": [
-     38.9632411,
-     -9.4170802
-    ],
     "wdpt": [
      38.962777777778,
      -9.4152777777778
     ]
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Basilica of Our Lady and St. Anthony [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "mafra-far~Q16268486"
    }
   },
   {
@@ -118,12 +104,12 @@
   },
   {
    "k": "INFO",
-   "t": "29 sights, 8 day trips/towns; must-see: Jerónimos Monastery, Belém Tower; top by fame: Belém Tower 57, Jerónimos Monastery 53, 25 de Abril Bridge 34, Lisbon Cathedral 32, Praça do Comércio 32, Padrão dos Descobrimentos 32, Castle of Saint George 31, Santa Justa Lift 26",
+   "t": "29 sights, 11 day trips/towns; must-see: Jerónimos Monastery, Belém Tower; top by fame: Belém Tower 57, Jerónimos Monastery 53, 25 de Abril Bridge 34, Lisbon Cathedral 32, Praça do Comércio 32, Padrão dos Descobrimentos 32, Castle of Saint George 31, Santa Justa Lift 26",
    "x": {}
   },
   {
    "k": "INFO",
-   "t": "day trips: Ericeira, Sintra, Parque de Santa Marta, Pena National Palace, Moorish Castle, Sintra National Palace, Quintinha de Monserrate, Quinta da Regaleira",
+   "t": "day trips: Mafra, Ericeira, Sintra, Convento de Mafra, Basilica of Our Lady and St. Anthony, Parque de Santa Marta, Pena National Palace, Moorish Castle, Sintra National Palace, Quintinha de Monserrate, Quinta da Regaleira",
    "x": {}
   }
  ],
@@ -165,7 +151,7 @@
    "lat": 38.69139,
    "lng": -9.21583,
    "minutes": 90,
-   "category": "Palace",
+   "category": "Castle or fort",
    "kind": "touristy",
    "quick": false,
    "mustSee": true,
@@ -288,7 +274,7 @@
    "lat": 38.71389,
    "lng": -9.13333,
    "minutes": 50,
-   "category": "Palace",
+   "category": "Castle or fort",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -318,8 +304,8 @@
    "local": "Elevador de Santa Justa",
    "lat": 38.71194,
    "lng": -9.13917,
-   "minutes": 30,
-   "category": "Church",
+   "minutes": 40,
+   "category": "Sight",
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
@@ -470,8 +456,8 @@
    "id": "src-q623228",
    "name": "Águas Livres Aqueduct",
    "local": "Aqueduto das Águas Livres",
-   "lat": 38.7223,
-   "lng": -9.1591,
+   "lat": 38.72667,
+   "lng": -9.16667,
    "minutes": 10,
    "category": "Landmark",
    "kind": "local",
@@ -494,7 +480,7 @@
    "travel": "",
    "parts": [],
    "merged": [],
-   "posDoubt": true,
+   "posDoubt": false,
    "summary": "This is a historic aqueduct in the city of Lisbon, Portugal. It is one of the most remarkable examples of 18th-century Portuguese engineering, including the lar"
   },
   {
@@ -529,37 +515,6 @@
    "summary": "Started in 1582, this Mannerist monastery wasn't completed until 1629, following the reconstruction of a 1147 church under royal decree."
   },
   {
-   "id": "src-q1470414",
-   "name": "Carmo Convent",
-   "local": "Convento do Carmo (Lisboa)",
-   "lat": 38.712,
-   "lng": -9.14057,
-   "minutes": 30,
-   "category": "Church",
-   "kind": "local",
-   "quick": false,
-   "mustSee": false,
-   "fame": 18,
-   "unesco": false,
-   "heritage": true,
-   "wd": "Q1470414",
-   "src": [
-    "Wikidata (Wikipedia in many languages)",
-    "national heritage register",
-    "Wikivoyage (English)",
-    "Wikipedia in Portuguese"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "The hilltop church of the former convent of Carmo is a towering memorial of the 1755 earthquake, which made the roof of the church collapse, but the Gothic arch"
-  },
-  {
    "id": "src-q2657972",
    "name": "Estrela Basilica",
    "local": "Basílica da Estrela",
@@ -589,6 +544,37 @@
    "merged": [],
    "posDoubt": false,
    "summary": "This Neoclassical and Baroque basilica, dedicated to the Sacred Heart of Jesus, was built in the late 1700s by Queen Maria I in fulfilment of a vow. The Queen i"
+  },
+  {
+   "id": "src-q1470414",
+   "name": "Carmo Convent",
+   "local": "Convento do Carmo (Lisboa)",
+   "lat": 38.712,
+   "lng": -9.14057,
+   "minutes": 30,
+   "category": "Church",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 18,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q1470414",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikivoyage (English)",
+    "Wikipedia in Portuguese"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The hilltop church of the former convent of Carmo is a towering memorial of the 1755 earthquake, which made the roof of the church collapse, but the Gothic arch"
   },
   {
    "id": "src-q211262",
@@ -1009,6 +995,34 @@
    "summary": "Formal park with expansive views down toward the city and water from Miradouro Parque Eduardo VII. Home to the wonderful Estufa Fria greenhouse gardens."
   },
   {
+   "id": "mafra-far",
+   "name": "Mafra",
+   "local": "",
+   "lat": 38.93333,
+   "lng": -9.33333,
+   "minutes": 180,
+   "category": "Day trip",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 50,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q986419",
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
+   "srcOnly": false,
+   "builtin": false,
+   "famousFix": true,
+   "far": true,
+   "travel": "Bus from Terreiro do Paço, about 70 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A charming town with a monastery."
+  },
+  {
    "id": "ericeira-far",
    "name": "Ericeira",
    "local": "",
@@ -1030,7 +1044,7 @@
    "builtin": false,
    "famousFix": true,
    "far": true,
-   "travel": "Bus from Terreiro do Paço, about 95 min one way",
+   "travel": "Bus from Terreiro do Paço, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1058,11 +1072,66 @@
    "builtin": false,
    "famousFix": true,
    "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
    "summary": "A beautiful UNESCO World Heritage site town 40 minutes by car/train from Lisbon."
+  },
+  {
+   "id": "mafra-far~Q599223",
+   "name": "Convento de Mafra",
+   "local": "",
+   "lat": 38.93667,
+   "lng": -9.32639,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 50,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q599223",
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Bus from Terreiro do Paço, about 70 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "",
+   "wdByName": true
+  },
+  {
+   "id": "mafra-far~Q16268486",
+   "name": "Basilica of Our Lady and St. Anthony",
+   "local": "",
+   "lat": 38.9372,
+   "lng": -9.328,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": true,
+   "travel": "Bus from Terreiro do Paço, about 70 min one way",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": ""
   },
   {
    "id": "ericeira-far~0",
@@ -1086,7 +1155,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from Terreiro do Paço, about 95 min one way",
+   "travel": "Bus from Terreiro do Paço, about 110 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1115,7 +1184,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1141,7 +1210,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1167,7 +1236,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1194,7 +1263,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1220,7 +1289,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Metro from Pç. Comércio, about 80 min one way",
+   "travel": "Metro from Terreiro do Paço, about 80 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,

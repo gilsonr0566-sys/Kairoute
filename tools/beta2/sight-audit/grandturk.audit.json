@@ -2,22 +2,15 @@
  "name": "grandturk",
  "label": "Grand Turk, Turks and Caicos",
  "centre": {
-  "lat": 21.47222,
-  "lng": -71.1474
+  "lat": 21.47133,
+  "lng": -71.14604
  },
  "findings": [
   {
    "k": "NOID",
-   "t": "Palm Grove Sunset Cabana beach: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)",
+   "t": "Her Majesty's Prison: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)",
    "x": {
-    "id": "src-palm-grove-sunset-cabana-beach"
-   }
-  },
-  {
-   "k": "NOID",
-   "t": "Tour Buses: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)",
-   "x": {
-    "id": "src-tour-buses"
+    "id": "src-her-majesty-s-prison"
    }
   },
   {
@@ -25,6 +18,13 @@
    "t": "Turks and Caicos National Museum: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)",
    "x": {
     "id": "src-turks-and-caicos-national-museum"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Palm Grove Sunset Cabana beach: no Wikidata id and nothing of the name on the map nearby (from OpenStreetMap)",
+   "x": {
+    "id": "src-palm-grove-sunset-cabana-beach"
    }
   },
   {
@@ -44,7 +44,7 @@
   },
   {
    "k": "INFO",
-   "t": "4 sights, 0 day trips/towns; must-see: none; top by fame: Grand Turk 26, Palm Grove Sunset Cabana beach 0, Tour Buses 0, Turks and Caicos National Museum 0",
+   "t": "4 sights, 0 day trips/towns; must-see: none; top by fame: Grand Turk 26, Her Majesty's Prison 0, Turks and Caicos National Museum 0, Palm Grove Sunset Cabana beach 0",
    "x": {}
   }
  ],
@@ -78,39 +78,11 @@
    "summary": "A sight in Grand Turk, Turks and Caicos, named by 1 independent sources."
   },
   {
-   "id": "src-palm-grove-sunset-cabana-beach",
-   "name": "Palm Grove Sunset Cabana beach",
+   "id": "src-her-majesty-s-prison",
+   "name": "Her Majesty's Prison",
    "local": "",
-   "lat": 21.45335,
-   "lng": -71.15024,
-   "minutes": 40,
-   "category": "Sight",
-   "kind": "touristy",
-   "quick": false,
-   "mustSee": false,
-   "fame": 0,
-   "unesco": false,
-   "heritage": false,
-   "wd": "",
-   "src": [
-    "OpenStreetMap"
-   ],
-   "srcOnly": true,
-   "builtin": false,
-   "famousFix": false,
-   "far": false,
-   "travel": "",
-   "parts": [],
-   "merged": [],
-   "posDoubt": false,
-   "summary": "A sight in Grand Turk, Turks and Caicos, named by 1 independent sources."
-  },
-  {
-   "id": "src-tour-buses",
-   "name": "Tour Buses",
-   "local": "",
-   "lat": 21.47646,
-   "lng": -71.14903,
+   "lat": 21.46847,
+   "lng": -71.14604,
    "minutes": 40,
    "category": "Sight",
    "kind": "touristy",
@@ -160,6 +132,34 @@
    "merged": [],
    "posDoubt": false,
    "summary": "A museum in Grand Turk, Turks and Caicos, named by 1 independent sources."
+  },
+  {
+   "id": "src-palm-grove-sunset-cabana-beach",
+   "name": "Palm Grove Sunset Cabana beach",
+   "local": "",
+   "lat": 21.45335,
+   "lng": -71.15024,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "OpenStreetMap"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Grand Turk, Turks and Caicos, named by 1 independent sources."
   }
  ]
 }

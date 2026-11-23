@@ -1,0 +1,40 @@
+## Madrid (Madrid, built-in guide)
+- POS Nuevos Ministerios {Q2705508 by name}: app 40.44396,-3.69346 is 0.26 km from the map's Nuevos Ministerios (node/4998670036, 40.44584,-3.69170); Wikidata 0.05 km from the map
+- POS Casa de Campo {Q568579 by name}: app 40.42410,-3.75510 is 2.34 km from the map's Casa de Campo (node/5303127327, 40.40349,-3.76093); Wikidata 0.05 km from the map
+- POS Toledo [day trip] {Q5836 by name}: app is 0.67 km from Wikidata's point (not on the map by id)
+- NOT Fundación Juan March {Q29043218 by name}: Wikidata says it is an organization (family-run Spanish cultural heritage institution)
+- NOID Reina Sofía Museum (Guernica): built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Real Ermita de San Antonio de la Florida: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Parque Madrid Río: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Basílica La Milagrosa: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Constitutional Tribunal: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID El Escorial monastery [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Cathedral [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Iglesia de los Jesuitas [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Iglesia del Salvador [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID The Burial of the Count of Orgaz [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Monastery of San Juan de los Reyes [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID The Alcazar [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Museum of the Army [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NAME Plaza Mayor and Puerta del Sol {Q1123493 by name}: local name; Wikidata's English name is "Main Square"
+- NAME Museo Nacional de Ciencias Naturales {Q1966699 by name}: local name; Wikidata's English name is "National Museum of Natural Sciences"
+- NAME Cathedral [day trip]: a bare name that says what, not which one
+- LEN Plaza Mayor and Puerta del Sol {Q1123493 by name}: 40 min, but a square usually takes 5-30 min
+- LEN Cuatro Torres {Q503109 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- LEN Museo Nacional de Antropología {Q29538755 by name}: 60 min, but a fountain, statue or monument usually takes 5-30 min
+- FAME #1 best known nearby, "Spanish" (351 Wikipedia languages, Q1321), is not offered
+- FAME #2 best known nearby, "Madrid Metro" (55 Wikipedia languages, Q191987), is not offered
+- FAME #3 best known nearby, "2004 Madrid train bombings" (49 Wikipedia languages, Q213531), is not offered
+- FAME #4 best known nearby, "Vicente Calderón Stadium" (48 Wikipedia languages, Q207626), is not offered
+- FAME #5 best known nearby, "The Third of May 1808" (45 Wikipedia languages, Q1091086), is not offered
+- FAME #6 best known nearby, "Torre Moeve" (33 Wikipedia languages, Q519568), is not offered
+- FAME #7 best known nearby, "Dos de Mayo Uprising" (31 Wikipedia languages, Q181146), is not offered
+- FAME #8 best known nearby, "Siege of Madrid" (26 Wikipedia languages, Q685062), is not offered
+- FAME #9 best known nearby, "Torre Picasso" (26 Wikipedia languages, Q1364394), is not offered
+- FAME #10 best known nearby, "Torre PwC" (25 Wikipedia languages, Q651643), is not offered
+- FAME #11 best known nearby, "Forest of Remembrance" (25 Wikipedia languages, Q833213), is not offered
+- FAME must-see "Retiro" is offered (Retiro Park) but not marked must-see
+- FAME must-see "Reina Sof" is offered (Reina Sofía Museum (Guernica)) but not marked must-see
+- INFO 30 sights, 13 day trips/towns; must-see: Prado Museum, Royal Palace, Plaza Mayor and Puerta del Sol; top by fame: Prado Museum 0, Royal Palace 0, Plaza Mayor and Puerta del Sol 0, Retiro Park 0, Reina Sofía Museum (Guernica) 0, Chocolatería San Ginés 0, Almudena Cathedral 0, Cuatro Torres 0
+- INFO day trips: Toledo, El Escorial monastery, Cathedral, Iglesia de los Jesuitas, Mosque of Cristo de la Luz, Iglesia del Salvador, The Burial of the Count of Orgaz, Synagogue of Santa María la Blanca, Monastery of San Juan de los Reyes, Synagogue of El Tránsito, The Alcazar, El Greco Museum, Museum of the Army
+
