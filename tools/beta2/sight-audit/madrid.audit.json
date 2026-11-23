@@ -64,6 +64,27 @@
    }
   },
   {
+   "k": "POS",
+   "t": "Nuevos Ministerios {Q2705508 by name}: app 40.44396,-3.69346 is 0.26 km from the map's Nuevos Ministerios (node/4998670036, 40.44584,-3.69170); Wikidata 0.05 km from the map",
+   "x": {
+    "d": 0.2568646428655129,
+    "id": "wv~Q2919276",
+    "wd": "Q2705508",
+    "app": [
+     40.44396,
+     -3.69346
+    ],
+    "map": [
+     40.4458416,
+     -3.6916991
+    ],
+    "wdpt": [
+     40.446277777778,
+     -3.6918138888889
+    ]
+   }
+  },
+  {
    "k": "NOID",
    "t": "Parque Madrid Río: built-in sight with no Wikidata id and nothing of the name on the map nearby",
    "x": {
@@ -79,14 +100,18 @@
   },
   {
    "k": "POS",
-   "t": "Casa de Campo {Q568579 by name}: app is 2.39 km from Wikidata's point (not on the map by id)",
+   "t": "Casa de Campo {Q568579 by name}: app 40.42410,-3.75510 is 2.34 km from the map's Casa de Campo (node/5303127327, 40.40349,-3.76093); Wikidata 0.05 km from the map",
    "x": {
-    "d": 2.390791514755919,
+    "d": 2.3447495458490843,
     "id": "wv~casa-de-campo",
     "wd": "Q568579",
     "app": [
      40.4241,
      -3.7551
+    ],
+    "map": [
+     40.4034858,
+     -3.7609309
     ],
     "wdpt": [
      40.4031,
