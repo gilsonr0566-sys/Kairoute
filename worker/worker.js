@@ -118,7 +118,7 @@ function aiGate(env, path, lim) {
   return gate;
 }
 // Memory of kept answers (see the fetch handler). Only these content prefixes; everything else reads the store.
-const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3|p2|gc|gr|ev|gq|fp|wx|wv|dp|bk|tr|ns|nv|fx|fm|sr|leg|xn|kh|xf)(\.[0-9a-f]{10})?:/, MEMO_MS = 600000, MEMO = new Map();
+const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3|p2|gc|gr|ev|gq|fp|wx|wv|dp|bk|tr|ns|nv|fx|fm|sr|leg|xn|kh|xf|vy)(\.[0-9a-f]{10})?:/, MEMO_MS = 600000, MEMO = new Map();
 let memoChars = 0; // kept under ~30 MB of the Worker's 128 MB memory
 function memoStore(kv) {
   if (!kv || kv.__memo) return kv;
@@ -926,7 +926,7 @@ async function famousData(label, env, ctx) {
     const hm = new Map(((hj && hj.results && hj.results.bindings) || []).map(b => [b.item.value.split("/").pop(), +b.un.value]));
     [...main, ...far].forEach(x => { if (hm.has(x.wd)) { x.heritage = true; x.unesco = hm.get(x.wd) === 1; } }); }
   const res = { area, port, center, main, far };
-  ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: 30 * 86400 }));
+  await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: 30 * 86400 }); // kept before the next stage starts (see voyageKept)
   return res;
 }
 
@@ -972,6 +972,16 @@ function parseListings(wt) {
     i = j;
   }
   return out;
+}
+// A city's sources are gathered in stages (fame list, English Wikivoyage, local Wikivoyage): a cold city takes about 100 s,
+// and the helper is sometimes stopped part way (Lisbon, Nov 24: dropped at 64 s with nothing kept, and asked again it
+// started from scratch). Each Wikivoyage stage is kept as soon as it is read, before the next starts, so asking again
+// picks up where the last ask stopped (R-29: kept answers carry the code's fingerprint like every other answer).
+async function voyageKept(host, title, UA, env) {
+  const key = (await codeKey("vy", [voyagePages, parseListings, voyageNext])) + (await sha(host + "|" + String(title).toLowerCase())), hit = await env.USAGE.get(key);
+  if (hit) return JSON.parse(hit);
+  const v = await voyagePages(host, title, UA); if (v && v.pages) await env.USAGE.put(key, JSON.stringify(v), { expirationTtl: 30 * 86400 });
+  return v;
 }
 async function voyagePages(host, title, UA) {
   const get = async t => { try { const r = await fetch(`https://${host}/w/api.php?action=parse&prop=wikitext&format=json&formatversion=2&redirects=1&page=` + encodeURIComponent(t), { headers: UA, signal: AbortSignal.timeout(12000) }); if (r.ok) { const j = await r.json(); if (j.parse && j.parse.wikitext) return { title: j.parse.title, wt: j.parse.wikitext }; } } catch (e) {} return null; };
@@ -1087,7 +1097,7 @@ async function sourcesData(label, env, ctx) {
   if (fam.error) return fam;
   const area = fam.area, center = fam.center, kmOf = (a, b) => Math.hypot((a.lat - b.lat) * 111, (a.lng - b.lng) * 111 * Math.cos(b.lat * Math.PI / 180));
   // The city's Wikidata item tells which language is local here and which local Wikivoyage page covers it.
-  const enGuess = area.split(",")[0].trim(), enP = voyagePages("en.wikivoyage.org", enGuess, UA).then(v => { lap("enVoy"); return v; });
+  const enGuess = area.split(",")[0].trim(), enP = voyageKept("en.wikivoyage.org", enGuess, UA, env).then(v => { lap("enVoy"); return v; });
   // enLocal: English is a language of the place itself (the Bahamas, Malta, Juneau), so its local names are English names.
   let lang = "", localVoy = "", localWiki = "", enLocal = false;
   const enTitle0 = (await enP).title || area.split(",")[0].trim();
@@ -1104,7 +1114,7 @@ async function sourcesData(label, env, ctx) {
       if (lang && city.sitelinks[lang + "wiki"]) localWiki = city.sitelinks[lang + "wiki"].title; }
   }
   lap("lang");
-  const [enV, lcV] = await Promise.all([enP, localVoy ? voyagePages(lang + ".wikivoyage.org", localVoy, UA).then(v => { lap("localVoy"); return v; }) : Promise.resolve({ pages: 0, listings: [] })]);
+  const [enV, lcV] = await Promise.all([enP, localVoy ? voyageKept(lang + ".wikivoyage.org", localVoy, UA, env).then(v => { lap("localVoy"); return v; }) : Promise.resolve({ pages: 0, listings: [] })]);
   const LN = LANG_NAME[lang] || lang;
   const S = { fame: "Wikidata (Wikipedia in many languages)", localWiki: `Wikipedia in ${LN}`, enVoy: "Wikivoyage (English)", lcVoy: `Wikivoyage (${LN})`, heritage: "national heritage register", unesco: "UNESCO World Heritage" };
   // Gather every sight by Wikidata id where the source gives one.
@@ -1126,7 +1136,10 @@ async function sourcesData(label, env, ctx) {
   for (const l of enV.listings.filter(l => l.kind === "see")) add(l.wd, l.name, l.lat, l.lng, S.enVoy, { en: l.content, web: l.url || undefined });
   for (const l of lcV.listings.filter(l => l.kind === "see")) { const x = add(l.wd, l.name, l.lat, l.lng, S.lcVoy); x.local = x.local || l.name; x.lc = l.content; }
   // Facts for every id from Wikidata: local-language article, official website, heritage status, place, fame.
-  const ids = [...byId.keys()].slice(0, 200), chunks = []; for (let k = 0; k < ids.length; k += 50) chunks.push(ids.slice(k, k + 50));
+  // The famous places a day out (fam.far) get the same facts: what they are decides whether they are a place to go at
+  // all (Nov 23, Kusadasi: "Seikilos epitaph", an inscription kept in a museum abroad, was offered as a day trip).
+  const farById = new Map((fam.far || []).filter(f => f && /^Q\d+$/.test(f.wd || "") && !byId.has(f.wd)).map(f => [f.wd, f]));
+  const ids = [...byId.keys()].slice(0, 200).concat([...farById.keys()].slice(0, 25)), chunks = []; for (let k = 0; k < ids.length; k += 50) chunks.push(ids.slice(k, k + 50));
   const answers = await Promise.all(chunks.map(part => {
     const V = `VALUES ?item { ${part.map(x => "wd:" + x).join(" ")} }`, H2 = { headers: { ...UA, accept: "application/sparql-results+json" } }, url = q => "https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q);
     return Promise.all([getJ(url(`SELECT ?item ?h ?w ?loc ?lab ?sl ?whole ?wloc WHERE { ${V} OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item rdfs:label ?mlab FILTER(LANG(?mlab) = "mul") } OPTIONAL { ?item wikibase:sitelinks ?sl } OPTIONAL { ?item wdt:P361|wdt:P276 ?whole . OPTIONAL { ?whole wdt:P625 ?wloc } } }`), 25000, H2),
@@ -1150,7 +1163,7 @@ async function sourcesData(label, env, ctx) {
       const res = await Promise.all(cc.map(part => getJ(uq(`SELECT ?c ?w WHERE { VALUES ?c { ${part.map(x => "wd:" + x).join(" ")} } VALUES ?w { ${Object.keys(SIGHT_KINDS).map(x => "wd:" + x).join(" ")} } ?c wdt:P279* ?w }`), 25000, H3)));
       if (res.every(Boolean)) {
         for (const j of res) for (const b of j.results.bindings) { const c = b.c.value.split("/").pop(); (up.get(c) || up.set(c, new Set()).get(c)).add(SIGHT_KINDS[b.w.value.split("/").pop()]); }
-        for (const id of ids) { const x = byId.get(id); if (!x) continue; const ks = new Set(); for (const c of direct.get(id) || []) for (const k of up.get(c) || []) ks.add(k); x.kinds = [...ks].sort();
+        for (const id of ids) { const x = byId.get(id) || farById.get(id); if (!x) continue; const ks = new Set(); for (const c of direct.get(id) || []) for (const k of up.get(c) || []) ks.add(k); x.kinds = [...ks].sort();
           if (razed.has(id) || (ended.has(id) && !ks.has("organization") && !ks.has("event") && !ks.has("occurrence"))) x.gone = true;
           // "Destroyed building or structure" (the Bastille: a castle and a prison, so the end-date rule spared it as an
           // organisation) is gone too, unless its ruins are an archaeological site to visit (Nov 23 sight check).
