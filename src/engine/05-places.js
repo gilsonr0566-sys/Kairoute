@@ -60,8 +60,11 @@
       // the place file, so it holds offline (Nov 23: Lokrum wasn't one of the file's sights and was planned as a taxi).
       // Never the island a day of this place starts from (the ship's pier, a hotel): where the traveler is, is not across
       // the water from itself (Nov 24 Venice build: the cruise terminal's own islet came back as "no way there on foot").
-      const homes = new Set((b.days || []).filter(d => d.city === key).flatMap(d => [d.point, d.lodging, d.hotel]).filter(p => p && isFinite(+p.lat) && isFinite(+p.lng))
-        .map(p => { const h = E.islandAt(P.islands && P.islands.shapes, p); return h && h.id; }).filter(Boolean));
+      // Only an island EVERY day of the place starts from: a stay on an island no path reaches, with another day starting on
+      // the main island, keeps it across the water (a boat from there; independent review of cce49f79).
+      const isleOf = p => p && isFinite(+p.lat) && isFinite(+p.lng) ? ((E.islandAt(P.islands && P.islands.shapes, p) || {}).id || "-") : null;
+      const dayHomes = (b.days || []).filter(d => d.city === key).map(d => [d.point, d.lodging, d.hotel].map(isleOf).filter(Boolean)).filter(h => h.length);
+      const homes = new Set(dayHomes.length ? dayHomes[0].filter(id => id !== "-" && dayHomes.every(h => h.every(x => x === id))) : []);
       const across = s => { if (!s || s.acrossWater || !P.islands || !Array.isArray(P.islands.shapes)) return;
         const sh = E.islandAt(P.islands.shapes, s); if (sh && sh.id !== P.islands.centreShape && !homes.has(sh.id) && sh.walk === false) s.acrossWater = sh.name || true; };
       // Every listed sight shows its English name (tools/places/en-names.cjs: the English Wikipedia title, else the
