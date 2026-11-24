@@ -16,6 +16,9 @@ jobs:
         with:
           node-version: 22
       - run: npm i playwright@1.65.1 && npx playwright install --with-deps chromium
+      - name: Can the live helper be reached
+        if: always()
+        run: sh tools/beta2/live-verify/helper-probe.sh
       - name: Sight names and day trips on the live site
         if: always()
         run: node tools/beta2/live-verify/sights-live.cjs
