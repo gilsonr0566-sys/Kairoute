@@ -1,0 +1,142 @@
+{
+ "name": "d11-nashville",
+ "label": "Nashville by car",
+ "legs": [
+  {
+   "k": "stay",
+   "place": "Nashville, Tennessee",
+   "date": "2027-04-23",
+   "nights": 2,
+   "inBy": "car",
+   "inAt": "15:00",
+   "homeBy": "car",
+   "homeAt": "11:00"
+  }
+ ],
+ "started": "2026-11-24T12:55:10.441Z",
+ "passed": {
+  "/sources": 12,
+  "/transit": 12,
+  "/guide": 1,
+  "/route": 24
+ },
+ "refused": {},
+ "errors": [],
+ "days": [
+  {
+   "i": 0,
+   "date": "2027-04-23",
+   "type": "arrival",
+   "text": "FRI APR 23 · NASHVILLE, TENNESSEE · ARRIVING\nNashville, Tennessee ✎ Rename\nLock this day\nI couldn't reach the travel guides and maps for Nashville, Tennessee. Your trip is saved. Tap Build the guide on the Trip page when you're online.\nNo guide for Nashville, Tennessee yet\n\nKairoute will build the guide for Nashville, Tennessee from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Nashville, Tennessee guide"
+  },
+  {
+   "i": 1,
+   "date": "2027-04-24",
+   "type": "land",
+   "text": "SAT APR 24 · NASHVILLE, TENNESSEE · LAND DAY\nNashville, Tennessee ✎ Rename\nLock this day\nI couldn't reach the travel guides and maps for Nashville, Tennessee. Your trip is saved. Tap Build the guide on the Trip page when you're online.\nNo guide for Nashville, Tennessee yet\n\nKairoute will build the guide for Nashville, Tennessee from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Nashville, Tennessee guide"
+  },
+  {
+   "i": 2,
+   "date": "2027-04-25",
+   "type": "departure",
+   "text": "SUN APR 25 · NASHVILLE, TENNESSEE · LEAVING\nNashville, Tennessee ✎ Rename\nLock this day\nI couldn't reach the travel guides and maps for Nashville, Tennessee. Your trip is saved. Tap Build the guide on the Trip page when you're online.\nNo guide for Nashville, Tennessee yet\n\nKairoute will build the guide for Nashville, Tennessee from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Nashville, Tennessee guide"
+  }
+ ],
+ "guides": {},
+ "steps": [],
+ "screen": [],
+ "screenRead": 0,
+ "rules": [],
+ "hosts": {
+  "fonts.googleapis.com": {
+   "ok": 1,
+   "bad": 0,
+   "fail": 0
+  },
+  "cdnjs.cloudflare.com": {
+   "ok": 1,
+   "bad": 0,
+   "fail": 0
+  },
+  "fonts.gstatic.com": {
+   "ok": 3,
+   "bad": 0,
+   "fail": 0
+  },
+  "kairoute-ai.rickgilson.workers.dev": {
+   "ok": 41,
+   "bad": 1,
+   "fail": 6
+  },
+  "overpass-api.de": {
+   "ok": 0,
+   "bad": 31,
+   "fail": 11
+  },
+  "router.project-osrm.org": {
+   "ok": 31,
+   "bad": 0,
+   "fail": 0
+  },
+  "routing.openstreetmap.de": {
+   "ok": 12,
+   "bad": 1,
+   "fail": 0
+  },
+  "overpass.private.coffee": {
+   "ok": 1,
+   "bad": 0,
+   "fail": 41
+  },
+  "tiles.openfreemap.org": {
+   "ok": 4,
+   "bad": 0,
+   "fail": 0
+  }
+ },
+ "version": "de7cba02-1795522279",
+ "aiReady": false,
+ "wizard": {
+  "miss": [],
+  "prev": "Your days: 3 days",
+  "form": "Add each place in order, the way it's booked. Each new stop starts where the last one ends.\n\nSTOP 1 · CITY STAY\nCity\nArrive on\nNights\nHotel (optional)\nGetting there\nFlight\nTrain\nFerry\nCar or bus\nArrive in town at\nLeave empty if you don't know yet.\n+ Add a city stay\n+ Add a cruise\nGoing home from here\nFlight\nTrain\nFerry\nCar or bus\nLeave at\nYour days: 3 days\nAdd more details (optional)\nName this trip\n\nKairoute picks good defaults for pace, walking and voice, and you can change any of them later.\n\nCancel\nPersonalize first\nBuild my trip"
+ },
+ "buildSec": 60,
+ "state": {
+  "busy": "",
+  "err": "I couldn't reach the travel guides and maps for Nashville, Tennessee. Your trip is saved. Tap Build the guide on the Trip page when you're online.",
+  "days": [
+   {
+    "date": "2027-04-23",
+    "type": "arrival",
+    "mode": "car"
+   },
+   {
+    "date": "2027-04-24",
+    "type": "land",
+    "mode": "flight"
+   },
+   {
+    "date": "2027-04-25",
+    "type": "departure",
+    "mode": "car"
+   }
+  ]
+ },
+ "phoneText": "SAT APR 24 · NASHVILLE, TENNESSEE · LAND DAY\nNashville, Tennessee ✎ Rename\nLock this day\nI couldn't reach the travel guides and maps for Nashville, Tennessee. Your trip is saved. Tap Build the guide on the Trip page when you're online.\nNo guide for Nashville, Tennessee yet\n\nKairoute will build the guide for Nashville, Tennessee from travel guides and maps: real sights, places to eat, the cruise port and stations.\n\nBuild the Nashville, Tennessee guide",
+ "stepDay": 1,
+ "bucket": {
+  "wayside.cities": "{}",
+  "kairoute.transit3": "{\"37.906,22.880,37.973,23.730|wk\":{\"t\":1795524979570,\"v\":10,\"partial\":true,\"opts\":[]},\"37.973,23.728,37.906,22.880|wk\":{\"t\":1795524979570,\"v\":10,\"partial\":true,\"opts\":[]},\"37.973,23.730,37.906,22.880|wk\":{\"t\":1795524979570,\"v\":10,\"partial\":true,\"opts\":[]},\"37.906,22.880,37.975,23.730|wk\":{\"t\":1795524979570,\"v\":10,\"partial\":true,\"opts\":[]},\"37.975,23.730,37.906,22.880|wk\":{\"t\":1795524979570,\"v\":10,\"partial\":true,\"opts\":[]},\"37.906,22.880,37.973,23.728|wk\":{\"t\":1795524979569,\"v\":10,\"partial\":true,\"opts\":[]},\"41.353,2.170,41.387,2.170|wk\":{\"t\":1795524913363,\"v\":10,\"partial\":true,\"opts\":[]}}",
+  "kairoute.lobbySeen": "1",
+  "kairoute.areas1": "{\"fira caldera path|36.4170|25.4310\":[],\"oia village|36.4618|25.3753\":[],\"akrotiri prehistoric town|36.3517|25.4033\":[],\"pyrgos village|36.3833|25.4500\":[],\"museum of prehistoric thera|36.4155|25.4320\":[]}",
+  "kairoute.bible1": "1",
+  "wayside.library": "[{\"id\":\"t1795524918967\",\"name\":\"Nashville by car\",\"updated\":1795524918968,\"trip\":{\"id\":\"t1795524918967\",\"name\":\"Nashville by car\",\"active\":0,\"sourceText\":\"\",\"portCheck\":null,\"style\":\"mix\",\"prefs\":{\"pace\":\"moderate\",\"walk\":\"medium\",\"interests\":[],\"travelers\":\"\",\"access\":\"none\",\"party\":2,\"lang\":\"English\",\"voice\":\"buttery\"},\"lodging\":{},\"days\":[{\"id\":\"d80\",\"date\":\"2027-04-23\",\"destination\":\"Nashville, Tennessee\",\"type\":\"arrival\",\"mode\":\"car\",\"time\":\"15:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":6,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null,\"estimated\":false},{\"id\":\"d81\",\"date\":\"2027-04-24\",\"destination\":\"Nashville, Tennessee\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null},{\"id\":\"d82\",\"date\":\"2027-04-25\",\"destination\":\"Nashville, Tennessee\",\"type\":\"departure\",\"mode\":\"car\",\"time\":\"11:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null,\"estimated\":false}],\"sample\":false,\"madeBy\":\"steps\",\"prefsSeen\":\"|0|\"}},{\"id\":\"sample-sunprincess-2027\",\"name\":\"Athens, Sun Princess cruise, Barcelona & Madrid\",\"updated\":1795524916319,\"trip\":{\"id\":\"sample-sunprincess-2027\",\"name\":\"Athens, Sun Princess cruise, Barcelona & Madrid\",\"active\":15,\"style\":\"mix\",\"prefs\":{\"pace\":\"moderate\",\"walk\":\"medium\",\"interests\":[\"bible\",\"churches\"],\"travelers\":\"\",\"access\":\"none\",\"party\":2,\"lang\":\"English\",\"voice\":\"buttery\"},\"lodging\":{\"barcelona\":{\"idx\":0}},\"days\":[{\"id\":\"d45\",\"date\":\"2027-06-30\",\"destination\":\"Athens\",\"type\":\"arrival\",\"mode\":\"flight\",\"time\":\"10:30\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":6,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"agia-ekaterini\",\"syntagma\",\"metropolis\",\"monastiraki\",\"plaka\"],\"cityKey\":null,\"seedSig\":\"agia-ekaterini|metropolis|monastiraki|plaka|syntagma\",\"autoEmpty\":false},{\"id\":\"d46\",\"date\":\"2027-07-01\",\"destination\":\"Athens\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"theatre-dionysus\",\"acropolis\",\"promenade\",\"areopagus\",\"agora\"],\"cityKey\":null,\"seedSig\":\"acropolis|agora|areopagus|promenade|theatre-dionysus\",\"autoEmpty\":false},{\"id\":\"d47\",\"date\":\"2027-07-02\",\"destination\":\"Athens\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"src-q242741\",\"src-q384813\",\"src-q844930\",\"philopappos\"],\"cityKey\":null,\"seedSig\":\"philopappos|src-q242741|src-q384813|src-q844930\",\"autoEmpty\":false},{\"id\":\"d48\",\"date\":\"2027-07-03\",\"destination\":\"Athens\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"src-q1168003\"],\"cityKey\":null,\"seedSig\":\"src-q1168003\",\"autoEmpty\":false},{\"id\":\"d49\",\"date\":\"2027-07-04\",\"destination\":\"Athens\",\"type\":\"embark\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"18:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"acromuseum\",\"olympieion\",\"src-q1160664\",\"kapnikarea\",\"roman-agora\"],\"cityKey\":\"athens piraeus\",\"destOrig\":\"Athens (Piraeus)\",\"seedSig\":\"acromuseum|kapnikarea|olympieion|roman-agora|src-q1160664\",\"autoEmpty\":false},{\"id\":\"d50\",\"date\":\"2027-07-05\",\"destination\":\"Heraklion\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"07:00\",\"allAboard\":\"16:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"knossos\",\"minas\",\"market\",\"lions\",\"titus\",\"heramuseum\",\"koules\"],\"cityKey\":\"heraklion crete\",\"destOrig\":\"Heraklion, Crete\",\"seedSig\":\"heramuseum|knossos|koules|lions|market|minas|titus\",\"autoEmpty\":false},{\"id\":\"d51\",\"date\":\"2027-07-06\",\"destination\":\"Kusadasi\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"09:00\",\"allAboard\":\"18:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"stjohn\",\"artemis\",\"ephesus\",\"marydouse\",\"pigeon\"],\"cityKey\":\"kusadasi ephesus\",\"destOrig\":\"Kusadasi (Ephesus)\",\"seedSig\":\"artemis|ephesus|marydouse|pigeon|stjohn\",\"autoEmpty\":false},{\"id\":\"d52\",\"date\":\"2027-07-07\",\"destination\":\"Santorini\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"07:00\",\"allAboard\":\"20:30\",\"tender\":true,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"fira\",\"prehistmus\",\"oia\",\"akrotiri\",\"pyrgos\"],\"cityKey\":null,\"seedSig\":\"akrotiri|fira|oia|prehistmus|pyrgos\",\"autoEmpty\":false},{\"id\":\"d53\",\"date\":\"2027-07-08\",\"destination\":\"Mykonos\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"20:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"wv~Q4785417\",\"wv~Q108611526\",\"chora\",\"paraportiani\",\"windmills\"],\"cityKey\":null,\"seedSig\":\"chora|paraportiani|windmills|wv~Q108611526|wv~Q4785417\",\"autoEmpty\":false},{\"id\":\"d54\",\"date\":\"2027-07-09\",\"destination\":\"Chania\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"nikolaos\",\"agora-ch\",\"wv~etz-hayyim-synagogue\",\"oldtown\",\"firkas\",\"harbor\"],\"cityKey\":\"chania crete\",\"destOrig\":\"Chania, Crete\",\"seedSig\":\"agora-ch|firkas|harbor|nikolaos|oldtown|wv~etz-hayyim-synagogue\",\"autoEmpty\":false},{\"id\":\"d55\",\"date\":\"2027-07-10\",\"destination\":\"At sea\",\"type\":\"sea\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null},{\"id\":\"d56\",\"date\":\"2027-07-11\",\"destination\":\"Messina\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"duomo-me\",\"wv~Q28669610\",\"museo-me\",\"wv~Q3673236\",\"wv~chiesa-del-carmine\",\"annunziata\"],\"cityKey\":\"messina sicily\",\"destOrig\":\"Messina, Sicily\",\"seedSig\":\"annunziata|duomo-me|museo-me|wv~Q28669610|wv~Q3673236|wv~chiesa-del-carmine\",\"autoEmpty\":false},{\"id\":\"d57\",\"date\":\"2027-07-12\",\"destination\":\"Naples\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"07:00\",\"allAboard\":\"18:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"wv~castel-nuovo\",\"plebiscito\",\"wv~Q645041\",\"duomo-na\",\"spaccanapoli\",\"sansevero\",\"museonaz\"],\"cityKey\":null,\"seedSig\":\"duomo-na|museonaz|plebiscito|sansevero|spaccanapoli|wv~Q645041|wv~castel-nuovo\",\"autoEmpty\":false},{\"id\":\"d58\",\"date\":\"2027-07-13\",\"destination\":\"Rome\",\"type\":\"port\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"07:00\",\"allAboard\":\"20:30\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"wv~Q2031943\",\"colosseum\",\"trevi\",\"pantheon\",\"navona\",\"wv~Q182955\",\"vatican\",\"wv~Q83425\"],\"cityKey\":\"civitavecchia rome\",\"destOrig\":\"Civitavecchia (Rome)\",\"seedSig\":\"colosseum|navona|pantheon|trevi|vatican|wv~Q182955|wv~Q2031943|wv~Q83425\",\"autoEmpty\":false},{\"id\":\"d59\",\"date\":\"2027-07-14\",\"destination\":\"At sea\",\"type\":\"sea\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null},{\"id\":\"d60\",\"date\":\"2027-07-15\",\"destination\":\"Barcelona\",\"type\":\"arrival\",\"mode\":\"ship\",\"time\":\"07:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":9,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"gothic\",\"rambla\",\"smdm\",\"picasso\",\"born\",\"palau\"],\"cityKey\":\"barcelona\",\"pointPicked\":true,\"pickNames\":{\"palau\":\"Palau de la Música Catalana\"}},{\"id\":\"d61\",\"date\":\"2027-07-16\",\"destination\":\"Barcelona\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"sagrada\",\"santpau\",\"batllo\",\"pedrera\",\"gracia\"],\"cityKey\":\"barcelona\"},{\"id\":\"d62\",\"date\":\"2027-07-17\",\"destination\":\"Barcelona\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:30\",\"hours\":7,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"montserrat\"],\"cityKey\":\"barcelona\"},{\"id\":\"d63\",\"date\":\"2027-07-18\",\"destination\":\"Barcelona\",\"type\":\"departure\",\"mode\":\"train\",\"time\":\"13:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"parkguell\"],\"cityKey\":\"barcelona\",\"pointPicked\":true},{\"id\":\"d64\",\"date\":\"2027-07-18\",\"destination\":\"Madrid\",\"type\":\"arrival\",\"mode\":\"train\",\"time\":\"15:45\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":5,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"wv~Q786291\"],\"cityKey\":null,\"pointPicked\":true,\"seedSig\":\"wv~Q786291\",\"autoEmpty\":false},{\"id\":\"d65\",\"date\":\"2027-07-19\",\"destination\":\"Madrid\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"sangin-s\",\"mayor\",\"almudena\",\"palacio\",\"prado\"],\"cityKey\":null,\"seedSig\":\"almudena|mayor|palacio|prado|sangin-s\",\"autoEmpty\":false},{\"id\":\"d66\",\"date\":\"2027-07-20\",\"destination\":\"Madrid\",\"type\":\"departure\",\"mode\":\"flight\",\"time\":\"16:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":[\"wv~Q3109752\",\"src-q1140249\",\"src-q1326261\"],\"cityKey\":null,\"pointPicked\":true,\"seedSig\":\"src-q1140249|src-q1326261|wv~Q3109752\",\"autoEmpty\":false}],\"sample\":true,\"example\":true,\"unopened\":true,\"datesChecked\":1,\"prefsSeen\":\"bible,churches|0|\"}}]",
+  "kairoute.sunprincess1": "1",
+  "kairoute.spread1": "1",
+  "wayside.trip2": "{\"id\":\"t1795524918967\",\"name\":\"Nashville by car\",\"active\":0,\"sourceText\":\"\",\"portCheck\":null,\"style\":\"mix\",\"prefs\":{\"pace\":\"moderate\",\"walk\":\"medium\",\"interests\":[],\"travelers\":\"\",\"access\":\"none\",\"party\":2,\"lang\":\"English\",\"voice\":\"buttery\"},\"lodging\":{},\"days\":[{\"id\":\"d80\",\"date\":\"2027-04-23\",\"destination\":\"Nashville, Tennessee\",\"type\":\"arrival\",\"mode\":\"car\",\"time\":\"15:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":6,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null,\"estimated\":false},{\"id\":\"d81\",\"date\":\"2027-04-24\",\"destination\":\"Nashville, Tennessee\",\"type\":\"land\",\"mode\":\"flight\",\"time\":\"\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null},{\"id\":\"d82\",\"date\":\"2027-04-25\",\"destination\":\"Nashville, Tennessee\",\"type\":\"departure\",\"mode\":\"car\",\"time\":\"11:00\",\"pointIdx\":0,\"portArrive\":\"08:00\",\"allAboard\":\"17:00\",\"tender\":false,\"startTime\":\"09:00\",\"hours\":8,\"alongWay\":true,\"returnToStart\":true,\"event\":\"\",\"selected\":null,\"cityKey\":null,\"estimated\":false}],\"sample\":false,\"madeBy\":\"steps\",\"prefsSeen\":\"|0|\"}",
+  "kairoute.devid2": "57utgujz",
+  "kairoute.intro1": "1"
+ },
+ "finished": "2026-11-24T12:57:52.390Z"
+}
