@@ -4,6 +4,10 @@ on:
     branches: ["claude/project-thread-65fiyt"]
     paths: ["tools/helper-warm.cjs", ".github/workflows/helper-warm.yml"]
   workflow_dispatch:
+    inputs:
+      canary_only:
+        description: "Only ask cold cities the way the app does (no warming)"
+        default: "false"
 permissions:
   contents: read
 jobs:
@@ -15,4 +19,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node tools/helper-warm.cjs
+      - name: Cold cities get their guide the way the app asks (R-31 canary)
+        run: node tools/helper-canary.cjs 10
+      - if: always() && github.event.inputs.canary_only != 'true'
+        run: node tools/helper-warm.cjs
