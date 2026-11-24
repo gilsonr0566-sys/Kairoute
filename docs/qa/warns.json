@@ -27,10 +27,10 @@
     {
       "rule": "SHIFT",
       "tool": "feel",
-      "where": "choose-sights|guide",
+      "where": "choose-sights",
       "owner": "Stop the select sites page jumping",
       "until": "2026-11-30",
-      "why": "header shrinking on scroll start and the Choose sights re-sort; fix written, waiting for release"
+      "why": "the Choose sights re-sort and fold; the scrolling part (pinned countdown leaving no width, E40) is fixed and the Guide is no longer covered by this warning"
     },
     {
       "rule": "SETTLES",

@@ -11,12 +11,16 @@
 //   WAIT-ENDS      (R-31) With every outside service hanging (never answering), no spinner is left on any screen, including in
 //                  folded cards, once the app's time limits have passed (the limits are shortened 20 times in this
 //                  check so it runs in seconds). (Escaped: a lookup with no time limit kept "More about today" spinning.)
+//   PIN-STEADY     (R-28) Scrolling a screen down and back up moves nothing on its own: whatever pins to the top as the page
+//                  scrolls (the day strip, the back-to-the-ship countdown) leaves its whole box behind. (Escaped Nov 24: the
+//                  pinned countdown left no width, the buttons beside it moved up a line and the page jumped 50 px on
+//                  Choose sights, the Guide and every day page with a countdown, at phone size.)
 //   RESUME-LEFT    (R-25) Reopening the app after Exit tour opens the Day plan, never the tour the traveler left. (Escaped
 //                  Nov 23.)
 //
 // Data sources: built-in places, places from sources, helper answers (refused or hanging), no internet. No AI, no spend.
 // Usage: node tools/client/steady-all.cjs [beta2-site/index.html]   TRIPS=g01,g04 (name prefixes)  SIZES=phone,tablet
-// Exit 1 on any failure. PLANT=redraw|settle|wait plants a known defect in the page to prove the check fires.
+// Exit 1 on any failure. PLANT=redraw|settle|wait|pinbox plants a known defect in the page to prove the check fires.
 const { chromium } = require('playwright'); const path = require('path'), http = require('http'), fs = require('fs');
 const ROOT = path.join(__dirname, '..', '..'), FILE = path.resolve(process.argv[2] || path.join(ROOT, 'beta2-site', 'index.html'));
 const CORPUS = process.env.CORPUS || path.join(ROOT, 'tools', 'beta2', 'corpus');
@@ -40,15 +44,17 @@ function appTrip(name, c) {
 // shortened time limits, and the planted defects.
 const PROBE = ([seed, plant]) => {
   try { const ls = localStorage; if (!ls.getItem('b2:__copied')) { ls.setItem('b2:__copied', '1'); ls.setItem('b2:__merged2', '1');
-    ls.setItem('b2:wayside.trip2', seed.trip); ls.setItem('b2:wayside.cities', seed.cities); ls.setItem('b2:kairoute.lobbySeen', '1');
+    if (seed.trip) { ls.setItem('b2:wayside.trip2', seed.trip); ls.setItem('b2:wayside.cities', seed.cities); } ls.setItem('b2:kairoute.lobbySeen', '1');
     ['intro1', 'sunprincess1', 'spread1', 'bible1', 'coach1', 'coachDone', 'tourTip'].forEach(k => ls.setItem('b2:kairoute.' + k, '1')); } } catch (e) {}
   const T = AbortSignal.timeout && AbortSignal.timeout.bind(AbortSignal); if (T) AbortSignal.timeout = ms => T(Math.max(40, ms / 20));
   const st = window.__steady = { shifts: 0, last: 0, n: 0 };
   try { new PerformanceObserver(l => { for (const e of l.getEntries()) if (!e.hadRecentInput) st.shifts += e.value; }).observe({ type: 'layout-shift', buffered: true }); } catch (e) {}
   addEventListener('DOMContentLoaded', () => { new MutationObserver(ms => { for (const m of ms) { const t = m.target.nodeType === 1 ? m.target : m.target.parentElement;
-      if (!t || t.closest('[role=status],[aria-live],.clock,.countdown,time,.spinner,.coach,.toast')) continue; if (m.type === 'attributes' && (/^(aria-|data-feel|style$)/.test(m.attributeName || '') || m.oldValue === m.target.getAttribute(m.attributeName))) continue; /* written again with the same value: nothing changed on screen */ st.last = performance.now(); st.n++; st.what = m.type + ' ' + (t.id ? '#' + t.id : t.tagName.toLowerCase() + '.' + String(t.className).split(' ')[0]) + (m.attributeName ? ' [' + m.attributeName + ']' : '') + ' "' + (t.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40) + '"'; } })
-    .observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, characterData: true });
+      if (!t || t.closest('[role=status],[aria-live],.clock,.countdown,time,.spinner,.coach,.toast')) continue; if (m.type === 'attributes' && (/^(aria-|data-feel|style$)/.test(m.attributeName || '') || m.oldValue === m.target.getAttribute(m.attributeName))) continue; /* written again with the same value: nothing changed on screen */
+      if (m.type === 'characterData' && m.oldValue === m.target.data) continue; /* the same words written again (a clock's minute tick that lands on the same time) */ st.last = performance.now(); st.n++; st.what = (m.type === 'characterData' ? '"' + String(m.oldValue).slice(0, 20) + '" became ' : '') + m.type + ' ' + (t.id ? '#' + t.id : t.tagName.toLowerCase() + '.' + String(t.className).split(' ')[0]) + (m.attributeName ? ' [' + m.attributeName + ']' : '') + ' "' + (t.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40) + '"'; } })
+    .observe(document.body, { subtree: true, childList: true, attributes: true, attributeOldValue: true, characterData: true, characterDataOldValue: true });
     // Planted defects (each a way this class has gone wrong before): the check must catch every one.
+    if (plant === 'pinbox') window.__kairoutePlant = 'pinbox'; /* the app's own plant switch: the pinned countdown keeps its height but not its width (the Nov 24 bug) */
     if (plant === 'redraw') { const v = document.getElementById('view'); new MutationObserver(() => { if (!window.__pl) { window.__pl = 1; v.style.paddingTop = '57px'; requestAnimationFrame(() => requestAnimationFrame(() => { v.style.paddingTop = ''; window.__pl = 0; })); } }).observe(v, { attributes: true, attributeFilter: ['class'] }); } /* the Nov 23 tablet bug: each redraw reset the view's classes and the screen dropped for a frame */
     if (plant === 'settle') { let k = 0; const id = setInterval(() => { const v = document.querySelector('#view .dayhead, #view h2'); if (v) v.setAttribute('data-tick', String(k++)); if (k > 40) clearInterval(id); }, 150); }
     if (plant === 'wait') { const v = document.getElementById('view'); new MutationObserver(() => { const c = document.querySelector('#view details .card, #view details > :not(summary), #view .card'); if (c && !c.querySelector('.planted')) c.insertAdjacentHTML('beforeend', '<p class="ai-note planted"><span class="spinner"></span> Looking that up…</p>'); }).observe(v, { childList: true }); }
@@ -64,11 +70,15 @@ const SPINNERS = () => [...document.querySelectorAll('.spinner, [aria-busy="true
   .map(x => { let a = x.parentElement; while (a && a !== document.body && !(a.textContent || '').trim()) a = a.parentElement; return ((a && a.textContent) || '').trim().replace(/\s+/g, ' ').slice(0, 70); });
 (async () => {
   const browser = await chromium.launch(), srv = await serve();
-  const files = fs.readdirSync(CORPUS).filter(f => f.endsWith('.json')).sort().filter(f => !ONLY.length || ONLY.some(o => f.startsWith(o)));
+  // The saved test trips, and the example trip the app itself puts in front of a first-time traveler (its port days know
+  // their piers, so the back-to-the-ship countdown shows; the saved trips' port days ask for the pier first).
+  const files = ['example', ...fs.readdirSync(CORPUS).filter(f => f.endsWith('.json')).sort()].filter(f => !ONLY.length || ONLY.some(o => f.startsWith(o)));
   for (const f of files) {
-    let c; try { c = JSON.parse(fs.readFileSync(path.join(CORPUS, f), 'utf8')); } catch (e) { fail('NOT TESTED', f, 'trip file unreadable'); continue; }
-    if (!c.days || !c.cities) { fail('NOT TESTED', f, 'trip file has no days or places'); continue; }
-    const name = f.replace(/\.json$/, ''), a = appTrip(name, c), seed = { trip: JSON.stringify(a.trip), cities: JSON.stringify(a.cities) }; counts.trips++;
+    let seed = { trip: null, cities: null }, name = 'example';
+    if (f !== 'example') { let c; try { c = JSON.parse(fs.readFileSync(path.join(CORPUS, f), 'utf8')); } catch (e) { fail('NOT TESTED', f, 'trip file unreadable'); continue; }
+      if (!c.days || !c.cities) { fail('NOT TESTED', f, 'trip file has no days or places'); continue; }
+      name = f.replace(/\.json$/, ''); const a = appTrip(name, c); seed = { trip: JSON.stringify(a.trip), cities: JSON.stringify(a.cities) }; }
+    counts.trips++;
     for (const size of PICK) { const vp = SIZES[size]; if (!vp) continue;
       for (const net of ['refused', 'hanging']) {
         const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, isMobile: vp.isMobile, hasTouch: true, deviceScaleFactor: 1, timezoneId: 'America/Chicago' });
@@ -86,7 +96,7 @@ const SPINNERS = () => [...document.querySelectorAll('.spinner, [aria-busy="true
         // then the Journal and Settings.
         const kinds = []; for (const d of days) if (!kinds.some(k => k.type === d.type)) kinds.push(d); // one day of each kind, then the first and last
         for (const d of [days[0], days[days.length - 1]]) if (d && !kinds.includes(d)) kinds.push(d);
-        const screens = [['trip', 0]]; kinds.slice(0, +process.env.DAYS || 7).sort((a, b) => a.i - b.i).forEach(d => screens.push(['plan', d.i])); shore.slice(0, 2).forEach(i => screens.push(['sites', i], ['guide', i])); screens.push(['journal', 0], ['settings', 0]);
+        const screens = [['trip', 0]]; kinds.slice(0, +process.env.DAYS || 7).sort((a, b) => a.i - b.i).forEach(d => screens.push(['plan', d.i])); const port = days.find(d => d.type === 'port'); [...new Set([...shore.slice(0, 2), ...(port ? [port.i] : [])])].forEach(i => screens.push(['sites', i], ['guide', i])); /* and the first port day: its pages carry the back-to-the-ship countdown */ screens.push(['journal', 0], ['settings', 0]);
         for (const [v, i] of (net === 'refused' ? screens : screens.filter(s => s[0] === 'plan' || s[0] === 'guide'))) {
           const where = `${tag} ${v}${v === 'plan' || v === 'sites' || v === 'guide' ? ' day ' + (i + 1) : ''}`;
           const t0 = await p.evaluate(([v, i]) => { window.__kairouteGo(v, i); return performance.now(); }, [v, i]).catch(e => { fail('ERROR', where, 'could not open: ' + e.message.slice(0, 80)); return null; });
@@ -103,6 +113,16 @@ const SPINNERS = () => [...document.querySelectorAll('.spinner, [aria-busy="true
             const far = (x, y) => { const [a1, b1] = x.split(',').map(Number), [a2, b2] = y.split(',').map(Number); return Math.abs(a1 - a2) > 2 || Math.abs(b1 - b2) > 2; }; /* under 3 px is rounding (a fraction of a pixel), not a move anyone sees */
             const moved = Object.keys(before).filter(k => k in after && far(before[k], after[k])).map(k => `${k.split(' ').slice(1).join(' ') || k} ${before[k]}→${after[k]}`);
             if (sh > 0.01 || moved.length) fail('STEADY-REDRAW', where, `a redraw of the same screen moved things (layout shift ${sh.toFixed(3)}${moved.length ? '; ' + moved.slice(0, 3).join('; ') : ''})`);
+            // PIN-STEADY: scroll the page (and a side-by-side list pane) down in small steps and back to the top, one frame
+            // at a time, as a finger does; anything that pins as it goes must not move the rest (layout shift, no input).
+            const ps = await p.evaluate(async () => { const F = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+              const s0 = window.__steady.shifts, se = document.scrollingElement, panes = [se, ...document.querySelectorAll('#view [data-pane]')].filter(e => e && e.scrollHeight > e.clientHeight + 40);
+              let pinned = 0; for (const e of panes) { const end = Math.min(e.scrollHeight - e.clientHeight, 2400);
+                for (let y = 0; y <= end; y += 60) { e.scrollTop = y; if (e === se) dispatchEvent(new Event('scroll')); await F(); pinned = Math.max(pinned, document.querySelectorAll('.pinned').length); }
+                for (let y = end; y >= 0; y -= 60) { e.scrollTop = y; if (e === se) dispatchEvent(new Event('scroll')); await F(); } e.scrollTop = 0; await F(); }
+              return { sh: window.__steady.shifts - s0, panes: panes.length, pinned }; }).catch(() => ({ sh: 0, panes: 0, pinned: 0 }));
+            counts.scrolled = (counts.scrolled || 0) + (ps.panes ? 1 : 0); counts.pins = (counts.pins || 0) + (ps.pinned ? 1 : 0);
+            if (ps.sh > 0.01) fail('PIN-STEADY', where, `scrolling the screen down and back moved things by itself (layout shift ${ps.sh.toFixed(3)}${ps.pinned ? ', while something pinned to the top' : ''})`);
           } else {
             // WAIT-ENDS: open every folded card, then wait past the (shortened) time limits; no spinner may be left.
             await p.waitForTimeout(800);
@@ -143,14 +163,15 @@ const SPINNERS = () => [...document.querySelectorAll('.spinner, [aria-busy="true
   for (let k = fails.length - 1; k >= 0; k--) { const x = fails[k], w = W.find(w => w.rule === x.rule && !NEVER.has(w.rule) && w.until >= today && w.until <= week && (!w.where || new RegExp(w.where).test(x.where || '')));
     if (w) { fails.splice(k, 1); console.log(`WARN ${x.rule} 1 (known: ${w.owner} until ${w.until}) [${x.where}] ${x.why}`); } }
   const by = {}; fails.forEach(x => { by[x.rule] = (by[x.rule] || 0) + 1; });
-  console.log(`\nSteady screens: ${counts.trips} trips, ${counts.screens} screens opened, ${counts.redraws} redraws, ${counts.hung} screens with hanging services, ${counts.resumes} tours reopened`);
+  console.log(`\nSteady screens: ${counts.trips} trips, ${counts.screens} screens opened, ${counts.redraws} redraws, ${counts.hung} screens with hanging services, ${counts.resumes} tours reopened, ${counts.scrolled || 0} screens scrolled (${counts.pins || 0} with something pinning)`);
+  if (counts.trips && !counts.pins && PICK.includes('phone')) { fails.push({ rule: 'NOT TESTED' }); console.log('FAIL NOT TESTED [PIN-STEADY] no screen pinned anything while scrolling at phone size'); by['NOT TESTED'] = (by['NOT TESTED'] || 0) + 1; }
   if (counts.trips && !counts.resumes) { fails.push({ rule: 'NOT TESTED' }); console.log('FAIL NOT TESTED [RESUME-LEFT] no trip could start and exit a tour'); by['NOT TESTED'] = (by['NOT TESTED'] || 0) + 1; }
   for (const [k, n] of Object.entries(by)) console.log(`FAIL ${k} ${n}`);
   // Proof, every run: each planted defect (a way this class has gone wrong before) must be caught by its rule.
   if (!PLANT && !process.env.NO_PROOF) {
     const { spawnSync } = require('child_process');
-    for (const [plant, rule] of [['redraw', 'STEADY-REDRAW'], ['settle', 'SETTLES'], ['wait', 'WAIT-ENDS']]) {
-      const r = spawnSync(process.execPath, [__filename, FILE], { env: Object.assign({}, process.env, { PLANT: plant, TRIPS: 'g01', SIZES: 'phone', NO_PROOF: '1' }), encoding: 'utf8', timeout: 900000 });
+    for (const [plant, rule] of [['redraw', 'STEADY-REDRAW'], ['settle', 'SETTLES'], ['wait', 'WAIT-ENDS'], ['pinbox', 'PIN-STEADY']]) {
+      const r = spawnSync(process.execPath, [__filename, FILE], { env: Object.assign({}, process.env, { PLANT: plant, TRIPS: plant === 'pinbox' ? 'example' : 'g01', SIZES: 'phone', NO_PROOF: '1' }), encoding: 'utf8', timeout: 900000 });
       const caught = r.status === 1 && new RegExp('^FAIL ' + rule + ' [0-9]', 'm').test(r.stdout || '');
       console.log(`${caught ? 'ok  ' : 'FAIL'} planted ${plant}: ${caught ? 'caught by ' + rule : 'NOT caught by ' + rule + ' (the check is blind)'}`);
       if (!caught) fails.push({ rule: 'PROOF', where: plant, why: 'planted defect not caught' });

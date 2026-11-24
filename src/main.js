@@ -5003,8 +5003,10 @@ function pinChip() {
   pinDay(); const c = document.getElementById("cdCard"); if (!c) return pinBand();
   const was = c.classList.contains("pinned"), row = document.getElementById("dayRow");
   const at = 8 + (row && row.classList.contains("pinned") ? row.offsetHeight - 2 : 0); // pins just below the pinned day strip
-  if (!was) { const r = c.getBoundingClientRect(); if (r.height && r.top < at) { c.style.height = r.height + "px"; c.classList.add("pinned"); } }
-  else if (c.getBoundingClientRect().top >= at) { c.classList.remove("pinned"); c.style.height = ""; }
+  // Pinning leaves the card's whole box behind, width as well as height (R-28; Nov 24 feel check: the empty card shrank to
+  // no width, the buttons beside it on the phone's wrapped header moved up a line and the whole page jumped 50 px).
+  if (!was) { const r = c.getBoundingClientRect(); if (r.height && r.top < at) { if (window.__kairoutePlant !== "pinbox") c.style.width = r.width + "px"; c.style.height = r.height + "px"; c.classList.add("pinned"); } } // "pinbox": planted bug for steady-all PIN-STEADY
+  else if (c.getBoundingClientRect().top >= at) { c.classList.remove("pinned"); c.style.height = ""; c.style.width = ""; }
   pinBand();
 }
 // A pinned strip or banner never covers content (Richard, Nov 24: the LEAVE BY banner sat over a sight's name). Everything
