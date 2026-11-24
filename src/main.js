@@ -1137,7 +1137,7 @@ function bumpWhy(d, b) {
 // numbers"; Richard, Nov 22: every reason on screen traces to real data).
 // A lunch brought along and eaten during a long visit (the planner times it inside the visit, around midday).
 function lunchInLine(s) {
-  const L = s && s.lunchIn; if (!L || !isFinite(L.at)) return "";
+  const L = s && s.lunchIn; if (!L || !isFinite(L.at)) return s && s.lunchSay ? `<div class="sub lunchin">${esc(s.lunchSay)}</div>` : "";
   const buy = L.packed && typeof packedWords === "function" ? packedWords(L) : "";
   return `<div class="sub lunchin">Lunch during this visit: bring your own, eat about ${fmt(L.at)} (${dur(L.min || 0)})${buy ? ". " + esc(buy) : ""}.</div>`;
 }
@@ -1229,6 +1229,8 @@ function seedPicks(d, city) {
   if (!d.selected) { const w = wantIds(d, city); const ds = defaultSelection(city, trip.style, d); d.selected = [...new Set([...w, ...ds])]; fitTrim(d, w.length ? w : ds.lead ? [ds.lead] : []); w.forEach(id => markMine(d, id, true)); d.autoEmpty = !d.selected.length; d.seedSig = seedSigOf(d); made = true; wantsFind(d, city); }
   if (made && !seedSave) seedSave = setTimeout(() => { seedSave = null; save(); }, 0);
 }
+// For the checks (ticks-match-check): the day's guide installed again on days with no picks yet, as a guide arriving does.
+if (typeof window !== "undefined") window.__kairouteReinstall = i => { const d = trip.days[i], c = cityFor(d); if (!c) return false; trip.days.forEach(o => { if (cityFor(o) === c) { o.selected = null; ["seedSig", "mine", "ownList", "anchor", "autoEmpty", "cleared"].forEach(k => delete o[k]); } }); installGuide(d, c); return trip.days.filter(o => cityFor(o) === c).map(o => ({ selected: (o.selected || []).length, appSeeded: appSeeded(o) })); };
 // Places the traveler named for a day when they described the trip ("Naples on July 12, we want Pompeii and
 // Sorrento"): they are that day's picks from the start, the traveler's own (kept like a tick), and no other day takes
 // them. The guide's own sight is used when it has one; a place the guide doesn't list is looked up once by name
@@ -2970,7 +2972,10 @@ function installGuide(d, c) {
   // is kept, and every pick is carried over to the same sight in the new guide.
   if (prev) carryGuide(prev, c);
   cities[key] = c;
-  trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; delete x.pointPicked; if (prev && x.selected) carryPicks(x, prev, c); if (!x.selected) { x.selected = defaultSelection(c, trip.style, x); fitTrim(x); } } });
+  trip.days.forEach(x => { if (keyOf(x.destination) === keyOf(label) && !x.event === !d.event) { x.cityKey = key; x.pointIdx = 0; delete x.pointPicked; if (prev && x.selected) carryPicks(x, prev, c); if (!x.selected) seedPicks(x, c); } });
+  // The starting picks are the app's, marked as such (seedPicks), so the planner fills the day and the picker ticks
+  // what it planned. Picks set here without the mark (Nov 23 outside test, Dublin: two sights closed by the evening
+  // arrival stayed ticked as if the traveler's, while the plan showed two other sights the planner chose).
   save();
 }
 // A guide for a place: the AI writer when it's on; when it's off, or when it can't answer (the day's allowance used up,
@@ -6206,6 +6211,12 @@ let openCard = null, picksOpen = true; // the traveler's own sights show first, 
 // interest labels. A tap opens the rest (one card at a time).
 function siteCard(s, d, plan, nr) {
   const city = cityFor(d), sel = d.selected || [], kids = kidsOf(s, city), kidOn = kids.find(k => sel.includes(k.id)), on = sel.includes(s.id) || !!kidOn, anc = nr && nr.anc, isAnc = anc && s === anc;
+  // A day-trip town's own sights are stops of their own on the Day plan (each palace, then the walk through the town), so
+  // each has its own tick inside the town's card, and the town's tick is the town's own visit only (Nov 23 outside test:
+  // "Sintra" ticked while the plan had four palaces and the town as five stops, on 13 of 174 days). A sight inside a
+  // bigger one (the Parthenon in the Acropolis) is seen in that visit, so it stays "Included" and ticks its host.
+  const townKids = kids.filter(k => k.town != null && String(k.town) === String(s.id)), inclKids = kids.filter(k => !townKids.includes(k));
+  const tickOn = sel.includes(s.id) || inclKids.some(k => sel.includes(k.id));
   // How far from where the day starts (the list's order), so the line never changes as you tick.
   const st = nr && nr.st, near = st && isFinite(s.lat) && isFinite(s.lng) ? hav(st, s) : null, nearTo = st;
   const other = plannedElsewhere(d)[s.id];
@@ -6217,7 +6228,8 @@ function siteCard(s, d, plan, nr) {
   } else if (on) badge = pickStatus(sel.includes(s.id) ? s : kidOn, plan).replace('class="tag ', 'class="tag fitbadge ');
   const sym = priceSym(city), nm = showName(s) || s.name;
   const l2 = [dur(s.minutes), (pr => pr == null ? "" : pr > 0 ? sym + pr : "Free")(priceOf(s, city)), s.far ? "Day trip" : "", near != null ? (near < 0.05 ? "At " + nearTo.name : distTxt(near, true) + " from " + nearTo.name) : ""].filter(Boolean).map(esc).join(" · ");
-  const incl = kids.length ? `<div class="incl"><b>Included:</b> ${kids.map(k => esc(showName(k) || k.name)).join(" · ")}</div>` : "";
+  const incl = (inclKids.length ? `<div class="incl"><b>Included:</b> ${inclKids.map(k => esc(showName(k) || k.name)).join(" · ")}</div>` : "")
+    + (townKids.length ? `<div class="partpick townpick"><span class="eyebrow">Sights in ${esc(nm)}</span>${townKids.map(k => { const kn = showName(k) || k.name; return `<label class="partchk"><input type="checkbox" data-site="${esc(k.id)}" ${sel.includes(k.id) ? "checked" : ""} aria-label="Pick ${esc(kn)}"><span>${esc(kn)} <small>${dur(k.minutes)}</small></span></label>`; }).join("")}</div>` : "");
   const l3 = `<div class="tags ints">${cardLabels(s, city, nr && nr.my).map(x => `<span class="tag int${x.mine ? " mine" : " kind"}">${esc(x.t)}</span>`).join("")}</div>`;
   const ex = ((plan && plan.elsewhere) || []).find(x => x.s.id === s.id);
   const seen = other ? `<span class="tag seen">${!on ? "Planned " + esc(schedWhen(other)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>` : "";
@@ -6238,7 +6250,7 @@ function siteCard(s, d, plan, nr) {
     <span class="nobox" aria-hidden="true"></span>
     <div class="body">${head}${det}</div></div>`;
   return `<label class="site ${on ? "on" : ""}${isAnc ? " anchor" : ""}${open}" for="s-${esc(s.id)}" data-card="${esc(s.id)}">
-    <input type="checkbox" id="s-${esc(s.id)}" data-site="${esc(s.id)}" ${on ? "checked" : ""} aria-label="Pick ${esc(nm)}">
+    <input type="checkbox" id="s-${esc(s.id)}" data-site="${esc(s.id)}" ${tickOn ? "checked" : ""} aria-label="Pick ${esc(nm)}">
     <div class="body">${head}${on && seen ? `<div class="tags">${seen}</div>` : ""}${det}</div>
   </label>`;
 }
@@ -7758,8 +7770,10 @@ document.addEventListener("change", e => {
     if (t.checked && !addPick(d, id, true)) { t.checked = false; return; }
     delete d.autoEmpty; d.ownList = true; // the traveler's first tick or untick makes the list theirs
     if (t.checked) { d.anchor = id; delete d.cleared; }
-    else { const ks = kidsOf({ id }, cityFor(d)).map(k => k.id); d.selected = d.selected.filter(x => x !== id && !ks.includes(x)); [id, ...ks].forEach(x => markMine(d, x, false)); if (d.anchor === id) d.anchor = null; if (!d.selected.length) d.cleared = true; } // a bigger sight comes off with what's inside it // unticking the last one: the day stays free
-    const back = cardSpot(id); save(); renderKeep(); back(); return; // the list never jumps (Richard, Nov 16); every change here is in the trip, which keys the plans
+    else { const ks = kidsOf({ id }, cityFor(d)).filter(k => k.town == null || String(k.town) !== String(id)).map(k => k.id); d.selected = d.selected.filter(x => x !== id && !ks.includes(x)); [id, ...ks].forEach(x => markMine(d, x, false)); if (d.anchor === id) d.anchor = null; if (!d.selected.length) d.cleared = true; } // a bigger sight comes off with what's inside it (a town's own sights have their own ticks) // unticking the last one: the day stays free
+    const back = cardSpot(id); save(); renderKeep(); back(); // the list never jumps (Richard, Nov 16); every change here is in the trip, which keys the plans
+    if (window.__kairoutePlant === "resort") { pickFrozen = null; renderKeep(); } // planted bug for the steady-sights check's own proof (R-28): re-sorting after a tap
+    return;
   }
   if (t.dataset && t.dataset.part) {
     const [sid, k] = t.dataset.part.split(":"), s = allSites(cityFor(day())).find(x => x.id === sid); if (!s || !s.parts) return;

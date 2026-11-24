@@ -1022,7 +1022,18 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
           `${inner.name} inside the gated ${town.name} is part of that visit (+${E.foldExtra(inner)} min), not a stop of its own (got ${sb && sb.min} of ${town.minutes} + ${E.foldExtra(inner)} min, own stop: ${!!ib}, trimmed ${sb && sb.trimmed})`);
         else { ok(sb && sb.min === town.townWalk && (b.explain || []).some(t => t.startsWith(town.name + ' gets ' + town.townWalk + ' min, the walk to ' + inner.name)), `${town.name} with ${inner.name} picked too becomes the walk to it, and says so (got ${sb && sb.min} min)`);
           ok(open == null || (ib && ib.at >= open), `a sight inside a gated town is never planned before the town opens (${inner.name} at ${ib && E.clock(ib.at)}, opens ${open == null ? '?' : E.clock(open)})`); } }
-      else ok(false, 'a town with its own sights is in the test trip'); } }
+      else ok(false, 'a town with its own sights is in the test trip');
+      // Nov 23 outside test (Sintra): planned together without the traveler's ticks (the guide's day trip there, a set
+      // list), an open town is the walk to its sight all the same, never its whole visit again beside it, and never says
+      // "you picked".
+      let openTown = 0;
+      for (let k = 0; k < s0.days.length; k++) for (const t of ((s0.cities[s0.days[k].city] || {}).farther || []).filter(t => t.townWalk && t.minutes > t.townWalk)) {
+        const tdy = (s0.days[k].sites || {})[t.id], inn = s0.cities[s0.days[k].city].farther.find(x => x.town === t.id);
+        if (!inn || (tdy && tdy.oh && tdy.oh.spans && tdy.oh.spans.length) || (inn.minutes || 30) <= 15) continue;
+        const sc = JSON.parse(JSON.stringify(s0)); sc.days[k].selected = []; sc.days[k].only = [t.id, inn.id]; const c = E.planTrip(sc)[k], it = c && (c.items || []).find(x => String(x.id) === String(t.id));
+        if (!it || !(c.items || []).some(x => String(x.id) === String(inn.id))) continue; openTown++;
+        ok(it.min === t.townWalk && (c.explain || []).some(x => x.startsWith(t.name + ' gets ' + t.townWalk + ' min, the walk to ' + inn.name) && !/you picked/.test(x)), `${t.name} planned with ${inn.name} by the app (no ticks) is the walk to it (got ${it.min} of ${t.minutes} min; ${(c.explain || []).filter(x => x.startsWith(t.name + ' gets ')).join(' ')})`); }
+      ok(openTown > 0, `an open town planned with its own sight is in the test trip (${openTown})`); } }
   ok(E.notPublicEat({ name: "Metropolitan Officers' Cafeteria" }) && E.notPublicEat({ name: 'Cafe', access: 'private' }) && !E.notPublicEat({ name: 'Trattoria da Enzo' }), 'a staff or officers\' canteen, or a private place, is never a place to eat');
   // Round 1 (Nov 20): no ride option far slower than the road, and on a day with a time to be back none that would get the
   // traveler back late (a ferry to another island across a city, a train back landing after the time to be back).
