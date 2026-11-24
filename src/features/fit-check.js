@@ -330,12 +330,20 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && fitState) 
 // the rest are checked in small batches right after the list draws, and their cards update in place.
 // A sight moved off another day changes what fits everywhere (one sight, one day): every mark is checked again.
 let fitEpoch = 0;
-let sitesCtx = null, fitMemo = { key: "", res: new Map(), add: new Map() }, fitQueue = [], fitTimer = 0;
+let sitesCtx = null, fitMemo = { key: "", res: new Map(), add: new Map(), boat: new Set(), boatDone: new Set() }, fitQueue = [], fitTimer = 0;
 const fitKey = d => { try { return JSON.stringify([trip.days.indexOf(d), d, trip.lodging, trip.prefs, trip.style, fitEpoch]); } catch (e) { return String(Math.random()); } };
 function fitCostOf(plan, s) { if (fitMemo.add.has(s.id)) return { min: fitMemo.add.get(s.id), spare: 0, exact: true }; try { const c = stopCost(plan, s); return { min: c.min, spare: Math.max(0, c.spare) }; } catch (e) { return { min: s.minutes || 45, spare: 0 }; } }
 function timeLeft(plan, d) { const m = meterCalc(plan, d); return m ? { left: Math.max(0, m.avail - m.used), m } : null; }
+const fitWet = s => !!s && (!!s.acrossWater || (typeof KEngine !== "undefined" && (KEngine.byBoat(s.travelNote || s.travel || "") || KEngine.waterOnly(s))));
+// A stop reached by boat gets its own check, whatever the fit: does a timetable confirm its boat (fitRefine)? Asked by
+// every card drawn for a sight not picked (the list's own fit marks may come from elsewhere, so not from siteFits).
+function boatAsk(d, s) {
+  const k = fitKey(d); if (fitMemo.key !== k) { fitMemo = { key: k, res: new Map(), add: new Map(), boat: new Set(), boatDone: new Set() }; fitQueue = []; }
+  if (fitWet(s) && !fitMemo.boatDone.has(s.id) && !fitQueue.includes("b:" + s.id)) { fitQueue.unshift("b:" + s.id); clearTimeout(fitTimer); fitTimer = setTimeout(fitRefine, 30); }
+  return fitMemo.boat.has(s.id);
+}
 function siteFits(d, s, plan) {
-  const k = fitKey(d); if (fitMemo.key !== k) { fitMemo = { key: k, res: new Map(), add: new Map() }; fitQueue = []; }
+  const k = fitKey(d); if (fitMemo.key !== k) { fitMemo = { key: k, res: new Map(), add: new Map(), boat: new Set(), boatDone: new Set() }; fitQueue = []; }
   if (fitMemo.res.has(s.id)) return fitMemo.res.get(s.id);
   const m = meterCalc(plan, d); if (m && (m.over || m.dropped.length || (plan && plan.noLunch === "time"))) { fitMemo.res.set(s.id, false); return false; } // already full (or no time for lunch): nothing more fits
   if (!fitQueue.includes(s.id)) fitQueue.push(s.id);
@@ -367,6 +375,15 @@ function fitRefine() {
   try { while (fitQueue.length) {
     if (performance.now() - t0 > 10 || (performance.now() > t0 && pend())) break;
     const id = fitQueue.shift();
+    // A stop reached only by a boat no timetable confirms, on a day with a time to be back (R-06, Nov 24: a Greek island
+    // offered from a Turkish port as "Needs 6 h 51 min"): the card says so, never a plain fit or a bare time. The traveler
+    // may still pick it and it is planned with its warning (Richard, Nov 21); it never looks like an ordinary day trip.
+    if (String(id).startsWith("b:")) { const bid = id.slice(2), bs = allSites(city).find(x => x.id === bid); fitMemo.boatDone.add(bid);
+      if (!bs || (d.selected || []).includes(bid)) continue;
+      const own = p => ((p && p.items) || []).some(x => x.type === "travel" && x.leg && x.leg.ownBoat);
+      let r = null; try { r = fitTrial(d, [...d.selected, bid], null, true); } catch (e) {}
+      if (r && own(r.p) && !own(baseNow())) { fitMemo.boat.add(bid); const el = document.querySelector(`#view [data-card="${CSS.escape(bid)}"]`); if (el) el.outerHTML = siteCard(bs, d, ctx.plan, ctx.near); }
+      continue; }
     if (fitMemo.res.has(id)) continue;
     const s = allSites(city).find(x => x.id === id);
     // The same full-day plan decides both the mark and its number: "+24 min" is how much later the day really ends.

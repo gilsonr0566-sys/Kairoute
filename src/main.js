@@ -6225,7 +6225,9 @@ function siteCard(s, d, plan, nr) {
   let badge = "", fs;
   if (!on && plan && !plan.error) {
     fs = nr && nr.fs && nr.fs.get(s.id) !== undefined ? nr.fs.get(s.id) : siteFits(d, s, plan); const c = fitCostOf(plan, s);
-    badge = fs === false ? `<button type="button" class="tag nofit fitbadge" data-act="fitask" data-id="${esc(s.id)}" title="Ways to fit it in">Needs ${dur(c.min)}</button>`
+    // Only by a boat no timetable confirms, on a day with a time to be back (R-06): said as such, never as an ordinary fit.
+    badge = boatAsk(d, s) ? `<button type="button" class="tag nofit fitbadge" data-act="fitask" data-id="${esc(s.id)}" title="No sailing times are confirmed for this boat">No confirmed boat${fs === false ? " · Needs " + dur(c.min) : ""}</button>`
+      : fs === false ? `<button type="button" class="tag nofit fitbadge" data-act="fitask" data-id="${esc(s.id)}" title="Ways to fit it in">Needs ${dur(c.min)}</button>`
       : fs === true ? `<span class="tag fit fitbadge">${c.exact && c.min < 5 ? "Fits, same finish" : "+" + dur(c.min)}</span>` : `<span class="tag fitbadge pending" aria-hidden="true">+${dur(c.min)}</span>`; // same space while it's checked, so nothing moves
   } else if (on) badge = pickStatus(sel.includes(s.id) ? s : kidOn, plan).replace('class="tag ', 'class="tag fitbadge ');
   const sym = priceSym(city), nm = showName(s) || s.name;

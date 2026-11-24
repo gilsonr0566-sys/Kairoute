@@ -96,6 +96,13 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // The list shows once it is sorted (Nov 23 steady list): read it when the traveler can see it.
   await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 20000, polling: 100 }).catch(() => {}); await p.waitForTimeout(300);
   const yp = p.locator('[data-act="picksfold"][aria-expanded="false"]').first(); if (await yp.isVisible().catch(() => false)) { await yp.tap(); await p.waitForTimeout(500); }
+  // R-06 (Nov 24: a Greek island offered from a Turkish port as "Needs 6 h 51 min"): on a ship day, every sight not picked
+  // that only a boat reaches, with no sailing times confirmed, says "No confirmed boat" on its card, never a bare fit or
+  // time; every other card never says it.
+  { await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 20000, polling: 100 }).catch(() => {}); await p.waitForTimeout(1500);
+    const cards = await p.$$eval('#view [data-card]', xs => xs.map(x => ({ id: x.dataset.card, b: ((x.querySelector('.fitbadge') || {}).innerText || '').trim() })));
+    const isle = cards.find(c => /capri/.test(c.id)), wrong = cards.filter(c => /No confirmed boat/.test(c.b) && !/capri|ischia|procida/.test(c.id));
+    check('On a ship day a sight only a boat with no confirmed sailings reaches says "No confirmed boat", never a fit or a bare time', !!isle && /^No confirmed boat/.test(isle.b) && !wrong.length, isle ? `${isle.id}: "${isle.b}"; wrongly marked: ${wrong.map(c => c.id).join(', ') || 'none'}` : 'no island card'); }
   // Nov 21 live re-check: with the day's sights on, the box for a place reached only by boat said "Even with nothing else
   // picked, it can't fit this day" on a day it fits alone, and offered no way. It offers the sights to swap for it.
   { const isle = await p.evaluate(() => [...document.querySelectorAll('[data-act="fitask"]')].map(x => x.dataset.id).find(id => window.__kairouteBoatPlace(id)) || null);

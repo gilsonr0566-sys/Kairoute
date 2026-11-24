@@ -146,7 +146,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         // it is, its steps say how to make it, the guide's words are a note beside it.
         const leg = { mode: MODE[x.mode] || "ride", kind: UIKIND[x.kind] || (x.mode === "walk" ? "walk" : "car"), how: x.how || (x.mode === "walk" ? "Walk" : "Taxi or car"), km: x.km || 0, min: x.min || 0 };
         if (x.pierName) leg.pier = x.pierName; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to; if (x.options) leg.options = x.options;
-        if (x.ans) leg.transit = x.ans; if (x.steps) leg.steps = x.steps; if (x.note) leg.note = x.note; if (x.lost) leg.lost = x.lost; if (x.slack) leg.slack = x.slack; if (x.swapWhy) leg.swapWhy = x.swapWhy;
+        if (x.ans) leg.transit = x.ans; if (x.steps) leg.steps = x.steps; if (x.note) leg.note = x.note; if (x.lost) leg.lost = x.lost; if (x.slack) leg.slack = x.slack; if (x.swapWhy) leg.swapWhy = x.swapWhy; if (x.ownBoat) leg.ownBoat = x.ownBoat;
         // Every way for this ride is a choice on the plan (the ride chips): a tap saves it as the traveler's own choice for
         // this ride, and the engine plans with it.
         if (x.from && x.to && x.options && x.options.length > 1) {
