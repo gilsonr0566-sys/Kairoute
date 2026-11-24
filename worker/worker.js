@@ -1,6 +1,7 @@
 import { extras, Group } from "./extras.js";
 import { allOptions, ferriesNear, keptFerries, ferryKey, topRides } from "./transit.js";
 import { departures } from "./departures.js";
+import { islandsData } from "./islands.js";
 export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
 // and answers. Usage is counted from real token counts.
@@ -118,7 +119,7 @@ function aiGate(env, path, lim) {
   return gate;
 }
 // Memory of kept answers (see the fetch handler). Only these content prefixes; everything else reads the store.
-const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3|p2|gc|gr|ev|gq|fp|wx|wv|dp|bk|tr|ns|nv|fx|fm|sr|leg|xn|kh|xf|vy|sx)(\.[0-9a-f]{10})?:/, MEMO_MS = 600000, MEMO = new Map();
+const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3|p2|gc|gr|ev|gq|fp|wx|wv|dp|bk|tr|ns|nv|fx|fm|sr|leg|xn|kh|xf|vy|sx|is)(\.[0-9a-f]{10})?:/, MEMO_MS = 600000, MEMO = new Map();
 let memoChars = 0; // kept under ~30 MB of the Worker's 128 MB memory
 function memoStore(kv) {
   if (!kv || kv.__memo) return kv;
@@ -375,6 +376,13 @@ const HANDLER = {
       const label = String(url.searchParams.get("city") || "").slice(0, 120).trim(); if (!label) return Response.json({ error: "Empty" }, { status: 400, headers: h });
       const fd = await famousData(label, env, ctx); if (fd.error) return Response.json({ error: fd.error }, { status: fd.status || 500, headers: h });
       return Response.json(fd, { headers: h });
+    }
+    // /islands?lat=&lng=: the island outlines around a place with no place file, each with whether it can be walked to
+    // (islands.js, rule R-06), so a stop across the water is a boat away in every city.
+    if (url.pathname === "/islands") {
+      const lat = +url.searchParams.get("lat"), lng = +url.searchParams.get("lng"); if (!isFinite(lat) || !isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const r = await islandsData({ lat, lng }, env, codeKey, sha); if (r.error) return Response.json({ error: r.error }, { status: r.status || 500, headers: h });
+      return Response.json(r, { headers: h });
     }
     // /sources?city=: every source Kairoute uses for a city, gathered and cross-checked (see sourcesData).
     if (url.pathname === "/sources") {

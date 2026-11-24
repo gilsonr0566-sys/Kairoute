@@ -4,6 +4,9 @@ on:
     inputs:
       cities:
         default: ""
+      pts:
+        description: "Island probe points name:lat,lng|... (runs tools/islands-probe.mjs instead)"
+        default: ""
 permissions:
   contents: read
 jobs:
@@ -17,4 +20,5 @@ jobs:
           node-version: 22
       - env:
           CITIES: ${{ inputs.cities }}
-        run: node tools/probe.mjs
+          PTS: ${{ inputs.pts }}
+        run: if [ -n "$PTS" ]; then node tools/islands-probe.mjs; else node tools/probe.mjs; fi
