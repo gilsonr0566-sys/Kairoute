@@ -11,6 +11,7 @@ const CASES = [
   ["water bus fastest, bridge another way", { foot: ans("Ok", [route(true), route(false)], on) }, true],
   ["only a boat; road router ends on the mainland", { foot: ans("Ok", [route(true)], on), car: ans("Ok", [route(false)], off) }, false],
   ["only a boat on foot; a road bridge", { foot: ans("Ok", [route(true)], on), car: ans("Ok", [route(false)], on) }, true],
+  ["only a boat on foot; the road router's way takes a car ferry", { foot: ans("Ok", [route(true)], on), car: ans("Ok", [route(true)], on) }, false],
   ["no path at all", { foot: { code: "NoRoute" } }, false],
   ["paths end on another shore", { foot: ans("Ok", [route(false)], off) }, false],
 ];

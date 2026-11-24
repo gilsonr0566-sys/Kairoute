@@ -84,7 +84,9 @@ async function overpass(q, ms) {
 // The walking router's fastest way may take a boat even where a bridge reaches the island (Venice: water buses), and it
 // can't be told to leave boats out (Nov 24 live probe: Lokrum and 152 of Venice's 155 islands came back "not known").
 // So when its way takes a boat: one of its other ways without a boat that ends on the island = a bridge; else the road
-// router, told to leave boats out (it can), ending on the island = a road bridge or causeway; else no way on foot.
+// router's way (it can't leave boats out either: "InvalidValue", Nov 24 probe) with no boat in it, ending on the island =
+// a road bridge or causeway; else no way on foot. A car island with only a car ferry, or an island with no roads (its
+// point taken to the mainland's nearest road), is only by boat.
 async function walkTo(centre, s) {
   const p = insidePoint(s.rings.reduce((a, f) => ringArea(f) > ringArea(a) ? f : a));
   const pts = [centre, p].map(q => (+q.lng).toFixed(5) + "," + (+q.lat).toFixed(5)).join(";");
@@ -97,7 +99,7 @@ async function walkTo(centre, s) {
   if (!ends(j)) return { walk: false, why: "paths end on another shore" };
   if (!hasFerry(j.routes[0])) return { walk: true, why: "path" };
   if (j.routes.some(r => !hasFerry(r))) return { walk: true, why: "path besides the boat" };
-  const c = await ask("car", "?steps=true&overview=false&exclude=ferry"); if (!c || !c.code) return undefined;
+  const c = await ask("car", "?steps=true&overview=false"); if (!c || !c.code) return undefined;
   if (c.code === "Ok" && c.routes && c.routes[0] && !hasFerry(c.routes[0]) && ends(c)) return { walk: true, why: "road" };
   if (c.code === "Ok" || c.code === "NoRoute") return { walk: false, why: "only by boat" };
   return { walk: null, why: "road router said " + c.code };

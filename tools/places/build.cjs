@@ -106,10 +106,10 @@ async function islandShapes(centre, km) {
     if (!ends(j)) { s.walk = false; continue; }
     // The fastest path may take a water bus even where bridges reach the island (Nov 24 Venice build), and the walking
     // router can't be told to leave boats out (Nov 24: 152 of Venice's 155 islands came back "not known"). Its other ways
-    // without a boat count; else the road router, which can leave boats out, ending on the island = a road link; else
-    // no way on foot (the same test as the helper's /islands, worker/islands.js).
+    // without a boat count; else the road router's way (it can't leave boats out either) with no boat, ending on the
+    // island = a road link; else no way on foot (the same test as the helper's /islands, worker/islands.js).
     if (!hasFerry(j.routes[0]) || j.routes.some(r => !hasFerry(r))) { s.walk = true; continue; }
-    const c = await get('https://routing.openstreetmap.de/routed-car/route/v1/driving/' + pts + '?steps=true&overview=false&exclude=ferry', {}, 3, 60000);
+    const c = await get('https://routing.openstreetmap.de/routed-car/route/v1/driving/' + pts + '?steps=true&overview=false', {}, 3, 60000);
     await sleep(1100);
     if (!c || !c.code) { s.walk = null; continue; }
     s.walk = c.code === 'Ok' && c.routes && c.routes[0] && !hasFerry(c.routes[0]) && ends(c) ? true : c.code === 'Ok' || c.code === 'NoRoute' ? false : null; }
