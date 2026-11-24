@@ -124,6 +124,7 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   // "Train"); in a sentence, the name after "to", "from" or "at" becomes "the stop", after "take" or "ride" "the line", and
   // any other is left out (round 2 outside test, Nov 23: Hebrew train lines, Japanese station names).
   const OTHER = /[^\u0000-\u024F\u1E00-\u1EFF\u2000-\u206F\u20A0-\u20CF]/;
+  E.cap = n => String(n == null ? "" : n).replace(/^\p{Ll}/u, c => c.toUpperCase());
   E.say = (name, plain) => { const t = E.latin(name); if (!OTHER.test(t)) return t;
     if (plain != null) { const left = t.replace(/[^\u0000-\u024F\u1E00-\u1EFF]+/g, " ").replace(/[()\[\]\-–,·:]+\s*$/g, "").replace(/\(\s*\)/g, "").replace(/\s+/g, " ").trim(); return /[A-Za-z]{3}/.test(left) ? left : plain; }
     return t.replace(/(\b(?:to|from|at|towards|via|for|into)\s+)?([^\u0000-\u024F\u1E00-\u1EFF\s][^\u0000-\u024F\u1E00-\u1EFF]*(?:\s+[^\u0000-\u024F\u1E00-\u1EFF\s][^\u0000-\u024F\u1E00-\u1EFF]*)*)/gi,

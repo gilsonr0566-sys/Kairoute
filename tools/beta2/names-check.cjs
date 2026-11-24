@@ -35,6 +35,7 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   const raw = JSON.parse(fs.readFileSync(path.join(dir, f))), s = PD ? E.applyPlaces(JSON.parse(JSON.stringify(raw)), places) : raw; trips++;
   // The list the traveler chooses from.
   for (const [ck, c] of Object.entries(s.cities || {})) for (const x of [...(c.sites || []), ...(c.farther || [])]) { names++;
+    if (/^\p{Ll}/u.test(x.name || '')) add('script', f, `${c.name || ck} list: "${x.name}" starts with a small letter (a guide prints "Place de la Concorde")`);
     if (OTHER.test(x.name || '')) add('script', f, `${c.name || ck} list: "${x.name}"`);
     else { const m = localOf(x); if (m) add('local', f, `${c.name || ck} list: ${m}`); } }
   // Every planned day.
