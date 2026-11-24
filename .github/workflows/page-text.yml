@@ -4,6 +4,9 @@ on:
     inputs:
       url:
         default: "https://gilsonr0566-sys.github.io/Kairoute/usage.html"
+      day:
+        description: "Example-trip day (destination words) to print the Day plan of; empty = print the page"
+        default: ""
 permissions:
   contents: read
 jobs:
@@ -19,4 +22,5 @@ jobs:
           node-version: 22
       - env:
           URL: ${{ inputs.url }}
-        run: npm i playwright@1.65.1 && npx playwright install chromium && node tools/page-text.cjs
+          DAY: ${{ inputs.day }}
+        run: npm i playwright@1.65.1 && npx playwright install chromium && if [ -n "$DAY" ]; then node tools/live-day-text.cjs; else node tools/page-text.cjs; fi
