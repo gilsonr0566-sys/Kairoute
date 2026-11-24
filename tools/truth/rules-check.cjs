@@ -63,7 +63,7 @@ function checkEscapes(rules, esc) {
 function checkCommits(rules, commits, links) {
   const ids = new Set(rules.map(r => r.id)), linked = [...links.matchAll(/^\| *([0-9a-f]{8,}) *\| *([^|]*R-\d+[^|]*)\|/gm)].map(m => [m[1], m[2]]), bad = [];
   for (const c of commits) {
-    const named = (c.msg.match(/^Rule: *(.+)$/m) || [, ''])[1].match(/R-\d+/g) || [], l = linked.find(([s]) => c.sha.startsWith(s));
+    const named = [...c.msg.matchAll(/^Rule: *(.+)$/gm)].flatMap(m => m[1].match(/R-\d+/g) || []), l = linked.find(([s]) => c.sha.startsWith(s));
     const all = named.concat(l ? l[1].match(/R-\d+/g) || [] : []);
     if (!all.length) bad.push(`${c.sha.slice(0, 8)} "${c.msg.split('\n')[0].slice(0, 60)}": changes the app but names no rule (add "Rule: R-xx", or link it in docs/qa/rule-links.md)`);
     else all.filter(x => !ids.has(x)).forEach(x => bad.push(`${c.sha.slice(0, 8)}: names ${x}, which is not in docs/qa/RULES.md`));
@@ -88,6 +88,7 @@ const self = [
   ['two escaped bugs with one number', checkEscapes(rules, '| E1 | a |\n| E1 | b |').length === 1],
   ['a fix with no rule line', checkCommits(rules, [{ sha: 'f'.repeat(40), msg: 'Lunch: fix\n\nCo-Authored-By: x' }], '').length === 1],
   ['a fix naming a rule that does not exist', checkCommits(rules, [{ sha: 'f'.repeat(40), msg: 'x\n\nRule: R-999' }], '').length === 1],
+  ['a rule named on a later Rule: line counts', checkCommits(rules, [{ sha: 'f'.repeat(40), msg: 'x\n\nRule: no screen moves by itself\nRule: R-28' }], '').length === 0],
   ['a fix with its rule passes', checkCommits(rules, [{ sha: 'f'.repeat(40), msg: 'x\n\nRule: R-11, R-12' }], '').length === 0],
   ['an ENFORCED rule with no planted bug', checkRules([{ id: 'R-998', by: '`tools/truth/oracle.cjs`', proof: 'none', bugs: '', before: 'none', status: 'ENFORCED' }]).length === 1],
   ['an ENFORCED rule whose check the gate does not run', checkRules([{ id: 'R-997', by: '`tools/truth/oracle.cjs`', proof: '`leaveby-late`', bugs: '', before: 'none', status: 'ENFORCED' }], 'nothing').length >= 1],
