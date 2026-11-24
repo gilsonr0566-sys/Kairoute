@@ -1523,7 +1523,10 @@ function dayWindow(d, city) {
     if (!P) return { error: "Choose where the ship docks." };
     w.start = shipToPort(d, d.portArrive) + (d.tender ? 60 : 30); w.endBy = shipToPort(d, d.allAboard) - 45; w.buffer = 45;
     w.head = [Object.assign({}, P, { leaveWhenReady: true })]; w.tail = [Object.assign({}, P, { backToShip: true })];
-    w.startLabel = (d.tender ? "Tender ashore to " : "Off the ship at ") + P.name; w.endLabel = "Back at the ship";
+    w.startLabel = (d.tender ? "Tender ashore to " : "Off the ship at ") + P.name; w.endLabel = d.tender ? "At the tender pier, for the boat back to the ship" : "Back at the ship";
+    // A tender port both ways (outside test round 7b: the way back ended in a taxi "Back at the ship"): the boats back stop
+    // before all aboard and queue, so the plan has you at the pier earlier than at a dock, and says so.
+    if (d.tender) w.notesEnd.push(`This is a tender port: the boats back to the ship stop before all aboard and can have a long queue, so the plan has you at the tender pier ${(typeof KEngine !== "undefined" && KEngine.TENDER_BACK) || 30} min earlier than it would at a dock. The ship's daily program gives the last tender: if it is earlier than the time shown, leave earlier.`);
     w.notes.push(`Ship docks ${d.portArrive}${d.tender ? " (tender port, so we allow an hour to get ashore)" : ""}.`);
   }
   if (!isFinite(w.start) || !isFinite(w.endBy)) return { error: "Add the times for this day." };
@@ -1871,7 +1874,7 @@ function checksCard(d, city, plan) {
   // (failure map, Nov 22: one boarding day showed four different leave times).
   const F = !plan.over ? dayFacts(d, plan) : null, freeOn = F && F.left >= 30 && F.leaveBy != null && !(plan.dropped || []).length && !(plan.w && plan.w.straight);
   if (plan.over) add("warn", `The day runs past ${fmt(plan.endBy)}. Take out a stop.`);
-  else if (freeOn) add("ok", `The day fits, with travel, meals and lines allowed for: ${dur(F.left)} of free time, then leave by ${fmt(F.leaveBy)} to be back by ${fmt(plan.endBy)}.`);
+  else if (freeOn) add("ok", freeAtStart(plan, F) ? `The day fits, with travel, meals and lines allowed for: ${dur(F.left)} of free time. Nothing is planned away from here, so leave in time from wherever you go: be back at ${esc(backWhere(d, plan))} by ${fmt(plan.endBy)}.` : `The day fits, with travel, meals and lines allowed for: ${dur(F.left)} of free time, then leave by ${fmt(F.leaveBy)} to be back by ${fmt(plan.endBy)}.`);
   else add("ok", `The day fits: done by ${fmt(plan.end)}, with travel, meals and lines allowed for.`);
   if ((plan.dropped || []).length) add("warn", dropLine(d, plan, plan.dropped, true));
   const short = (plan.stops || []).filter(s => s.shortFrom && s.shortFrom > s.minutes);
@@ -4997,11 +5000,25 @@ function placeMenu(m) {
 document.addEventListener("toggle", e => { const m = e.target; if (m.matches && m.matches("details.planmore") && m.open) placeMenu(m); }, true);
 // The back-to-the-ship countdown never leaves the screen: once the page scrolls it out of view, it pins to the top.
 function pinChip() {
-  pinDay(); const c = document.getElementById("cdCard"); if (!c) return;
+  pinDay(); const c = document.getElementById("cdCard"); if (!c) return pinBand();
   const was = c.classList.contains("pinned"), row = document.getElementById("dayRow");
   const at = 8 + (row && row.classList.contains("pinned") ? row.offsetHeight - 2 : 0); // pins just below the pinned day strip
   if (!was) { const r = c.getBoundingClientRect(); if (r.height && r.top < at) { c.style.height = r.height + "px"; c.classList.add("pinned"); } }
   else if (c.getBoundingClientRect().top >= at) { c.classList.remove("pinned"); c.style.height = ""; }
+  pinBand();
+}
+// A pinned strip or banner never covers content (Richard, Nov 24: the LEAVE BY banner sat over a sight's name). Everything
+// pinned at the top forms ONE solid band: --pinh is its real height, measured; the page paints it opaque (no card shows
+// around or between the pinned pieces), sticky bars sit below it, and the app's own scrolling lands content under it.
+function pinBand() {
+  const root = document.documentElement; let h = 0;
+  const row = document.getElementById("dayRow"), c = document.getElementById("cdCard");
+  if (row && row.classList.contains("pinned")) h = Math.max(h, row.getBoundingClientRect().bottom);
+  const cs = c && c.classList.contains("pinned") && c.querySelector(":scope > summary");
+  if (cs) h = Math.max(h, cs.getBoundingClientRect().bottom + 6);
+  h = Math.ceil(h); if (window.__kairoutePlant === "noband") h = 0; // planted bug for tools/ui/pinned-band-check.cjs (R-32)
+  if (h > 0) { root.style.setProperty("--pinh", h + "px"); root.classList.add("pinband"); }
+  else { root.style.removeProperty("--pinh"); root.classList.remove("pinband"); }
 }
 // Scrolled down on a phone: the day strip itself pins to the top (Richard, Nov 14), so any day can be picked without
 // scrolling back up. A spacer keeps its place so the page doesn't jump. Tablets never need it (their header stays put).
@@ -5114,8 +5131,13 @@ function render() {
   // (data arriving, live updates); only a tap outside or picking an item closes it.
   const menuKey = el => el.id || ((el.querySelector("summary") || {}).getAttribute && el.querySelector("summary").getAttribute("aria-label")) || "";
   const openMenus = [...document.querySelectorAll("#view details.moremenu[open]")].map(menuKey).filter(Boolean);
+  // Choose sights redrawn on the same visit by anything (a plan or fit answer arriving, the clock): the card last
+  // ticked, else the first card in view, stays where it was on screen (R-28; Nov 24 gate, Vienna: a badge above grew
+  // to two lines 1-2 s after a tick and pushed the ticked card down 12 px).
+  const spot = view === "sites" && paneMemo.key === pkey ? viewSpot() : null;
   renderView();
   if (sideMin) { const sd = document.querySelector("#view .sitesside"); if (sd) sd.style.minHeight = sideMin + "px"; }
+  if (view === "sites") { if (listRoomKey !== pkey || !sideMin) { listRoom = 0; listRoomKey = pkey; } else if (listRoom) placeRoom(); }
   { const v = document.getElementById("view"), app = !FULL_VIEWS[view] || /^(settings|privacy|terms)$/.test(view);
     document.documentElement.classList.toggle("appview", app);
     // Tablets and computers: the screens live in a slim rail on the left (see "Navigation rail" in shell.html)
@@ -5134,7 +5156,11 @@ function render() {
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
   // put every panel, and the page itself, back exactly where it was, after folds have reopened.
   if (paneMemo.same) { panes().forEach(el => { const y = pos[el.dataset.pane || "view"]; if (y) el.scrollTop = y; }); if (winY && Math.abs(window.scrollY - winY) > 1) window.scrollTo(0, winY); }
-  centerChip(); shownFp = viewFp(); pinChip(); seedSoon();
+  centerChip(); shownFp = viewFp(); pinChip();
+  // After the pinned strip has its spacer back, and once more just before the screen is drawn: pieces filled in right
+  // after the redraw (answers already at hand, delivered a moment later) can still change what is above the card.
+  if (spot) { spot(); requestAnimationFrame(spot); }
+  seedSoon();
 }
 // Speed: a new trip's days get their starting picks in the background, one day at a time while the app is idle,
 // instead of all at once on the tap that first opens a day (that tap used to take a second or more). The picks
@@ -6290,7 +6316,7 @@ let spotRef = null; // the card kept in place after the last tick, kept in place
 function viewSpot() {
   const vis = x => cardShown(x) && x.getBoundingClientRect().top > 0 && x.getBoundingClientRect().top < innerHeight;
   const r = spotRef && [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(spotRef)}"]`)].find(vis);
-  const c = r || [...document.querySelectorAll("#view .sitesmain [data-card]")].find(x => cardShown(x) && x.getBoundingClientRect().top > 160);
+  const c = r || [...document.querySelectorAll("#view .sitesmain [data-card]")].find(x => cardShown(x) && x.getBoundingClientRect().top > (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--pinh")) || 0) + 60);
   return c ? cardSpotOf(c.dataset.card, true) : () => {};
 }
 // Ticking keeps your place in the list: the card that followed the ticked one stays where it was on screen.
@@ -6305,9 +6331,18 @@ function cardSpotOf(id, self) {
     const dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) < 1) return;
     // The panel the card really scrolls in (on tablets the list's own pane); the page only when no panel scrolls.
     let pane = nx.parentElement; while (pane && pane !== document.body && !(pane.scrollHeight > pane.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(pane).overflowY))) pane = pane.parentElement;
-    if (pane && pane !== document.body) pane.scrollTop += dy; else window.scrollBy(0, dy);
+    const scrollIt = d => { if (pane && pane !== document.body) pane.scrollTop += d; else window.scrollBy(0, d); };
+    scrollIt(dy);
+    // Near the end of the list the page may be too short to scroll that far (a card above got shorter): the list keeps
+    // room at its end for the rest of the visit, so the card still stays under the finger (Nov 23, Nassau, 25 px).
+    const left = nx.getBoundingClientRect().top - top;
+    if (left > 1) { listRoom += Math.ceil(left); placeRoom(); scrollIt(nx.getBoundingClientRect().top - top); }
   };
 }
+// Room kept at the end of Choose sights for this visit (see cardSpotOf); a new visit starts without it.
+let listRoom = 0, listRoomKey = "";
+function placeRoom() { const m = document.querySelector("#view .sitesmain"); if (!m) return; let sp = m.querySelector(":scope > .keeproom");
+  if (!sp) { sp = document.createElement("div"); sp.className = "keeproom"; sp.setAttribute("aria-hidden", "true"); m.appendChild(sp); } sp.style.height = listRoom + "px"; }
 // Separate stops a few steps apart (a square and the clock on it) say so, so neither looks missing.
 function nextDoor(s, city) { if (!city || s.far || !isFinite(s.lat)) return ""; const n = (city.sites || []).filter(x => x !== s && !x.quick && isFinite(x.lat) && hav(x, s) <= 0.15).slice(0, 3); return n.length ? `<p class="travelnote">Right next to: ${n.map(x => esc(x.name)).join(", ")} (${n.length > 1 ? "their own stops" : "its own stop"})</p>` : ""; }
 const elsewhereNote = plan => { const ex = (plan && plan.elsewhere) || []; if (!ex.length) return ""; const by = (f, w) => ex.filter(f).map(x => `<b>${esc(x.s.name)}</b>`).join(", ") + (w || ""); const e = ex.filter(x => x.earlier), l = ex.filter(x => x.later), on = xs => [...new Set(xs.map(x => fmtDow(x.on.date) + " " + fmtDate(x.on.date)))].join(" and ");
@@ -6364,6 +6399,7 @@ function schedWhen(o) { const d = day(); return `${fmtDow(o.date)} ${fmtDate(o.d
 // ---------- The sights list's steady order (Richard, Nov 17) ----------
 const SORT_HOLD_MS = 2500; // longest the sights list waits for the fits check before it shows (then updates cards in place)
 let pickFrozen = null; // the list as set when the page opened: section and place of every sight
+if (typeof window !== "undefined") window.__kairouteSorted = () => pickFrozen && { key: pickFrozen.key, t0: pickFrozen.t0, settled: pickFrozen.settled }; // checks: when the list was last sorted
 const frozenKey = (d, city) => trip.days.indexOf(d) + "|" + keyOf(city.city) + "|" + siteFilter + "|" + prefsSig();
 // Where the day starts (hotel, port, station), for "nearest first".
 // Sightseeing starts after the last of the day's opening steps (the hotel after an airport arrival).
@@ -6490,7 +6526,11 @@ function renderSites(d) {
   // A sight that arrives later (a fuller guide) takes its section when it first shows, then keeps it like the rest.
   const secNow = new Map(all.map(x => { let k = pickFrozen.settled ? pickFrozen.secs.get(x.id) : secLive.get(x.id); if (pickFrozen.settled && !k) { k = secLive.get(x.id); pickFrozen.secs.set(x.id, k); } return [x.id, k]; }));
   const holding = !pickFrozen.settled;
-  const inSec = k => all.filter(x => secNow.get(x.id) === k).sort((x, y) => (k === "sched" ? trip.days.indexOf(elsew[x.id]) - trip.days.indexOf(elsew[y.id]) : 0) || pickFrozen.ord.get(x.id) - pickFrozen.ord.get(y.id));
+  // "Already picked on other days" goes by that day as it was when the list was sorted: ticking one moves it to today,
+  // and it must stay where it is on screen (Nov 24: it jumped within its section, under a check that only watched the
+  // ticked card, which the app keeps under the finger).
+  const dayAt = x => { if (!pickFrozen.days) pickFrozen.days = new Map(); if (pickFrozen.settled && !pickFrozen.days.has(x.id)) pickFrozen.days.set(x.id, trip.days.indexOf(elsew[x.id])); return pickFrozen.days.has(x.id) ? pickFrozen.days.get(x.id) : trip.days.indexOf(elsew[x.id]); };
+  const inSec = k => all.filter(x => secNow.get(x.id) === k).sort((x, y) => (k === "sched" ? dayAt(x) - dayAt(y) : 0) || pickFrozen.ord.get(x.id) - pickFrozen.ord.get(y.id));
   const picked = inSec("picks"), mustL = inSec("must"), fitL = inSec("main"), wontL = inSec("wont"), moreL = inSec("more"), farL = inSec("far");
   const schedL = inSec("sched");
   const refs = [], near = { refs, anc, fs: fsMap, my, st }; sitesCtx = { d, plan, near, secs: secNow };
@@ -7802,7 +7842,7 @@ document.addEventListener("change", e => {
     delete d.autoEmpty; d.ownList = true; // the traveler's first tick or untick makes the list theirs
     if (t.checked) { d.anchor = id; delete d.cleared; }
     else { const ks = kidsOf({ id }, cityFor(d)).filter(k => k.town == null || String(k.town) !== String(id)).map(k => k.id); d.selected = d.selected.filter(x => x !== id && !ks.includes(x)); [id, ...ks].forEach(x => markMine(d, x, false)); if (d.anchor === id) d.anchor = null; if (!d.selected.length) d.cleared = true; } // a bigger sight comes off with what's inside it (a town's own sights have their own ticks) // unticking the last one: the day stays free
-    const back = cardSpot(id); save(); renderKeep(); back(); // the list never jumps (Richard, Nov 16); every change here is in the trip, which keys the plans
+    const back = cardSpot(id); save(); renderKeep(); back(); requestAnimationFrame(back); // the list never jumps (Richard, Nov 16); every change here is in the trip, which keys the plans
     if (window.__kairoutePlant === "resort") { pickFrozen = null; renderKeep(); } // planted bug for the steady-sights check's own proof (R-28): re-sorting after a tap
     return;
   }

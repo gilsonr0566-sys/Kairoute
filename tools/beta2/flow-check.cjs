@@ -281,6 +281,10 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(500);
       const got = await setPicks(set); if (got === 'nofit') { skipped++; continue; } if (!got) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
+      // The map's lines are read once the day is planned and drawn (a slow phone took longer than 0.8 s: "no ferry drawn"
+      // while the plan had both ferries, Nov 24): wait for the checks in flight, then read again while no ferry is drawn yet.
+      await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 15000, polling: 100 }).catch(() => {});
+      for (let k = 0; k < 4 && !(await p.evaluate(() => window.__kairouteMapLegs().some(l => l.kind === 'ferry'))); k++) await p.waitForTimeout(1500);
       const r = await p.evaluate(() => { const R = Math.PI / 180, km = (a, b) => { const x = Math.sin((b[1] - a[1]) * R / 2) ** 2 + Math.cos(a[1] * R) * Math.cos(b[1] * R) * Math.sin((b[0] - a[0]) * R / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
         const piers = window.__kairoutePiers().map(q => [q.lng, q.lat]), d = window.__kairouteEngine2()[window.__kairouteDays().findIndex(x => /Naples/.test(x.dest))];
         const boatAt = (d.items || []).filter(x => x.t === 'stop' && window.__kairouteBoatPlace(x.id)).map(x => [x.lng, x.lat]);
@@ -443,7 +447,8 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
   // 3d. The sight list organizes itself (Richard, Nov 19): Your picks, Still fits, Also see (farther out), Already picked
   // on other days, Doesn't fit, in that order. Every card under "Still fits" has a tick; every card under "Doesn't fit"
   // has none and opens the box that says why and how to make it fit; a sight ticked stays put and is under Your picks
-  // on the next visit (Nov 23: the list never re-sorts in front of the traveler).
+  // on the next visit (Nov 23: the list never re-sorts in front of the traveler). The card's OWN tick counts: a town
+  // card's "Sights in <town>" ticks (Nov 23, ticks match the plan) are its parts, each checked when ticked.
   { const bad = []; const days = await p.evaluate(() => window.__kairouteDays());
     const ORDER = ['Your picks', 'Still fits today', 'Also see, farther out', 'Already picked on other days', "Doesn't fit today"];
     for (const i of days.map((d, i) => i).filter(i => /Athens|Naples|Chania/.test(days[i].dest)).slice(0, 4)) {
@@ -452,7 +457,7 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       const r = await p.evaluate(() => { const heads = [...document.querySelectorAll('.sitesmain .foldrow span:first-child, .sitesmain .secttl')].map(e => e.innerText.replace(/\s*\(.*$/, '').trim());
         const after = lbl => { const h = [...document.querySelectorAll('.sitesmain .secttl')].find(e => e.innerText.startsWith(lbl)); if (!h) return []; let e = h.nextElementSibling, out = []; while (e && !e.classList.contains('secttl')) { if (e.matches('.sitelist')) out = out.concat([...e.querySelectorAll(':scope > [data-card]')]); e = e.nextElementSibling; } return out; };
         const fits = after('Still fits').concat(after('Also see')), wont = after("Doesn't fit");
-        return { heads, fitsNoTick: fits.filter(c => !c.querySelector('input[data-site]')).map(c => c.dataset.card), wontTick: wont.filter(c => c.querySelector('input[data-site]') || !c.querySelector('[data-act="fitask"]')).map(c => c.dataset.card), first: fits.length ? fits[0].dataset.card : null }; });
+        return { heads, fitsNoTick: fits.filter(c => !c.querySelector(`input[data-site="${CSS.escape(c.dataset.card)}"]`)).map(c => c.dataset.card), wontTick: wont.filter(c => c.querySelector(`input[data-site="${CSS.escape(c.dataset.card)}"]`) || !c.querySelector('[data-act="fitask"]')).map(c => c.dataset.card), first: fits.length ? fits[0].dataset.card : null }; });
       const seen = r.heads.filter(h => ORDER.includes(h)), want = ORDER.filter(h => seen.includes(h));
       if (seen.join('|') !== want.join('|')) bad.push(`day ${i + 1}: sections out of order: ${seen.join(', ')}`);
       if (r.fitsNoTick.length) bad.push(`day ${i + 1}: under "Still fits" without a tick: ${r.fitsNoTick.join(', ')}`);

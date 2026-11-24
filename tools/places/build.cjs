@@ -92,12 +92,24 @@ async function islandShapes(centre, km) {
     // A tiny rock nobody visits needs no answer: under about 2 ha it is never asked (null = not known).
     if (IS.ringArea(s.rings[0]) < 2e-6) { s.walk = null; continue; }
     const p = IS.insidePoint(s.rings.reduce((a, f) => IS.ringArea(f) > IS.ringArea(a) ? f : a));
-    const j = await get('https://routing.openstreetmap.de/routed-foot/route/v1/foot/' + [centre, p].map(q => (+q.lng).toFixed(5) + ',' + (+q.lat).toFixed(5)).join(';') + '?steps=true&overview=false', {}, 3, 60000);
+    const url = '/route/v1/foot/' + [centre, p].map(q => (+q.lng).toFixed(5) + ',' + (+q.lat).toFixed(5)).join(';') + '?steps=true&overview=false';
+    let j = await get('https://routing.openstreetmap.de/routed-foot' + url, {}, 3, 60000);
     await sleep(1100);
     if (!j || !j.code) { s.walk = null; continue; }
     if (j.code === 'NoRoute') { s.walk = false; continue; }
     if (j.code !== 'Ok' || !j.routes || !j.routes[0]) { s.walk = null; continue; }
-    const ferry = j.routes[0].legs.some(l => (l.steps || []).some(st => st.mode === 'ferry'));
+    const hasFerry = r => r.legs.some(l => (l.steps || []).some(st => st.mode === 'ferry'));
+    // The fastest path may take a water bus even where bridges reach the island (Nov 24 Venice build: Tronchetto, Santa
+    // Marta and the cruise terminal came back "no way on foot" from the centre). Ask again with boats left out; an
+    // island is "no way on foot" only when that answer says so. A router that can't leave boats out gives "not known".
+    if (hasFerry(j.routes[0])) {
+      j = await get('https://routing.openstreetmap.de/routed-foot' + url + '&exclude=ferry', {}, 3, 60000);
+      await sleep(1100);
+      if (!j || !j.code) { s.walk = null; continue; }
+      if (j.code === 'NoRoute') { s.walk = false; continue; }
+      if (j.code !== 'Ok' || !j.routes || !j.routes[0]) { s.walk = null; continue; }
+      if (hasFerry(j.routes[0])) { s.walk = null; continue; } }
+    const ferry = false;
     // The path the router ends on may run along the coast, just outside the simplified outline (30 m): within 60 m of the
     // outline counts as on the island (Nov 24 Venice build: the cruise terminal's islet, reached by bridges, came back as
     // "no way there on foot"). A way that ends on another shore is far from it.

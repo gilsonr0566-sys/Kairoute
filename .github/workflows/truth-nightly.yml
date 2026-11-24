@@ -76,6 +76,11 @@ jobs:
         run: |
           TRIPS=corpus DAYS=all SIZES=${{ matrix.size }} node tools/ui/steady-sights-check.cjs beta2-site/index.html 2>&1 | tee steady.txt
           { echo "## Steady sights, every test trip (${{ matrix.size }})"; echo '```'; grep -E "^(FAIL|NOTE)|Steady sights" steady.txt | head -80; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Nothing pinned covers content, every day of every test trip (R-30)
+        if: always()
+        run: |
+          TRIPS=corpus DAYS=all SIZES=${{ matrix.size }} NO_PROOF=1 node tools/ui/pinned-band-check.cjs beta2-site/index.html 2>&1 | tee -a steady.txt | grep -E "^FAIL|Pinned band" | head -80 > band.txt || true
+          { echo "## Pinned band, every test trip (${{ matrix.size }})"; echo '```'; cat band.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
         with: { name: "steady-${{ matrix.size }}", path: steady.txt }
