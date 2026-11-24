@@ -6226,8 +6226,11 @@ function siteCard(s, d, plan, nr) {
   // each has its own tick inside the town's card, and the town's tick is the town's own visit only (Nov 23 outside test:
   // "Sintra" ticked while the plan had four palaces and the town as five stops, on 13 of 174 days). A sight inside a
   // bigger one (the Parthenon in the Acropolis) is seen in that visit, so it stays "Included" and ticks its host.
-  const townKids = kids.filter(k => k.town != null && String(k.town) === String(s.id)), inclKids = kids.filter(k => !townKids.includes(k));
-  const tickOn = sel.includes(s.id) || inclKids.some(k => sel.includes(k.id));
+  // A sight inside a bigger one that is picked while the bigger one is not is planned as a stop of its own under its own
+  // name (round 7b: "Palace of Westminster" ticked while the plan had Big Ben; "Champ de Mars" and the Eiffel Tower), so it
+  // shows its own tick too; the bigger one's tick is its own visit only.
+  const townKids = kids.filter(k => (k.town != null && String(k.town) === String(s.id)) || (sel.includes(k.id) && !sel.includes(s.id))), inclKids = kids.filter(k => !townKids.includes(k));
+  const tickOn = sel.includes(s.id);
   // How far from where the day starts (the list's order), so the line never changes as you tick.
   const st = nr && nr.st, near = st && isFinite(s.lat) && isFinite(s.lng) ? hav(st, s) : null, nearTo = st;
   const other = plannedElsewhere(d)[s.id];
