@@ -360,7 +360,7 @@ function offBanner() {
 }
 // Updates the card and the banner in place (no full redraw, so nothing the traveler is reading moves).
 function offPaint() {
-  const c = document.getElementById("offCard"); if (c) { const w = document.createElement("div"); w.innerHTML = offCard(); const open = c.querySelector("details[open]"); c.replaceWith(w.firstElementChild); if (open) { const n = document.querySelector("#offCard details"); if (n) n.open = true; } }
+  const c = document.getElementById("offCard"); if (c) { const w = document.createElement("div"); w.innerHTML = offCard(c.classList.contains("offline1")); /* the same form it was drawn in: the Trip page's one-line card turned into the full card when the check finished, then back on the next redraw (steady-all, R-25) */ const open = c.querySelector("details[open]"); c.replaceWith(w.firstElementChild); if (open) { const n = document.querySelector("#offCard details"); if (n) n.open = true; } }
   const v = document.getElementById("view"), b = document.getElementById("offBanner"), html = offBanner();
   if (b) { if (html) b.outerHTML = html; else b.remove(); } else if (html && v && !FULL_VIEWS[view]) v.insertAdjacentHTML("afterbegin", html);
 }

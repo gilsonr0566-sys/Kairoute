@@ -8,8 +8,15 @@
 // device sync, status) don't count. Every other fetch counts, so a new kind of data is always safe by default.
 let planGen = 0, dataGen = 0; // planGen: the traveler changed something; dataGen: an answer arrived
 const NOPLAN_URL = /\/(speak|script|voiceplan|events|route|x\/group|status|identify|sync|usage)(\?|$)|\/version\.txt|openfreemap|tiles?\.|\/tiles\/|fonts\.(googleapis|gstatic)|\.(pbf|png|jpe?g|webp|mp3|woff2?)(\?|$)/;
+// Class rule "every wait ends" (registry: WAIT-ENDS): a question to any service gets an answer, an error or a time-out,
+// never a spinner that turns for good (client feel test, live app Nov 23: a lookup with no time limit kept "More about
+// today" spinning). Every call in the app goes through here, so each one without its own limit gets 60 s (AI writing:
+// 120 s). Downloads of the app's own files and media for offline use are left alone (large, and nothing waits on screen).
+const FETCH_LIMIT = u => /\.(mp3|pbf|png|jpe?g|webp|woff2?|js|json|html)(\?|$)|openfreemap|tiles?\.|\/tiles\//.test(u) && !/workers\.dev/.test(u) ? 0 : /\/(sample|x\/write|x\/knowhow|identify)(\?|$)|anthropic\.com/.test(u) ? 120000 : 60000;
 const fetch = (input, init) => {
-  const p = window.fetch(input, init), u = String((input && input.url) || input || "");
+  const u = String((input && input.url) || input || ""), lim = FETCH_LIMIT(u);
+  if (lim && !(init && init.signal) && !(typeof Request !== "undefined" && input instanceof Request) && typeof AbortSignal !== "undefined" && AbortSignal.timeout) init = Object.assign({}, init, { signal: AbortSignal.timeout(lim) });
+  const p = window.fetch(input, init);
   if (NOPLAN_URL.test(u)) return p;
   const bump = v => { dataGen++; return v; };
   const wrap = r => { if (!r || typeof r !== "object") return r; ["json", "text", "blob", "arrayBuffer"].forEach(m => { const f = r[m]; if (typeof f === "function") r[m] = () => f.call(r).then(bump); });

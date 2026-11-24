@@ -15,7 +15,7 @@ const read = f => { try { return fs.readFileSync(f, 'utf8'); } catch (e) { retur
 const NAMES = { code: 'Code: secrets, syntax, engine rules, helper AI switch', safety: 'Safety: independent check, odd trips, planted defects', engine: 'Engine rules, opening hours, reasons, lunch',
   leaks: 'Leaks and stress', phone: 'Phone flow (the real app, phone size)', screen: 'What the traveler sees (screen rules, time zones, no signal, older saved trips, sizes, voices, guard)',
   'odd-screen': 'Odd days on screen, ship days while the water check waits, group trips', words: 'The app says only what is true (first run, day plan, outside text, no paid AI, trip copy, AI honesty)',
-  feel: 'What the traveler feels: real finger taps and swipes on phone and tablets (jumps, self-scroll, layout shift, slow and dead taps, Back button)' };
+  feel: 'What the traveler feels: real finger taps and swipes on phone and tablets (jumps, self-scroll, layout shift, slow and dead taps, Back button)', steady: 'Steady screens on every test trip: redraws move nothing, screens settle, every wait ends, reopening after Exit tour' };
 const word = s => s === 'success' ? 'PASS' : s === 'failure' ? 'FAIL' : 'NOT TESTED (' + (s || 'not run') + ')';
 const parts = Object.keys(needs).length ? Object.keys(needs) : Object.keys(NAMES);
 const log = k => read(path.join(dir, 'part-' + k, 'log.txt')), fails = k => read(path.join(dir, 'part-' + k, 'fails.txt')).trim();
