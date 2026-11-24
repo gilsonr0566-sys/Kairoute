@@ -15,14 +15,16 @@
 // or more). On the ride back on a ship, train or flight day (any ride after the day's last visit) a too-fast ride is S1:
 // following the plan could miss the departure. Too slow (more than double and 15 min over) is S2 (it wastes the day).
 //
-// Usage: node tools/truth/real-world.mjs [--max 400] [--trips g09-kotor,g02-vienna] [--out file.json]
+// Usage: node tools/truth/real-world.mjs [--max 400] [--trips g09-kotor,g02-vienna] [--out file.json] [--cache tools/truth/real-world-cache.json]
+// --cache keeps every real-world time measured (merged with the file's earlier ones, newest wins): the release gate compares
+// every plan with them offline (tools/truth/real-world-gate.cjs), so a ride-time bug is caught before release, not the night after.
 // Needs the internet (run on GitHub: .github/workflows/real-world.yml, nightly). No AI, free public services only, one
 // request a second to each. Exit 1 when an S1 is found or nothing could be checked; it never publishes anything.
 import fs from 'fs'; import path from 'path'; import { createRequire } from 'module'; import { fileURLToPath } from 'url';
 const require = createRequire(import.meta.url), HERE = path.dirname(fileURLToPath(import.meta.url)), ROOT = path.join(HERE, '..', '..');
 const E = require(path.join(ROOT, 'tools', 'beta2', 'engine.cjs'));
 const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > 0 ? process.argv[i + 1] : d; };
-const MAX = +arg('max', 400), ONLY = (arg('trips', '') || '').split(',').filter(Boolean), OUT = arg('out', null);
+const MAX = +arg('max', 400), ONLY = (arg('trips', '') || '').split(',').filter(Boolean), OUT = arg('out', null), CACHE = arg('cache', null);
 const UA = { 'User-Agent': 'kairoute-test (free route check; github.com/gilsonr0566-sys/kairoute)' };
 const PD = path.join(ROOT, 'tools', 'places', 'data'), places = {};
 if (fs.existsSync(PD)) for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
@@ -121,3 +123,12 @@ if (OUT) fs.writeFileSync(OUT, JSON.stringify({ rows, notChecked }, null, 1));
 const s1 = rows.filter(r => r.sev === 'S1').length;
 console.log(`\n${rows.length} rides compared with the real world; ${s1} too fast on the ride back (S1); ${rows.filter(r => r.sev === 'S2').length} other gaps (S2)`);
 process.exitCode = s1 || !rows.length ? 1 : 0;
+if (CACHE) { // the real least time of every ride measured, by kind and its two ends (4 decimals, about 10 m)
+  let old = []; try { old = JSON.parse(fs.readFileSync(CACHE, 'utf8')).rides || []; } catch (e) { }
+  const ck = r => `${r.kind}|${(+r.from.lat).toFixed(4)},${(+r.from.lng).toFixed(4)}|${(+r.to.lat).toFixed(4)},${(+r.to.lng).toFixed(4)}`, by = new Map(old.map(r => [ck(r), r]));
+  const day = new Date().toISOString().slice(0, 10);
+  for (const r of rows) if (r.real > 0) by.set(ck(r), { kind: r.kind, from: { lat: +(+r.from.lat).toFixed(4), lng: +(+r.from.lng).toFixed(4) }, to: { lat: +(+r.to.lat).toFixed(4), lng: +(+r.to.lng).toFixed(4) }, real: r.real, realKm: r.realKm, src: r.src.split(':')[0], measured: day });
+  const all = [...by.values()].sort((a, b) => ck(a) < ck(b) ? -1 : 1).slice(-4000);
+  fs.writeFileSync(CACHE, JSON.stringify({ note: 'Real least ride times measured by tools/truth/real-world.mjs (BRouter, DB journey planner). Read by tools/truth/real-world-gate.cjs.', rides: all }, null, 0).replace(/\},\{/g, '},\n{') + '\n');
+  console.log(`\nKept ${all.length} real-world ride times in ${CACHE}`);
+}
