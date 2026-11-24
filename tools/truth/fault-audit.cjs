@@ -30,6 +30,9 @@ const ONLY = (arg('area', '') || '').split(',').filter(Boolean);
 // The checks, in order of speed; the first that fails catches the bug (the rest are not run).
 const CHECKS = [
   ['engine-test', ['tools/beta2/engine-test.cjs'], { FAIL_FAST: '1' }],
+  ['route times', ['tools/beta2/route-time-check.cjs']],
+  ['best ride', ['tools/beta2/best-ride-check.cjs']],
+  ['real-world rides', ['tools/truth/real-world-gate.cjs']],
   ['independent check', ['tools/truth/oracle.cjs', '--corpus']],
   ['hours-test', ['tools/beta2/hours-test.cjs']],
   ['lunch check', ['tools/beta2/lunch-during-check.cjs'], { PLACES_DIR: 'tools/places/data' }],
