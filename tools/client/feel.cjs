@@ -10,6 +10,7 @@
 //     which Chrome's CLS leaves out but a person sees) over 0.10;
 //   - SLOW: a tap that takes over 500 ms to show anything (first change on screen) or 2.5 s to settle;
 //   - DEAD: a tap after which nothing on the screen changed;
+//   - COVERED: something on top (a pinned strip or band) covers a button where a finger taps it, even mid-screen;
 //   - SCROLL: a swipe that doesn't move the page, or a page you cannot scroll to the end of;
 //   - LANDING: a new screen opened part way down instead of at its top;
 //   - WIDE: the page is wider than the screen; ERROR: an error in the app; STUCK: a spinner still showing.
@@ -135,7 +136,13 @@ async function runSize(browser, size, base) {
       if (b.x >= row.l && b.x + b.width <= row.r) break; const w = row.r - row.l;
       await drag(Math.round(b.x < row.l ? row.l + w * 0.15 : row.r - w * 0.15), Math.round(b.y + b.height / 2), b.x < row.l ? Math.round(w * 0.6) : -Math.round(w * 0.6), 0); }
     for (let k = 0; k < 10; k++) { const b = await el.boundingBox({ timeout: 3000 }).catch(() => null); if (!b) break; if (b.y > 60 && b.y + b.height < vh - 80) break; await swipe(b.y - vh * 0.45); }
-    const b = await el.boundingBox({ timeout: 3000 }).catch(() => null); if (!b) { R.notes.push(`[${where}] could not reach: ${label}`); return null; }
+    let b = await el.boundingBox({ timeout: 3000 }).catch(() => null); if (!b) { R.notes.push(`[${where}] could not reach: ${label}`); return null; }
+    // A person taps what they can see: if something pinned covers the spot (the day strip, the countdown, the band behind
+    // them), they scroll it out from under it first. Still covered with the thing in the middle of the screen: COVERED.
+    const hitAt = (x, y) => el.evaluate((e, [x, y]) => { const h = document.elementFromPoint(x, y); if (!h || e === h || e.contains(h) || h.contains(e) && h.tagName === 'LABEL') return ''; let a = h, pin = ''; while (a && a !== document.body) { const ps = getComputedStyle(a).position; if (ps === 'fixed' || ps === 'sticky') { pin = a.id ? '#' + a.id : a.tagName.toLowerCase() + '.' + String(a.className).split(' ')[0]; break; } a = a.parentElement; } return pin || (h.tagName.toLowerCase() + '.' + String(h.className).split(' ')[0]); }, [x, y]).catch(() => '');
+    let cover = await hitAt(b.x + Math.min(b.width / 2, 24), b.y + b.height / 2);
+    if (cover) { await swipe(b.y - vh * 0.45); b = (await el.boundingBox({ timeout: 3000 }).catch(() => null)) || b; cover = await hitAt(b.x + Math.min(b.width / 2, 24), b.y + b.height / 2);
+      if (cover) { fail('COVERED', `"${label}" is covered by ${cover} where a finger would tap it, even in the middle of the screen`); return null; } }
     const key = await keyOf(el).catch(() => ({})); const g0 = await geom(); const before = await rectOfKey(key);
     const x = b.x + Math.min(b.width / 2, 24), y = b.y + b.height / 2;
     const t0 = await now(); await p.touchscreen.tap(x, y); const s = await settle(t0, 8000); await sleep(stay ? 1200 : 300);
@@ -260,7 +267,7 @@ async function runSize(browser, size, base) {
   await browser.close(); srv && srv.close();
   // Known P2 findings may be listed in docs/qa/warns.json (tool "feel", rule = kind, optional "where" pattern) with an
   // owner and an end date at most 7 days ahead: they print WARN and don't fail. P1 kinds can never be warned.
-  const P1 = new Set(['BACK', 'DEAD', 'STUCK', 'ERROR', 'NOT TESTED', 'SCROLL', 'OFFLINE']);
+  const P1 = new Set(['BACK', 'DEAD', 'COVERED', 'STUCK', 'ERROR', 'NOT TESTED', 'SCROLL', 'OFFLINE']);
   const today = new Date().toISOString().slice(0, 10), week = new Date(Date.now() + 7 * 864e5).toISOString().slice(0, 10);
   let W = []; try { W = (JSON.parse(fs.readFileSync(path.join(ROOT, 'docs', 'qa', 'warns.json'), 'utf8')).warns || []).filter(w => w.tool === 'feel'); } catch (e) {}
   const warnFor = f => P1.has(f.kind) ? null : W.find(w => w.rule === f.kind && w.owner && w.until && w.until >= today && w.until <= week && (!w.where || new RegExp(w.where).test(f.where)));
