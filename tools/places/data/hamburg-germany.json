@@ -516,7 +516,8 @@
      "wikidata": "Q19479",
      "content": "This is one of the finest in Europe and has been included on the UNESCO World Heritage List. Building work started in 1410 and it is seen as an important display of the wealth and freedom of the city.",
      "editions": 37,
-     "unesco": true
+     "unesco": true,
+     "en": "Town Hall of Bremen"
     },
     {
      "kind": "see",
@@ -528,7 +529,8 @@
      "wikidata": "Q19665",
      "content": "This statue on the main square, in front of the town hall, is of the Knight Roland, subject of the Medieval epic, the Song of Roland, who was a protector of trade. He appears in many European cities, especially those involved in the Hanseat",
      "editions": 34,
-     "unesco": true
+     "unesco": true,
+     "en": "Bremen Roland"
     },
     {
      "kind": "see",
@@ -539,7 +541,8 @@
      "price": "Free entry to cathedral; Tower and Museum: €3–5",
      "wikidata": "Q695038",
      "content": "Over 1,200 years old, its huge towered façade dominates the main square. The interior is also impressive, with some fine painted details on the ceilings. The cathedral was damaged by fire and lightning in the 17th century and also seriously",
-     "editions": 23
+     "editions": 23,
+     "en": "Bremen Cathedral"
     },
     {
      "kind": "see",
@@ -582,7 +585,8 @@
      "price": "Children €2.50, adults €7.50",
      "wikidata": "Q333527",
      "content": "",
-     "editions": 7
+     "editions": 7,
+     "en": "Übersee-Museum Bremen"
     },
     {
      "kind": "see",
@@ -615,7 +619,8 @@
      "price": "€5",
      "wikidata": "Q1567953",
      "content": "Housed in a former cotton warehouse. Models of ships used during the past.",
-     "editions": 2
+     "editions": 2,
+     "en": "Hafenmuseum Bremen"
     },
     {
      "kind": "see",
@@ -636,7 +641,8 @@
      "price": "Free entry for children, adults €9",
      "wikidata": "Q693591",
      "content": "",
-     "editions": 20
+     "editions": 20,
+     "en": "Kunsthalle Bremen"
     },
     {
      "kind": "see",
@@ -647,7 +653,8 @@
      "price": "",
      "wikidata": "Q1511196",
      "content": "The contemporary art museum shows the work of [[w:Gerhard Marcks",
-     "editions": 4
+     "editions": 4,
+     "en": "Gerhard Marcks House"
     },
     {
      "kind": "see",
@@ -658,7 +665,8 @@
      "price": "€5",
      "wikidata": "Q2571567",
      "content": "Founded as a design museum but also used for exhibitions in modern art. The museum is named after [[w:Wilhelm Wagenfeld",
-     "editions": 3
+     "editions": 3,
+     "en": "Wilhelm Wagenfeld House"
     },
     {
      "kind": "see",
@@ -815,7 +823,8 @@
      "price": "",
      "wikidata": "Q52366584",
      "content": "",
-     "editions": 2
+     "editions": 2,
+     "noEn": true
     },
     {
      "kind": "see",
@@ -836,7 +845,8 @@
      "price": "",
      "wikidata": "Q1954671",
      "content": "",
-     "editions": 2
+     "editions": 2,
+     "noEn": true
     }
    ],
    "foodDrink": [
@@ -939,7 +949,8 @@
      "price": "",
      "wikidata": "Q1775395",
      "content": "",
-     "editions": 5
+     "editions": 5,
+     "en": "Itzehoe Monastery"
     },
     {
      "kind": "see",
@@ -961,7 +972,8 @@
      "price": "",
      "wikidata": "Q2327446",
      "content": "",
-     "editions": 3
+     "editions": 3,
+     "en": "St. Laurentii, Itzehoe"
     },
     {
      "kind": "see",
@@ -972,7 +984,8 @@
      "price": "",
      "wikidata": "Q2316309",
      "content": "",
-     "editions": 2
+     "editions": 2,
+     "en": "St.-Jürgen-Kapelle (Itzehoe)"
     }
    ],
    "foodDrink": [
@@ -1034,7 +1047,8 @@
      "price": "",
      "wikidata": "Q695065",
      "content": "The largest church in Lübeck, and a key example of brick Gothic architecture. Built between 1277 and 1351, it features the highest brick vault in the world.",
-     "editions": 29
+     "editions": 29,
+     "en": "St. Mary's Church Lübeck"
     },
     {
      "kind": "see",
@@ -1045,7 +1059,8 @@
      "price": "",
      "wikidata": "Q3916007",
      "content": "Founded in 1173 by Henry the Lion, this is one of the oldest monuments in Lübeck and the first large brick church built on the Baltic coast. Initially constructed as a Romanesque basilica and later converted into a Gothic hall church, it is",
-     "editions": 24
+     "editions": 24,
+     "en": "Lübeck Cathedral"
     },
     {
      "kind": "see",
@@ -1056,7 +1071,8 @@
      "price": "",
      "wikidata": "Q896458",
      "content": "Its tower platform (which can be reached by an elevator) offers a great view over the city, and if weather conditions allow it you can even see Travemünde (17&nbsp;km to the north-east).",
-     "editions": 13
+     "editions": 13,
+     "en": "St. Peter's Church (Lübeck)"
     },
     {
      "kind": "see",
@@ -1078,7 +1094,8 @@
      "price": "",
      "wikidata": "Q316973",
      "content": "The smallest of Lübeck's five medieval parish churches was spared from destruction in World War II. Its interior combines medieval frescoes with a carved 1587 Renaissance singers' gallery and a prominent Baroque altar.",
-     "editions": 6
+     "editions": 6,
+     "en": "Saint Giles church (Lübeck)"
     },
     {
      "kind": "see",
@@ -1089,7 +1106,8 @@
      "price": "",
      "wikidata": "Q317388",
      "content": "This early 14th-century former Franciscan monastery church is the only surviving conventual church in Lübeck's Old Town. Today operating as a museum, it features an elevated choir built over a double-nave crypt and exterior sculptures by Er",
-     "editions": 8
+     "editions": 8,
+     "en": "St. Catherine's Church"
     },
     {
      "kind": "see",
@@ -1123,7 +1141,8 @@
      "price": "",
      "wikidata": "Q317608",
      "content": "",
-     "editions": 12
+     "editions": 12,
+     "en": "Heilig-Geist-Hospital Lübeck"
     },
     {
      "kind": "see",
@@ -1134,7 +1153,8 @@
      "price": "",
      "wikidata": "Q814533",
      "content": "A Classicist burgher house that now hosts an art museum.",
-     "editions": 3
+     "editions": 3,
+     "en": "Museum Behnhaus Drägerhaus"
     },
     {
      "kind": "see",
@@ -1146,7 +1166,8 @@
      "wikidata": "Q538453",
      "content": "Its architecture is a stylistic potpourri reaching back to the 12th century. It is still the seat of the city administration and not a museum, so you can't have a look inside on your own. But there are guided tours every hour or so where th",
      "editions": 13,
-     "unesco": true
+     "unesco": true,
+     "en": "Lübeck city hall"
     },
     {
      "kind": "see",
@@ -1168,7 +1189,8 @@
      "price": "",
      "wikidata": "Q2713736",
      "content": "A building built by the wealthy merchants.",
-     "editions": 2
+     "editions": 2,
+     "en": "Haus der Kaufmannschaft zu Lübeck"
     },
     {
      "kind": "see",
@@ -1179,7 +1201,8 @@
      "price": "",
      "wikidata": "Q18674699",
      "content": "",
-     "editions": 9
+     "editions": 9,
+     "en": "St. Anne's Museum Quarter"
     },
     {
      "kind": "see",
@@ -1201,7 +1224,8 @@
      "price": "",
      "wikidata": "Q1560511",
      "content": "Dedicated to the author (born in Gdańsk) who spent most of his life in Lübeck until his death in 2015 and who received the Nobel Prize for Literature in 1999.",
-     "editions": 5
+     "editions": 5,
+     "en": "Günter Grass House"
     },
     {
      "kind": "see",
@@ -1212,7 +1236,8 @@
      "price": "",
      "wikidata": "Q1954827",
      "content": "It features some old-fashioned ships, among them a rebuilt Hanseatic ''kraweel'' (\"Lisa von Lübeck\") — more so in winter, because many of these ships are still in use during summer.",
-     "editions": 3
+     "editions": 3,
+     "en": "Museumshafen Lubeck"
     },
     {
      "kind": "see",
@@ -1223,7 +1248,8 @@
      "price": "€16 for adults in main exhibition, reduced price €10, free for children (under 18), university students",
      "wikidata": "Q14545643",
      "content": "Opened in 2015, this is perhaps the \"crown jewel\" among Lübeck's historical museums as it gives an in-depth look into Lübeck's over 800 years of history and how Lübeck shaped the Hanseatic League and how the ''Hanse'' in turn shaped Lübeck.",
-     "editions": 10
+     "editions": 10,
+     "en": "Europäisches Hansemuseum"
     },
     {
      "kind": "see",
@@ -1245,7 +1271,8 @@
      "price": "",
      "wikidata": "Q1545709",
      "content": "As Lübeck's eastern border was co-extensive with the border between West (FRG) and East Germany (GDR) during the [[Cold War Europe",
-     "editions": 2
+     "editions": 2,
+     "en": "Border museum Lübeck-Schlutup"
     },
     {
      "kind": "see",
@@ -1256,7 +1283,8 @@
      "price": "",
      "wikidata": "Q463403",
      "content": "A museum dedicated to all kinds of theatre puppets.",
-     "editions": 9
+     "editions": 9,
+     "en": "Lübeck Museum of Theatre Puppets"
     },
     {
      "kind": "see",
@@ -4313,7 +4341,8 @@
    "note": "The youngest and most famous of the five is also the only baroque church. This building is not the original St. Michaelis - that one (built 1647-1669) was destroyed by a lightning strike in 1750. It was not until 1786 that the present churc",
    "editions": 27,
    "unesco": false,
-   "web": "https://www.st-michaelis.de/"
+   "web": "https://www.st-michaelis.de/",
+   "en": "St. Michaelis Church, Hamburg"
   },
   {
    "name": "Hauptkirche St. Jacobi",
@@ -4324,7 +4353,8 @@
    "editions": 15,
    "unesco": false,
    "closedForGood": true,
-   "web": "http://www.jacobus.de/"
+   "web": "http://www.jacobus.de/",
+   "en": "St. James' Church"
   },
   {
    "name": "Hauptkirche St. Petri",
@@ -4334,7 +4364,8 @@
    "note": "St. Petri was a cathedral as early as the 12th century or possibly even earlier. As with other ''Hauptkirchen'', the present version is one of many successive, and was only completed in 1878 after the great fire in 1842 consumed its predece",
    "editions": 18,
    "unesco": false,
-   "web": "http://www.sankt-petri.de/"
+   "web": "http://www.sankt-petri.de/",
+   "en": "St. Peter’s Church"
   },
   {
    "name": "Hauptkirche St. Nikolai",
@@ -4345,7 +4376,8 @@
    "editions": 31,
    "unesco": false,
    "closedForGood": true,
-   "web": "https://www.mahnmal-st-nikolai.de"
+   "web": "https://www.mahnmal-st-nikolai.de",
+   "en": "St. Nicholas Church, Hamburg"
   },
   {
    "name": "Hauptkirche St. Katharinen",
@@ -4355,7 +4387,8 @@
    "note": "Situated on an island, it traditionally served as the church of the seamen. The base of its spire, dating from the 13th century, is the second oldest building preserved in the city. The church is also famous for its centuries-old organ, pla",
    "editions": 19,
    "unesco": false,
-   "web": "http://www.katharinen-hamburg.de/"
+   "web": "http://www.katharinen-hamburg.de/",
+   "en": "St. Catherine's Church, Hamburg"
   },
   {
    "name": "Hulbe-Haus",
@@ -4364,7 +4397,8 @@
    "wikidata": "Q1586687",
    "note": "Dating from the beginning of the 20th century as most buildings around, but looking much older.",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Hulbehaus"
   },
   {
    "name": "Radio Hamburg",
@@ -4479,7 +4513,8 @@
    "note": "New 'architectural lighthouse' of Hamburg. On the top of a huge old warehouse a 110 metres tall modern philharmonic hall with glass façade and wave-shaped roof. It also includes a fancy hotel, restaurant, as well as private apartments. Acce",
    "editions": 41,
    "unesco": false,
-   "web": "https://www.elbphilharmonie.de/"
+   "web": "https://www.elbphilharmonie.de/",
+   "en": "Elbphilharmonie"
   },
   {
    "name": "HafenCity Kesselhaus InfoCenter",
@@ -4686,7 +4721,8 @@
    "note": "Built in 1898, when Altona was still a separate city. It's an impressive building with influences of Italian Renaissance.",
    "editions": 3,
    "unesco": false,
-   "web": "http://www.hamburg.de/rathaus-altona/"
+   "web": "http://www.hamburg.de/rathaus-altona/",
+   "en": "city hall of Altona"
   },
   {
    "name": "Dockland",
@@ -4703,7 +4739,8 @@
    "note": "This used to be the city park of the independent town of Altona. Unlike Hamburger Stadtpark, this park has been left in a more natural state. On the northern edge of the park is Volksparkstadion, the home stadium of the football team HSV, a",
    "editions": 4,
    "unesco": false,
-   "web": "http://www.hamburg.de/altona/parks-und-gaerten/2769476/altonaer-volkpark.html"
+   "web": "http://www.hamburg.de/altona/parks-und-gaerten/2769476/altonaer-volkpark.html",
+   "en": "Altona Volkspark"
   },
   {
    "name": "Landungsbrücken",
@@ -4712,7 +4749,8 @@
    "wikidata": "Q458970",
    "note": "The most touristy part of Hamburg's harbour, close to the metro station with the same name. Piers connected with several bridges swim on the water adapting to the tide. There tourist boats land and you will find souvenir shops, restaurants,",
    "editions": 12,
-   "unesco": false
+   "unesco": false,
+   "en": "St. Pauli Landing Stages"
   },
   {
    "name": "U-434",
@@ -4722,7 +4760,8 @@
    "note": "One of the biggest non-nuclear Soviet submarines, moored near to the Fischmarkt. Guided tours are possible.",
    "editions": 10,
    "unesco": false,
-   "web": "http://www.u-434.de/"
+   "web": "http://www.u-434.de/",
+   "en": "B-515"
   },
   {
    "name": "Alter Elbtunnel",
@@ -4731,7 +4770,8 @@
    "wikidata": "Q460264",
    "note": "Completed in 1911, it links both sides of the river Elbe. A lift or stairs bring you the 24 m down into the tunnel. You then walk through one of its two 427-m-long pipes having 12 m of water over your head. At the other side, you again walk",
    "editions": 12,
-   "unesco": false
+   "unesco": false,
+   "en": "Elbe Tunnel"
   },
   {
    "name": "Museumshafen Oevelgönne",
@@ -4817,7 +4857,8 @@
    "wikidata": "Q895867",
    "note": "In the pedestrian street there are a lot of bars and clubs - a great place to go in the evening, although it's very crowded and it may get a bit dangerous in the weekend. On weekdays, it is harmless here - a low-budget tip is, 99 Cent Bar, ",
    "editions": 7,
-   "unesco": false
+   "unesco": false,
+   "en": "Große Freiheit"
   },
   {
    "name": "Hans-Albers-Platz",
@@ -4904,7 +4945,8 @@
    "note": "For a century and a half, the botanical garden was situated in the current Planten un Blomen park, where the tropical greenhouses still remain. In 1979, the botanical garden was relocated to its current place in the Klein Flottbek district.",
    "editions": 5,
    "unesco": false,
-   "web": "https://www.biologie.uni-hamburg.de/loki-schmidt-garten.html"
+   "web": "https://www.biologie.uni-hamburg.de/loki-schmidt-garten.html",
+   "en": "Loki-Schmidt-Garten"
   },
   {
    "name": "Hamburg Stadtpark",
@@ -4948,7 +4990,8 @@
    "editions": 17,
    "unesco": false,
    "web": "https://www.friedhof-hamburg.de/die-friedhoefe/ohlsdorf/",
-   "posFrom": "map"
+   "posFrom": "map",
+   "en": "Ohlsdorf Cemetery"
   },
   {
    "name": "Imam-Ali-Mosque",
@@ -4959,7 +5002,8 @@
    "editions": 21,
    "unesco": false,
    "closedForGood": true,
-   "web": "http://www.izhamburg.com/en/"
+   "web": "http://www.izhamburg.com/en/",
+   "en": "Islamic Centre Hamburg"
   },
   {
    "name": "Museum am Rothenbaum - Kulturen und Kunste der Welt",
@@ -4969,7 +5013,8 @@
    "note": "Formerly known as the Museum of Ethnology. The museum has ethnographic objects from around the world.",
    "editions": 0,
    "unesco": false,
-   "web": "https://markk-hamburg.de/"
+   "web": "https://markk-hamburg.de/",
+   "en": "Museum am Rothenbaum"
   },
   {
    "name": "Museum für Kunst und Gewerbe",
@@ -4979,7 +5024,8 @@
    "note": "The museum is a leading centre for art, applied art, and design. Its collections of work from Europe and the Middle and the Far East are of the finest-quality and span all epochs from the Ancient World to the present day. They also have man",
    "editions": 16,
    "unesco": false,
-   "web": "https://www.mkg-hamburg.de/"
+   "web": "https://www.mkg-hamburg.de/",
+   "en": "Museum of Art and Crafts Hamburg"
   },
   {
    "name": "Dreieinigkeitskirche St. Georg",
@@ -4988,7 +5034,8 @@
    "wikidata": "Q1308438",
    "note": "Baroque church in Sankt Georg.",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Trinity church in Hamburg-St.Georg"
   },
   {
    "name": "St.-Marien-Dom St. Georg",
@@ -4998,7 +5045,8 @@
    "note": "Since 1995, this neo-romanesque church is the cathedral of the youngest Roman Catholic archbishop of Germany. Though the church has not the splendor one might expect, next to it you may find the first statue world wide of the late pope, Joh",
    "editions": 16,
    "unesco": false,
-   "web": "https://www.mariendomhamburg.de/"
+   "web": "https://www.mariendomhamburg.de/",
+   "en": "Domkirche St. Marien"
   },
   {
    "name": "Memorial to the X-ray martyrs of the world",
@@ -5007,7 +5055,8 @@
    "wikidata": "Q1300206",
    "note": "This monument is devoted to researchers, physicians, physicists, radiographers, laboratory technicians and nurses who died from injuries or illnesses caused by prolonged exposure to radiation used in medicine. On the list of about 360 names",
    "editions": 8,
-   "unesco": false
+   "unesco": false,
+   "en": "Monument to the X-ray and Radium Martyrs of All Nations"
   },
   {
    "name": "St. Pankratius",
@@ -5018,7 +5067,8 @@
    "editions": 3,
    "unesco": false,
    "web": "http://www.kirche-ochsenwerder.de/kirche.html",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Church Ochsenwerder"
   },
   {
    "name": "Container port",
@@ -5029,7 +5079,8 @@
    "editions": 35,
    "unesco": false,
    "web": "https://www.hafen-hamburg.de/de",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Port of Hamburg"
   },
   {
    "name": "Aussichtspunkt Steinwerder",

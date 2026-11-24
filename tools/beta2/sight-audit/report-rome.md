@@ -1,5 +1,4 @@
 ## Rome (Rome (from Civitavecchia), built-in guide)
-- DUP San Paolo fuori le Mura = Basilica of Saint Paul Outside the Walls (same Wikidata Q231699)
 - NOID Olympic Stadium: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID The Vatican Museum: built-in sight with no Wikidata id and nothing of the name on the map nearby
 - NOID The Celio: built-in sight with no Wikidata id and nothing of the name on the map nearby
@@ -29,6 +28,6 @@
 - FAME #14 best known nearby, "Capitoline Wolf" (43 Wikipedia languages, Q408623), is not offered
 - FAME must-see "Trevi Fountain" is offered (Trevi Fountain) but not marked must-see
 - FAME must-see "Vatican Museums|Sistine Chapel" is not offered
-- INFO 30 sights, 1 day trips/towns; must-see: St Peter's Basilica, Colosseum and Roman Forum, Pantheon; top by fame: St Peter's Basilica 0, Colosseum and Roman Forum 0, Pantheon 0, Trevi Fountain 0, Piazza Navona 0, San Giovanni in Laterano 0, San Paolo fuori le Mura 0, Palazzo della Cancelleria 0
+- INFO 30 sights, 1 day trips/towns; must-see: St Peter's Basilica, Colosseum and Roman Forum, Pantheon; top by fame: St Peter's Basilica 0, Colosseum and Roman Forum 0, Pantheon 0, Trevi Fountain 0, Piazza Navona 0, San Giovanni in Laterano 0, Palazzo della Cancelleria 0, Olympic Stadium 0
 - INFO day trips: Basilica of Saint Paul Outside the Walls
 

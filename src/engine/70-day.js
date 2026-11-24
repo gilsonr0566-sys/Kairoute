@@ -46,7 +46,7 @@
     // Within one day the list of places to eat and the ledger don't change, so each point is worked out once.
     if (!ctx.eatMemo) {
       ctx.eatMemo = new Map();
-      ctx.eatList = ctx.eats.filter(r => isFinite(r.lat) && isFinite(r.lng) && !r.drop && E.mealPlace(r) && E.readable(E.latin(r.name) || r.name)).map(r => { // only a name the traveler can read
+      ctx.eatList = ctx.eats.filter(r => isFinite(r.lat) && isFinite(r.lng) && !r.drop && E.mealPlace(r) && E.readable(E.latin(r.name))).map(r => { // only a name the traveler can read
         const k = E.eatKey(r.name), f = ctx.eatFacts[k] || ctx.eatFacts[r.name && r.name.toLowerCase()] || {};
         return { r, k, f };
       });
@@ -121,7 +121,7 @@
     const isleOf = r => { if (!isles.length || !isFinite(r.lat)) return null; let best = null, bd = Infinity; for (const s of isles) { const d = E.hav(s, r); if (d < bd) { bd = d; best = s; } }
       return land.every(p => E.hav(p, r) > bd) ? best : null; };
     const isleFacts = r => { const s = isleOf(r); return !s ? {} : Object.assign({ travelNote: r.travelNote || s.travelNote || "", onIsle: s.id }, s.wish && !s.guideWish ? { insideWish: true } : {}, s.acrossWater ? { acrossWater: s.acrossWater } : {}, E.waterOnly(s) ? { access: s.access } : {}); };
-    const mealAt = (e, len, extra) => Object.assign({ id: "eat:" + e.k, eatKey: e.k, name: e.r.name, lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo: len === E.TO_GO, chosen: !!my.pick, fromMap: !!e.r.fromMap, packed: !!e.r.packed, travelNote: e.r.travelNote || "",
+    const mealAt = (e, len, extra) => Object.assign({ id: "eat:" + e.k, eatKey: e.k, name: E.say(e.r.name), lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo: len === E.TO_GO, chosen: !!my.pick, fromMap: !!e.r.fromMap, packed: !!e.r.packed, travelNote: e.r.travelNote || "",
       // A lunch to go is still bought at that place, so it waits for it to open too (Nov 23 audit: a lunch to go at 11:56
       // at a place that opens at noon).
       oh: ((ctx.eatFacts || {})[e.k] || {}).oh || null }, isleFacts(e.r), extra || {});
@@ -551,6 +551,6 @@
     // A day that ends late (an arrival at 10 pm) gets no dinner the app picked at 11:30 pm or past midnight, when most
     // kitchens are closed (outside test round 5, Nov 22); the traveler's own pick or booking stays.
     if (!my.pick && !my.meal.booked && !my.meal.pinned && at > E.DINNER_LAST) return null;
-    return Object.assign({ t: "evening", id: "eat:" + e.k, eatKey: e.k, name: e.r.name, at: Math.max(end + ride, from), min: D.len, lat: e.r.lat, lng: e.r.lng }, my.pick ? { chosen: true } : {}, my.meal.booked ? { booked: true } : {});
+    return Object.assign({ t: "evening", id: "eat:" + e.k, eatKey: e.k, name: E.say(e.r.name), at: Math.max(end + ride, from), min: D.len, lat: e.r.lat, lng: e.r.lng }, my.pick ? { chosen: true } : {}, my.meal.booked ? { booked: true } : {});
   };
 })(KEngine);

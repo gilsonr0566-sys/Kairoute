@@ -145,17 +145,37 @@
    }
   },
   {
-   "k": "NOID",
-   "t": "Pompeii [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "k": "POS",
+   "t": "Pompeii [day trip] {Q43332 by name}: app is 0.45 km from Wikidata's point (not on the map by id)",
    "x": {
-    "id": "pompeii-far"
+    "d": 0.4536657225936896,
+    "id": "pompeii-far",
+    "wd": "Q43332",
+    "app": [
+     40.7489,
+     14.4848
+    ],
+    "wdpt": [
+     40.75055555555556,
+     14.489722222222222
+    ]
    }
   },
   {
-   "k": "NOID",
-   "t": "Capri [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "k": "POS",
+   "t": "Capri [day trip] {Q173292 by name}: app is 1.01 km from Wikidata's point (not on the map by id)",
    "x": {
-    "id": "capri-far"
+    "d": 1.005686639513351,
+    "id": "capri-far",
+    "wd": "Q173292",
+    "app": [
+     40.5532,
+     14.2222
+    ],
+    "wdpt": [
+     40.55,
+     14.233333333333
+    ]
    }
   },
   {
@@ -1166,7 +1186,7 @@
    "fame": 0,
    "unesco": false,
    "heritage": false,
-   "wd": "",
+   "wd": "Q43332",
    "src": [],
    "srcOnly": false,
    "builtin": true,
@@ -1176,7 +1196,8 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "The Roman city buried by Vesuvius in AD 79."
+   "summary": "The Roman city buried by Vesuvius in AD 79.",
+   "wdByName": true
   },
   {
    "id": "capri-far",
@@ -1192,7 +1213,7 @@
    "fame": 0,
    "unesco": false,
    "heritage": false,
-   "wd": "",
+   "wd": "Q173292",
    "src": [],
    "srcOnly": false,
    "builtin": true,
@@ -1202,7 +1223,8 @@
    "parts": [],
    "merged": [],
    "posDoubt": false,
-   "summary": "A glamorous island of cliffs, sea caves and lemon groves."
+   "summary": "A glamorous island of cliffs, sea caves and lemon groves.",
+   "wdByName": true
   },
   {
    "id": "sorrento-far",

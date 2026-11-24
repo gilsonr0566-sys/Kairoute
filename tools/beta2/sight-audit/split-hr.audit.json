@@ -1,0 +1,107 @@
+{
+ "name": "split-hr",
+ "label": "Split, Croatia",
+ "centre": {
+  "lat": 43.51556,
+  "lng": 16.43444
+ },
+ "findings": [
+  {
+   "k": "INFO",
+   "t": "3 sights, 0 day trips/towns; must-see: Diocletian's Palace, Stadion Poljud; top by fame: Diocletian's Palace 52, Stadion Poljud 40, Archaeological Museum Split 8",
+   "x": {}
+  }
+ ],
+ "sights": [
+  {
+   "id": "src-q322287",
+   "name": "Diocletian's Palace",
+   "local": "Dioklecijanova palača",
+   "lat": 43.50806,
+   "lng": 16.43833,
+   "minutes": 60,
+   "category": "Ancient site",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 52,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q322287",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikipedia in Croatian"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic ancient site in Split, Croatia, named by 3 independent sources."
+  },
+  {
+   "id": "src-q841384",
+   "name": "Stadion Poljud",
+   "local": "Gradski stadion Poljud",
+   "lat": 43.51944,
+   "lng": 16.43167,
+   "minutes": 45,
+   "category": "Stadium",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 40,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q841384",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "national heritage register",
+    "Wikipedia in Croatian"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic stadium in Split, Croatia, named by 3 independent sources."
+  },
+  {
+   "id": "src-q598800",
+   "name": "Archaeological Museum Split",
+   "local": "Arheološki muzej u Splitu",
+   "lat": 43.51556,
+   "lng": 16.43444,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 8,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q598800",
+   "src": [
+    "Wikidata (Wikipedia in many languages)",
+    "Wikivoyage (English)",
+    "Wikipedia in Croatian"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The oldest museum in Croatia (1820), about 20 min walk north of the old town. Many artifacts and monuments from Roman colonies Salona and Narona."
+  }
+ ]
+}

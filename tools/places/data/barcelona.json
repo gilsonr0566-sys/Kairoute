@@ -8295,7 +8295,8 @@
    "note": "One of the most representative examples of Catalan Gothic architecture, it features a sombre but beautiful interior. The upsweeping verticality and lightness of the interior are especially surprising considering the blocky exterior surfaces",
    "editions": 30,
    "unesco": false,
-   "web": "http://www.santamariadelmarbarcelona.org"
+   "web": "http://www.santamariadelmarbarcelona.org",
+   "en": "Basilica of Our Lady of the Sea"
   },
   {
    "name": "Carrer Montcada",
@@ -8304,7 +8305,8 @@
    "wikidata": "Q8255466",
    "note": "This street has the biggest collection of Gothic houses in Barcelona. In amongst these houses is the Picasso Museum, which is definitely worth a visit. There are also smaller museums along the street, and many tapas restaurants though they ",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "en": "Carrer de Montcada"
   },
   {
    "name": "Passeig del Born",
@@ -8356,7 +8358,8 @@
    "wikidata": "Q1519964",
    "note": "This square is famous for the nightlife and the uniform architecture, and features fountains and palm trees. It was built during the 19th century on the site of a monastery, after the ''Mendizábal law'' expelled the monks. After some years ",
    "editions": 17,
-   "unesco": false
+   "unesco": false,
+   "en": "Royal Square"
   },
   {
    "name": "Plaça del Rei",
@@ -8365,7 +8368,8 @@
    "wikidata": "Q2067174",
    "note": "This square has two important buildings, the ''Santa Àgata'' church, where the kings from the ''Aragon crown'' had baptism. Is possible to visit it. The other building has the ''Saló del Tinell'', one of the best civil Gothic architecture e",
    "editions": 16,
-   "unesco": false
+   "unesco": false,
+   "en": "plaça del Rei"
   },
   {
    "name": "Cathedral of Santa Eulàlia",
@@ -8375,7 +8379,8 @@
    "note": "The main Gothic church in Barcelona. The cloister is maybe the most interesting part.",
    "editions": 44,
    "unesco": false,
-   "web": "https://catedralbcn.org/"
+   "web": "https://catedralbcn.org/",
+   "en": "Cathedral of the Holy Cross and Saint Eulalia"
   },
   {
    "name": "Plaça Sant Felip Neri",
@@ -8384,7 +8389,8 @@
    "wikidata": "Q9060949",
    "note": "One of the most romantic squares in Barcelona, it hides a dark history in that it was built over the city's old cemetery. Barcelona's most famous architect, Antonio Gaudi, was on his way to visit the church there when he was run over and ki",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "en": "Plaça de Sant Felip Neri"
   },
   {
    "name": "Plaça del Pi",
@@ -8409,7 +8415,8 @@
    "wikidata": "Q2916029",
    "note": "They open during the morning. It is the re-discovered synagogue from the Jewish quarter, called ''call''. This building, not very spectacular, is important since it has been here since the Roman era, and stayed as a synagogue until the Jewi",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "en": "Synagogue Shlomo ben Adret"
   },
   {
    "name": "Museu d'Història de la Ciutat de Barcelona",
@@ -8426,7 +8433,8 @@
    "note": "Museum dedicated to erotic and sensual works. A huge tourist trap. The tour is not worth it, unless you wish to see old paintings of the Kama Sutra. The only interest is the huge phallus in the hallway, which makes for funny pictures.",
    "editions": 6,
    "unesco": false,
-   "web": "http://www.erotica-museum.com"
+   "web": "http://www.erotica-museum.com",
+   "en": "Erotic Museum Barcelona"
   },
   {
    "name": "Hash Marijuana & Hemp Museum Barcelona",
@@ -8452,7 +8460,8 @@
    "note": "Housed in Drassanes, the Gothic shipyard of the city. During the 14th century, the Arag&oacute; Crown was the most important power in the Mediterranean Sea, and this was the main place where the ships were built. Nowadays, it's the Maritime",
    "editions": 16,
    "unesco": false,
-   "web": "https://www.mmb.cat/"
+   "web": "https://www.mmb.cat/",
+   "en": "Maritime Museum of Barcelona"
   },
   {
    "name": "Hospital de la Santa Creu",
@@ -8461,7 +8470,8 @@
    "wikidata": "Q683875",
    "note": "This Gothic building was the old city hospital, before the modernist ''Hospital de Sant Pau'' was built in ''l'[[Barcelona/Eixample",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "en": "Old Hospital de la Santa Creu, Barcelona"
   },
   {
    "name": "Sant Pau del Camp",
@@ -8538,7 +8548,8 @@
    "editions": 14,
    "unesco": false,
    "web": "https://portvellbcn.cat/ca/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Port Vell de Barcelona"
   },
   {
    "name": "Museum of the History of Catalonia",
@@ -8582,7 +8593,8 @@
    "wikidata": "Q2330791",
    "note": "By [[w:Casa Lleó Morera",
    "editions": 17,
-   "unesco": false
+   "unesco": false,
+   "en": "Casa Lleó Morera"
   },
   {
    "name": "Fundació Antoni Tàpies",
@@ -8694,7 +8706,8 @@
    "editions": 31,
    "unesco": false,
    "web": "https://www.museunacional.cat/ca",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Museu Nacional d'Art de Catalunya"
   },
   {
    "name": "Archaeology Museum of Catalonia",
@@ -8714,7 +8727,8 @@
    "note": "This museum mainly exhibits exponents, which were imported by Catalan sailors as they explored the new world. Free on the first Sunday each month (11:00 to 15:00)",
    "editions": 2,
    "unesco": false,
-   "web": "http://www.barcelona.cat/museuetnologic/"
+   "web": "http://www.barcelona.cat/museuetnologic/",
+   "en": "Museu Etnològic de Barcelona"
   },
   {
    "name": "Olympic and Sports Museum Joan Antoni Samaranch",
@@ -8725,7 +8739,8 @@
    "editions": 7,
    "unesco": false,
    "web": "http://www.museuolimpicbcn.cat",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Joan Antoni Samaranch Olympic and Sport Museum"
   },
   {
    "name": "Plaça d'Espanya",
@@ -8744,7 +8759,8 @@
    "note": "A fake village built in 1929, with replicas of characteristic buildings in Spain (like the Avila walls, the Vall-de-roures town hall, etc.). The village hosts the Fondation Fran Daurel, where you can enjoy an interesting Modern Art collecti",
    "editions": 20,
    "unesco": false,
-   "web": "https://www.poble-espanyol.com"
+   "web": "https://www.poble-espanyol.com",
+   "en": "Poble Espanyol"
   },
   {
    "name": "Botanical Garden",
@@ -8755,7 +8771,8 @@
    "editions": 11,
    "unesco": false,
    "web": "http://museuciencies.cat/es/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Jardí Botànic de Barcelona"
   },
   {
    "name": "Miramar gardens",
@@ -8764,7 +8781,8 @@
    "wikidata": "Q14886513",
    "note": "This is where you arrive by a harbour cable car. Marvelous place in the spring, full of roses and fountains. Entrance to the cactus garden is nearby. The Mirador Miramar offers splendid views over the city.",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "en": "Jardins de Miramar"
   },
   {
    "name": "The Montjuïc Castle",
@@ -8774,7 +8792,8 @@
    "note": "Provides a beautiful panorama view over the rest of the city. The Montjuic Castle is in the Montjuic hill. From the ''Montjuïc Castle'', take [[#Harbour Cable Car",
    "editions": 17,
    "unesco": false,
-   "web": "http://www.bcn.cat/castelldemontjuic/"
+   "web": "http://www.bcn.cat/castelldemontjuic/",
+   "en": "Montjuïc Castle"
   },
   {
    "name": "Torre Glòries",
@@ -8808,7 +8827,8 @@
    "note": "",
    "editions": 5,
    "unesco": false,
-   "web": "https://ccib.es/en/"
+   "web": "https://ccib.es/en/",
+   "en": "International Convention Centre of Barcelona"
   },
   {
    "name": "Olympic Port",
@@ -8818,7 +8838,8 @@
    "note": "It has a large number of restaurants, bars and other establishments. In this wide offer you can find also the Barcelona Casino.",
    "editions": 12,
    "unesco": false,
-   "web": "https://portolimpic.barcelona"
+   "web": "https://portolimpic.barcelona",
+   "en": "Port Olímpic"
   },
   {
    "name": "Vila Olimpica",
@@ -8827,7 +8848,8 @@
    "wikidata": "Q1167101",
    "note": "",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "en": "La Vila Olímpica del Poblenou"
   },
   {
    "name": "Poblenou Cemetery",
@@ -8845,7 +8867,8 @@
    "wikidata": "Q18711243",
    "note": "One of the most unusual landmarks in this otherwise ultra-modern area is this 19th-century (finished in 1882) brick water tower. Standing 62 metres tall, it is now overshadowed by neighbouring residential, office and hotel towers and easy t",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "en": "Torre de les Aigües del Besòs"
   },
   {
    "name": "Parc de Poblenou",
@@ -8855,7 +8878,8 @@
    "note": "",
    "editions": 4,
    "unesco": false,
-   "posFrom": "wikidata"
+   "posFrom": "wikidata",
+   "en": "Parc del Centre del Poblenou"
   },
   {
    "name": "Parc del Clot",
@@ -8864,7 +8888,8 @@
    "wikidata": "Q11940184",
    "note": "",
    "editions": 5,
-   "unesco": false
+   "unesco": false,
+   "en": "Park el Clot"
   },
   {
    "name": "Parc de les Glories",
@@ -8873,7 +8898,8 @@
    "wikidata": "Q18338244",
    "note": "",
    "editions": 2,
-   "unesco": false
+   "unesco": false,
+   "en": "Parc de les Glòries"
   },
   {
    "name": "Parc Diagonal Mar",
@@ -8891,7 +8917,8 @@
    "editions": 37,
    "unesco": true,
    "web": "https://www.santpaubarcelona.org/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Hospital de Sant Pau"
   },
   {
    "name": "Monestir de Pedralbes",
@@ -8933,7 +8960,8 @@
    "note": "Museum dedicated to the FC Barcelona. It occupies 3,500 m² and attracts 1.2 million visitors a year, ranking it second to the Museu Picasso, which attracts 1.3 million visitors, as the most visited museum in the city of Barcelona. All of th",
    "editions": 27,
    "unesco": false,
-   "web": "https://www.fcbarcelona.com/en/tickets/camp-nou-experience"
+   "web": "https://www.fcbarcelona.com/en/tickets/camp-nou-experience",
+   "en": "FC Barcelona Museum"
   },
   {
    "name": "Palau de la Música Catalana",
@@ -8950,7 +8978,8 @@
    "note": "One of the most representative examples of Catalan Gothic architecture, it features a sombre but beautiful interior. The upsweeping verticality and lightness of the interior are especially surprising considering the blocky exterior surfaces",
    "editions": 30,
    "unesco": false,
-   "web": "http://www.santamariadelmarbarcelona.org"
+   "web": "http://www.santamariadelmarbarcelona.org",
+   "en": "Basilica of Our Lady of the Sea"
   },
   {
    "name": "Carrer Montcada",
@@ -8959,7 +8988,8 @@
    "wikidata": "Q8255466",
    "note": "This street has the biggest collection of Gothic houses in Barcelona. In amongst these houses is the Picasso Museum, which is definitely worth a visit. There are also smaller museums along the street, and many tapas restaurants though they ",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "en": "Carrer de Montcada"
   },
   {
    "name": "Passeig del Born",
@@ -9011,7 +9041,8 @@
    "wikidata": "Q1519964",
    "note": "This square is famous for the nightlife and the uniform architecture, and features fountains and palm trees. It was built during the 19th century on the site of a monastery, after the ''Mendizábal law'' expelled the monks. After some years ",
    "editions": 17,
-   "unesco": false
+   "unesco": false,
+   "en": "Royal Square"
   },
   {
    "name": "Plaça del Rei",
@@ -9020,7 +9051,8 @@
    "wikidata": "Q2067174",
    "note": "This square has two important buildings, the ''Santa Àgata'' church, where the kings from the ''Aragon crown'' had baptism. Is possible to visit it. The other building has the ''Saló del Tinell'', one of the best civil Gothic architecture e",
    "editions": 16,
-   "unesco": false
+   "unesco": false,
+   "en": "plaça del Rei"
   },
   {
    "name": "Cathedral of Santa Eulàlia",
@@ -9030,7 +9062,8 @@
    "note": "The main Gothic church in Barcelona. The cloister is maybe the most interesting part.",
    "editions": 44,
    "unesco": false,
-   "web": "https://catedralbcn.org/"
+   "web": "https://catedralbcn.org/",
+   "en": "Cathedral of the Holy Cross and Saint Eulalia"
   },
   {
    "name": "Plaça Sant Felip Neri",
@@ -9039,7 +9072,8 @@
    "wikidata": "Q9060949",
    "note": "One of the most romantic squares in Barcelona, it hides a dark history in that it was built over the city's old cemetery. Barcelona's most famous architect, Antonio Gaudi, was on his way to visit the church there when he was run over and ki",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "en": "Plaça de Sant Felip Neri"
   },
   {
    "name": "Plaça del Pi",
@@ -9064,7 +9098,8 @@
    "wikidata": "Q2916029",
    "note": "They open during the morning. It is the re-discovered synagogue from the Jewish quarter, called ''call''. This building, not very spectacular, is important since it has been here since the Roman era, and stayed as a synagogue until the Jewi",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "en": "Synagogue Shlomo ben Adret"
   },
   {
    "name": "Museu d'Història de la Ciutat de Barcelona",
@@ -9081,7 +9116,8 @@
    "note": "Museum dedicated to erotic and sensual works. A huge tourist trap. The tour is not worth it, unless you wish to see old paintings of the Kama Sutra. The only interest is the huge phallus in the hallway, which makes for funny pictures.",
    "editions": 6,
    "unesco": false,
-   "web": "http://www.erotica-museum.com"
+   "web": "http://www.erotica-museum.com",
+   "en": "Erotic Museum Barcelona"
   },
   {
    "name": "Hash Marijuana & Hemp Museum Barcelona",
@@ -9107,7 +9143,8 @@
    "note": "Housed in Drassanes, the Gothic shipyard of the city. During the 14th century, the Arag&oacute; Crown was the most important power in the Mediterranean Sea, and this was the main place where the ships were built. Nowadays, it's the Maritime",
    "editions": 16,
    "unesco": false,
-   "web": "https://www.mmb.cat/"
+   "web": "https://www.mmb.cat/",
+   "en": "Maritime Museum of Barcelona"
   },
   {
    "name": "Hospital de la Santa Creu",
@@ -9116,7 +9153,8 @@
    "wikidata": "Q683875",
    "note": "This Gothic building was the old city hospital, before the modernist ''Hospital de Sant Pau'' was built in ''l'[[Barcelona/Eixample",
    "editions": 10,
-   "unesco": false
+   "unesco": false,
+   "en": "Old Hospital de la Santa Creu, Barcelona"
   },
   {
    "name": "Sant Pau del Camp",
@@ -9193,7 +9231,8 @@
    "editions": 14,
    "unesco": false,
    "web": "https://portvellbcn.cat/ca/",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Port Vell de Barcelona"
   },
   {
    "name": "Museum of the History of Catalonia",

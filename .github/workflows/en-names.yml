@@ -1,0 +1,24 @@
+name: English names
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/project-thread-65fiyt"]
+    paths: ["tools/places/en-names.cjs", "tools/beta2/en-names-ids.json"]
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/places/en-names.cjs
+      - run: |
+          git config user.name "Kairoute names"
+          git config user.email "noreply@anthropic.com"
+          git add tools/places/data tools/beta2/en-names.json
+          git commit -m "English names from Wikidata for listed sights and test-trip sights [skip ci]" || exit 0
+          for i in 1 2 3 4; do git pull --rebase -q origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && break; sleep $((i*5)); done

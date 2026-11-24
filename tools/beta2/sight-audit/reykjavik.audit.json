@@ -2,10 +2,27 @@
  "name": "reykjavik",
  "label": "Reykjavik, Iceland",
  "centre": {
-  "lat": 64.14666,
+  "lat": 64.14411,
   "lng": -21.9327
  },
  "findings": [
+  {
+   "k": "POS",
+   "t": "Reykjavík Cathedral: app is 0.70 km from Wikidata's point (not on the map by id)",
+   "x": {
+    "d": 0.6995569544584863,
+    "id": "src-q1270853",
+    "wd": "Q1270853",
+    "app": [
+     64.14056,
+     -21.93583
+    ],
+    "wdpt": [
+     64.14666,
+     -21.93936
+    ]
+   }
+  },
   {
    "k": "LEN",
    "t": "Reykjavík Botanic Garden: 40 min, but a art museum or gallery usually takes 45-240 min",
@@ -337,8 +354,8 @@
    "id": "src-q1270853",
    "name": "Reykjavík Cathedral",
    "local": "Dómkirkjan í Reykjavík",
-   "lat": 64.14666,
-   "lng": -21.93936,
+   "lat": 64.14056,
+   "lng": -21.93583,
    "minutes": 30,
    "category": "Church",
    "kind": "local",
@@ -360,7 +377,7 @@
    "travel": "",
    "parts": [],
    "merged": [],
-   "posDoubt": false,
+   "posDoubt": true,
    "summary": "The church beside the parliament is Reykjavík Cathedral, the mother church of the Church of Iceland, the country's national church and part of the Lutheran deno"
   },
   {
@@ -505,7 +522,7 @@
    "builtin": false,
    "famousFix": true,
    "far": true,
-   "travel": "Bus from Klambratún, about 50 min one way",
+   "travel": "Bus from Klambratún, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -533,7 +550,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from Klambratún, about 50 min one way",
+   "travel": "Bus from Klambratún, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -562,7 +579,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from Klambratún, about 50 min one way",
+   "travel": "Bus from Klambratún, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -588,7 +605,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from Klambratún, about 50 min one way",
+   "travel": "Bus from Klambratún, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -614,7 +631,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from Klambratún, about 50 min one way",
+   "travel": "Bus from Klambratún, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -640,7 +657,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from Klambratún, about 50 min one way",
+   "travel": "Bus from Klambratún, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -666,7 +683,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from Klambratún, about 50 min one way",
+   "travel": "Bus from Klambratún, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -692,7 +709,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from Klambratún, about 50 min one way",
+   "travel": "Bus from Klambratún, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -719,7 +736,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from Klambratún, about 50 min one way",
+   "travel": "Bus from Klambratún, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -745,7 +762,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Bus from Klambratún, about 50 min one way",
+   "travel": "Bus from Klambratún, about 55 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,

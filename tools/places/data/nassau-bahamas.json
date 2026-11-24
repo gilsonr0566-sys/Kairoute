@@ -108,7 +108,8 @@
    "note": "Visit the Bahamas' only zoo. See the marching flamingo shows. Let the parakeets land on you as you feed them.",
    "editions": 5,
    "unesco": false,
-   "web": "http://www.ardastra.com/"
+   "web": "http://www.ardastra.com/",
+   "en": "Ardastra Gardens, Zoo and Conservation Centre"
   },
   {
    "name": "National Art Gallery of the Bahamas",
@@ -118,7 +119,8 @@
    "note": "Opened in 2003, this showcases Bahamian art from the precolonial era to the present. The quality of art is rather uneven to say the least, but the renovated building &mdash; once the residence of the Chief Justice &mdash; is a sight in itse",
    "editions": 5,
    "unesco": false,
-   "web": "https://nagb.org.bs/"
+   "web": "https://nagb.org.bs/",
+   "en": "National Art Gallery of The Bahamas"
   },
   {
    "name": "Pirates of Nassau Museum",
@@ -128,7 +130,8 @@
    "note": "Recreations of a pirate town, a pirate ship and a pirate battle, with a few real artifacts mixed in. Cheesy, but fun. Try to catch a guided tour.",
    "editions": 1,
    "unesco": false,
-   "web": "http://www.piratesofnassau.com/"
+   "web": "http://www.piratesofnassau.com/",
+   "en": "Pirates of Nassau"
   },
   {
    "name": "Fort Fincastle",
