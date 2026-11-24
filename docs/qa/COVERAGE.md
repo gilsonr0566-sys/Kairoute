@@ -86,3 +86,34 @@ and sunset hours (now closed, E52), a ferry arrival's time to get off, flying in
 3 h free, a taxi-or-walk boundary, meal-hour limits, and boundaries in the screen rules (a < read as a <=).
 Next: add test trips for every case the misses name (odd trips that fly in on sailing day, arrive by ferry, eat late),
 then run the audit again with a new seed.
+## Second fault audit (Nov 24, evening; GitHub run 45477515216, seed 48, a new set of 120 random bugs)
+
+Run after the fixes above, with the full safety check now part of the audit (the independent safety check on saved,
+unconfirmed-boat and no-timetable trips, plus the odd trips and the safety check on them).
+
+| Area | First audit | Second audit |
+|---|---|---|
+| Screen rules | 9 of 20 (45%) | 14 of 20 (70%) |
+| Leave-by and deadlines | 11 of 20 (55%) | 9 of 20 (45%) |
+| Names and places | 5 of 20 (25%) | 9 of 20 (45%) |
+| Opening hours | 6 of 20 (30%) | 8 of 20 (40%) |
+| Day planning and lunch | 6 of 20 (30%) | 5 of 20 (25%) |
+| Rides | 11 of 20 (55%) | 4 of 20 (20%) |
+| **All** | **48 of 120 (40%)** | **49 of 120 (41%)** |
+
+Honest reading: the bugs planted the first time are now caught, but a fresh set of random bugs is caught at about the
+same rate. Fixing what one audit finds does not raise the catch rate for bugs nobody has seen; only broader checks do.
+What the misses have in common:
+- **Rides (weakest):** the walk-or-taxi boundary (a <= read as a <), road-speed bands, walk minutes per km, the
+  2-hour gap rule, and guards with && read as ||. Several give a different but still plausible ride, which no check
+  compares against anything. The nightly real-world ride check would see some of these, but it is not in the gate.
+- **Day planning:** which sights get dropped when the day is full, the "also worth seeing" note, how long a far sight
+  needs, Sunday-afternoon hours. No check says which sight *should* have been kept.
+- Several misses change nothing a traveler sees (a cache size, a route-search size limit, an unused branch), so the
+  true rate is somewhat higher, but still far from 90%.
+
+Next, in order: (1) a "best ride" check that, for every ride on the saved trips, works out the expected kind and minutes
+from first principles (distance, the walking limit, road speed) independently of the planner and flags any difference;
+(2) a "kept the right sights" check (a dropped sight must rank below every kept one unless its hours or distance
+forbid it); (3) put a cached copy of the real-world ride results in the gate so a ride-time bug is compared with real
+routes, not only with itself; then audit again with a new seed.

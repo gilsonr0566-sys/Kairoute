@@ -23,6 +23,8 @@
 //   lunchtime  lunch starting outside its hours (before 11:00 or more than MEAL_LATE after last orders)
 //   shut       a meal at a place shut then; a stop reached after its last entry
 //   walk       a ride slower than walking the same way (more than 5 min slower, under 3 km)
+//   walkpref   a traveler who walks little sent on a walk over 1.2 km straight when the ride offers another way
+//   garbled    code words on the screen: "[object Object]", "undefined", "NaN", "null"
 //   zero       a ride of no time between places apart
 //   twice      the same sight planned on two days of one trip
 //   pick       a traveler's pick left out with nothing said
@@ -157,6 +159,12 @@ const checkTrip = (name, b, edits) => {
     its.forEach((x, k) => { if (x.t !== 'ride') return; const a = its.slice(0, k).reverse().find(y => y.t !== 'ride' && E.hasPos(y)), z = its.slice(k + 1).find(y => y.t !== 'ride' && E.hasPos(y));
       const km = a && z ? E.hav(a, z) : x.km; if (x.mode !== 'lift' && a && z && km > 0.05 && !(x.min > 0)) add('zero', tag, `${a.name} > ${z.name} ${km.toFixed(2)} km`);
       if (x.mode && x.mode !== 'walk' && x.mode !== 'lift' && x.mode !== 'boat' && km > 0 && km < 3 && x.min > walkMin(km, b.prefs) + 5 && !x.bags && !(z && (z.t === 'end' || /bags/i.test(z.name || ''))) && !(a && /bags/i.test(a.name || ''))) add('walk', tag, `${x.mode} ${x.min} min for ${km.toFixed(2)} km (walk ~${Math.round(walkMin(km, b.prefs))}) ${a && a.name} > ${z && z.name}`); });
+    // walkpref: a traveler who walks little (Walks little, 0.8 km) is not sent on a walk well past it when a ride exists.
+    if (b.prefs.walk === 'low') its.forEach((x, k) => { if (x.t !== 'ride' || x.mode !== 'walk' || x.pinned) return; const a = its.slice(0, k).reverse().find(y => y.t !== 'ride' && E.hasPos(y)), z = its.slice(k + 1).find(y => y.t !== 'ride' && E.hasPos(y));
+      if (a && z && E.hav(a, z) > 1.2 && (x.options || []).some(o => o.kind !== 'walk')) add('walkpref', tag, `walks little, but walks ${E.hav(a, z).toFixed(2)} km straight (${x.min} min) ${a.name} > ${z.name}`); });
+    // garbled: words the code meant for itself on the screen ("[object Object]", "undefined", "NaN", "null").
+    { const bad = []; const scan = (v, d, k) => { if (d > 4 || bad.length > 2) return; if (typeof v === 'string') { if (/\[object |\bundefined\b|\bNaN\b|\bnull\b/.test(v)) bad.push(k + ': ' + v.slice(0, 90)); } else if (Array.isArray(v)) v.forEach(y => scan(y, d + 1, k)); else if (v && typeof v === 'object') for (const kk of Object.keys(v)) scan(v[kk], d + 1, kk); };
+      its.forEach(x => ['name', 'how', 'note', 'steps', 'from', 'to', 'why', 'lines', 'options'].forEach(f => scan(x[f], 0, f))); scan(p.explain, 0, 'explain'); bad.forEach(m => add('garbled', tag, m)); }
     // shut / late
     its.forEach(x => { if (x.t === 'stop' && x.late) add('shut', tag, `${x.name} reached after last entry`); if (x.t === 'meal' && x.shut) add('shut', tag, `${x.meal} at ${x.name} when shut`); });
     // lunch
@@ -207,7 +215,7 @@ for (let n = 0; n < N; n++) {
 }
 const outFile = arg('out', ''); if (outFile) fs.writeFileSync(outFile, JSON.stringify(trips.map(t => ({ name: t.name, edits: t.edits, bucket: t.b }))));
 console.log(`Odd trips: ${tripsN} trips, ${daysN} days, ${plannedN} days planned (seed ${SEED}, ${Math.round((Date.now() - t0) / 1000)} s)`);
-const order = ['slow', 'error', 'nan', 'back', 'leaveby', 'order', 'start', 'lunch', 'lunchtime', 'shut', 'walk', 'zero', 'twice', 'pick', 'untrue', 'zigzag'];
+const order = ['slow', 'error', 'nan', 'back', 'leaveby', 'order', 'start', 'lunch', 'lunchtime', 'shut', 'walk', 'walkpref', 'garbled', 'zero', 'twice', 'pick', 'untrue', 'zigzag'];
 for (const k of order) { const n = out[k] || 0; console.log(`${n ? 'FAIL' : 'ok  '} ${k.padEnd(9)} ${n}`); (examples[k] || []).slice(0, SHOW).forEach(e => console.log('       ' + e)); }
 if (process.env.ALL) fs.writeFileSync(process.env.ALL, JSON.stringify(examples, null, 1));
 // --warn rule,rule: listed, not failed (a finding handed to the thread that owns it). Never for a safety rule: an error, a
