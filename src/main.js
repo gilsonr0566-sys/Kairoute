@@ -7201,6 +7201,9 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     d.estimated ? `<div class="banner warn">These port times are estimated. Check them against your cruise documents.</div>` : "",
     (e => e ? `<div class="banner ok"><span>Leave at <b>${e.start}</b> instead of ${esc(d.startTime)} and ${e.fits.length ? `you also fit <b>${e.fits.map(esc).join(", ")}</b>` : "the day fits"}, back by ${e.end}. Earlier also means cooler weather, less traffic and fewer crowds.</span><button class="btn small" data-act="earlystart" data-v="${e.start}" data-h="${e.hours}">Leave at ${e.start}</button></div>` : "")(earlierStart(d, plan)),
     laterEndBanner(d, plan), elsewhereNote(plan),
+    // A place nobody has opened before: its sights and travel guides take a minute or more to gather the first time (R-34;
+    // outside test 8d, Nov 24: 1 to 3 minutes for a new city, about 5 for a trip of three new cities, with nothing said).
+    (c => c && fameWait[keyOf(c.city)] && fameAsked[keyOf(c.city)] === true && !(upgrading && keyOf(upgrading) === keyOf(d.destination)) ? `<p class="banner" role="status"><span class="spinner"></span> Gathering the sights and travel guides for ${esc(c.city)}. The first time can take 1 to 3 minutes; this plan updates by itself.</p>` : "")(cityFor(d)),
     upgrading && keyOf(upgrading) === keyOf(d.destination) ? `<p class="banner" role="status"><span class="spinner"></span> Building a fuller guide for ${esc(d.destination)} in the background. This plan updates by itself in about two minutes.</p>` : "",
     suggestNow(d) ? `<p class="banner ok" id="suggestNote" role="status">${esc(suggestNow(d))} <button class="linkbtn" data-act="suggestok">OK</button></p>` : ""
   ].filter(Boolean).join("");
