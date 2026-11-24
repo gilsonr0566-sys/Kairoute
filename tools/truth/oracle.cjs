@@ -57,6 +57,7 @@ const clk = m => { if (!isFinite(m)) return String(m); const d = Math.floor(m / 
 const FLOOR = { flight: 60, train: 10, ship: 15, bus: 10, checkin: 30 };
 // The least time to get off and out after arriving.
 const OFF = { flight: 20, train: 5, ship: 15, bus: 5 };
+const PROMISE = { port: 45, embark: 60 }; // Kairoute's stated margins before all aboard (policy, not the planner's numbers)
 const BAGS = 10;                          // collecting bags from storage or a hotel desk, at the very least
 const FASTEST_KMH = 60;                   // straight line, no traffic, no waiting: no real ride is faster on average
 const MAX_KMH = { walk: 6.5, taxi: 90, ride: 90, car: 90, bus: 90, metro: 90, tram: 90, transit: 300, train: 300, rail: 300, ferry: 80, boat: 80, lift: 60, funicular: 60, cable: 60 };
@@ -192,6 +193,12 @@ function checkDay(d, p, ctx) {
   if (!smallHours) {
     // The plan's own arrival at the gate.
     const endIt = its.slice().reverse().find(y => y.t === 'end' && Number.isFinite(y.at));
+    // Kairoute's own promise, written here from the stated policy and never read from the planner (fault audit, Nov 24:
+    // halving the planner's margins was caught by no check, because the floors above are only the least time possible).
+    // Ship days: back 45 min before all aboard (docs/beta-2/engine-plan.md); boarding day: at the terminal an hour before
+    // all aboard (docs/beta-2/lessons-from-the-old-engine.md #14).
+    const promise = d.type === 'port' ? PROMISE.port : d.type === 'embark' ? PROMISE.embark : null;
+    if (endIt && promise != null && endIt.at > D.at - promise + 1) add('margin', 'S1', `the plan reaches ${endIt.name || 'the ' + D.mode} at ${clk(endIt.at)}, ${D.at - endIt.at} min before ${d.type === 'port' ? 'all aboard' : 'all aboard on boarding day'} (${clk(D.at)}); Kairoute promises ${promise}`);
     if (endIt && endIt.at > lastAt) add('gone', 'S1', `the plan reaches ${endIt.name || 'the ' + D.mode} at ${clk(endIt.at)}; the ${D.mode} leaves ${clk(D.at)} (be there by ${clk(lastAt)} at the very least)`);
     visits.forEach(x => { if (ends(x) > lastAt) add('gone', 'S1', `${x.name} ends ${clk(ends(x))}; the ${D.mode} leaves ${clk(D.at)} (be there by ${clk(lastAt)} at the very least)`); });
     if (G) {
@@ -243,7 +250,7 @@ if (require.main === module) {
   // --warn rule,rule lists a known finding without failing the run. It is allowed ONLY for S2 rules (wrong on screen).
   // An S1 rule (could miss a flight, train or ship) can never be warned: asking for it is refused and the rule still
   // fails (Richard, Nov 23: "the S1 warning exception is a serious design flaw"). A safety finding always blocks.
-  const S1 = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water', 'notetime'];
+  const S1 = ['error', 'gone', 'margin', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water', 'notetime'];
   const asked = String(arg('warn', '') || '').split(',').filter(Boolean), refused = asked.filter(k => S1.includes(k)), WARN = asked.filter(k => !S1.includes(k));
   if (refused.length) console.log(`REFUSED --warn ${refused.join(',')}: S1 safety rules always fail the run; no warn-only path`);
   const found = {}, ex = {}, SHOW = +arg('show', 6);
@@ -271,7 +278,7 @@ if (require.main === module) {
       for (const f of checkDay(d, p, { places: places[d.city], wet: wetOf(bb, d) })) { const k = f.rule; found[k] = (found[k] || 0) + 1; (ex[k] = ex[k] || []).push(`${f.sev} ${name} day ${i + 1} ${d.type}${d.mode && /arrival|departure/.test(d.type) ? '/' + d.mode : ''} ${d.city || ''}: ${f.msg}`); } });
   }
   console.log(`Independent safety check: ${trips.length} trips, ${days} days, ${planned} planned`);
-  const order = ['error', 'gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water', 'notetime', 'about', 'physics', 'clock', 'drift', 'slowride', 'lunchshut', 'lunchlate'];
+  const order = ['error', 'gone', 'margin', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water', 'notetime', 'about', 'physics', 'clock', 'drift', 'slowride', 'lunchshut', 'lunchlate'];
   for (const k of order) { const n = found[k] || 0; console.log(`${n ? (WARN.includes(k) ? 'WARN' : 'FAIL') : 'ok  '} ${k.padEnd(9)} ${n}`); (ex[k] || []).slice(0, SHOW).forEach(e => console.log('       ' + e)); }
   if (lunchUntested.n) { console.log(`NOT TESTED lunchshut: ${lunchUntested.n} lunches with map hours not judged (the opening_hours library is not installed: npm i --no-save opening_hours@3.16.0)`); }
   if (process.env.ALL) fs.writeFileSync(process.env.ALL, JSON.stringify(ex, null, 1));
