@@ -118,7 +118,7 @@ function aiGate(env, path, lim) {
   return gate;
 }
 // Memory of kept answers (see the fetch handler). Only these content prefixes; everything else reads the store.
-const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3|p2|gc|gr|ev|gq|fp|wx|wv|dp|bk|tr|ns|nv|fx|fm|sr|leg|xn|kh|xf|vy)(\.[0-9a-f]{10})?:/, MEMO_MS = 600000, MEMO = new Map();
+const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3|p2|gc|gr|ev|gq|fp|wx|wv|dp|bk|tr|ns|nv|fx|fm|sr|leg|xn|kh|xf|vy|sx)(\.[0-9a-f]{10})?:/, MEMO_MS = 600000, MEMO = new Map();
 let memoChars = 0; // kept under ~30 MB of the Worker's 128 MB memory
 function memoStore(kv) {
   if (!kv || kv.__memo) return kv;
@@ -874,7 +874,10 @@ const HCODE = () => [HANDLER.fetch, allOptions, ferriesNear, keptFerries, ferryK
 async function famousData(label, env, ctx) {
   const key = (await codeKey("fm", [famousData, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
-  const getJ = async (u, ms) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: { ...UA, accept: "application/sparql-results+json" }, signal: AbortSignal.timeout(ms || 25000) }); if (r.ok) return await r.json(); } catch (e) {} } return null; };
+  // Each outside read kept as soon as it comes back, so a stopped ask loses nothing (R-34, see sourcesData).
+  const sxKey = await codeKey("sx", []);
+  const getJ = async (u, ms) => { const k = sxKey + (await sha(u + "|")), hit = await env.USAGE.get(k); if (hit) return JSON.parse(hit);
+    for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: { ...UA, accept: "application/sparql-results+json" }, signal: AbortSignal.timeout(ms || 25000) }); if (r.ok) { const j = await r.json(); await env.USAGE.put(k, JSON.stringify(j), { expirationTtl: 30 * 86400 }).catch(() => {}); return j; } } catch (e) {} } return null; };
   const centerOf = async name => {
     for (const t of [name, name.split(",")[0].trim()]) { const j = await getJ("https://en.wikivoyage.org/w/api.php?action=query&format=json&prop=coordinates&redirects=1&titles=" + encodeURIComponent(t), 9000);
       const pg = j && Object.values((j.query && j.query.pages) || {})[0], co = pg && pg.coordinates && pg.coordinates[0]; if (co) return { lat: co.lat, lng: co.lon }; }
@@ -1091,10 +1094,19 @@ function placeOf(listing, wd, map, wholes) {
 async function sourcesData(label, env, ctx) {
   const key = (await codeKey("sr", [sourcesData, placeOf, SIGHT_KINDS, mapSights, MAP_SIGHT, parseListings, voyagePages, voyageNext, voyageNextPlaces, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
-  const getJ = async (u, ms, opt) => { for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) return await r.json(); } catch (e) {} } return null; };
+  // Every outside read here (Wikidata, its query service, the map server) is kept on its own as soon as it comes back
+  // (R-34): a city nobody has opened takes 55 to 220 s to gather, longer than the app waits for one ask (60 s), and an
+  // ask that is stopped part way used to lose everything it had read, so the next ask started from zero again (outside
+  // test round 8b, Nov 24: 28 of 36 trips never got a guide). Now each ask picks up where the last one stopped.
+  const sxKey = await codeKey("sx", []);
+  const getJ = async (u, ms, opt) => { const k = sxKey + (await sha(u + "|" + ((opt && opt.body) || ""))), hit = await env.USAGE.get(k); if (hit) return JSON.parse(hit);
+    for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) { const j = await r.json(); await env.USAGE.put(k, JSON.stringify(j), { expirationTtl: 30 * 86400 }).catch(() => {}); return j; } } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
   const fam = await famousData(label, env, ctx); lap("fame");
   if (fam.error) return fam;
+  // One answer per place, whatever name it was asked by: "Prague" and "Prague, Czech Republic" are the same city (R-31).
+  const placeKey = fam.area ? key.slice(0, key.lastIndexOf(":") + 1) + "@" + (await sha(String(fam.area).toLowerCase())) : "";
+  if (placeKey) { const ph = await env.USAGE.get(placeKey); if (ph) { ctx.waitUntil(env.USAGE.put(key, ph, { expirationTtl: 30 * 86400 })); return JSON.parse(ph); } }
   const area = fam.area, center = fam.center, kmOf = (a, b) => Math.hypot((a.lat - b.lat) * 111, (a.lng - b.lng) * 111 * Math.cos(b.lat * Math.PI / 180));
   // The city's Wikidata item tells which language is local here and which local Wikivoyage page covers it.
   const enGuess = area.split(",")[0].trim(), enP = voyageKept("en.wikivoyage.org", enGuess, UA, env).then(v => { lap("enVoy"); return v; });
@@ -1233,7 +1245,8 @@ async function sourcesData(label, env, ctx) {
   lap("next");
   const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T };
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
-  ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (enV.pages && fam.main.length ? 30 : 1) * 86400 }));
+  const ttl = { expirationTtl: (enV.pages && fam.main.length ? 30 : 1) * 86400 };
+  ctx.waitUntil(Promise.all([env.USAGE.put(key, JSON.stringify(res), ttl), placeKey ? env.USAGE.put(placeKey, JSON.stringify(res), ttl) : null]));
   return res;
 }
 

@@ -1,0 +1,29 @@
+name: Real-world ride check
+# Nov 24 2026 (Richard: "Are walk, train, metro, taxi, ferries and alike accurate and giving users an accurate way to
+# safely get around"). Every ride on every saved test trip's plan, compared with sources the app itself never uses:
+# BRouter for walks and taxis, Deutsche Bahn's journey planner for trains, metro, trams and buses. The ride back on a
+# ship, train or flight day planned faster than the real world allows is S1. Ferries have no free independent source
+# and are counted as NOT CHECKED. Reports only; a finding goes to docs/qa/escapes.md and becomes a rule (docs/qa/RULES.md).
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-bw3ktc]
+    paths: [tools/truth/real-world.mjs, .github/workflows/real-world.yml]
+  schedule:
+    - cron: "45 8 * * *" # 2:45 am Central, after the nightly truth check
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ github.event_name == 'schedule' && 'claude/project-thread-xrdp7v' || github.ref }}" }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Every ride on the saved test trips against BRouter and the DB journey planner
+        run: node tools/truth/real-world.mjs --max 450 --out real-world.json 2>&1 | tee real-world.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: real-world, path: "real-world.*" }
