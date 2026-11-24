@@ -7,6 +7,8 @@
 //      ticked sight is a numbered stop (a list the traveler made may hold a sight that day can't take, said on the plan);
 //   3. a day-trip town planned with its own sights is the walk between them, never its whole visit again beside them,
 //      and the sights keep their town in what the planner is given.
+//   (Round 7b: a sight inside a bigger one, picked on its own, is the plan's stop under its own name: Big Ben, not the
+//   Palace of Westminster it stands in; it has its own tick.)
 // Usage: node tools/beta2/ticks-match-check.cjs [beta2-site/index.html]. Exit 1 on any failure.
 const { chromium } = require('playwright'); const path = require('path'), http = require('http'), fs = require('fs');
 const ROOT = path.join(__dirname, '..', '..');
