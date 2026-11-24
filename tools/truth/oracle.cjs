@@ -57,7 +57,7 @@ const clk = m => { if (!isFinite(m)) return String(m); const d = Math.floor(m / 
 const FLOOR = { flight: 60, train: 10, ship: 15, bus: 10, checkin: 30 };
 // The least time to get off and out after arriving.
 const OFF = { flight: 20, train: 5, ship: 15, bus: 5 };
-const PROMISE = { port: 45, embark: 60 }; // Kairoute's stated margins before all aboard (policy, not the planner's numbers)
+const PROMISE = { port: 45, tender: 30, embark: 60 }; // tender: the boats back stop well before all aboard, so 30 min more at a tender port // Kairoute's stated margins before all aboard (policy, not the planner's numbers)
 const BAGS = 10;                          // collecting bags from storage or a hotel desk, at the very least
 const FASTEST_KMH = 60;                   // straight line, no traffic, no waiting: no real ride is faster on average
 const MAX_KMH = { walk: 6.5, taxi: 90, ride: 90, car: 90, bus: 90, metro: 90, tram: 90, transit: 300, train: 300, rail: 300, ferry: 80, boat: 80, lift: 60, funicular: 60, cable: 60 };
@@ -195,9 +195,9 @@ function checkDay(d, p, ctx) {
     const endIt = its.slice().reverse().find(y => y.t === 'end' && Number.isFinite(y.at));
     // Kairoute's own promise, written here from the stated policy and never read from the planner (fault audit, Nov 24:
     // halving the planner's margins was caught by no check, because the floors above are only the least time possible).
-    // Ship days: back 45 min before all aboard (docs/beta-2/engine-plan.md); boarding day: at the terminal an hour before
+    // Ship days: back 45 min before all aboard, 30 more at a tender port where the boats back stop early (docs/beta-2/engine-plan.md); boarding day: at the terminal an hour before
     // all aboard (docs/beta-2/lessons-from-the-old-engine.md #14).
-    const promise = d.type === 'port' ? PROMISE.port : d.type === 'embark' ? PROMISE.embark : null;
+    const promise = d.type === 'port' ? PROMISE.port + (d.tender ? PROMISE.tender : 0) : d.type === 'embark' ? PROMISE.embark : null;
     if (endIt && promise != null && endIt.at > D.at - promise + 1) add('margin', 'S1', `the plan reaches ${endIt.name || 'the ' + D.mode} at ${clk(endIt.at)}, ${D.at - endIt.at} min before ${d.type === 'port' ? 'all aboard' : 'all aboard on boarding day'} (${clk(D.at)}); Kairoute promises ${promise}`);
     if (endIt && endIt.at > lastAt) add('gone', 'S1', `the plan reaches ${endIt.name || 'the ' + D.mode} at ${clk(endIt.at)}; the ${D.mode} leaves ${clk(D.at)} (be there by ${clk(lastAt)} at the very least)`);
     visits.forEach(x => { if (ends(x) > lastAt) add('gone', 'S1', `${x.name} ends ${clk(ends(x))}; the ${D.mode} leaves ${clk(D.at)} (be there by ${clk(lastAt)} at the very least)`); });

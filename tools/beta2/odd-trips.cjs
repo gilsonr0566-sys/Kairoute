@@ -73,7 +73,7 @@ const hours = () => pick([2.5, 4, 8, 8, 10]);
 const shapes = {
   cruise: () => { const home = cities[pick(ANY)], out = []; const t0 = pick([[11 * 60, 17 * 60], [13 * 60, 16 * 60 + 30], [9 * 60, 15 * 60], [16 * 60, 21 * 60]]);
     if (chance(0.5)) out.push(day(home, 'arrival', { mode: 'flight', point: home.airport, time: hm(pick([30, 6 * 60, 10 * 60 + 30, 15 * 60, 21 * 60, 23 * 60 + 40])), hours: hours() }));
-    const thru = chance(0.4) ? { mode: pick(['flight', 'train']), time: hm(pick([6 * 60, 7 * 60 + 30, 9 * 60, 10 * 60 + 30, 12 * 60])), point: home.airport } : null;
+    const thru = chance(0.4) ? { mode: pick(['flight', 'train']), time: hm(pick([6 * 60, 7 * 60 + 30, 9 * 60, 10 * 60 + 30, 12 * 60, 13 * 60 + 30, 14 * 60 + 30])), point: home.airport } : null; // the last two: under 3 h before all aboard (fault audit, Nov 24)
     if (thru && thru.mode === 'train') thru.point = home.station;
     out.push(day(home, 'embark', { point: home.port || home.station, allAboard: t0[1], boardAt: chance(0.5) ? t0[0] : null, startTime: hm(pick([8 * 60, 9 * 60, 10 * 60])), thru, noBags: chance(0.15) }));
     for (let k = 0, n = 2 + Math.floor(rnd() * 4); k < n; k++) { if (chance(0.2)) { out.push(sea()); continue; } const c = cities[pick(PORTS)], [a, b] = portCall();
@@ -85,7 +85,7 @@ const shapes = {
     return out; },
   multicity: () => { const out = []; const n = 2 + Math.floor(rnd() * 2), cs = []; while (cs.length < n) { const k = pick(ANY); if (!cs.includes(k)) cs.push(k); }
     cs.forEach((k, j) => { const c = cities[k];
-      const inMode = j ? pick(['train', 'flight', 'train']) : 'flight', gate = m => m === 'train' ? c.station : c.airport;
+      const inMode = j ? pick(c.port ? ['train', 'flight', 'train', 'ferry'] : ['train', 'flight', 'train']) : 'flight', gate = m => m === 'train' ? c.station : m === 'ferry' ? c.port : c.airport; // ferry: fault audit, Nov 24
       out.push(day(c, 'arrival', { mode: inMode, point: gate(inMode), time: hm(pick([15, 5 * 60 + 40, 8 * 60, 12 * 60 + 30, 16 * 60, 20 * 60, 23 * 60 + 50])), hours: hours() }));
       for (let s = 0, m = Math.floor(rnd() * 3); s < m; s++) out.push(day(c, 'land', { startTime: hm(pick([6 * 60, 7 * 60 + 30, 9 * 60, 11 * 60, 14 * 60, 17 * 60])), hours: hours(), returnToStart: chance(0.85) }));
       const outMode = j < n - 1 ? pick(['train', 'flight']) : 'flight';
@@ -93,8 +93,8 @@ const shapes = {
         toOther: outMode === 'train', country: c.country || '', toCountry: outMode === 'train' ? (cities[cs[j + 1]] || c).country || '' : '' })); });
     return out; },
   // A same-day hop: off a ship, plane or train in the morning and away again that day, bags stored between.
-  hop: () => { const c = cities[pick(ANY)], am = pick(['flight', 'train', 'ship']), out = pick(['flight', 'train']);
-    const ap = am === 'ship' ? c.port || c.station : am === 'train' ? c.station : c.airport;
+  hop: () => { const c = cities[pick(ANY)], am = pick(c.port ? ['flight', 'train', 'ship', 'ferry'] : ['flight', 'train', 'ship']), out = pick(['flight', 'train']);
+    const ap = am === 'ship' || am === 'ferry' ? c.port || c.station : am === 'train' ? c.station : c.airport;
     return [day(c, 'departure', { mode: out, point: out === 'train' ? c.station : c.airport, time: hm(pick([11 * 60, 13 * 60, 15 * 60, 18 * 60, 21 * 60, 23 * 60 + 45, 45])),
       thru: { mode: am, time: hm(pick([5 * 60, 6 * 60 + 30, 8 * 60, 9 * 60 + 15, 11 * 60])), point: ap }, noBags: chance(0.1), toOther: out === 'train', country: c.country || '', toCountry: c.country || '' })]; },
   stay: () => { const c = cities[pick(ANY)], out = []; for (let k = 0, n = 2 + Math.floor(rnd() * 4); k < n; k++) out.push(day(c, 'land', { startTime: hm(pick([5 * 60 + 30, 7 * 60, 8 * 60 + 30, 9 * 60, 10 * 60, 13 * 60, 15 * 60 + 30, 18 * 60])), hours: hours(), returnToStart: chance(0.8) }));
