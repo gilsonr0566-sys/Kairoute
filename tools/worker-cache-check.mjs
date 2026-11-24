@@ -25,8 +25,8 @@ ok(!hand.length, `no hand-numbered answer keys outside the stored records (${[..
   const miss = all.filter(p => !memo || !memo[1].split('|').includes(p));
   ok(all.length >= 15 && !miss.length, `every code-keyed answer (${all.length} kinds) is also known to the short memory` + (miss.length ? ': missing ' + miss.join(', ') : '')); }
 // Two copies of the helper, one rule apart.
-async function copy(tag, change) { const d = fs.mkdtempSync(path.join(os.tmpdir(), 'kr-cache-' + tag + '-'));
-  for (const f of files) { let s = fs.readFileSync(path.join(W, f), 'utf8'); if (change && change[0] === f) { const at = s.indexOf(change[1]); if (at < 0) throw new Error('not found: ' + change[1]); s = s.slice(0, at + change[1].length) + ' /* a rule changed */ ' + s.slice(at + change[1].length); } fs.writeFileSync(path.join(d, f), s); }
+async function copy(tag, change, swap) { const d = fs.mkdtempSync(path.join(os.tmpdir(), 'kr-cache-' + tag + '-'));
+  for (const f of files) { let s = fs.readFileSync(path.join(W, f), 'utf8'); if (swap && f === 'worker.js') { if (!s.includes(swap[0])) throw new Error('not found: ' + swap[0]); s = s.replace(swap[0], swap[1]); } if (change && change[0] === f) { const at = s.indexOf(change[1]); if (at < 0) throw new Error('not found: ' + change[1]); s = s.slice(0, at + change[1].length) + ' /* a rule changed */ ' + s.slice(at + change[1].length); } fs.writeFileSync(path.join(d, f), s); }
   return (await import(pathToFileURL(path.join(d, 'worker.js')).href)).default; }
 globalThis.fetch = async () => { throw new Error('no internet in this check'); };
 async function keysAsked(worker, url) { const asked = []; const env = { AI_ON: '0', USAGE: { get: async k => { asked.push(k); return null; }, put: async () => {}, delete: async () => {}, list: async () => ({ keys: [] }) } };
@@ -39,5 +39,26 @@ for (const [what, change, url, pre] of [
   const b = await copy('b', change), k1 = (await keysAsked(base, url)).filter(k => k.startsWith(pre)), k2 = (await keysAsked(b, url)).filter(k => k.startsWith(pre));
   ok(k1.length > 0 && k2.length > 0 && k1[0] !== k2[0], `a change to ${what} starts a fresh key (${k1[0] || 'none'} vs ${k2[0] || 'none'})`);
   const k3 = (await keysAsked(base, url)).filter(k => k.startsWith(pre)); ok(k3[0] === k1[0], `with no change the key stays the same, so answers are reused (${what})`); }
+// 3. A slow answer is kept in stages (R-29, Nov 24): a cold city's sources take about 100 s and the helper is sometimes
+// stopped part way (Lisbon: dropped at 64 s, and asked again it started from scratch). Here the city's later sources
+// never answer: the first ask is given up, and the second must not read English Wikivoyage again. Planted on every
+// run: the same helper without stage keeping must read it twice.
+async function stageReads(worker) {
+  const store = new Map(), env = { AI_ON: '0', USAGE: { get: async k => store.has(k) ? store.get(k) : null, put: async (k, v) => { store.set(k, v); }, delete: async k => { store.delete(k); }, list: async () => ({ keys: [] }) } };
+  const ask = () => Promise.race([worker.fetch(new Request('https://helper.test/sources?city=Testopolis', { headers: { Origin: 'https://gilsonr0566-sys.github.io' } }), env, { waitUntil: () => {} }).catch(() => {}), new Promise(r => setTimeout(r, 400))]);
+  let voy = 0; const hang = new Promise(() => {});
+  globalThis.fetch = async () => { throw new Error('no internet'); };
+  await ask(); const fk = [...store.keys()].find(k => k.startsWith('fm.')) ; // nothing kept yet: the fame list failed
+  const fmKey = (await (async () => { const asked = []; const e2 = { AI_ON: '0', USAGE: { get: async k => { asked.push(k); return null; }, put: async () => {}, delete: async () => {}, list: async () => ({ keys: [] }) } };
+    try { await worker.fetch(new Request('https://helper.test/sources?city=Testopolis', { headers: { Origin: 'https://gilsonr0566-sys.github.io' } }), e2, { waitUntil: () => {} }); } catch (e) {} return asked.find(k => k.startsWith('fm.')); })());
+  if (!fmKey || fk) return -1;
+  store.set(fmKey, JSON.stringify({ area: 'Testopolis', center: { lat: 1, lng: 1 }, main: [], far: [] }));
+  globalThis.fetch = async u => { u = String(u); if (u.includes('en.wikivoyage.org')) { voy++; return new Response(JSON.stringify({ parse: { title: 'Testopolis', wikitext: '== See ==\n* {{see | name=Old Tower | lat=1 | long=1 | content=A tower.}}\n' } }), { headers: { 'content-type': 'application/json' } }); } return hang; };
+  await ask(); await ask();
+  globalThis.fetch = async () => { throw new Error('no internet in this check'); };
+  return voy; }
+{ const n = await stageReads(await copy('s')); ok(n === 1, `a city's English Wikivoyage, read before the helper was stopped, is kept: asked again it is not read again (read ${n} time(s))`);
+  const p = await stageReads(await copy('p', null, ['enP = voyageKept(', 'enP = voyagePages(']));
+  ok(p === 2, `planted: the helper without stage keeping reads it again, and this check sees it (read ${p} time(s))`); if (p !== 2) console.log('worker-cache-check: BLIND on stage keeping'); }
 console.log(`worker-cache-check: ${checks - fails} passed, ${fails} failed`);
 process.exit(fails ? 1 : 0);

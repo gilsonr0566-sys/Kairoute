@@ -3215,7 +3215,11 @@ async function sourcesFor(label) {
   if (!label) return null; if (sourcesCache[label]) return sourcesCache[label];
   await helperKnown();
   srcUnreached[keyOf(label)] = true;
-  if (freeAI && navigator.onLine !== false) try { const r = await fetch(freeAI.url + "/sources?city=" + encodeURIComponent(label)); if (r.status < 500 && r.status !== 429) delete srcUnreached[keyOf(label)]; if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.stops)) { kv.set("src:" + keyOf(label), j); return (sourcesCache[label] = j); } } } catch (e) {}
+  // The helper gathers a city it hasn't seen in stages and keeps each one (R-29): when it is stopped part way, asking
+  // once more picks up where it stopped (Lisbon, Nov 24: stopped at 64 s, done on the second ask).
+  for (let tries = 0; tries < 2 && freeAI && navigator.onLine !== false; tries++) { let again = true;
+    try { const r = await fetch(freeAI.url + "/sources?city=" + encodeURIComponent(label)); again = r.status >= 500; if (r.status < 500 && r.status !== 429) delete srcUnreached[keyOf(label)]; if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.stops)) { kv.set("src:" + keyOf(label), j); return (sourcesCache[label] = j); } } } catch (e) {}
+    if (!again) break; }
   const kept = await srcKept("src:", label, j => j && Array.isArray(j.stops));
   return kept ? (sourcesCache[label] = kept) : null;
 }
