@@ -39,6 +39,15 @@ ok(E.readOsm('Mo-Su 09:00-17:00; PH off', '2027-07-07', { holiday: true }).close
 // Sunset times from the sun at the place (Athens, July): about 8:50 pm.
 { const r = E.readOsm('Mo-Su 09:30-sunset', '2027-07-07', { holiday: false, lat: 37.65, lng: 24.02, offset: 180 }); ok(r.known && r.spans[0][1] > 20 * 60 + 35 && r.spans[0][1] < 20 * 60 + 59, `sunset closing at Sounion in July (got ${sp(r)})`);
   ok(!E.readOsm('Mo-Su 09:30-sunset', '2027-07-07', { holiday: false }).known, 'sunset hours with the place\'s clock unknown are not confirmed'); }
+// An offset from the sun is read as written: "(sunset-01:00)" is an hour before sunset (fault audit, Nov 24: reading the
+// hour as 95 minutes was caught by no check).
+{ const c = { holiday: false, lat: 37.65, lng: 24.02, offset: 180 }, r = E.readOsm('Mo-Su 09:30-(sunset-01:00)', '2027-07-07', c), s0 = E.readOsm('Mo-Su 09:30-sunset', '2027-07-07', c);
+  ok(r.known && s0.known && r.spans[0][1] === s0.spans[0][1] - 60 && r.spans[0][1] > 19 * 60 + 35 && r.spans[0][1] < 19 * 60 + 59, `an hour before sunset at Sounion in July (got ${sp(r)})`); }
+// Easter, Western and Orthodox, against the published dates for 12 years (fault audit, Nov 24: a changed sign in either
+// formula was caught by no check, because the tests held only 2027, where it happened to come out the same).
+{ const W = { 2024: '03-31', 2025: '04-20', 2026: '04-05', 2027: '03-28', 2028: '04-16', 2029: '04-01', 2030: '04-21', 2031: '04-13', 2032: '03-28', 2033: '04-17', 2034: '04-09', 2035: '03-25' };
+  const O = { 2024: '05-05', 2025: '04-20', 2026: '04-12', 2027: '05-02', 2028: '04-16', 2029: '04-08', 2030: '04-28', 2031: '04-13', 2032: '05-02', 2033: '04-24', 2034: '04-09', 2035: '04-29' };
+  for (const y of Object.keys(W)) { ok(E.easter(+y) === y + '-' + W[y], `Western Easter ${y}: ${E.easter(+y)}, published ${y}-${W[y]}`); ok(E.easter(+y, true) === y + '-' + O[y], `Orthodox Easter ${y}: ${E.easter(+y, true)}, published ${y}-${O[y]}`); } }
 
 // ---- The reader: hours in words (guides, the map's free text) ----
 const words = [
