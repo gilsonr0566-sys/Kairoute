@@ -162,9 +162,11 @@
   E.FOLD_NEAR = 0.2; // km: right beside the bigger visit
   E.foldExtra = s => Math.min(20, Math.max(5, Math.round((s.minutes || 30) * 0.25 / 5) * 5));
   // gated(h): the bigger visit has its own opening hours this day (a gate: an excavation town, a castle).
-  E.foldPicks = (picks, groups, gated) => {
+  // walkOk(h, s): a sight on h's story walk may be seen on it this day (its own hours leave the walk's time open); a sight
+  // shut then is never "seen on the walk" (Nov 24 review of the one-story-one-stop fix).
+  E.foldPicks = (picks, groups, gated, walkOk) => {
     const ids = new Map(picks.map(s => [String(s.id), s])), into = new Map();
-    const onWalk = (h, s) => (s.onWalk || []).map(String).includes(String(h.id));
+    const onWalk = (h, s) => (s.onWalk || []).map(String).includes(String(h.id)) && (!walkOk || walkOk(h, s));
     const covers = (h, s) => onWalk(h, s) || !!(gated && gated(h)) || (!s.far && !E.needsHours(s)) || (s.minutes || 30) <= 15 || (!h.far && E.needsHours(h) && !E.isOpenArea(h));
     for (const s of picks) {
       let k = String(s.id), seen = new Set([k]), h = null;
@@ -196,6 +198,14 @@
       return t; });
     return { picks: out, folded };
   };
+  // A walk's hours with the sights folded into it: open only while every one of them is (spans intersected); shut if
+  // any is shut that day; hours assumed if any are assumed. own: the walk's own facts (often none: open-air).
+  E.walkHours = (own, members) => { if (!members.length) return own;
+    const lists = [own].concat(members).filter(sd => sd && (sd.closed || (sd.oh && sd.oh.spans && sd.oh.spans.length)));
+    if (!lists.length) return own; if (lists.some(sd => sd.closed)) return Object.assign({}, own, { closed: true });
+    let sp = [[0, 1440 + 360]]; for (const sd of lists) sp = sp.flatMap(([a, b]) => sd.oh.spans.map(([c, d]) => [Math.max(a, c), Math.min(b, d)]).filter(([u, v]) => v > u));
+    const last = Math.min(...lists.map(sd => sd.oh.last != null ? sd.oh.last : Infinity));
+    return Object.assign({}, own, { closed: !sp.length, oh: { spans: E.mergeSpans(sp), last: isFinite(last) ? last : null }, ...(lists.some(sd => sd.assumed) ? { assumed: true } : {}) }); };
   E.listWords = (xs, joiner) => xs.length < 2 ? xs.join("") : xs.slice(0, -1).join(", ") + " " + (joiner || "or") + " " + xs[xs.length - 1];
   // Which list a sight came in on (a guide's sights or its trips out) doesn't decide how it's planned; where it is does.
   // A sight more than FAR_KM from the heart of the place's sights (their median point) is a trip out, with its own ride,
@@ -324,7 +334,7 @@
       // An area walk whose sights with their own tour are stops of their own: the walk keeps only the time between them
       // (its own time less theirs, never under half an hour), and its time goes to more sights.
       const byIdR = new Map(ranked.map(s => [String(s.id), s]));
-      const own = g => (groups.members.get(String(g.id)) || []).map(m => byIdR.get(String(m))).filter(m => m && E.ownStop(m, picked));
+      const own = g => (groups.members.get(String(g.id)) || []).map(m => byIdR.get(String(m))).filter(m => m && E.ownStop(m, picked) && E.allowed(m, prefs, siteDay(m.id), win)); // a member shut today is no stop of its own (never "the walk to X, a stop of its own" for a closed X)
       // A sight seen only from the water is never a stop the app adds on a ship, train or plane day (a boat tour is the
       // traveler's own pick); picked, it is reached by boat.
       // An optional stop the traveler said "Skip it" to is never added to this day again (Nov 18: the button did nothing).
@@ -391,13 +401,35 @@
         return inTown.length ? Object.assign({}, s, { minutes: s.townWalk, walkOf: inTown.map(m => m.name), fullMinutes: s.minutes || 60 }) : s; });
       // Picks inside or right beside a bigger picked visit are part of it (E.foldPicks); never added again as fillers.
       let foldedIds = new Set();
-      if (!again) { const fp = E.foldPicks(picks, groups, h => gated(ownDay(h.id))); picks = fp.picks; Object.values(fp.folded).forEach(f => f.forEach(x => foldedIds.add(String(x.id)))); }
+      // A sight on a story walk (R-16, one story one stop) is folded in only when its own hours leave the whole walk open
+      // that day; the walk is then planned inside those hours (its hours are the sight's), so it is never "seen on the
+      // walk" while shut. Otherwise it stays a stop of its own, planned or said closed by its own hours (R-14).
+      const walkMin = (h, s) => Math.max(h.fullMinutes || h.minutes || 60, Math.ceil((30 + (s.minutes || 30)) / 5) * 5);
+      const walkOk = (h, s) => { const sd = siteDay(s.id); if (!sd) return true; if (sd.closed) return false; const sp = sd.oh && sd.oh.spans;
+        return !sp || !sp.length || sp.some(([a, b]) => Math.min(b, win.endBy) - Math.max(a, win.start) >= walkMin(h, s)); };
+      if (!again) { const fp = E.foldPicks(picks, groups, h => gated(ownDay(h.id)), walkOk); picks = fp.picks; Object.values(fp.folded).forEach(f => f.forEach(x => foldedIds.add(String(x.id)))); }
       else again.kept.forEach(k => (k.folded || []).forEach(x => foldedIds.add(String(x.id))));
-      const fit = E.fitDay(d.cleared ? Object.assign({}, d, { fillTime: false }) : d, win, picks, foldedIds.size ? pool.filter(s => !foldedIds.has(String(s.id))) : pool, ctx);
+      { const walks = new Map(); picks.forEach(p => { const w = (p.folded || []).filter(x => x.walk).map(x => String(x.id)); if (w.length) walks.set(String(p.id), w); });
+        if (walks.size) { const base = ctx.siteDay; ctx.siteDay = id => E.walkHours(base(id), (walks.get(String(id)) || []).map(m => base(m))); } }
+      const fitOf = pk => E.fitDay(d.cleared ? Object.assign({}, d, { fillTime: false }) : d, win, pk, foldedIds.size ? pool.filter(s => !foldedIds.has(String(s.id))) : pool, ctx);
+      let fit = fitOf(picks);
+      // A walk shortened for sights inside it that are stops of their own gets its time back when those stops don't make the
+      // day (Nov 24 review: "La Rambla gets 30 min, the walk between Plaça de Catalunya and Plaça Reial, which are stops of
+      // their own" on a day with neither planned). Planned once more with the walk's time put back; never untrue words.
+      if (fit.kept.some(s => s.walkOf && s.walkOf.some(n => !fit.kept.some(k => k.name === n)))) {
+        const back = picks.map(s => { if (!s.walkOf) return s; const k = fit.kept.find(x => String(x.id) === String(s.id)); if (!k) return s;
+          const walkOf = s.walkOf.filter(n => fit.kept.some(x => x.name === n)), full = s.fullMinutes || s.minutes || 60;
+          const rest = fit.kept.filter(x => walkOf.includes(x.name)).reduce((a, x) => a + (x.minutes || 30), 0), left = walkOf.length ? Math.min(full, Math.max(30, Math.round((full - rest) / 5) * 5)) : full;
+          const t = Object.assign({}, s, { minutes: left + (s.folded || []).reduce((a, x) => a + (x.extra || 0), 0) }); if (walkOf.length) t.walkOf = walkOf; else { delete t.walkOf; delete t.fullMinutes; } return t; })
+          .filter(s => fit.kept.some(x => String(x.id) === String(s.id)) || !fit.kept.length);
+        const dropped = picks.filter(s => s.walkOf && fit.kept.some(x => String(x.id) === String(s.id))).flatMap(s => s.walkOf.filter(n => !fit.kept.some(k => k.name === n)).map(n => [n, s.name]));
+        const again2 = fitOf(back); if (again2.kept.length >= fit.kept.filter(x => !x.filled).length) { fit = again2;
+          dropped.filter(([n, w]) => !fit.kept.some(k => k.name === n) && fit.kept.some(k => k.name === w)).forEach(([n, w]) => { const line = n + " is part of the " + w + " walk: seen on that visit, not a stop of its own today.";
+            if (!explain.includes(line)) explain.push(line); }); } }
       fit.kept.forEach(s => { if (s.filled) autoIds.add(String(s.id)); });
       // A place shortened because its own sights are stops of their own says so (Fable review #12: never shortened silently).
       const mine = names => names.every(n => wishes.some(w => w.name === n && !w.guideWish));
-      fit.kept.filter(s => s.walkOf && s.fullMinutes > s.minutes).forEach(s => { const line = s.name + " gets " + s.minutes + " min, the walk " + (s.walkOf.length > 1 ? "between " + E.listWords(s.walkOf, "and") + (mine(s.walkOf) ? ", which you picked as stops of their own" : ", which are stops of their own") : "to " + s.walkOf[0] + (mine(s.walkOf) ? ", which you picked as a stop of its own" : ", which is a stop of its own")) + " (on its own it gets " + s.fullMinutes + " min).";
+      fit.kept.filter(s => s.walkOf && s.fullMinutes > s.minutes && s.walkOf.every(n => fit.kept.some(k => k.name === n))).forEach(s => { const line = s.name + " gets " + s.minutes + " min, the walk " + (s.walkOf.length > 1 ? "between " + E.listWords(s.walkOf, "and") + (mine(s.walkOf) ? ", which you picked as stops of their own" : ", which are stops of their own") : "to " + s.walkOf[0] + (mine(s.walkOf) ? ", which you picked as a stop of its own" : ", which is a stop of its own")) + " (on its own it gets " + s.fullMinutes + " min).";
         if (!explain.some(t => t.startsWith(s.name + " gets "))) explain.push(line); });
       fit.kept.forEach(s => (s.folded || []).forEach(x => { const line = x.walk ? x.name + " is on the " + s.name + " walk: seen on that visit, not a stop of its own." : x.name + (x.beside ? " is right beside " : " is inside ") + s.name + ": seen on that visit (" + x.extra + " min more), not a stop of its own.";
         if (!explain.includes(line)) explain.push(line); }));
@@ -622,7 +654,10 @@
     out.forEach((p, i) => { if (!p || !p.items || p.safe) return; const d = days[i], city = guides[d.city]; if (!city || (byCity.get(d.city) || []).length !== 1) return;
       const said = (p.explain || []).join(" "), left = (city.sites || []).filter(s => E.ownStop(s) && !plannedIds.has(String(s.id)) && !said.includes(s.name));
       if (!left.length) return; p.leftOut = left.map(s => s.id);
-      const names = left.slice(0, 4).map(s => s.name).concat(left.length > 4 ? [(left.length - 4) + " more"] : []);
+      // A sight shut that date is said shut, never "not in today's time" (R-18: the one real reason).
+      const shut = left.filter(s => ((d.sites || {})[s.id] || {}).closed); if (shut.length) p.explain = (p.explain || []).concat([E.listWords(shut.map(s => s.name), "and") + (shut.length > 1 ? " are" : " is") + " closed on this date."]);
+      const open = left.filter(s => !shut.includes(s)); if (!open.length) return;
+      const names = open.slice(0, 4).map(s => s.name).concat(open.length > 4 ? [(open.length - 4) + " more"] : []);
       p.explain = (p.explain || []).concat([(d.own ? "Also worth seeing here, not on your list: " : "Also worth seeing here, but not in today's time: ") + E.listWords(names, "and") + "."]); });
     // Never a silent gap of time either: an hour or more left at the end of a day are named as free time,
     // with the nearest trip out nobody took and why it wasn't added (it doesn't fit, or not with a safe margin).

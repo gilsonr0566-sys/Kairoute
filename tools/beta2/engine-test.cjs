@@ -1202,6 +1202,22 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
       const nw = E.foldPicks([ow, Object.assign({}, syn, { onWalk: undefined })], E.makeGroups([ow, Object.assign({}, syn, { onWalk: undefined, lat: 40.21 })]), () => false);
       ok(nw.picks.length === 2, 'without the story, a gated sight in an open old town stays a stop of its own');
       ok(E.foldPicks([syn], gw, () => false).picks.length === 1, 'a sight on a walk that is not planned that day is a stop of its own'); }
+    // ...and only while it is open (Nov 24 review): its own hours decide. On the sample cruise's Chania day, a synagogue on
+    // the old-town walk open 2-6 pm puts the walk in those hours; open only 4-6 pm (less than the walk) it is not folded;
+    // shut that date it is said shut and the walk is not shortened for it. Planted: folding with no hours check (no
+    // walkOk) must fold the 4-6 pm one, so these checks can tell the two apart.
+    { const base = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, 'corpus', 'sample-cruise.json'), 'utf8')), di = base.days.findIndex(d => d.city === 'chania');
+      const run = sd => { const b = JSON.parse(JSON.stringify(base)), c = b.cities.chania, ot = c.sites.find(x => x.id === 'oldtown');
+        c.sites.push({ id: 'syn-t', name: 'Old Synagogue', lat: ot.lat + 0.0008, lng: ot.lng + 0.0012, minutes: 30, mustSee: true, category: 'Synagogue', tags: ['indoor', 'must-see'], onWalk: ['oldtown'] });
+        b.days[di].sites['syn-t'] = sd; const p = E.planTrip(b)[di]; return { stops: p.items.filter(x => x.t === 'stop'), ex: (p.explain || []).join(' | ') }; };
+      const a = run({ closed: false, oh: { spans: [[840, 1080]], last: null } }), w = a.stops.find(x => x.id === 'oldtown');
+      ok(w && !a.stops.some(x => x.id === 'syn-t') && w.at >= 840 && w.at + w.min <= 1080, `a sight on the walk open 2-6 pm: one stop, the walk planned inside its hours (${w && E.clock(w.at)})`);
+      const bb = run({ closed: false, oh: { spans: [[960, 1080]], last: null } });
+      ok(!/Old Synagogue is on the/.test(bb.ex), `a sight on the walk open less than the walk lasts is never "seen on the walk" (${bb.ex.slice(0, 160)})`);
+      const cc = run({ closed: true, oh: null });
+      ok(!/Old Synagogue is on the|walk to Old Synagogue/.test(cc.ex) && /Old Synagogue is closed on this date/.test(cc.ex) && cc.stops.find(x => x.id === 'oldtown').min === 60, `a sight on the walk shut that date is said shut and the walk keeps its time (${cc.ex.slice(0, 160)})`);
+      const g2 = E.makeGroups([{ id: 'w', name: 'Old Town Lanes', category: 'Old town', lat: 1, lng: 1, minutes: 60 }, { id: 's', name: 'Old Synagogue', lat: 1.0008, lng: 1.0012, minutes: 30, onWalk: ['w'] }]), pk = [{ id: 'w', name: 'Old Town Lanes', category: 'Old town', lat: 1, lng: 1, minutes: 60 }, { id: 's', name: 'Old Synagogue', lat: 1.0008, lng: 1.0012, minutes: 30, onWalk: ['w'] }];
+      ok(E.foldPicks(pk, g2, () => false).picks.length === 1 && E.foldPicks(pk, g2, () => false, () => false).picks.length === 2, 'planted: without the hours check the shut sight would fold; with it, it stays apart'); }
     // In a plan: one stop, the folded sight named on it, claimed for that day, a line that says so.
     const trip = { prefs: { walk: 'medium' }, cities: { k: { key: 'k', name: 'K', sites: all.map(x => Object.assign({}, x)), restaurants: [] } },
       days: [{ i: 0, type: 'land', city: 'k', date: '2027-05-04', startTime: '09:00', hours: 9, lodging: { name: 'Hotel', lat: 40.005, lng: 10.005 }, selected: ['c', 't'], own: true }, { i: 1, type: 'land', city: 'k', date: '2027-05-05', startTime: '09:00', hours: 9, lodging: { name: 'Hotel', lat: 40.005, lng: 10.005 }, selected: [] }] };
