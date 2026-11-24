@@ -18,7 +18,9 @@ const NAMES = { code: 'Code: secrets, syntax, engine rules, helper AI switch', s
   feel: 'What the traveler feels: real finger taps and swipes on phone and tablets (jumps, self-scroll, layout shift, slow and dead taps, Back button)', steady: 'Steady screens on every test trip: redraws move nothing, screens settle, every wait ends, reopening after Exit tour' };
 const word = s => s === 'success' ? 'PASS' : s === 'failure' ? 'FAIL' : 'NOT TESTED (' + (s || 'not run') + ')';
 const parts = Object.keys(needs).length ? Object.keys(needs) : Object.keys(NAMES);
-const log = k => read(path.join(dir, 'part-' + k, 'log.txt')), fails = k => read(path.join(dir, 'part-' + k, 'fails.txt')).trim();
+// A part split side by side (a matrix job: part-steady-phone, part-steady-tablet) is read as one part.
+const partDirs = k => { let ds = []; try { ds = fs.readdirSync(dir).filter(d => d === 'part-' + k || d.startsWith('part-' + k + '-') && !parts.includes(d.slice(5))); } catch (e) {} return ds.length ? ds : ['part-' + k]; };
+const log = k => partDirs(k).map(d => read(path.join(dir, d, 'log.txt'))).join('\n'), fails = k => partDirs(k).map(d => read(path.join(dir, d, 'fails.txt')).trim()).filter(Boolean).join('\n');
 const all = parts.map(log).join('\n');
 const sh = c => { try { return execSync(c, { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch (e) { return ''; } };
 

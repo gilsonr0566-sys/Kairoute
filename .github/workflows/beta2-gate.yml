@@ -304,15 +304,19 @@ jobs:
 
   steady:
     name: "10 Steady screens on every test trip: redraws move nothing, screens settle, every wait ends, reopening after Exit tour"
+    strategy:
+      fail-fast: false
+      matrix:
+        size: [phone, tablet] # about 45 min each for the 35 saved trips; side by side
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - run: sh build-beta2.sh
-      - run: node tools/client/steady-all.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - run: SIZES=${{ matrix.size }} node tools/client/steady-all.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Keep this part's failing lines for the release report
         if: always()
         run: |
@@ -322,7 +326,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: part-steady
+          name: part-steady-${{ matrix.size }}
           path: part
           if-no-files-found: ignore
 

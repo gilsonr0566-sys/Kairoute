@@ -135,6 +135,13 @@ const SPINNERS = () => [...document.querySelectorAll('.spinner, [aria-busy="true
     console.log(`  ${name}: done (${fails.length} problem(s) so far)`);
   }
   await browser.close(); srv.close();
+  // Known S2 findings with an owner and an end date at most 7 days ahead (docs/qa/warns.json, tool "steady", optional
+  // "where" pattern) are listed as WARN; WAIT-ENDS, RESUME-LEFT, ERROR, NOT TESTED and PROOF never can be.
+  const NEVER = new Set(['WAIT-ENDS', 'RESUME-LEFT', 'ERROR', 'NOT TESTED', 'PROOF']), today = new Date().toISOString().slice(0, 10), week = new Date(Date.now() + 7 * 864e5).toISOString().slice(0, 10);
+  let W = []; try { W = (JSON.parse(fs.readFileSync(path.join(ROOT, 'docs', 'qa', 'warns.json'), 'utf8')).warns || []).filter(w => w.tool === 'steady'); } catch (e) {}
+  for (const w of W) if (NEVER.has(w.rule) || !w.owner || !w.until || w.until < today || w.until > week) { console.log(`FAIL warns.json: the steady ${w.rule} warning is not allowed (never-warn rule, or no owner, or end date not between ${today} and ${week})`); fails.push({ rule: 'WARNS' }); }
+  for (let k = fails.length - 1; k >= 0; k--) { const x = fails[k], w = W.find(w => w.rule === x.rule && !NEVER.has(w.rule) && w.until >= today && w.until <= week && (!w.where || new RegExp(w.where).test(x.where || '')));
+    if (w) { fails.splice(k, 1); console.log(`WARN ${x.rule} 1 (known: ${w.owner} until ${w.until}) [${x.where}] ${x.why}`); } }
   const by = {}; fails.forEach(x => { by[x.rule] = (by[x.rule] || 0) + 1; });
   console.log(`\nSteady screens: ${counts.trips} trips, ${counts.screens} screens opened, ${counts.redraws} redraws, ${counts.hung} screens with hanging services, ${counts.resumes} tours reopened`);
   if (counts.trips && !counts.resumes) { fails.push({ rule: 'NOT TESTED' }); console.log('FAIL NOT TESTED [RESUME-LEFT] no trip could start and exit a tour'); by['NOT TESTED'] = (by['NOT TESTED'] || 0) + 1; }

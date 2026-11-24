@@ -38,6 +38,14 @@
       "owner": "Check every sight's facts and position",
       "until": "2026-11-26",
       "why": "R-11: names from the timetable helper, restaurants and towns in scripts other than Greek and Cyrillic reach the screen unconverted (E23); the class check is new and the fix is being built"
+    },
+    {
+      "rule": "SETTLES",
+      "tool": "steady",
+      "where": " sites day ",
+      "owner": "Stop the select sites page jumping",
+      "until": "2026-11-30",
+      "why": "Choose sights: the list's fits badges arrive by redrawing the list up to 2.7 s after the page opens (live-hamburg-stay, tablet; steady-all, Nov 24). Same area as the late-jump fix that thread owns"
     }
   ]
 }
