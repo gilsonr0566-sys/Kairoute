@@ -36,6 +36,12 @@ const CHECKS = [
   ['reason numbers', ['tools/beta2/reason-numbers-check.cjs']],
   ['language', ['tools/truth/language-check.cjs'], { PLACES_DIR: 'tools/places/data' }],
   ['names', ['tools/beta2/names-check.cjs'], { PLACES_DIR: 'tools/places/data' }],
+  // The rest of the gate's safety part: the independent check in its other two modes, and the 300 odd trips with the
+  // older day checks and the independent check on them (the slowest, so last).
+  ['independent check, unconfirmed notes', ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed']],
+  ['independent check, no timetable', ['tools/truth/oracle.cjs', '--corpus', '--no-timetable']],
+  ['odd trips', src => ['tools/beta2/odd-trips.cjs', '--n', '300', '--seed', '1', '--warn', 'walk', '--out', path.join(src, 'odd.json')], { NOZIG: '1', SLOW_MS: '60000' }],
+  ['independent check on odd trips', src => ['tools/truth/oracle.cjs', '--trips', path.join(src, 'odd.json')]],
 ];
 // Mutation operators: each finds candidate spots on a line (outside strings, regexes and comments, roughly) and returns
 // the changed line.
@@ -82,7 +88,7 @@ const run = (args, env, cwd) => new Promise(res => { const p = spawn('node', arg
     const load = await run(['-e', `require(${JSON.stringify(path.join(ROOT, 'tools', 'beta2', 'engine.cjs'))})`], { ENGINE_SRC: src }, ROOT);
     if (load.code) { rows.push(Object.assign(m, { result: 'not counted (does not load)' })); fs.rmSync(src, { recursive: true, force: true }); continue; }
     let by = null;
-    for (const [name, args, env] of CHECKS) { const r = await run(args, Object.assign({ ENGINE_SRC: src }, env || {}), ROOT); if (r.code) { by = name; m.why = (r.out.match(/^(FAIL|MISSED|NOT TESTED).*$/m) || [r.out.trim().split('\n').pop() || ''])[0].slice(0, 200); break; } }
+    for (const [name, args, env] of CHECKS) { const r = await run(typeof args === 'function' ? args(src) : args, Object.assign({ ENGINE_SRC: src }, env || {}), ROOT); if (r.code) { by = name; m.why = (r.out.match(/^(FAIL|MISSED|NOT TESTED).*$/m) || [r.out.trim().split('\n').pop() || ''])[0].slice(0, 200); break; } }
     rows.push(Object.assign(m, { result: by ? 'caught' : 'missed', by }));
     process.stderr.write(`${rows.length}/${plan.length} ${by ? 'caught by ' + by : 'MISSED'}  ${m.file}:${m.line + 1} ${m.op}\n`);
     fs.rmSync(src, { recursive: true, force: true }); } };
