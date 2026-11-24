@@ -242,7 +242,13 @@
       // mountain road planned 23 min, 42-50 by road; a walk to an island planned 18 min straight over the water, 55 over the
       // bridge). A known route is never made shorter than the guess, which stays the floor.
       const rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;
-      const rFoot = rt && rt.foot && isFinite(rt.foot.km) && rt.foot.km > 0 ? rt.foot : null, rCar = rt && rt.car && isFinite(rt.car.km) && isFinite(rt.car.min) && rt.car.km > 0 ? rt.car : null;
+      // A router answer far beyond any real road (more than 10 times the straight line and 20 km) is a wrong snap across a
+      // harbour or onto another road, never a route: it is left out and the guess stands.
+      const sane = r => r.km <= d * 10 + 20;
+      const rFoot = rt && rt.foot && isFinite(rt.foot.km) && rt.foot.km > 0 && sane(rt.foot) ? rt.foot : null, rCar = rt && rt.car && isFinite(rt.car.km) && isFinite(rt.car.min) && rt.car.km > 0 && sane(rt.car) ? rt.car : null;
+      // How far the walk really is, in the straight-line terms the walking limits are set in: a street route longer than
+      // the guess makes the walk as far as it really is, so a long way round is not taken on foot when a ride is quicker.
+      const dw = rFoot ? Math.max(d, rFoot.km / 1.3) : d;
       const isle = p => E.byBoat(p.travelNote) || E.waterOnly(p) || !!p.acrossWater, note = noteFor(a, b);
       // The traveler's choice, as a kind (a row of a timetable answer picked earlier counts as its kind).
       const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || (/^note\|/.test(String(wantRaw)) ? String(wantRaw).slice(5) : wantRaw); // a note's way is its kind
@@ -277,7 +283,7 @@
       } else {
         // On foot: any ride up to 4 km may be walked.
         const onFoot = pinned && pinned.mode === "walk" ? Math.round(pinned.min) : Math.max(2, Math.round(Math.max(d * 1.3, rFoot ? rFoot.km : 0) / speed * 60));
-        if (d <= WALK_EITHER || (pinned && pinned.mode === "walk")) opts.push({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: rFoot ? Math.max(d * 1.3, rFoot.km) : d * 1.3, steps: [] });
+        if (dw <= WALK_EITHER || (pinned && pinned.mode === "walk")) opts.push({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: rFoot ? Math.max(d * 1.3, rFoot.km) : d * 1.3, steps: [] });
         // Public transport: the timetable's answers, one per kind; a line mapped on OpenStreetMap for a kind they don't
         // have (a stop within a short walk of each end). On a walk short enough, only when it is quicker than walking.
         const pub = answered(a, b, d, wantRaw);
@@ -347,7 +353,7 @@
         // A bus or metro slower than walking the same way is never taken on its own: it stays a choice, and the taxi (or,
         // with none, the walk) is the way (odd-trips stress test, Nov 22: "walks little" got a 28 min bus for a 16 min walk).
         const quick = auto.filter(o => !w || o.min < w.min);
-        pick = w && d <= lim && !(b.bags && w.min > E.BAGS_WALK) ? w : quick.length && (!t || E.publicWins(quick[0].min, t.min)) ? quick[0] : t || quick[0] || (w && !(b.bags && w.min > E.BAGS_WALK) ? w : null) || auto[0] || pubs[0] || w || opts[0]; }
+        pick = w && dw <= lim && !(b.bags && w.min > E.BAGS_WALK) ? w : quick.length && (!t || E.publicWins(quick[0].min, t.min)) ? quick[0] : t || quick[0] || (w && !(b.bags && w.min > E.BAGS_WALK) ? w : null) || auto[0] || pubs[0] || w || opts[0]; }
       // A way the guide names that the data doesn't have: said plainly, never planned as if it were known.
       const missing = d > 5 && note ? E.noteKinds(note).filter(k => !opts.some(o => o.kind === k || (k === "train" && (o.kind === "metro" || o.kind === "tram")))) : [];
       // Where each way's time comes from (Nov 19 review: an estimate must never read as a timetable): the timetable, a line

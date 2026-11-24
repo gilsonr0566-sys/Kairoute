@@ -14,7 +14,10 @@ function run(E) {
   const real = E.makeTravel({ walk: 'medium' }, {}, null, null, null, null, routes).estimate(a, isl);
   const walkOf = r => (r.opts || []).find(o => o.kind === 'walk');
   t(plain.min < 30, `the made-up walk is short on the guess (${plain.min} min)`);
-  t(real.min >= 25, `a walk whose street route is 4.1 km round the water is planned at least 25 min, or taken by car (got ${real.how} ${real.min} min)`);
+  t(real.kind === 'taxi' ? real.min >= 23 : real.min >= 54, `a walk whose street route is 4.1 km round the water is never planned on the guess: by car on the road route (12 min + traffic and start-up), or 55 min on foot (got ${real.how} ${real.min} min)`);
+  t(real.kind !== 'walk', `a 55 min way round on foot is not taken when a taxi is far quicker (got ${real.how} ${real.min} min)`);
+  const snap = (p, q) => (p === a && q === isl) || (p === isl && q === a) ? { foot: { km: 2075 }, car: { km: 2075, min: 1500 } } : null, sn = E.makeTravel({ walk: 'medium' }, {}, null, null, null, null, snap).estimate(a, isl);
+  t(sn.min === plain.min, `a router answer far beyond any road (2,075 km for 1.4 km) is a wrong snap and is left out (got ${sn.min}, guess ${plain.min})`);
   t(!walkOf(real) || walkOf(real).min >= 54, `the walk offered is the street route's 4.1 km at 4.5 km/h, 55 min (got ${walkOf(real) && walkOf(real).min})`);
   const b = { name: 'Port', lat: 42.424, lng: 18.769 }, c = { name: 'Mountain village', lat: 42.433, lng: 18.912 };  // 11.8 km straight
   const mr = (p, q) => (p === b && q === c) || (p === c && q === b) ? { car: { km: 25.5, min: 38 } } : null;
