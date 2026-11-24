@@ -7087,7 +7087,8 @@ if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltin
 // The schedule says plainly when you get to each place and when you leave it.
 // A wait of this many minutes or more before a meal is free time where it is spent, never time standing at the restaurant
 // (outside test 7b, Nov 23: up to 2 h 31 min "to spare before lunch" at 9:14 am). Class rule R-13.
-const MEAL_FREE = 20;
+const MEAL_FREE = 20; // Any shorter wait is said on the card ("3 min to spare before lunch at 12:00 pm"), however short: the card's start is never
+// before the opening it shows (outside test 8d, Nov 24: Bruges lunch "ARRIVE 11:57 am" under "Open 12:00 pm").
 function tcell(it) {
   const len = it.type === "meal" || it.type === "evening" ? (it.meal && it.meal.len) || 0 : it.type === "stop" || it.type === "fixed" ? (it.place && it.place.minutes) || 0 : 0;
   // A meal reached early shows the real arrival (leave + ride = arrive), and its card says the time to spare (card review,
@@ -7145,7 +7146,7 @@ function renderPlan(d) {
       if (r.onBoard) return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what"><div class="nm">${lbl}: ${esc(r.name)}</div><div class="sub">${esc("On the ship, once you're back · " + dur(it.meal.len))}</div></div></div>`;
       const toGo = !r.booked && it.meal.len <= 20, whyR = Object.assign({}, r, { why: mealWhy(r, plan.items, idx) });
       return (!(pv && pv.type === "travel") ? mealFree(idx, null) : "") + `<div class="${cls}"${mv ? ` data-meal="${esc(lbl)}"` : ""}>${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">${mv ? dragHandle({ id: "meal:" + lbl, name: lbl }) : ""}
-        <div class="nm">${toGo ? lbl + " to go" : it.meal.quick && !r.booked ? "Quick " + lbl.toLowerCase() : lbl}: ${esc(r.name)}</div>${it.early >= 5 && it.early < MEAL_FREE ? `<div class="sub">${esc(dur(it.early))} to spare before ${lbl.toLowerCase()} at ${fmt(it.time)}</div>` : ""}${toGo ? `<div class="sub">The day is full: buy something to take away and eat on the way (about 20 min).</div>` : ""}${!r.generic && !r.booked && (r.openSpans || []).length ? `<div class="sub">Open ${esc(r.openSpans.map(([a, b]) => fmt(a) + "–" + fmt(b)).join(", "))}</div>` : ""}<div class="sub">${[r.booked ? "Your reservation" : "", r.cuisine, r.price, mealTag(r), dur(it.meal.len), r.generic || r.booked || r.hoursKnown !== false ? "" : "Hours not confirmed", lbl === "Lunch" && !r.booked && it.time > MEALS[0].to ? "Late lunch: check they still serve" : ""].filter(Boolean).map(esc).join(" · ")}</div>
+        <div class="nm">${toGo ? lbl + " to go" : it.meal.quick && !r.booked ? "Quick " + lbl.toLowerCase() : lbl}: ${esc(r.name)}</div>${it.early > 0 && it.early < MEAL_FREE ? `<div class="sub">${esc(dur(it.early))} to spare before ${lbl.toLowerCase()} at ${fmt(it.time)}</div>` : ""}${toGo ? `<div class="sub">The day is full: buy something to take away and eat on the way (about 20 min).</div>` : ""}${!r.generic && !r.booked && (r.openSpans || []).length ? `<div class="sub">Open ${esc(r.openSpans.map(([a, b]) => fmt(a) + "–" + fmt(b)).join(", "))}</div>` : ""}<div class="sub">${[r.booked ? "Your reservation" : "", r.cuisine, r.price, mealTag(r), dur(it.meal.len), r.generic || r.booked || r.hoursKnown !== false ? "" : "Hours not confirmed", lbl === "Lunch" && !r.booked && it.time > MEALS[0].to ? "Late lunch: check they still serve" : ""].filter(Boolean).map(esc).join(" · ")}</div>
         ${mealFacts(r)}${r.booked ? bookedLinks(lbl) : mealChangeLink(lbl, r) + mealMore(whyR, city, lbl)}</div></div>`;
     }
     if (it.type === "stop") {
