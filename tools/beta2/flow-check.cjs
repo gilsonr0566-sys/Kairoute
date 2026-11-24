@@ -281,6 +281,10 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(500);
       const got = await setPicks(set); if (got === 'nofit') { skipped++; continue; } if (!got) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
+      // The map's lines are read once the day is planned and drawn (a slow phone took longer than 0.8 s: "no ferry drawn"
+      // while the plan had both ferries, Nov 24): wait for the checks in flight, then read again while no ferry is drawn yet.
+      await p.waitForFunction(() => !window.__kairouteFitPending || window.__kairouteFitPending() === 0, null, { timeout: 15000, polling: 100 }).catch(() => {});
+      for (let k = 0; k < 4 && !(await p.evaluate(() => window.__kairouteMapLegs().some(l => l.kind === 'ferry'))); k++) await p.waitForTimeout(1500);
       const r = await p.evaluate(() => { const R = Math.PI / 180, km = (a, b) => { const x = Math.sin((b[1] - a[1]) * R / 2) ** 2 + Math.cos(a[1] * R) * Math.cos(b[1] * R) * Math.sin((b[0] - a[0]) * R / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
         const piers = window.__kairoutePiers().map(q => [q.lng, q.lat]), d = window.__kairouteEngine2()[window.__kairouteDays().findIndex(x => /Naples/.test(x.dest))];
         const boatAt = (d.items || []).filter(x => x.t === 'stop' && window.__kairouteBoatPlace(x.id)).map(x => [x.lng, x.lat]);
