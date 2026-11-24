@@ -53,10 +53,12 @@ if (process.argv.includes("--legs")) {
       for (let k = 1; k < its.length; k++) { const a = its[k - 1], b = its[k], km = hav(a, b); if (km < 2) continue;
         const gate = b.t === "end" || a.t === "start", key = [a.lat, a.lng, b.lat, b.lng].map(v => (+v).toFixed(3)).join(",");
         if (seen.has(key)) continue; seen.add(key);
-        pairs.push({ trip: f.replace(/\.json$/, ""), city: d.city, from: a.name || a.t, to: b.name || b.t, a: { lat: +a.lat, lng: +a.lng }, b: { lat: +b.lat, lng: +b.lng }, km: +km.toFixed(1), gate,
+        pairs.push({ trip: f.replace(/\.json$/, ""), city: d.city, from: a.name || a.t, to: b.name || b.t, a: { lat: +a.lat, lng: +a.lng }, b: { lat: +b.lat, lng: +b.lng }, km: +km.toFixed(1), gate, back: b.t === "end" && /^(port|departure|embark)$/.test(d.type || ""),
           dow: new Date(Date.parse(d.date + "T12:00:00Z")).getUTCDay() }); } });
   }
-  pairs.sort((x, y) => (y.gate ? 1 : 0) - (x.gate ? 1 : 0));
+  // The ride back on a ship, train or flight day first (the one a traveler can miss the ship or train on), then the other
+  // rides to and from a fixed point, so a run cut short has always measured those (Nov 24, testing thread).
+  pairs.sort((x, y) => (y.back ? 1 : 0) - (x.back ? 1 : 0) || (y.gate ? 1 : 0) - (x.gate ? 1 : 0));
 }
 // --shard k/N: only every N-th ride from k (Nov 23: one runner got map answers for 47 of 171 rides in its time; several
 // runners at once, each with its own share, measure them all).
@@ -67,17 +69,22 @@ console.log(`Ride accuracy: ${pairs.length} rides from ${new Set(pairs.map(p => 
 // Two rides at a time; the results are written after each ride, so a run cut short still has its numbers.
 const sleep = ms => new Promise(r => setTimeout(r, ms)), byVer = NAMES.map(() => []), busyRows = [];
 const best = (list, k, one) => list.filter(o => kindOf(o) === k && (!one || !/change/.test(o.label || ""))).sort((x, y) => x.min - y.min)[0];
+// Each version keeps its own map answers for the run (ferries near a port, asked once for every ride from that port), as
+// the live helper does with its store: Nov 24 the hourly run spent its time asking the busy map servers the same ferry
+// question again for every ride and measured 17 of 87.
+const MEM = NAMES.map(() => { const m = new Map(); return { get: async k => m.has(k) ? m.get(k) : null, put: async (k, v) => { m.set(k, v); } }; });
 let done = 0, next = 0, stopped = false;
 async function one(p) {
-  let tt = [], why = [];
+  let tt = [], why = [], gotMap = false;
   try { tt = await T.timetableOptions(p.a, p.b, p.dow); } catch (e) { why.push("timetable: " + e.message); }
   for (const [v, M] of MODS.entries()) {
     let map = [];
     // The free map servers turn busy runners away: one try, then one more after a pause, each with a long wait.
     for (let t = 0; t < 2; t++) {
-      try { const m = await M.transitOptions(p.a, p.b); map = Array.isArray(m) ? m : []; if (m && m.why) why.push(NAMES[v] + " map: " + m.why.join("; ")); break; }
+      try { const m = await M.transitOptions(p.a, p.b, MEM[v]); map = Array.isArray(m) ? m : []; if (m && m.why) why.push(NAMES[v] + " map: " + m.why.join("; ")); break; }
       catch (e) { if (t) why.push(NAMES[v] + " map: " + e.message + (e.why ? " (" + e.why.join("; ") + ")" : "")); else await sleep(20000); }
     }
+    if (map.length) gotMap = true;
     const rows = byVer[v];
     for (const k of new Set(map.map(kindOf))) {
       const est = best(map, k), real = best(tt, k, true) || best(tt, k);
@@ -86,7 +93,8 @@ async function one(p) {
     // A ride kind the timetable knows and the map doesn't: the map would offer nothing (or a taxi) where a line runs.
     for (const k of new Set(tt.map(kindOf))) if (!map.some(o => kindOf(o) === k)) rows.push({ ...p, kind: k, est: null, real: pick(best(tt, k, true) || best(tt, k)) });
   }
-  if (why.length) busyRows.push({ ...p, kind: "-", why });
+  // A busy ferry lookup alone doesn't lose the ride: its train, metro and bus answers are still compared (Nov 24).
+  if (why.length && !gotMap) busyRows.push({ ...p, kind: "-", why });
 }
 async function lane() {
   while (next < pairs.length) {

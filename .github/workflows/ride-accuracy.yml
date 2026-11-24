@@ -16,7 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 170
     steps:
+      # The hourly run starts from main; the tools, test trips, place files and engine it needs live on the Beta 2
+      # release branch (Nov 24: the hourly run measured 17 of 87 start-to-sight rides and none of the rides back).
       - uses: actions/checkout@v4
+        with: { ref: "${{ github.event_name == 'schedule' && 'claude/project-thread-xrdp7v' || github.ref }}" }
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -32,11 +35,11 @@ jobs:
       - name: Measure
         run: |
           if [ "${{ github.event_name }}" = schedule ]; then
-            node tools/ride-accuracy.mjs --transit /tmp/live/transit.js --max 1 --minutes 40 --out ride-accuracy-hourly.json | tee ride-accuracy-hourly.txt
+            node tools/ride-accuracy.mjs --legs --transit /tmp/live/transit.js --minutes 40 --out ride-accuracy-hourly.json | tee ride-accuracy-hourly.txt
           elif ! cmp -s worker/transit.js /tmp/live/transit.js && [ -f tools/ride-accuracy-candidate ]; then
             node tools/ride-accuracy.mjs --transit /tmp/live/transit.js,worker/transit.js --names live,candidate --max 2 --minutes 150 --out ride-accuracy.json | tee ride-accuracy.txt
           else
-            node tools/ride-accuracy.mjs --transit /tmp/live/transit.js --minutes 150 --out ride-accuracy-live.json | tee ride-accuracy-live.txt
+            node tools/ride-accuracy.mjs --legs --transit /tmp/live/transit.js --minutes 150 --out ride-accuracy-live.json | tee ride-accuracy-live.txt
           fi
       - uses: actions/upload-artifact@v4
         if: always()
