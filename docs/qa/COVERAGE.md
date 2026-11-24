@@ -54,3 +54,21 @@ app's own estimates). **Live run** = the daily outside test on the published Bet
 
 `tools/truth/fault-audit.cjs` plants random small bugs in the planner (a < for a <=, a number off, && for ||) and counts
 what share the release gate's checks catch, by area. Results: see the section added below when the run finishes.
+
+## First results (Nov 24, afternoon)
+
+**Real-world ride check** (run 45447689433, saved trips planned as the app plans them): 362 rides compared.
+- Walks: 231 of 252 right; 21 planned 5-12 min short (hills, walls). Taxis: 100 of 110 right; 2 planned too fast, 8 far
+  too slow.
+- Two serious ones on port days, logged as escapes E46 and E47 under the new rule R-33:
+  - Kotor's mountain road to Njeguši, planned 23-25 min each way, really 42-50 min with empty roads.
+  - The walk from the Nassau pier to Paradise Island, planned 18-21 min straight across the harbour, really 52-56 min
+    over the bridge.
+- Not checked yet: 17 train, metro and bus rides (the DB journey planner gave no answer from GitHub), 2 ferries (no
+  source), 28 rides the router could not route.
+
+**Fault audit, half done** (57 of 120 random bugs): leave-by 11 of 20 caught, rides 11 of 20, day planning about a third.
+The misses include the ship's own safety margins in `30-window.js` (the time kept before all aboard, "under 3 h free
+means straight to the ship"): halving them was caught by no check. The independent safety check holds the plan only to
+the least time physically possible (15 min at the pier), not to Kairoute's own promised margins. Next: an independent
+rule for the promised margins, written from the stated policy, not read from the planner.
