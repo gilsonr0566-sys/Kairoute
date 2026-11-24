@@ -32,6 +32,12 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     if (peekMemo.size > 50000) peekMemo.clear(); peekMemo.set(k, r); return r; };
   const answerOf = (a, b) => { const r = peek(a, b); return r && r.map(o => Object.assign({}, o, { id: rideId(o), kind: rideKind(o) })); };
   const askRides = ep => { (ep && ep.items || []).forEach(x => { if (x.t === "ride" && x.from && x.to && x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift") { try { transitFor(x.from, x.to); } catch (e) {} } }); };
+  // R-33: every walk and taxi the plans take is asked for its real route once (see askRouteTimes in main.js).
+  const askRoutes = plans => { const pairs = [];
+    (plans || []).forEach(ep => (ep && ep.items || []).forEach(x => { if (x.t !== "ride" || !x.from || !x.to || !isFinite(+x.from.lat) || !isFinite(+x.to.lat)) return; const d = hav(x.from, x.to); if (d < 0.15) return;
+      if (x.mode === "walk" || d <= 3) pairs.push(["foot", x.from, x.to]); if (x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift" && d > 0.5) pairs.push(["car", x.from, x.to]); }));
+    if (pairs.length && typeof askRouteTimes === "function") setTimeout(() => askRouteTimes(pairs), 0); };
+  const routeSig = (a, b) => JSON.stringify(typeof routeTimeOf === "function" ? routeTimeOf(a, b) : null);
   const answerSig = (a, b) => JSON.stringify((peek(a, b) || []).map(o => [rideId(o), o.min, o.label]));
   // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
   const recent = new Map(), recentAlone = new Map(); // the quick checks' plans kept apart (see alonePlans)
@@ -65,6 +71,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     if (window.PLACES2) { bucket = E.applyPlaces(bucket, window.PLACES2); guideFromPlaces(bucket); }
     bucket.days = bucket.days.map((x, i) => i === ai ? Object.assign({}, x, { alone: true }) : x);
     bucket.answers = (a, b) => answerOf(a, b);
+    bucket.routes = (a, b) => typeof routeTimeOf === "function" ? routeTimeOf(a, b) : null;
     let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
     const mm = { k, plans, bucket, used: new Map() }; recentAlone.set(k, mm); if (recentAlone.size > 40) recentAlone.delete(recentAlone.keys().next().value); return mm;
   }
@@ -84,14 +91,17 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     // A ride answer arriving replans only when it is an answer the plans used and it changed (answers for rides the
     // plans never take, arriving all the time while the traveler looks around, change nothing).
     stat.bucketMs += performance.now() - t0; t0 = performance.now();
-    const same = memo.ik === ik && memo.plans && [...memo.used.values()].every(u => answerSig(u.a, u.b) === u.sig); stat.checkMs += performance.now() - t0;
+    const same = memo.ik === ik && memo.plans && [...memo.used.values()].every(u => (u.route ? routeSig(u.a, u.b) : answerSig(u.a, u.b)) === u.sig); stat.checkMs += performance.now() - t0;
     if (same) { memo.k = k; return memo; }
     stat.planned++;
     if (window.PLACES2) { bucket = E.applyPlaces(bucket, window.PLACES2); guideFromPlaces(bucket); }
     // The app's own public transport answers for each ride (asked for any ride not known yet, as in the app).
     const used = new Map();
     bucket.answers = (a, b) => { const r = answerOf(a, b); used.set(a.lat + "," + a.lng + ">" + b.lat + "," + b.lng, { a, b, sig: answerSig(a, b) }); return r; };
+    // Real routes known so far: a route arriving replans only when the plans asked for that pair (see answers above).
+    bucket.routes = (a, b) => { const r = typeof routeTimeOf === "function" ? routeTimeOf(a, b) : null; used.set("r|" + a.lat + "," + a.lng + ">" + b.lat + "," + b.lng, { a, b, route: true, sig: JSON.stringify(r) }); return r; };
     let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
+    askRoutes(plans);
     // A day still on the app's own seeding (the traveler hasn't ticked or unticked anything there) shows what the
     // engine planned: its ticks become the engine's stops, so the picker, the counts and the plan always agree.
     let synced = false;

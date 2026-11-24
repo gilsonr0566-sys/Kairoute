@@ -135,7 +135,7 @@
     return best; };
   E.nearGap = (a, b, n, byRoad) => n ? E.gapMin(E.hav(a, n.A), byRoad) + E.gapMin(E.hav(b, n.B), byRoad) : 0;
   const roadMemos = new Map();
-  E.makeTravel = (prefs, legModes, legs, lines, answers, piers) => {
+  E.makeTravel = (prefs, legModes, legs, lines, answers, piers, routes) => {
     const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map(), memoBags = new Map(), memoFixed = new Map();
     const walkMinOf = km => Math.max(1, Math.round(km * 1.3 / speed * 60));
     // The traveler's ride choice belongs to the two places, whichever way the day goes between them (Nov 18: the train
@@ -236,6 +236,13 @@
       // said "no train").
       const got = modeOf(a, b), nearOnly = got && typeof got === "object", wantRaw = nearOnly ? got.near : got;
       const pin = (legs && legs[E.pairKey(a, b)]) || roadNear(a, b), pinned = pin && isFinite(pin.min) ? pin : null;
+      // R-33: the real route between the two points, from a street router (routes(a, b): { foot: { km }, car: { km, min } },
+      // either may be missing), wherever the places files have no time for it. The straight line times 1.3 is only a
+      // guess: up a hill, round a harbour or over a mountain road it is far short (real-world check, Nov 24: a taxi over a
+      // mountain road planned 23 min, 42-50 by road; a walk to an island planned 18 min straight over the water, 55 over the
+      // bridge). A known route is never made shorter than the guess, which stays the floor.
+      const rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;
+      const rFoot = rt && rt.foot && isFinite(rt.foot.km) && rt.foot.km > 0 ? rt.foot : null, rCar = rt && rt.car && isFinite(rt.car.km) && isFinite(rt.car.min) && rt.car.km > 0 ? rt.car : null;
       const isle = p => E.byBoat(p.travelNote) || E.waterOnly(p) || !!p.acrossWater, note = noteFor(a, b);
       // The traveler's choice, as a kind (a row of a timetable answer picked earlier counts as its kind).
       const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || (/^note\|/.test(String(wantRaw)) ? String(wantRaw).slice(5) : wantRaw); // a note's way is its kind
@@ -269,8 +276,8 @@
         }
       } else {
         // On foot: any ride up to 4 km may be walked.
-        const onFoot = pinned && pinned.mode === "walk" ? Math.round(pinned.min) : Math.max(2, Math.round(d * 1.3 / speed * 60));
-        if (d <= WALK_EITHER || (pinned && pinned.mode === "walk")) opts.push({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: d * 1.3, steps: [] });
+        const onFoot = pinned && pinned.mode === "walk" ? Math.round(pinned.min) : Math.max(2, Math.round(Math.max(d * 1.3, rFoot ? rFoot.km : 0) / speed * 60));
+        if (d <= WALK_EITHER || (pinned && pinned.mode === "walk")) opts.push({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: rFoot ? Math.max(d * 1.3, rFoot.km) : d * 1.3, steps: [] });
         // Public transport: the timetable's answers, one per kind; a line mapped on OpenStreetMap for a kind they don't
         // have (a stop within a short walk of each end). On a walk short enough, only when it is quicker than walking.
         const pub = answered(a, b, d, wantRaw);
@@ -293,18 +300,18 @@
         // By road: a taxi or car, on the road network's time when the places database has it, else the road estimate.
         // The guide's own time for the ride (a winding road it knows) is the floor, never the label.
         if (d >= 0.6 || !opts.length) {
-          const r = pinned && pinned.mode !== "walk" && pinned.mode !== "boat" ? { km: pinned.km || d * 1.3, min: Math.round(pinned.min) } : road(d), said = d > 5 ? saidMin(note) : 0;
+          const r = pinned && pinned.mode !== "walk" && pinned.mode !== "boat" ? { km: pinned.km || d * 1.3, min: Math.round(pinned.min) } : rCar ? ((g, c) => c.min > g.min ? c : g)(road(d), { km: rCar.km, min: Math.round(rCar.min * 1.15 + 10), routed: true }) : road(d), said = d > 5 ? saidMin(note) : 0;
           // A stop far from any road a car can drive (a car-free old town on the water, Round 1: taxis between the
           // sights): the taxi starts or ends at the nearest road, and the walk to it is part of the ride. Between two such
           // stops within a walk, no taxi at all.
           const gap = p => Math.max(0, +p.roadGap || 0) / 1000, ga = gap(a), gb = gap(b);
           if (!(ga && gb && d <= WALK_EITHER)) {
             const gw = k => k ? Math.max(2, Math.round(k * 1.3 / speed * 60)) : 0, walkTo = gw(ga) + gw(gb);
-            opts.push(Object.assign({ id: "taxi", kind: "taxi", how: walkTo ? "Walk to the road, then taxi" : "Taxi or car", min: Math.max(r.min, said) + walkTo, km: r.km, steps: walkTo ? [(ga ? "Walk about " + gw(ga) + " min to the nearest road a car can reach" : "") + (ga && gb ? "; " : "") + (gb ? "the taxi stops about " + gw(gb) + " min walk away" : "")] : [], source: said > r.min ? "guide" : pinned && pinned.road ? "roads" : "estimate" }, walkTo ? { roadWalk: walkTo } : {}));
+            opts.push(Object.assign({ id: "taxi", kind: "taxi", how: walkTo ? "Walk to the road, then taxi" : "Taxi or car", min: Math.max(r.min, said) + walkTo, km: r.km, steps: walkTo ? [(ga ? "Walk about " + gw(ga) + " min to the nearest road a car can reach" : "") + (ga && gb ? "; " : "") + (gb ? "the taxi stops about " + gw(gb) + " min walk away" : "")] : [], source: said > r.min ? "guide" : (pinned && pinned.road) || r.routed ? "roads" : "estimate" }, walkTo ? { roadWalk: walkTo } : {}));
           }
         }
         // Nothing else reaches it (two stops far from any road, farther apart than a walk): the walk is offered, on its time.
-        if (!opts.length) opts.push({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: d * 1.3, steps: [] });
+        if (!opts.length) opts.push({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: rFoot ? Math.max(d * 1.3, rFoot.km) : d * 1.3, steps: [] });
         // Never a way far slower than the road (Round 1, Nov 20: a ferry to another island offered for a ride across the
         // city, a coach with 6 changes taking 13 h): over twice the taxi's time and 20 min more, it isn't offered, unless it is
         // the traveler's own choice.
@@ -370,7 +377,7 @@
     // the clock, never which place comes first (Nov 18: picking the train made the day run another way round and the
     // choice was refused; Nov 19, Richard's Jul 2: picking the train home sent the day back and forth across a town).
     let plain = null;
-    const plainTr = () => { if (!Object.keys(modes).length) return null; if (!plain) plain = E.makeTravel(prefs, null, legs, lines, answers, piers); return plain; };
+    const plainTr = () => { if (!Object.keys(modes).length) return null; if (!plain) plain = E.makeTravel(prefs, null, legs, lines, answers, piers, routes); return plain; };
     const orderMin = (a, b) => { const p = plainTr(); return p ? p.min(a, b) : min(a, b); };
     return { estimate, min, orderMin, plainTr, road: d => Object.assign({ mode: "ride", kind: "taxi", how: "Taxi or car" }, road(d)), saidMin, chosen: (a, b) => modeOf(a, b) != null };
   };

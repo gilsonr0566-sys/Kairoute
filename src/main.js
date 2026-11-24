@@ -6752,6 +6752,26 @@ async function fetchRoutes(legs, then) {
   } catch (e) {} finally { need.forEach(l => { const k = legKey(l); routeAsk.delete(k); if (!routeMem.has(k)) routeFail.set(k, Date.now()); }); }
   if (then) then();
 }
+// R-33: real walk and road times for the plan's own rides, from the same street routers (the helper's /route, kept 90
+// days there and on the device here). The plan's walk and taxi times start as a straight-line guess; each ride the plans
+// take is asked for once, and when its real route is longer the plans are made again with it (the engine never makes a
+// ride shorter than the guess). routeTimeOf(a, b) gives { foot: { km }, car: { km, min } } as known so far.
+const rtMem = new Map(), rtAsked = new Set(); let rtQueue = [], rtBusy = false;
+const rtKey = (m, a, b) => m + ":" + (+a.lat).toFixed(4) + "," + (+a.lng).toFixed(4) + ">" + (+b.lat).toFixed(4) + "," + (+b.lng).toFixed(4);
+function routeTimeOf(a, b) { const f = rtMem.get(rtKey("foot", a, b)), c = rtMem.get(rtKey("car", a, b)); return f || c ? { foot: f || null, car: c || null } : null; }
+async function askRouteTimes(pairs) {
+  for (const [m, a, b] of pairs) { const k = rtKey(m, a, b); if (rtAsked.has(k) || rtMem.has(k)) continue; rtAsked.add(k);
+    const kept = await kv.get("rt:" + k).catch(() => null); if (kept && isFinite(kept.km)) { rtMem.set(k, kept); continue; } rtQueue.push([m, a, b, k]); }
+  if (rtBusy || !rtQueue.length || !freeAI || (typeof navigator !== "undefined" && navigator.onLine === false)) { if (rtMem.size) nearGen++; return; }
+  rtBusy = true; let got = 0;
+  try { while (rtQueue.length) { const part = rtQueue.splice(0, 20);
+      const r = await fetch(freeAI.url + "/route", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ legs: part.map(([m, a, b]) => ({ m: m === "car" ? "car" : "foot", a: [+a.lng, +a.lat], b: [+b.lng, +b.lat] })) }) });
+      if (!r.ok) break; const j = await r.json();
+      part.forEach(([m, a, b, k], i) => { const rt = (j.routes || [])[i]; if (rt && isFinite(rt.km) && isFinite(rt.min)) { const v = { km: +rt.km, min: +rt.min }; rtMem.set(k, v); kv.set("rt:" + k, v); got++; } }); } }
+  catch (e) {} finally { rtBusy = false; }
+  if (got) transitShow();
+}
+if (typeof window !== "undefined") { window.__kairouteRouteTimes = () => [...rtMem.entries()]; window.__kairouteRouteTimeSet = (m, a, b, v) => { rtMem.set(rtKey(m, a, b), v); nearGen++; }; }
 // A street route joins the stop only where the stop is beside the street: a cruise terminal out on its pier, or a
 // place across the harbour from the nearest road, is never joined by a straight line over the water (Nov 18, Naples:
 // "floating cars"). The last steps from the street (on foot, along the pier) are the stop's own.
