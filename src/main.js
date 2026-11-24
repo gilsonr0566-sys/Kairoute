@@ -5098,6 +5098,7 @@ function render() {
   const openMenus = [...document.querySelectorAll("#view details.moremenu[open]")].map(menuKey).filter(Boolean);
   renderView();
   if (sideMin) { const sd = document.querySelector("#view .sitesside"); if (sd) sd.style.minHeight = sideMin + "px"; }
+  if (view === "sites") { if (listRoomKey !== pkey || !sideMin) { listRoom = 0; listRoomKey = pkey; } else if (listRoom) placeRoom(); }
   { const v = document.getElementById("view"), app = !FULL_VIEWS[view] || /^(settings|privacy|terms)$/.test(view);
     document.documentElement.classList.toggle("appview", app);
     // Tablets and computers: the screens live in a slim rail on the left (see "Navigation rail" in shell.html)
@@ -6255,9 +6256,18 @@ function cardSpotOf(id, self) {
     const dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) < 1) return;
     // The panel the card really scrolls in (on tablets the list's own pane); the page only when no panel scrolls.
     let pane = nx.parentElement; while (pane && pane !== document.body && !(pane.scrollHeight > pane.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(pane).overflowY))) pane = pane.parentElement;
-    if (pane && pane !== document.body) pane.scrollTop += dy; else window.scrollBy(0, dy);
+    const scrollIt = d => { if (pane && pane !== document.body) pane.scrollTop += d; else window.scrollBy(0, d); };
+    scrollIt(dy);
+    // Near the end of the list the page may be too short to scroll that far (a card above got shorter): the list keeps
+    // room at its end for the rest of the visit, so the card still stays under the finger (Nov 23, Nassau, 25 px).
+    const left = nx.getBoundingClientRect().top - top;
+    if (left > 1) { listRoom += Math.ceil(left); placeRoom(); scrollIt(nx.getBoundingClientRect().top - top); }
   };
 }
+// Room kept at the end of Choose sights for this visit (see cardSpotOf); a new visit starts without it.
+let listRoom = 0, listRoomKey = "";
+function placeRoom() { const m = document.querySelector("#view .sitesmain"); if (!m) return; let sp = m.querySelector(":scope > .keeproom");
+  if (!sp) { sp = document.createElement("div"); sp.className = "keeproom"; sp.setAttribute("aria-hidden", "true"); m.appendChild(sp); } sp.style.height = listRoom + "px"; }
 // Separate stops a few steps apart (a square and the clock on it) say so, so neither looks missing.
 function nextDoor(s, city) { if (!city || s.far || !isFinite(s.lat)) return ""; const n = (city.sites || []).filter(x => x !== s && !x.quick && isFinite(x.lat) && hav(x, s) <= 0.15).slice(0, 3); return n.length ? `<p class="travelnote">Right next to: ${n.map(x => esc(x.name)).join(", ")} (${n.length > 1 ? "their own stops" : "its own stop"})</p>` : ""; }
 const elsewhereNote = plan => { const ex = (plan && plan.elsewhere) || []; if (!ex.length) return ""; const by = (f, w) => ex.filter(f).map(x => `<b>${esc(x.s.name)}</b>`).join(", ") + (w || ""); const e = ex.filter(x => x.earlier), l = ex.filter(x => x.later), on = xs => [...new Set(xs.map(x => fmtDow(x.on.date) + " " + fmtDate(x.on.date)))].join(" and ");

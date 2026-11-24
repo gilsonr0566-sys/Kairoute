@@ -39,7 +39,7 @@ const SEEN = () => { const out = {}; for (const c of document.querySelectorAll('
     if (!c.offsetParent || c.closest('.sorthold, details:not([open]), .picksfold:not(.open) .anchorlist')) continue;
     const st = getComputedStyle(c); if (st.visibility === 'hidden') continue; const b = c.getBoundingClientRect();
     if (b.bottom <= 0 || b.top >= innerHeight || b.height < 4) continue; out[c.dataset.card] = Math.round(b.top); }
-  if (window.__steadyDiag) for (const e of document.querySelectorAll('#view .sitesmain [data-card], #view .sitesmain > *')) { const b = e.getBoundingClientRect(); if (b.height) out['@h ' + (e.dataset.card || e.className.slice(0, 20)) + ' ' + (e.dataset.card ? e.innerText.replace(/\s+/g, ' ').slice(0, 90) : '')] = Math.round(b.height); }
+  if (window.__steadyDiag) for (const e of document.querySelectorAll('#view .sitesmain [data-card], #view .sitesmain > *, #view .sitesside, header.top, #dayRowSpace, #view > *')) { const b = e.getBoundingClientRect(); if (b.height) out['@ ' + (e.dataset.card || e.id || e.className.slice(0, 24))] = Math.round(b.top) + '/' + Math.round(b.height); }
   return out; };
 const moves = (a, b, tol = 2) => Object.keys(a).filter(id => id in b && (Math.abs(a[id] - b[id]) > tol || (id[0] === '@' && a[id] !== b[id]))).map(id => `${id} ${a[id]}→${b[id]}`);
 const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a[id] < 700).map(id => `${id} (was at ${a[id]})`); // vanished from mid-screen
@@ -83,7 +83,7 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         if (await p.evaluate(() => !!document.querySelector('.fitbox, .closedbox'))) { await p.evaluate(() => { const c = document.querySelector('.fitbox [data-act="fitcancel"], .closedbox [data-act="fitcancel"]'); if (c) c.click(); }); await p.waitForTimeout(300); continue; }
         const on = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); return !!(x && x.checked); }, id); if (!on) continue; ticked.push(id);
         const a = await p.evaluate(SEEN); await p.waitForTimeout(2700); await settle(); const b = await p.evaluate(SEEN);
-        check(`${tag}: ticking ${id} keeps it under the finger`, id in a && Math.abs(a[id] - before[id]) <= 4, id in a ? `moved ${before[id]}→${a[id]} px` : 'it left the screen');
+        check(`${tag}: ticking ${id} keeps it under the finger`, id in a && Math.abs(a[id] - before[id]) <= 4, (id in a ? `moved ${before[id]}→${a[id]} px` : 'it left the screen') + (process.env.DIAG ? ' DIAG ' + moves(before, a).slice(0, 30).join(' ; ') : ''));
         const late = moves(a, b).concat(gone(a, b).map(x => 'gone ' + x));
         check(`${tag}: after ticking ${id}, nothing jumps later`, !late.length, late.slice(0, 3).join(', '));
       }
