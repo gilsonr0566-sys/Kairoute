@@ -131,9 +131,15 @@ function rules(text, info = {}) {
     const at = s.arrive != null ? s.arrive : s.leave; if (at != null && at > 14 * 60 + 30 && !/bring|late lunch|reservation|your pick|on board/i.test(t(s))) add('S2', 'lunch at a lunch hour', `lunch at ${nm} starts ${clock(at)}, after the kitchen's last orders (2:30 pm)`); });
   // Into a meal the clock adds up: leave + ride = arrive (card review, Nov 22: lunch looked pinned to 11:45 am, up to 47 min
   // missing). Time to spare before lunch shows on the card, never in the gap.
-  P.rides.forEach(r => { const k = P.rows.indexOf(r.from), nx = P.rows[k + 1]; if (!nx || nx.key !== 'L' || r.from.leave == null || nx.arrive == null || r.choices.length) return;
+  // Free time before lunch ("UNTIL 11:41 am · Free time") is when the traveler leaves for it.
+  P.rides.forEach(r => { const k = P.rows.indexOf(r.from), nx = P.rows[k + 1], lv = r.from.until != null ? r.from.until : r.from.leave; if (!nx || nx.key !== 'L' || lv == null || nx.arrive == null || r.choices.length) return;
     if (P.rides.filter(q => q.from === r.from).length > 1) return;
-    const gap = nx.arrive - (r.from.leave + r.min); if (Math.abs(gap) > 2 && !/spare|wait|includes/i.test(r.notes.join(' '))) add('S2', 'leave + ride = arrive at lunch', `${r.from.name} leave ${clock(r.from.leave)} + ${r.head} gives ${clock(r.from.leave + r.min)}, lunch says arrive ${clock(nx.arrive)}`); });
+    const gap = nx.arrive - (lv + r.min); if (Math.abs(gap) > 2 && !/spare|wait|includes/i.test(r.notes.join(' '))) add('S2', 'leave + ride = arrive at lunch', `${r.from.name} leave ${clock(lv)} + ${r.head} gives ${clock(lv + r.min)}, lunch says arrive ${clock(nx.arrive)}`); });
+  // No idle wait before a meal (R-13; outside test 7b, Nov 23: "2 h 31 min to spare before lunch" on arriving at 9:14 am,
+  // about 26 days with 20 min or more): a wait of 20 min or more is free time where it is spent, shown as free time before
+  // the way to the meal, never time standing at the restaurant.
+  P.rows.filter(r => r.key === 'L').forEach(r => { const m = /(?:(\d+) h ?)?(?:(\d+) min)? to spare before (lunch|dinner)/i.exec([r.meta || ''].concat(r.notes || []).join(' \n '));
+    const w = m ? (+m[1] || 0) * 60 + (+m[2] || 0) : 0; if (w >= 20) add('S2', 'no idle wait before a meal', `${r.name}: ${w} min "to spare" standing at the restaurant (shown as free time where it is spent instead)`); });
   // Dinner at a dinner hour (card review: "ARRIVE 11:43 pm Suggested dinner").
   const lines = raw.split('\n').map(l => l.trim());
   lines.forEach((l, k) => { if (/^(From|FROM|ARRIVE)$/.test(l) && T(lines[k + 1]) != null && T(lines[k + 1]) > 21 * 60 + 30 && /dinner/i.test(lines.slice(k + 2, k + 5).join(' '))) add('S2', 'dinner at a dinner hour', `dinner at ${lines[k + 1]}`); });

@@ -39,6 +39,7 @@ const P = {
   'lunch is a meal': ['naples', rep('Lunch: Sorbillo\nPizza · € · Local spot · 1 h', 'Lunch: Gran Caffè Coffee\nCafé · € · 1 h')],
   'lunch at a lunch hour': ['naples', rep('ARRIVE\n12:56 pm', 'ARRIVE\n2:45 pm')],
   'leave + ride = arrive at lunch': ['naples', rep('ARRIVE\n12:56 pm', 'ARRIVE\n1:10 pm')],
+  'no idle wait before a meal': ['naples', rep('Lunch: Sorbillo\n', 'Lunch: Sorbillo\n45 min to spare before lunch at 1:41 pm\n')],
   'dinner at a dinner hour': ['arrive', rep('FROM\n6:30 pm', 'FROM\n11:43 pm')],
   'lunch on a day out': ['naples', rep('\nL\nLunch: Sorbillo', '\n4\nSorbillo')],
   'bags stored for something': ['arrive', t => rep('\nH\nCheck in or drop bags', '\nH\nLeave your bags in luggage storage')(t).replace('\n1\nLa Rambla & La Boqueria market', '\nH\nCollect your bags')],
