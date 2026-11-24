@@ -9,6 +9,10 @@
 // mid-afternoon", "head back early"): one rule shared by the screen check and the app, which leaves them out on a day that
 // has its own time to leave (src/main.js, planNote).
 var KScreenAdvice = /[^.\n]*\b(?:leave\s+(?:\w+\s+){0,2}?by|(?:head|come|get|be)\s+back(?:\s+\w+){0,3}?\s+(?:by|before)|return(?:\s+\w+){0,3}?\s+(?:by|before))\s+(?:the\s+)?(?:early |mid-?|late )?(?:morning|afternoon|evening|noon|lunch(?:time)?)\b[^.\n]*\.?|[^.\n]*\b(?:head|come|get) back early\b[^.\n]*\.?/i;
+// A story's goodbye chapter ("Closing", "Before you go") is something the guide says, not a place to go: the Day plan's
+// numbered points of a visit are places, so it is never listed there with a time (it still plays in the Guide). One
+// pattern for the app (main.js partsList) and the screen check ('points are places').
+var KFarewellPart = /^(?:closing|before you (?:go|leave)|farewell|goodbye)$/i;
 var KScreenRules = (function () {
 const T = s => { const m = String(s || '').trim().match(/^(\d{1,2}):(\d\d)(?:\s*([ap])m)?$/i); if (!m) return null; let h = +m[1]; if (m[3]) h = h % 12 + (m[3].toLowerCase() === 'p' ? 12 : 0); return h * 60 + +m[2]; };
 const inTxt = s => { const m = /(\d{1,2}):(\d\d)\s*([ap])m/i.exec(s || ''); return m ? T(m[0]) : null; };
@@ -187,6 +191,18 @@ function rules(text, info = {}) {
   // The parts of a visit ("1. Arrival 11:02", "2. The climb 11:03", ...) are spread over the visit, not a minute apart.
   stops.forEach(st => { const ts = st.notes.map(l => /(\d{1,2}:\d\d\s*[ap]m)$/i.exec(l)).filter(Boolean).map(m => T(m[1])), want = dur(st.meta);
     if (ts.length >= 3 && want >= 30 && Math.max(...ts) - Math.min(...ts) < want / 4) add('S2', 'visit parts spread over the visit', `${st.name}: ${ts.length} parts timed ${clock(Math.min(...ts))} to ${clock(Math.max(...ts))} in a ${want} min visit`); });
+  // A visit's numbered points ("The fountain square 10:15 am") as the phone shows them, right under the stop's own line.
+  const ptsOf = st => { const out = []; for (const l of st.notes) { const m = /^(.*\S)\s+(\d{1,2}:\d\d\s*[ap]m)$/i.exec(l); if (!m || /^(Open|Hours|Closed|Lunch|Last entry|Arrive|Leave)\b/i.test(m[1])) { if (out.length) break; continue; } out.push(m[1].trim()); } return out; };
+  const words = t => String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(w => w && !/^(the|and|of|a|an|de|la|le|di|del|in|at|on|to|s)$/.test(w));
+  const namesIt = (p, n) => { const a = words(p), b = words(n); return b.length && b.every(w => a.includes(w)) && (b.length >= 2 || b[0].length >= 5); };
+  // Points are places (R-17, Nov 24, Richard's Chania screenshot: "5. Before you go 10:40 am"): a story's goodbye chapter is
+  // never listed as a place of the visit.
+  stops.forEach(st => ptsOf(st).filter(n => KFarewellPart.test(n)).forEach(n => add('S2', 'points are places', `${st.name}: "${n}" is listed as a place of the visit, but it is the guide's goodbye`)));
+  // A place once (R-16, Nov 24, same screenshot: the old-town walk's five points on the synagogue's stop and again on the
+  // walk's own stop): a place is a stop OR a point of another stop's visit, never both, and no two stops show the same walk.
+  const sv = stops.filter(s => s.key !== 'L').map(st => ({ st, pts: ptsOf(st) }));
+  sv.forEach(a => sv.forEach(b => { if (a === b) return; const p = a.pts.find(n => namesIt(n, b.st.name)); if (p) add('S2', 'a place once', `${b.st.name} is a stop of its own and also point "${p}" of ${a.st.name}`); }));
+  sv.forEach((a, i) => sv.slice(i + 1).forEach(b => { if (a.pts.length >= 2 && a.pts.join('|') === b.pts.join('|')) add('S2', 'a place once', `${a.st.name} and ${b.st.name} show the same ${a.pts.length} points (${a.pts.slice(0, 3).join(', ')}...)`); }));
   // ---- S3: readable
   const RL = raw.split('\n'), foreign = RL.filter((l, k) => SCRIPT.test(l) && !/^[A-Za-z]+(-[A-Za-z]+)+\b/.test((RL[k + 1] || '').trim()) && !/USEFUL WORDS/i.test(RL.slice(Math.max(0, k - 30), k).join(' '))); /* a phrase card shows the local words with how to say them */ if (foreign.length) add('S2', 'English letters', `"${foreign[0].trim().slice(0, 70)}"`);
   P.rides.forEach(r => r.choices.forEach(c => { if (c.min > Math.max(3 * r.min, r.min + 90)) add('S3', 'no absurd ride choice', `"${c.txt}" offered beside ${r.head}`); }));

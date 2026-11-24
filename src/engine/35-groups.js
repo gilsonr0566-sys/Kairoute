@@ -5,6 +5,7 @@
 // sit inside a group and still be its own stop (its own guide and narration) within the group's visit.
 // Membership comes from two general rules, never from a list of places:
 //  1. the map's own boundaries: the sight stands inside the group's mapped area (kept in the places database as `in`);
+//  1b. a story's walk that stops at the sight (`onWalk`): the walk goes there, so the sight is on it;
 //  2. an open square or plaza has no walls, so the buildings that face onto it belong to it: a sight within a short walk
 //     of the square's centre (SQUARE_REACH) is a member. An old town or district with no mapped boundary is the same:
 //     its point is its heart, so a sight within OLD_TOWN_REACH of it is part of its walk.
@@ -29,6 +30,8 @@
     const holders = new Map(); // site id -> ids of groups it stands in
     const add = (m, g) => { if (m === g) return; const k = String(m); if (!holders.has(k)) holders.set(k, new Set()); holders.get(k).add(String(g)); };
     for (const s of list) for (const g of s.in || []) if (byId.has(String(g))) add(s.id, g);                 // rule 1: map boundaries
+    // rule 1b: a sight a story's walk stops at (onWalk, from the story library) is on that walk, as if inside it.
+    for (const s of list) for (const g of s.onWalk || []) if (byId.has(String(g))) add(s.id, g);
     for (const g of list) if (E.isSquare(g) && !g.far) for (const s of list)                                // rule 2: around a square
       if (s !== g && !s.far && !E.isSquare(s) && E.hav(s, g) <= E.SQUARE_REACH && !(g.in || []).includes(s.id)) add(s.id, g.id);
     for (const g of list) if (OLD_TOWN.test(text(g)) && !E.isSquare(g) && !g.far && !list.some(s => (s.in || []).map(String).includes(String(g.id)))) for (const s of list)
@@ -40,6 +43,7 @@
     for (const [m, gs] of holders) { if (!gs.size) continue;
       // Of holders that don't sit in one another, the nearest (the square a church faces, not the district around it).
       const m0 = byId.get(m), near = (a, b) => (m0 ? E.hav(m0, byId.get(a)) - E.hav(m0, byId.get(b)) : 0) || a.localeCompare(b);
+      const walk = m0 && (m0.onWalk || []).map(String).find(g => gs.has(g)); if (walk) { groupOf.set(m, walk); continue; }
       const inner = [...gs].filter(g => ![...gs].some(h => h !== g && holders.has(h) && holders.get(h).has(g))).sort(near)[0] || [...gs].sort(near)[0];
       groupOf.set(m, inner); }
     const members = new Map(), kind = new Map();

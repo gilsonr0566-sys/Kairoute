@@ -164,12 +164,13 @@
   // gated(h): the bigger visit has its own opening hours this day (a gate: an excavation town, a castle).
   E.foldPicks = (picks, groups, gated) => {
     const ids = new Map(picks.map(s => [String(s.id), s])), into = new Map();
-    const covers = (h, s) => !!(gated && gated(h)) || (!s.far && !E.needsHours(s)) || (s.minutes || 30) <= 15 || (!h.far && E.needsHours(h) && !E.isOpenArea(h));
+    const onWalk = (h, s) => (s.onWalk || []).map(String).includes(String(h.id));
+    const covers = (h, s) => onWalk(h, s) || !!(gated && gated(h)) || (!s.far && !E.needsHours(s)) || (s.minutes || 30) <= 15 || (!h.far && E.needsHours(h) && !E.isOpenArea(h));
     for (const s of picks) {
       let k = String(s.id), seen = new Set([k]), h = null;
       if (s.town != null && ids.has(String(s.town))) h = ids.get(String(s.town));
       else while (groups && groups.groupOf.has(k)) { k = String(groups.groupOf.get(k)); if (seen.has(k)) break; seen.add(k); if (ids.has(k)) { h = ids.get(k); break; } }
-      if (h && covers(h, s)) { into.set(String(s.id), { h, beside: false }); continue; }
+      if (h && covers(h, s)) { into.set(String(s.id), { h, beside: false, walk: onWalk(h, s) }); continue; }
       // Beside: only one small thing (a fountain, a statue), never an area or a street (a historic centre is never part of a chapel).
       if (s.far || E.needsHours(s) || E.isAreaKind(s) || E.isOpenArea(s) || /\b(street|road|avenue|boulevard|lane|rua|calle|strasse|straße)\b/i.test(s.name) || !isFinite(s.lat)) continue;
       const near = picks.filter(x => x !== s && !x.far && isFinite(x.lat) && (x.fullMinutes || x.minutes || 30) > (s.minutes || 30) && E.hav(x, s) <= E.FOLD_NEAR)
@@ -179,7 +180,7 @@
     const root = id => { let k = id, n = 0; while (into.has(k) && n++ < 20) k = String(into.get(k).h.id); return k; };
     const folded = {};
     for (const [id, f] of into) { const r = root(id); if (r === id) continue; const s = ids.get(id);
-      (folded[r] = folded[r] || []).push({ id: s.id, name: s.name, extra: E.foldExtra(s), beside: f.beside && r === String(f.h.id) }); }
+      (folded[r] = folded[r] || []).push({ id: s.id, name: s.name, extra: f.walk && r === String(f.h.id) ? 0 : E.foldExtra(s), beside: f.beside && r === String(f.h.id), ...(f.walk && r === String(f.h.id) ? { walk: true, own: s.minutes || 30 } : {}) }); }
     if (!Object.keys(folded).length) return { picks, folded };
     const out0 = picks.filter(s => !(into.has(String(s.id)) && root(String(s.id)) !== String(s.id)));
     const out = out0.map(s => { const f = folded[String(s.id)]; if (!f) return s;
@@ -187,7 +188,10 @@
       // Its own time back, less only what its remaining own stops take (as the pool shortens it, never under half an hour).
       const base = s.fullMinutes || s.minutes || 60, rest = out0.filter(x => walkOf.includes(x.name)).reduce((a, x) => a + (x.minutes || 30), 0);
       const left = walkOf.length ? Math.min(base, Math.max(30, Math.round((base - rest) / 5) * 5)) : base;
-      const t = Object.assign({}, s, { minutes: left + f.reduce((a, x) => a + x.extra, 0), folded: f });
+      // A sight the walk's story stops at (onWalk) keeps its own time inside the walk: the walk gets at least half an hour
+      // around it, as when it was a stop of its own beside the walk (the day's time is the same, told as one visit).
+      const onW = f.filter(x => x.walk).reduce((a, x) => a + x.own, 0), body = onW ? Math.max(left, Math.ceil((30 + onW) / 5) * 5) : left;
+      const t = Object.assign({}, s, { minutes: body + f.reduce((a, x) => a + x.extra, 0), folded: f });
       if (walkOf.length) t.walkOf = walkOf; else { delete t.walkOf; delete t.fullMinutes; }
       return t; });
     return { picks: out, folded };
@@ -395,7 +399,7 @@
       const mine = names => names.every(n => wishes.some(w => w.name === n && !w.guideWish));
       fit.kept.filter(s => s.walkOf && s.fullMinutes > s.minutes).forEach(s => { const line = s.name + " gets " + s.minutes + " min, the walk " + (s.walkOf.length > 1 ? "between " + E.listWords(s.walkOf, "and") + (mine(s.walkOf) ? ", which you picked as stops of their own" : ", which are stops of their own") : "to " + s.walkOf[0] + (mine(s.walkOf) ? ", which you picked as a stop of its own" : ", which is a stop of its own")) + " (on its own it gets " + s.fullMinutes + " min).";
         if (!explain.some(t => t.startsWith(s.name + " gets "))) explain.push(line); });
-      fit.kept.forEach(s => (s.folded || []).forEach(x => { const line = x.name + (x.beside ? " is right beside " : " is inside ") + s.name + ": seen on that visit (" + x.extra + " min more), not a stop of its own.";
+      fit.kept.forEach(s => (s.folded || []).forEach(x => { const line = x.walk ? x.name + " is on the " + s.name + " walk: seen on that visit, not a stop of its own." : x.name + (x.beside ? " is right beside " : " is inside ") + s.name + ": seen on that visit (" + x.extra + " min more), not a stop of its own.";
         if (!explain.includes(line)) explain.push(line); }));
       // Lunch back on board (Nov 20, decided for Richard's lunch rule: every day over lunchtime has a timed lunch): a port day
       // whose picks fill the time ashore, back at the ship in time for lunch, has lunch on board. It never shortens a pick

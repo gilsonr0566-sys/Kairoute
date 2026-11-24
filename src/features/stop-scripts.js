@@ -222,13 +222,51 @@ const scriptFor = (s, city) => { if (!(s && city)) return s && city; scriptMemoF
 const scriptForKey = (s, city) => { const k = (city.city || "") + "\u0000" + s.name + " " + (s.local || "");
   if (scriptMemo.site.has(k)) return scriptMemo.site.get(k);
   const v = STOP_SCRIPTS.find(sc => sc.city.test(city.city || "") && sc.site.test(s.name + " " + (s.local || ""))); scriptMemo.site.set(k, v); return v; };
+// ONE STORY, ONE STOP (rules registry R-16, Nov 24: Richard's Chania screenshot showed the old-town walk's five
+// chapters on two stops in a row, the Etz Hayyim Synagogue and the old-town walk, because the story's pattern names
+// the synagogue so it can be found under any of its names). A story is about one place: of the sights its pattern
+// matches, it goes only to the one it is about, the sight whose name is most of the story's title (a sight named by
+// one of the story's chapters is a stop on the walk, not the walk). Every other sight keeps its own words. A sight a
+// story's chapter is named for, close to the story's own stop, is ON THAT WALK (s.onWalk): the planner folds it into
+// the walk when both are planned the same day, so the walk is never told twice.
+const SCRIPT_SKIP = new Set(["the", "and", "of", "a", "an", "de", "la", "le", "di", "del", "della", "in", "at", "on", "to", "s"]);
+const scriptWords = t => String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim().split(" ").filter(w => w && !SCRIPT_SKIP.has(w));
+// A chapter is named for the sight: the chapter's name holds the sight's whole name, word for word ("Kastelli hill"
+// for "Kastelli"; "Etz Hayyim Synagogue" for itself).
+const scriptPartFor = (sc, s) => { const n = scriptWords(s.name); if (!n.length) return -1;
+  return sc.parts.findIndex(p => { const w = scriptWords(p.name); return w.length && n.every(x => w.includes(x)) && (n.length >= 2 || n[0].length >= 5); }); };
+// How much of the story's title the sight's name is (0 to 1).
+const scriptTitleFit = (sc, s) => { const t = new Set(scriptWords(sc.title + " " + (sc.where || ""))), n = scriptWords(s.name); return n.length ? n.filter(w => t.has(w)).length / n.length : 0; };
+const SCRIPT_WALK_KM = 1; // a chapter's sight further than this from the story's stop is another place of that name
+// The sight a story belongs to, of those its pattern matches: the best fit to its title, a chapter's own sight only when
+// no other fits; none when the only matches are chapters' sights (the synagogue alone never gets the whole old-town walk).
+function scriptOwner(sc, cands) {
+  const r = cands.map(s => ({ s, fit: scriptTitleFit(sc, s), part: scriptPartFor(sc, s) >= 0 }))
+    .sort((a, b) => (a.part - b.part) || (b.fit - a.fit) || ((b.s.minutes || 0) - (a.s.minutes || 0)) || String(a.s.id).localeCompare(String(b.s.id)));
+  const best = r[0]; return best && (!best.part || best.fit > 0) ? best.s : null;
+}
+var scriptOwnMemo = new WeakMap(); // city -> { sig, owner: script id -> site, walk: site -> [owner ids] }
+function scriptOwners(city) {
+  const sites = city.sites || [], sig = scriptMemo.n + "|" + (city.city || "") + "|" + sites.map(s => s.id + "~" + s.name + "~" + (s.local || "")).join("|");
+  const kept = scriptOwnMemo.get(city); if (kept && kept.sig === sig) return kept;
+  const by = new Map(); for (const s of sites) { const sc = scriptFor(s, city); if (sc) { if (!by.has(sc)) by.set(sc, []); by.get(sc).push(s); } }
+  const owner = new Map(), walk = new Map();
+  for (const [sc, cands] of by) { const o = scriptOwner(sc, cands); if (!o) continue; owner.set(sc.id, o);
+    for (const s of sites) if (s !== o && isFinite(+s.lat) && isFinite(+o.lat) && hav(s, o) <= SCRIPT_WALK_KM && scriptPartFor(sc, s) >= 0) { if (!walk.has(s)) walk.set(s, []); walk.get(s).push(o.id); } }
+  const out = { sig, owner, walk }; scriptOwnMemo.set(city, out); return out;
+}
 // Puts the script on the stop as its parts (the same parts the voice tour and the day plan already show). The AI
 // walk-through never rewrites a stop with a script. Cheap and safe to call often.
 function scriptStops(city) {
   if (!city || !STOP_SCRIPTS || !scriptMemo) return; scriptMemoFresh();
   const ck = city.city || ""; let any = scriptMemo.city.get(ck); if (any === undefined) scriptMemo.city.set(ck, any = STOP_SCRIPTS.some(sc => sc.city.test(ck))); if (!any) return;
+  const own = scriptOwners(city);
   for (const s of city.sites || []) {
-    const sc = scriptFor(s, city); if (!sc || s.scriptV === sc.id + sc.v) continue;
+    const w = own.walk.get(s); if (w) s.onWalk = w.slice(); else if (s.onWalk) delete s.onWalk;
+    const sc0 = scriptFor(s, city), sc = sc0 && own.owner.get(sc0.id) === s ? sc0 : null;
+    // A sight given a story it isn't about (a saved trip from before this rule) gets its own words back.
+    if (!sc) { if (s.scriptV) { delete s.parts; delete s.scriptV; s.partsOff = []; delete s.extrasV; } continue; }
+    if (s.scriptV === sc.id + sc.v) continue;
     s.parts = sc.parts.map(p => ({ name: p.name, spot: true, local: "", lat: s.lat, lng: s.lng, minutes: p.minutes, stand: p.stand, next: "", guide: p.paras.join("\n\n"), lookFor: "" }));
     s.partsOff = []; s.intro = ""; s.wrap = ""; s.extrasV = 99; s.scriptV = sc.id + sc.v;
     if (sc.show) s.show = Object.assign({ part: null }, sc.show);
@@ -311,4 +349,4 @@ updateAudioUI = function () {
     const st = b.parentElement.querySelector(".state"); if (st) st.textContent = on ? (ttsState === "starting" ? "Starting…" : `Playing${voiceNow ? " · " + voiceNow : ""}`) : ""; });
 };
 if (typeof window !== "undefined" && typeof document !== "undefined") setTimeout(scriptDemo, 200);
-if (typeof window !== "undefined") window.__kairouteScripts = { STOP_SCRIPTS, voices: GUIDES.map(g => g[3]), sayText, scriptStops, speech: (s, k) => partSpeech(s, k, true), play: s => speakSite(s), state: () => ({ speakingId, ttsState, voiceNow }) };
+if (typeof window !== "undefined") window.__kairouteScripts = { STOP_SCRIPTS, stops: c => { scriptStops(c); return (c.sites || []).map(s => ({ id: s.id, story: s.scriptV || '', onWalk: s.onWalk || null })); }, owners: c => { const o = scriptOwners(c); return { owner: [...o.owner].map(([k, v]) => [k, v.id]), walk: [...o.walk].map(([k, v]) => [k.id, v]) }; }, voices: GUIDES.map(g => g[3]), sayText, scriptStops, speech: (s, k) => partSpeech(s, k, true), play: s => speakSite(s), state: () => ({ speakingId, ttsState, voiceNow }) };
