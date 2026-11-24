@@ -99,6 +99,9 @@ function rules(text, info = {}) {
     if (/: walk 0 min, so leave by/.test(raw)) add('S2', 'leave-by is not the back-by', 'a leave-by from a walk of 0 min'); }
   // One time to head back (Nov 24, outside test round 7b: "Leave Rome by mid-afternoon" on a day whose plan leaves St Peter's
   // at 5:30 pm): on a day with a LEAVE BY, no other words tell the traveler a different, vaguer time to head back.
+  // A tender day goes back by tender too (Nov 24, outside test round 7b a14 idx 2: "Taxi or car 27 min ... Back at the
+  // ship" after a day that began "Tender ashore"): the day's end names the tender, never a ride straight to the ship.
+  if (/\nS\nTender ashore\b/.test(raw)) { const e = P.rows.filter(r => r.key === 'E').pop(); if (e && !/tender/i.test(e.name + ' ' + (e.notes || []).join(' '))) add('S1', 'tender both ways', `the day starts by tender but ends "${e.name}"`); }
   if (P.leaveBy != null) { const m = KScreenAdvice.exec(raw); if (m) add('S2', 'one time to head back', `"${m[0].trim()}" beside the plan's own LEAVE BY ${clock(P.leaveBy)}`); }
   // "Which airport" with only terminals of one airport to choose from is a terminal question (tester round 7a).
   { const m = /Which airport [^?]*\? There is more than one here \(([^)]*)\)/.exec(raw);

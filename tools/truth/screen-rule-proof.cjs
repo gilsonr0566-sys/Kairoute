@@ -27,6 +27,7 @@ const P = {
   'small-hours departure asked': ['leave', t => t, { time: '00:20', mode: 'train' }],
   'free time after the first steps': ['arrive', t => rep('\nH\nCheck in or drop bags', '\nH\nHotel')(t).replace('Back at Hotel near Plaça de Catalunya', 'Check in or drop bags')],
   'leave-by is not the back-by': ['naples', add('Free time: 2 h 45 min\nYours to spend as you like. Leave here by 10:45 pm to be back by 10:45 pm.')],
+  'tender both ways': ['naples', rep('\nS\nOff the ship at ', '\nS\nTender ashore to ')],
   'one time to head back': ['naples', add('From the cruise port: Rome is about 1 hour 15 minutes by train. Leave Rome by mid-afternoon.')],
   'terminals asked as terminals': ['leave', add('Which airport do you leave from? There is more than one here (Big City Airport, Terminal 1 or Big City Airport, Terminal 2). Choose yours')],
   'free time fits its clock': ['arrive', t => { const m = /\nUNTIL\n(\d{1,2}:\d\d [ap]m)\n\+\nFree time: /.exec(t); if (!m) throw new Error('fixture has no free time'); return t.replace(/\nFree time: [^\n]*/, '\nFree time: 9 h 59 min'); }],

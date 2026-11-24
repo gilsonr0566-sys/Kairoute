@@ -1516,7 +1516,10 @@ function dayWindow(d, city) {
     if (!P) return { error: "Choose where the ship docks." };
     w.start = shipToPort(d, d.portArrive) + (d.tender ? 60 : 30); w.endBy = shipToPort(d, d.allAboard) - 45; w.buffer = 45;
     w.head = [Object.assign({}, P, { leaveWhenReady: true })]; w.tail = [Object.assign({}, P, { backToShip: true })];
-    w.startLabel = (d.tender ? "Tender ashore to " : "Off the ship at ") + P.name; w.endLabel = "Back at the ship";
+    w.startLabel = (d.tender ? "Tender ashore to " : "Off the ship at ") + P.name; w.endLabel = d.tender ? "At the tender pier, for the boat back to the ship" : "Back at the ship";
+    // A tender port both ways (outside test round 7b: the way back ended in a taxi "Back at the ship"): the boats back stop
+    // before all aboard and queue, so the plan has you at the pier earlier than at a dock, and says so.
+    if (d.tender) w.notesEnd.push(`This is a tender port: the boats back to the ship stop before all aboard and can have a long queue, so the plan has you at the tender pier ${(typeof KEngine !== "undefined" && KEngine.TENDER_BACK) || 30} min earlier than it would at a dock. The ship's daily program gives the last tender: if it is earlier than the time shown, leave earlier.`);
     w.notes.push(`Ship docks ${d.portArrive}${d.tender ? " (tender port, so we allow an hour to get ashore)" : ""}.`);
   }
   if (!isFinite(w.start) || !isFinite(w.endBy)) return { error: "Add the times for this day." };
