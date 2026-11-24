@@ -52,12 +52,15 @@
       });
     }
     const key = meal + n + "@" + p.lat + "," + p.lng, got = ctx.eatMemo.get(key); if (got) return got;
+    // Which places are open for this meal and free today doesn't depend on the point either: worked out once per meal
+    // (speed, Nov 24: this scan ran for every point of every trial plan on Choose sights).
+    if (!ctx.eatOpen) ctx.eatOpen = new Map();
+    let open = ctx.eatOpen.get(meal);
+    if (!open) { open = ctx.eatList.filter(x => !(E.eatShut(x.f, meal) || (meal !== "Lunch" && (x.r.townLunch || x.r.inTown))) && ctx.ledger.eatFree(x.k, ctx.dayIdx))
+      .map(x => ({ x, add: (x.r.fromMap ? 0.4 : 0) + (E.cafeName(x.r) ? 0.6 : 0) })); ctx.eatOpen.set(meal, open); }
     const out = [];
-    for (const x of ctx.eatList) {
-      if (E.eatShut(x.f, meal) || (meal !== "Lunch" && (x.r.townLunch || x.r.inTown))) continue;
-      if (!ctx.ledger.eatFree(x.k, ctx.dayIdx)) continue;
-      out.push({ r: x.r, k: x.k, d: E.hav(p, x.r) + (x.r.fromMap ? 0.4 : 0) + (E.cafeName(x.r) ? 0.6 : 0) }); // a guide place to eat first, a map one when it is nearer the way
-    }
+    const bLat = 1.5 / 110, bLng = 1.5 / (110 * Math.max(0.05, Math.cos(p.lat * Math.PI / 180))); // only places within 1.5 km are kept
+    for (const { x, add } of open) { if (Math.abs(x.r.lat - p.lat) > bLat || Math.abs(x.r.lng - p.lng) > bLng) continue; out.push({ r: x.r, k: x.k, d: E.hav(p, x.r) + add }); } // a guide place to eat first, a map one when it is nearer the way
     out.sort((a, b) => a.d - b.d || a.k.localeCompare(b.k));
     const res = out.slice(0, n).filter(x => x.d <= 1.5);
     ctx.eatMemo.set(key, res); return res;
