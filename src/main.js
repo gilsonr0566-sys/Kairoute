@@ -5156,8 +5156,11 @@ function render() {
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
   // put every panel, and the page itself, back exactly where it was, after folds have reopened.
   if (paneMemo.same) { panes().forEach(el => { const y = pos[el.dataset.pane || "view"]; if (y) el.scrollTop = y; }); if (winY && Math.abs(window.scrollY - winY) > 1) window.scrollTo(0, winY); }
-  if (spot) spot();
-  centerChip(); shownFp = viewFp(); pinChip(); seedSoon();
+  centerChip(); shownFp = viewFp(); pinChip();
+  // After the pinned strip has its spacer back, and once more just before the screen is drawn: pieces filled in right
+  // after the redraw (answers already at hand, delivered a moment later) can still change what is above the card.
+  if (spot) { spot(); requestAnimationFrame(spot); }
+  seedSoon();
 }
 // Speed: a new trip's days get their starting picks in the background, one day at a time while the app is idle,
 // instead of all at once on the tap that first opens a day (that tap used to take a second or more). The picks
@@ -7839,7 +7842,7 @@ document.addEventListener("change", e => {
     delete d.autoEmpty; d.ownList = true; // the traveler's first tick or untick makes the list theirs
     if (t.checked) { d.anchor = id; delete d.cleared; }
     else { const ks = kidsOf({ id }, cityFor(d)).filter(k => k.town == null || String(k.town) !== String(id)).map(k => k.id); d.selected = d.selected.filter(x => x !== id && !ks.includes(x)); [id, ...ks].forEach(x => markMine(d, x, false)); if (d.anchor === id) d.anchor = null; if (!d.selected.length) d.cleared = true; } // a bigger sight comes off with what's inside it (a town's own sights have their own ticks) // unticking the last one: the day stays free
-    const back = cardSpot(id); save(); renderKeep(); back(); // the list never jumps (Richard, Nov 16); every change here is in the trip, which keys the plans
+    const back = cardSpot(id); save(); renderKeep(); back(); requestAnimationFrame(back); // the list never jumps (Richard, Nov 16); every change here is in the trip, which keys the plans
     if (window.__kairoutePlant === "resort") { pickFrozen = null; renderKeep(); } // planted bug for the steady-sights check's own proof (R-28): re-sorting after a tap
     return;
   }
