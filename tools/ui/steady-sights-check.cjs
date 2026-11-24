@@ -69,7 +69,7 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         if (prev && Object.keys(prev).length) { const m = moves(prev, now), g = gone(prev, now); if (m.length || g.length) bad1.push(`at ${t * 100} ms: ${m.concat(g.map(x => 'gone ' + x)).slice(0, 3).join(', ')}`); }
         if (first < 0 && Object.keys(now).length) first = t * 100; prev = now; await p.waitForTimeout(100); }
       await settle();
-      const free = await p.evaluate(() => [...document.querySelectorAll('#view .sitesmain label.site input[data-site]:not(:checked)')].filter(x => !x.closest('details:not([open]), .picksfold, .sorthold')).map(x => x.dataset.site));
+      const free = await p.evaluate(() => [...document.querySelectorAll('#view .sitesmain label.site input[data-site]:not(:checked)')].filter(x => !x.closest('details:not([open]), .picksfold, .sorthold') && x.dataset.site === (x.closest('[data-card]') || {dataset:{}}).dataset.card).map(x => x.dataset.site));
       if (free.length < 2) continue; tried++;
       check(`${tag}: opening the list, nothing on screen moves by itself`, !bad1.length, bad1.slice(0, 2).join(' | '));
       check(`${tag}: the list shows within 4 s`, first >= 0, 'no card shown 4 s after opening');
@@ -132,7 +132,7 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
     if (tripName === TRIPS[0] && size === PICK[0] && !process.env.NO_PROOF) {
       let caught = null;
       for (const d of days) { await open(d.i); await settle();
-        const id = await p.evaluate(() => { const xs = [...document.querySelectorAll('#view .sitesmain label.site input[data-site]:not(:checked)')].filter(x => !x.closest('details:not([open]), .picksfold, .sorthold')); const x = xs[Math.floor(xs.length / 2)]; if (!x) return null; x.closest('[data-card]').scrollIntoView({ block: 'center' }); return x.dataset.site; });
+        const id = await p.evaluate(() => { const xs = [...document.querySelectorAll('#view .sitesmain label.site input[data-site]:not(:checked)')].filter(x => !x.closest('details:not([open]), .picksfold, .sorthold') && x.dataset.site === (x.closest('[data-card]') || {dataset:{}}).dataset.card); const x = xs[Math.floor(xs.length / 2)]; if (!x) return null; x.closest('[data-card]').scrollIntoView({ block: 'center' }); return x.dataset.site; });
         if (!id) continue; await p.waitForTimeout(600);
         const pt = await p.evaluate(id => { const b = document.querySelector(`input[data-site="${id}"]`).getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; }, id);
         const before = await p.evaluate(SEEN); await p.evaluate(() => { window.__kairoutePlant = 'resort'; });
