@@ -22,7 +22,10 @@ if (!other) { console.log('names-check: NOT RUN, en-names.json has no other-lang
 const keyOf = n => String(n || '').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/^the\s+/, '').replace(/[^a-z0-9]+/g, ' ').trim();
 const qOf = x => { const m = /(?:^src-q|~Q|^wv~Q)(\d+)$/i.exec(String(x.id || '')); return m ? 'Q' + m[1] : x.wd || x.wikidata || null; };
 // A sight shown under its name in another language, or null.
-const localOf = x => { const q = qOf(x), en = q && book[q], loc = q && other[q]; if (!loc || !loc.includes(keyOf(x.name))) return null;
+// The English name as a guide prints it is the English name: without the encyclopedia title's ", City" ending ("Hôtel de
+// Ville, Paris" is shown as Hôtel de Ville in Paris, R-11 Nov 24), even when it reads the same as the local name.
+const enForms = en => en ? [keyOf(en), keyOf(String(en).replace(/,\s*[^,]+$/, ''))] : [];
+const localOf = x => { const q = qOf(x), en = q && book[q], loc = q && other[q]; if (!loc || !loc.includes(keyOf(x.name)) || enForms(en).includes(keyOf(x.name))) return null;
   return `"${x.name}" (${q}) is its ${en ? 'local name; English name "' + en + '"' : 'local name and it has no English name in any source'}`; };
 const bad = { script: [], local: [] }; let names = 0, trips = 0, planted = 0;
 const seen = new Set(), add = (k, f, msg) => { const key = k + f + msg; if (!seen.has(key)) { seen.add(key); bad[k].push(`${f}: ${msg}`); } };
@@ -59,6 +62,11 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
 // another script must both be caught, or the run fails.
 { const q = Object.keys(other).find(id => book[id] && other[id].length), x = { id: 'wv~' + q, name: other[q][0] };
   const caught = !!localOf(x) && !localOf({ id: x.id, name: book[q] }), scr = OTHER.test('נתי מזנון') && OTHER.test('東京駅') && !OTHER.test('Café Ñandú, Kraków');
+  // The English name minus its ", City" ending passes; a local name that differs from it is still caught.
+  book.Q999999990 = 'Town Hall, Testopolis'; other.Q999999990 = ['town hall', 'hotel de testville'];
+  const endOk = !localOf({ id: 'wv~Q999999990', name: 'Town Hall' }) && !!localOf({ id: 'wv~Q999999990', name: 'Hôtel de Testville' });
+  delete book.Q999999990; delete other.Q999999990;
+  if (!endOk) { console.log('names-check: WRONG, the English name without its ", City" ending was flagged, or a local name passed'); process.exit(1); }
   if (!caught || !scr) { console.log('names-check: BLIND, a planted ' + (!caught ? 'local name' : 'script name') + ' was not caught'); process.exit(1); }
   console.log(`planted names caught (local "${x.name}" for ${q}, Hebrew and Japanese script); the English name passes`); }
 const n = bad.script.length + bad.local.length;
