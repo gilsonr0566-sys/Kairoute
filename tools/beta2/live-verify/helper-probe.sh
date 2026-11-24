@@ -1,6 +1,7 @@
 #!/bin/sh
-# How long the live helper takes for a city's sources, cold and again (the app gives up sooner than this).
+# What the live helper says about sights that showed wrong on the live list (Paris, Nov 24).
 U=https://kairoute-ai.rickgilson.workers.dev; O=https://gilsonr0566-sys.github.io
-for c in Paris Thessaloniki Lisbon Kusadasi; do for n in 1 2; do
-  echo "== /sources?city=$c try $n"; curl -s -m 280 -o /tmp/h.out -w "HTTP %{http_code} in %{time_total}s, %{size_download} bytes\n" -H "Origin: $O" "$U/sources?city=$c"; head -c 300 /tmp/h.out; echo
-done; done
+curl -s -m 280 -H "Origin: $O" "$U/sources?city=Paris" > /tmp/paris.json
+node -e '
+const j = JSON.parse(require("fs").readFileSync("/tmp/paris.json")); const all = [...(j.stops||[]), ...(j.far||[])];
+for (const x of all) if (/venus|milo|louvre|champs|cité|cite|concorde|monceau|hôtel de ville|samaritaine/i.test(x.name)) console.log(JSON.stringify(x).slice(0, 700));'
