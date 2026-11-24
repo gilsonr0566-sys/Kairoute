@@ -451,7 +451,8 @@ function alarmState(d, plan, opt) {
   }
   // Nothing planned away from the start (an evening call whose picks are all shut): no leave-by from "here" with a 0 min
   // walk; the time is the back-by, and on the day it counts down from where the traveler really is (Nov 23 recheck).
-  if (src === "plan" && now == null && plan.items && (plan.items[lastAshoreIdx(plan)] || {}).type === "start" && !(leg && leg.min > 0)) { st.nothingAway = true; st.leaveBy = backBy; }
+  // The same rule as noWayBack (day-facts.js): a leave-by that is the back-by itself is never said (Nov 24 gate).
+  if (src === "plan" && now == null && plan.items && (((plan.items[lastAshoreIdx(plan)] || {}).type === "start" && !(leg && leg.min > 0)) || (st.leaveBy != null && st.leaveBy >= backBy))) { st.nothingAway = true; st.leaveBy = backBy; }
   st.ride = point && !via ? rideBack(d, plan, st) : null;
   // On the day, leave-by is for the train or ferry you can still catch.
   if (st.ride && now != null) st.leaveBy = st.ride.leaveBy;
