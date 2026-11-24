@@ -97,6 +97,10 @@ function rules(text, info = {}) {
   { const m = /Which airport [^?]*\? There is more than one here \(([^)]*)\)/.exec(raw);
     if (m) { const ns = m[1].split(/,? or |, (?!(?:terminals?|T)\s*[0-9A-Z]{1,3}\b)/i).map(s => s.trim()).filter(Boolean), base = n => n.replace(/\s*,?\s*(terminals?|T)\s*[0-9A-Z]{1,3}$/i, '').trim();
       if (ns.length > 1 && new Set(ns.map(base)).size === 1 && ns.some(n => base(n) !== n)) add('S2', 'terminals asked as terminals', `"Which airport" asked with only terminals of one airport: ${m[1]}`); } }
+  // Free time is the time really free where it is shown: from leaving the stop before it to its "until" (Nov 24, tester
+  // round 7b, Naples: "Free time: 36 min" until 1:42 pm, right after a lunch ending 1:42 pm).
+  P.rows.forEach(r => { if (r.until == null || r.leave == null) return; const n = r.notes.find(x => /^Free time: /.test(x)), m = n && dur(n.replace(/^Free time: /, ''));
+    if (m != null && m > r.until - r.leave + 2) add('S2', 'free time fits its clock', `"${n}" until ${clock(r.until)}, but ${r.name} is left at ${clock(r.leave)}`); });
   // ---- S2: what the screen says must add up
   // Free time comes after the day's own first steps (bags left in storage, the hotel check-in), never before them at the
   // airport or the pier (Nov 23: "Free time 1 h 16 min" at the airport, then the ride to the hotel).

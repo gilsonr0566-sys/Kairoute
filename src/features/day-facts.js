@@ -78,7 +78,12 @@ function dayFacts(d, plan) {
   let leaveBy = plan.endBy - back;
   if (fixed && typeof alarmState === "function") { try { const st = alarmState(d, plan); if (st && isFinite(st.leaveBy)) leaveBy = Math.min(leaveBy, st.leaveBy); } catch (e) {} }
   const aa = (d.type === "port" || d.type === "embark") && d.allAboard ? shipToPort(d, d.allAboard) : null;
-  return { start: plan.start, endBy: plan.endBy, len: plan.endBy - plan.start, finish: plan.end, left, back, leaveBy, fixed: !!fixed, allAboard: aa, over: !!plan.over };
+  // The time left is never more than the time from the end of the last stop to the leave-by: a boat back on its own
+  // sailings keeps the plan's time, so minutes the plan is back early are spare at the ship, never free time where the
+  // traveler is (Nov 24, tester round 7b, Naples: "Free time: 36 min, until 1:42 pm" right after a lunch ending 1:42 pm).
+  const L0 = j >= 0 ? its[j] : null, lastEnd = !L0 ? null : L0.time + (L0.type === "meal" ? ((L0.meal && L0.meal.len) || 0) : L0.type === "start" ? 0 : ((L0.place && L0.place.minutes) || 0));
+  const leftHere = lastEnd != null && isFinite(leaveBy) && isFinite(lastEnd) ? Math.min(left, Math.max(0, Math.round(leaveBy - lastEnd))) : left;
+  return { start: plan.start, endBy: plan.endBy, len: plan.endBy - plan.start, finish: plan.end, left: leftHere, back, leaveBy, fixed: !!fixed, allAboard: aa, over: !!plan.over };
 }
 // How the hours read, the same on every screen: "08:00–18:30" and "10 h 30 min".
 const dayHoursText = f => `${fmt(f.start)}–${fmt(f.endBy)}`;
