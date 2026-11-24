@@ -7204,7 +7204,9 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     laterEndBanner(d, plan), elsewhereNote(plan),
     // A place nobody has opened before: its sights and travel guides take a minute or more to gather the first time (R-34;
     // outside test 8d, Nov 24: 1 to 3 minutes for a new city, about 5 for a trip of three new cities, with nothing said).
-    (c => c && fameWait[keyOf(c.city)] && fameAsked[keyOf(c.city)] === true && !(upgrading && keyOf(upgrading) === keyOf(d.destination)) ? `<p class="banner" role="status"><span class="spinner"></span> Gathering the sights and travel guides for ${esc(c.city)}. The first time can take 1 to 3 minutes; this plan updates by itself.</p>` : "")(cityFor(d)),
+    // No spinner (a spinner gives way within 20 s, R-31): the ask itself ends after its tries (4 of 60 s), and the line goes
+    // with it; never shown with no signal, and never without the place's name.
+    (c => { const nm = c && (c.city || d.destination); return c && nm && String(nm).trim() && (typeof navigator === "undefined" || navigator.onLine !== false) && fameWait[keyOf(c.city)] && fameAsked[keyOf(c.city)] === true && !(upgrading && keyOf(upgrading) === keyOf(d.destination)) ? `<p class="banner" role="status">Gathering the sights and travel guides for ${esc(nm)}. The first time can take 1 to 3 minutes; this plan updates by itself.</p>` : ""; })(cityFor(d)),
     upgrading && keyOf(upgrading) === keyOf(d.destination) ? `<p class="banner" role="status"><span class="spinner"></span> Building a fuller guide for ${esc(d.destination)} in the background. This plan updates by itself in about two minutes.</p>` : "",
     suggestNow(d) ? `<p class="banner ok" id="suggestNote" role="status">${esc(suggestNow(d))} <button class="linkbtn" data-act="suggestok">OK</button></p>` : ""
   ].filter(Boolean).join("");
