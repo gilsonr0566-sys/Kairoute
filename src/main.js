@@ -6986,13 +6986,16 @@ if (typeof window !== "undefined") window.__kairouteGuideLoading = v => { upgrad
 if (typeof window !== "undefined") window.__kairouteSights = () => { ensureBuiltins(); const out = {}; trip.days.forEach(d => { const c = cityFor(d); if (!c || out[d.destination]) return; out[d.destination] = { builtin: !!c.builtin, sites: (c.sites || []).map(x => x.name + (x.quick ? " [quick]" : "")), farther: (c.farther || []).map(x => x.name), shown: allSites(c).map(showName) }; }); return out; }; // shown: names as the sights list prints them (English only)
 if (typeof window !== "undefined") window.__kairouteThin = () => { ensureBuiltins(); return trip.days.map((d, i) => { const c = cityFor(d); return c ? i + " " + d.destination + ": " + (c.sites || []).filter(x => !x.quick).length + (c.builtin ? " builtin" : "") : null; }).filter(Boolean).join("\n"); };
 // The schedule says plainly when you get to each place and when you leave it.
+// A wait of this many minutes or more before a meal is free time where it is spent, never time standing at the restaurant
+// (outside test 7b, Nov 23: up to 2 h 31 min "to spare before lunch" at 9:14 am). Class rule R-13.
+const MEAL_FREE = 20;
 function tcell(it) {
   const len = it.type === "meal" || it.type === "evening" ? (it.meal && it.meal.len) || 0 : it.type === "stop" || it.type === "fixed" ? (it.place && it.place.minutes) || 0 : 0;
   // A meal reached early shows the real arrival (leave + ride = arrive), and its card says the time to spare (card review,
   // Nov 22: lunch looked pinned to 11:45 am with the wait hidden). A dinner idea after the day is a time to go from, not a stop.
   // Lunch back on board is on the ship: its time, never a time to leave (the leave-by rows are the ones ashore).
   const ship = it.type === "meal" && it.place && it.place.onBoard;
-  const arr = it.type === "start" ? null : it.type === "meal" && it.early > 0 ? it.time - it.early : it.time, lv = it.type === "end" || it.type === "evening" || ship ? null : it.type === "start" ? it.time : it.time + len;
+  const arr = it.type === "start" ? null : it.type === "meal" && it.early > 0 && it.early < MEAL_FREE ? it.time - it.early : it.time, lv = it.type === "end" || it.type === "evening" || ship ? null : it.type === "start" ? it.time : it.time + len;
   if (it.type === "evening") return `<div class="time"><span class="ta">From</span><span class="tt">${fmt(Math.ceil(it.time / 15) * 15)}</span></div>`;
   return `<div class="time">${arr != null ? `<span class="ta">Arrive</span><span class="tt ar">${fmt(arr)}</span>` : ""}${lv != null && (arr == null || len >= 5) ? `<span class="ta">Leave</span><span class="tt lv">${fmt(lv)}</span>` : ""}</div>`;
 }
@@ -7021,6 +7024,11 @@ function renderPlan(d) {
   const freeAt = lastAshoreIdx(plan) + 1;
   // After the free time the way back follows on the clock: its rides and fixed steps start when the free time ends.
   const freeShift = freeOn && plan.items[freeAt] && isFinite(plan.items[freeAt].time) && F.leaveBy > plan.items[freeAt].time ? F.leaveBy - plan.items[freeAt].time : 0;
+  // Free time before a meal: the wait sits where it is spent, after the stop before it and before the way there.
+  const mealFree = (mi, it) => { const m = plan.items[mi]; if (!m || m.type !== "meal" || !(m.early >= MEAL_FREE) || m.place.onBoard || m.place.packed) return "";
+    const lg = it && it.type === "travel" ? it.leg.min || 0 : 0, go = m.time - lg, from = plan.items.slice(0, mi).reverse().find(x => x.type !== "travel");
+    const near = from && from.type !== "start" && from.place && from.place.name ? " near " + from.place.name : "";
+    return `<div class="tl freetime"><div class="time"><span class="ta">Until</span><span class="tt">${fmt(go)}</span></div><div class="rail"><div class="dot bonusdot">+</div></div><div class="what"><div class="nm">Free time: ${dur(m.early)}</div><div class="sub">${esc(`Yours to spend as you like${near}. Leave by ${fmt(go)} for ${m.meal.label.toLowerCase()} at ${m.place.name} at ${fmt(m.time)}.`)} <button type="button" class="linkbtn" data-goto="sites">See what fits</button></div></div></div>`; };
   const rows = plan.items.map((it0, idx) => {
     const it = freeShift && idx >= freeAt && it0.type !== "end" && it0.type !== "evening" ? Object.assign({}, it0, { time: it0.time + freeShift }) : it0;
     const pv = plan.items[idx - 1], nx = plan.items[idx + 1], rideIn = pv && pv.type === "travel" && pv.leg.mode !== "walk" && legKind(pv.leg), rideOut = nx && nx.type === "travel" && nx.leg.mode !== "walk" && legKind(nx.leg);
@@ -7028,7 +7036,7 @@ function renderPlan(d) {
     if (it.type === "start") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}${plan.w.notes.map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
     if (it.type === "travel") {
       const m = it.leg.mode, k = legKind(it.leg), freeHere = !freeShown && freeCard && idx === freeAt ? (freeShown = true, freeCard) : ""; // before the first of the rides back (to the pier, then the boat)
-      return freeHere + `<div class="tl leg ${m} k-${k}${it.leg.choices ? " ridecho" : ""}" data-kind="${k}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(k)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg, it.time, plan.w && plan.w.endBy)}</span></div></div>`;
+      return freeHere + mealFree(idx + 1, it) + `<div class="tl leg ${m} k-${k}${it.leg.choices ? " ridecho" : ""}" data-kind="${k}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(k)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg, it.time, plan.w && plan.w.endBy)}</span></div></div>`;
     }
     if (it.type === "fixed") return (!freeShown && freeCard && idx === freeAt ? (freeShown = true, freeCard) : "") + `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot fixed">H</div></div><div class="what">${it.free ? `<div class="nm">Free time until ${fmt(it.time + it.free)}</div><div class="sub">Breakfast, coffee or a last walk nearby. Then ${esc(it.place.name.replace(/^C/, "c"))} (${dur(it.bags)}).</div>` : `<div class="nm">${esc(it.place.name)}</div><div class="sub">${dur(it.place.minutes)}</div>`}</div></div>`;
     if (it.type === "meal") {
@@ -7037,8 +7045,8 @@ function renderPlan(d) {
       if (r.packed) return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what"><div class="nm">${lbl}: ${esc(r.name)}</div><div class="sub">${esc(packedWords(r) + " · " + dur(it.meal.len))}</div></div></div>`;
       if (r.onBoard) return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what"><div class="nm">${lbl}: ${esc(r.name)}</div><div class="sub">${esc("On the ship, once you're back · " + dur(it.meal.len))}</div></div></div>`;
       const toGo = !r.booked && it.meal.len <= 20, whyR = Object.assign({}, r, { why: mealWhy(r, plan.items, idx) });
-      return `<div class="${cls}"${mv ? ` data-meal="${esc(lbl)}"` : ""}>${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">${mv ? dragHandle({ id: "meal:" + lbl, name: lbl }) : ""}
-        <div class="nm">${toGo ? lbl + " to go" : it.meal.quick && !r.booked ? "Quick " + lbl.toLowerCase() : lbl}: ${esc(r.name)}</div>${it.early >= 5 ? `<div class="sub">${esc(dur(it.early))} to spare before ${lbl.toLowerCase()} at ${fmt(it.time)}</div>` : ""}${toGo ? `<div class="sub">The day is full: buy something to take away and eat on the way (about 20 min).</div>` : ""}${!r.generic && !r.booked && (r.openSpans || []).length ? `<div class="sub">Open ${esc(r.openSpans.map(([a, b]) => fmt(a) + "–" + fmt(b)).join(", "))}</div>` : ""}<div class="sub">${[r.booked ? "Your reservation" : "", r.cuisine, r.price, mealTag(r), dur(it.meal.len), r.generic || r.booked || r.hoursKnown !== false ? "" : "Hours not confirmed", lbl === "Lunch" && !r.booked && it.time > MEALS[0].to ? "Late lunch: check they still serve" : ""].filter(Boolean).map(esc).join(" · ")}</div>
+      return (!(pv && pv.type === "travel") ? mealFree(idx, null) : "") + `<div class="${cls}"${mv ? ` data-meal="${esc(lbl)}"` : ""}>${tcell(it)}<div class="rail"><div class="dot meal">${lbl[0]}</div></div><div class="what">${mv ? dragHandle({ id: "meal:" + lbl, name: lbl }) : ""}
+        <div class="nm">${toGo ? lbl + " to go" : it.meal.quick && !r.booked ? "Quick " + lbl.toLowerCase() : lbl}: ${esc(r.name)}</div>${it.early >= 5 && it.early < MEAL_FREE ? `<div class="sub">${esc(dur(it.early))} to spare before ${lbl.toLowerCase()} at ${fmt(it.time)}</div>` : ""}${toGo ? `<div class="sub">The day is full: buy something to take away and eat on the way (about 20 min).</div>` : ""}${!r.generic && !r.booked && (r.openSpans || []).length ? `<div class="sub">Open ${esc(r.openSpans.map(([a, b]) => fmt(a) + "–" + fmt(b)).join(", "))}</div>` : ""}<div class="sub">${[r.booked ? "Your reservation" : "", r.cuisine, r.price, mealTag(r), dur(it.meal.len), r.generic || r.booked || r.hoursKnown !== false ? "" : "Hours not confirmed", lbl === "Lunch" && !r.booked && it.time > MEALS[0].to ? "Late lunch: check they still serve" : ""].filter(Boolean).map(esc).join(" · ")}</div>
         ${mealFacts(r)}${r.booked ? bookedLinks(lbl) : mealChangeLink(lbl, r) + mealMore(whyR, city, lbl)}</div></div>`;
     }
     if (it.type === "stop") {
