@@ -1099,8 +1099,9 @@ async function sourcesData(label, env, ctx) {
   // ask that is stopped part way used to lose everything it had read, so the next ask started from zero again (outside
   // test round 8b, Nov 24: 28 of 36 trips never got a guide). Now each ask picks up where the last one stopped.
   const sxKey = await codeKey("sx", []);
-  const getJ = async (u, ms, opt) => { const k = sxKey + (await sha(u + "|" + ((opt && opt.body) || ""))), hit = await env.USAGE.get(k); if (hit) return JSON.parse(hit);
-    for (let t = 0; t < 2; t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) { const j = await r.json(); await env.USAGE.put(k, JSON.stringify(j), { expirationTtl: 30 * 86400 }).catch(() => {}); return j; } } catch (e) {} } return null; };
+  let mapMissed = false;
+  const getJ = async (u, ms, opt, tries) => { const k = sxKey + (await sha(u + "|" + ((opt && opt.body) || ""))), hit = await env.USAGE.get(k); if (hit) return JSON.parse(hit);
+    for (let t = 0; t < (tries || 2); t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) { const j = await r.json(); await env.USAGE.put(k, JSON.stringify(j), { expirationTtl: 30 * 86400 }).catch(() => {}); return j; } } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
   const fam = await famousData(label, env, ctx); lap("fame");
   if (fam.error) return fam;
@@ -1206,9 +1207,14 @@ async function sourcesData(label, env, ctx) {
   // the same Wikidata item is a third witness, asked once for the whole city; then one rule decides (placeOf).
   const withId = [...byId.values()].filter(x => x.lat != null && kmOf(x, center) <= 15);
   if (withId.length) { const q = `[out:json][timeout:25];nwr["wikidata"~"^(${withId.map(x => x.wd).join("|")})$"](around:16000,${center.lat},${center.lng});out center tags;`;
+    // The map is the third witness only, and the slowest read (canary, Nov 24: 30 to 77 s): it gets what is left of 50 s
+    // from the start of this ask, so the answer reaches the app inside its 60 s (R-34). When the map didn't answer in
+    // time, the answer is kept a day only, and a later ask fills the map in (its read is kept when it does come back).
+    mapMissed = true;
     for (const ep of ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter"]) {
-      const j = await getJ(ep, 26000, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { ...UA, "content-type": "application/x-www-form-urlencoded", accept: "application/json" } });
-      if (!j) continue;
+      const left = 50000 - (Date.now() - t0); if (left < 4000) break;
+      const j = await getJ(ep, Math.min(26000, left), { method: "POST", body: "data=" + encodeURIComponent(q), headers: { ...UA, "content-type": "application/x-www-form-urlencoded", accept: "application/json" } }, 1);
+      if (!j) continue; mapMissed = false;
       for (const e of j.elements || []) { const x = byId.get(e.tags && e.tags.wikidata), c = e.center || (e.lat != null ? { lat: e.lat, lon: e.lon } : null); if (x && c && !x.mp) x.mp = { lat: c.lat, lng: c.lon };
         // The map's own word that it is a country, state or region (an area, not a place to stand in).
         if (x && /^(country|state|region|province|county|archipelago)$/.test(e.tags.place || "")) x.area = true; }
@@ -1245,7 +1251,7 @@ async function sourcesData(label, env, ctx) {
   lap("next");
   const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T };
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
-  const ttl = { expirationTtl: (enV.pages && fam.main.length ? 30 : 1) * 86400 };
+  const ttl = { expirationTtl: (enV.pages && fam.main.length && !mapMissed ? 30 : 1) * 86400 };
   ctx.waitUntil(Promise.all([env.USAGE.put(key, JSON.stringify(res), ttl), placeKey ? env.USAGE.put(placeKey, JSON.stringify(res), ttl) : null]));
   return res;
 }
