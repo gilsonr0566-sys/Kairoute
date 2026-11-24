@@ -5000,11 +5000,25 @@ function placeMenu(m) {
 document.addEventListener("toggle", e => { const m = e.target; if (m.matches && m.matches("details.planmore") && m.open) placeMenu(m); }, true);
 // The back-to-the-ship countdown never leaves the screen: once the page scrolls it out of view, it pins to the top.
 function pinChip() {
-  pinDay(); const c = document.getElementById("cdCard"); if (!c) return;
+  pinDay(); const c = document.getElementById("cdCard"); if (!c) return pinBand();
   const was = c.classList.contains("pinned"), row = document.getElementById("dayRow");
   const at = 8 + (row && row.classList.contains("pinned") ? row.offsetHeight - 2 : 0); // pins just below the pinned day strip
   if (!was) { const r = c.getBoundingClientRect(); if (r.height && r.top < at) { c.style.height = r.height + "px"; c.classList.add("pinned"); } }
   else if (c.getBoundingClientRect().top >= at) { c.classList.remove("pinned"); c.style.height = ""; }
+  pinBand();
+}
+// A pinned strip or banner never covers content (Richard, Nov 24: the LEAVE BY banner sat over a sight's name). Everything
+// pinned at the top forms ONE solid band: --pinh is its real height, measured; the page paints it opaque (no card shows
+// around or between the pinned pieces), sticky bars sit below it, and the app's own scrolling lands content under it.
+function pinBand() {
+  const root = document.documentElement; let h = 0;
+  const row = document.getElementById("dayRow"), c = document.getElementById("cdCard");
+  if (row && row.classList.contains("pinned")) h = Math.max(h, row.getBoundingClientRect().bottom);
+  const cs = c && c.classList.contains("pinned") && c.querySelector(":scope > summary");
+  if (cs) h = Math.max(h, cs.getBoundingClientRect().bottom + 6);
+  h = Math.ceil(h); if (window.__kairoutePlant === "noband") h = 0; // planted bug for tools/ui/pinned-band-check.cjs (R-32)
+  if (h > 0) { root.style.setProperty("--pinh", h + "px"); root.classList.add("pinband"); }
+  else { root.style.removeProperty("--pinh"); root.classList.remove("pinband"); }
 }
 // Scrolled down on a phone: the day strip itself pins to the top (Richard, Nov 14), so any day can be picked without
 // scrolling back up. A spacer keeps its place so the page doesn't jump. Tablets never need it (their header stays put).
@@ -5119,6 +5133,7 @@ function render() {
   const openMenus = [...document.querySelectorAll("#view details.moremenu[open]")].map(menuKey).filter(Boolean);
   renderView();
   if (sideMin) { const sd = document.querySelector("#view .sitesside"); if (sd) sd.style.minHeight = sideMin + "px"; }
+  if (view === "sites") { if (listRoomKey !== pkey || !sideMin) { listRoom = 0; listRoomKey = pkey; } else if (listRoom) placeRoom(); }
   { const v = document.getElementById("view"), app = !FULL_VIEWS[view] || /^(settings|privacy|terms)$/.test(view);
     document.documentElement.classList.toggle("appview", app);
     // Tablets and computers: the screens live in a slim rail on the left (see "Navigation rail" in shell.html)
@@ -6308,9 +6323,18 @@ function cardSpotOf(id, self) {
     const dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) < 1) return;
     // The panel the card really scrolls in (on tablets the list's own pane); the page only when no panel scrolls.
     let pane = nx.parentElement; while (pane && pane !== document.body && !(pane.scrollHeight > pane.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(pane).overflowY))) pane = pane.parentElement;
-    if (pane && pane !== document.body) pane.scrollTop += dy; else window.scrollBy(0, dy);
+    const scrollIt = d => { if (pane && pane !== document.body) pane.scrollTop += d; else window.scrollBy(0, d); };
+    scrollIt(dy);
+    // Near the end of the list the page may be too short to scroll that far (a card above got shorter): the list keeps
+    // room at its end for the rest of the visit, so the card still stays under the finger (Nov 23, Nassau, 25 px).
+    const left = nx.getBoundingClientRect().top - top;
+    if (left > 1) { listRoom += Math.ceil(left); placeRoom(); scrollIt(nx.getBoundingClientRect().top - top); }
   };
 }
+// Room kept at the end of Choose sights for this visit (see cardSpotOf); a new visit starts without it.
+let listRoom = 0, listRoomKey = "";
+function placeRoom() { const m = document.querySelector("#view .sitesmain"); if (!m) return; let sp = m.querySelector(":scope > .keeproom");
+  if (!sp) { sp = document.createElement("div"); sp.className = "keeproom"; sp.setAttribute("aria-hidden", "true"); m.appendChild(sp); } sp.style.height = listRoom + "px"; }
 // Separate stops a few steps apart (a square and the clock on it) say so, so neither looks missing.
 function nextDoor(s, city) { if (!city || s.far || !isFinite(s.lat)) return ""; const n = (city.sites || []).filter(x => x !== s && !x.quick && isFinite(x.lat) && hav(x, s) <= 0.15).slice(0, 3); return n.length ? `<p class="travelnote">Right next to: ${n.map(x => esc(x.name)).join(", ")} (${n.length > 1 ? "their own stops" : "its own stop"})</p>` : ""; }
 const elsewhereNote = plan => { const ex = (plan && plan.elsewhere) || []; if (!ex.length) return ""; const by = (f, w) => ex.filter(f).map(x => `<b>${esc(x.s.name)}</b>`).join(", ") + (w || ""); const e = ex.filter(x => x.earlier), l = ex.filter(x => x.later), on = xs => [...new Set(xs.map(x => fmtDow(x.on.date) + " " + fmtDate(x.on.date)))].join(" and ");

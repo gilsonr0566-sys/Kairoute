@@ -134,7 +134,7 @@ button.tag.fitbadge { cursor: pointer; font: inherit; font-size: 0.74rem; font-w
 .site.open { border-color: var(--ink); }
 .site.nofitcard .cdet .sum { -webkit-line-clamp: unset; display: block; }
 .tag.int.mine { background: var(--route-soft); color: var(--route); border-color: transparent; }
-.pickbar { position: sticky; top: var(--toph, 0px); z-index: 4; background: var(--paper); padding: 8px 0 10px; border-bottom: 1px solid var(--line); display: grid; gap: 6px; }
+.pickbar { position: sticky; top: var(--pinh, var(--toph, 0px)); z-index: 4; background: var(--paper); padding: 8px 0 10px; border-bottom: 1px solid var(--line); display: grid; gap: 6px; }
 .pickbar .pbrow { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: .92rem; }
 .pickbar .pbleft { font-weight: 700; color: var(--route); }
 .picksfold .anchorlist { display: none; margin-top: 10px; }
@@ -1041,6 +1041,15 @@ html.setview .top .wrap > :not(.tabs) { display: none; }
 /* ---- Phones: compact header, bottom tab bar, swipeable days, tighter type ---- */
 .tab svg { display: none; }
 html, body { overflow-x: hidden; }
+/* Choose sights: the time-left bar sticks (a page that hides sideways overflow makes the page its own scroller, so
+   sticky never stuck). clip hides the same overflow without that. Kept to this page so no other screen changes. */
+html:has(#view[data-v="sites"]), html:has(#view[data-v="sites"]) body { overflow-x: clip; }
+html:has(#view[data-v="sites"]) header.top { position: relative; top: 0; } /* the header scrolls away as on every other page; the day strip pins (pinRow) */
+/* One solid band behind everything pinned at the top (pinBand): content passes under it, never shows around it. */
+html.pinband::before { content: ""; position: fixed; z-index: 6; top: 0; left: 0; right: 0; height: var(--pinh); background: var(--paper); box-shadow: 0 1px 0 var(--line); } /* takes taps too: nothing hidden under it can be tapped */
+@media (max-width: 640px) { html:has(#view[data-v="sites"]) .meter { position: relative; top: auto; } } /* on phones the time-left bar is the one that sticks */
+html.pinband { scroll-padding-top: calc(var(--pinh) + 8px); }
+html.pinband header.top { z-index: 7; } /* the pinned day strip lives in the header: it stays above the band */
 @media (max-width: 640px) {
   .top .wrap { padding-block: 8px 0; gap: 6px; }
   .brand { align-items: center; flex-wrap: nowrap; min-width: 0; }
