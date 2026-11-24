@@ -12,7 +12,7 @@ const fs = require('fs'), path = require('path'), { execFileSync } = require('ch
 const ROOT = path.join(__dirname, '..', '..'), rd = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const START = '2026-11-23T23:30:00Z';
 // Checks that plant their own bad input on every run (so naming one counts as a proof).
-const PLANTING = new Set(['tools/truth/language-check.cjs', 'tools/truth/screen-rule-proof.cjs', 'tools/truth/no-warn-check.cjs',
+const PLANTING = new Set(['tools/truth/language-check.cjs', 'tools/client/steady-all.cjs' /* plants a redraw drop, endless change and endless lookup on every run (R-25, R-31) */, 'tools/truth/screen-rule-proof.cjs', 'tools/truth/no-warn-check.cjs',
   'tools/truth/report-check.cjs', 'tools/truth/rules-check.cjs', 'tools/truth/mutants.cjs', 'tools/truth/sight-mutants.cjs',
   'tools/ui/steady-sights-check.cjs' /* plants a re-sort after a tap on every run (R-28) */,
   'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */,

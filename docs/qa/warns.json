@@ -31,6 +31,14 @@
       "owner": "Stop the select sites page jumping",
       "until": "2026-11-30",
       "why": "header shrinking on scroll start and the Choose sights re-sort; fix written, waiting for release"
+    },
+    {
+      "rule": "SETTLES",
+      "tool": "steady",
+      "where": " sites day ",
+      "owner": "Stop the select sites page jumping",
+      "until": "2026-11-30",
+      "why": "Choose sights: the list's fits badges arrive by redrawing the list up to 2.7 s after the page opens (live-hamburg-stay, tablet; steady-all, Nov 24). Same area as R-28, which that thread owns"
     }
   ]
 }
