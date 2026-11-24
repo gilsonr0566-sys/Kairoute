@@ -80,19 +80,27 @@ async function overpass(q, ms) {
     .then(r => r.ok ? r.json() : Promise.reject(new Error("busy"))).then(j => j && Array.isArray(j.elements) && !(j.remark && /runtime error|timed out/i.test(j.remark)) ? j.elements : Promise.reject(new Error("bad")));
   try { return await Promise.any(OVERPASS.map(one)); } catch (e) { return null; }
 }
-// Can a person walk from the centre to the island without a boat? The same test as the place files' (build.cjs).
+// Can a person walk from the centre to the island without a boat? Answers { walk, why }.
+// The walking router's fastest way may take a boat even where a bridge reaches the island (Venice: water buses), and it
+// can't be told to leave boats out (Nov 24 live probe: Lokrum and 152 of Venice's 155 islands came back "not known").
+// So when its way takes a boat: one of its other ways without a boat that ends on the island = a bridge; else the road
+// router, told to leave boats out (it can), ending on the island = a road bridge or causeway; else no way on foot.
 async function walkTo(centre, s) {
   const p = insidePoint(s.rings.reduce((a, f) => ringArea(f) > ringArea(a) ? f : a));
-  const url = "/route/v1/foot/" + [centre, p].map(q => (+q.lng).toFixed(5) + "," + (+q.lat).toFixed(5)).join(";") + "?steps=true&overview=false";
-  const ask = async u => { try { const r = await fetch("https://routing.openstreetmap.de/routed-foot" + u, { headers: UA, signal: AbortSignal.timeout(12000) }); return r.ok || r.status === 400 ? await r.json() : null; } catch (e) { return null; } };
+  const pts = [centre, p].map(q => (+q.lng).toFixed(5) + "," + (+q.lat).toFixed(5)).join(";");
+  const ask = async (prof, q) => { try { const r = await fetch("https://routing.openstreetmap.de/routed-" + prof + "/route/v1/" + (prof === "car" ? "driving" : "foot") + "/" + pts + q, { headers: UA, signal: AbortSignal.timeout(12000) }); return r.ok || r.status === 400 ? await r.json() : null; } catch (e) { return null; } };
   const hasFerry = r => (r.legs || []).some(l => (l.steps || []).some(st => st.mode === "ferry"));
-  let j = await ask(url); if (!j || !j.code) return undefined;   // not asked: the router didn't answer (asked again next time)
-  if (j.code === "NoRoute") return false;
-  if (j.code !== "Ok" || !j.routes || !j.routes[0]) return null;
-  if (hasFerry(j.routes[0])) { j = await ask(url + "&exclude=ferry"); if (!j || !j.code) return undefined; if (j.code === "NoRoute") return false;
-    if (j.code !== "Ok" || !j.routes || !j.routes[0] || hasFerry(j.routes[0])) return null; }
-  const w = (j.waypoints || [])[1], on = w && w.location && s.rings.some(f => inRing(f, w.location[1], w.location[0]) || nearRing(f, w.location[1], w.location[0], 60));
-  return !!on;
+  const ends = j => { const w = (j.waypoints || [])[1]; return !!(w && w.location && s.rings.some(f => inRing(f, w.location[1], w.location[0]) || nearRing(f, w.location[1], w.location[0], 60))); };
+  const j = await ask("foot", "?steps=true&overview=false&alternatives=3"); if (!j || !j.code) return undefined;   // asked again next time
+  if (j.code === "NoRoute") return { walk: false, why: "no path" };
+  if (j.code !== "Ok" || !j.routes || !j.routes[0]) return { walk: null, why: "router said " + j.code };
+  if (!ends(j)) return { walk: false, why: "paths end on another shore" };
+  if (!hasFerry(j.routes[0])) return { walk: true, why: "path" };
+  if (j.routes.some(r => !hasFerry(r))) return { walk: true, why: "path besides the boat" };
+  const c = await ask("car", "?steps=true&overview=false&exclude=ferry"); if (!c || !c.code) return undefined;
+  if (c.code === "Ok" && c.routes && c.routes[0] && !hasFerry(c.routes[0]) && ends(c)) return { walk: true, why: "road" };
+  if (c.code === "Ok" || c.code === "NoRoute") return { walk: false, why: "only by boat" };
+  return { walk: null, why: "road router said " + c.code };
 }
 export async function islandsData(centre, env, codeKey, sha) {
   const t0 = Date.now(), c = { lat: +(+centre.lat).toFixed(3), lng: +(+centre.lng).toFixed(3) };
@@ -115,11 +123,11 @@ export async function islandsData(centre, env, codeKey, sha) {
     if (home && s.id === home.id) { s.walk = true; continue; }
     if (ringArea(s.rings[0]) < 2e-6) { s.walk = null; continue; }   // a rock under about 2 ha: never asked
     const wk = base + "w:" + c.lat + "," + c.lng + ":" + s.id, kept = await env.USAGE.get(wk);
-    if (kept != null) { s.walk = JSON.parse(kept); continue; }
+    if (kept != null) { const k = JSON.parse(kept); s.walk = k && typeof k === "object" ? k.walk : k; if (k && k.why) s.why = k.why; continue; }
     if (Date.now() - t0 > 45000) { s.walk = null; open++; continue; }   // asked next time (the app waits 60 s for one ask)
     const w = await walkTo(c, s);
     if (w === undefined) { s.walk = null; open++; continue; }
-    s.walk = w; await env.USAGE.put(wk, JSON.stringify(w), { expirationTtl: 90 * 86400 });
+    s.walk = w.walk; s.why = w.why; await env.USAGE.put(wk, JSON.stringify(w), { expirationTtl: 90 * 86400 });
   }
   const res = { shapes, centreShape: home ? home.id : null, km: ISLE_KM, open };
   // Kept whole only when every island has its answer; until then each island's answer is kept on its own (above).
