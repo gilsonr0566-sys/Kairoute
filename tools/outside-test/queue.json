@@ -1,54 +1,10 @@
 {
- "run": "round8b-2026-11-24",
+ "run": "round8c-2026-11-24",
  "dayWait": 20000,
  "stopShots": false,
  "tickCheck": true,
  "answerGates": true,
  "trips": [
-  {
-   "name": "a01-istanbul",
-   "label": "Istanbul Thu+Fri stay",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Istanbul, Turkey",
-     "date": "2027-05-12",
-     "nights": 3,
-     "inAt": "15:00",
-     "homeAt": "13:00"
-    }
-   ]
-  },
-  {
-   "name": "a03-lisbon",
-   "label": "Lisbon Mon+Tue stay",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Lisbon, Portugal",
-     "date": "2027-05-09",
-     "nights": 3,
-     "inAt": "13:00",
-     "homeAt": "11:30"
-    }
-   ]
-  },
-  {
-   "name": "a06-kyoto",
-   "label": "Kyoto April stay",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Kyoto, Japan",
-     "date": "2027-04-05",
-     "nights": 3,
-     "inBy": "train",
-     "inAt": "13:15",
-     "homeBy": "train",
-     "homeAt": "11:00"
-    }
-   ]
-  },
   {
    "name": "a07-southampton-lehavre",
    "label": "Southampton fly in, board next day, Le Havre for Paris Saturday call",
@@ -147,29 +103,6 @@
    ]
   },
   {
-   "name": "a15-pontadelgada",
-   "label": "Ponta Delgada call",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Lisbon, Portugal",
-     "date": "2027-04-18",
-     "aboard": "17:00",
-     "ports": [
-      {
-       "date": "2027-04-20",
-       "place": "Ponta Delgada, Azores",
-       "arrive": "08:00",
-       "aboard": "17:00"
-      }
-     ],
-     "end": "Lisbon, Portugal",
-     "endDate": "2027-04-22",
-     "off": "07:00"
-    }
-   ]
-  },
-  {
    "name": "a17-haifa",
    "label": "Jerusalem from Haifa, Saturday call",
    "legs": [
@@ -189,50 +122,6 @@
      "end": "Limassol, Cyprus",
      "endDate": "2027-05-16",
      "off": "07:00"
-    }
-   ]
-  },
-  {
-   "name": "a18-reykjavik",
-   "label": "Reykjavik January stay",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Reykjavik, Iceland",
-     "date": "2027-01-18",
-     "nights": 3,
-     "inAt": "15:30",
-     "homeAt": "16:00"
-    }
-   ]
-  },
-  {
-   "name": "a20-dubai",
-   "label": "Dubai July stay",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Dubai, UAE",
-     "date": "2027-07-19",
-     "nights": 3,
-     "inAt": "06:00",
-     "homeAt": "23:00"
-    }
-   ]
-  },
-  {
-   "name": "a21-hamburg",
-   "label": "Hamburg Tue to Thu stay (Lubeck day trip)",
-   "legs": [
-    {
-     "k": "stay",
-     "place": "Hamburg, Germany",
-     "date": "2027-05-10",
-     "nights": 4,
-     "inBy": "train",
-     "inAt": "13:00",
-     "homeBy": "train",
-     "homeAt": "12:00"
     }
    ]
   },
@@ -557,29 +446,6 @@
      ],
      "end": "Singapore",
      "endDate": "2027-11-15",
-     "off": "07:00"
-    }
-   ]
-  },
-  {
-   "name": "d18-aqaba-petra",
-   "label": "Aqaba for Petra",
-   "legs": [
-    {
-     "k": "cruise",
-     "board": "Piraeus (Athens), Greece",
-     "date": "2027-10-10",
-     "aboard": "17:00",
-     "ports": [
-      {
-       "date": "2027-10-13",
-       "place": "Aqaba (Petra), Jordan",
-       "arrive": "07:00",
-       "aboard": "19:00"
-      }
-     ],
-     "end": "Piraeus (Athens), Greece",
-     "endDate": "2027-10-16",
      "off": "07:00"
     }
    ]
