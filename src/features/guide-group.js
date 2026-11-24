@@ -85,7 +85,7 @@ async function grpLead() {
     const { status, j } = await grpCall({ op: "new", trip: grpSnapshot(), name: trip.name || tripName(trip), live: grpLive() });
     if (status === 200 && j && j.code) { trip.groupShared = j.code; save(); grp = { code: j.code, role: "lead", token: j.token, tripId: trip.id, at: Date.now(), tripName: trip.name || tripName(trip) }; grpSave(); grpLastLive = ""; grpLastTrip = JSON.stringify(trip.days) + "|" + grpRidesSig() + "|" + grpOrdersSig(); grpNote = ""; return { code: j.code }; }
     grpNote = "The group couldn't start just now. Try again in a minute.";
-  } catch (e) { grpNote = "Starting a group needs the internet. Try again when you're online."; }
+  } catch (e) { grpNote = netWhy("Starting a group", "Starting the group"); }
   finally { grpBusy = false; render(); }
   return null;
 }
@@ -126,7 +126,7 @@ async function grpJoin(code) {
       grpBusy = false; render(); return { ok: true };
     }
     grpNote = status === 404 ? "That group wasn't found. Check the code with your group leader." : "Couldn't reach the group just now. Try again in a minute.";
-  } catch (e) { grpNote = "Joining needs the internet. Try again when you're online."; }
+  } catch (e) { grpNote = netWhy("Joining", "Joining the group"); }
   grpBusy = false; render(); return { ok: false };
 }
 // Follower: go where the leader is, and start the same story when the leader starts it.
@@ -285,7 +285,7 @@ async function grpOffer(d) {
   try { const r = await grpCall({ op: "offer", code: grp.code, who: grpWho, name: grp.me || "", dayId: d.id, day: grpOffered(d) });
     grpNote = r.status === 200 ? "Your day was offered to the group. The trip's owner can use it for everyone." : "Couldn't offer your day just now. Try again in a minute.";
     if (r.status === 200) { grp.offers = grp.offers || {}; grp.offers[d.id] = (grp.offers[d.id] || []).filter(o => o.who !== grpWho).concat([{ who: grpWho }]); grpSave(); }
-  } catch (e) { grpNote = "Offering your day needs the internet. Try again when you're online."; }
+  } catch (e) { grpNote = netWhy("Offering your day", "Offering your day"); }
   render();
 }
 // The owner uses a member's day for everyone. The group day's facts stay (same meeting point and time); if the plan

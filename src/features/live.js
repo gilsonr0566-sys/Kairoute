@@ -682,7 +682,7 @@ async function camLookup(file) {
   } else cands = todays.filter(s => !s.fixed).map(s => ({ name: s.name, kind: s.category || "", m: 0, site: allSites(city).find(x => x.id === s.id) || s }));
   cam.cands = cands; cam.noGps = !pos;
   if (!cands.length) { cam.busy = false; cam.msg = pos ? "I don't know any sights within a few hundred meters of you, so I can't say what this is." : "I need your location to see what's around you. Turn on location and try again."; camSheet(); return; }
-  if (!freeAI) { cam.busy = false; cam.msg = "Photo look-up needs the internet. Here's what's nearest to you:"; camSheet(); return; }
+  if (!freeAI) { cam.busy = false; cam.msg = navigator.onLine === false ? "Photo look-up needs the internet. Here's what's nearest to you:" : "Photo look-up isn't available just now. Here's what's nearest to you:"; camSheet(); return; }
   // Photo matching switched off on the helper (minimal AI, or AI off): said plainly, never sent to be refused as "busy".
   if (!aiCan("photoIdentify")) { cam.busy = false; cam.msg = "Matching a photo isn't part of this version yet. Here's what's nearest to you:"; camSheet(); return; }
   cam.msg = "Matching your photo…"; camSheet();

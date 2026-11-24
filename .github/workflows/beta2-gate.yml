@@ -265,6 +265,9 @@ jobs:
         run: node tools/ui/dayplan-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
         run: node tools/ui/no-paid-ai-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Failure messages blame the connection only when offline; planted unguarded message caught (R-18)
+        if: always()
+        run: node tools/ui/net-words-check.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
         run: node tools/ui/trip-copy-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Saved content (AI-era guides, guides copied from the first app) passes today's rules on every open; planted miss caught (R-30)

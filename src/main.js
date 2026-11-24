@@ -487,7 +487,7 @@ async function syncPull() {
 async function syncStart() {
   syncNote = ""; syncBusy = true; render();
   try { const { status, j } = await syncCall({ op: "new", data: syncPayload() }); if (status === 200 && j && j.code) syncSet({ code: j.code, rev: j.rev, at: Date.now() }); else syncNote = "Sync couldn't start just now. Try again in a minute."; }
-  catch (e) { syncNote = "Sync needs the internet. Try again when you're online."; }
+  catch (e) { syncNote = netWhy("Sync", "Syncing"); }
   syncBusy = false; render();
 }
 async function syncLink() {
@@ -501,7 +501,7 @@ async function syncLink() {
     const g = await syncCall({ op: "get", code });
     if (g.status === 200 && g.j) { syncBusy = false; syncSet({ code, rev: g.j.rev, at: Date.now() }); syncMerge(g.j.data, true); syncJoin = null; syncNote = "Linked. Your trips now match your other device."; syncPush(); }
     else syncNote = g.status === 404 ? "That code wasn't found. Check it on your other device (Settings > Connect another device)." : g.status === 429 ? "Too many tries today. Try again tomorrow." : "Sync couldn't connect just now. Try again in a minute.";
-  } catch (e) { syncNote = "Linking needs the internet. Try again when you're online."; }
+  } catch (e) { syncNote = netWhy("Linking", "Linking"); }
   syncBusy = false; render();
 }
 const fmtCode = c => c ? c.slice(0, 4) + "-" + c.slice(4) : "";
@@ -3201,13 +3201,19 @@ const sourcesCache = {};
 // Places whose travel guides and maps could not be reached at all (no signal, or the helper was down), as against
 // places that were reached and are not known. A traveler is never told to check the spelling of a place the app
 // simply could not ask about (first-time traveler walk, Nov 22).
-const srcUnreached = {}, srcMissing = {};   // srcMissing: asked, and the guides and maps list nothing for it
+// One rule for every "couldn't do it" message (R-18, outside test round 8a): the connection is blamed only when the phone
+// says it is offline; online, a failure is said as what it is (the service didn't answer), never "when you're online".
+const netWhy = (what, act) => typeof navigator !== "undefined" && navigator.onLine === false ? `${what} needs the internet. Try again when you're online.` : `${act} didn't go through just now. Try again in a few minutes.`;
+const srcUnreached = {}, srcMissing = {}, srcSlow = {};   // srcSlow: the helper answered too slowly while online (R-18: never blame the connection then)   // srcMissing: asked, and the guides and maps list nothing for it
 // The words of the Trip page's own button, so the message names a button the traveler can see.
 const buildAgain = n => `Tap Build the guide${n === 1 ? "" : "s"} on the Trip page`;
 function notFoundMsg(labels, again) {
   const off = labels.filter(l => srcUnreached[keyOf(l)]), miss = labels.filter(l => !srcUnreached[keyOf(l)]), out = [];
   miss.forEach(l => { srcMissing[keyOf(l)] = true; });
-  if (off.length) out.push(`I couldn't reach the travel guides and maps for ${off.join(" and ")}${typeof navigator !== "undefined" && navigator.onLine === false ? " because there's no internet right now" : ""}. Your trip is saved. ${again} when you're online.`);
+  const offline = typeof navigator !== "undefined" && navigator.onLine === false, slow = off.filter(l => !offline && srcSlow[keyOf(l)]), down = off.filter(l => !slow.includes(l));
+  // What is true is said (R-18, outside test round 8a): online, with the helper only slow, the words never blame the connection.
+  if (slow.length) out.push(`The travel guides and maps for ${slow.join(" and ")} are taking longer than usual to gather. Your trip is saved. ${again} again in a minute or two.`);
+  if (down.length) out.push(`I couldn't reach the travel guides and maps for ${down.join(" and ")}${offline ? " because there's no internet right now" : ""}. Your trip is saved. ${again}${offline ? " when you're online" : " again in a few minutes"}.`);
   if (miss.length) out.push(`I couldn't find ${miss.join(" and ")} in the travel guides and maps. Check the spelling (for example "Kotor, Montenegro"), then ${again.replace(/^./, c => c.toLowerCase())}.`);
   return out.join(" ");
 }
@@ -3215,10 +3221,11 @@ async function sourcesFor(label) {
   if (!label) return null; if (sourcesCache[label]) return sourcesCache[label];
   await helperKnown();
   srcUnreached[keyOf(label)] = true;
-  // The helper gathers a city it hasn't seen in stages and keeps each one (R-29): when it is stopped part way, asking
-  // once more picks up where it stopped (Lisbon, Nov 24: stopped at 64 s, done on the second ask).
-  for (let tries = 0; tries < 2 && freeAI && navigator.onLine !== false; tries++) { let again = true;
-    try { const r = await fetch(freeAI.url + "/sources?city=" + encodeURIComponent(label)); again = r.status >= 500; if (r.status < 500 && r.status !== 429) delete srcUnreached[keyOf(label)]; if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.stops)) { kv.set("src:" + keyOf(label), j); return (sourcesCache[label] = j); } } } catch (e) {}
+  // The helper gathers a city it hasn't seen in stages and keeps each one (R-29): when it is stopped part way, or the
+  // app's own 60 s limit (R-31) ends the wait, asking again picks up where it stopped. A cold city takes up to about
+  // 220 s (Rome, Nov 24), so up to four asks (outside test round 8a: 36 of 65 trips got no guide at 60 s).
+  for (let tries = 0; tries < 4 && freeAI && navigator.onLine !== false; tries++) { let again = true;
+    try { const r = await fetch(freeAI.url + "/sources?city=" + encodeURIComponent(label)); again = r.status >= 500; if ([504, 522, 524].includes(r.status)) srcSlow[keyOf(label)] = true; if (r.status < 500 && r.status !== 429) delete srcUnreached[keyOf(label)]; if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.stops)) { kv.set("src:" + keyOf(label), j); return (sourcesCache[label] = j); } } } catch (e) { if (e && /Timeout|Abort/.test(e.name || "")) srcSlow[keyOf(label)] = true; }   // slow (the wait ran out), not down
     if (!again) break; }
   const kept = await srcKept("src:", label, j => j && Array.isArray(j.stops));
   return kept ? (sourcesCache[label] = kept) : null;
@@ -6133,7 +6140,7 @@ function renderTrip(d) {
         ${needsLodging ? `<div class="field"><label for="f-lodging">Where you're staying in ${esc(d.destination || "this city")}</label>
           <select id="f-lodging">${opts(hotels, L.idx)}<option value="custom" ${L.idx === "custom" ? "selected" : ""}>My hotel or rental…</option></select>
           ${L.idx === "custom" ? `<div class="ask"><input type="text" id="f-lname" value="${esc(L.name || "")}" placeholder="Hotel name or address"><button type="button" class="btn small" data-act="geo" ${aiReady() || freeAI ? "" : "disabled"}>Find it</button></div>
-          <span class="hint">${L.ll ? "Found on the map: " + esc(L.name) : aiReady() || freeAI ? "Type the name and tap Find it." : "Pick an area for now. Finding your exact hotel needs the internet."}</span>` : `<span class="hint">Used for every day you're in ${esc(d.destination || "this city")}.</span>`}
+          <span class="hint">${L.ll ? "Found on the map: " + esc(L.name) : aiReady() || freeAI ? "Type the name and tap Find it." : (typeof navigator !== "undefined" && navigator.onLine === false ? "Pick an area for now. Finding your exact hotel needs the internet." : "Pick an area for now. Finding your exact hotel isn't possible just now; try again in a few minutes.")}</span>` : `<span class="hint">Used for every day you're in ${esc(d.destination || "this city")}.</span>`}
         </div>` : ""}
         <details class="more dayopts" ${d.event ? "open" : ""}><summary>More options for this day</summary>
         ${t === "port" ? `<label class="check"><input type="checkbox" id="f-stayaboard" ${d.aboard ? "checked" : ""}><span>Staying on board this day (not going ashore)</span></label>` : ""}

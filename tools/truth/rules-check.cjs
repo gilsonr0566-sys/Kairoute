@@ -17,6 +17,7 @@ const PLANTING = new Set(['tools/truth/language-check.cjs', 'tools/client/steady
   'tools/ui/steady-sights-check.cjs' /* plants a re-sort after a tap on every run (R-28) */,
   'tools/ui/pinned-band-check.cjs' /* plants "no band behind pinned pieces" on every run (R-32) */,
   'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */,
+  'tools/ui/net-words-check.cjs' /* plants an unguarded "when you're online" message on every run (R-18) */,
   'tools/ui/saved-recheck.cjs' /* runs the build with the saved-content re-check switched off and must find problems (R-30) */]);
 const GATE = rd('.github/workflows/beta2-gate.yml');
 const DEFECTS = new Set(['mutants.cjs', 'sight-mutants.cjs'].flatMap(f => (fs.readFileSync(path.join(__dirname, f), 'utf8').match(/id: '([a-z-]+)'/g) || []).map(s => s.slice(5, -1))));
