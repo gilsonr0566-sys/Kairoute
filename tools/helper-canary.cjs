@@ -16,7 +16,7 @@ const LIST = ['Seville', 'Porto', 'Krakow', 'Budapest', 'Seoul', 'Lima', 'Cape T
   'Boston', 'Chicago', 'San Francisco', 'New Orleans', 'Savannah', 'Charleston', 'San Juan', 'Cartagena', 'Cusco', 'Quito', 'Santiago', 'Rio de Janeiro',
   'Salvador', 'Montevideo', 'Havana', 'Oaxaca', 'Antigua Guatemala', 'Bermuda', 'Sitka', 'Skagway', 'Victoria', 'Galway', 'York', 'Bath', 'Oxford', 'Cork'];
 const uniq = [...new Set(LIST)], day = Math.floor(Date.now() / 86400000), hour = new Date().getUTCHours(), start = ((day * 24 + hour) * N) % uniq.length;
-const pick = Array.from({ length: Math.min(N, uniq.length) }, (_, i) => uniq[(start + i) % uniq.length]);
+const pick = process.env.CANARY_CITIES ? process.env.CANARY_CITIES.split('|').filter(Boolean) : Array.from({ length: Math.min(N, uniq.length) }, (_, i) => uniq[(start + i) % uniq.length]);
 async function asApp(city) {
   const t0 = Date.now(), log = [];
   for (let t = 0; t < 4; t++) { const a0 = Date.now(); let again = true;
@@ -30,6 +30,7 @@ async function asApp(city) {
 (async () => {
   console.log(`canary: ${pick.length} cities nobody has opened on ${H}`); let bad = 0;
   await Promise.all([0, 1, 2].map(async k => { for (let i = k; i < pick.length; i += 3) { const c = pick[i], r = await asApp(c); if (!r.ok) bad++;
-    console.log(`${r.ok ? 'OK  ' : 'FAIL'} ${c}: ${r.s.toFixed(0)} s, asks ${r.log.join(', ')}${r.ok ? `; ${r.stops} sights; stages ${Object.entries(r.ms).map(([k, v]) => k + ' ' + (v / 1000).toFixed(0) + 's').join(' ')}` : ''}`); } }));
+    if (!r.ok) { const t0 = Date.now(); try { const x = await fetch(H + '/sources?city=' + encodeURIComponent(c), { headers: { Origin: O }, signal: AbortSignal.timeout(280000) }); const j = x.ok ? await x.json() : null; r.after = `then one long ask: ${x.status} in ${((Date.now() - t0) / 1000).toFixed(0)} s${j && j.ms ? '; stages ' + Object.entries(j.ms).map(([k, v]) => k + ' ' + (v / 1000).toFixed(0) + 's').join(' ') : ''}`; } catch (e) { r.after = `then one long ask: stopped after ${((Date.now() - t0) / 1000).toFixed(0)} s`; } }
+    console.log(`${r.ok ? 'OK  ' : 'FAIL'} ${c}: ${r.s.toFixed(0)} s, asks ${r.log.join(', ')}${r.ok ? `; ${r.stops} sights; stages ${Object.entries(r.ms).map(([k, v]) => k + ' ' + (v / 1000).toFixed(0) + 's').join(' ')}` : ''}${r.after ? '; ' + r.after : ''}`); } }));
   console.log(`helper-canary: ${pick.length - bad} of ${pick.length} cities got their guide the way the app asks${bad ? ', ' + bad + ' got none (R-34)' : ''}`); process.exit(bad ? 1 : 0);
 })();
