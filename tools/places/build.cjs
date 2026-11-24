@@ -92,29 +92,27 @@ async function islandShapes(centre, km) {
     // A tiny rock nobody visits needs no answer: under about 2 ha it is never asked (null = not known).
     if (IS.ringArea(s.rings[0]) < 2e-6) { s.walk = null; continue; }
     const p = IS.insidePoint(s.rings.reduce((a, f) => IS.ringArea(f) > IS.ringArea(a) ? f : a));
-    const url = '/route/v1/foot/' + [centre, p].map(q => (+q.lng).toFixed(5) + ',' + (+q.lat).toFixed(5)).join(';') + '?steps=true&overview=false';
-    let j = await get('https://routing.openstreetmap.de/routed-foot' + url, {}, 3, 60000);
+    const pts = [centre, p].map(q => (+q.lng).toFixed(5) + ',' + (+q.lat).toFixed(5)).join(';');
+    const hasFerry = r => r.legs.some(l => (l.steps || []).some(st => st.mode === 'ferry'));
+    // The path the router ends on may run along the coast, just outside the simplified outline (30 m): within 60 m of the
+    // outline counts as on the island (Nov 24 Venice build: the cruise terminal's islet, reached by bridges, came back as
+    // "no way there on foot"). A way that ends on another shore is far from it.
+    const ends = j => { const w = (j.waypoints || [])[1]; return !!(w && w.location && s.rings.some(f => IS.inRing(f, w.location[1], w.location[0]) || IS.nearRing(f, w.location[1], w.location[0], 60))); };
+    let j = await get('https://routing.openstreetmap.de/routed-foot/route/v1/foot/' + pts + '?steps=true&overview=false&alternatives=3', {}, 3, 60000);
     await sleep(1100);
     if (!j || !j.code) { s.walk = null; continue; }
     if (j.code === 'NoRoute') { s.walk = false; continue; }
     if (j.code !== 'Ok' || !j.routes || !j.routes[0]) { s.walk = null; continue; }
-    const hasFerry = r => r.legs.some(l => (l.steps || []).some(st => st.mode === 'ferry'));
-    // The fastest path may take a water bus even where bridges reach the island (Nov 24 Venice build: Tronchetto, Santa
-    // Marta and the cruise terminal came back "no way on foot" from the centre). Ask again with boats left out; an
-    // island is "no way on foot" only when that answer says so. A router that can't leave boats out gives "not known".
-    if (hasFerry(j.routes[0])) {
-      j = await get('https://routing.openstreetmap.de/routed-foot' + url + '&exclude=ferry', {}, 3, 60000);
-      await sleep(1100);
-      if (!j || !j.code) { s.walk = null; continue; }
-      if (j.code === 'NoRoute') { s.walk = false; continue; }
-      if (j.code !== 'Ok' || !j.routes || !j.routes[0]) { s.walk = null; continue; }
-      if (hasFerry(j.routes[0])) { s.walk = null; continue; } }
-    const ferry = false;
-    // The path the router ends on may run along the coast, just outside the simplified outline (30 m): within 60 m of the
-    // outline counts as on the island (Nov 24 Venice build: the cruise terminal's islet, reached by bridges, came back as
-    // "no way there on foot"). A way that ends on another shore is far from it.
-    const w = (j.waypoints || [])[1], on = w && w.location && s.rings.some(f => IS.inRing(f, w.location[1], w.location[0]) || IS.nearRing(f, w.location[1], w.location[0], 60));
-    s.walk = !ferry && !!on; }
+    if (!ends(j)) { s.walk = false; continue; }
+    // The fastest path may take a water bus even where bridges reach the island (Nov 24 Venice build), and the walking
+    // router can't be told to leave boats out (Nov 24: 152 of Venice's 155 islands came back "not known"). Its other ways
+    // without a boat count; else the road router, which can leave boats out, ending on the island = a road link; else
+    // no way on foot (the same test as the helper's /islands, worker/islands.js).
+    if (!hasFerry(j.routes[0]) || j.routes.some(r => !hasFerry(r))) { s.walk = true; continue; }
+    const c = await get('https://routing.openstreetmap.de/routed-car/route/v1/driving/' + pts + '?steps=true&overview=false&exclude=ferry', {}, 3, 60000);
+    await sleep(1100);
+    if (!c || !c.code) { s.walk = null; continue; }
+    s.walk = c.code === 'Ok' && c.routes && c.routes[0] && !hasFerry(c.routes[0]) && ends(c) ? true : c.code === 'Ok' || c.code === 'NoRoute' ? false : null; }
   return { shapes, centreShape: home ? home.id : null, big, km };
 }
 // ---- Wikidata
