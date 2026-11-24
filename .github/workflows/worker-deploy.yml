@@ -14,7 +14,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -46,3 +46,6 @@ jobs:
           [ "$s1" = 403 ] || grep -q '^AI_ON = "0"' worker/wrangler.toml || { echo FAIL; exit 1; }
           [ "$s2" != 200 ] && [ "$s3" != 200 ] || { echo "FAIL a guard let a call through"; exit 1; }
           curl -s $H/status; echo
+      - name: Warm every known city's kept answers (a deploy starts them all cold; R-29)
+        if: always()
+        run: node tools/helper-warm.cjs

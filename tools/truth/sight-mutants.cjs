@@ -44,6 +44,10 @@ const MUTANTS = [
     was: 'Didyma and Didim, one outing, offered as two Kusadasi day trips (Nov 24)' },
   { id: 'ai-price-shown', from: 'return written ? (+s.cost > 0 ? +s.cost : 0) : null;', to: 'return +s.cost > 0 ? +s.cost : 0;',
     was: '"€150" an AI guessed and "Free" where nothing was known, on Kusadasi day trips (Nov 24)' },
+  { id: 'artwork-as-stop', from: "if (srcHas2(x, /^creative-work$/) && !srcHas2(x,", to: "if (false && srcHas2(x, /^creative-work$/) && !srcHas2(x,",
+    was: 'the Venus de Milo offered as a Paris stop of its own beside the Louvre (live, Nov 24)' },
+  { id: 'name-as-printed', from: 'return t.replace(/^\\p{Ll}/u, c => c.toUpperCase());', to: 'return String(n || "").trim();',
+    was: '"place de la Concorde", "Hôtel de Ville, Paris" on the live Paris list (Nov 24)' },
 ];
 const html = fs.readFileSync(file, 'utf8'), tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'sight-mutants-'));
 const real = spawnSync('node', [CHECK, file], { encoding: 'utf8' });

@@ -233,6 +233,12 @@ function srcNamedInside(x, W) {
   }
   return false;
 }
+function srcShowName(n, area) {
+  let t = String(n || "").trim(); const a = String(area || "").trim();
+  if (a) { const m = /,\s*([^,]+)$/.exec(t); if (m && t.length > m[0].length + 2 && keyOf(m[1]) === keyOf(a)) t = t.slice(0, m.index).trim(); }
+  return t.replace(/^\p{Ll}/u, c => c.toUpperCase());
+}
+if (typeof window !== "undefined") window.__kairouteShowName = (n, a) => srcShowName(n, a);
 function srcWholeOf(s, src, all, depth) {
   const stops = (src && src.stops) || [], x = s.wd && stops.find(y => y.wd === s.wd); if (!x || !isFinite(s.lat)) return null;
   for (const id of Array.isArray(x.partOf) ? x.partOf : []) {
@@ -243,6 +249,12 @@ function srcWholeOf(s, src, all, depth) {
     // Its whole is itself seen inside a bigger visit (a fresco in a chapel that is seen in a museum): that visit.
     if (!(depth > 1)) { const up = srcWholeOf(Object.assign({}, W, { lat: W.lat, lng: W.lng }), src, all.filter(o => o !== s), (depth || 0) + 1); if (up) return up; }
   }
+  // A work of art that is not a building or a place outdoors (the Venus de Milo, a painting, a sculpture in a gallery),
+  // whose own whole isn't on the list, standing within 300 m of a museum that is: seen inside that museum (R-16, Paris
+  // live check Nov 24: the Venus de Milo was offered as a stop of its own next to the Louvre).
+  if (srcHas2(x, /^creative-work$/) && !srcHas2(x, /^(building|structure|monument|fountain|bridge|tower|park|garden|square|archaeological|church|chapel)$/)) {
+    const m = all.filter(o => o !== s && isFinite(o.lat) && hav(o, s) <= 0.3 && (o.wd ? srcIsMuseum(stops.find(y => y.wd === o.wd) || o) : srcIsMuseum(o))).sort((a, b) => hav(a, s) - hav(b, s))[0];
+    if (m) return m; }
   // Named inside a museum's own description, within a kilometre: that museum, when it is on the list.
   for (const W of stops) {
     if (W === x || W.lat == null || hav(W, s) > 1 || !srcIsMuseum(W) || srcNotPlace(W) || !srcNamedInside(x, W)) continue;
@@ -322,6 +334,8 @@ function sourceSights(city, src) {
       return !(x && k === "sites" && srcNotPlace(x)); }); }
   const centre = srcCentre(city, src); if (!centre) return 0;
   const area = String(src.area || city.city).replace(/\s*\(.*\)/, "");
+  // Saved source sights take today's name rule too (R-30: saved content passes today's rules when opened).
+  for (const s of allSites(city)) if (s.srcOnly && !s.localOnly && s.name) s.name = srcShowName(s.name, area.split(",")[0].trim());
   // The caps count the written guide and the sources' own sights, never the famous places written in (famousFix): those
   // come back from the device before this runs offline but arrive after it online, and must not change what's added.
   const own = () => (city.sites || []).filter(x => !x.famousFix);
@@ -332,9 +346,13 @@ function sourceSights(city, src) {
   const cands = src.stops.filter(x => worthy(x) && ((x.src || []).length >= need || (x.sl || 0) >= SRC_WORLD) && x.lat != null && x.name && keyOf(x.name) !== keyOf(area) && hav(x, centre) <= (srcFamed(x) && (x.sl || 0) >= 60 ? SRC_R_FAMED : SRC_R))
     .sort((a, b) => score(b) - score(a));
   let n = 0;
+  // A name as a guide prints it (R-11, Paris live check Nov 24): a capital first letter ("place de la Concorde" is
+  // Place de la Concorde), and no encyclopedia title's ", City" after it when that is this city ("Hôtel de Ville, Paris").
+  const areaWords = String(area || city.city || "").split(",")[0].trim();
+  const showN = n => srcShowName(n, areaWords);
   const make = (x, extra) => {
     const [, cat, min0] = srcKindOf(x), q = !extra.far && cat === "Landmark" && (x.sl || 0) < SRC_WIDE, min = srcMinutes(cat, min0, x.sl);
-    const st = normSite({ id: "src-" + (x.wd || keyOf(x.name).replace(/ /g, "-")), name: x.name, lat: x.lat, lng: x.lng, minutes: q ? 10 : min, category: cat, summary: srcSummary(x, cat, area), web: x.web, kind: "touristy", quick: q }, 0);
+    const st = normSite({ id: "src-" + (x.wd || keyOf(x.name).replace(/ /g, "-")), name: showN(x.name), lat: x.lat, lng: x.lng, minutes: q ? 10 : min, category: cat, summary: srcSummary(x, cat, area), web: x.web, kind: "touristy", quick: q }, 0);
     Object.assign(st, { srcOnly: true, fame: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, src: x.src || [], local: x.local, wd: x.wd }, extra);
     // The helper's sources disagree on where it is and nothing settles it: said so on its card and on rides to it.
     if (x.posDoubt) st.posDoubt = true;

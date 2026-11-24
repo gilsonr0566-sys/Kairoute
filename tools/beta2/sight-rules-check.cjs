@@ -62,6 +62,12 @@ const stops = [
   stop('Testonica Rotunda', ['building', 'church', 'structure'], 25, 1.1, -2.7, { partOf: ['Q940'] }),
   stop('Testonica Walls', ['fortification', 'structure'], 22, 0.7, -2.9, { partOf: ['Q940'] }),
   stop('テスト寺', [], 6, -3.4, 1.4, { localName: true }),
+  // A work of art held in a museum is seen inside it; one standing outdoors is a stop (Paris live check, Nov 24).
+  stop('Venus of Testos', ['creative-work', 'statue'], 73, 0.1, 0.1, { partOf: ['Q990'] }),
+  stop('Little Test Maid', ['creative-work', 'statue'], 45, -3.6, -3.6),
+  // Names as a guide prints them: a capital first letter, no ", Testopolis" after them.
+  stop('place de la Testcorde', ['square', 'structure'], 62, 3.6, -3.2),
+  stop('Town Hall, Testopolis', ['building', 'structure'], 38, -3.6, 3.2),
 ];
 const guideSite = Object.assign({ id: 'wv~Q131', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
 // The guide's own museum, and the travel guide's listing of it under its Italian name 400 m off (Messina, Nov 23).
@@ -120,6 +126,10 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok('the museum itself stays', !!get('Testican Museums'));
   ok('a church the museum\'s listing names as "opposite" stays its own stop', !!get('Church of San Testo'));
   ok('a place a museum\'s listing names only inside a longer name (a stadium tour package) stays its own stop', !!get('Camp Testou'));
+  ok('a work of art held in a museum is seen inside that museum, not offered as a stop (Venus de Milo, Paris)', !get('Venus of Testos') && !!get('Grand Museum'), sites.filter(s => /Venus|Grand Museum/.test(s.name)).map(s => s.name));
+  ok('a statue standing outdoors is still a stop', !!get('Little Test Maid'), sites.filter(s => /Maid/.test(s.name)).map(s => s.name));
+  ok('a sight name starts with a capital letter (place de la Concorde, Paris)', !!get('Place de la Testcorde') && !get('place de la Testcorde'), sites.filter(s => /Testcorde/.test(s.name)).map(s => s.name));
+  ok('no ", City" after a sight name in its own city (Hôtel de Ville, Paris)', !!get('Town Hall') && !get('Town Hall, Testopolis'), sites.filter(s => /Town Hall/.test(s.name)).map(s => s.name));
   ok('a heritage listing of three or more listed works close together is no stop of its own; its works stay (Thessaloniki)', !get('Byzantine monuments of Testonica') && !!get('Testonica Rotunda'), sites.filter(s => /Testonica/.test(s.name)).map(s => s.name));
   // Day trips (Kusadasi, Nov 24): an inscription is no place to go; two day trips 1.5 km apart are one outing; a price
   // shows only where a source gives it (no AI guess, no "Free" when nothing is known).

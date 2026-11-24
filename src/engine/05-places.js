@@ -165,6 +165,9 @@
         }
       }
     }
+    // A sight's name as a guide prints it, from every source (R-11, Nov 24): a capital first letter ("piazza Venezia" is
+    // Piazza Venezia, "place de la Concorde" is Place de la Concorde).
+    for (const city of Object.values(b.cities || {})) for (const k of ["sites", "farther"]) for (const s of city[k] || []) if (s && typeof s.name === "string") s.name = E.cap(s.name);
     return b;
   };
 })(KEngine);
