@@ -67,8 +67,22 @@ what share the release gate's checks catch, by area. Results: see the section ad
 - Not checked yet: 17 train, metro and bus rides (the DB journey planner gave no answer from GitHub), 2 ferries (no
   source), 28 rides the router could not route.
 
-**Fault audit, half done** (57 of 120 random bugs): leave-by 11 of 20 caught, rides 11 of 20, day planning about a third.
-The misses include the ship's own safety margins in `30-window.js` (the time kept before all aboard, "under 3 h free
-means straight to the ship"): halving them was caught by no check. The independent safety check holds the plan only to
-the least time physically possible (15 min at the pier), not to Kairoute's own promised margins. Next: an independent
-rule for the promised margins, written from the stated policy, not read from the planner.
+**Fault audit, finished** (120 random bugs, 20 per area; full list in /mnt/project-files/reviews/fault-audit-2026-11-24.md):
+
+| Area | Caught |
+|---|---|
+| Leave-by and deadlines | 11 of 20 (55%) |
+| Rides | 11 of 20 (55%) |
+| Screen rules | 9 of 20 (45%) |
+| Day planning and lunch | 6 of 20 (30%) |
+| Opening hours | 6 of 20 (30%) |
+| Names and places | 5 of 20 (25%) |
+| **All** | **48 of 120 (40%)** |
+
+Some misses change nothing a traveler could see (an unused helper, a limit no real input reaches), so the true catch rate
+is somewhat higher, but far from the 90% target. The pattern in the misses: the checks are strong where a past bug
+taught them and blind where no test trip goes. Kairoute's promised margins (now closed by the margin rule, E49), Easter
+and sunset hours (now closed, E50), a ferry arrival's time to get off, flying in on the day the ship sails with under
+3 h free, a taxi-or-walk boundary, meal-hour limits, and boundaries in the screen rules (a < read as a <=).
+Next: add test trips for every case the misses name (odd trips that fly in on sailing day, arrive by ferry, eat late),
+then run the audit again with a new seed.
