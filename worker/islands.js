@@ -73,10 +73,12 @@ function nearRing(f, lat, lng, m) {
   return false;
 }
 const hav = (a, b) => { const R = 6371, r = x => x * Math.PI / 180, dl = r(b.lat - a.lat), dg = r(b.lng - a.lng); const h = Math.sin(dl / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(dg / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+// Every map server at once, the first good answer wins: one after another, a busy first server used up the whole ask
+// (Nov 24 live probe: "Busy" after 57 s on every ask, for Dubrovnik, Kotor and Nassau).
 async function overpass(q, ms) {
-  for (const ep of OVERPASS) { try { const r = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { ...UA, "content-type": "application/x-www-form-urlencoded", accept: "application/json" }, signal: AbortSignal.timeout(ms) });
-    if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.elements) && !(j.remark && /runtime error|timed out/i.test(j.remark))) return j.elements; } } catch (e) {} }
-  return null;
+  const one = ep => fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { ...UA, "content-type": "application/x-www-form-urlencoded", accept: "application/json" }, signal: AbortSignal.timeout(ms) })
+    .then(r => r.ok ? r.json() : Promise.reject(new Error("busy"))).then(j => j && Array.isArray(j.elements) && !(j.remark && /runtime error|timed out/i.test(j.remark)) ? j.elements : Promise.reject(new Error("bad")));
+  try { return await Promise.any(OVERPASS.map(one)); } catch (e) { return null; }
 }
 // Can a person walk from the centre to the island without a boat? The same test as the place files' (build.cjs).
 async function walkTo(centre, s) {
@@ -98,15 +100,14 @@ export async function islandsData(centre, env, codeKey, sha) {
   // The outlines: kept 30 days as soon as they come back.
   const ok = base + "o:" + c.lat + "," + c.lng; let shapes = JSON.parse((await env.USAGE.get(ok)) || "null");
   if (!shapes) {
-    const list = await overpass(`[out:json][timeout:25];(way["place"~"^(island|islet)$"](around:${ISLE_KM * 1000},${c.lat},${c.lng});relation["place"~"^(island|islet)$"](around:${ISLE_KM * 1000},${c.lat},${c.lng}););out tags bb;`, 28000);
-    if (!list) return { error: "Busy", status: 503 };
-    const small = list.filter(e => e.bounds && hav({ lat: e.bounds.minlat, lng: e.bounds.minlon }, { lat: e.bounds.maxlat, lng: e.bounds.maxlon }) <= 60).slice(0, 120);
+    // One question for the outlines themselves (the size is told from each one's box afterwards).
+    const els = await overpass(`[out:json][timeout:40];(way["place"~"^(island|islet)$"](around:${ISLE_KM * 1000},${c.lat},${c.lng});relation["place"~"^(island|islet)$"](around:${ISLE_KM * 1000},${c.lat},${c.lng}););out tags geom;`, 45000);
+    if (!els) return { error: "Busy", status: 503 };
     shapes = [];
-    for (let i = 0; i < small.length; i += 60) { const part = small.slice(i, i + 60), ids = t => part.filter(e => e.type === t).map(e => e.id).join(",");
-      const els = await overpass("[out:json][timeout:25];(" + (ids("way") ? `way(id:${ids("way")});` : "") + (ids("relation") ? `relation(id:${ids("relation")});` : "") + ");out tags geom;", 28000);
-      if (!els) return { error: "Busy", status: 503 };
-      for (const el of els) { const rs = rings(el).map(r => flat(simplify(r, 0.0003))).filter(f => f.length >= 8); if (!rs.length) continue;
-        shapes.push({ id: el.type[0] + el.id, name: (el.tags && (el.tags["name:en"] || el.tags.name)) || "an island", rings: rs }); } }
+    for (const el of els) { const rs = rings(el).map(r => r).filter(r => r.length >= 4); if (!rs.length) continue;
+      const la = rs.flat().map(p => p[0]), ln = rs.flat().map(p => p[1]); if (hav({ lat: Math.min(...la), lng: Math.min(...ln) }, { lat: Math.max(...la), lng: Math.max(...ln) }) > 60) continue;
+      const fl = rs.map(r => flat(simplify(r, 0.0003))).filter(f => f.length >= 8); if (!fl.length) continue;
+      shapes.push({ id: el.type[0] + el.id, name: (el.tags && (el.tags["name:en"] || el.tags.name)) || "an island", rings: fl }); if (shapes.length >= 120) break; }
     await env.USAGE.put(ok, JSON.stringify(shapes), { expirationTtl: 30 * 86400 });
   }
   const home = shapeAt(shapes, c.lat, c.lng); let open = 0;
