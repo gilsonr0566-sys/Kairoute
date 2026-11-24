@@ -74,6 +74,9 @@ function srcNotPlace(x) {
   return false;
 }
 if (typeof window !== "undefined") window.__kairouteNotPlace = x => srcNotPlace(x);
+// A day trip may be a town, a village or an island: what is no place to go for a day is what is no place at all (an
+// object, an organisation, an event, a region, a word), or gone.
+const farNotPlace = x => !!x && (x.gone || (!srcHas2(x, /^(settlement|admin-area|island)$/) && srcNotPlace(x)));
 // "City" in a name means a city or district, except in an old town's ("Old City of Jerusalem" was never offered, Nov 23).
 // A place the sources know only by a local-language name (no English label, no English travel guide, no single name
 // for every language) is never offered: the app shows names in the traveler's language (Richard, Nov 23), and a local
@@ -300,6 +303,17 @@ function sourceSights(city, src) {
       return allSites(city).some(t => t !== s && !/^wv~/.test(String(t.id)) && (!isFinite(t.lat) || !isFinite(s.lat) || hav(t, s) <= 2) &&
         (t.wd === m[1] || (en && en.split(" ").length >= 2 && (keyOf(t.name) === en || keyOf(t.srcName || "") === en)))); };
     for (const k of ["sites", "farther"]) if (Array.isArray(city[k])) city[k] = city[k].filter(s => !twin(s)); }
+  // Day trips (rule R-15 and R-16, Nov 24, Kusadasi): one the facts show is no place to go (an inscription kept in a
+  // museum abroad: "Seikilos epitaph") leaves the list; and two day trips within 3 km of each other are one outing
+  // (Didyma's temple stands in the town of Didim): the better known stays, unless the traveler chose the other.
+  { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).concat(d.selected || []).map(String)));
+    const facts = s => s.wd && ((src.far || []).find(y => y.wd === s.wd) || src.stops.find(y => y.wd === s.wd));
+    if (Array.isArray(city.farther)) {
+      city.farther = city.farther.filter(s => { if (mine.has(String(s.id)) || s.town) return true; const x = facts(s); return !(x && farNotPlace(x)); });
+      const rank = s => (mine.has(String(s.id)) ? 1e6 : 0) + (s.mustSee ? 1e4 : 0) + (s.unesco ? 1e3 : 0) + (s.fame || 0) + (/town|village|city/i.test(s.category || "") ? -50 : 0);
+      const outing = [...city.farther].filter(s => !s.town && isFinite(s.lat) && isFinite(s.lng)).sort((a, b) => rank(b) - rank(a)), gone = new Set();
+      outing.forEach((s, i) => { if (gone.has(s)) return; for (const t of outing.slice(i + 1)) if (!gone.has(t) && !mine.has(String(t.id)) && hav(s, t) <= 3) { gone.add(t); s.alsoNames = (s.alsoNames || []).concat(t.name); } });
+      if (gone.size) city.farther = city.farther.filter(s => !gone.has(s)); } }
   // A sight a saved guide got from the sources that the facts now show is no place to visit (an organisation, an event, a
   // region, a village) leaves the list, unless the traveler chose it themselves.
   { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).map(String)));

@@ -38,6 +38,12 @@ const MUTANTS = [
     was: 'Messina: "Palazzo Zanca" shown under its listing name though it has an English one (Nov 23, rule R-11)' },
   { id: 'close-group-as-stop', from: 'if (srcKnown(w) && w.kinds.every(k => k === "feature") && parts.length >= 3) w.isGroup = true;', to: '',
     was: '"Paleochristian and Byzantine monuments of Thessaloniki" offered as a must-see stop beside its own churches (Nov 23)' },
+  { id: 'object-as-day-trip', from: 'const x = facts(s); return !(x && farNotPlace(x)); });', to: 'return true; });',
+    was: '"Seikilos epitaph", an inscription in a museum abroad, offered as a Kusadasi day trip (Nov 24)' },
+  { id: 'same-outing-twice', from: 'hav(s, t) <= 3) { gone.add(t);', to: 'hav(s, t) <= 0) { gone.add(t);',
+    was: 'Didyma and Didim, one outing, offered as two Kusadasi day trips (Nov 24)' },
+  { id: 'ai-price-shown', from: 'return written ? (+s.cost > 0 ? +s.cost : 0) : null;', to: 'return +s.cost > 0 ? +s.cost : 0;',
+    was: '"€150" an AI guessed and "Free" where nothing was known, on Kusadasi day trips (Nov 24)' },
 ];
 const html = fs.readFileSync(file, 'utf8'), tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'sight-mutants-'));
 const real = spawnSync('node', [CHECK, file], { encoding: 'utf8' });

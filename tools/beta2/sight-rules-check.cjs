@@ -121,6 +121,17 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok('a church the museum\'s listing names as "opposite" stays its own stop', !!get('Church of San Testo'));
   ok('a place a museum\'s listing names only inside a longer name (a stadium tour package) stays its own stop', !!get('Camp Testou'));
   ok('a heritage listing of three or more listed works close together is no stop of its own; its works stay (Thessaloniki)', !get('Byzantine monuments of Testonica') && !!get('Testonica Rotunda'), sites.filter(s => /Testonica/.test(s.name)).map(s => s.name));
+  // Day trips (Kusadasi, Nov 24): an inscription is no place to go; two day trips 1.5 km apart are one outing; a price
+  // shows only where a source gives it (no AI guess, no "Free" when nothing is known).
+  { const far = (n, id, dx, dy, more) => Object.assign({ id, name: n, minutes: 180, far: true, category: 'Day trip', famousFix: true, fame: 30 }, at(dx, dy), more || {});
+    const got = await pg.evaluate(a => { const c = { city: 'Testopolis', country: 'Testland', sites: [], farther: JSON.parse(JSON.stringify(a.far)), starts: {}, restaurants: [] };
+      window.__kairouteSourceSights(c, a.src); return c.farther.map(s => s.name); }, { src: { area: 'Testopolis', center: C, stops: [], far: [
+      { name: 'Testilos epitaph', wd: 'Q950', sl: 40, kinds: ['creative-work'], km: 50 }, { name: 'Testyma', wd: 'Q951', sl: 45, kinds: ['archaeological', 'temple'], km: 52 }, { name: 'Testim', wd: 'Q952', sl: 30, kinds: ['settlement', 'admin-area'], km: 53 }] },
+      far: [far('Testilos epitaph', 'ep-far', 40, 10, { wd: 'Q950', category: 'Ancient Site' }), far('Testyma', 'ty-far', 30, -50, { wd: 'Q951', fame: 45, category: 'Ancient Site' }), far('Testim', 'tm-far', 31, -50.5, { wd: 'Q952', category: 'Scenic Town' }), far('Test Lakes', 'tl-far', -40, 20)] });
+    ok('an inscription or other object is no day trip (Seikilos epitaph, Kusadasi)', !got.includes('Testilos epitaph'), got);
+    ok('two day trips within 3 km of each other are one outing, the better known kept (Didyma and Didim)', got.includes('Testyma') && !got.includes('Testim') && got.includes('Test Lakes'), got);
+    const pr = await pg.evaluate(() => { const b = { builtin: true }; return [window.__kairoutePriceOf({ cost: 150, famousFix: true }, b), window.__kairoutePriceOf({ cost: 0, srcOnly: true }, b), window.__kairoutePriceOf({ cost: 40 }, b), window.__kairoutePriceOf({ cost: 0 }, b), window.__kairoutePriceOf({ cost: 20 }, { ai: true }), window.__kairoutePriceOf({ fee: 'free' }, {})]; });
+    ok('a price shows only where a source gives it: none for an AI guess or an unknown, the written guide\'s price and "Free" kept', pr[0] === null && pr[1] === null && pr[2] === 40 && pr[3] === 0 && pr[4] === null && pr[5] === 0, pr); }
   const rel = await pg.evaluate(() => window.__kairoutePlaceRel({ name: 'Holstentor', lat: 53.8662, lng: 10.6797 }, { name: 'Holstentor', lat: 53.55, lng: 9.99 })[0]);
   ok('the same name 59 km apart is two places (Holstentor in Lubeck is not one near Hamburg)', rel !== 'same', rel);
   ok('no source sight is called "Church" unless it is one', !sites.some(s => s.cat === 'Church' && /mosque|synagogue|shrine|-ji|-taisha/i.test(s.name)));

@@ -1126,7 +1126,10 @@ async function sourcesData(label, env, ctx) {
   for (const l of enV.listings.filter(l => l.kind === "see")) add(l.wd, l.name, l.lat, l.lng, S.enVoy, { en: l.content, web: l.url || undefined });
   for (const l of lcV.listings.filter(l => l.kind === "see")) { const x = add(l.wd, l.name, l.lat, l.lng, S.lcVoy); x.local = x.local || l.name; x.lc = l.content; }
   // Facts for every id from Wikidata: local-language article, official website, heritage status, place, fame.
-  const ids = [...byId.keys()].slice(0, 200), chunks = []; for (let k = 0; k < ids.length; k += 50) chunks.push(ids.slice(k, k + 50));
+  // The famous places a day out (fam.far) get the same facts: what they are decides whether they are a place to go at
+  // all (Nov 23, Kusadasi: "Seikilos epitaph", an inscription kept in a museum abroad, was offered as a day trip).
+  const farById = new Map((fam.far || []).filter(f => f && /^Q\d+$/.test(f.wd || "") && !byId.has(f.wd)).map(f => [f.wd, f]));
+  const ids = [...byId.keys()].slice(0, 200).concat([...farById.keys()].slice(0, 25)), chunks = []; for (let k = 0; k < ids.length; k += 50) chunks.push(ids.slice(k, k + 50));
   const answers = await Promise.all(chunks.map(part => {
     const V = `VALUES ?item { ${part.map(x => "wd:" + x).join(" ")} }`, H2 = { headers: { ...UA, accept: "application/sparql-results+json" } }, url = q => "https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q);
     return Promise.all([getJ(url(`SELECT ?item ?h ?w ?loc ?lab ?sl ?whole ?wloc WHERE { ${V} OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item rdfs:label ?mlab FILTER(LANG(?mlab) = "mul") } OPTIONAL { ?item wikibase:sitelinks ?sl } OPTIONAL { ?item wdt:P361|wdt:P276 ?whole . OPTIONAL { ?whole wdt:P625 ?wloc } } }`), 25000, H2),
@@ -1150,7 +1153,7 @@ async function sourcesData(label, env, ctx) {
       const res = await Promise.all(cc.map(part => getJ(uq(`SELECT ?c ?w WHERE { VALUES ?c { ${part.map(x => "wd:" + x).join(" ")} } VALUES ?w { ${Object.keys(SIGHT_KINDS).map(x => "wd:" + x).join(" ")} } ?c wdt:P279* ?w }`), 25000, H3)));
       if (res.every(Boolean)) {
         for (const j of res) for (const b of j.results.bindings) { const c = b.c.value.split("/").pop(); (up.get(c) || up.set(c, new Set()).get(c)).add(SIGHT_KINDS[b.w.value.split("/").pop()]); }
-        for (const id of ids) { const x = byId.get(id); if (!x) continue; const ks = new Set(); for (const c of direct.get(id) || []) for (const k of up.get(c) || []) ks.add(k); x.kinds = [...ks].sort();
+        for (const id of ids) { const x = byId.get(id) || farById.get(id); if (!x) continue; const ks = new Set(); for (const c of direct.get(id) || []) for (const k of up.get(c) || []) ks.add(k); x.kinds = [...ks].sort();
           if (razed.has(id) || (ended.has(id) && !ks.has("organization") && !ks.has("event") && !ks.has("occurrence"))) x.gone = true;
           // "Destroyed building or structure" (the Bastille: a castle and a prison, so the end-date rule spared it as an
           // organisation) is gone too, unless its ruins are an archaeological site to visit (Nov 23 sight check).

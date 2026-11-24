@@ -3343,7 +3343,7 @@ const FARFILL_V = 2, farFilling = {};
 function farUntimed(s) { return !!(s && s.far && s.famousFix && !(typeof s.travel === "string" && s.travel.trim())); }
 function farGaps(city, src) {
   const all = allSites(city), inGuide = y => all.some(s => sameSight(y, s) || (s.merged || []).some(m => sameSight(y, m)) || (s.lookFor || []).some(n => typeof n === "string" && nameMatch(n, y.name) && nameMatch(y.name, n)));
-  return (src.far || []).filter(y => y && y.name && isFinite(y.lat) && y.km >= 8 && y.km <= 100 && (y.sl || 0) >= 25 && !inGuide(y)).sort((a, b) => (b.sl || 0) - (a.sl || 0)).slice(0, 10);
+  return (src.far || []).filter(y => y && y.name && isFinite(y.lat) && y.km >= 8 && y.km <= 100 && (y.sl || 0) >= 25 && !farNotPlace(y) && !inGuide(y)).sort((a, b) => (b.sl || 0) - (a.sl || 0)).slice(0, 10);
 }
 async function fillFarther(city, src) {
   const k = keyOf(city.city); if (farFilling[k] || city.farFillV === FARFILL_V) return;
@@ -5676,9 +5676,20 @@ function readWiz() {
   if (g("w-lang")) wiz.lang = g("w-lang").value;
 }
 const priceLevel = p => Math.max(1, Math.min(3, (String(p || "").match(/[$€£¥₺₹]|kr|zł/g) || ["x"]).length));
+// What a visit costs, only as a source says it (rule R-15 / no untrue statements, Nov 24: Kusadasi day trips showed
+// "€150" an AI guide had guessed, and "Free" where nothing was known). A sight of a written guide (built in, prices
+// checked by hand) or a fee the sources give: its price, or free. Anything an AI wrote, or a place from the sources with
+// no fee given: unknown (null), and no price is shown or added up.
+function priceOf(s, city) {
+  if (!s) return null;
+  if (s.free === true || /^free/i.test(String(s.fee || ""))) return 0;
+  const written = !!(city && city.builtin) && !s.srcOnly && !s.famousFix && !s.noAI && !s.fromGuide && !s.fromPlaces && !s.added;
+  return written ? (+s.cost > 0 ? +s.cost : 0) : null;
+}
+if (typeof window !== "undefined") window.__kairoutePriceOf = (s, city) => priceOf(s, city);
 function planBudget(plan) {
   const party = Math.max(1, +P().party || 2), city = plan.city;
-  const entry = plan.stops.reduce((a, i) => a + (i.place.cost || 0), 0) * party;
+  const entry = plan.stops.reduce((a, i) => a + (priceOf(i.place, city) || 0), 0) * party;
   const food = plan.meals.reduce((a, r) => a + [0, 15, 30, 55][priceLevel(r.price)], 0) * party;
   let move = 0;
   plan.items.forEach((it, i) => {
@@ -6203,7 +6214,7 @@ function siteCard(s, d, plan, nr) {
       : fs === true ? `<span class="tag fit fitbadge">${c.exact && c.min < 5 ? "Fits, same finish" : "+" + dur(c.min)}</span>` : `<span class="tag fitbadge pending" aria-hidden="true">+${dur(c.min)}</span>`; // same space while it's checked, so nothing moves
   } else if (on) badge = pickStatus(sel.includes(s.id) ? s : kidOn, plan).replace('class="tag ', 'class="tag fitbadge ');
   const sym = priceSym(city), nm = showName(s) || s.name;
-  const l2 = [dur(s.minutes), s.cost ? sym + s.cost : "Free", s.far ? "Day trip" : "", near != null ? (near < 0.05 ? "At " + nearTo.name : distTxt(near, true) + " from " + nearTo.name) : ""].filter(Boolean).map(esc).join(" · ");
+  const l2 = [dur(s.minutes), (pr => pr == null ? "" : pr > 0 ? sym + pr : "Free")(priceOf(s, city)), s.far ? "Day trip" : "", near != null ? (near < 0.05 ? "At " + nearTo.name : distTxt(near, true) + " from " + nearTo.name) : ""].filter(Boolean).map(esc).join(" · ");
   const incl = kids.length ? `<div class="incl"><b>Included:</b> ${kids.map(k => esc(showName(k) || k.name)).join(" · ")}</div>` : "";
   const l3 = `<div class="tags ints">${cardLabels(s, city, nr && nr.my).map(x => `<span class="tag int${x.mine ? " mine" : " kind"}">${esc(x.t)}</span>`).join("")}</div>`;
   const ex = ((plan && plan.elsewhere) || []).find(x => x.s.id === s.id);
