@@ -9,10 +9,12 @@
 // mid-afternoon", "head back early"): one rule shared by the screen check and the app, which leaves them out on a day that
 // has its own time to leave (src/main.js, planNote).
 var KScreenAdvice = /[^.\n]*\b(?:leave\s+(?:\w+\s+){0,2}?by|(?:head|come|get|be)\s+back(?:\s+\w+){0,3}?\s+(?:by|before)|return(?:\s+\w+){0,3}?\s+(?:by|before))\s+(?:the\s+)?(?:early |mid-?|late )?(?:morning|afternoon|evening|noon|lunch(?:time)?)\b[^.\n]*\.?|[^.\n]*\b(?:head|come|get) back early\b[^.\n]*\.?/i;
-// A story's goodbye chapter ("Closing", "Before you go") is something the guide says, not a place to go: the Day plan's
-// numbered points of a visit are places, so it is never listed there with a time (it still plays in the Guide). One
-// pattern for the app (main.js partsList) and the screen check ('points are places').
-var KFarewellPart = /^(?:closing|before you (?:go|leave)|farewell|goodbye)$/i;
+// A visit's numbered points in the Day plan (and its "What's here" list in Choose sights) are PLACES. A story chapter
+// named for a moment or an action ("Arrival", "Closing", "Before you go", "Sunset", "Welcome") is something the guide
+// says, not a place to go, so it is never listed there with a time (it still plays in the Guide). One pattern for the
+// app (main.js partsList, partsPick) and the screen check ('points are places'), on every trip and every story.
+var KNotPlacePart = /^(?:(?:the\s+)?(?:arrival|arriving|welcome|introduction|intro|start|beginning|opening|closing|close|ending|end|the end|finale|farewell|goodbye|good-?bye|departure|leaving|wrap-?up|summary|last words?|final words?|final thoughts?|one last thing|before you (?:go|leave)|on (?:the|your) way (?:in|out)|sunrise|sunset|dusk|dawn|morning|afternoon|evening|night|lunch|break|rest|free time))[.!]?$/i;
+var KFarewellPart = KNotPlacePart;
 var KScreenRules = (function () {
 const T = s => { const m = String(s || '').trim().match(/^(\d{1,2}):(\d\d)(?:\s*([ap])m)?$/i); if (!m) return null; let h = +m[1]; if (m[3]) h = h % 12 + (m[3].toLowerCase() === 'p' ? 12 : 0); return h * 60 + +m[2]; };
 const inTxt = s => { const m = /(\d{1,2}):(\d\d)\s*([ap])m/i.exec(s || ''); return m ? T(m[0]) : null; };
@@ -197,7 +199,7 @@ function rules(text, info = {}) {
   const namesIt = (p, n) => { const a = words(p), b = words(n); return b.length && b.every(w => a.includes(w)) && (b.length >= 2 || b[0].length >= 5); };
   // Points are places (R-17, Nov 24, Richard's Chania screenshot: "5. Before you go 10:40 am"): a story's goodbye chapter is
   // never listed as a place of the visit.
-  stops.forEach(st => ptsOf(st).filter(n => KFarewellPart.test(n)).forEach(n => add('S2', 'points are places', `${st.name}: "${n}" is listed as a place of the visit, but it is the guide's goodbye`)));
+  stops.forEach(st => ptsOf(st).filter(n => KNotPlacePart.test(n)).forEach(n => add('S2', 'points are places', `${st.name}: "${n}" is listed as a place of the visit, but it is a time or action word, not a place`)));
   // A place once (R-16, Nov 24, same screenshot: the old-town walk's five points on the synagogue's stop and again on the
   // walk's own stop): a place is a stop OR a point of another stop's visit, never both, and no two stops show the same walk.
   const sv = stops.filter(s => s.key !== 'L').map(st => ({ st, pts: ptsOf(st) }));

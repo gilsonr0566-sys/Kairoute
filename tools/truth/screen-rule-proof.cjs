@@ -79,6 +79,16 @@ for (const rule of all) {
   if (!hit.length) { bad++; console.log(`MISSED      ${rule}: the planted bug went through`); continue; }
   ok++; if (process.env.VERBOSE) console.log(`caught      ${rule}: ${hit[0].msg}`);
 }
+// More plants for rules that guard a whole class of words: each must be caught on its own.
+const MORE = [
+  ['points are places', 'naples', rep('The opera house and the Galleria 9:27 am\n', 'Arrival 9:20 am\nThe opera house and the Galleria 9:27 am\n')],
+  ['points are places', 'naples', rep('The opera house and the Galleria 9:27 am\n', 'The opera house and the Galleria 9:27 am\nBefore you go 9:33 am\n')],
+  ['points are places', 'naples', rep('The opera house and the Galleria 9:27 am\n', 'The opera house and the Galleria 9:27 am\nSunset 9:33 am\n')],
+];
+for (const [rule, f, plant] of MORE) {
+  const fx = FX[f]; let txt; try { txt = plant(fx.text); } catch (e) { bad++; console.log(`BROKEN      ${rule}: ${e.message}`); continue; }
+  if (!R.rules(txt, { type: fx.type, date: fx.date }).some(x => x.rule === rule)) { bad++; console.log(`MISSED      ${rule}: a planted word went through`); }
+}
 for (const k of Object.keys(P)) if (!all.includes(k)) { bad++; console.log(`STALE       ${k}: no such rule in screen-rules.js`); }
 console.log(`Screen-rule proof: ${ok} of ${all.length} screen rules caught their planted bug, ${bad} failed`);
 process.exitCode = bad ? 1 : 0;

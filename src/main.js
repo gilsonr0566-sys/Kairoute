@@ -3671,14 +3671,19 @@ function queueExtras(plan) {
 // What a big stop holds, for the Choose sights card: each part can be unticked.
 function partsPick(s) {
   if (!s.parts || s.parts.length < 2) return "";
-  return `<div class="partpick"><span class="eyebrow">What's here</span>${s.parts.map((p, k) => { const on = !(s.partsOff || []).includes(k); return `<label class="partchk"><input type="checkbox" data-part="${esc(s.id)}:${k}" ${on ? "checked" : ""}><span>${esc(showName(p) || "Part " + (k + 1))} <small>${dur(p.minutes)}</small></span></label>`; }).join("")}</div>`;
+  // "What's here" lists places only (KNotPlacePart): "Arrival" or "Closing" is the guide talking, not a place to untick.
+  const isPlace = p => typeof KNotPlacePart === "undefined" || !KNotPlacePart.test(String(p.name || "").trim());
+  if (s.parts.filter(isPlace).length < 2) return "";
+  return `<div class="partpick"><span class="eyebrow">What's here</span>${s.parts.map((p, k) => { if (!isPlace(p)) return ""; const on = !(s.partsOff || []).includes(k); return `<label class="partchk"><input type="checkbox" data-part="${esc(s.id)}:${k}" ${on ? "checked" : ""}><span>${esc(showName(p) || "Part " + (k + 1))} <small>${dur(p.minutes)}</small></span></label>`; }).join("")}</div>`;
 }
 // The parts in order, for the Day plan and the Guide.
 function partsList(s, start, withPlay) {
   if (!s.parts || s.parts.length < 2) return s.show && s.show.what ? `<div class="sub show">⏱ ${esc(showLine(s, start))}</div>` : "";
   const pp = partPlan(s, start == null ? 9 * 60 : start);
-  // The Day plan lists the places of a visit; a goodbye chapter is not one (KFarewellPart, screen rule 'points are places').
-  const list = withPlay || typeof KFarewellPart === "undefined" ? pp.list : pp.list.filter(x => !KFarewellPart.test(String(x.p.name || "").trim()));
+  // The Day plan lists the places of a visit; a chapter named for a moment or an action is not one (KNotPlacePart,
+  // screen rule 'points are places').
+  const list = withPlay || typeof KNotPlacePart === "undefined" ? pp.list : pp.list.filter(x => !KNotPlacePart.test(String(x.p.name || "").trim()));
+  if (!withPlay && list.length < 2) return s.show && s.show.what ? `<div class="sub show">⏱ ${esc(showLine(s, start))}</div>` : "";
   return `${s.show && s.show.what ? `<div class="sub show">⏱ ${esc(showLine(s, start))}</div>` : ""}<ol class="parts">${list.map((x, i) => `<li><b>${esc(showName(x.p) || "Part " + (i + 1))}</b>${start != null ? ` <small>${fmt(x.time)}${x.wait ? " · wait " + dur(x.wait) + " for the show" : ""}</small>` : ""}${withPlay ? `${i && x.p.cue ? `<span class="cue">${esc(x.p.cue)}</span>` : ""}${x.p.stand ? `<span class="cue"><b>Stand here:</b> ${esc(x.p.stand)}</span>` : ""}<span class="pguide">${esc(unitText(x.p.guide))}</span>${x.p.lookFor ? `<span class="cue">Look for: ${esc(x.p.lookFor)}</span>` : ""}<button class="btn ghost small" data-play="part:${esc(s.id)}:${x.k}" data-label="▶ Play">▶ Play</button>` : ""}</li>`).join("")}</ol>`;
 }
 function partSpeech(s, k, first) {
