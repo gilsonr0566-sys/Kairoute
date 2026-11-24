@@ -421,9 +421,9 @@
           const walkOf = s.walkOf.filter(n => fit.kept.some(x => x.name === n)), full = s.fullMinutes || s.minutes || 60;
           const rest = fit.kept.filter(x => walkOf.includes(x.name)).reduce((a, x) => a + (x.minutes || 30), 0), left = walkOf.length ? Math.min(full, Math.max(30, Math.round((full - rest) / 5) * 5)) : full;
           const t = Object.assign({}, s, { minutes: left + (s.folded || []).reduce((a, x) => a + (x.extra || 0), 0) }); if (walkOf.length) t.walkOf = walkOf; else { delete t.walkOf; delete t.fullMinutes; } return t; })
-          .filter(s => fit.kept.some(x => String(x.id) === String(s.id)) || !fit.kept.length);
+          ; // every pick goes in again (one left out is then said left out, as on the first try)
         const dropped = picks.filter(s => s.walkOf && fit.kept.some(x => String(x.id) === String(s.id))).flatMap(s => s.walkOf.filter(n => !fit.kept.some(k => k.name === n)).map(n => [n, s.name]));
-        const again2 = fitOf(back); if (again2.kept.length >= fit.kept.filter(x => !x.filled).length) { fit = again2;
+        const again2 = fitOf(back); if (again2.kept.filter(x => !x.filled).length >= fit.kept.filter(x => !x.filled).length) { fit = again2;
           dropped.filter(([n, w]) => !fit.kept.some(k => k.name === n) && fit.kept.some(k => k.name === w)).forEach(([n, w]) => { const line = n + " is part of the " + w + " walk: seen on that visit, not a stop of its own today.";
             if (!explain.includes(line)) explain.push(line); }); } }
       fit.kept.forEach(s => { if (s.filled) autoIds.add(String(s.id)); });
