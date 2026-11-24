@@ -16,16 +16,23 @@ async function run(file) {
         days: [{ city: 'no-file-port', point: { lat: 42.65, lng: 18.09 } }] };
       window.__kairouteIsles().set('no-file-port', { shapes: [{ id: 'w1', name: 'Isle', rings: [ring], walk: false }], centreShape: null, km: 12, open: 0 });
       const out = window.KEngine.applyPlaces(bucket, window.__kairoutePlacesWithIsles(bucket)), s = out.cities['no-file-port'].sites;
-      return { isle: (s.find(x => x.id === 'isl') || {}).acrossWater || null, town: (s.find(x => x.id === 'town') || {}).acrossWater || null }; }); }
+      // A place file whose build left the island "not known" takes the helper's answer for the same island.
+      window.PLACES2 = Object.assign({}, window.PLACES2, { 'file-port': { key: 'file-port', islands: { shapes: [{ id: 'w2', name: 'Isle', rings: [ring], walk: null }], centreShape: null, km: 12 } } });
+      const b2 = { cities: { 'file-port': JSON.parse(JSON.stringify(bucket.cities['no-file-port'])) }, days: [{ city: 'file-port', point: { lat: 42.65, lng: 18.09 } }] };
+      b2.cities['file-port'].key = 'file-port';
+      window.__kairouteIsles().set('file-port', { shapes: [{ id: 'w2', name: 'Isle', rings: [ring], walk: false }], centreShape: null, km: 12, open: 0 });
+      const s2 = window.KEngine.applyPlaces(b2, window.__kairoutePlacesWithIsles(b2)).cities['file-port'].sites;
+      return { isle: (s.find(x => x.id === 'isl') || {}).acrossWater || null, town: (s.find(x => x.id === 'town') || {}).acrossWater || null, fileIsle: (s2.find(x => x.id === 'isl') || {}).acrossWater || null }; }); }
   finally { await b.close(); }
 }
 (async () => {
   const bad = []; const r = await run(SITE);
   if (!r.isle) bad.push('a stop on an island no path reaches, in a city with no place file, is not marked across the water');
   if (r.town) bad.push('a stop on the mainland was marked across the water');
+  if (!r.fileIsle) bad.push('a place file island its build left "not known" did not take the helper\'s answer');
   const html = fs.readFileSync(SITE, 'utf8'); if (!html.includes(want)) { console.log('FAIL the planted copy could not be made: the app text it changes is gone'); process.exit(1); }
   const tmp = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'isles-plant-')), 'index.html'); fs.writeFileSync(tmp, html.replace(want, 'return P2; }'));
-  const pl = await run(tmp); const seen = !pl.isle;
+  const pl = await run(tmp); const seen = !pl.isle && !pl.fileIsle;
   for (const m of bad) console.log('FAIL ' + m);
   console.log(`planted (helper outlines left out): ${seen ? 'caught' : 'NOT caught - BLIND'}`);
   console.log(`isles-any-city-check: ${bad.length ? bad.length + ' failed' : 'all passed'}`);

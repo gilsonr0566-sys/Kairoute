@@ -56,8 +56,15 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     } catch (e) {} finally { delete islesTries[key + "|busy"]; } }
   function placesWithIsles(bucket) {
     const P2 = window.PLACES2 || {}; let out = null;
-    for (const key of Object.keys(bucket.cities || {})) { const P = P2[key]; if (P && P.islands && Array.isArray(P.islands.shapes)) continue;
-      if (islesMem[key]) { out = out || Object.assign({}, P2); out[key] = Object.assign({ key }, P || {}, { islands: islesMem[key] }); continue; }
+    for (const key of Object.keys(bucket.cities || {})) { const P = P2[key], own = P && P.islands && Array.isArray(P.islands.shapes) ? P.islands : null;
+      // A place file's island with no answer ("not known": its build couldn't tell) takes the helper's answer for the same
+      // island (Nov 24: the build's walk test left Lokrum and 152 of Venice's 155 islands not known).
+      if (own && !own.shapes.some(x => x.walk == null && x.id !== own.centreShape)) continue;
+      const got = islesMem[key];
+      if (got && own) { const by = new Map((got.shapes || []).map(x => [x.id, x]));
+        const shapes = own.shapes.map(x => { const h = x.walk == null && by.get(x.id); return h && h.walk != null ? Object.assign({}, x, { walk: h.walk }) : x; });
+        out = out || Object.assign({}, P2); out[key] = Object.assign({}, P, { islands: Object.assign({}, own, { shapes }) }); continue; }
+      if (got) { out = out || Object.assign({}, P2); out[key] = Object.assign({ key }, P || {}, { islands: got }); continue; }
       const d = (bucket.days || []).find(x => x && x.city === key && ((x.point && isFinite(+x.point.lat)) || (x.lodging && isFinite(+x.lodging.lat))));
       const c = d && (d.point && isFinite(+d.point.lat) ? d.point : d.lodging); if (c) setTimeout(() => askIsles(key, c), 0); }
     return out || P2; }
