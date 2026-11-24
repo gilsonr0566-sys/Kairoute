@@ -50,6 +50,13 @@ ok(E.publicWins(73, 46) && E.publicWins(100, 50) === false, 'a train an hour and
       if (here) ok(st.every(y => y.id === 'far-in-sites' || E.hav(far, y) <= 20), `day ${i}: a sight 80 km out, listed among the city's sights, is planned as a day trip, not mixed into a day in town`); }); } }
 ok(!E.mealPlace({ cuisine: 'Honey doughnuts', why: 'Perfect afternoon treat.' }) && !E.mealPlace({ amenity: 'cafe' }) && E.mealPlace({ cuisine: 'Greek', why: 'Save room for dessert' }) && E.mealPlace({ amenity: 'restaurant', cuisine: 'coffee_shop;greek' }), 'lunch and dinner only at a place that serves a meal (a doughnut shop is a snack, not dinner)');
 ok(E.latin('Ζευγολατιό') === 'Zevgolatio' && E.latin('Ευαγγελισμός') === 'Evangelismos' && E.latin('Μπενάκη') === 'Benaki' && E.latin('Киевская') === 'Kievskaya' && E.latin('Piraeus') === 'Piraeus', 'Greek and Cyrillic names are written in Latin letters by fixed rules');
+// A lift up and back down (Santorini's cable car) is planned only when both fit in the time ashore: a 3-hour tender call
+// never sends the traveler up with the queue down ending after the back-by (Nov 24 dawn/evening call sweep; R-04).
+{ const fira = { name: 'Fira old port', lat: 36.4165, lng: 25.4305, lift: { name: 'Cable car', kind: 'cable car', top: { lat: 36.4175, lng: 25.4318 }, topName: 'Fira' } };
+  const short = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 660, tender: true, point: fira }), tr), long = E.dayWindow(day({ type: 'port', portArrive: 480, allAboard: 1080, tender: true, point: fira }), tr);
+  const fix = w => w.head.concat(w.tail).filter(x => x.fixed).length;
+  ok(!short.error && short.liftNoTime && fix(short) === 0 && !short.lift, `a short tender call plans no cable car it can't ride back down in time (got ${short.error || ''} lift steps ${fix(short)})`);
+  ok(!long.error && !long.liftNoTime && fix(long) === 2 && long.lift, `a full day still rides the cable car up and down (got lift steps ${fix(long)})`); }
 // A port placed on the wrong island (a lookup gone astray) is never planned from; a guide written as a trip out from
 // that very port ("Rome from Civitavecchia") is far by design and is planned.
 { const fira = [{ lat: 36.416, lng: 25.432 }], wrong = { name: 'Athinios port', lat: 35.345, lng: 25.14 };

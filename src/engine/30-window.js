@@ -191,6 +191,13 @@
         w.head.push(Object.assign(fixed(top, (lf.kind === "funicular" ? "Funicular" : "Cable car") + " up (with the queue)", E.LIFT_UP), { viaLift: via }));
         w.tail.unshift(Object.assign(fixed(top, (lf.kind === "funicular" ? "Funicular" : "Cable car") + " down (the queue is longest when ships leave)", E.LIFT_DOWN), { viaLift: via }));
         w.lift = lf; w.notes.push("lift");
+        // The day's own fixed steps must fit before anything else is planned: a lift up and back down that can't be done
+        // in the time ashore is never planned (Nov 24, Santorini tender call docking 8:00 am, all aboard 11:00: up the cable
+        // car at 9:00 and down again by 10:10, after the 9:45 back-by, with "leave by 8:55 am" before getting ashore).
+        // The day stays at the landing and says why. Rule R-18 (times on a day must be reachable).
+        const need = chain(w.head, tr) + chain(w.tail, tr);
+        if (w.start + need > w.endBy) { w.liftNoTime = { name: lf.name || (lf.kind === "funicular" ? "Funicular" : "Cable car"), kind: lf.kind || "cable car", top: lf.topName || "the top", need };
+          w.head = [w.head[0]]; w.tail = [w.tail[w.tail.length - 1]]; delete w.lift; w.notes.push("liftNoTime"); }
       }
     } else return E.fail("Unknown day type: " + d.type);
     if (!isFinite(w.start) || !isFinite(w.endBy)) return E.fail("Add the times for this day.");
