@@ -1,4 +1,4 @@
-// Canary for rule R-31 (a city nobody has opened yet still gets its guide): asks the live helper for cities that are
+// Canary for rule R-34 (a city nobody has opened yet still gets its guide): asks the live helper for cities that are
 // NOT in the warm list, the way the app asks (the app's 60 s limit per ask, up to 4 asks, again only on a 5xx or a
 // stopped wait), and fails when any city gets no guide. A different slice of the list each run, so the cities are cold
 // (kept answers last 30 days). Prints each stage's time from the helper's answer (ms), so a slow stage is named.
@@ -31,5 +31,5 @@ async function asApp(city) {
   console.log(`canary: ${pick.length} cities nobody has opened on ${H}`); let bad = 0;
   await Promise.all([0, 1, 2].map(async k => { for (let i = k; i < pick.length; i += 3) { const c = pick[i], r = await asApp(c); if (!r.ok) bad++;
     console.log(`${r.ok ? 'OK  ' : 'FAIL'} ${c}: ${r.s.toFixed(0)} s, asks ${r.log.join(', ')}${r.ok ? `; ${r.stops} sights; stages ${Object.entries(r.ms).map(([k, v]) => k + ' ' + (v / 1000).toFixed(0) + 's').join(' ')}` : ''}`); } }));
-  console.log(`helper-canary: ${pick.length - bad} of ${pick.length} cities got their guide the way the app asks${bad ? ', ' + bad + ' got none (R-31)' : ''}`); process.exit(bad ? 1 : 0);
+  console.log(`helper-canary: ${pick.length - bad} of ${pick.length} cities got their guide the way the app asks${bad ? ', ' + bad + ' got none (R-34)' : ''}`); process.exit(bad ? 1 : 0);
 })();

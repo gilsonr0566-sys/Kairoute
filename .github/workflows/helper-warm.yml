@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Cold cities get their guide the way the app asks (R-31 canary)
+      - name: Cold cities get their guide the way the app asks (R-34 canary)
         run: node tools/helper-canary.cjs 10
       - if: always() && github.event.inputs.canary_only != 'true'
         run: node tools/helper-warm.cjs

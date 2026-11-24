@@ -60,5 +60,26 @@ async function stageReads(worker) {
 { const n = await stageReads(await copy('s')); ok(n === 1, `a city's English Wikivoyage, read before the helper was stopped, is kept: asked again it is not read again (read ${n} time(s))`);
   const p = await stageReads(await copy('p', null, ['enP = voyageKept(', 'enP = voyagePages(']));
   ok(p === 2, `planted: the helper without stage keeping reads it again, and this check sees it (read ${p} time(s))`); if (p !== 2) console.log('worker-cache-check: BLIND on stage keeping'); }
+// R-34: every outside read in a city's sources (Wikidata here) is kept as soon as it comes back, so an ask the app
+// stops at 60 s loses nothing and the next ask starts where it stopped.
+async function wdReads(worker) {
+  const store = new Map(), env = { AI_ON: '0', USAGE: { get: async k => store.has(k) ? store.get(k) : null, put: async (k, v) => { store.set(k, v); }, delete: async k => { store.delete(k); }, list: async () => ({ keys: [] }) } };
+  const ask = () => Promise.race([worker.fetch(new Request('https://helper.test/sources?city=Testopolis', { headers: { Origin: 'https://gilsonr0566-sys.github.io' } }), env, { waitUntil: () => {} }).catch(() => {}), new Promise(r => setTimeout(r, 400))]);
+  const fmKey = (await (async () => { const asked = []; const e2 = { AI_ON: '0', USAGE: { get: async k => { asked.push(k); return null; }, put: async () => {}, delete: async () => {}, list: async () => ({ keys: [] }) } };
+    globalThis.fetch = async () => { throw new Error('no internet'); };
+    try { await worker.fetch(new Request('https://helper.test/sources?city=Testopolis', { headers: { Origin: 'https://gilsonr0566-sys.github.io' } }), e2, { waitUntil: () => {} }); } catch (e) {} return asked.find(k => k.startsWith('fm.')); })());
+  if (!fmKey) return -1;
+  store.set(fmKey, JSON.stringify({ area: 'Testopolis', center: { lat: 1, lng: 1 }, main: [], far: [] }));
+  let wd = 0; const hang = new Promise(() => {}), J = o => new Response(JSON.stringify(o), { headers: { 'content-type': 'application/json' } });
+  globalThis.fetch = async u => { u = String(u);
+    if (u.includes('en.wikivoyage.org')) return J({ parse: { title: 'Testopolis', wikitext: '== See ==\n* {{see | name=Old Tower | lat=1 | long=1 | content=A tower.}}\n' } });
+    if (u.includes('www.wikidata.org/w/api.php') && u.includes('wbgetentities') && u.includes('titles=')) { wd++; return J({ entities: { Q1: { sitelinks: { enwikivoyage: { title: 'Testopolis' } }, claims: {} } } }); }
+    return hang; };
+  await ask(); await ask();
+  globalThis.fetch = async () => { throw new Error('no internet in this check'); };
+  return wd; }
+{ const n = await wdReads(await copy('w')); ok(n === 1, `R-34: a city's Wikidata read, back before the app stopped the ask, is kept: asked again it is not read again (read ${n} time(s))`);
+  const p = await wdReads(await copy('q', null, ['if (r.ok) { const j = await r.json(); await env.USAGE.put(k, JSON.stringify(j), { expirationTtl: 30 * 86400 }).catch(() => {}); return j; } } catch (e) {} } return null; };\n  const T = {}', 'if (r.ok) { const j = await r.json(); return j; } } catch (e) {} } return null; };\n  const T = {}']));
+  ok(p === 2, `planted: the helper without kept reads reads Wikidata again, and this check sees it (read ${p} time(s))`); if (p !== 2) console.log('worker-cache-check: BLIND on kept reads'); }
 console.log(`worker-cache-check: ${checks - fails} passed, ${fails} failed`);
 process.exit(fails ? 1 : 0);
