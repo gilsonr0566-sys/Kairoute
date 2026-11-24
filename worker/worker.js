@@ -876,8 +876,9 @@ async function famousData(label, env, ctx) {
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   // Each outside read kept as soon as it comes back, so a stopped ask loses nothing (R-34, see sourcesData).
   const sxKey = await codeKey("sx", []);
-  const getJ = async (u, ms) => { const k = sxKey + (await sha(u + "|")), hit = await env.USAGE.get(k); if (hit) return JSON.parse(hit);
-    for (let t = 0; t < 2; t++) { try { const r = await fetch(u, { headers: { ...UA, accept: "application/sparql-results+json" }, signal: AbortSignal.timeout(ms || 25000) }); if (r.ok) { const j = await r.json(); await env.USAGE.put(k, JSON.stringify(j), { expirationTtl: 30 * 86400 }).catch(() => {}); return j; } } catch (e) {} } return null; };
+  const t0 = Date.now();
+  const getJ = async (u, ms, tries) => { const k = sxKey + (await sha(u + "|")), hit = await env.USAGE.get(k); if (hit) return JSON.parse(hit);
+    for (let t = 0; t < (tries || 2); t++) { try { const r = await fetch(u, { headers: { ...UA, accept: "application/sparql-results+json" }, signal: AbortSignal.timeout(ms || 25000) }); if (r.ok) { const j = await r.json(); await env.USAGE.put(k, JSON.stringify(j), { expirationTtl: 30 * 86400 }).catch(() => {}); return j; } } catch (e) {} } return null; };
   const centerOf = async name => {
     for (const t of [name, name.split(",")[0].trim()]) { const j = await getJ("https://en.wikivoyage.org/w/api.php?action=query&format=json&prop=coordinates&redirects=1&titles=" + encodeURIComponent(t), 9000);
       const pg = j && Object.values((j.query && j.query.pages) || {})[0], co = pg && pg.coordinates && pg.coordinates[0]; if (co) return { lat: co.lat, lng: co.lon }; }
@@ -896,12 +897,12 @@ async function famousData(label, env, ctx) {
   // Not sights: cities and municipalities, stations, airports, schools, hospitals, regions, seas, government bodies.
   const NOT_SIGHT = "wd:Q515 wd:Q1549591 wd:Q5119 wd:Q1637706 wd:Q200250 wd:Q2074737 wd:Q747074 wd:Q1093829 wd:Q15284 wd:Q3957 wd:Q928830 wd:Q55488 wd:Q1248784 wd:Q644371 wd:Q3918 wd:Q3914 wd:Q16917 wd:Q4022 wd:Q165 wd:Q39594 wd:Q10864048 wd:Q13220204 wd:Q13221722 wd:Q1620908 wd:Q1194951 wd:Q476028 wd:Q34770 wd:Q33742 wd:Q1288568 wd:Q5503 wd:Q15079663";
   const NOT_TOWN = "wd:Q928830 wd:Q55488 wd:Q1248784 wd:Q644371 wd:Q3918 wd:Q3914 wd:Q16917 wd:Q4022 wd:Q165 wd:Q39594 wd:Q10864048 wd:Q13220204 wd:Q13221722 wd:Q1620908 wd:Q34770 wd:Q33742 wd:Q1288568 wd:Q5503";
-  const famous = async (c, r, min, bad, lim, maxPop) => {
+  const famous = async (c, r, min, bad, lim, maxPop, ms, tries) => {
     const q = `SELECT ?item ?itemLabel ?sl ?loc ?dist WHERE { SERVICE wikibase:around { ?item wdt:P625 ?loc . bd:serviceParam wikibase:center "Point(${c.lng} ${c.lat})"^^geo:wktLiteral . bd:serviceParam wikibase:radius "${r}" . bd:serviceParam wikibase:distance ?dist . }
       ?item wikibase:sitelinks ?sl . FILTER(?sl >= ${min}) FILTER NOT EXISTS { ?item wdt:P31 ?bad . VALUES ?bad { ${bad} } } FILTER NOT EXISTS { ?item wdt:P576 ?gone } FILTER NOT EXISTS { ?item wdt:P585 ?when } FILTER NOT EXISTS { ?item wdt:P580 ?from }
       FILTER NOT EXISTS { ?item wdt:P1082 ?pop FILTER(?pop > ${maxPop}) }
       SERVICE wikibase:label { bd:serviceParam wikibase:language "en,mul,el,it,es,tr,fr,de" . } } ORDER BY DESC(?sl) LIMIT ${lim}`;
-    const j = await getJ("https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q), 40000);
+    const j = await getJ("https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q), ms || 40000, tries);
     if (!j) return null; const seen = new Set(), out = [];
     for (const b of (j.results && j.results.bindings) || []) { const id = b.item.value.split("/").pop(); if (seen.has(id)) continue; seen.add(id);
       const m = /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.loc.value); const name = b.itemLabel && b.itemLabel.value; if (!m || !name || /^Q\d+$/.test(name)) continue;
@@ -919,7 +920,11 @@ async function famousData(label, env, ctx) {
   // The place in brackets, when it is a bigger draw than the port town itself, is where the day is spent.
   if (inBr.length) { const c2 = await centerOf(inBr[0]); if (c2) { const d = Math.hypot((c2.lat - center.lat) * 111, (c2.lng - center.lng) * 111 * Math.cos(center.lat * Math.PI / 180));
     if (d > 5) { const m2 = await famous(c2, 6, 8, NOT_SIGHT, 60, 20000); if (m2 && fame(m2) > fame(main) * 2.5) { area = inBr[0]; center = c2; main = m2; } } } }
-  const farRaw = (await famous(center, 80, 25, NOT_TOWN, 120, 200000)) || [];
+  // The day trips out (80 km round) are the slowest question here (Bath, Nov 24: 81 s with its retry), longer than the app
+  // waits for one ask: it gets what is left of 40 s of this ask, one try (R-34). When it doesn't answer in time the fame
+  // list is kept a day only, so a later ask fills the trips in (the answer itself is kept the moment it comes back).
+  const farLeft = 40000 - (Date.now() - t0), farGot = farLeft >= 5000 ? await famous(center, 80, 25, NOT_TOWN, 120, 200000, farLeft, 1) : null;
+  const farRaw = farGot || [], farMissed = !farGot;
   const mainIds = new Set(main.map(x => x.wd)), lc = s => s.toLowerCase();
   const far = farRaw.filter(x => x.km > 6 && !mainIds.has(x.wd) && lc(x.name) !== lc(area) && lc(x.name) !== lc(port)).slice(0, 25);
   main = main.filter(x => lc(x.name) !== lc(area) && lc(x.name) !== lc(port) && !(selfId && x.wd === selfId)).slice(0, 45);
@@ -928,8 +933,8 @@ async function famousData(label, env, ctx) {
   if (hids.length) { const hj = await getJ("https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(`SELECT ?item (MAX(IF(?h = wd:Q9259, 1, 0)) AS ?un) WHERE { VALUES ?item { ${hids.map(x => "wd:" + x).join(" ")} } ?item wdt:P1435 ?h } GROUP BY ?item`), 25000);
     const hm = new Map(((hj && hj.results && hj.results.bindings) || []).map(b => [b.item.value.split("/").pop(), +b.un.value]));
     [...main, ...far].forEach(x => { if (hm.has(x.wd)) { x.heritage = true; x.unesco = hm.get(x.wd) === 1; } }); }
-  const res = { area, port, center, main, far };
-  await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: 30 * 86400 }); // kept before the next stage starts (see voyageKept)
+  const res = Object.assign({ area, port, center, main, far }, farMissed ? { farMissed: true } : {});
+  await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (farMissed ? 1 : 30) * 86400 }); // kept before the next stage starts (see voyageKept)
   return res;
 }
 
@@ -1251,7 +1256,7 @@ async function sourcesData(label, env, ctx) {
   lap("next");
   const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T };
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
-  const ttl = { expirationTtl: (enV.pages && fam.main.length && !mapMissed ? 30 : 1) * 86400 };
+  const ttl = { expirationTtl: (enV.pages && fam.main.length && !mapMissed && !fam.farMissed ? 30 : 1) * 86400 };
   ctx.waitUntil(Promise.all([env.USAGE.put(key, JSON.stringify(res), ttl), placeKey ? env.USAGE.put(placeKey, JSON.stringify(res), ttl) : null]));
   return res;
 }
