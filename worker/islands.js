@@ -134,3 +134,4 @@ export async function islandsData(centre, env, codeKey, sha) {
   if (!open) await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: 30 * 86400 });
   return res;
 }
+export { walkTo as _walkTo };
