@@ -25,6 +25,8 @@
 //   walk       a ride slower than walking the same way (more than 5 min slower, under 3 km)
 //   walkpref   a traveler who walks little sent on a walk over 1.2 km straight when the ride offers another way
 //   garbled    code words on the screen: "[object Object]", "undefined", "NaN", "null"
+//   keptwrong  a picked or must-see sight given up for time while a lesser one next door, as long to visit, stays
+//   roomleft   a sight given up for time while the day still has room for it, the ride there and back, and 20 min spare
 //   zero       a ride of no time between places apart
 //   twice      the same sight planned on two days of one trip
 //   pick       a traveler's pick left out with nothing said
@@ -105,11 +107,15 @@ const shapes = {
 // Edits a traveler makes, on one day.
 const edit = (b, d) => { const c = b.cities[d.city]; if (!c) return 'none'; const ids = (c.sites || []).map(s => String(s.id)), far = (c.farther || []).map(s => String(s.id));
   const r = rnd();
-  if (r < 0.12) { d.selected = []; d.cleared = true; return 'emptied'; }
-  if (r < 0.24) { d.selected = ids.slice(); return 'every sight ticked'; }
-  if (r < 0.40) { const s = ids.filter(() => chance(0.3)).slice(0, 6); d.selected = s; return 'some ticked'; }
-  if (r < 0.50) { const s = ids.filter(() => chance(0.35)).slice(0, 5); d.selected = s; d.order = s.slice().reverse(); return 'own order (reversed)'; }
-  if (r < 0.58 && far.length) { d.selected = [pick(far)].concat(ids.filter(() => chance(0.2)).slice(0, 2)); return 'trip out ticked'; }
+  // A list the traveler ticked or emptied is their own (the app sends own: true, as listIsOwn says, and mine: their ticks).
+  // Until Nov 24 these edits went out with own: false, a state the app never sends: every traveler-edited day was planned
+  // as the app's suggestion (fault audit seed 48).
+  const mineOf = () => { d.own = true; d.mine = (d.selected || []).slice(); };
+  if (r < 0.12) { d.selected = []; d.cleared = true; mineOf(); return 'emptied'; }
+  if (r < 0.24) { d.selected = ids.slice(); mineOf(); return 'every sight ticked'; }
+  if (r < 0.40) { const s = ids.filter(() => chance(0.3)).slice(0, 6); d.selected = s; mineOf(); return 'some ticked'; }
+  if (r < 0.50) { const s = ids.filter(() => chance(0.35)).slice(0, 5); d.selected = s; d.order = s.slice().reverse(); mineOf(); return 'own order (reversed)'; }
+  if (r < 0.58 && far.length) { d.selected = [pick(far)].concat(ids.filter(() => chance(0.2)).slice(0, 2)); mineOf(); return 'trip out ticked'; }
   if (r < 0.64) { d.mealPrefs = { Lunch: { skip: true } }; return 'lunch skipped'; }
   if (r < 0.70) { d.meet = true; return 'group trip'; }
   return 'as the app picks'; };
@@ -165,6 +171,22 @@ const checkTrip = (name, b, edits) => {
     // garbled: words the code meant for itself on the screen ("[object Object]", "undefined", "NaN", "null").
     { const bad = []; const scan = (v, d, k) => { if (d > 4 || bad.length > 2) return; if (typeof v === 'string') { if (/\[object |\bundefined\b|\bNaN\b|\bnull\b/.test(v)) bad.push(k + ': ' + v.slice(0, 90)); } else if (Array.isArray(v)) v.forEach(y => scan(y, d + 1, k)); else if (v && typeof v === 'object') for (const kk of Object.keys(v)) scan(v[kk], d + 1, kk); };
       its.forEach(x => ['name', 'how', 'note', 'steps', 'from', 'to', 'why', 'lines', 'options'].forEach(f => scan(x[f], 0, f))); scan(p.explain, 0, 'explain'); bad.forEach(m => add('garbled', tag, m)); }
+    // keptwrong: when a day is too full, a sight given up "for time" never loses its place to a lesser sight next door that
+    // takes as long. Judged on the guide's own facts (must-see, the traveler's own pick), never the planner's worth score:
+    // a pick or must-see dropped while a non-pick (or non-must-see) within 0.6 km, of at least the same visit length, stays.
+    if (!p.safe && (p.dropped || []).length) { const all = (c0 => (c0.sites || []).concat(c0.farther || []))(b.cities[d.city] || {}), byId = id => all.find(y => String(y.id) === String(id));
+      const pickd = new Set(d.own ? (d.selected || []).map(String) : []), must = x => !!(x && (x.mustSee || (x.tags || []).includes('must-see')));
+      const rank = x => (pickd.has(String(x.id)) ? 2 : 0) + (must(x) ? 1 : 0);
+      for (const id of p.dropped) { const D = byId(id), why = (p.dropWhy || {})[id] || ''; if (!D || !isFinite(D.lat) || !/didn't fit|time/i.test(why) || /open|shut|closed|boat|lunch|last entry/i.test(why)) continue;
+        const K = st.filter(x => ![x.id].concat(x.includesIds || []).some(y => pickd.has(String(y)))).map(x => byId(x.id)).find(k => k && E.hav(k, D) <= 0.6 && rank(k) < rank(D) && (k.minutes || 60) >= (D.minutes || 60));
+        if (K) add('keptwrong', tag, `${D.name} (${pickd.has(String(D.id)) ? 'picked' : ''}${must(D) ? ' must-see' : ''}, ${D.minutes || 60} min) given up for time while ${K.name} (${K.minutes || 60} min, ${E.hav(K, D).toFixed(2)} km away) stays`); } }
+    // roomleft: a sight given up "for time" while the day, as shown, still has the time for it: its visit and the trip there
+    // and back from the nearest stop (a taxi's worth: 25 km/h on 1.4 times the straight line, plus 10 min each way) plus 20
+    // min to spare fit between the day's last item and the time the day must end. Never on a day with a time to be back.
+    if (!p.safe && !hard && isFinite(p.endBy) && isFinite(p.end) && (p.dropped || []).length && st.length) { const all = (c0 => (c0.sites || []).concat(c0.farther || []))(b.cities[d.city] || {});
+      for (const id of p.dropped) { const D = all.find(y => String(y.id) === String(id)), why = (p.dropWhy || {})[id] || ''; if (!D || !isFinite(D.lat) || D.far || !/fill the time|time is left|didn't fit/i.test(why)) continue;
+        const near = Math.min(...st.filter(x => E.hasPos(x)).map(x => E.hav(x, D))), leg = near * 1.4 / 25 * 60 + 10, need = (D.minutes || 60) + 2 * leg + 20, free = p.endBy - p.end;
+        if (isFinite(near) && free >= need) add('roomleft', tag, `${D.name} given up for time (${D.minutes || 60} min, ${near.toFixed(1)} km from a stop) with ${Math.round(free)} min free at the end of the day`); } }
     // shut / late
     its.forEach(x => { if (x.t === 'stop' && x.late) add('shut', tag, `${x.name} reached after last entry`); if (x.t === 'meal' && x.shut) add('shut', tag, `${x.meal} at ${x.name} when shut`); });
     // lunch
@@ -178,7 +200,7 @@ const checkTrip = (name, b, edits) => {
     const picked = (d.selected || []).map(String), inPlan = new Set(); st.forEach(x => { inPlan.add(String(x.id)); (x.includesIds || []).forEach(y => inPlan.add(String(y))); });
     const dropped = new Set((p.dropped || []).map(String)), folded = new Set((p.folded || []).map(String));
     if (!p.safe) picked.forEach(id => { if (inPlan.has(id) || dropped.has(id) || folded.has(id)) return; const sx = (c.sites || []).concat(c.farther || []).find(y => String(y.id) === id); if (!sx) return;
-      const nm = String(sx.name).split(',')[0]; if (s.includes(nm)) return;
+      const nm = String(sx.name).split(',')[0].toLowerCase(); if (s.toLowerCase().includes(nm)) return; // the screen capitalises a guide's lower-case name ("parc Monceau" shown "Parc Monceau")
       // Claimed by another day of the trip (a pick ticked on two days belongs to one) is said on the screen as "on day N".
       if ([...seen.entries()].some(([k, v]) => k === id && v !== i) || plans.some((q, j) => j !== i && q && q.items && q.items.some(y => y.t === 'stop' && (String(y.id) === id || (y.includesIds || []).map(String).includes(id))))) return;
       add('pick', tag, `${sx.name} ticked, not planned, not said`); });
@@ -215,7 +237,7 @@ for (let n = 0; n < N; n++) {
 }
 const outFile = arg('out', ''); if (outFile) fs.writeFileSync(outFile, JSON.stringify(trips.map(t => ({ name: t.name, edits: t.edits, bucket: t.b }))));
 console.log(`Odd trips: ${tripsN} trips, ${daysN} days, ${plannedN} days planned (seed ${SEED}, ${Math.round((Date.now() - t0) / 1000)} s)`);
-const order = ['slow', 'error', 'nan', 'back', 'leaveby', 'order', 'start', 'lunch', 'lunchtime', 'shut', 'walk', 'walkpref', 'garbled', 'zero', 'twice', 'pick', 'untrue', 'zigzag'];
+const order = ['slow', 'error', 'nan', 'back', 'leaveby', 'order', 'start', 'lunch', 'lunchtime', 'shut', 'walk', 'walkpref', 'garbled', 'keptwrong', 'roomleft', 'zero', 'twice', 'pick', 'untrue', 'zigzag'];
 for (const k of order) { const n = out[k] || 0; console.log(`${n ? 'FAIL' : 'ok  '} ${k.padEnd(9)} ${n}`); (examples[k] || []).slice(0, SHOW).forEach(e => console.log('       ' + e)); }
 if (process.env.ALL) fs.writeFileSync(process.env.ALL, JSON.stringify(examples, null, 1));
 // --warn rule,rule: listed, not failed (a finding handed to the thread that owns it). Never for a safety rule: an error, a
