@@ -5131,6 +5131,10 @@ function render() {
   // (data arriving, live updates); only a tap outside or picking an item closes it.
   const menuKey = el => el.id || ((el.querySelector("summary") || {}).getAttribute && el.querySelector("summary").getAttribute("aria-label")) || "";
   const openMenus = [...document.querySelectorAll("#view details.moremenu[open]")].map(menuKey).filter(Boolean);
+  // Choose sights redrawn on the same visit by anything (a plan or fit answer arriving, the clock): the card last
+  // ticked, else the first card in view, stays where it was on screen (R-28; Nov 24 gate, Vienna: a badge above grew
+  // to two lines 1-2 s after a tick and pushed the ticked card down 12 px).
+  const spot = view === "sites" && paneMemo.key === pkey ? viewSpot() : null;
   renderView();
   if (sideMin) { const sd = document.querySelector("#view .sitesside"); if (sd) sd.style.minHeight = sideMin + "px"; }
   if (view === "sites") { if (listRoomKey !== pkey || !sideMin) { listRoom = 0; listRoomKey = pkey; } else if (listRoom) placeRoom(); }
@@ -5152,6 +5156,7 @@ function render() {
   // A re-render of the same screen (live updates, sync, data arriving) never moves what you're looking at:
   // put every panel, and the page itself, back exactly where it was, after folds have reopened.
   if (paneMemo.same) { panes().forEach(el => { const y = pos[el.dataset.pane || "view"]; if (y) el.scrollTop = y; }); if (winY && Math.abs(window.scrollY - winY) > 1) window.scrollTo(0, winY); }
+  if (spot) spot();
   centerChip(); shownFp = viewFp(); pinChip(); seedSoon();
 }
 // Speed: a new trip's days get their starting picks in the background, one day at a time while the app is idle,
@@ -6308,7 +6313,7 @@ let spotRef = null; // the card kept in place after the last tick, kept in place
 function viewSpot() {
   const vis = x => cardShown(x) && x.getBoundingClientRect().top > 0 && x.getBoundingClientRect().top < innerHeight;
   const r = spotRef && [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(spotRef)}"]`)].find(vis);
-  const c = r || [...document.querySelectorAll("#view .sitesmain [data-card]")].find(x => cardShown(x) && x.getBoundingClientRect().top > 160);
+  const c = r || [...document.querySelectorAll("#view .sitesmain [data-card]")].find(x => cardShown(x) && x.getBoundingClientRect().top > (parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--pinh")) || 0) + 60);
   return c ? cardSpotOf(c.dataset.card, true) : () => {};
 }
 // Ticking keeps your place in the list: the card that followed the ticked one stays where it was on screen.
@@ -6391,6 +6396,7 @@ function schedWhen(o) { const d = day(); return `${fmtDow(o.date)} ${fmtDate(o.d
 // ---------- The sights list's steady order (Richard, Nov 17) ----------
 const SORT_HOLD_MS = 2500; // longest the sights list waits for the fits check before it shows (then updates cards in place)
 let pickFrozen = null; // the list as set when the page opened: section and place of every sight
+if (typeof window !== "undefined") window.__kairouteSorted = () => pickFrozen && { key: pickFrozen.key, t0: pickFrozen.t0, settled: pickFrozen.settled }; // checks: when the list was last sorted
 const frozenKey = (d, city) => trip.days.indexOf(d) + "|" + keyOf(city.city) + "|" + siteFilter + "|" + prefsSig();
 // Where the day starts (hotel, port, station), for "nearest first".
 // Sightseeing starts after the last of the day's opening steps (the hotel after an airport arrival).
@@ -6517,7 +6523,11 @@ function renderSites(d) {
   // A sight that arrives later (a fuller guide) takes its section when it first shows, then keeps it like the rest.
   const secNow = new Map(all.map(x => { let k = pickFrozen.settled ? pickFrozen.secs.get(x.id) : secLive.get(x.id); if (pickFrozen.settled && !k) { k = secLive.get(x.id); pickFrozen.secs.set(x.id, k); } return [x.id, k]; }));
   const holding = !pickFrozen.settled;
-  const inSec = k => all.filter(x => secNow.get(x.id) === k).sort((x, y) => (k === "sched" ? trip.days.indexOf(elsew[x.id]) - trip.days.indexOf(elsew[y.id]) : 0) || pickFrozen.ord.get(x.id) - pickFrozen.ord.get(y.id));
+  // "Already picked on other days" goes by that day as it was when the list was sorted: ticking one moves it to today,
+  // and it must stay where it is on screen (Nov 24: it jumped within its section, under a check that only watched the
+  // ticked card, which the app keeps under the finger).
+  const dayAt = x => { if (!pickFrozen.days) pickFrozen.days = new Map(); if (pickFrozen.settled && !pickFrozen.days.has(x.id)) pickFrozen.days.set(x.id, trip.days.indexOf(elsew[x.id])); return pickFrozen.days.has(x.id) ? pickFrozen.days.get(x.id) : trip.days.indexOf(elsew[x.id]); };
+  const inSec = k => all.filter(x => secNow.get(x.id) === k).sort((x, y) => (k === "sched" ? dayAt(x) - dayAt(y) : 0) || pickFrozen.ord.get(x.id) - pickFrozen.ord.get(y.id));
   const picked = inSec("picks"), mustL = inSec("must"), fitL = inSec("main"), wontL = inSec("wont"), moreL = inSec("more"), farL = inSec("far");
   const schedL = inSec("sched");
   const refs = [], near = { refs, anc, fs: fsMap, my, st }; sitesCtx = { d, plan, near, secs: secNow };

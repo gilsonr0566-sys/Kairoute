@@ -42,6 +42,8 @@ const SEEN = () => { const out = {}; for (const c of document.querySelectorAll('
   if (window.__steadyDiag) for (const e of document.querySelectorAll('#view .sitesmain [data-card], #view .sitesmain > *, #view .sitesside, header.top, #dayRowSpace, #view > *')) { const b = e.getBoundingClientRect(); if (b.height) out['@ ' + (e.dataset.card || e.id || e.className.slice(0, 24))] = Math.round(b.top) + '/' + Math.round(b.height); }
   return out; };
 const moves = (a, b, tol = 2) => Object.keys(a).filter(id => id in b && (Math.abs(a[id] - b[id]) > tol || (id[0] === '@' && a[id] !== b[id]))).map(id => `${id} ${a[id]}→${b[id]}`);
+// The cards on screen in both looks, in their order down the screen: a re-sort changes it even when the tapped card stays.
+const orderOf = (o, other) => Object.keys(o).filter(k => k[0] !== '@' && k in other).sort((x, y) => o[x] - o[y]).join(',');
 const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a[id] < 700).map(id => `${id} (was at ${a[id]})`); // vanished from mid-screen
 (async () => {
   const browser = await chromium.launch(); const srv = await serve(FILE);
@@ -84,6 +86,7 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         const on = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); return !!(x && x.checked); }, id); if (!on) continue; ticked.push(id);
         const a = await p.evaluate(SEEN); await p.waitForTimeout(2700); await settle(); const b = await p.evaluate(SEEN);
         check(`${tag}: ticking ${id} keeps it under the finger`, id in a && Math.abs(a[id] - before[id]) <= 4, (id in a ? `moved ${before[id]}→${a[id]} px` : 'it left the screen') + (process.env.DIAG ? ' DIAG ' + moves(before, a).slice(0, 30).join(' ; ') : ''));
+        check(`${tag}: ticking ${id} keeps the cards around it in their order`, orderOf(before, a) === orderOf(a, before) && !gone(before, a).length, orderOf(before, a) !== orderOf(a, before) ? `order on screen was ${orderOf(before, a)}, now ${orderOf(a, before)}` : 'gone from the screen: ' + gone(before, a).slice(0, 3).join(', '));
         const late = moves(a, b).concat(gone(a, b).map(x => 'gone ' + x));
         check(`${tag}: after ticking ${id}, nothing jumps later`, !late.length, late.slice(0, 3).join(', '));
       }
@@ -113,6 +116,7 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         const before = await p.evaluate(SEEN); await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(300);
         const a = await p.evaluate(SEEN); scr.push(await p.evaluate(SCR)); await p.waitForTimeout(2700); await settle(); const b = await p.evaluate(SEEN);
         check(`${tag}: unticking ${id} keeps it under the finger`, id in a && Math.abs(a[id] - before[id]) <= 4, (id in a ? `moved ${before[id]}→${a[id]} px` : 'it left the screen') + (process.env.DIAG ? ' DIAG ' + moves(before, a).join(' ; ') + ' DIAGSCROLL ' + JSON.stringify(scr) : ''));
+        check(`${tag}: unticking ${id} keeps the cards around it in their order`, orderOf(before, a) === orderOf(a, before) && !gone(before, a).length, orderOf(before, a) !== orderOf(a, before) ? `order on screen was ${orderOf(before, a)}, now ${orderOf(a, before)}` : 'gone from the screen: ' + gone(before, a).slice(0, 3).join(', '));
         const late = moves(a, b).concat(gone(a, b).map(x => 'gone ' + x));
         check(`${tag}: after unticking ${id}, nothing jumps later`, !late.length, late.slice(0, 3).join(', '));
       }
@@ -135,7 +139,9 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(300);
         if (await p.evaluate(() => !!document.querySelector('.fitbox, .closedbox'))) { await p.evaluate(() => { window.__kairoutePlant = ''; const c = document.querySelector('.fitbox [data-act="fitcancel"], .closedbox [data-act="fitcancel"]'); if (c) c.click(); }); continue; }
         const a = await p.evaluate(SEEN); await p.evaluate(() => { window.__kairoutePlant = ''; });
-        caught = !(id in a) || Math.abs(a[id] - before[id]) > 4;
+        // A re-sort shows as the tapped card leaving the finger, or as the cards on screen changing order around it
+        // (the app keeps the tapped card in place through any redraw, Nov 24, so the order is what gives a re-sort away).
+        caught = !(id in a) || Math.abs(a[id] - before[id]) > 4 || orderOf(before, a) !== orderOf(a, before) || gone(before, a).length > 0;
         await settle(); await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); if (x && x.checked) x.click(); }, id); await p.waitForTimeout(400); break; }
       check(`proof: the planted bug "re-sort after a tap" is caught (${size} ${tripName})`, caught === true, caught === null ? 'NOT TESTED: no sight to tick for the proof' : 'the check did not see the card move: it is blind');
     }
