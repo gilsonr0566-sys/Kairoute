@@ -44,6 +44,8 @@ const P = {
   'dinner at a dinner hour': ['arrive', rep('FROM\n6:30 pm', 'FROM\n11:43 pm')],
   'lunch on a day out': ['naples', rep('\nL\nLunch: Sorbillo', '\n4\nSorbillo')],
   'bags stored for something': ['arrive', t => rep('\nH\nCheck in or drop bags', '\nH\nLeave your bags in luggage storage')(t).replace('\n1\nLa Rambla & La Boqueria market', '\nH\nCollect your bags')],
+  'points are places': ['naples', rep('The opera house and the Galleria 9:27 am\n', 'The opera house and the Galleria 9:27 am\nClosing 9:33 am\n')],
+  'a place once': ['naples', rep('The opera house and the Galleria 9:27 am\n', 'The opera house and the Galleria 9:27 am\nCertosa e Museo di San Martino 9:33 am\n')],
   'sight once': ['naples', rep('Santa Maria del Carmine Maggiore\n30 min', 'Certosa e Museo di San Martino\n30 min')],
   'no broken values': ['naples', add('Walk · NaN min')],
   'date on the day': ['naples', t => t, { date: '2027-07-13' }],
@@ -59,7 +61,7 @@ const P = {
   'English letters': ['naples', rep('Santa Maria del Carmine Maggiore\n30 min', 'Σάντα Μαρία\n30 min')],
   'no absurd ride choice': ['naples', rep('Walk · 39 min', 'Bus · 10 h 49 min')],
   'never planned while closed': ['naples', rep('Open 9:00 am–8:00 pm travel guide', 'Closed on Mondays')],
-  'unknown hours said with the planned window': ['naples', rep('Hours not confirmed: planned 9:00 am–5:00 pm. Check before you go', 'Hours not confirmed. Check before you go')],
+  'unknown hours said with the planned window': ['naples', rep('Hours not confirmed: planned as if open 9:00 am–5:00 pm. Check before you go', 'Hours not confirmed. Check before you go')],
   'visit ends by closing': ['naples', rep('Open 8:30 am–1:30 pm, 4:30 pm–7:30 pm', 'Open 8:30 am–12:30 pm')],
   'arrive by last entry': ['naples', rep('Open 9:00 am–7:00 pm, last entry 6:30 pm', 'Open 9:00 am–7:00 pm, last entry 2:00 pm')],
 };

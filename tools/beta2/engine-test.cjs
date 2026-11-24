@@ -1191,6 +1191,17 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
       ok((r => r.includes('a') && r.includes('p') && !r.includes('s'))(E.foldPicks([area, chap, st2], E.makeGroups([area, chap, st2]), () => false).picks.map(x => x.id)), 'an area is never folded into a small building beside it (a historic centre into a chapel); a street inside it is part of its walk'); }
     ok(!E.foldPicks([tower], g, () => false).folded.c && E.foldPicks([tower], g, () => false).picks.length === 1, 'a sight inside a visit not picked stays a stop of its own');
     const ga = E.foldPicks([ot, mus], g, s => s.id === 'o'); ok(ga.picks.length === 1, 'inside a place with its own opening hours (a gate) is folded, even a museum');
+    // R-16, one story one stop (Nov 24, Richard's Chania screenshot): a sight the walk's story stops at (onWalk) is on that
+    // walk, even a gated one in an open old town; the walk keeps the time the two had side by side; alone it stays a stop.
+    { const ow = { id: 'w', name: 'Old Town Lanes', category: 'Old town', lat: 40.2, lng: 10.2, minutes: 60, tags: ['open-air'] }, syn = { id: 'y', name: 'Old Synagogue', category: 'Synagogue', lat: 40.2008, lng: 10.2012, minutes: 30, mustSee: true, onWalk: ['w'] },
+        far2 = { id: 'z', name: 'Hill Chapel', lat: 40.23, lng: 10.23, minutes: 30, onWalk: ['w'] };
+      const gw = E.makeGroups([ow, syn, far2]); ok(gw.groupOf.get('y') === 'w' && gw.groupOf.get('z') === 'w', 'a sight a story walk stops at belongs to that walk');
+      const fw = E.foldPicks([ow, syn], gw, () => false), w2 = fw.picks.find(x => x.id === 'w');
+      ok(fw.picks.length === 1 && w2 && w2.minutes === 60 && fw.folded.w[0].walk, `a sight on the walk's story folds into the walk, one stop, the walk's time kept (${fw.picks.map(x => x.id + ' ' + x.minutes)})`);
+      const fw2 = E.foldPicks([Object.assign({}, ow, { minutes: 30 }), syn], gw, () => false); ok(fw2.picks[0].minutes === 60, `a short walk grows to hold the sight's own time with half an hour around it (${fw2.picks[0].minutes})`);
+      const nw = E.foldPicks([ow, Object.assign({}, syn, { onWalk: undefined })], E.makeGroups([ow, Object.assign({}, syn, { onWalk: undefined, lat: 40.21 })]), () => false);
+      ok(nw.picks.length === 2, 'without the story, a gated sight in an open old town stays a stop of its own');
+      ok(E.foldPicks([syn], gw, () => false).picks.length === 1, 'a sight on a walk that is not planned that day is a stop of its own'); }
     // In a plan: one stop, the folded sight named on it, claimed for that day, a line that says so.
     const trip = { prefs: { walk: 'medium' }, cities: { k: { key: 'k', name: 'K', sites: all.map(x => Object.assign({}, x)), restaurants: [] } },
       days: [{ i: 0, type: 'land', city: 'k', date: '2027-05-04', startTime: '09:00', hours: 9, lodging: { name: 'Hotel', lat: 40.005, lng: 10.005 }, selected: ['c', 't'], own: true }, { i: 1, type: 'land', city: 'k', date: '2027-05-05', startTime: '09:00', hours: 9, lodging: { name: 'Hotel', lat: 40.005, lng: 10.005 }, selected: [] }] };

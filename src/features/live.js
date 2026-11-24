@@ -191,7 +191,7 @@ function stopHoursLine(it) {
   const h = it.hours; if (!h || (!h.need && !h.spans && !h.notes && !h.holiday)) return "";
   const bits = [];
   if (h.spans && h.spans.length) bits.push(`Open ${esc(spanTxt(h.spans))}${h.last != null ? `, last entry ${fmt(h.last)}` : ""}${it.wait ? " (you start at opening)" : ""}${h.seasonChange ? " (the shorter of its seasonal hours)" : ""} <small>${esc(HOURS_SRC[h.src] || h.src || "listed hours")}</small>`);
-  else if (h.unknown) bits.push(`<span class="hoursunk">Hours not confirmed</span>: planned ${fmt(h.planned[0])}–${fmt(h.planned[1])}. Check before you go`);
+  else if (h.unknown) bits.push(`<span class="hoursunk">Hours not confirmed</span>: planned as if open ${fmt(h.planned[0])}–${fmt(h.planned[1])}. Check before you go`);
   else if (h.allDay) bits.push("Open all day");
   if (h.holiday) bits.push(`${esc(h.holiday)} (public holiday): hours not confirmed`);
   (h.notes || []).filter(n => !/public holiday/.test(n)).forEach(n => bits.push(esc(n[0].toUpperCase() + n.slice(1))));

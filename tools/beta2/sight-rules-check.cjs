@@ -142,6 +142,20 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
     ok('two day trips within 3 km of each other are one outing, the better known kept (Didyma and Didim)', got.includes('Testyma') && !got.includes('Testim') && got.includes('Test Lakes'), got);
     const pr = await pg.evaluate(() => { const b = { builtin: true }; return [window.__kairoutePriceOf({ cost: 150, famousFix: true }, b), window.__kairoutePriceOf({ cost: 0, srcOnly: true }, b), window.__kairoutePriceOf({ cost: 40 }, b), window.__kairoutePriceOf({ cost: 0 }, b), window.__kairoutePriceOf({ cost: 20 }, { ai: true }), window.__kairoutePriceOf({ fee: 'free' }, {})]; });
     ok('a price shows only where a source gives it: none for an AI guess or an unknown, the written guide\'s price and "Free" kept', pr[0] === null && pr[1] === null && pr[2] === 40 && pr[3] === 0 && pr[4] === null && pr[5] === 0, pr); }
+  // R-16 one story, one stop (Nov 24, Richard's Chania screenshot: the old-town walk's story on the synagogue's stop and
+  // again on the walk's own stop). A story goes to the one sight it is about; a sight its walk stops at, close by, is on
+  // that walk; a chapter's sight alone never gets the whole walk; a saved stop given a story before the rule gets it off.
+  { const st = await pg.evaluate(() => { const K = window.__kairouteScripts; if (!K.STOP_SCRIPTS.some(x => x.id === 'test-walk'))
+      K.STOP_SCRIPTS.push({ id: 'test-walk', v: 1, city: /Storyopolis/, site: /\b(old lanes|story synagogue)\b/i, title: 'Storyopolis Old Lanes', where: 'Storyopolis Old Lanes',
+        parts: ['The fountain square', 'Story Synagogue', 'Kastro hill', 'Before you go'].map(name => ({ name, minutes: 1, stand: '', paras: ['x'] })) });
+    const s = (id, name, lat, lng, more) => Object.assign({ id, name, lat, lng, minutes: 30 }, more || {});
+    const a = { city: 'Storyopolis', sites: [s('syn', 'Story Synagogue', 40.0008, 20.0012), s('ol', 'Old Lanes of Storyopolis', 40, 20, { minutes: 60 }), s('k', 'Kastro', 40.002, 20.002), s('kf', 'Kastro', 40.05, 20.05), s('m', 'Town Museum', 40.001, 20.001)] };
+    const b = { city: 'Storyopolis', sites: [s('syn', 'Story Synagogue', 40.0008, 20.0012, { scriptV: 'test-walk1', parts: [{ name: 'x' }, { name: 'y' }] })] };
+    return { a: K.stops(a), b: K.stops(b), bParts: b.sites[0].parts || null }; });
+    const g = (L, id) => L.find(x => x.id === id) || {};
+    ok('a story goes to the one sight it is about, not to a sight its walk stops at (Chania old town and Etz Hayyim)', g(st.a, 'ol').story === 'test-walk1' && !g(st.a, 'syn').story && st.a.filter(x => x.story).length === 1, st.a);
+    ok('a sight a story walk stops at, close by, is on that walk; one of the same name far away is not', JSON.stringify(g(st.a, 'syn').onWalk) === '["ol"]' && JSON.stringify(g(st.a, 'k').onWalk) === '["ol"]' && !g(st.a, 'kf').onWalk && !g(st.a, 'm').onWalk, st.a);
+    ok('a chapter\'s sight alone never gets the whole walk, and a saved one that had it loses it', !st.b[0].story && !st.bParts, st.b); }
   const rel = await pg.evaluate(() => window.__kairoutePlaceRel({ name: 'Holstentor', lat: 53.8662, lng: 10.6797 }, { name: 'Holstentor', lat: 53.55, lng: 9.99 })[0]);
   ok('the same name 59 km apart is two places (Holstentor in Lubeck is not one near Hamburg)', rel !== 'same', rel);
   ok('no source sight is called "Church" unless it is one', !sites.some(s => s.cat === 'Church' && /mosque|synagogue|shrine|-ji|-taisha/i.test(s.name)));
