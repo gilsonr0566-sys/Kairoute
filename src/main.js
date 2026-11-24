@@ -1874,7 +1874,7 @@ function checksCard(d, city, plan) {
   // (failure map, Nov 22: one boarding day showed four different leave times).
   const F = !plan.over ? dayFacts(d, plan) : null, freeOn = F && F.left >= 30 && F.leaveBy != null && !(plan.dropped || []).length && !(plan.w && plan.w.straight);
   if (plan.over) add("warn", `The day runs past ${fmt(plan.endBy)}. Take out a stop.`);
-  else if (freeOn) add("ok", `The day fits, with travel, meals and lines allowed for: ${dur(F.left)} of free time, then leave by ${fmt(F.leaveBy)} to be back by ${fmt(plan.endBy)}.`);
+  else if (freeOn) add("ok", freeAtStart(plan, F) ? `The day fits, with travel, meals and lines allowed for: ${dur(F.left)} of free time. Nothing is planned away from here, so leave in time from wherever you go: be back at ${esc(backWhere(d, plan))} by ${fmt(plan.endBy)}.` : `The day fits, with travel, meals and lines allowed for: ${dur(F.left)} of free time, then leave by ${fmt(F.leaveBy)} to be back by ${fmt(plan.endBy)}.`);
   else add("ok", `The day fits: done by ${fmt(plan.end)}, with travel, meals and lines allowed for.`);
   if ((plan.dropped || []).length) add("warn", dropLine(d, plan, plan.dropped, true));
   const short = (plan.stops || []).filter(s => s.shortFrom && s.shortFrom > s.minutes);

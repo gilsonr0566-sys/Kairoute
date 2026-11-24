@@ -94,8 +94,9 @@ function rules(text, info = {}) {
     if (small && info.nightDep !== 'night' && stops.length) add('S1', 'small-hours departure asked', `a ${info.time} departure ${info.nightDep ? 'this morning' : 'not yet placed'} has ${stops.length} sight(s) planned`); }
   // A time to leave that is the time to be back, from a walk of no time (Nov 23 recheck, evening port call with nothing
   // planned ashore: "Leave here by 10:45 pm to be back by 10:45 pm", "From the cruise port: walk 0 min, so leave by").
-  { const m = /Leave here by (\d{1,2}:\d\d\s*[ap]m) to be back by (\d{1,2}:\d\d\s*[ap]m)/i.exec(raw);
-    if (m && T(m[1]) != null && T(m[1]) === T(m[2])) add('S2', 'leave-by is not the back-by', `"Leave here by ${m[1]} to be back by ${m[2]}": the same time, so the words say nothing true`);
+  // Any wording counts ("Leave here by X to be back by X", "then leave by X to be back by X" in What we checked).
+  { for (const m of raw.matchAll(/leave (?:here )?by (\d{1,2}:\d\d\s*[ap]m) to be back by (\d{1,2}:\d\d\s*[ap]m)/gi))
+      if (T(m[1]) != null && T(m[1]) === T(m[2])) add('S2', 'leave-by is not the back-by', `"${m[0]}": the same time, so the words say nothing true`);
     if (/: walk 0 min, so leave by/.test(raw)) add('S2', 'leave-by is not the back-by', 'a leave-by from a walk of 0 min'); }
   // One time to head back (Nov 24, outside test round 7b: "Leave Rome by mid-afternoon" on a day whose plan leaves St Peter's
   // at 5:30 pm): on a day with a LEAVE BY, no other words tell the traveler a different, vaguer time to head back.
