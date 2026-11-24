@@ -495,6 +495,12 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
       ok(fx[E.eatKey('Noon Place')] && JSON.stringify(fx[E.eatKey('Noon Place')].oh.spans) === '[[720,930]]' && sun[E.eatKey('Noon Place')].closed && fx[E.eatKey('Odd')] && fx[E.eatKey('Odd')].closed && !fx[E.eatKey('Junk')]
         && E.eatShut(sun[E.eatKey('Noon Place')], 'Lunch') && !E.eatShut(fx[E.eatKey('Noon Place')], 'Lunch'),
         'a place to eat with map hours: open spans read for the date, shut on its day off and out of its season (one hours reader), unreadable hours left unknown'); }
+    // R-13 (Nov 24, Tangs in Southampton at 11:50, opens noon): the day's saved facts and the map hours both hold.
+    { const tg = E.eatFactsFor({ date: '2028-01-05', eats: { tangs: { closed: false, oh: { spans: [[0, 960]], last: null } } } }, [{ name: 'Tangs', hours: 'Mo-Sa 12:00-14:00' }])[E.eatKey('Tangs')];
+      const sun = E.eatFactsFor({ date: '2028-01-09', eats: { tangs: { closed: false, oh: { spans: [[0, 960]], last: null } } } }, [{ name: 'Tangs', hours: 'Mo-Sa 12:00-14:00' }])[E.eatKey('Tangs')];
+      const f = tg && tg.oh && E.hoursFit(tg.oh, 710, 35);
+      ok(!!(tg && JSON.stringify(tg.oh.spans) === '[[720,840]]' && f && f.wait === 10 && sun && sun.closed),
+        "a meal waits for its place's map opening even when the day's saved facts say it is open earlier (and is shut on its map day off)"); }
     if (!noLunch.length) oks++; console.log(`ok   lunch on ${days - said - noLunch.length} of ${days} days over lunchtime (${said} say plainly why not)${noLunch.length ? ', missing silently on ' + noLunch.length : ''}`); }
   console.log(`ok   every ride the kind it is drawn as: ${boats} boat rides, ${piered} rides to or from a pier`); }
 

@@ -134,13 +134,20 @@
   // What is known of each place to eat that day: the day's own facts first, else the hours the place has on the map, read
   // for that date (Nov 23 real-map check: 10 of 140 lunches were planned at places shut at that hour, Sorbillo at 11:45 when
   // it opens at noon, because the map hours never reached the planner). Hours this reader can't fully read stay unknown.
+  // Minutes open in both lists of open spans ([[from, to], ...]).
+  E.spansAnd = (a, b) => { const out = []; for (const [p, q] of a || []) for (const [x, y] of b || []) { const lo = Math.max(p, x), hi = Math.min(q, y); if (hi > lo) out.push([lo, hi]); } return out.sort((m, n) => m[0] - n[0]); };
   E.eatFactsFor = (d, eats) => {
     const out = Object.assign({}, (d && d.eats) || {}); if (!d || !d.date) return out;
     for (const r of eats || []) {
       if (!r || !r.hours || !r.name) continue; const k = E.eatKey(r.name), f = out[k] || out[r.name.toLowerCase()];
-      if (f && (f.closed || (f.oh && f.oh.spans && f.oh.spans.length))) continue;
+      if (f && f.closed) continue;
       const oh = E.ohSpans(r.hours, d.date); if (!oh) continue;
-      out[k] = Object.assign({}, f || {}, oh.spans.length ? { oh, mapHours: r.hours } : { closed: true, mapHours: r.hours });
+      // The day's facts and the place's own map hours both hold: a meal is planned only when both say open (Nov 24, the
+      // testing thread: a trip's saved facts said Tangs was open from midnight to 4 pm, its map hours say noon to 2 pm, and
+      // lunch was planned at 11:50). Class rule R-13: a meal never starts before its place opens, whatever the source.
+      const day = f && f.oh && f.oh.spans && f.oh.spans.length ? f.oh.spans : null;
+      const spans = day ? E.spansAnd(day, oh.spans) : oh.spans;
+      out[k] = Object.assign({}, f || {}, spans.length ? { oh: Object.assign({}, day ? f.oh : oh, { spans }), mapHours: r.hours } : { closed: true, oh: null, mapHours: r.hours });
     }
     return out;
   };
