@@ -18,17 +18,17 @@ async function newTrip(b, city) { const { ctx, p } = await open(b);
   await p.fill('#ts-0-place', city); await p.fill('#ts-0-date', '2027-05-09'); await p.fill('#ts-0-nights', '2'); await p.press('#ts-0-nights', 'Tab');
   await p.getByRole('button', { name: /Build my trip/i }).click();
   for (let k = 0; k < 60; k++) { await p.waitForTimeout(1500); const s = await p.evaluate(() => window.__kairouteState && window.__kairouteState()); if (s && !s.busy && k > 3) break; }
-  const r = await sights(p, 1); await ctx.close(); return r; }
+  const r = await sights(p, 1); r.state = JSON.stringify(await p.evaluate(() => window.__kairouteState && window.__kairouteState())).slice(0, 600); await ctx.close(); return r; }
 (async () => {
   const b = await chromium.launch(); let fails = 0; const F = m => { fails++; console.log('FAIL ' + m); };
   const v = await (await fetch(URL0 + 'version.txt', { cache: 'no-store' })).text().catch(() => '?'); console.log('live build: ' + String(v).trim());
-  { const { ctx, p } = await open(b); const r = await sights(p, 6); console.log('Kusadasi day: ' + r.names.length + ' sights: ' + r.names.join(' | '));
+  { const { ctx, p } = await open(b); const r = await sights(p, 6); console.log('Kusadasi day: ' + r.names.length + ' sights: ' + r.names.join(' | ')); console.log('Kusadasi screen: ' + r.text.slice(0, 3000)); if (!r.names.length) F('Kusadasi: no sights read (check blind)');
     r.names.filter(n => OTHER.test(n)).forEach(n => F('Kusadasi: name in another script: ' + n));
     r.names.filter(n => /^banner$/i.test(n)).forEach(n => F('Kusadasi: junk listing: ' + n));
     const dt = (r.text.match(/Day trip/g) || []).length; console.log('Kusadasi: "Day trip" labels on screen: ' + dt);
     if (/€150|PLANT/.test(r.text)) F('Kusadasi: an AI price or planted text on screen'); await ctx.close(); }
   for (const [city, bad] of [['Paris', /^(the )?bastille$/i], ['Thessaloniki', /walls|ramparts|byzantine (and|&) early christian monuments|paleochristian and byzantine monuments/i]]) {
-    const r = await newTrip(b, city); console.log(city + ': ' + r.names.length + ' sights: ' + r.names.join(' | '));
+    const r = await newTrip(b, city); console.log(city + ': ' + r.names.length + ' sights: ' + r.names.join(' | ')); if (!r.names.length) { F(city + ': no sights read (check blind)'); console.log(city + ' screen: ' + r.text.slice(0, 2000) + ' || state: ' + r.state); }
     r.names.filter(n => OTHER.test(n)).forEach(n => F(city + ': name in another script: ' + n));
     r.names.filter(n => bad.test(n)).forEach(n => F(city + ': ' + n + ' is listed'));
     if (city === 'Paris' && /Bastille[^.]{0,80}(standing|still stands)/i.test(r.text)) F('Paris: the Bastille is called standing'); }
