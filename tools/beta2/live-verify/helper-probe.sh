@@ -1,9 +1,6 @@
 #!/bin/sh
-# Can the live helper be reached the way the published app reaches it? (status codes and the start of each answer)
-O=https://gilsonr0566-sys.github.io
-for src in "$O/Kairoute-Beta2/ai.json" "$O/Kairoute/ai.json"; do echo "== $src"; curl -s -m 20 "$src" | head -c 300; echo; done
-U=$(curl -s -m 20 "$O/Kairoute-Beta2/ai.json" | sed -n 's/.*"url" *: *"\([^"]*\)".*/\1/p'); [ -z "$U" ] && U=$(curl -s -m 20 "$O/Kairoute/ai.json" | sed -n 's/.*"url" *: *"\([^"]*\)".*/\1/p')
-echo "helper: $U"
-for path in "/status" "/sources?city=Paris" "/sources?city=Thessaloniki" "/famous?city=Paris"; do
-  echo "== $path"; curl -s -m 60 -o /tmp/h.out -w "HTTP %{http_code} in %{time_total}s\n" -H "Origin: $O" "$U$path"; head -c 400 /tmp/h.out; echo
-done
+# How long the live helper takes for a city's sources, cold and again (the app gives up sooner than this).
+U=https://kairoute-ai.rickgilson.workers.dev; O=https://gilsonr0566-sys.github.io
+for c in Paris Thessaloniki Lisbon Kusadasi; do for n in 1 2; do
+  echo "== /sources?city=$c try $n"; curl -s -m 280 -o /tmp/h.out -w "HTTP %{http_code} in %{time_total}s, %{size_download} bytes\n" -H "Origin: $O" "$U/sources?city=$c"; head -c 300 /tmp/h.out; echo
+done; done
