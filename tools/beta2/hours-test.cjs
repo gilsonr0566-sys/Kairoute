@@ -147,6 +147,8 @@ ok(!E.isMosque({ name: 'Mosque of Cristo de la Luz', content: 'built as a small 
   const shut = t => R.rules(t, { type: '', date: '' }).some(f => f.rule === 'never planned while closed');
   ok(shut(card('11:45 am', '12:45 pm')), 'screen: lunch at 11:45 at a place whose card says it opens 1:15 pm is caught');
   ok(!shut(card('1:15 pm', '2:15 pm')), 'screen: lunch at opening time passes');
-  ok(!shut(card('1:05 pm', '2:15 pm', ['10 min to spare before lunch at 1:15 pm'])), 'screen: arriving early and waiting for opening passes'); }
+  ok(!shut(card('1:05 pm', '2:15 pm', ['10 min to spare before lunch at 1:15 pm'])), 'screen: arriving early and waiting for opening passes');
+  // Outside test 8d (Bruges, Nov 24): 3 min early with no line saying so reads as lunch before opening.
+  ok(shut(card('1:12 pm', '2:15 pm')) && !shut(card('1:12 pm', '2:15 pm', ['3 min to spare before lunch at 1:15 pm'])), 'screen: a few minutes early must say so, or it reads as lunch before opening'); }
 
 console.log(`\n${oks} checks passed, ${fails} failed`); process.exit(fails ? 1 : 0);
