@@ -1,5 +1,5 @@
 {
- "run": "round8c-2026-11-24",
+ "run": "round8d-2026-11-24",
  "dayWait": 20000,
  "stopShots": false,
  "tickCheck": true,
@@ -1004,6 +1004,306 @@
      "name": "9-phone",
      "phone": true,
      "js": "(async()=>{window.__kairouteAt($D,'plan');await __T.sleep(3000);return 'phone'})()"
+    }
+   ]
+  },
+  {
+   "name": "c01-ljubljana",
+   "label": "Ljubljana, Slovenia, never opened",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Ljubljana, Slovenia",
+     "nights": 2,
+     "date": "2027-08-10",
+     "inBy": "train",
+     "inAt": "11:00",
+     "homeBy": "train",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    }
+   ]
+  },
+  {
+   "name": "c02-porto",
+   "label": "Porto, Portugal, never opened",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Porto, Portugal",
+     "nights": 2,
+     "date": "2027-08-11",
+     "inBy": "train",
+     "inAt": "11:00",
+     "homeBy": "train",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    }
+   ]
+  },
+  {
+   "name": "c03-cartagena-spain",
+   "label": "Cartagena, Spain, never opened",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Cartagena, Spain",
+     "nights": 2,
+     "date": "2027-08-12",
+     "inBy": "train",
+     "inAt": "11:00",
+     "homeBy": "train",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    }
+   ]
+  },
+  {
+   "name": "c04-hobart",
+   "label": "Hobart, Tasmania, never opened",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Hobart, Tasmania",
+     "nights": 2,
+     "date": "2027-08-13",
+     "inBy": "train",
+     "inAt": "11:00",
+     "homeBy": "train",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    }
+   ]
+  },
+  {
+   "name": "c05-bergen",
+   "label": "Bergen, Norway, never opened",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Bergen, Norway",
+     "nights": 2,
+     "date": "2027-08-14",
+     "inBy": "train",
+     "inAt": "11:00",
+     "homeBy": "train",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    }
+   ]
+  },
+  {
+   "name": "c06-santiago",
+   "label": "Santiago, Chile, never opened",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Santiago, Chile",
+     "nights": 2,
+     "date": "2027-08-15",
+     "inBy": "train",
+     "inAt": "11:00",
+     "homeBy": "train",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    }
+   ]
+  },
+  {
+   "name": "c07-savannah",
+   "label": "Savannah, Georgia, never opened",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Savannah, Georgia",
+     "nights": 2,
+     "date": "2027-08-16",
+     "inBy": "train",
+     "inAt": "11:00",
+     "homeBy": "train",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    }
+   ]
+  },
+  {
+   "name": "c08-riga",
+   "label": "Riga, Latvia, never opened",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Riga, Latvia",
+     "nights": 2,
+     "date": "2027-08-17",
+     "inBy": "train",
+     "inAt": "11:00",
+     "homeBy": "train",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    }
+   ]
+  },
+  {
+   "name": "c09-fes",
+   "label": "Fes, Morocco, never opened",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Fes, Morocco",
+     "nights": 2,
+     "date": "2027-08-18",
+     "inBy": "train",
+     "inAt": "11:00",
+     "homeBy": "train",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
+    }
+   ]
+  },
+  {
+   "name": "c10-hoi-an",
+   "label": "Hoi An, Vietnam, never opened",
+   "legs": [
+    {
+     "k": "stay",
+     "place": "Hoi An, Vietnam",
+     "nights": 2,
+     "date": "2027-08-19",
+     "inBy": "train",
+     "inAt": "11:00",
+     "homeBy": "train",
+     "homeAt": "17:00"
+    }
+   ],
+   "steps": [
+    {
+     "name": "1-untick-one",
+     "js": "__T.tap($D,false,1)"
+    },
+    {
+     "name": "2-tick-six-more",
+     "js": "__T.tap($D,true,6)"
+    },
+    {
+     "name": "3-fit-in-one",
+     "js": "__T.fit($D)"
     }
    ]
   }
