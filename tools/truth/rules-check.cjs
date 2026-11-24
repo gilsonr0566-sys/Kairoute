@@ -15,6 +15,7 @@ const START = '2026-11-23T23:30:00Z';
 const PLANTING = new Set(['tools/truth/language-check.cjs', 'tools/truth/screen-rule-proof.cjs', 'tools/truth/no-warn-check.cjs',
   'tools/truth/report-check.cjs', 'tools/truth/rules-check.cjs', 'tools/truth/mutants.cjs', 'tools/truth/sight-mutants.cjs',
   'tools/ui/steady-sights-check.cjs' /* plants a re-sort after a tap on every run (R-28) */,
+  'tools/ui/pinned-band-check.cjs' /* plants "no band behind pinned pieces" on every run (R-30) */,
   'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */]);
 const GATE = rd('.github/workflows/beta2-gate.yml');
 const DEFECTS = new Set(['mutants.cjs', 'sight-mutants.cjs'].flatMap(f => (fs.readFileSync(path.join(__dirname, f), 'utf8').match(/id: '([a-z-]+)'/g) || []).map(s => s.slice(5, -1))));

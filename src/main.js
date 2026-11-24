@@ -4986,11 +4986,25 @@ function placeMenu(m) {
 document.addEventListener("toggle", e => { const m = e.target; if (m.matches && m.matches("details.planmore") && m.open) placeMenu(m); }, true);
 // The back-to-the-ship countdown never leaves the screen: once the page scrolls it out of view, it pins to the top.
 function pinChip() {
-  pinDay(); const c = document.getElementById("cdCard"); if (!c) return;
+  pinDay(); const c = document.getElementById("cdCard"); if (!c) return pinBand();
   const was = c.classList.contains("pinned"), row = document.getElementById("dayRow");
   const at = 8 + (row && row.classList.contains("pinned") ? row.offsetHeight - 2 : 0); // pins just below the pinned day strip
   if (!was) { const r = c.getBoundingClientRect(); if (r.height && r.top < at) { c.style.height = r.height + "px"; c.classList.add("pinned"); } }
   else if (c.getBoundingClientRect().top >= at) { c.classList.remove("pinned"); c.style.height = ""; }
+  pinBand();
+}
+// A pinned strip or banner never covers content (Richard, Nov 24: the LEAVE BY banner sat over a sight's name). Everything
+// pinned at the top forms ONE solid band: --pinh is its real height, measured; the page paints it opaque (no card shows
+// around or between the pinned pieces), sticky bars sit below it, and the app's own scrolling lands content under it.
+function pinBand() {
+  const root = document.documentElement; let h = 0;
+  const row = document.getElementById("dayRow"), c = document.getElementById("cdCard");
+  if (row && row.classList.contains("pinned")) h = Math.max(h, row.getBoundingClientRect().bottom);
+  const cs = c && c.classList.contains("pinned") && c.querySelector(":scope > summary");
+  if (cs) h = Math.max(h, cs.getBoundingClientRect().bottom + 6);
+  h = Math.ceil(h); if (window.__kairoutePlant === "noband") h = 0; // planted bug for tools/ui/pinned-band-check.cjs (R-30)
+  if (h > 0) { root.style.setProperty("--pinh", h + "px"); root.classList.add("pinband"); }
+  else { root.style.removeProperty("--pinh"); root.classList.remove("pinband"); }
 }
 // Scrolled down on a phone: the day strip itself pins to the top (Richard, Nov 14), so any day can be picked without
 // scrolling back up. A spacer keeps its place so the page doesn't jump. Tablets never need it (their header stays put).
