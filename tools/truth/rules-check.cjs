@@ -15,7 +15,8 @@ const START = '2026-11-23T23:30:00Z';
 const PLANTING = new Set(['tools/truth/language-check.cjs', 'tools/truth/screen-rule-proof.cjs', 'tools/truth/no-warn-check.cjs',
   'tools/truth/report-check.cjs', 'tools/truth/rules-check.cjs', 'tools/truth/mutants.cjs', 'tools/truth/sight-mutants.cjs',
   'tools/ui/steady-sights-check.cjs' /* plants a re-sort after a tap on every run (R-28) */,
-  'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */]);
+  'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */,
+  'tools/ui/saved-recheck.cjs' /* runs the build with the saved-content re-check switched off and must find problems (R-30) */]);
 const GATE = rd('.github/workflows/beta2-gate.yml');
 const DEFECTS = new Set(['mutants.cjs', 'sight-mutants.cjs'].flatMap(f => (fs.readFileSync(path.join(__dirname, f), 'utf8').match(/id: '([a-z-]+)'/g) || []).map(s => s.slice(5, -1))));
 const SCREEN = (() => { const s = fs.readFileSync(path.join(__dirname, 'screen-rule-proof.cjs'), 'utf8'); return new Set([...s.matchAll(/^  '([^']+)': \[/gm)].map(m => m[1])); })();
