@@ -631,6 +631,8 @@ function roadGuess(d) {
 const saidMemo = new Map();
 function saidMin(p) {
   const t = p && p.travel; if (!t || typeof t !== "string") return 0;
+  // Unconfirmed travel words (an earlier AI guide's) never give a ride time (R-05, Nov 24); the engine reads them the same way.
+  if (/^\s*not confirmed\b/i.test(t)) return 0;
   if (saidMemo.has(t)) return saidMemo.get(t);
   let m = 0; const low = t.toLowerCase();
   for (const x of low.matchAll(/(\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(\d+(?:\.\d+)?)\s*(hours?|hrs?|h\b|minutes?|mins?\b|min\b)/g)) m = Math.max(m, +x[2] * (/^h/.test(x[3]) ? 60 : 1));

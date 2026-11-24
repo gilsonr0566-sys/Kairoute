@@ -28,7 +28,7 @@
   // Every way a start place's note names (a port's "Sea bus to the old harbor every 20 to 30 minutes, about 10 minutes";
   // "A port shuttle bus runs to the main square"), one per kind, with its name as the guide gives it, its ride time if
   // said, and how often it runs if said (Nov 20 UI review: the note named a ride the plan offered no button for).
-  E.noteWays = note => { const out = [];
+  E.noteWays = note => { const out = []; if (E.unconfirmedNote(note)) return out;
     for (const part of String(note || "").split(/(?<=[.;!?])\s+|\n/)) {
       // Only a sentence that offers the ride: it gives a time or how often it runs, says it runs or goes, or starts with it
       // ("Right by the ferries to the islands" only says where the port is).
@@ -50,7 +50,12 @@
   E.roadTime = d => { const k = 1.3 - 0.1 * Math.min(1, Math.max(0, (d - 15) / 25)), add = 10 + 5 * Math.min(1, d / 40); return { km: d * k, min: Math.round(add + d * k / E.roadSpeed(d) * 60) }; };
   const road = d => E.roadTime(d);
   // The longest time a guide's note names ("1 hour on the train", "60-75 min"), 10 to 300 minutes, else 0.
+  // Words no source confirms (an earlier AI guide's "Not confirmed: ..." travel words, R-30) may say THAT a boat is needed,
+  // never how long it takes or when it sails (R-05, Nov 24): their times are not read. The crossing is then worked out from
+  // the distance and marked as an estimate, and on a ship day the app never picks that boat on its own.
+  E.unconfirmedNote = note => /^\s*not confirmed\b/i.test(String(note || ""));
   function saidMin(note) {
+    if (E.unconfirmedNote(note)) return 0;
     const low = String(note || "").toLowerCase(); if (!low) return 0; let m = 0;
     for (const x of low.matchAll(/(\d+(?:\.\d+)?)\s*(?:-|–|to)\s*(\d+(?:\.\d+)?)\s*(hours?|hrs?|h\b|minutes?|mins?\b|min\b)/g)) m = Math.max(m, +x[2] * (/^h/.test(x[3]) ? 60 : 1));
     for (const x of low.matchAll(/(\d+(?:\.\d+)?|an|one|half an)\s*(hours?|hrs?|h\b|minutes?|mins?\b|min\b)/g)) { const n = x[1] === "an" || x[1] === "one" ? 1 : x[1] === "half an" ? 0.5 : +x[1]; m = Math.max(m, n * (/^h/.test(x[2]) ? 60 : 1)); }
@@ -72,7 +77,7 @@
   E.BAGS_WALK = 10; // longest walk planned with luggage
   E.PIER_BACK = 60; // at the pier for a boat back with no sailing times known: a gap between sailings
   // The first sailing a guide's note gives ("boats leave from about 9:00", "first boat at 9.30 am"), in minutes, else null.
-  E.firstSailing = note => { const m = String(note || "").match(/\b(?:from|after|first (?:boat|ferry|sailing|departure)s?(?: \w+){0,2}?)\s+(?:about |around |approx(?:imately|\.)? )?(\d{1,2})[:.](\d{2})\s*(am|pm)?/i);
+  E.firstSailing = note => { if (E.unconfirmedNote(note)) return null; const m = String(note || "").match(/\b(?:from|after|first (?:boat|ferry|sailing|departure)s?(?: \w+){0,2}?)\s+(?:about |around |approx(?:imately|\.)? )?(\d{1,2})[:.](\d{2})\s*(am|pm)?/i);
     if (!m) return null; let h = +m[1]; if (m[3] && /pm/i.test(m[3]) && h < 12) h += 12; if (m[3] && /am/i.test(m[3]) && h === 12) h = 0; return h < 24 && +m[2] < 60 ? h * 60 + +m[2] : null; };
   E.PIER_AT = 0.3;  // within this of a pier is at the water already
   E.PIER_KM = 40;   // farthest a pier may be from where the traveler is to take a boat from it
@@ -342,7 +347,7 @@
       // on the map (no timetable), the map's roads, the guide's words, or an estimate from the distance.
       for (const o of opts) if (!o.source) o.source = o.ans ? "timetable" : o.mapped ? "map" : "estimate";
       const notes = [];
-      if (note && d > 5) notes.push("The guide says: " + note.trim().replace(/\s+/g, " "));
+      if (note && d > 5) notes.push(E.unconfirmedNote(note) ? "An earlier AI guide said (not confirmed, not a timetable): " + note.trim().replace(/^\s*not confirmed:?\s*/i, "").replace(/\s+/g, " ") : "The guide says: " + note.trim().replace(/\s+/g, " "));
       if (missing.length) notes.push("The guide names " + missing.map(k => k === "ferry" ? "a ferry" : "a " + k).join(" and ") + ", but no timetable for it is known here, so this ride is planned " + (pick.kind === "taxi" ? "by taxi" : "as " + pick.how) + ": check at the " + (missing.includes("ferry") && missing.length === 1 ? "pier" : "station") + " or with your hotel.");
       // The ride back to a ship, train or plane on a time no timetable confirms: said, with the extra time already in it.
       if ((b.backToShip || b.deadline) && pick.kind !== "walk" && pick.source !== "timetable" && pick.min >= 30)
