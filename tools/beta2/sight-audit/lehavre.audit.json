@@ -25,6 +25,13 @@
    }
   },
   {
+   "k": "NOID",
+   "t": "Saint-Denis Gate: no Wikidata id and nothing of the name on the map nearby (from Wikidata (Wikipedia in many languages))",
+   "x": {
+    "id": "src-q684594"
+   }
+  },
+  {
    "k": "POS",
    "t": "Chantilly [day trip]: app is 1.51 km from Wikidata's point (not on the map by id)",
    "x": {
@@ -83,7 +90,7 @@
   },
   {
    "k": "POS",
-   "t": "Castle of Fontainebleau [day trip] {Q201428 by name}: app is 0.84 km from Wikidata's point (not on the map by id)",
+   "t": "Château de Fontainebleau [day trip] {Q201428 by name}: app is 0.84 km from Wikidata's point (not on the map by id)",
    "x": {
     "d": 0.8355393847992333,
     "id": "fontainebleau-far~Q201428",
@@ -251,12 +258,12 @@
   },
   {
    "k": "INFO",
-   "t": "46 sights, 12 day trips/towns; must-see: Eiffel Tower, Louvre Museum, Notre-Dame de Paris, Musée d'Orsay, Arc de Triomphe, avenue des Champs-Élysées; top by fame: Eiffel Tower 191, Louvre Museum 170, Notre-Dame de Paris 125, Musée d'Orsay 122, avenue des Champs-Élysées 95, Arc de Triomphe 86, Venus de Milo 73, Père Lachaise Cemetery 71",
+   "t": "46 sights, 12 day trips/towns; must-see: Eiffel Tower, Louvre Museum, Notre-Dame de Paris, Musée d'Orsay, Arc de Triomphe, avenue des Champs-Élysées; top by fame: Eiffel Tower 191, Louvre Museum 170, Notre-Dame de Paris 125, Musée d'Orsay 122, avenue des Champs-Élysées 95, Saint-Denis Gate 95, Arc de Triomphe 86, Venus de Milo 73",
    "x": {}
   },
   {
    "k": "INFO",
-   "t": "day trips: Chantilly, Chartres, Disneyland Paris, Fontainebleau, Ch&acirc;teau de Chantilly, Chartres Cathedral, Maison Picassiette, Musée du Vitrail, Castle of Fontainebleau, Forêt de Fontainebleau, Musée d'art figuratif contemporain, Musée des pompiers",
+   "t": "day trips: Chantilly, Chartres, Disneyland Paris, Fontainebleau, Ch&acirc;teau de Chantilly, Chartres Cathedral, Maison Picassiette, Musée du Vitrail, Château de Fontainebleau, Forêt de Fontainebleau, Musée d'art figuratif contemporain, Musée des pompiers",
    "x": {}
   }
  ],
@@ -1592,22 +1599,20 @@
   {
    "id": "src-q684594",
    "name": "Saint-Denis Gate",
-   "local": "Porte Saint-Denis",
+   "local": "",
    "lat": 48.86972,
    "lng": 2.3525,
    "minutes": 10,
    "category": "Landmark",
-   "kind": "local",
+   "kind": "touristy",
    "quick": true,
    "mustSee": false,
-   "fame": 27,
+   "fame": 95,
    "unesco": false,
-   "heritage": true,
-   "wd": "Q684594",
+   "heritage": false,
+   "wd": "",
    "src": [
-    "Wikivoyage (English)",
-    "national heritage register",
-    "Wikipedia in French"
+    "Wikidata (Wikipedia in many languages)"
    ],
    "srcOnly": true,
    "builtin": false,
@@ -1671,7 +1676,7 @@
    "builtin": false,
    "famousFix": true,
    "far": true,
-   "travel": "Train from Hôtel de Ville, about 85 min one way",
+   "travel": "Train from Hôtel de Ville, about 90 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1688,18 +1693,18 @@
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
-   "fame": 0,
+   "fame": 104,
    "unesco": false,
    "heritage": false,
    "wd": "Q130272",
    "src": [
-    "Wikivoyage (English)"
+    "Wikidata (Wikipedia in many languages)"
    ],
    "srcOnly": false,
    "builtin": false,
    "famousFix": true,
    "far": true,
-   "travel": "Train from Cité, about 115 min one way",
+   "travel": "Train from Cité, about 120 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1744,12 +1749,12 @@
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
-   "fame": 0,
+   "fame": 81,
    "unesco": false,
    "heritage": false,
    "wd": "Q182872",
    "src": [
-    "Wikivoyage (English)"
+    "Wikidata (Wikipedia in many languages)"
    ],
    "srcOnly": false,
    "builtin": false,
@@ -1781,7 +1786,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Hôtel de Ville, about 85 min one way",
+   "travel": "Train from Hôtel de Ville, about 90 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1798,16 +1803,18 @@
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
-   "fame": 0,
-   "unesco": true,
+   "fame": 104,
+   "unesco": false,
    "heritage": false,
    "wd": "Q180274",
-   "src": [],
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
    "srcOnly": false,
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Cité, about 115 min one way",
+   "travel": "Train from Cité, about 120 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1834,7 +1841,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Cité, about 115 min one way",
+   "travel": "Train from Cité, about 120 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1861,7 +1868,7 @@
    "builtin": true,
    "famousFix": false,
    "far": true,
-   "travel": "Train from Cité, about 115 min one way",
+   "travel": "Train from Cité, about 120 min one way",
    "parts": [],
    "merged": [],
    "posDoubt": false,
@@ -1869,8 +1876,8 @@
   },
   {
    "id": "fontainebleau-far~Q201428",
-   "name": "Castle of Fontainebleau",
-   "local": "Château de Fontainebleau",
+   "name": "Château de Fontainebleau",
+   "local": "",
    "lat": 48.39704,
    "lng": 2.69236,
    "minutes": 30,
@@ -1878,11 +1885,13 @@
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
-   "fame": 0,
-   "unesco": true,
+   "fame": 81,
+   "unesco": false,
    "heritage": false,
    "wd": "Q201428",
-   "src": [],
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
    "srcOnly": false,
    "builtin": true,
    "famousFix": false,
@@ -1905,11 +1914,13 @@
    "kind": "touristy",
    "quick": false,
    "mustSee": false,
-   "fame": 0,
+   "fame": 81,
    "unesco": false,
    "heritage": false,
    "wd": "Q1293678",
-   "src": [],
+   "src": [
+    "Wikidata (Wikipedia in many languages)"
+   ],
    "srcOnly": false,
    "builtin": true,
    "famousFix": false,

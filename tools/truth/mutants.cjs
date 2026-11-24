@@ -38,6 +38,10 @@ const MUTANTS = [
     was: 'Stops before passengers are ashore (failure map, section 1)' },
   { id: 'return-shown-confirmed', file: '95-plan.js', from: 'const basis = onWheels.length ? ["timetable", "roads", "estimate"]', to: 'const basis = onWheels.length ? ["timetable", "timetable", "timetable"]',
     was: 'A way back with no timetable behind it shown as resting on timetables (Richard, Nov 23 release target: unverified return connections shown as confirmed = 0)' },
+  { id: 'island-by-road', corpus: true, file: '10-travel.js', from: 'const isle = p => E.byBoat(p.travelNote) || E.waterOnly(p) || !!p.acrossWater,', to: 'const isle = p => false,',
+    was: 'An island reached by taxi or on foot: "Walk 6 min to Lokrum", "floating cars and ferries that drive on land" (Nov 18; Lokrum as a 16 min taxi, Nov 23)' },
+  { id: 'unconfirmed-words-timed', corpus: true, file: '10-travel.js', from: '    if (E.unconfirmedNote(note)) return 0;\n', to: '',
+    was: 'Ride times read from an earlier AI guide\'s unconfirmed travel words (Nov 24, P1: "Not confirmed" words still gave a crossing time)' },
   { id: 'off-before-arrival', file: '30-window.js', from: 'w.start = E.toMin(d.thru.time) + am.clear;', to: 'w.start = E.toMin(d.thru.time) - 150;',
     was: '"Off the ship 5:30 am" when the ship arrives at 7:00 am (weekly ladder, Nov 22)' },
 ];
@@ -59,6 +63,10 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
   // independent check then answers every ride of 1.5 km or more as such a train too (oracle --no-timetable).
   const anyNT = MUTANTS.some(m => m.nott && (!ONLY.length || ONLY.includes(m.id)));
   const baseOracleNT = anyNT ? await run('node', ['tools/truth/oracle.cjs', '--trips', trips, '--no-timetable']) : null;
+  // Mutants marked corpus: true are about places the odd trips rarely visit (islands): the independent check then runs on
+  // the saved test trips, which hold them (Delos from Mykonos, Capri, Santorini).
+  const anyCorpus = MUTANTS.some(m => m.corpus && (!ONLY.length || ONLY.includes(m.id)));
+  const baseCorpus = anyCorpus ? counts((await run('node', ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'])).out) : {};
   const baseOld = counts(base.out), baseOra = counts(baseOracle.out), baseOraNT = baseOracleNT ? counts(baseOracleNT.out) : {};
   if (!Object.keys(baseOld).length || !Object.keys(baseOra).length) { console.log('NOT TESTED: the checks did not run on the real engine\n' + base.out.slice(-2000) + baseOracle.out.slice(-2000)); process.exit(1); }
   const already = [...Object.keys(baseOld).filter(k => baseOld[k]), ...Object.keys(baseOra).filter(k => baseOra[k])];
@@ -72,8 +80,8 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
     if (txt.split(m.from).length !== 2) { rows.push({ m, planted: false }); continue; }
     fs.writeFileSync(f, txt.replace(m.from, m.to));
     const env = { ENGINE_SRC: src, NOZIG: '1', SLOW_MS: '60000' };
-    const [old, ora] = await Promise.all([run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7'], env), run('node', ['tools/truth/oracle.cjs', '--trips', trips].concat(m.nott ? ['--no-timetable'] : []), env)]);
-    const o = more(counts(old.out), baseOld), n = more(counts(ora.out), m.nott ? baseOraNT : baseOra);
+    const [old, ora] = await Promise.all([run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7'], env), run('node', (m.corpus ? ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'] : ['tools/truth/oracle.cjs', '--trips', trips]).concat(m.nott ? ['--no-timetable'] : []), env)]);
+    const o = more(counts(old.out), baseOld), n = more(counts(ora.out), m.corpus ? baseCorpus : m.nott ? baseOraNT : baseOra);
     rows.push({ m, planted: true, old: o, oracle: n });
   } };
   await Promise.all(Array.from({ length: LANES }, lane));
@@ -90,7 +98,7 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
   // Spec v2 T1: every safety rule of the independent check must be shown to bite by at least one planted defect in this
   // run. A rule no planted defect raised is NOT TESTED (it might never fire), and blocks like a miss.
   let uncovered = [];
-  if (!ONLY.length) { const SAFETY = ['gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait'];
+  if (!ONLY.length) { const SAFETY = ['gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water', 'notetime'];
     const raised = new Set(rows.filter(r => r.planted).flatMap(r => r.oracle.map(x => String(x).split(' ')[0])));
     uncovered = SAFETY.filter(k => !raised.has(k));
     console.log(uncovered.length ? uncovered.map(k => `NOT TESTED coverage: no planted defect made the safety rule "${k}" fire`).join('\n') : `Every safety rule (${SAFETY.join(', ')}) was made to fire by a planted defect.`); }

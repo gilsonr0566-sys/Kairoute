@@ -50,17 +50,31 @@ const stops = [
   stop('Camp Testou', ['building', 'structure'], 80, 2.4, 2.4),
   stop('Testa Club Museum', ['building', 'museum', 'structure'], 40, 2.45, 2.45, { en: 'Trophies of the club. The museum can be visited by booking the Camp Testou Experience package.' }),
   stop('Testopolis Sea Wall', ['structure'], 110, -2.4, 2.2),
+  // Names in the traveler's language, any language (rule R-11, Nov 23 Kusadasi): the encyclopedia's English name is shown;
+  // a place known only by a local name in every source is never offered.
+  stop('Testi Palace', ['building', 'palace', 'structure'], 14, 2.8, 0.6, { wd: 'Q934' }),
+  stop('Testkale Müzesi', ['building', 'museum', 'structure'], 9, -2.8, -0.6, { localName: true, wd: 'Q935' }),
+  stop('Plajı Testo', ['beach', 'feature'], 8, 3.2, 1.6, { localName: true }),
+  stop('Kadı Testesi', [], 6, 3.4, -1.4, { localName: true }),
+  // A heritage listing of many works close together is no stop of its own (Thessaloniki, Nov 23 untested-city audit).
+  stop('Byzantine monuments of Testonica', ['feature'], 30, 0.9, -2.6, { wd: 'Q940', unesco: true }),
+  stop('Church of Saint Testos', ['building', 'church', 'structure'], 20, 0.95, -2.5, { partOf: ['Q940'] }),
+  stop('Testonica Rotunda', ['building', 'church', 'structure'], 25, 1.1, -2.7, { partOf: ['Q940'] }),
+  stop('Testonica Walls', ['fortification', 'structure'], 22, 0.7, -2.9, { partOf: ['Q940'] }),
+  stop('テスト寺', [], 6, -3.4, 1.4, { localName: true }),
 ];
 const guideSite = Object.assign({ id: 'wv~Q131', name: 'Musei Testolini', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-0.3, -0.6));
 // The guide's own museum, and the travel guide's listing of it under its Italian name 400 m off (Messina, Nov 23).
 const builtMuseum = Object.assign({ id: 'museo-t', name: 'Regional Museum of Testopolis', minutes: 75, category: 'Museum', builtin: true }, at(1.5, -1.6));
 const twinListing = Object.assign({ id: 'wv~Q132', name: 'Museo regionale di Testopolis', minutes: 60, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(1.8, -1.6));
+const palaceListing = Object.assign({ id: 'wv~Q934', name: 'Palazzo Testi', minutes: 30, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(2.8, 0.6));
+const localListing = Object.assign({ id: 'wv~Q935', name: 'Testkale Müzesi', minutes: 60, category: 'Sight', fromGuide: true, tags: ['from-guide'] }, at(-2.8, -0.6));
 const fails = []; let n = 0;
 const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== undefined ? ' (got ' + JSON.stringify(got) + ')' : '')); };
 (async () => {
   const b = await chromium.launch(), pg = await b.newPage(); await pg.goto('file://' + file); await pg.waitForTimeout(1200);
   const sites = await pg.evaluate(a => { const c = { city: 'Testopolis', country: 'Testland', sites: JSON.parse(JSON.stringify(a.g)), farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, a.src);
-    return c.sites.map(s => ({ name: s.name, cat: s.category, min: s.minutes, quick: !!s.quick })); }, { src: { area: 'Testopolis', center: C, stops }, g: [guideSite, builtMuseum, twinListing] });
+    return c.sites.map(s => ({ name: s.name, cat: s.category, min: s.minutes, quick: !!s.quick, local: s.local })); }, { src: { area: 'Testopolis', center: C, stops }, g: [guideSite, builtMuseum, twinListing, palaceListing, localListing] });
   const get = nm => sites.find(s => s.name === nm);
   ok('a mosque is called a mosque', (get('Great Mosque') || {}).cat === 'Mosque', get('Great Mosque'));
   ok('a synagogue is called a synagogue', (get('Old Synagogue') || {}).cat === 'Synagogue', get('Old Synagogue'));
@@ -97,11 +111,27 @@ const ok = (what, cond, got) => { n++; if (!cond) fails.push(what + (got !== und
   ok('a holy place with thin data (Bethany) stays', !!get('Bethtest'));
   ok('a saint\'s name on a lift is no church ("Santa Justa Lift")', !!get('Santa Testa Lift') && get('Santa Testa Lift').cat !== 'Church', get('Santa Testa Lift'));
   ok('a travel-guide listing of a sight the guide already has, under its local name, is no second stop (Museo regionale / Regional Museum)', !get('Museo regionale di Testopolis') && sites.filter(s => /Regional Museum of Testopolis/i.test(s.name)).length === 1, sites.filter(s => /Testopolis/.test(s.name)));
+  ok("a travel-guide listing shows the place's English name, whatever the listing's language (Palazzo Testi > Testi Palace)", !!get('Testi Palace') && !get('Palazzo Testi'), sites.filter(s => /Testi/.test(s.name)));
+  { const loc = sites.filter(s => /Testkale|Plaj|Testesi|テスト/.test(s.local || '') || /Testkale|Plaj|Testesi|テスト/.test(s.name));
+    ok('a place with no English name in any source is shown by what it is in English, its own name beneath (Kusadasi, Nov 23)', loc.length >= 2 && loc.every(s => !/Testkale|Plaj|Testesi|テスト/.test(s.name) && /^(Museum|Beach|Local sight|[A-Z][a-z]+( or [a-z]+)?)$/.test(s.name) && s.local), loc.map(s => s.name + ' / ' + s.local));
+    ok('a place known only by a name in another script and of no known kind is not offered (it could not be told apart)', !sites.some(s => /テスト/.test(s.local || s.name)), loc.map(s => s.name + ' / ' + s.local)); }
   ok('a chapel a museum\'s listing names as seen inside it is part of that museum visit, not its own stop (Sistine Chapel)', !get('Testine Chapel'), sites.map(s => s.name));
   ok('a fresco inside that chapel is no stop of its own either', !get('The Creation of Testam'));
   ok('the museum itself stays', !!get('Testican Museums'));
   ok('a church the museum\'s listing names as "opposite" stays its own stop', !!get('Church of San Testo'));
   ok('a place a museum\'s listing names only inside a longer name (a stadium tour package) stays its own stop', !!get('Camp Testou'));
+  ok('a heritage listing of three or more listed works close together is no stop of its own; its works stay (Thessaloniki)', !get('Byzantine monuments of Testonica') && !!get('Testonica Rotunda'), sites.filter(s => /Testonica/.test(s.name)).map(s => s.name));
+  // Day trips (Kusadasi, Nov 24): an inscription is no place to go; two day trips 1.5 km apart are one outing; a price
+  // shows only where a source gives it (no AI guess, no "Free" when nothing is known).
+  { const far = (n, id, dx, dy, more) => Object.assign({ id, name: n, minutes: 180, far: true, category: 'Day trip', famousFix: true, fame: 30 }, at(dx, dy), more || {});
+    const got = await pg.evaluate(a => { const c = { city: 'Testopolis', country: 'Testland', sites: [], farther: JSON.parse(JSON.stringify(a.far)), starts: {}, restaurants: [] };
+      window.__kairouteSourceSights(c, a.src); return c.farther.map(s => s.name); }, { src: { area: 'Testopolis', center: C, stops: [], far: [
+      { name: 'Testilos epitaph', wd: 'Q950', sl: 40, kinds: ['creative-work'], km: 50 }, { name: 'Testyma', wd: 'Q951', sl: 45, kinds: ['archaeological', 'temple'], km: 52 }, { name: 'Testim', wd: 'Q952', sl: 30, kinds: ['settlement', 'admin-area'], km: 53 }] },
+      far: [far('Testilos epitaph', 'ep-far', 40, 10, { wd: 'Q950', category: 'Ancient Site' }), far('Testyma', 'ty-far', 30, -50, { wd: 'Q951', fame: 45, category: 'Ancient Site' }), far('Testim', 'tm-far', 31, -50.5, { wd: 'Q952', category: 'Scenic Town' }), far('Test Lakes', 'tl-far', -40, 20)] });
+    ok('an inscription or other object is no day trip (Seikilos epitaph, Kusadasi)', !got.includes('Testilos epitaph'), got);
+    ok('two day trips within 3 km of each other are one outing, the better known kept (Didyma and Didim)', got.includes('Testyma') && !got.includes('Testim') && got.includes('Test Lakes'), got);
+    const pr = await pg.evaluate(() => { const b = { builtin: true }; return [window.__kairoutePriceOf({ cost: 150, famousFix: true }, b), window.__kairoutePriceOf({ cost: 0, srcOnly: true }, b), window.__kairoutePriceOf({ cost: 40 }, b), window.__kairoutePriceOf({ cost: 0 }, b), window.__kairoutePriceOf({ cost: 20 }, { ai: true }), window.__kairoutePriceOf({ fee: 'free' }, {})]; });
+    ok('a price shows only where a source gives it: none for an AI guess or an unknown, the written guide\'s price and "Free" kept', pr[0] === null && pr[1] === null && pr[2] === 40 && pr[3] === 0 && pr[4] === null && pr[5] === 0, pr); }
   const rel = await pg.evaluate(() => window.__kairoutePlaceRel({ name: 'Holstentor', lat: 53.8662, lng: 10.6797 }, { name: 'Holstentor', lat: 53.55, lng: 9.99 })[0]);
   ok('the same name 59 km apart is two places (Holstentor in Lubeck is not one near Hamburg)', rel !== 'same', rel);
   ok('no source sight is called "Church" unless it is one', !sites.some(s => s.cat === 'Church' && /mosque|synagogue|shrine|-ji|-taisha/i.test(s.name)));

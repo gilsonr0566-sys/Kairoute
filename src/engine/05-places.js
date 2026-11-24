@@ -37,9 +37,9 @@
       // Ferry piers as mapped: a boat leaves from a pier and lands at one, never from a church in the old town (Nov 18,
       // a ferry to an island was drawn from a cathedral, across the streets).
       const piers = (P.ports || []).filter(x => !x.cruise && /ferry|pier/i.test(String(x.kind || ""))).concat(P.piers || []).filter(x => isFinite(x.lat) && isFinite(x.lng));
-      if (piers.length) b.piers = (b.piers || []).concat(piers.map(x => ({ name: E.latin(x.name) || "the ferry pier", lat: x.lat, lng: x.lng })));
+      if (piers.length) b.piers = (b.piers || []).concat(piers.map(x => ({ name: E.say(x.name, "the ferry pier"), lat: x.lat, lng: x.lng })));
       // The ferry routes the map draws between piers (which pier sails to which island).
-      for (const l of P.ferryLinks || []) if (l && l.a && l.b && isFinite(l.a.lat) && isFinite(l.b.lat)) (b.ferryLinks = b.ferryLinks || []).push({ name: E.latin(l.name || ""), a: { lat: l.a.lat, lng: l.a.lng, name: E.latin(l.a.name || "") }, b: { lat: l.b.lat, lng: l.b.lng, name: E.latin(l.b.name || "") } });
+      for (const l of P.ferryLinks || []) if (l && l.a && l.b && isFinite(l.a.lat) && isFinite(l.b.lat)) (b.ferryLinks = b.ferryLinks || []).push({ name: E.say(l.name || "", ""), a: { lat: l.a.lat, lng: l.a.lng, name: E.say(l.a.name || "", "") }, b: { lat: l.b.lat, lng: l.b.lng, name: E.say(l.b.name || "", "") } });
       for (const s of city.sites || []) {
         const f = P.sites && P.sites[s.id]; if (!f) continue;
         if (f.editions) s.editions = f.editions;
@@ -54,14 +54,30 @@
       // whether or not the traveler's phone can reach the map's server for its own water check (Nov 23: an island off the
       // old town planned as a taxi ride). The on-device check can still add more; it never removes what the file says.
       for (const s of city.sites || []) { const isl = P.islands && P.islands.sites && P.islands.sites[s.id]; if (isl && isl.across && !s.acrossWater) s.acrossWater = (isl.island && isl.island.name) || true; }
+      // The class rule (R-06): ANY stop that stands on a mapped island the place's centre isn't on, and that the map's
+      // paths don't reach on foot from the centre, is across the water: a sight of the guide, one the travel guide or
+      // the helper brings in, a stop the traveler adds, a town a day away and its own sights. From the island outlines in
+      // the place file, so it holds offline (Nov 23: Lokrum wasn't one of the file's sights and was planned as a taxi).
+      // Never the island a day of this place starts from (the ship's pier, a hotel): where the traveler is, is not across
+      // the water from itself (Nov 24 Venice build: the cruise terminal's own islet came back as "no way there on foot").
+      // Only an island EVERY day of the place starts from: a stay on an island no path reaches, with another day starting on
+      // the main island, keeps it across the water (a boat from there; independent review of cce49f79).
+      const isleOf = p => p && isFinite(+p.lat) && isFinite(+p.lng) ? ((E.islandAt(P.islands && P.islands.shapes, p) || {}).id || "-") : null;
+      const dayHomes = (b.days || []).filter(d => d.city === key).map(d => [d.point, d.lodging, d.hotel].map(isleOf).filter(Boolean)).filter(h => h.length);
+      const homes = new Set(dayHomes.length ? dayHomes[0].filter(id => id !== "-" && dayHomes.every(h => h.every(x => x === id))) : []);
+      const across = s => { if (!s || s.acrossWater || !P.islands || !Array.isArray(P.islands.shapes)) return;
+        const sh = E.islandAt(P.islands.shapes, s); if (sh && sh.id !== P.islands.centreShape && !homes.has(sh.id) && sh.walk === false) s.acrossWater = sh.name || true; };
+      // Every listed sight shows its English name (tools/places/en-names.cjs: the English Wikipedia title, else the
+      // Wikidata English label); one with no English name in any source is a "Local sight" with its own name beneath
+      // as the name on signs (rule R-11, any language).
       // A thin guide (under 8 sights): the travel guide's own best-known sights for the place join it, unless already there (same
       // name, or within 150 m) or closed for good.
       if ((city.sites || []).length < 8 && (P.guideSights || []).length) {
         const key = n => String(n || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
         // The same place under a longer name in the guide ("The Roman Forum" is in "Colosseum and Roman Forum", Nov 23).
         const bare = n => key(n).replace(/^the /, ""), within = (big, small) => small.split(" ").length >= 2 && (" " + big + " ").includes(" " + small + " ");
-        const more = P.guideSights.filter(x => !x.closedForGood && isFinite(x.lat) && ![...(city.sites || []), ...(city.farther || [])].some(s => key(s.name) === key(x.name) || within(bare(s.name), bare(x.name)) || (isFinite(s.lat) && E.hav(s, x) <= 0.15)))
-          .map((x, n) => Object.assign({ id: "wv~" + (x.wikidata || key(x.name).replace(/ /g, "-")), name: x.name, lat: x.lat, lng: x.lng, minutes: /museum|museo|musei|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
+        const more = P.guideSights.filter(x => !x.closedForGood && !(x.noEn && !E.readable(E.latin(x.name))) && isFinite(x.lat) && ![...(city.sites || []), ...(city.farther || [])].some(s => [x.name, x.en].filter(Boolean).some(n => key(s.name) === key(n) || within(bare(s.name), bare(n))) || (isFinite(s.lat) && E.hav(s, x) <= 0.15)))
+          .map((x, n) => Object.assign({ id: "wv~" + (x.wikidata || key(x.name).replace(/ /g, "-")), name: x.en || (x.noEn ? "Local sight" : x.name), ...(x.en || x.noEn ? { local: E.latin(x.name) } : {}), lat: x.lat, lng: x.lng, minutes: /museum|museo|musei|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
             editions: x.editions || 0, unesco: !!x.unesco, tags: ["from-guide"], category: "Sight", fromGuide: true, blurb: x.note || "" }, x.web ? { web: x.web } : {}, x.posDoubt ? { posDoubt: true } : {})).filter((x, i, a) => a.findIndex(y => y.id === x.id) === i);
         // Filled up to 30 sights, the best known first (a guide page can list 170: too many to choose from on a phone,
         // and slow to plan).
@@ -77,7 +93,7 @@
         for (const r of city.restaurants || []) { if (r.hours || !r.name) continue; const k = E.eatKey(r.name);
           const m = P.cityEats.find(x => x.hours && x.name && E.eatKey(E.latin(x.name) || x.name) === k && (!isFinite(r.lat) || !isFinite(x.lat) || E.hav(r, x) <= 0.3)); if (m) r.hours = m.hours; }
         city.restaurants = (city.restaurants || []).concat(P.cityEats.filter(x => x.name && !E.notPublicEat(x) && E.readable(E.latin(x.name) || x.name) && isFinite(x.lat) && isFinite(x.lng) && !have.has(E.eatKey(x.name)))
-          .map(x => Object.assign({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }, x.hours ? { hours: x.hours } : {}))); }
+          .map(x => Object.assign({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.say(x.name), lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }, x.hours ? { hours: x.hours } : {}))); }
       // Opening hours of the places to eat on the map near the sights ([name, lat, lng, hours, kind]): a place the guide
       // names, with no hours of its own, takes the hours of the place on the map with its name within 200 m ("Sorbillo" is
       // the map's "Antonio Sorbillo"). Nov 23 real-map check: lunches planned before the place opens.
@@ -103,20 +119,21 @@
         const isl = P.islands && P.islands.towns && P.islands.towns[s.id]; if (isl && isl.across) s.acrossWater = (isl.island && isl.island.name) || true;
         // The town's own sights (travel guide "see" listings on the map, within a walk of the town) become stops of
         // their own, so a day there is planned sight by sight and weighed by what the town really offers.
-        const own = (t.sights || []).filter(x => (x.kind || "see") === "see" && isFinite(x.lat) && isFinite(x.lng) && E.hav(s, x) <= TOWN_KM);
-        s.townSights = own.map(x => ({ name: x.name, lat: x.lat, lng: x.lng }));
+        const own = (t.sights || []).filter(x => (x.kind || "see") === "see" && !(x.noEn && !E.readable(E.latin(x.name))) && isFinite(x.lat) && isFinite(x.lng) && E.hav(s, x) <= TOWN_KM);
+        s.townSights = own.map(x => ({ name: x.en || (x.noEn ? "Local sight" : x.name), lat: x.lat, lng: x.lng }));
         // A museum gets an hour, anything else half an hour; getting there takes what the town's own ride note says.
-        own.forEach((x, n) => { const id = s.id + "~" + (x.wikidata || n); if (haveFar.has(id)) return; haveFar.add(id); added.push({ id, name: x.name, lat: x.lat, lng: x.lng, minutes: /museum|museo|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
+        own.forEach((x, n) => { const id = s.id + "~" + (x.wikidata || n); if (haveFar.has(id)) return; haveFar.add(id); added.push({ id, name: x.en || (x.noEn ? "Local sight" : x.name), ...(x.en || x.noEn ? { local: E.latin(x.name) } : {}), lat: x.lat, lng: x.lng, minutes: /museum|museo|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
           far: true, town: s.id, townName: s.name, travelNote: s.travelNote || "", ...(s.acrossWater ? { acrossWater: s.acrossWater } : {}), editions: x.editions || 0, unesco: !!x.unesco, tags: ["in-town"], category: "Sight" }); });
         // A town keeps its own visit length when picked on its own (Fable review #12: an excavation town picked alone got an hour). Only when its
         // own sights are picked too does it shrink to the walk through its centre (planAll does that, and says so).
         if (own.length >= 2) s.townWalk = Math.min(s.minutes || 60, 60);
-        s.foodDrink = (t.foodDrink || []).map(x => ({ name: E.latin(x.name) || x.name, lat: isFinite(x.lat) ? x.lat : null, lng: isFinite(x.lng) ? x.lng : null, kind: x.kind, note: x.content || "", special: E.foodSpecial(x) }));
+        s.foodDrink = (t.foodDrink || []).filter(x => x.name && E.readable(E.latin(x.name))).map(x => ({ name: E.say(x.name), lat: isFinite(x.lat) ? x.lat : null, lng: isFinite(x.lng) ? x.lng : null, kind: x.kind, note: x.content || "", special: E.foodSpecial(x) }));
         // No place to eat in its travel guide: the restaurants and cafés on the map beside it (named as from the map).
-        if (!s.foodDrink.some(x => x.kind === "eat") && (t.mapEats || []).length) s.foodDrink = s.foodDrink.concat(t.mapEats.filter(x => x.name && !E.notPublicEat(x) && E.readable(E.latin(x.name) || x.name)).map(x => ({ name: E.latin(x.name) || x.name, lat: x.lat, lng: x.lng, kind: "eat", note: x.cuisine || "", special: false, fromMap: true })));
+        if (!s.foodDrink.some(x => x.kind === "eat") && (t.mapEats || []).length) s.foodDrink = s.foodDrink.concat(t.mapEats.filter(x => x.name && !E.notPublicEat(x) && E.readable(E.latin(x.name) || x.name)).map(x => ({ name: E.say(x.name), lat: x.lat, lng: x.lng, kind: "eat", note: x.cuisine || "", special: false, fromMap: true })));
         if ((P.eatHours || []).length) for (const x of s.foodDrink) if (x.kind === "eat") mapHours(x);
       }
       if (added.length) city.farther = (city.farther || []).concat(added);
+      for (const s of (city.sites || []).concat(city.farther || [])) across(s);
       // Hours per day: a mapped opening time read for that day's date, where the day has no hours for the sight yet.
       for (const d of b.days || []) {
         if (d.city !== key || !d.date) continue;
@@ -136,7 +153,7 @@
         if (d.type === "port" && d.point && isFinite(d.point.lat) && !d.point.lift) for (const l of P.lifts || []) {
           const k = (l.ends || []).findIndex(e => E.hav(e, d.point) <= 0.4); if (k < 0) continue;
           // A name known only in another script ("Τελεφερίκ", which just means cable car) is shown as what it is.
-          const kindName = l.kind ? l.kind[0].toUpperCase() + l.kind.slice(1) : "Cable car", nm = !l.name || E.latin(l.name) !== l.name ? kindName : l.name;
+          const kindName = l.kind ? l.kind[0].toUpperCase() + l.kind.slice(1) : "Cable car", nm = !l.name || E.say(l.name) !== l.name ? kindName : l.name;
           d.point = Object.assign({}, d.point, { lift: { name: nm, kind: l.kind, top: l.ends[1 - k] } }); break; }
         // Where the ship docks: a guessed point is replaced by a mapped cruise terminal or pier.
         if (d.point && d.point.unknown && (P.ports || []).some(p => p.cruise)) {

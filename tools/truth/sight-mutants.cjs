@@ -32,6 +32,18 @@ const MUTANTS = [
     was: "Lübeck's Holstentor took the id of a Hamburg place 59 km away (sight audit, Nov 23)" },
   { id: 'twin-listing-kept', from: 'city[k] = city[k].filter(s => !twin(s));', to: 'city[k] = city[k].filter(s => true);',
     was: '"Museo regionale di Messina" beside the "Regional Museum of Messina" (sight audit, Nov 23)' },
+  { id: 'local-only-name-shown', from: 'if (!en && x.localName && !srcSaysKind(x)) {', to: 'if (false) {',
+    was: 'Kusadasi: "Kadı Kalesi", "Halk Plajı" shown under their Turkish names: no English name in any source (Nov 23, rule R-11)' },
+  { id: 'listing-keeps-local-name', from: 'if (!s.srcName && x.name && !nonLatin(x.name) && keyOf(x.name) !== keyOf(s.name)) {', to: 'if (false) {',
+    was: 'Messina: "Palazzo Zanca" shown under its listing name though it has an English one (Nov 23, rule R-11)' },
+  { id: 'close-group-as-stop', from: 'if (srcKnown(w) && w.kinds.every(k => k === "feature") && parts.length >= 3) w.isGroup = true;', to: '',
+    was: '"Paleochristian and Byzantine monuments of Thessaloniki" offered as a must-see stop beside its own churches (Nov 23)' },
+  { id: 'object-as-day-trip', from: 'const x = facts(s); return !(x && farNotPlace(x)); });', to: 'return true; });',
+    was: '"Seikilos epitaph", an inscription in a museum abroad, offered as a Kusadasi day trip (Nov 24)' },
+  { id: 'same-outing-twice', from: 'hav(s, t) <= 3) { gone.add(t);', to: 'hav(s, t) <= 0) { gone.add(t);',
+    was: 'Didyma and Didim, one outing, offered as two Kusadasi day trips (Nov 24)' },
+  { id: 'ai-price-shown', from: 'return written ? (+s.cost > 0 ? +s.cost : 0) : null;', to: 'return +s.cost > 0 ? +s.cost : 0;',
+    was: '"€150" an AI guessed and "Free" where nothing was known, on Kusadasi day trips (Nov 24)' },
 ];
 const html = fs.readFileSync(file, 'utf8'), tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'sight-mutants-'));
 const real = spawnSync('node', [CHECK, file], { encoding: 'utf8' });

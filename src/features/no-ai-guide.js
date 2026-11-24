@@ -19,7 +19,7 @@ async function guideNoAI(d, quiet) {
     if (raw && builtinNow && (raw.sites || []).length <= (builtinNow.sites || []).length) raw = null;
     if (raw) {
       raw = await realPlaces(raw, label);
-      if (raw && raw.grounded) { c = cleanCity(raw, label); if (raw.area) c.area = String(raw.area); if (!c.sites.length) c = null; }
+      if (raw && raw.grounded) { c = recheckSaved(cleanCity(raw, label)); /* R-30 */ if (c && raw.area) c.area = String(raw.area); if (c && !c.sites.length) c = null; }
     }
     if (!c && !builtinNow) c = await sourceGuide(d);
     if (!c) throw new Error(builtinNow ? "not fuller" : "no sources");

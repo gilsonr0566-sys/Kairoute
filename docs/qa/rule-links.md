@@ -10,3 +10,6 @@ One line per commit: the start of its sha (8 or more characters), the rule(s), a
 | 69b4cc4f | R-06 | Sights across the water are known from the place file (Lokrum planned as a taxi when the map server was busy) |
 | 34f686c4 | R-05 | Rides to the day's own fixed steps keep the full gap (no-timetable wait) |
 | 19551ccc | R-05, R-12 | No-timetable wait: half the gap going out, the full gap toward a fixed end |
+| dc8192f3 | R-13 | No meal while its place is shut, for every eat source, checked on screen too (the lunch thread called it CR-MEAL-OPEN) |
+| 1aea1a0c | R-30 | Saved content re-checked on every open; its body's first "Rule:" line is the rule's wording, so the R-30 line further down wasn't read |
+| c1634e76 | R-15, R-16 | Day trips: no objects, one outing per place, prices only from a source (rule named in the subject line only) |

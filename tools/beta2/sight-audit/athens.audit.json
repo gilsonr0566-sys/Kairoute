@@ -23,23 +23,6 @@
    }
   },
   {
-   "k": "POS",
-   "t": "Lycabettus Hill {Q1357713 by name}: app is 0.36 km from Wikidata's point (not on the map by id)",
-   "x": {
-    "d": 0.36113749727178174,
-    "id": "lycabettus",
-    "wd": "Q1357713",
-    "app": [
-     37.9817,
-     23.7432
-    ],
-    "wdpt": [
-     37.98305555555555,
-     23.746944444444445
-    ]
-   }
-  },
-  {
    "k": "LEN",
    "t": "Theatre of Dionysus {Q1227044 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min",
    "x": {

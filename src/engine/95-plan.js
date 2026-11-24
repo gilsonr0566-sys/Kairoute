@@ -72,7 +72,10 @@
       if (x.packed) it.packed = true; if (x.during != null) it.during = x.during; if (src && src.lunchCut) it.lunchCut = src.lunchCut; // lunch is inside this visit: the visit gave it these minutes
       // What is known about a place to eat travels with it to the screen: found only on the map (no guide or review behind
       // it), and whether its hours that day are known (Nov 22: never say more than the data says).
-      if (x.t === "meal" || x.t === "evening") { if (x.fromMap) it.fromMap = true; const fx = (fit.eatFacts || {})[E.eatKey(x.name || "")]; if (fx && (fx.closed || (fx.oh && fx.oh.spans && fx.oh.spans.length))) it.hoursKnown = true; }
+      if (x.t === "meal" || x.t === "evening") { if (x.fromMap) it.fromMap = true; const fx = (fit.eatFacts || {})[E.eatKey(x.name || "")]; if (fx && (fx.closed || (fx.oh && fx.oh.spans && fx.oh.spans.length))) it.hoursKnown = true;
+        // ...and its opening hours that day, shown on its card so the time beside them can be checked on the screen (class rule
+        // "no meal while the place is shut", Nov 23).
+        if (fx && fx.oh && fx.oh.spans && fx.oh.spans.length && !fx.closed) it.openSpans = fx.oh.spans.map(s => s.slice(0, 2)); }
       Object.assign(it, point(whereIs(x)));
       items.push(it);
     }
@@ -355,7 +358,9 @@
         // A day the traveler has made their own (they ticked or unticked its sights) is planned from their list only:
         // the app never picks in their place there, and a list they emptied is a free day. Spare time may still take an
         // optional stop (marked optional, never in the way of a pick), unless they cleared the day.
-        if (d.own) { picks = wishes; if (!wishes.length) explain.push(d.cleared ? "You cleared this day: nothing is planned. Pick any sight to plan it." : "Pick the sights you want and they're planned here."); }
+        // Picks that all can't be visited (shut in an evening port call, Nov 23 recheck) are not "nothing picked": the notes
+        // above say why for each, and this says what to do.
+        if (d.own) { picks = wishes; if (!wishes.length) explain.push(d.cleared ? "You cleared this day: nothing is planned. Pick any sight to plan it." : (sel[i] || []).length ? "None of your picks can be visited in today's time (the reasons are above), so nothing is planned. Pick another sight to plan it." : "Pick the sights you want and they're planned here."); }
         const tripIds = !d.own && !wishes.length && dayTrip.get(i);
         if (tripIds) {
           picks = tripIds.map(id => pool.find(s => String(s.id) === id)).filter(Boolean);
@@ -374,6 +379,12 @@
       // Straight from the plane to the ship (under 3 h left with a safe margin): no sightseeing at all, the app's or the
       // traveler's (Round 1, Nov 20: the day said "no time for sightseeing" and then planned three sights with luggage).
       if (win.straight) { if (!again && wishes.length) explain.push("Not planned today: " + E.listWords(wishes.map(s => s.name), "and") + ". You fly in the day the ship sails, with too little time for sightseeing with a safe margin."); picks = []; }
+      // A day-trip town planned with its own sights (the guide's day trip there, or picks of any kind) is the walk between
+      // them, not its whole visit again beside them (Nov 23 outside test: Sintra 3 h between four of its palaces, planned
+      // as a day trip nobody ticked: only the traveler's own picks shortened it).
+      if (!again) picks = picks.map(s => { if (!s.townWalk || s.walkOf || !(s.townWalk < (s.minutes || 60))) return s;
+        const inTown = picks.filter(m => m !== s && m.town != null && String(m.town) === String(s.id));
+        return inTown.length ? Object.assign({}, s, { minutes: s.townWalk, walkOf: inTown.map(m => m.name), fullMinutes: s.minutes || 60 }) : s; });
       // Picks inside or right beside a bigger picked visit are part of it (E.foldPicks); never added again as fillers.
       let foldedIds = new Set();
       if (!again) { const fp = E.foldPicks(picks, groups, h => gated(ownDay(h.id))); picks = fp.picks; Object.values(fp.folded).forEach(f => f.forEach(x => foldedIds.add(String(x.id)))); }
@@ -381,8 +392,9 @@
       const fit = E.fitDay(d.cleared ? Object.assign({}, d, { fillTime: false }) : d, win, picks, foldedIds.size ? pool.filter(s => !foldedIds.has(String(s.id))) : pool, ctx);
       fit.kept.forEach(s => { if (s.filled) autoIds.add(String(s.id)); });
       // A place shortened because its own sights are stops of their own says so (Fable review #12: never shortened silently).
-      fit.kept.filter(s => s.walkOf && s.fullMinutes > s.minutes).forEach(s => { const line = s.name + " gets " + s.minutes + " min, the walk " + (s.walkOf.length > 1 ? "between " + E.listWords(s.walkOf, "and") + ", which you picked as stops of their own" : "to " + s.walkOf[0] + ", which you picked as a stop of its own") + " (on its own it gets " + s.fullMinutes + " min).";
-        if (!explain.includes(line)) explain.push(line); });
+      const mine = names => names.every(n => wishes.some(w => w.name === n && !w.guideWish));
+      fit.kept.filter(s => s.walkOf && s.fullMinutes > s.minutes).forEach(s => { const line = s.name + " gets " + s.minutes + " min, the walk " + (s.walkOf.length > 1 ? "between " + E.listWords(s.walkOf, "and") + (mine(s.walkOf) ? ", which you picked as stops of their own" : ", which are stops of their own") : "to " + s.walkOf[0] + (mine(s.walkOf) ? ", which you picked as a stop of its own" : ", which is a stop of its own")) + " (on its own it gets " + s.fullMinutes + " min).";
+        if (!explain.some(t => t.startsWith(s.name + " gets "))) explain.push(line); });
       fit.kept.forEach(s => (s.folded || []).forEach(x => { const line = x.name + (x.beside ? " is right beside " : " is inside ") + s.name + ": seen on that visit (" + x.extra + " min more), not a stop of its own.";
         if (!explain.includes(line)) explain.push(line); }));
       // Lunch back on board (Nov 20, decided for Richard's lunch rule: every day over lunchtime has a timed lunch): a port day
@@ -536,6 +548,10 @@
       // Each sight the day gave up, with the one reason the planner knows (closed, opens too late, the numbers of the time).
       plan.dropWhy = {}; if (!d.wantsOnly) fit.dropped.forEach(x => { plan.dropWhy[x.id] = x.needs && x.why === "didn't fit in the time" ? x.needs : x.why; });
       plan.dropped = d.wantsOnly ? [] : [].concat(...fit.dropped.map(x => [x.id].concat(((picks.find(p => String(p.id) === String(x.id)) || {}).folded || []).map(f => f.id)))); if (Object.keys(ways).length) plan.waysToFit = ways; plan.explain = explain.concat(lunchNote ? [lunchNote] : []);
+      // A day out over lunchtime with no lunch on it says so on the timeline too, on the visit lunchtime falls in (or the
+      // first one after it), not only in the day's notes (Nov 23: a day trip to a town with no time for lunch).
+      if (lunchNote && !(plan.items || []).some(x => x.t === "meal" && /lunch/i.test(String(x.label || x.meal || x.name || "")))) { const st = (plan.items || []).filter(x => x.t === "stop" && isFinite(x.at));
+        const on = st.find(x => x.at + (x.min || 0) >= 12 * 60 + 30) || null; if (on) on.lunchSay = lunchNote; }
       return { plan, sightIds, eatIds, kept: fit.kept, autoIds: [...autoIds], explain, spare: win.endBy - fit.r.end, win };
     };
     const done = new Array(days.length).fill(null);
@@ -720,6 +736,25 @@
       }
       idx.forEach((i, k) => { out[i] = got.plans[k]; });
     }
-    return out;
+    return out.map(shownWords);
   };
+  // One last layer every shown word goes through, whatever source it came from (rule R-11, Nov 23: "the app is presented
+  // in the language that is selected"): Greek, Cyrillic and kana put into Latin letters; a name still in another script
+  // gives way to a plain word ("a local restaurant", "the stop"), never local script on screen.
+  const PLAIN = { meal: "a local restaurant", stop: "the sight", travel: "the stop" };
+  const WORDS = ["how", "label", "note", "why", "title", "travelNote", "where", "line", "say", "needs", "lunchNote"];
+  const NAMES = ["from", "to", "townName", "station", "at"];
+  const shownWords = p => {
+    if (!p || typeof p !== "object") return p;
+    const one = x => { if (!x || typeof x !== "object") return;
+      if (typeof x.name === "string") x.name = E.say(x.name, PLAIN[x.t] || "the stop");
+      if (typeof x.meal === "string") x.meal = E.say(x.meal, "Lunch");
+      WORDS.forEach(f => { if (typeof x[f] === "string") x[f] = E.say(x[f]); });
+      NAMES.forEach(f => { if (typeof x[f] === "string") x[f] = E.say(x[f], "the stop"); });
+      if (Array.isArray(x.steps)) x.steps = x.steps.map(t => typeof t === "string" ? E.say(t) : (one(t), t));
+      ["leg", "ride", "back"].forEach(f => one(x[f])); };
+    (p.items || []).forEach(one);
+    ["explain", "notes"].forEach(f => { if (Array.isArray(p[f])) p[f] = p[f].map(t => typeof t === "string" ? E.say(t) : t); });
+    if (Array.isArray(p.lunchOptions)) p.lunchOptions.forEach(one);
+    return p; };
 })(KEngine);

@@ -194,7 +194,8 @@
    "wikidata": "Q173527",
    "note": "If you see just one ruin on Crete, see Knossos (in Greek it’s Κνωσός, stress is on the second syllable). The site is fairly compact, and much of it is accessible with restricted mobility. But 30 minutes will do it. It is one of six Minoan P",
    "editions": 71,
-   "unesco": true
+   "unesco": true,
+   "en": "Knossos"
   },
   {
    "name": "Koules",
@@ -204,7 +205,8 @@
    "note": "Koules (Greek: Κούλες) was built by the Venetians in the 16th C. From the parapet, enjoy the view towards Dia Islet, where Jacques Cousteau found many sunken remains of Cretan sea trade.",
    "editions": 20,
    "unesco": false,
-   "web": "https://www.heraklion.gr/en/ourplace/koule/koule.html"
+   "web": "https://www.heraklion.gr/en/ourplace/koule/koule.html",
+   "en": "Rocca a Mare"
   },
   {
    "name": "Fortifications of Heraklion",
@@ -232,7 +234,8 @@
    "wikidata": "Q14175781",
    "note": "An elegant city meeting place, built in 1628.",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "en": "Loggia of Heraklion"
   },
   {
    "name": "Morosini Fountain",
@@ -241,7 +244,8 @@
    "wikidata": "Q6555912",
    "note": "",
    "editions": 3,
-   "unesco": false
+   "unesco": false,
+   "en": "Lions Square"
   },
   {
    "name": "St Minas Cathedral",
@@ -250,7 +254,8 @@
    "wikidata": "Q2942217",
    "note": "(Greek: Άγιος Μηνάς)",
    "editions": 21,
-   "unesco": false
+   "unesco": false,
+   "en": "Agios Minas Cathedral"
   },
   {
    "name": "St Titus Church",
@@ -261,7 +266,8 @@
    "editions": 13,
    "unesco": false,
    "web": "http://agiostitos.gr}}",
-   "posDoubt": true
+   "posDoubt": true,
+   "en": "Hagios Titos church"
   },
   {
    "name": "St Catherine of the Sinaites Church",
@@ -270,7 +276,8 @@
    "wikidata": "Q4505145",
    "note": "(Greek: Αγία Αικατερίνη Σιναϊτών).",
    "editions": 4,
-   "unesco": false
+   "unesco": false,
+   "en": "Agia Aikaterini"
   },
   {
    "name": "St Mark's Basilica",
@@ -280,7 +287,8 @@
    "note": "(Greek: Βασιλική Αγίου Μάρκου).",
    "editions": 8,
    "unesco": false,
-   "web": "http://www.heraklionvisualarts.gr"
+   "web": "http://www.heraklionvisualarts.gr",
+   "en": "Agios Marcos"
   },
   {
    "name": "Dominican Church of St Peter",
@@ -289,7 +297,8 @@
    "wikidata": "Q38285052",
    "note": "(Greek: Άγιος Πέτρος Δομηνικανών).",
    "editions": 4,
-   "unesco": false
+   "unesco": false,
+   "en": "Saint Peter of the Dominicans, Heraklion"
   },
   {
    "name": "Natural History Museum of Crete",

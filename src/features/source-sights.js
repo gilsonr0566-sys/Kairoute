@@ -74,8 +74,23 @@ function srcNotPlace(x) {
   return false;
 }
 if (typeof window !== "undefined") window.__kairouteNotPlace = x => srcNotPlace(x);
+// A day trip may be a town, a village or an island: what is no place to go for a day is what is no place at all (an
+// object, an organisation, an event, a region, a word), or gone.
+const farNotPlace = x => !!x && (x.gone || (!srcHas2(x, /^(settlement|admin-area|island)$/) && srcNotPlace(x)));
 // "City" in a name means a city or district, except in an old town's ("Old City of Jerusalem" was never offered, Nov 23).
-const srcNotSpot = x => srcNotPlace(x) || (SRC_NEVER.test(x.name) && !(SRC_OLD_TOWN.test(x.name) && !/\b(metro|station|line|airport|bank|school|hospital)\b/i.test(x.name))) || SRC_BUSINESS.test(x.name) || (SRC_EVENT.test(x.name) && !SRC_MEMORIAL.test(x.name)) || ((SRC_UNLESS_LISTED.test(x.name) || /\bbuilding\b/i.test(x.name)) && !x.heritage && !x.unesco);
+// A place the sources know only by a local-language name (no English label, no English travel guide, no single name
+// for every language) is never offered: the app shows names in the traveler's language (Richard, Nov 23), and a local
+// name can't be put into English without knowing the language. Whatever the language, the same rule.
+// A place no source names in English (rule R-11, any language): shown by what it is in English ("Castle or fort",
+// "Beach", "Museum"), its own name beneath as the name on signs. When what it is isn't known either, it is "Local
+// sight" if its name can at least be read in Latin letters; otherwise it can't be told apart and is not offered.
+const srcTypeName = x => { const cat = srcKindOf(x)[1]; return cat && cat !== "Sight" ? cat : nonLatin(x.name) ? "" : "Local sight"; };
+// A name that already says in English what the place is ("Ladies Beach", "Papaz Hamamı Beach", "Ada Modern Art
+// Gallery") is a proper name with an English word for its kind, as English maps write it: shown as it is.
+// English words only (the traveler's language), whatever language the rest of the name is in.
+const SRC_EN_KIND = /\b(museum|gallery|collection|basilica|cathedral|church|chapel|monastery|convent|abbey|catacombs?|mosque|synagogue|forum|baths|mausoleum|tomb|amphitheat(re|er)|theat(re|er)|ruins|acropolis|agora|shrine|temple|castle|fortress|fort|citadel|bastion|palace|villa|opera house|park|gardens?|square|fountain|statue|obelisk|bridge|gate|arch|stairs|steps|monument|memorial|beach|island|lighthouse|tower|market|bazaar|harbou?r|lake|bay|cave|hill|viewpoint|old town|aquarium|zoo)\b/i;
+const srcSaysKind = x => !nonLatin(x.name) && SRC_EN_KIND.test(x.name);
+const srcNotSpot = x => srcNotPlace(x) || (!!x.localName && !srcTypeName(x)) || (SRC_NEVER.test(x.name) && !(SRC_OLD_TOWN.test(x.name) && !/\b(metro|station|line|airport|bank|school|hospital)\b/i.test(x.name))) || SRC_BUSINESS.test(x.name) || (SRC_EVENT.test(x.name) && !SRC_MEMORIAL.test(x.name)) || ((SRC_UNLESS_LISTED.test(x.name) || /\bbuilding\b/i.test(x.name)) && !x.heritage && !x.unesco);
 // What kind of stop a name describes: a typical visit length, a category and whether it is a walk-past stop.
 const SRC_KINDS = [
   [/museum|museo|musei|museu|mus[ée]e|gallery|galleria|galer[ií]a|pinacoteca|collection/i, "Museum", 90],
@@ -187,9 +202,14 @@ const srcPartOf = (x, s, src) => {
 const SRC_WHOLE_ANY = /^(museum|art-museum|castle|fortification|archaeological|ancient-city)$/, SRC_WHOLE_LESSER = /^(palace|church|cathedral|chapel|monastery|mosque|temple|synagogue)$/;
 function srcMarkGroups(src) {
   const stops = (src && src.stops) || [];
-  for (const w of stops) { if (!w.wd || w.lat == null) continue;
+  for (const w of stops) { if (!w.wd) continue;
     const parts = stops.filter(p => p !== w && Array.isArray(p.partOf) && p.partOf.includes(w.wd) && p.lat != null);
-    if (parts.length >= 2 && parts.some(p => hav(p, w) > 2)) w.isGroup = true; }
+    if (w.lat != null && parts.length >= 2 && parts.some(p => hav(p, w) > 2)) w.isGroup = true;
+    // A listing that is no place of its own kind (the encyclopedia calls it only a "feature": a heritage listing of many
+    // works) with three or more listed places as its parts is a group too, however close they stand (sight audit on an
+    // untested city, Nov 23: "Paleochristian and Byzantine monuments of Thessaloniki" offered as a must-see stop beside
+    // its own fifteen churches). An old town or a fortress stays: it is a place of its own kind.
+    if (srcKnown(w) && w.kinds.every(k => k === "feature") && parts.length >= 3) w.isGroup = true; }
 }
 // A museum's own travel-guide description that names a sight as one of the things seen inside it ("most famous for its
 // spiral staircase, the Raphael Rooms and the exquisitely decorated Sistine Chapel"): that sight is seen in the museum's
@@ -265,6 +285,15 @@ function sourceSights(city, src) {
     const x = src.stops.find(y => y.wd === m[1]); if (!x || !srcKnown(x) || srcNotPlace(x)) continue;
     const [, cat, m0] = srcKindOf(x); if (cat === "Sight") continue;
     if (!s.wd) s.wd = m[1]; s.category = cat; if (s.minutes === 30 || s.minutes === 60) s.minutes = srcMinutes(cat, m0, x.sl); }
+  // A travel-guide listing shows the place's English name (the encyclopedia's English label or English Wikipedia
+  // title, as the helper sends it), its listing name kept as the local name; one with no English name in any source
+  // leaves the list unless the traveler chose it (rule R-11, any language: "Kadı Kalesi", "Palazzo Zanca").
+  { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).map(String)));
+    for (const k of ["sites", "farther"]) if (Array.isArray(city[k])) city[k] = city[k].filter(s => { const m = /^wv~(Q\d+)$/.exec(String(s.id)); if (!m || !s.fromGuide) return true;
+      const x = src.stops.find(y => y.wd === m[1]); if (!x) return true;
+      if (x.localName) { if (!s.srcName && !srcSaysKind(Object.assign({}, x, { name: s.name }))) { const t = srcTypeName(Object.assign({}, x, { name: s.name })); if (!t) return mine.has(String(s.id)); s.srcName = s.name; s.local = s.local || s.name; s.name = t; s.localOnly = true; } return true; }
+      if (!s.srcName && x.name && !nonLatin(x.name) && keyOf(x.name) !== keyOf(s.name)) { s.srcName = s.name; s.local = s.local || s.name; s.name = x.name; }
+      return true; }); }
   // A travel-guide listing that is a sight the guide already has under its English name leaves the list (Nov 23 sight
   // check: "Museo regionale di Messina" beside the "Regional Museum of Messina", "San Paolo fuori le Mura" beside the
   // "Basilica of Saint Paul Outside the Walls"): the same id, or the encyclopedia's English name is the guide's own, within 2 km.
@@ -274,11 +303,23 @@ function sourceSights(city, src) {
       return allSites(city).some(t => t !== s && !/^wv~/.test(String(t.id)) && (!isFinite(t.lat) || !isFinite(s.lat) || hav(t, s) <= 2) &&
         (t.wd === m[1] || (en && en.split(" ").length >= 2 && (keyOf(t.name) === en || keyOf(t.srcName || "") === en)))); };
     for (const k of ["sites", "farther"]) if (Array.isArray(city[k])) city[k] = city[k].filter(s => !twin(s)); }
+  // Day trips (rule R-15 and R-16, Nov 24, Kusadasi): one the facts show is no place to go (an inscription kept in a
+  // museum abroad: "Seikilos epitaph") leaves the list; and two day trips within 3 km of each other are one outing
+  // (Didyma's temple stands in the town of Didim): the better known stays, unless the traveler chose the other.
+  { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).concat(d.selected || []).map(String)));
+    const facts = s => s.wd && ((src.far || []).find(y => y.wd === s.wd) || src.stops.find(y => y.wd === s.wd));
+    if (Array.isArray(city.farther)) {
+      city.farther = city.farther.filter(s => { if (mine.has(String(s.id)) || s.town) return true; const x = facts(s); return !(x && farNotPlace(x)); });
+      const rank = s => (mine.has(String(s.id)) ? 1e6 : 0) + (s.mustSee ? 1e4 : 0) + (s.unesco ? 1e3 : 0) + (s.fame || 0) + (/town|village|city/i.test(s.category || "") ? -50 : 0);
+      const outing = [...city.farther].filter(s => !s.town && isFinite(s.lat) && isFinite(s.lng)).sort((a, b) => rank(b) - rank(a)), gone = new Set();
+      outing.forEach((s, i) => { if (gone.has(s)) return; for (const t of outing.slice(i + 1)) if (!gone.has(t) && !mine.has(String(t.id)) && hav(s, t) <= 3) { gone.add(t); s.alsoNames = (s.alsoNames || []).concat(t.name); } });
+      if (gone.size) city.farther = city.farther.filter(s => !gone.has(s)); } }
   // A sight a saved guide got from the sources that the facts now show is no place to visit (an organisation, an event, a
   // region, a village) leaves the list, unless the traveler chose it themselves.
   { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).map(String)));
     for (const k of ["sites", "farther"]) if (Array.isArray(city[k])) city[k] = city[k].filter(s => { if (!s.srcOnly || !s.wd || mine.has(String(s.id))) return true;
-      const x = src.stops.find(y => y.wd === s.wd); return !(x && k === "sites" && srcNotPlace(x)); }); }
+      const x = src.stops.find(y => y.wd === s.wd); if (x && x.localName && !s.localOnly && !s.srcName && !srcSaysKind(Object.assign({}, x, { name: s.name }))) { const t = srcTypeName(x); if (!t) return false; s.srcName = s.name; s.local = s.local || s.name; s.name = t; s.localOnly = true; }
+      return !(x && k === "sites" && srcNotPlace(x)); }); }
   const centre = srcCentre(city, src); if (!centre) return 0;
   const area = String(src.area || city.city).replace(/\s*\(.*\)/, "");
   // The caps count the written guide and the sources' own sights, never the famous places written in (famousFix): those
@@ -297,7 +338,8 @@ function sourceSights(city, src) {
     Object.assign(st, { srcOnly: true, fame: x.sl || 0, unesco: !!x.unesco, heritage: !!x.heritage, src: x.src || [], local: x.local, wd: x.wd }, extra);
     // The helper's sources disagree on where it is and nothing settles it: said so on its card and on rides to it.
     if (x.posDoubt) st.posDoubt = true;
-    const en = enSight(x, cat); if (en) Object.assign(st, en); st.enN = 1;   // "Palazzo Zanca" is shown as "Zanca Palace", its local name beneath
+    const en = enSight(x, cat); if (en) Object.assign(st, en); st.enN = 1;
+    if (!en && x.localName && !srcSaysKind(x)) { st.srcName = x.name; st.local = x.name; st.name = srcTypeName(x); st.localOnly = true; }   // "Palazzo Zanca" is shown as "Zanca Palace", its local name beneath
     const w = srcWritten[srcWKey(city, st)]; if (w) Object.assign(st, w);
     return st;
   };

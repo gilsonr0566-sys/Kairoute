@@ -58,6 +58,11 @@ function lastAshoreIdx(plan) {
   its.forEach((it, k) => { if (it.type === "start" || (it.type === "fixed" && (it.up || it.head))) j = k; });
   return j;
 }
+// Free time from where the day starts, with nothing planned away from it and no ride back (an evening port call whose
+// picks are all shut, Nov 23 recheck): "leave here by 10:45 pm to be back by 10:45 pm" says nothing true; the screens say
+// to be back by the time instead, leaving in time from wherever the traveler goes.
+function freeAtStart(plan, F) { const its = (plan && plan.items) || [], j = lastAshoreIdx(plan); return !!(F && F.back === 0 && j >= 0 && its[j] && its[j].type === "start"); }
+const backWhere = (d, plan) => d.type === "port" ? "the ship" : d.type === "embark" ? "the cruise terminal" : (fixedPointName(d, plan) || "your " + ((typeof MODES !== "undefined" && MODES[d.mode] || {}).label || "ride").toLowerCase());
 function dayFacts(d, plan) {
   if (!d || !plan || plan.error) return null;
   const fixed = typeof fixedTitle === "function" && !!fixedTitle(d) && plan.w && plan.w.tail && plan.w.tail.length;
@@ -73,7 +78,12 @@ function dayFacts(d, plan) {
   let leaveBy = plan.endBy - back;
   if (fixed && typeof alarmState === "function") { try { const st = alarmState(d, plan); if (st && isFinite(st.leaveBy)) leaveBy = Math.min(leaveBy, st.leaveBy); } catch (e) {} }
   const aa = (d.type === "port" || d.type === "embark") && d.allAboard ? shipToPort(d, d.allAboard) : null;
-  return { start: plan.start, endBy: plan.endBy, len: plan.endBy - plan.start, finish: plan.end, left, back, leaveBy, fixed: !!fixed, allAboard: aa, over: !!plan.over };
+  // The time left is never more than the time from the end of the last stop to the leave-by: a boat back on its own
+  // sailings keeps the plan's time, so minutes the plan is back early are spare at the ship, never free time where the
+  // traveler is (Nov 24, tester round 7b, Naples: "Free time: 36 min, until 1:42 pm" right after a lunch ending 1:42 pm).
+  const L0 = j >= 0 ? its[j] : null, lastEnd = !L0 ? null : L0.time + (L0.type === "meal" ? ((L0.meal && L0.meal.len) || 0) : L0.type === "start" ? 0 : ((L0.place && L0.place.minutes) || 0));
+  const leftHere = lastEnd != null && isFinite(leaveBy) && isFinite(lastEnd) ? Math.min(left, Math.max(0, Math.round(leaveBy - lastEnd))) : left;
+  return { start: plan.start, endBy: plan.endBy, len: plan.endBy - plan.start, finish: plan.end, left: leftHere, back, leaveBy, fixed: !!fixed, allAboard: aa, over: !!plan.over };
 }
 // How the hours read, the same on every screen: "08:00–18:30" and "10 h 30 min".
 const dayHoursText = f => `${fmt(f.start)}–${fmt(f.endBy)}`;

@@ -3,15 +3,15 @@
 // opens the BUILT Beta 2 app on EVERY saved test trip (tools/beta2/corpus: the 20-city list, the sample cruise and its
 // variants, live trips) at phone and tablet size, and holds three class rules on every screen it opens:
 //
-//   STEADY-REDRAW  A redraw of the screen the traveler is on (answers arriving, live updates) moves nothing: no layout
+//   STEADY-REDRAW  (R-28) A redraw of the screen the traveler is on (answers arriving, live updates) moves nothing: no layout
 //                  shift and every element on screen keeps its place. (Escaped: tablets counted the whole screen moving
 //                  57 px on each redraw; Choose sights cards jumping.)
-//   SETTLES        A screen stops changing by itself within 2.5 s of opening (outside live regions such as clocks and
+//   SETTLES        (R-28) A screen stops changing by itself within 2.5 s of opening (outside live regions such as clocks and
 //                  progress lines). (Escaped: the Journal's cost card redrew every 0.3 s for 6 s.)
-//   WAIT-ENDS      With every outside service hanging (never answering), no spinner is left on any screen, including in
+//   WAIT-ENDS      (R-31) With every outside service hanging (never answering), no spinner is left on any screen, including in
 //                  folded cards, once the app's time limits have passed (the limits are shortened 20 times in this
 //                  check so it runs in seconds). (Escaped: a lookup with no time limit kept "More about today" spinning.)
-//   RESUME-LEFT    Reopening the app after Exit tour opens the Day plan, never the tour the traveler left. (Escaped
+//   RESUME-LEFT    (R-25) Reopening the app after Exit tour opens the Day plan, never the tour the traveler left. (Escaped
 //                  Nov 23.)
 //
 // Data sources: built-in places, places from sources, helper answers (refused or hanging), no internet. No AI, no spend.

@@ -146,7 +146,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         // it is, its steps say how to make it, the guide's words are a note beside it.
         const leg = { mode: MODE[x.mode] || "ride", kind: UIKIND[x.kind] || (x.mode === "walk" ? "walk" : "car"), how: x.how || (x.mode === "walk" ? "Walk" : "Taxi or car"), km: x.km || 0, min: x.min || 0 };
         if (x.pierName) leg.pier = x.pierName; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to; if (x.options) leg.options = x.options;
-        if (x.ans) leg.transit = x.ans; if (x.steps) leg.steps = x.steps; if (x.note) leg.note = x.note; if (x.lost) leg.lost = x.lost; if (x.slack) leg.slack = x.slack; if (x.swapWhy) leg.swapWhy = x.swapWhy;
+        if (x.ans) leg.transit = x.ans; if (x.steps) leg.steps = x.steps; if (x.note) leg.note = x.note; if (x.lost) leg.lost = x.lost; if (x.slack) leg.slack = x.slack; if (x.swapWhy) leg.swapWhy = x.swapWhy; if (x.ownBoat) leg.ownBoat = x.ownBoat;
         // Every way for this ride is a choice on the plan (the ride chips): a tap saves it as the traveler's own choice for
         // this ride, and the engine plans with it.
         if (x.from && x.to && x.options && x.options.length > 1) {
@@ -167,6 +167,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         p.bonus = !!x.bonus; // the engine's own word: a stop it planned is part of the day, whatever the guide's listing says
         if (x.lunchCut) p.lunchCut = x.lunchCut; // lunch is inside this visit
         if (x.lunchIn) p.lunchIn = Object.assign({}, x.lunchIn); // a brought lunch eaten during this visit, at this time
+        if (x.lunchSay) p.lunchSay = x.lunchSay; // no lunch fits today: said on the visit lunchtime falls in
         if (x.within) p.within = x.within; if (x.includes) p.includes = x.includes;
         const it = Object.assign({ type: "stop", place: p, time: x.at }, x.wait ? { wait: x.wait } : {}, x.late ? { ohLate: x.late } : {}, x.hours ? { hours: x.hours } : {});
         items.push(it); stops.push(it); return;
@@ -178,7 +179,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         const label = x.meal || "Lunch", m = MEALS.find(z => z.label === label) || MEALS[0];
         const r = x.onBoard ? { name: "Back on board", onBoard: true, generic: true, lat: x.lat, lng: x.lng, alts: [] } : x.packed ? Object.assign({ name: "Bring your own", packed: true, generic: true, lat: x.lat, lng: x.lng, alts: [] }, packedBuy(items, city)) : Object.assign({}, byName(city.restaurants, x.name) || at(x), { alts: [] });
         if (x.booked) Object.assign(r, { booked: true, why: "Your reservation at " + fmt(x.at) + "." }); // a table the traveler booked shows as theirs
-        if (!r.generic) { if (x.fromMap) r.fromMap = true; r.hoursKnown = !!x.hoursKnown; } // what is known about it, said on its card
+        if (!r.generic) { if (x.fromMap) r.fromMap = true; r.hoursKnown = !!x.hoursKnown; if (x.openSpans) r.openSpans = x.openSpans; } // what is known about it, said on its card
         const it = { type: x.t === "evening" ? "evening" : "meal", meal: Object.assign({}, m, { len: x.min || m.len }), place: r, time: x.at };
         if (x.early > 0 && x.t === "meal") it.early = x.early; // here before lunch starts: the card shows the real arrival and the time to spare
         items.push(it); (x.t === "evening" ? evening : meals).push(x.t === "evening" ? it : r);
