@@ -77,7 +77,8 @@ function aliasRepair(d) {
 function offShown(d) {
   const c = cityFor(d); if (!c || !Array.isArray(d.offLog) || !d.offLog.length) return [];
   const sel = new Set(d.selected || []), byId = new Map(allSites(c).map(x => [x.id, x]));
-  return d.offLog.filter(o => o.k === "merged" ? byId.has(o.into) && sel.has(o.into) : !sel.has(o.id) && byId.has(o.id)).slice().reverse();
+  // R-30: a kept note names the sight as the guide names it today (the name rules may have changed since it was kept).
+  return d.offLog.filter(o => o.k === "merged" ? byId.has(o.into) && sel.has(o.into) : !sel.has(o.id) && byId.has(o.id)).map(o => byId.has(o.id) ? Object.assign({}, o, { n: byId.get(o.id).name }) : o).slice().reverse();
 }
 const agoWord = t => { const m = Math.round((Date.now() - (t || 0)) / 60000); return m < 2 ? "just now" : m < 60 ? m + " min ago" : m < 1440 ? Math.round(m / 60) + " h ago" : fmtDow(new Date(t).toISOString().slice(0, 10)) + " " + fmtDate(new Date(t).toISOString().slice(0, 10)); };
 // The fold on the Day plan. Closed unless something left the day in the last few minutes.

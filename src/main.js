@@ -284,6 +284,7 @@ try {
   const savedCities = JSON.parse(localStorage.getItem("wayside.cities") || "null");
   if (savedCities) {
     for (const k in savedCities) { const c = savedCities[k]; if (c && c.ai && !guideInLang(c, c.lang)) delete savedCities[k]; } // an older build could come back in the wrong language
+    for (const k in savedCities) if (!recheckSaved(savedCities[k])) delete savedCities[k]; // R-30: saved content passes today's rules every time it is opened
     Object.assign(cities, savedCities, { barcelona: SAMPLE_CITY });
   }
   if (saved && saved.days && saved.days.length) { trip = saved; idSeq = 1000; }
@@ -3043,7 +3044,8 @@ ${P().access !== "none" ? "- The travelers need: " + ACCESS.find(a => a[0] === P
       if (fresh || !raw.gv) raw.gv = GUIDE_V;
       if (JSON.stringify([raw.verified, raw.grounded, (raw.restaurants || []).length, raw.startsOk, raw.eatsV]) !== before) fresh = true;
     }
-    const c = cleanCity(raw, label);
+    const c = recheckSaved(cleanCity(raw, label)); // R-30
+    if (!c) throw new Error("check unavailable");
     if (raw.area) c.area = String(raw.area);
     if (!c.sites.length) throw new Error("empty");
     if (!guideInLang(c, P().lang)) throw new Error("The guide came back in the wrong language. Try again.");
@@ -3329,7 +3331,7 @@ function fillsEarly(c) {
 }
 function restoreFills(city, list) {
   if (!Array.isArray(list)) return 0; let n = 0;
-  for (const st of list) if (st && st.name && st.id && !farUntimed(st) && !allSites(city).some(s => s.id === st.id || sameSight(st, s))) { (st.far ? (city.farther = city.farther || []) : city.sites).push(Object.assign({}, st)); n++; }
+  for (const st of list) if (st && st.name && st.id && !farUntimed(st) && !allSites(city).some(s => s.id === st.id || sameSight(st, s))) { (st.far ? (city.farther = city.farther || []) : city.sites).push(recheckSight(Object.assign({}, st), city)); n++; }
   return n;
 }
 // Famous day trips the guide left out (Naples without Vesuvius or Amalfi, Messina without Etna): the writer lists only
@@ -3710,7 +3712,7 @@ function srcLabel(city, d) {
 // How much a sight's fame protects it: 1 for an ordinary sight, up to 3 for a World Heritage site that
 // half the world's Wikipedias write about.
 const fameW = s => travW(s) * (1 + (s && s.unesco ? 0.8 : s && s.heritage ? 0.3 : 0) + Math.min(1.2, ((s && s.fame) || 0) / 80) + Math.min(0.6, Math.max(0, ((s && s.src && s.src.length) || 0) - 1) * 0.15));
-const srcNote = s => s && s.src && s.src.length ? `<p class="srcnote">Named by ${s.src.length} source${s.src.length > 1 ? "s" : ""}: ${esc(s.src.join(", "))}</p>` : "";
+const srcNote = s => (s && s.src && s.src.length ? `<p class="srcnote">Named by ${s.src.length} source${s.src.length > 1 ? "s" : ""}: ${esc(s.src.join(", "))}</p>` : "") + (s && s.notConfirmed ? `<p class="srcnote nc">Not confirmed: this description was written by an earlier AI guide and hasn't been checked against sources.</p>` : "");
 const unescoTag = s => s && s.unesco ? `<span class="tag unesco">UNESCO World Heritage</span>` : "";
 // The AI sometimes returns {"name": …} where a plain name was asked for.
 const nameStr = x => typeof x === "string" ? x.trim() : x && typeof x.name === "string" ? x.name.trim() : "";
@@ -4865,7 +4867,7 @@ async function restoreSplits() {
   if (typeof freeAI === "undefined" || !freeAI || !restoreKeys.size) return;
   for (const key of [...restoreKeys]) { restoreKeys.delete(key);
     const c = cities[key], d = (trip.days || []).find(x => x.cityKey === key || keyOf(x.destination) === key); if (!c || !d || !(c.restore || []).length) continue;
-    try { const raw = await cachedGuide(d); if (!raw) continue; const fresh = cleanCity(raw, d.destination), want = new Set(c.restore.map(keyOf)), have = new Set(allSites(c).map(x => x.id));
+    try { const raw = await cachedGuide(d); if (!raw) continue; const fresh = recheckSaved(cleanCity(raw, d.destination)); if (!fresh) continue; const want = new Set(c.restore.map(keyOf)), have = new Set(allSites(c).map(x => x.id));
       for (const [from, into] of [[fresh.sites || [], c.sites = c.sites || []], [fresh.farther || [], c.farther = c.farther || []]]) for (const x of from) {
         if (!want.has(keyOf(x.name)) || allSites(c).some(y => keyOf(y.name) === keyOf(x.name))) continue;
         if (have.has(x.id)) x.id = x.id + "-r"; into.push(x); have.add(x.id); want.delete(keyOf(x.name));
@@ -4880,7 +4882,7 @@ function carryGuide(prev, c) {
   const ids = new Set(have.map(x => x.id));
   // A kept sight whose id the new guide already uses gets a new id; the old one stays among its aliases, so picks,
   // hearted plans and shown plans that name it still find it.
-  const keep = (list, into) => (list || []).forEach(x => { if (!x || have.some(y => samePlace(x, y))) return; const k = Object.assign({}, x); if (ids.has(k.id)) { k.alias = [...new Set([...(k.alias || []), k.id])]; k.id = k.id + "-k"; } ids.add(k.id); into.push(k); have.push(k); });
+  const keep = (list, into) => (list || []).forEach(x => { if (!x || have.some(y => samePlace(x, y))) return; const k = Object.assign({}, x); if (prev.builtin) k.builtinCopy = true; /* R-30: checked writing, not the AI's */ if (ids.has(k.id)) { k.alias = [...new Set([...(k.alias || []), k.id])]; k.id = k.id + "-k"; } ids.add(k.id); into.push(k); have.push(k); });
   c.farther = c.farther || [];
   keep(prev.sites, c.sites); keep(prev.farther, c.farther);
   dedupeSites(c);
@@ -6225,7 +6227,7 @@ function siteCard(s, d, plan, nr) {
       <div class="tags">${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}${unescoTag(s)}${sightKind(s, city) === "local" ? `<span class="tag local">Local favorite</span>` : `<span class="tag">Famous sight</span>`}${!on && plan && (plan.bonus || []).some(x => x.id === s.id) ? `<span class="tag bonus">On your plan as an optional stop</span>` : ""}${s.indoor ? `<span class="tag">Indoors</span>` : ""}${closedOn(s, d.date) && cl ? `<span class="tag nofit">${esc(cl)}</span>` : ""}</div>
       ${twinNote(s, city)}${partsPick(s)}${s.show && s.show.what ? `<p class="travelnote">⏱ ${esc(showLine(s))}</p>` : ""}${nextDoor(s, city)}
       ${s.posDoubt ? `<p class="travelnote"><b>Where it is isn't sure:</b> the travel guide and the encyclopedia put it in different places, so the ride times to and from it may be wrong. Check the spot on a map before you go.</p>` : ""}
-      ${s.far && txt(s.travel) ? `<p class="travelnote">Getting there, as the travel guide says (not a checked timetable): ${esc(unitText(s.travel))}</p>` : ""}
+      ${s.far && txt(s.travel) ? (/^Not confirmed: /.test(s.travel) ? `<p class="travelnote">Getting there, not confirmed (an earlier AI guide's words, not a timetable): ${esc(unitText(s.travel.replace(/^Not confirmed: /, "")))}</p>` : `<p class="travelnote">Getting there, as the travel guide says (not a checked timetable): ${esc(unitText(s.travel))}</p>`) : ""}
       ${hrs ? `<p class="travelnote">${esc(hrs)}${cl ? " · " + esc(cl) : ""}</p>` : ""}
       ${P().access !== "none" && txt(s.access) ? `<p class="travelnote"><b>Access:</b> ${esc(s.access)}</p>` : ""}
       ${srcNote(s)}${fs === false ? `<button type="button" class="btn ghost small" data-act="fitask" data-id="${esc(s.id)}">Ways to fit it in</button>` : ""}
@@ -6475,7 +6477,7 @@ function renderSites(d) {
   ${timeMeter(plan, d)}${plan && !plan.error ? laterEndBanner(d, plan) + elsewhereNote(plan) : ""}
   <div class="card suggest"><div><h3>Let your guide plan it</h3><p class="lede small">The best stops for ${nDays > 1 ? `all ${nDays} days` : "today"} in ${esc(city.city)}, fitted to your hours, pace and interests. Nothing repeats.</p>${picksDaysHint(city)}</div>
     ${suggestNow(d) ? `<p class="banner" id="suggestNote" role="status">${esc(suggestNow(d))}</p>` : ""}${movedNote ? `<p class="banner ok" id="movedNote" role="status">${esc(movedNote)}</p>` : ""}<div class="actions"><button class="btn small" data-act="suggesttour">Suggest my tour</button><button class="btn ghost small" data-act="freshpicks">Fresh sights for this day only</button></div></div>
-  ${city.ai ? `<p class="ai-note">Written by your AI guide from checked sources: every place is confirmed on the map, stories draw on Wikipedia and Wikivoyage (CC BY-SA), hours and access on OpenStreetMap contributors (ODbL). Check opening hours before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}${city.sites.some(x => x.srcOnly) ? `<p class="ai-note">More sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.</p>` : ""}
+  ${city.ai ? `<p class="ai-note">This guide was written by an earlier AI guide. Every place is on the map, but its descriptions are not confirmed, and the hours, tickets and prices it gave are left out because no source backs them. Check before you go.</p>` : city.builtin ? `<p class="ai-note">Kairoute guide. Hours and prices are typical: check before you go.</p>` : ""}${city.sites.some(x => x.srcOnly) ? `<p class="ai-note">More sights come from checked sources (Wikidata, Wikipedia, heritage registers); their short descriptions are from Wikivoyage (CC BY-SA). Each one's full story is written when you add it to a day.</p>` : ""}
   </div><div class="sitesmain pane" data-pane="sites">
   ${bumpedNote(d)}${pickbar}
   ${picked.length ? `<div class="picksfold${picksOpen ? " open" : ""}"><button type="button" class="foldrow" data-act="picksfold" aria-expanded="${picksOpen}"><span>Your sights (${picked.filter(on).length})</span><span class="foldhint">${picksOpen ? "Hide" : "Show"}</span></button>
