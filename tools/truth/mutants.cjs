@@ -42,6 +42,8 @@ const MUTANTS = [
     was: 'An island reached by taxi or on foot: "Walk 6 min to Lokrum", "floating cars and ferries that drive on land" (Nov 18; Lokrum as a 16 min taxi, Nov 23)' },
   { id: 'unconfirmed-words-timed', corpus: true, file: '10-travel.js', from: '    if (E.unconfirmedNote(note)) return 0;\n', to: '',
     was: 'Ride times read from an earlier AI guide\'s unconfirmed travel words (Nov 24, P1: "Not confirmed" words still gave a crossing time)' },
+  { id: 'port-margin-halved', corpus: true, file: '30-window.js', from: 'E.PORT_BUFFER = 45;', to: 'E.PORT_BUFFER = 22;',
+    was: 'Back at the ship only 22 min before all aboard instead of the promised 45 (fault audit, Nov 24: halving the margins was caught by no check)' },
   { id: 'off-before-arrival', file: '30-window.js', from: 'w.start = E.toMin(d.thru.time) + am.clear;', to: 'w.start = E.toMin(d.thru.time) - 150;',
     was: '"Off the ship 5:30 am" when the ship arrives at 7:00 am (weekly ladder, Nov 22)' },
 ];
@@ -98,7 +100,7 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
   // Spec v2 T1: every safety rule of the independent check must be shown to bite by at least one planted defect in this
   // run. A rule no planted defect raised is NOT TESTED (it might never fire), and blocks like a miss.
   let uncovered = [];
-  if (!ONLY.length) { const SAFETY = ['gone', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water', 'notetime'];
+  if (!ONLY.length) { const SAFETY = ['gone', 'margin', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water', 'notetime'];
     const raised = new Set(rows.filter(r => r.planted).flatMap(r => r.oracle.map(x => String(x).split(' ')[0])));
     uncovered = SAFETY.filter(k => !raised.has(k));
     console.log(uncovered.length ? uncovered.map(k => `NOT TESTED coverage: no planted defect made the safety rule "${k}" fire`).join('\n') : `Every safety rule (${SAFETY.join(', ')}) was made to fire by a planted defect.`); }
