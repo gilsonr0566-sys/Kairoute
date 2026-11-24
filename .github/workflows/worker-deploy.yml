@@ -54,3 +54,8 @@ jobs:
       - name: Warm every known city's kept answers (a deploy starts them all cold; R-29)
         if: always()
         run: node rel/tools/helper-warm.cjs
+      # R-34: a city nobody has opened still gets its guide. Ten cities outside the warm list, a new slice each run,
+      # asked the way the app asks (60 s per ask, 4 asks); fails the deploy run when any gets no guide.
+      - name: Cold cities get their guide the way the app asks (R-34 canary)
+        if: always()
+        run: node rel/tools/helper-canary.cjs 10
