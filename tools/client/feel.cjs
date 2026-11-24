@@ -165,9 +165,11 @@ async function runSize(browser, size, base) {
   // Scroll the whole screen with the finger, down to the end and back to the top.
   const scrollThrough = async name => { where = name; let g = await geom(); const top0 = g.y; let stuck = 0, guard = 0;
     while (guard++ < 40) { const y0 = g.y; await swipe(D.viewport.height * 0.6); g = await geom(); if (g.y + g.ph >= g.h - 8) break; if (g.y === y0) { if (++stuck >= 2) { fail('SCROLL', `the page stopped scrolling at ${g.y}px of ${g.h}px`); break; } } else stuck = 0; }
-    const bottom = g.y; guard = 0; while (guard++ < 40 && g.y > 0) { const y0 = g.y; await swipe(-D.viewport.height * 0.6); g = await geom(); if (g.y === y0) break; }
-    if (bottom - top0 < 10 && g.h > g.ph + 50) fail('SCROLL', `a swipe did not move the page (height ${g.h}px)`);
-    if (g.y > 4) fail('SCROLL', `could not get back to the top (stuck at ${g.y}px)`);
+    const bottom = g.y; guard = 0; stuck = 0; while (guard++ < 40 && g.y > 0) { const y0 = g.y; await swipe(-D.viewport.height * 0.6); g = await geom(); if (g.y === y0) { if (++stuck >= 2) break; } else stuck = 0; } /* the same two tries as on the way down */
+    // What a finger on the page's upper part would touch, named in the failure (a pinned band, a box left open...).
+    const under = async () => p.evaluate(() => { const z = window.__feel.zone(), x = Math.round(z.l + (z.r - z.l) * 0.88), y = Math.max(z.t, 120) + 20, h = document.elementFromPoint(x, y); if (!h) return 'nothing'; let a = h; while (a && a !== document.body) { const ps = getComputedStyle(a); if (ps.position === 'fixed' || ps.position === 'sticky' || /none/.test(ps.touchAction)) return (a.id ? '#' + a.id : a.tagName.toLowerCase() + '.' + String(a.className).split(' ')[0]) + ' (' + ps.position + ', touch-action ' + ps.touchAction + ')'; a = a.parentElement; } return h.tagName.toLowerCase() + '.' + String(h.className).split(' ')[0]; }).catch(() => '?');
+    if (bottom - top0 < 10 && g.h > g.ph + 50) fail('SCROLL', `a swipe did not move the page (height ${g.h}px); under the finger: ${await under()}`);
+    if (g.y > 4) fail('SCROLL', `could not get back to the top (stuck at ${g.y}px); under the finger: ${await under()}`);
     R.steps.push({ step: 'scroll', where: name, height: g.h, reached: bottom }); console.log(`  scrolled ${name}: 0 -> ${bottom} -> ${g.y} of ${g.h}`); };
   // Go to a day as a traveler does: the day chips at the top of a day screen, or from the Day plan tab.
   const gotoDay = async (i, label) => { if (!(await p.locator(`[data-day="${i}"]`).first().isVisible().catch(() => false))) { const c = p.locator('[data-act=continue]'); if (await c.first().isVisible().catch(() => false)) await tap(c, 'Continue trip', { nav: true }); else await tap(navBtn('Day plan'), 'Day plan tab', { nav: true }); }
