@@ -39,6 +39,29 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     if (pairs.length && typeof askRouteTimes === "function") setTimeout(() => askRouteTimes(pairs), 0); };
   const routeSig = (a, b) => JSON.stringify(typeof routeTimeOf === "function" ? routeTimeOf(a, b) : null);
   const answerSig = (a, b) => JSON.stringify((peek(a, b) || []).map(o => [rideId(o), o.min, o.label]));
+  // R-06 in every city: a place with no island outlines of its own (no place file, or one built while the map server was
+  // busy) gets them from the helper (/islands, the same answer a place file holds), kept on the device. Until they come,
+  // the place is planned as before; when they come, the plans are made again with them (Nov 24: islands kept coming back
+  // because the across-the-water check only ever ran in the cities with a place file).
+  const islesMem = {}, islesTries = {}; let islesGen = 0;
+  async function askIsles(key, c) {
+    if ((islesTries[key] || 0) >= 6 || islesTries[key + "|busy"]) return; islesTries[key] = (islesTries[key] || 0) + 1; islesTries[key + "|busy"] = true;
+    try { const kept = await kv.get("isl:" + key).catch(() => null);
+      if (kept && Array.isArray(kept.shapes) && !kept.open) { islesMem[key] = kept; islesGen++; nearGen++; transitShow(); return; }
+      if (!freeAI || (typeof navigator !== "undefined" && navigator.onLine === false)) return;
+      const r = await fetch(freeAI.url + "/islands?lat=" + (+c.lat).toFixed(3) + "&lng=" + (+c.lng).toFixed(3)); if (!r.ok) return;
+      const j = await r.json(); if (!j || !Array.isArray(j.shapes)) return;
+      islesMem[key] = j; kv.set("isl:" + key, j); islesGen++; nearGen++; transitShow();
+      if (j.open) setTimeout(() => askIsles(key, c), 60000);   // islands not asked yet: the helper goes on from where it stopped
+    } catch (e) {} finally { delete islesTries[key + "|busy"]; } }
+  function placesWithIsles(bucket) {
+    const P2 = window.PLACES2 || {}; let out = null;
+    for (const key of Object.keys(bucket.cities || {})) { const P = P2[key]; if (P && P.islands && Array.isArray(P.islands.shapes)) continue;
+      if (islesMem[key]) { out = out || Object.assign({}, P2); out[key] = Object.assign({ key }, P || {}, { islands: islesMem[key] }); continue; }
+      const d = (bucket.days || []).find(x => x && x.city === key && ((x.point && isFinite(+x.point.lat)) || (x.lodging && isFinite(+x.lodging.lat))));
+      const c = d && (d.point && isFinite(+d.point.lat) ? d.point : d.lodging); if (c) setTimeout(() => askIsles(key, c), 0); }
+    return out || P2; }
+  if (typeof window !== "undefined") { window.__kairouteIsles = () => ({ gen: islesGen, keys: Object.keys(islesMem), set: (k, v) => { islesMem[k] = v; islesGen++; nearGen++; } }); window.__kairoutePlacesWithIsles = b => placesWithIsles(b); }
   // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
   const recent = new Map(), recentAlone = new Map(); // the quick checks' plans kept apart (see alonePlans)
   const stat = { calls: 0, keyMs: 0, bucketMs: 0, checkMs: 0, used: 0, planned: 0 };
@@ -68,7 +91,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     // Only the guides of the day's own place (and places sharing a sight with it) are needed: the trip's other places
     // aren't planned, so they aren't copied either.
     bucket.cities = E.citiesFor(bucket, ai);
-    if (window.PLACES2) { bucket = E.applyPlaces(bucket, window.PLACES2); guideFromPlaces(bucket); }
+    if (window.PLACES2) { bucket = E.applyPlaces(bucket, placesWithIsles(bucket)); guideFromPlaces(bucket); }
     bucket.days = bucket.days.map((x, i) => i === ai ? Object.assign({}, x, { alone: true }) : x);
     bucket.answers = (a, b) => answerOf(a, b);
     bucket.routes = (a, b) => typeof routeTimeOf === "function" ? routeTimeOf(a, b) : null;
@@ -87,14 +110,14 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     // to the trip or answers arriving (weather, a photo, the day being looked at) leave both as they were: then the
     // plans stand and nothing is planned again. Only a real change of the engine's inputs replans.
     t0 = performance.now(); let bucket = engineBucket(false);
-    const ik = strHash(JSON.stringify(bucket)) + "|" + todayISO(); // the places files never change while the app runs
+    const ik = strHash(JSON.stringify(bucket)) + "|" + todayISO() + "|" + islesGen; // the places files never change while the app runs; island outlines from the helper may arrive
     // A ride answer arriving replans only when it is an answer the plans used and it changed (answers for rides the
     // plans never take, arriving all the time while the traveler looks around, change nothing).
     stat.bucketMs += performance.now() - t0; t0 = performance.now();
     const same = memo.ik === ik && memo.plans && [...memo.used.values()].every(u => (u.route ? routeSig(u.a, u.b) : answerSig(u.a, u.b)) === u.sig); stat.checkMs += performance.now() - t0;
     if (same) { memo.k = k; return memo; }
     stat.planned++;
-    if (window.PLACES2) { bucket = E.applyPlaces(bucket, window.PLACES2); guideFromPlaces(bucket); }
+    if (window.PLACES2) { bucket = E.applyPlaces(bucket, placesWithIsles(bucket)); guideFromPlaces(bucket); }
     // The app's own public transport answers for each ride (asked for any ride not known yet, as in the app).
     const used = new Map();
     bucket.answers = (a, b) => { const r = answerOf(a, b); used.set(a.lat + "," + a.lng + ">" + b.lat + "," + b.lng, { a, b, sig: answerSig(a, b) }); return r; };

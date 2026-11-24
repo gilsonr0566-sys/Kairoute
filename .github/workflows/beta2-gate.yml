@@ -265,6 +265,9 @@ jobs:
         run: node tools/ui/dayplan-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
         run: node tools/ui/no-paid-ai-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: A stop across the water is a boat away in a city with no place file too; planted app without the helper's outlines caught (R-06)
+        if: always()
+        run: node tools/beta2/isles-any-city-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Failure messages blame the connection only when offline; planted unguarded message caught (R-18)
         if: always()
         run: node tools/ui/net-words-check.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
