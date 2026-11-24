@@ -58,10 +58,11 @@ function lastAshoreIdx(plan) {
   its.forEach((it, k) => { if (it.type === "start" || (it.type === "fixed" && (it.up || it.head))) j = k; });
   return j;
 }
-// Free time from where the day starts, with nothing planned away from it and no ride back (an evening port call whose
-// picks are all shut, Nov 23 recheck): "leave here by 10:45 pm to be back by 10:45 pm" says nothing true; the screens say
-// to be back by the time instead, leaving in time from wherever the traveler goes.
-function freeAtStart(plan, F) { const its = (plan && plan.items) || [], j = lastAshoreIdx(plan); return !!(F && F.back === 0 && j >= 0 && its[j] && its[j].type === "start"); }
+// No way back to leave for: the leave-by would be the back-by itself ("leave by 10:45 pm to be back by 10:45 pm", an
+// evening port call whose picks are all shut, Nov 23 recheck; "leave by 3:49 am to be back by 3:49 am", free time at the
+// hotel after a small-hours train in, Nov 24 gate). One rule for every screen: a leave-by equal to the back-by is never
+// said; the screens say to be back by the time instead (on a ship, train or flight day), or that the day ends then.
+function noWayBack(plan, F) { return !!(F && F.leaveBy != null && F.endBy != null && F.leaveBy >= F.endBy); }
 const backWhere = (d, plan) => d.type === "port" ? "the ship" : d.type === "embark" ? "the cruise terminal" : (fixedPointName(d, plan) || "your " + ((typeof MODES !== "undefined" && MODES[d.mode] || {}).label || "ride").toLowerCase());
 function dayFacts(d, plan) {
   if (!d || !plan || plan.error) return null;
