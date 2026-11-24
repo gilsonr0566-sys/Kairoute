@@ -1361,6 +1361,9 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
   ok(!by('g').acrossWater && !by('br').acrossWater && !by('rk').acrossWater && !by('sea').acrossWater, 'never across: the centre\'s own island, a footbridge, an island with no walk answer, the mainland');
   ok(by('lk').acrossWater === 'Lake Islet', 'an islet inside a bigger island\'s outline counts as the islet');
   ok(!b0.cities['Test Harbour'].sites[0].acrossWater, 'the place outlines never change the bucket they were given');
+  { const b1 = JSON.parse(JSON.stringify(b0)); b1.days = [{ city: 'Test Harbour', date: '2027-07-01', type: 'port', point: { name: 'Pier', lat: 42.617, lng: 18.118 } }];
+    const o1 = E.applyPlaces(b1, P).cities['Test Harbour']; ok(!o1.sites.find(x => x.id === 'own1').acrossWater, 'never across: the island a day of the place starts from (the ship\'s pier on it)'); }
+  { const IS = require('../places/island-shapes.cjs'), f = sq(42.63, 18.08, 42.66, 18.13); ok(IS.nearRing(f, 42.6603, 18.10, 60) && !IS.nearRing(f, 42.67, 18.10, 60), 'a path end 30 m off the simplified coast counts as on the island; one 1 km off does not'); }
   const st = Date.now(); for (let i = 0; i < 200; i++) E.islandAt(shapes, { lat: 42.6 + i * 0.0003, lng: 18.1 }); ok(Date.now() - st < 200, 'island lookups are quick'); }
 // The build's ring joining and simplifying (tools/places/island-shapes.cjs): a relation's outer ways in any direction join
 // into one closed ring; a ring's inside stays inside after simplifying; a tiny islet keeps an inside.

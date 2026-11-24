@@ -69,4 +69,12 @@ function insidePoint(f) {
     if (d > bd) { bd = d; best = { lat, lng }; } }
   return best || { lat: la[0], lng: ln[0] };
 }
-module.exports = { rings, simplify, flat, inRing, ringArea, shapeAt, insidePoint };
+// Within m metres of a flat ring's edge.
+function nearRing(f, lat, lng, m) {
+  const ky = 111320, kx = 111320 * Math.cos(lat * Math.PI / 180);
+  for (let i = 0, j = f.length - 2; i < f.length; j = i, i += 2) {
+    const ax = (f[j + 1] - lng) * kx, ay = (f[j] - lat) * ky, bx = (f[i + 1] - lng) * kx, by = (f[i] - lat) * ky, dx = bx - ax, dy = by - ay, L = dx * dx + dy * dy;
+    const t = L ? Math.max(0, Math.min(1, -(ax * dx + ay * dy) / L)) : 0; if (Math.hypot(ax + t * dx, ay + t * dy) <= m) return true; }
+  return false;
+}
+module.exports = { rings, simplify, flat, inRing, ringArea, shapeAt, insidePoint, nearRing };

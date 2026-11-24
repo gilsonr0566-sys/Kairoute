@@ -58,8 +58,12 @@
       // paths don't reach on foot from the centre, is across the water: a sight of the guide, one the travel guide or
       // the helper brings in, a stop the traveler adds, a town a day away and its own sights. From the island outlines in
       // the place file, so it holds offline (Nov 23: Lokrum wasn't one of the file's sights and was planned as a taxi).
+      // Never the island a day of this place starts from (the ship's pier, a hotel): where the traveler is, is not across
+      // the water from itself (Nov 24 Venice build: the cruise terminal's own islet came back as "no way there on foot").
+      const homes = new Set((b.days || []).filter(d => d.city === key).flatMap(d => [d.point, d.lodging, d.hotel]).filter(p => p && isFinite(+p.lat) && isFinite(+p.lng))
+        .map(p => { const h = E.islandAt(P.islands && P.islands.shapes, p); return h && h.id; }).filter(Boolean));
       const across = s => { if (!s || s.acrossWater || !P.islands || !Array.isArray(P.islands.shapes)) return;
-        const sh = E.islandAt(P.islands.shapes, s); if (sh && sh.id !== P.islands.centreShape && sh.walk === false) s.acrossWater = sh.name || true; };
+        const sh = E.islandAt(P.islands.shapes, s); if (sh && sh.id !== P.islands.centreShape && !homes.has(sh.id) && sh.walk === false) s.acrossWater = sh.name || true; };
       // Every listed sight shows its English name (tools/places/en-names.cjs: the English Wikipedia title, else the
       // Wikidata English label); one with no English name in any source is a "Local sight" with its own name beneath
       // as the name on signs (rule R-11, any language).

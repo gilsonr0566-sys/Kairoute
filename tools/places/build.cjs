@@ -98,7 +98,10 @@ async function islandShapes(centre, km) {
     if (j.code === 'NoRoute') { s.walk = false; continue; }
     if (j.code !== 'Ok' || !j.routes || !j.routes[0]) { s.walk = null; continue; }
     const ferry = j.routes[0].legs.some(l => (l.steps || []).some(st => st.mode === 'ferry'));
-    const w = (j.waypoints || [])[1], on = w && w.location && s.rings.some(f => IS.inRing(f, w.location[1], w.location[0]));
+    // The path the router ends on may run along the coast, just outside the simplified outline (30 m): within 60 m of the
+    // outline counts as on the island (Nov 24 Venice build: the cruise terminal's islet, reached by bridges, came back as
+    // "no way there on foot"). A way that ends on another shore is far from it.
+    const w = (j.waypoints || [])[1], on = w && w.location && s.rings.some(f => IS.inRing(f, w.location[1], w.location[0]) || IS.nearRing(f, w.location[1], w.location[0], 60));
     s.walk = !ferry && !!on; }
   return { shapes, centreShape: home ? home.id : null, big, km };
 }
