@@ -39,7 +39,7 @@ async function run(b, url) {
   const ctx = await b.newContext({ viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true });
   await ctx.addInitScript(saved => { try { if (!sessionStorage.getItem('seeded')) { sessionStorage.setItem('seeded', '1'); localStorage.setItem('kairoute.intro1', '1'); localStorage.setItem('wayside.cities', JSON.stringify(saved));
     const k = 'b2:kairoute.app', v = JSON.parse(localStorage.getItem(k) || '{}'); v.backAck = '2026-11-20'; localStorage.setItem(k, JSON.stringify(v)); } } catch (e) {} }, SAVED);
-  await ctx.route(u => !/^http:\/\/localhost/.test(String(u)), r => { const u = new URL(r.request().url());
+  if (!process.env.LIVE_URL) await ctx.route(u => !/^http:\/\/localhost/.test(String(u)), r => { const u = new URL(r.request().url());
     if (u.pathname === '/status') return r.fulfill({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: '{"ok":true,"on":false}' });
     return r.fulfill({ status: 503, body: '' }); });
   const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(String(e)));
@@ -64,6 +64,8 @@ async function run(b, url) {
   await ctx.close(); return { found, screens };
 }
 (async () => {
+  // On the live site (LIVE_URL): the same AI-era device, opened on the published app with its real helper (no plant).
+  if (process.env.LIVE_URL) { const b = await chromium.launch(), r = await run(b, process.env.LIVE_URL); await b.close(); console.log('screens read: ' + r.screens.join(', ')); r.found.forEach(f => console.log('FAIL ' + f)); console.log(`saved-recheck live: ${r.found.length ? 'FAIL' : 'PASS'} (0 unchecked items ${r.found.length ? 'NOT met' : 'met'})`); process.exit(r.found.length ? 1 : 0); }
   const b = await chromium.launch();
   // The real build.
   const s1 = await serve(path.dirname(FILE)); const real = await run(b, s1.url); s1.close();
