@@ -4,5 +4,5 @@ const H = 'https://kairoute-ai.rickgilson.workers.dev', O = 'https://gilsonr0566
 for (const p of (process.env.PTS || '').split('|').filter(Boolean)) { const [name, ll] = p.split(':'), [lat, lng] = ll.split(',');
   for (let t = 1; t <= 4; t++) { const t0 = Date.now();
     try { const r = await fetch(`${H}/islands?lat=${lat}&lng=${lng}`, { headers: { Origin: O }, signal: AbortSignal.timeout(60000) }); const j = await r.json().catch(() => null);
-      console.log(`${name} ask ${t}: ${r.status} in ${((Date.now() - t0) / 1000).toFixed(0)} s; ${j && j.shapes ? j.shapes.length + ' islands, ' + j.open + ' not asked yet: ' + j.shapes.filter(s => s.walk !== null).map(s => s.name + '=' + s.walk).join(', ') : JSON.stringify(j)}`);
+      console.log(`${name} ask ${t}: ${r.status} in ${((Date.now() - t0) / 1000).toFixed(0)} s; ${j && j.shapes ? j.shapes.length + ' islands, ' + j.open + ' not asked yet: ' + j.shapes.filter(s => s.why).map(s => s.name + '=' + s.walk + ' (' + s.why + ')').join(', ') + '; not known: ' + j.shapes.filter(s => s.walk === null).length : JSON.stringify(j)}`);
       if (j && j.shapes && !j.open) break; } catch (e) { console.log(`${name} ask ${t}: stopped (${e.name})`); } } }
