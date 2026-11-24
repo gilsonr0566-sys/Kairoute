@@ -14,14 +14,30 @@ on:
     branches: ["claude/project-thread-pe7pi0"]
     paths: ["tools/client/**", ".github/workflows/client-feel.yml"]
   schedule:
-    - cron: "15 11 * * *" # 5:15 am Central, ready before the 7 am report
+    # GitHub starts scheduled runs late or not at all when it is busy (Nov 24: the 5:15 am run never came; other
+    # schedules here ran 1-5 hours late). So: a first try at 2:20 am Central and a second at 4:50 am; the second does
+    # nothing if today's results are already in (see "today").
+    - cron: "20 8 * * *"
+    - cron: "50 10 * * *"
 permissions:
   contents: read
 concurrency:
   group: client-feel
   cancel-in-progress: false
 jobs:
+  today:
+    runs-on: ubuntu-latest
+    outputs:
+      done: ${{ steps.c.outputs.done }}
+    steps:
+      - id: c
+        run: |
+          D=$(date -u +%Y-%m-%d)
+          L=$(curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/client-feel-results/LATEST.txt" 2>/dev/null || true)
+          if [ "${{ github.event_name }}" = "schedule" ] && echo "$L" | grep -q "^$D"; then echo "done=1" >> "$GITHUB_OUTPUT"; echo "Today's run is already in ($L)"; else echo "done=0" >> "$GITHUB_OUTPUT"; fi
   walk:
+    needs: today
+    if: needs.today.outputs.done != '1'
     strategy:
       fail-fast: false
       matrix:
@@ -30,7 +46,9 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
-        with: { ref: "${{ github.event_name == 'schedule' && 'claude/project-thread-xrdp7v' || github.ref }}" }
+        # The tools live on the release branch, not on main: a scheduled run, or one started by hand on main, uses them
+        # from there (Nov 24: started by hand on main, it failed in a minute with no tools/client/feel.cjs).
+        with: { ref: "${{ (github.event_name == 'schedule' || github.ref_name == 'main') && 'claude/project-thread-xrdp7v' || github.ref }}" }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
@@ -50,7 +68,7 @@ jobs:
           retention-days: 14
   collect:
     needs: walk
-    if: always()
+    if: always() && needs.walk.result != 'skipped'
     runs-on: ubuntu-latest
     permissions:
       contents: write
