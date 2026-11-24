@@ -5,6 +5,10 @@
 //   - the release gate's phone run (tools/beta2/screen-gate.cjs);
 //   - the live-site outside test results (tools/beta2/screen-audit.cjs).
 // Severity: S1 = could make a traveler miss the ship, train or flight; S2 = wrong or misleading on screen; S3 = untidy.
+// Words that tell the traveler when to head back in rough terms ("Leave Rome by mid-afternoon", "come back by
+// mid-afternoon", "head back early"): one rule shared by the screen check and the app, which leaves them out on a day that
+// has its own time to leave (src/main.js, planNote).
+var KScreenAdvice = /[^.\n]*\b(?:leave\s+(?:\w+\s+){0,2}?by|(?:head|come|get|be)\s+back(?:\s+\w+){0,3}?\s+(?:by|before)|return(?:\s+\w+){0,3}?\s+(?:by|before))\s+(?:the\s+)?(?:early |mid-?|late )?(?:morning|afternoon|evening|noon|lunch(?:time)?)\b[^.\n]*\.?|[^.\n]*\b(?:head|come|get) back early\b[^.\n]*\.?/i;
 var KScreenRules = (function () {
 const T = s => { const m = String(s || '').trim().match(/^(\d{1,2}):(\d\d)(?:\s*([ap])m)?$/i); if (!m) return null; let h = +m[1]; if (m[3]) h = h % 12 + (m[3].toLowerCase() === 'p' ? 12 : 0); return h * 60 + +m[2]; };
 const inTxt = s => { const m = /(\d{1,2}):(\d\d)\s*([ap])m/i.exec(s || ''); return m ? T(m[0]) : null; };
@@ -93,6 +97,9 @@ function rules(text, info = {}) {
   { const m = /Leave here by (\d{1,2}:\d\d\s*[ap]m) to be back by (\d{1,2}:\d\d\s*[ap]m)/i.exec(raw);
     if (m && T(m[1]) != null && T(m[1]) === T(m[2])) add('S2', 'leave-by is not the back-by', `"Leave here by ${m[1]} to be back by ${m[2]}": the same time, so the words say nothing true`);
     if (/: walk 0 min, so leave by/.test(raw)) add('S2', 'leave-by is not the back-by', 'a leave-by from a walk of 0 min'); }
+  // One time to head back (Nov 24, outside test round 7b: "Leave Rome by mid-afternoon" on a day whose plan leaves St Peter's
+  // at 5:30 pm): on a day with a LEAVE BY, no other words tell the traveler a different, vaguer time to head back.
+  if (P.leaveBy != null) { const m = KScreenAdvice.exec(raw); if (m) add('S2', 'one time to head back', `"${m[0].trim()}" beside the plan's own LEAVE BY ${clock(P.leaveBy)}`); }
   // "Which airport" with only terminals of one airport to choose from is a terminal question (tester round 7a).
   { const m = /Which airport [^?]*\? There is more than one here \(([^)]*)\)/.exec(raw);
     if (m) { const ns = m[1].split(/,? or |, (?!(?:terminals?|T)\s*[0-9A-Z]{1,3}\b)/i).map(s => s.trim()).filter(Boolean), base = n => n.replace(/\s*,?\s*(terminals?|T)\s*[0-9A-Z]{1,3}$/i, '').trim();

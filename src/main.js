@@ -6211,6 +6211,15 @@ function famousTrue(s, city) { if (s.mustSee || s.unesco) return true; const f =
 let openCard = null, picksOpen = true; // the traveler's own sights show first, open (outside review, Nov 20)
 // One card per sight, collapsed to three lines: tick, name and what it does to the day; time, price and how far;
 // interest labels. A tap opens the rest (one card at a time).
+// One time to head back (R-03, Nov 24 outside test: "Leave Rome by mid-afternoon" above a plan leaving St Peter's at
+// 5:30 pm): on a day with its own time to leave, a note's rough advice on when to head back is left out (the plan's LEAVE BY
+// is worked out for this day; the guide's words are not). The same words the screen rule looks for (KScreenAdvice).
+function planNote(t, plan) {
+  if (!t || typeof t !== "string") return t || "";
+  const hard = !!(plan && plan.w && (plan.w.hard || isFinite(plan.w.endBy)));
+  if (!hard || typeof KScreenAdvice === "undefined") return t;
+  return t.replace(new RegExp(KScreenAdvice.source, "gi"), "").replace(/\s{2,}/g, " ").trim();
+}
 function siteCard(s, d, plan, nr) {
   const city = cityFor(d), sel = d.selected || [], kids = kidsOf(s, city), kidOn = kids.find(k => sel.includes(k.id)), on = sel.includes(s.id) || !!kidOn, anc = nr && nr.anc, isAnc = anc && s === anc;
   // A day-trip town's own sights are stops of their own on the Day plan (each palace, then the walk through the town), so
@@ -7025,7 +7034,7 @@ function renderPlan(d) {
     const it = freeShift && idx >= freeAt && it0.type !== "end" && it0.type !== "evening" ? Object.assign({}, it0, { time: it0.time + freeShift }) : it0;
     const pv = plan.items[idx - 1], nx = plan.items[idx + 1], rideIn = pv && pv.type === "travel" && pv.leg.mode !== "walk" && legKind(pv.leg), rideOut = nx && nx.type === "travel" && nx.leg.mode !== "walk" && legKind(nx.leg);
     const cls = `tl ${idx === 0 ? "first" : ""} ${idx === plan.items.length - 1 || it.type === "end" ? "last" : ""} ${rideIn ? "rin rin-" + rideIn : ""} ${rideOut ? "rout rout-" + rideOut : ""}`;
-    if (it.type === "start") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${it.place.note ? `<div class="sub">${esc(it.place.note)}</div>` : ""}${plan.w.notes.map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
+    if (it.type === "start") return `<div class="${cls}">${tcell(it)}<div class="rail"><div class="dot start">S</div></div><div class="what"><div class="nm">${esc(it.label)}</div>${planNote(it.place.note, plan) ? `<div class="sub">${esc(planNote(it.place.note, plan))}</div>` : ""}${plan.w.notes.map(t => planNote(t, plan)).filter(Boolean).map(t => `<div class="sub">${esc(t)}</div>`).join("")}</div></div>`;
     if (it.type === "travel") {
       const m = it.leg.mode, k = legKind(it.leg), freeHere = !freeShown && freeCard && idx === freeAt ? (freeShown = true, freeCard) : ""; // before the first of the rides back (to the pier, then the boat)
       return freeHere + `<div class="tl leg ${m} k-${k}${it.leg.choices ? " ridecho" : ""}" data-kind="${k}"><div class="time"></div><div class="rail"></div><div class="what">${legIcon(k)}<span>${it.leg.km < 0.1 ? "Next door" : `<b>${esc(it.leg.how)}</b> · ${dur(it.leg.min)} · ${distTxt(it.leg.km)}`}${rideDetail(it.leg, it.time, plan.w && plan.w.endBy)}</span></div></div>`;

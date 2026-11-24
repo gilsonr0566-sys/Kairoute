@@ -27,6 +27,7 @@ const P = {
   'small-hours departure asked': ['leave', t => t, { time: '00:20', mode: 'train' }],
   'free time after the first steps': ['arrive', t => rep('\nH\nCheck in or drop bags', '\nH\nHotel')(t).replace('Back at Hotel near Plaça de Catalunya', 'Check in or drop bags')],
   'leave-by is not the back-by': ['naples', add('Free time: 2 h 45 min\nYours to spend as you like. Leave here by 10:45 pm to be back by 10:45 pm.')],
+  'one time to head back': ['naples', add('From the cruise port: Rome is about 1 hour 15 minutes by train. Leave Rome by mid-afternoon.')],
   'terminals asked as terminals': ['leave', add('Which airport do you leave from? There is more than one here (Big City Airport, Terminal 1 or Big City Airport, Terminal 2). Choose yours')],
   'times go forward': ['naples', rep('ARRIVE\n9:58 am', 'ARRIVE\n8:00 am')],
   'ride time matches the clock': ['naples', rep('ARRIVE\n12:14 pm', 'ARRIVE\n12:05 pm')],
