@@ -36,6 +36,26 @@ app's own estimates). **Live run** = the daily outside test on the published Bet
 | **Accuracy of sources** | 161 official hours; Greek cruise stories fact-checked with sources; weekly sight audit (positions, names) | Real world for hours and stories; the audit uses the app's own sources | 161 sights; 82 stories; test places | **Partly** |
 | **Real data offered** (no made-up claims) | Screen rules "one real reason", "reason has its numbers", "missing data said as missing", "lunch has a real place"; AI honesty and no-paid-AI checks | Checks that every claim points to data; not that the data is still true (a restaurant that closed last month) | Saved trips | **Partly** |
 
+## Real-world score per question (read by `tools/truth/readiness-score.cjs`)
+
+One line per question Richard asked. **yes** = checked against the real world (a source the app does not use, or what the
+traveler typed), or, for "times agree across screens", the comparison between screens that IS the right test; **partly** =
+some of it; **no** = only checked that the app agrees with itself. Change a line only when the check behind it is in the
+release gate or a nightly run, and say which.
+
+| Question | Real world | Why |
+|---|---|---|
+| Back to the ship, train or flight safely | partly | the deadline is the traveler's own time; ride back times have a real-world time only for walks and taxis (BRouter), not trains, metro or ferries |
+| Walk, train, metro, taxi, ferry accurate | partly | walks and taxis vs BRouter in the gate; trains, metro, buses and ferries have no outside time yet |
+| Times agree across screens | yes | 48 screen rules on the finished screens, each with a planted bug |
+| Foreign languages | partly | letters rule on every source; the English name comes from Wikidata, the app's own source |
+| Correct routes (order of the day) | no | no check compares the order with a real walking route |
+| Sights grouped correctly | no | fold rules and the weekly audit use the app's own sources |
+| Time at sites stays correct | partly | the time stays the same after changes; no outside source for the right visit length |
+| Opening hours | partly | 161 sights vs official websites; the rest only the map's hours |
+| Accuracy of sources | partly | official hours and fact-checked stories; the sight audit uses the app's own sources |
+| Real data offered | partly | every claim must point to data; not checked that the data is still true |
+
 ## Closing the real-world gaps, safety first
 
 1. **Ride back to the ship, train or flight; every walk, taxi, train, metro and bus** (new today, `tools/truth/real-world.mjs`,

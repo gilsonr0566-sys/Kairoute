@@ -42,3 +42,26 @@ The report's first lines are, in this order:
 2. **Fault audit catch rate** by area, from the last run, with the weakest area named.
 3. Then the release status and everything else. The pass count moves to the end, as a count of checks, never as a sign
    of readiness.
+
+## 4. One readiness number (Richard, Nov 25: "a 1 percentage that shows a increase or decrease in readiness")
+
+`node tools/truth/readiness-score.cjs` gives one percentage, built only from measured data. The pass count is not in it.
+Four parts, 25 points each:
+
+| Part | What is measured | Full 25 points when |
+|---|---|---|
+| Fault audit catch rate | Average share of fresh random planted bugs the release gate catches, per area (`docs/qa/fault-audit-latest.json`, updated after each audit run) | 90% or more on average |
+| Real-world ride accuracy | For each kind of ride on the saved trips' plans (walk, taxi, train, metro, bus, ferry), the share of rides whose time a source the app doesn't use confirms as right. A ride with no outside time is not counted as right, so a kind with no outside source scores 0. Kinds count equally | every ride of every kind confirmed right |
+| Clean days | Whole days in a row, up to yesterday (Central), with 0 serious escapes and at most 1 other (`docs/qa/escapes.md`). A bad day resets it | 7 days |
+| Real-world coverage of Richard's questions | `docs/qa/COVERAGE.md`, "Real-world score per question": yes 1, partly 0.5, no 0 | all 10 questions checked against the real world |
+
+**Hard cap:** while any serious escape (S1, P0, P1) is open in the ledger, or any ride back to a ship, train or flight on
+the saved trips has no real-world time, the score can't go above 50%, whatever the parts add up to.
+
+The hourly report leads with the number, the change since the last report and the weakest part. The report saves each
+reading with `--save` (history in `/mnt/project-files/qa/readiness-history.json`), so the change is always against the
+last report. 100% is not "perfect"; it means every measure above has met its target. The full ready line in section 1
+(14 days without a serious escape, 90% in every area) still applies.
+
+First reading, Nov 25 10:30 AM Central: **29.6%** (fault audit 14.1, real-world rides 4.3, clean days 0, coverage 11.3),
+held under 50% by E8, E46, E47 open and 13 rides back with no real-world time.

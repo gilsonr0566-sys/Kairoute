@@ -19,7 +19,7 @@ function compare(engineFile) {
   for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
   const cache = new Map((JSON.parse(fs.readFileSync(path.join(__dirname, 'real-world-cache.json'), 'utf8')).rides || []).map(r => [ck(r.kind, r.from, r.to), r]));
   const route = new Map([...cache.values()].map(r => [`${r.kind}|${(+r.from.lat).toFixed(4)},${(+r.from.lng).toFixed(4)}|${(+r.to.lat).toFixed(4)},${(+r.to.lng).toFixed(4)}`, r]));
-  const dir = process.env.SNAP_DIR || path.join(ROOT, 'tools', 'beta2', 'corpus'), out = { compared: 0, bad: [] }, seen = new Set();
+  const dir = process.env.SNAP_DIR || path.join(ROOT, 'tools', 'beta2', 'corpus'), out = { compared: 0, bad: [], kinds: {}, backUnchecked: [] }, seen = new Set();
   for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
     const name = f.replace(/\.json$/, ''), b = JSON.parse(fs.readFileSync(path.join(dir, f))); let plans;
     // The street routes the app asks the helper for (R-33), here the measured ones: the plan is the one a traveler sees.
@@ -29,9 +29,15 @@ function compare(engineFile) {
     try { plans = E.planTrip(bb); } catch (e) { out.bad.push(`${name}: does not plan (${e.message})`); continue; }
     b.days.forEach((d, i) => { const p = plans[i]; if (!p || !p.items) return; const its = p.items, lastRide = its.map(x => x.t).lastIndexOf('ride'), hard = /port|departure|embark/.test(d.type);
       its.forEach((x, j) => { if (x.t !== 'ride' || !x.from || !x.to || !(x.min > 0)) return;
-        const kind = kindOf(x), k = ck(kind, x.from, x.to), m = cache.get(k); if (!m) return;
+        const kind = kindOf(x), k = ck(kind, x.from, x.to), m = cache.get(k);
         const planned = /train|metro|bus/.test(kind) ? x.min + (x.wait || 0) : x.min, back = hard && j === lastRide, id = k + '|' + planned;
-        if (seen.has(id)) return; seen.add(id); out.compared++;
+        if (seen.has(id)) return; seen.add(id);
+        // Tallies for the readiness score (tools/truth/readiness-score.cjs): every different ride on the plans, by kind,
+        // how many have a real-world time, how many of those are right, and rides back with no real-world time.
+        const t = out.kinds[kind] = out.kinds[kind] || { rides: 0, compared: 0, right: 0 }; t.rides++;
+        if (!m) { if (back) out.backUnchecked.push(`${name} day ${i + 1} ${d.city || ''}: ${kind} ride back`); return; }
+        out.compared++; t.compared++;
+        if (!(m.real - planned >= 5 && planned < m.real * 0.75) && !(!back && planned > m.real * 2.5 && planned - m.real > 15)) t.right++;
         if (m.real - planned >= 5 && planned < m.real * 0.75) out.bad.push(`${back ? 'S1 ' : ''}${name} day ${i + 1} ${d.city || ''}: ${kind} ${(its[j - 1] && its[j - 1].name) || '?'} > ${(its[j + 1] && its[j + 1].name) || '?'} planned ${planned} min, real least ${m.real} min (${m.src}, measured ${m.measured})${back ? ' RIDE BACK' : ''}`); }); });
   }
   return out;
