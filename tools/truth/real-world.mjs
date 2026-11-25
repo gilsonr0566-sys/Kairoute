@@ -75,7 +75,7 @@ async function db(r) {
   r0 = r.from; const when = nextDate(r.date || new Date().toISOString().slice(0, 10), r.at || 600);
   const q = new URLSearchParams({ 'from.latitude': r.from.lat, 'from.longitude': r.from.lng, 'from.address': r.fromName || 'start', 'to.latitude': r.to.lat, 'to.longitude': r.to.lng, 'to.address': r.toName || 'end',
     departure: when.toISOString(), results: '6', stopovers: 'false', remarks: 'false', walkingSpeed: 'normal' });
-  let res, last; for (const host of ['v6.db.transport.rest', 'v5.db.transport.rest']) { try { res = await fetch(`https://${host}/journeys?` + q, { headers: UA }); if (res.ok) break; last = new Error('db ' + res.status); res = null; } catch (e) { last = e; res = null; } }
+  let res, last; for (const host of ['v6.db.transport.rest', 'v5.db.transport.rest']) { try { res = await fetch(`https://${host}/journeys?` + q, { headers: UA }); if (res.ok) break; last = new Error('db ' + res.status); res = null; } catch (e) { last = new Error(host + ': ' + e.message + (e.cause ? ' (' + (e.cause.code || e.cause.message || e.cause) + ')' : '')); res = null; } }
   if (!res) throw new Error('db journey planner: ' + (last && last.message || 'no answer'));
   const j = await res.json(), js = (j.journeys || []).map(x => { const L = x.legs || [], a = L[0], z = L[L.length - 1];
     const dep = new Date(a.plannedDeparture || a.departure), arr = new Date(z.plannedArrival || z.arrival);
