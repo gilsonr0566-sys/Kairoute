@@ -26,7 +26,8 @@ const seed = { trip: JSON.stringify({ id: 'live-' + TRIP, name: c.name || TRIP, 
   // PICKS by name (the sights list on the live app can carry other ids than the saved trip): read the ids off the
   // live list's own tick boxes ("Pick <name>") and make them the day's own list.
   const names = (process.env.PICKS || '').split(',').filter(x => x && !/^src-|^q\d/.test(x));
-  if (names.length) { await p.evaluate(i => window.__kairouteGo('sites', i), DAY); await p.waitForTimeout(8000);
+  if (names.length) { await p.evaluate(i => window.__kairouteGo('sites', i), DAY);
+    for (let t = 0; t < 30; t++) { await p.waitForTimeout(3000); const n = await p.evaluate(ns => [...document.querySelectorAll('input[data-site]')].filter(x => ns.some(n => (x.getAttribute('aria-label') || '').toLowerCase().includes(n.toLowerCase()))).length, names); if (n >= names.length) break; } // the live guide arrives from the helper
     const ids = await p.evaluate(ns => [...document.querySelectorAll('input[data-site]')].filter(x => ns.some(n => (x.getAttribute('aria-label') || '').toLowerCase().includes(n.toLowerCase()))).map(x => x.dataset.site), names);
     console.log('PICKED ' + JSON.stringify(ids)); await p.evaluate(([i, ids]) => window.__kairouteEdit(i, { selected: [...new Set(ids)], ownList: true }), [DAY, ids]); }
   await p.evaluate(i => window.__kairouteGo('plan', i), DAY); await p.waitForTimeout(25000); // helper answers (routes, islands) arrive
