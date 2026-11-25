@@ -72,6 +72,15 @@ const run = (args, env, cwd) => new Promise(res => { const p = spawn('node', arg
     const seen = new Set();
     while (plan.filter(p => p.area === area).length < Math.min(PER, pool.length) && seen.size < pool.length) { const c = pool[Math.floor(rnd() * pool.length)], k = `${c.file}:${c.line}:${c.col}:${c.op}`; if (seen.has(k)) continue; seen.add(k); plan.push(Object.assign({ area }, c)); } }
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'fault-')), rows = [];
+  // Every check must pass on the unchanged planner first: one that already fails would "catch" every planted bug (Nov 24
+  // run 3: the reason-numbers check failed on the planner as it was, and two areas read 100%). A check that fails here is
+  // left out, said as NOT TESTED, and never counted as catching.
+  const base = path.join(tmp, 'base'); fs.cpSync(path.join(ROOT, 'src', 'engine'), path.join(base, 'engine'), { recursive: true });
+  if (fs.existsSync(path.join(ROOT, 'src', 'engine-data'))) fs.cpSync(path.join(ROOT, 'src', 'engine-data'), path.join(base, 'engine-data'), { recursive: true });
+  const notTested = [];
+  if (plan.some(m => m.area !== 'screen rules')) for (const c of CHECKS) { const [name, args, env] = c, r = await run(typeof args === 'function' ? args(base) : args, Object.assign({ ENGINE_SRC: base }, env || {}), ROOT);
+    if (r.code) { notTested.push(name); process.stderr.write(`NOT TESTED: ${name} fails on the unchanged planner (${(r.out.trim().split('\n').pop() || '').slice(0, 140)}); left out\n`); } }
+  const USE = CHECKS.filter(c => !notTested.includes(c[0]));
   let next = 0;
   const lane = async () => { while (next < plan.length) { const m = plan[next++], src = path.join(tmp, 'm' + plan.indexOf(m));
     fs.cpSync(path.join(ROOT, 'src', 'engine'), path.join(src, 'engine'), { recursive: true });
@@ -91,7 +100,7 @@ const run = (args, env, cwd) => new Promise(res => { const p = spawn('node', arg
     const load = await run(['-e', `require(${JSON.stringify(path.join(ROOT, 'tools', 'beta2', 'engine.cjs'))})`], { ENGINE_SRC: src }, ROOT);
     if (load.code) { rows.push(Object.assign(m, { result: 'not counted (does not load)' })); fs.rmSync(src, { recursive: true, force: true }); continue; }
     let by = null;
-    for (const [name, args, env] of CHECKS) { const r = await run(typeof args === 'function' ? args(src) : args, Object.assign({ ENGINE_SRC: src }, env || {}), ROOT); if (r.code) { by = name; m.why = (r.out.match(/^(FAIL|MISSED|NOT TESTED).*$/m) || [r.out.trim().split('\n').pop() || ''])[0].slice(0, 200); break; } }
+    for (const [name, args, env] of USE) { const r = await run(typeof args === 'function' ? args(src) : args, Object.assign({ ENGINE_SRC: src }, env || {}), ROOT); if (r.code) { by = name; m.why = (r.out.match(/^(FAIL|MISSED|NOT TESTED).*$/m) || [r.out.trim().split('\n').pop() || ''])[0].slice(0, 200); break; } }
     rows.push(Object.assign(m, { result: by ? 'caught' : 'missed', by }));
     process.stderr.write(`${rows.length}/${plan.length} ${by ? 'caught by ' + by : 'MISSED'}  ${m.file}:${m.line + 1} ${m.op}\n`);
     fs.rmSync(src, { recursive: true, force: true }); } };
@@ -99,6 +108,7 @@ const run = (args, env, cwd) => new Promise(res => { const p = spawn('node', arg
   fs.rmSync(tmp, { recursive: true, force: true });
   const counted = rows.filter(r => r.result !== 'not counted (does not load)');
   console.log(`Fault audit: ${counted.length} random bugs planted in the planner (seed ${arg('seed', 1)}), ${rows.length - counted.length} more did not load and are not counted\n`);
+  if (notTested.length) console.log(`NOT TESTED (failed on the unchanged planner, so left out and never counted as catching): ${notTested.join(', ')}\n`);
   console.log('| Area | Planted | Caught | Share | Caught first by the engine tests |\n|---|---|---|---|---|');
   for (const area of Object.keys(AREAS)) { const a = counted.filter(r => r.area === area); if (!a.length) continue; const c = a.filter(r => r.result === 'caught');
     console.log(`| ${area} | ${a.length} | ${c.length} | ${Math.round(100 * c.length / a.length)}% | ${a.filter(r => r.by === 'engine-test').length} |`); }
