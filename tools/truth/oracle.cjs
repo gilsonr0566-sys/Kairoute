@@ -22,6 +22,9 @@
 //                them), is later than the least time needed at the gate
 //   S1 before    a stop or meal before the traveler can be there: before the plane lands (+20), the train arrives, the
 //                ship docks (+15, +30 at a tender port), or before the day's own start time
+//   S1 margin    back at the ship less than Kairoute's promise before all aboard (45 min, 75 at a tender port), at the
+//                terminal less than 60 min before on boarding day, at the station less than 45 min before a train across an
+//                open border or 90 across a passport border (its own list of open-border countries, never the planner's)
 //   S1 night     a departure typed in the small hours (before 5:00) on a day the plan fills with sights: the plan takes it
 //                as the NEXT night, a ticket dated that day means THIS morning. Never assumed: it must be asked.
 //   S1 unverified the way back to the flight, train or ship rests on a ride with no timetable behind it, and the plan marks
@@ -57,7 +60,11 @@ const clk = m => { if (!isFinite(m)) return String(m); const d = Math.floor(m / 
 const FLOOR = { flight: 60, train: 10, ship: 15, bus: 10, checkin: 30 };
 // The least time to get off and out after arriving.
 const OFF = { flight: 20, train: 5, ship: 15, bus: 5 };
-const PROMISE = { port: 45, tender: 30, embark: 60 }; // tender: the boats back stop well before all aboard, so 30 min more at a tender port // Kairoute's stated margins before all aboard (policy, not the planner's numbers)
+const PROMISE = { port: 45, tender: 30, embark: 60, border: 45, passport: 90 };
+// Countries with no passport check between them (the Schengen area, Nov 2026), written here, not read from the planner: a
+// train between two of them needs 45 min at the station (ID checks), any other border 90 (passports, bags: to or from
+// Britain, for one). Fault audit Nov 25: the planner's 90 halved to 45 was caught by no check.
+const NO_PASSPORT = new Set(['austria', 'belgium', 'bulgaria', 'croatia', 'czechia', 'czech republic', 'denmark', 'estonia', 'finland', 'france', 'germany', 'greece', 'hungary', 'iceland', 'italy', 'latvia', 'liechtenstein', 'lithuania', 'luxembourg', 'malta', 'netherlands', 'norway', 'poland', 'portugal', 'romania', 'slovakia', 'slovenia', 'spain', 'sweden', 'switzerland']); // tender: the boats back stop well before all aboard, so 30 min more at a tender port // Kairoute's stated margins before all aboard (policy, not the planner's numbers)
 const BAGS = 10;                          // collecting bags from storage or a hotel desk, at the very least
 const FASTEST_KMH = 60;                   // straight line, no traffic, no waiting: no real ride is faster on average
 const MAX_KMH = { walk: 6.5, taxi: 90, ride: 90, car: 90, bus: 90, metro: 90, tram: 90, transit: 300, train: 300, rail: 300, ferry: 80, boat: 80, lift: 60, funicular: 60, cable: 60 };
@@ -197,8 +204,10 @@ function checkDay(d, p, ctx) {
     // halving the planner's margins was caught by no check, because the floors above are only the least time possible).
     // Ship days: back 45 min before all aboard, 30 more at a tender port where the boats back stop early (docs/beta-2/engine-plan.md); boarding day: at the terminal an hour before
     // all aboard (docs/beta-2/lessons-from-the-old-engine.md #14).
-    const promise = d.type === 'port' ? PROMISE.port + (d.tender ? PROMISE.tender : 0) : d.type === 'embark' ? PROMISE.embark : null;
-    if (endIt && promise != null && endIt.at > D.at - promise + 1) add('margin', 'S1', `the plan reaches ${endIt.name || 'the ' + D.mode} at ${clk(endIt.at)}, ${D.at - endIt.at} min before ${d.type === 'port' ? 'all aboard' : 'all aboard on boarding day'} (${clk(D.at)}); Kairoute promises ${promise}`);
+    const ca = String(d.country || '').trim().toLowerCase(), cb = String(d.toCountry || '').trim().toLowerCase();
+    const border = d.type === 'departure' && d.mode === 'train' && ca && cb && ca !== cb ? (NO_PASSPORT.has(ca) && NO_PASSPORT.has(cb) ? PROMISE.border : PROMISE.passport) : null;
+    const promise = d.type === 'port' ? PROMISE.port + (d.tender ? PROMISE.tender : 0) : d.type === 'embark' ? PROMISE.embark : border;
+    if (endIt && promise != null && endIt.at > D.at - promise + 1) add('margin', 'S1', `the plan reaches ${endIt.name || 'the ' + D.mode} at ${clk(endIt.at)}, ${D.at - endIt.at} min before ${d.type === 'port' ? 'all aboard' : d.type === 'embark' ? 'all aboard on boarding day' : 'the train across the border (' + ca + ' to ' + cb + ')'} (${clk(D.at)}); Kairoute promises ${promise}`);
     if (endIt && endIt.at > lastAt) add('gone', 'S1', `the plan reaches ${endIt.name || 'the ' + D.mode} at ${clk(endIt.at)}; the ${D.mode} leaves ${clk(D.at)} (be there by ${clk(lastAt)} at the very least)`);
     visits.forEach(x => { if (ends(x) > lastAt) add('gone', 'S1', `${x.name} ends ${clk(ends(x))}; the ${D.mode} leaves ${clk(D.at)} (be there by ${clk(lastAt)} at the very least)`); });
     if (G) {

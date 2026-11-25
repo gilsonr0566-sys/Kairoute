@@ -44,6 +44,8 @@ const MUTANTS = [
     was: 'Ride times read from an earlier AI guide\'s unconfirmed travel words (Nov 24, P1: "Not confirmed" words still gave a crossing time)' },
   { id: 'port-margin-halved', corpus: true, file: '30-window.js', from: 'E.PORT_BUFFER = 45;', to: 'E.PORT_BUFFER = 22;',
     was: 'Back at the ship only 22 min before all aboard instead of the promised 45 (fault audit, Nov 24: halving the margins was caught by no check)' },
+  { id: 'border-passport-halved', file: '30-window.js', from: 'E.BORDER_NEED = { open: 45, passport: 90 };', to: 'E.BORDER_NEED = { open: 45, passport: 45 };',
+    was: 'At the station 45 min before a train across a passport border instead of 90 (fault audit, Nov 25: caught by no check)' },
   { id: 'off-before-arrival', file: '30-window.js', from: 'w.start = E.toMin(d.thru.time) + am.clear;', to: 'w.start = E.toMin(d.thru.time) - 150;',
     was: '"Off the ship 5:30 am" when the ship arrives at 7:00 am (weekly ladder, Nov 22)' },
 ];
