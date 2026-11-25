@@ -1099,7 +1099,7 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     ok(ok1.cross === 45 && ok1.source === 'guide' && ok1.first, `confirmed travel words give the guide's crossing and first sailing (${ok1.cross}, ${ok1.source})`);
     ok(nc.kind === 'ferry' && nc.cross !== 45 && nc.source === 'estimate' && !nc.first, `unconfirmed travel words still mean a boat, but never give its time or first sailing (${nc.kind} ${nc.cross} ${nc.source} first=${!!nc.first})`);
     const land = n => { const e = T().estimate(town, { lat: 37.94, lng: 27.37, travelNote: n }); return (e.options || [e]).find(o => o.kind === 'taxi') || {}; };
-    ok(land('Not confirmed: about 2 hours by bus').source !== 'guide' && land('about 2 hours by bus').source === 'guide', 'unconfirmed travel words never set a ride time on land either');
+    ok(land('Not confirmed: about 70 min by bus').source !== 'guide' && land('about 70 min by bus').source === 'guide', 'unconfirmed travel words never set a ride time on land either');
     ok(!/The guide says/.test(T().estimate(town, isle('Not confirmed: ' + words)).note || '') && /not confirmed/.test(T().estimate(town, isle('Not confirmed: ' + words)).note || ''), 'unconfirmed words are never shown as what the guide says');
     ok(!E.noteWays('Not confirmed: Sea bus every 20 minutes, about 10 minutes').length && E.firstSailing('Not confirmed: first boat 9:30') == null, 'no ride or sailing time is read from unconfirmed words anywhere'); }
   // Round 1 S1-8: a stop the map puts across the water is a boat away however close it looks (Lokrum, "Walk 6 min"), and

@@ -78,6 +78,15 @@ function run(E) {
   const base = E.makeTravel({ walk: 'medium' }, {}, null, null, null, null).estimate(A, east(3));
   const sw = E.legAs(base, { kind: 'bus', id: 'bus', how: 'Bus 12 to the old town', min: 21, steps: [], source: 'timetable' }, 'the taxi rank is closed');
   t(sw.how === 'Bus 12 to the old town' && sw.kind === 'bus' && sw.min === 21, `a ride swapped to the bus says "Bus 12 to the old town", 21 min (got "${sw.how}", ${sw.kind}, ${sw.min})`);
+  // 6b. A guide's ride time far beyond the road to the map point (over twice it, and 30 min more) is about another spot:
+  //     never the plan's time on its own, always said; on the way back to a ship the longer time is kept, and said.
+  for (const [d0, words, back] of [[10.5, 'Driving from the city takes about 1 hour 30 minutes.', false], [10.5, 'Driving from the city takes about 1 hour 30 minutes.', true], [10.5, 'Driving from the city takes about 45 minutes.', false]]) {
+    const P = Object.assign(east(d0), { travelNote: words }), H = back ? Object.assign({}, A, { backToShip: true }) : A, d = E.hav(A, P);
+    const r = E.makeTravel({ walk: 'medium' }, {}, null, null, null, null).estimate(back ? P : A, back ? H : P), road = taxiOf(d), said = /1 hour 30/.test(words) ? 90 : 45;
+    const off = said > 2 * road && said - road >= 30, lab = `a guide's ${said} min for a place mapped ${d.toFixed(1)} km away (road ${road} min)${back ? ', on the way back to the ship' : ''}`;
+    const want = off && !back ? road : Math.max(road, said), got = r.kind === 'taxi' ? r.min - (r.slack || 0) : null;
+    t(got === want, `${lab}: the taxi is planned on ${want} min (got ${got})`);
+    t(/may mean another spot/.test(r.note || '') === off, `${lab}: ${off ? 'says' : 'does not say'} the guide may mean another spot (note: ${r.note || 'none'})`); }
   // 7. The best order of a day's stops: the shortest of every order, up to 8 stops (worked out by trying them all).
   let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const perms = a => a.length <= 1 ? [a] : a.flatMap((x, i) => perms(a.slice(0, i).concat(a.slice(i + 1))).map(p => [x].concat(p)));
@@ -103,6 +112,7 @@ if (require.main === module) {
     ['a public ride labelled with its kind, not its line', '10-travel.js', '{ transitMode: pick.transitMode || (pick.ans && pick.ans.mode) || pick.kind }', '{ transitMode: pick.kind === "metro" ? "train" : pick.transitMode || (pick.ans && pick.ans.mode) || pick.kind }'],
     ['the swapped ride keeps the old words', '10-travel.js', 'mode: E.modeOfKind(o.kind), kind: o.kind, how: o.how,', 'mode: E.modeOfKind(o.kind), kind: o.kind, how: leg.how,'],
     ['the extra time back to a ship from 20 min', '10-travel.js', 'if (o.min < 30) continue;', 'if (o.min < 20) continue;'],
+    ['a guide\'s ride time used however far it is from the map point', '10-travel.js', 'if (said0 > 2 * r.min && said0 - r.min >= 30) offMap', 'if (false) offMap'],
     ['the best order searched by a shortcut above 5 stops', '60-route.js', 'sorted.length <= 10 ? exact', 'sorted.length <= 5 ? exact'],
     ['a bus taken when the taxi saves a great deal', '10-travel.js', 'E.publicWins = (pub, roadMin) => !(roadMin < pub - 40 && roadMin < pub * 0.6);', 'E.publicWins = (pub, roadMin) => !(roadMin < pub - 90 && roadMin < pub * 0.6);'],
   ];
