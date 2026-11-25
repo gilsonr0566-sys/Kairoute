@@ -192,7 +192,8 @@ function checkDay(d, p, ctx) {
       const prevS = its.slice(0, j).reverse().find(y => y.t !== 'ride'), nextS = its.slice(j + 1).find(y => y.t !== 'ride'); // the places the boat's ride runs between (a walk to the pier may come first)
       const what = `${kindOf(x)} ${(prevS && prevS.name) || '?'} to ${(nextS && nextS.name) || '?'}`;
       const pickedStop = y => y && y.id != null && (d.selected || []).map(String).includes(String(y.id)) && !(d.wantsOnly && !d.own); // a sight on the traveler's own list
-      if (!(pickedStop(prevS) || pickedStop(nextS) || (ctx && ctx.chose && ctx.chose(x.from, x.to)))) return add('boat', 'S1', `a ${what} with no timetable behind it, planned on a day with a time to be back though the traveler chose neither that boat nor the place it goes to`);
+      const prevStop = its.slice(0, j).reverse().find(y => y.t === 'stop'), nextStop = its.slice(j + 1).find(y => y.t === 'stop'); // the sight across the water: the last one before a boat back, the next one after a boat out
+      if (!(pickedStop(prevS) || pickedStop(nextS) || pickedStop(prevStop) || pickedStop(nextStop) || (ctx && ctx.chose && ctx.chose(x.from, x.to)))) return add('boat', 'S1', `a ${what} with no timetable behind it, planned on a day with a time to be back though the traveler chose neither that boat nor the place it goes to`);
       if (!sayNo(x)) add('boat', 'S1', `the traveler's ${what} has no timetable behind it and nothing on it says so`);
       if (j > lastV && atPier(x) < 60) add('boat', 'S1', `the traveler's ${what} back has no sailing times known, but allows only ${atPier(x)} min at the pier (an hour is needed)`); }); }
   // ---- before: nothing before the traveler can be there

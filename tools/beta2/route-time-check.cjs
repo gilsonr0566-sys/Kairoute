@@ -33,7 +33,7 @@ const real = run(require('./engine.cjs'));
 for (const m of real) console.log('FAIL ' + m);
 // Planted: the engine with real routes ignored.
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'route-plant-')); fs.cpSync(SRC, tmp, { recursive: true });
-const f = path.join(tmp, 'engine', '10-travel.js'), s = fs.readFileSync(f, 'utf8'), want = 'const rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;';
+const f = path.join(tmp, 'engine', '10-travel.js'), s = fs.readFileSync(f, 'utf8'), want = 'let rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;';
 if (!s.includes(want)) { console.log('FAIL the planted copy could not be made: the engine text it changes is gone'); process.exit(1); }
 fs.writeFileSync(f, s.replace(want, 'const rt = null;'));
 const out = cp.spawnSync(process.execPath, ['-e', `const E=require(${JSON.stringify(path.join(__dirname, 'engine.cjs'))});process.stdout.write(JSON.stringify((${run.toString()})(E)))`], { env: Object.assign({}, process.env, { ENGINE_SRC: tmp }), encoding: 'utf8' });
