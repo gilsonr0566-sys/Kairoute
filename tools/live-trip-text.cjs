@@ -11,7 +11,7 @@ const c = JSON.parse(fs.readFileSync(path.join(__dirname, 'beta2', 'corpus', TRI
 const days = c.days.map(d => { const x = Object.assign({}, d); delete x.i; delete x.sites; delete x.wx; delete x.missing; delete x.order;
   if (/port|embark/.test(d.type) && d.point && !d.point.unknown && !x.pier) x.pier = { name: d.point.name, lat: d.point.lat, lng: d.point.lng }; /* the pier the traveler names from their cruise documents, as the app asks */
   for (const k of ['portArrive', 'allAboard', 'boardAt', 'startTime', 'time']) if (typeof x[k] === 'number') x[k] = String(Math.floor(x[k] / 60)).padStart(2, '0') + ':' + String(x[k] % 60).padStart(2, '0'); /* the corpus keeps engine minutes, the app keeps clock times */
-  if (process.env.PICKS && c.days.indexOf(d) === DAY) { x.selected = process.env.PICKS.split(','); x.ownList = true; } /* PICKS: the traveler's own list for that day (comma-separated sight ids) */
+  if (process.env.PICKS && /^src-|^q\d/.test(process.env.PICKS) && c.days.indexOf(d) === DAY) { x.selected = process.env.PICKS.split(','); x.ownList = true; } /* PICKS: the traveler's own list for that day (comma-separated sight ids) */
   x.cityKey = d.city; x.destination = d.city && c.cities[d.city] ? c.cities[d.city].name : d.destination || ''; return x; });
 const seed = { trip: JSON.stringify({ id: 'live-' + TRIP, name: c.name || TRIP, style: c.style || 'mix', active: DAY, days, lodging: {}, journal: {}, prefs: c.prefs || {}, legModes: c.legModes || {} }), cities: JSON.stringify(c.cities) };
 (async () => { const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 412, height: 915 }, hasTouch: true, isMobile: true });
@@ -23,6 +23,12 @@ const seed = { trip: JSON.stringify({ id: 'live-' + TRIP, name: c.name || TRIP, 
   console.log('VERSION ' + await p.evaluate(() => fetch('version.txt?v=' + Date.now(), { cache: 'no-store' }).then(r => r.text()).catch(() => '?')));
   const n = await p.evaluate(() => window.__kairouteDays ? window.__kairouteDays().length : 0).catch(() => 0);
   if (!n) { console.log('TRIP NOT LOADED'); await b.close(); process.exit(1); }
+  // PICKS by name (the sights list on the live app can carry other ids than the saved trip): read the ids off the
+  // live list's own tick boxes ("Pick <name>") and make them the day's own list.
+  const names = (process.env.PICKS || '').split(',').filter(x => x && !/^src-|^q\d/.test(x));
+  if (names.length) { await p.evaluate(i => window.__kairouteGo('sites', i), DAY); await p.waitForTimeout(8000);
+    const ids = await p.evaluate(ns => [...document.querySelectorAll('input[data-site]')].filter(x => ns.some(n => (x.getAttribute('aria-label') || '').toLowerCase().includes(n.toLowerCase()))).map(x => x.dataset.site), names);
+    console.log('PICKED ' + JSON.stringify(ids)); await p.evaluate(([i, ids]) => window.__kairouteEdit(i, { selected: [...new Set(ids)], ownList: true }), [DAY, ids]); }
   await p.evaluate(i => window.__kairouteGo('plan', i), DAY); await p.waitForTimeout(25000); // helper answers (routes, islands) arrive
   await p.evaluate(() => document.querySelectorAll('#view details').forEach(d => { d.open = true; })).catch(() => {});
   console.log(`\n===== ${TRIP} day ${DAY + 1} ${days[DAY].destination} (${days[DAY].type}) =====\n` + await p.evaluate(() => (document.querySelector('main') || document.body).innerText));
