@@ -147,4 +147,8 @@ Still far from 90%. Misses that matter most (safety first):
   covers named cases only. Next: a fixture per opening-hours form the reader accepts.
 - Several misses change nothing visible (memo sizes, sort tie-breaks, guards for input that never comes).
 
-A fresh set (seed 49) is running; its numbers will be added here.
+**A fresh set (seed 49, run 45526721276, same code, all checks passed on the unchanged planner):** 61 of 120 (51%).
+Leave-by 12 (60%), rides 12 (60%), opening hours 13 (65%), screen rules 10 (50%), day planning 7 (35%), names and places
+7 (35%). So about half of brand-new bugs are caught, in line with seed 48 (54%): the rise from 41% holds on bugs nobody had
+seen. Weakest now: day planning (which far sight is kept, worth scores, the lunch-pick guard) and names and places (place
+matching and the restaurant facts join). Since then the independent check holds the passport-border promise (cb8ed619).
