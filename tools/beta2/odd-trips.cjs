@@ -150,10 +150,11 @@ const checkTrip = (name, b, edits) => {
     if (!p.items) return add('error', tag, 'no items'); plannedN++;
     let w; try { w = E.dayWindow(Object.assign({}, ab.days[i]), tr); } catch (e) { w = null; }
     const hard = /port|embark|departure/.test(d.type), its = p.items, s = said(p);
-    // nan + clock order
+    // nan + clock order (a lunch brought along and eaten inside a long visit, x.during, shows on the visit with no row of its
+    // own, so it is not a step after the visit: Nov 25 nightly, a packed lunch at 12:17 pm inside a ranch visit to 3:22 pm)
     let t = null, prevName = '';
     its.forEach((x, k) => { if (x.at != null && !isFinite(x.at)) add('nan', tag, `${x.t} ${x.name || ''} at ${x.at}`); if (x.min != null && !isFinite(x.min)) add('nan', tag, `${x.t} ${x.name || k} min ${x.min}`);
-      if (x.at != null && isFinite(x.at)) { if (t != null && x.at < t - 1) add('order', tag, `${x.t} ${x.name || ''} at ${E.clock(x.at)} before ${prevName} ends ${E.clock(t)}`); t = x.at + (x.t === 'ride' ? 0 : (x.min || 0)); prevName = x.name || x.t; }
+      if (x.at != null && isFinite(x.at) && !x.during) { if (t != null && x.at < t - 1) add('order', tag, `${x.t} ${x.name || ''} at ${E.clock(x.at)} before ${prevName} ends ${E.clock(t)}`); t = x.at + (x.t === 'ride' ? 0 : (x.min || 0)); prevName = x.name || x.t; }
       if (x.t === 'ride' && t != null) t += (x.min || 0) + (x.wait || 0); });
     // start
     const st = its.filter(x => x.t === 'stop'), ml = its.filter(x => x.t === 'meal' && !x.onBoard);
@@ -192,7 +193,7 @@ const checkTrip = (name, b, edits) => {
     // min to spare fit between the day's last item and the time the day must end. Never on a day with a time to be back.
     if (!p.safe && !hard && isFinite(p.endBy) && isFinite(p.end) && (p.dropped || []).length && st.length) { const all = (c0 => (c0.sites || []).concat(c0.farther || []))(b.cities[d.city] || {});
       for (const id of p.dropped) { const D = all.find(y => String(y.id) === String(id)), why = (p.dropWhy || {})[id] || ''; if (!D || !isFinite(D.lat) || D.far || !/fill the time|time is left|didn't fit/i.test(why)) continue;
-        const near = Math.min(...st.filter(x => E.hasPos(x)).map(x => E.hav(x, D))), leg = near * 1.4 / 25 * 60 + 10, need = (D.minutes || 60) + 2 * leg + 20, free = p.endBy - p.end;
+        const near = Math.min(...st.filter(x => E.hasPos(x)).map(x => E.hav(x, D))), leg = near * 1.4 / 25 * 60 + 10, need = (D.minutes || 60) + 2 * leg + 20, eve = (p.items || []).find(x => x.t === 'evening' && isFinite(x.at) && x.at < p.endBy), free = (eve ? eve.at - 10 : p.endBy) - p.end; /* dinner planned before the day ends holds its time (Nov 25 nightly: 123 min 'free' was 30 before a 7:27 pm dinner) */
         if (isFinite(near) && free >= need) add('roomleft', tag, `${D.name} given up for time (${D.minutes || 60} min, ${near.toFixed(1)} km from a stop) with ${Math.round(free)} min free at the end of the day`); } }
     // shut / late
     its.forEach(x => { if (x.t === 'stop' && x.late) add('shut', tag, `${x.name} reached after last entry`); if (x.t === 'meal' && x.shut) add('shut', tag, `${x.meal} at ${x.name} when shut`); });

@@ -134,6 +134,9 @@ function checkDay(d, p, ctx) {
     if (x.at != null && !isFinite(x.at)) add('clock', 'S2', `${x.t} ${x.name || ''} at ${x.at}`);
     if (x.min != null && !isFinite(x.min)) add('clock', 'S2', `${x.t} ${x.name || ''} lasts ${x.min}`);
     if (x.at == null || !isFinite(x.at)) return;
+    // A lunch brought along and eaten inside a long visit (shown on the visit, no row of its own): it must lie within that
+    // visit, and is no step after it.
+    if (x.t === 'meal' && x.during) { const v = its.find(y => y.t === 'stop' && String(y.id) === String(x.during)); if (!v || x.at < v.at - 1 || x.at + (x.min || 0) > v.at + (v.min || 0) + 1) add('clock', 'S2', `${x.name || 'lunch'} at ${clk(x.at)} said to be inside a visit it does not fall within`); return; }
     if (t != null && x.at < t - 1) add('clock', 'S2', `${x.name || x.t} at ${clk(x.at)}, before the item above it ends (${clk(t)})`);
     t = x.at + (x.min || 0) + (x.t === 'ride' ? (x.wait || 0) : 0);
   });
