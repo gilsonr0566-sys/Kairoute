@@ -117,3 +117,34 @@ from first principles (distance, the walking limit, road speed) independently of
 (2) a "kept the right sights" check (a dropped sight must rank below every kept one unless its hours or distance
 forbid it); (3) put a cached copy of the real-world ride results in the gate so a ride-time bug is compared with real
 routes, not only with itself; then audit again with a new seed.
+
+## Third fault audit (Nov 24-25)
+
+**Run at 0a7f8344: void.** One check (the reason-numbers check) was already failing on the unchanged planner after a
+wording change, so it "caught" every planted bug and rides and day planning read 100%. The audit now runs every check on
+the unchanged planner first; a check that fails there is left out and named as NOT TESTED, never counted as catching.
+
+**Rerun at 3aac6d63** (GitHub run 45526712962, the same week seed 48 as the second audit; the code changed in between, so
+the planted bugs overlap but are not all the same). Every check passed on the unchanged planner (no NOT TESTED).
+
+| Area | Second audit | Third audit | What changed |
+|---|---|---|---|
+| Screen rules | 14 of 20 (70%) | 14 of 20 (70%) | |
+| Rides | 4 of 20 (20%) | 11 of 20 (55%) | best-ride check, route-time check, real-world ride times in the gate |
+| Leave-by and deadlines | 9 of 20 (45%) | 11 of 20 (55%) | |
+| Names and places | 9 of 20 (45%) | 11 of 20 (55%) | |
+| Day planning and lunch | 5 of 20 (25%) | 10 of 20 (50%) | odd trips plan the traveler's own ticked days; walkpref, garbled, roomleft |
+| Opening hours | 8 of 20 (40%) | 8 of 20 (40%) | |
+| **All** | **49 of 120 (41%)** | **65 of 120 (54%)** | |
+
+Still far from 90%. Misses that matter most (safety first):
+- **Border checks halved:** the time at the station for passport checks (90 min, to or from Britain) cut to 45, and
+  nothing noticed. Same class as the ship margins (E49): Kairoute's own promise, which the independent check does not
+  know. Next: the independent check gets its own list of passport borders and the 90 min promise.
+- **Spare time on the way back** (slackFor) shortened for 15-30 min rides: not noticed.
+- **Bag days:** the free time worked out with the bag steps added instead of taken away: not noticed.
+- Opening hours: the checked-hours lookup, sunset maths, year ranges and "last entry N hours before": the hours test
+  covers named cases only. Next: a fixture per opening-hours form the reader accepts.
+- Several misses change nothing visible (memo sizes, sort tie-breaks, guards for input that never comes).
+
+A fresh set (seed 49) is running; its numbers will be added here.

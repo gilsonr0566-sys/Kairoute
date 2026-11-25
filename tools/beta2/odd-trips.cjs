@@ -52,6 +52,13 @@ for (const { f, b } of bases) for (const d of b.days) { if (!d.city || !b.cities
   const c = cities[d.city] = cities[d.city] || { key: d.city, guide: b.cities[d.city], prefs: b.prefs, legModes: b.legModes, style: b.style, from: f, days: [] };
   c.days.push(d); if (d.type === 'port' || d.type === 'embark' || (d.type === 'arrival' && d.mode === 'ship')) c.port = c.port || d.point;
   if (d.lodging && !d.lodging.unknown) c.hotel = c.hotel || d.lodging; c.country = c.country || d.country; }
+// The saved trips name a country for only a few places (the app takes it from the city): the rest are named here from the
+// place's own name, so trains between countries (open borders and passport borders) are planned too (fault audit, Nov 25:
+// the 90 min at the station for a passport border, halved, went unnoticed; 3 border trains in 300 odd trips).
+const COUNTRY_OF = [[/turkey|istanbul|kusadasi/, 'Turkey'], [/austria|vienna/, 'Austria'], [/portugal|lisbon|azores/, 'Portugal'], [/scotland|england|edinburgh|southampton/, 'United Kingdom'],
+  [/japan|kyoto/, 'Japan'], [/france|paris/, 'France'], [/montenegro|kotor/, 'Montenegro'], [/croatia|dubrovnik/, 'Croatia'], [/alaska/, 'USA'], [/turks and caicos/, 'Turks and Caicos'],
+  [/israel|jerusalem|haifa/, 'Israel'], [/iceland|reykjavik/, 'Iceland'], [/italy|venice/, 'Italy'], [/uae|dubai/, 'United Arab Emirates'], [/bahamas|cococay|nassau/, 'Bahamas'], [/germany|hamburg/, 'Germany'], [/prague/, 'Czechia']];
+for (const c of Object.values(cities)) if (!c.country) { const m = COUNTRY_OF.find(([re]) => re.test(c.key)); if (m) c.country = m[1]; }
 const centre = c => { const s = (c.guide.sites || []).filter(x => isFinite(x.lat)); if (!s.length) return null; const lat = s.map(x => x.lat).sort((a, b) => a - b), lng = s.map(x => x.lng).sort((a, b) => a - b);
   return { lat: lat[lat.length >> 1], lng: lng[lng.length >> 1] }; };
 const keys = Object.keys(cities).filter(k => centre(cities[k]));
