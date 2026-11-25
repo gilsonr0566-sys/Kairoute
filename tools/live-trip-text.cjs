@@ -33,4 +33,5 @@ const seed = { trip: JSON.stringify({ id: 'live-' + TRIP, name: c.name || TRIP, 
   await p.evaluate(i => window.__kairouteGo('plan', i), DAY); await p.waitForTimeout(25000); // helper answers (routes, islands) arrive
   await p.evaluate(() => document.querySelectorAll('#view details').forEach(d => { d.open = true; })).catch(() => {});
   console.log(`\n===== ${TRIP} day ${DAY + 1} ${days[DAY].destination} (${days[DAY].type}) =====\n` + await p.evaluate(() => (document.querySelector('main') || document.body).innerText));
+  if (process.env.ROUTES) console.log('ROUTE TIMES ' + JSON.stringify(await p.evaluate(() => window.__kairouteRouteTimes ? window.__kairouteRouteTimes() : null))); // ROUTES=1: the street routes the app holds
   await b.close(); })();
