@@ -60,6 +60,17 @@ const TRIPS = [
   { name: 'g18-reykjavik', batch: 4, label: 'Reykjavik: January stay (day trips, winter dark)', days: stay(['2027-01-19', '2027-01-20'], 'Reykjavik, Iceland') },
   { name: 'g19-venice', batch: 4, label: 'Venice: Sat+Sun stay (no cars, water buses, entry-fee days)', days: stay(['2027-05-15', '2027-05-16'], 'Venice, Italy') },
   { name: 'g20-dubai', batch: 4, label: 'Dubai: July stay (extreme heat, big distances)', days: stay(['2027-07-20', '2027-07-21'], 'Dubai, UAE') },
+  // Boats (E8, Nov 25: the boat rule ran on one saved trip only, Mykonos to Delos): ship days with an island only a boat
+  // reaches on the traveler's own list, island hops on land days, and arriving and leaving by ferry, in several regions.
+  // pick: a pattern for the sights the traveler ticks on the first shore day (their own list, so the boat is their choice).
+  { name: 'f01-naples-capri', batch: 6, label: 'Naples: cruise call, the traveler picks Capri (ship day, island by boat)', pick: 'capri', days: [sea('2027-06-09'), port('2027-06-10', 'Naples, Italy', '07:00', '19:00')] },
+  { name: 'f02-split-hvar', batch: 6, label: 'Split: cruise call, the traveler picks Hvar (ship day, catamaran)', pick: 'hvar', days: [sea('2027-07-14'), port('2027-07-15', 'Split, Croatia', '08:00', '18:00')] },
+  { name: 'f03-seattle-bainbridge', batch: 6, label: 'Seattle: cruise turnaround call, the traveler picks Bainbridge Island (car ferry)', pick: 'bainbridge', days: [sea('2027-06-19'), port('2027-06-20', 'Seattle, Washington', '07:00', '16:30')] },
+  { name: 'f04-stockholm-vaxholm', batch: 6, label: 'Stockholm: cruise call, the traveler picks Vaxholm (archipelago boat)', pick: 'vaxholm|fjäderholm', days: [sea('2027-06-22'), port('2027-06-23', 'Stockholm, Sweden', '08:00', '17:00')] },
+  { name: 'f05-istanbul-princes', batch: 6, label: "Istanbul: stay with the Princes' Islands, then fly home (island hop, plane day)", pick: 'princes|büyükada|buyukada', days: [day({ date: '2027-05-13', destination: 'Istanbul, Turkey' }), day({ date: '2027-05-14', destination: 'Istanbul, Turkey', type: 'departure', mode: 'flight', time: '19:30' })] },
+  { name: 'f06-hongkong-lantau', batch: 6, label: 'Hong Kong: stay with Lantau and the Star Ferry, then fly home', pick: 'lantau|big buddha|tian tan|star ferry', days: [day({ date: '2027-03-09', destination: 'Hong Kong' }), day({ date: '2027-03-10', destination: 'Hong Kong', type: 'departure', mode: 'flight', time: '18:00' })] },
+  { name: 'f07-helsinki-ferry', batch: 6, label: 'Helsinki: arrive by ferry from Tallinn, Suomenlinna, leave by ferry next day', pick: 'suomenlinna', days: [day({ date: '2027-06-08', destination: 'Helsinki, Finland', type: 'arrival', mode: 'ferry', time: '10:30', hours: 7 }), day({ date: '2027-06-09', destination: 'Helsinki, Finland', type: 'departure', mode: 'ferry', time: '17:30' })] },
+  { name: 'f08-sydney-manly', batch: 6, label: 'Sydney: cruise call, the traveler picks Manly (harbour ferry)', pick: 'manly', days: [sea('2027-02-15'), port('2027-02-16', 'Sydney, Australia', '07:00', '18:00')] },
 ];
 const hm = m => m == null ? '--:--' : String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(Math.round(m % 60)).padStart(2, '0');
 (async () => {
@@ -78,6 +89,9 @@ const hm = m => m == null ? '--:--' : String(Math.floor(m / 60)).padStart(2, '0'
     if (await btn.isVisible().catch(() => false)) await btn.click();
     await p.waitForFunction(i => { const s = window.__kairouteState(); return !s.busy && !!window.__kairouteCityOf(i); }, first, { timeout: +process.env.GUIDE_WAIT || 150000 }).catch(() => console.log('  (timed out waiting for the guide)'));
     await p.waitForTimeout(8000);
+    // The traveler's own picks on the first shore day (a boat they choose, not one the guide suggests).
+    if (t.pick) { const r = await p.evaluate(([i, re]) => window.__kairouteDay(i, re, { ownList: true }), [first, t.pick]).catch(e => 'error ' + e.message);
+      console.log('  picked (' + t.pick + '): ' + (Array.isArray(r) ? 'NONE MATCHED; the list: ' + r.slice(0, 40).join(' | ') : JSON.stringify(r).slice(0, 200))); await p.waitForTimeout(8000); }
     const snap = await p.evaluate(() => window.__kairouteBucket(true)); snap.name = t.name; snap.label = t.label;
     fs.writeFileSync(path.join(OUT, t.name + '.json'), JSON.stringify(snap));
     console.log('\n===== ' + t.label + (errs.length ? ' | page errors: ' + [...new Set(errs)].join('; ') : ''));
