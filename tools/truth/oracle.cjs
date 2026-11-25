@@ -29,6 +29,9 @@
 //                as the NEXT night, a ticket dated that day means THIS morning. Never assumed: it must be asked.
 //   S1 unverified the way back to the flight, train or ship rests on a ride with no timetable behind it, and the plan marks
 //                it as resting on timetables, or a train, bus or boat on it says nothing of the missing timetable
+//   S1 boat      on a day with a time to be back, a boat no timetable confirms that the traveler didn't choose (neither the
+//                boat nor the place across the water), or one they chose that doesn't say so, or whose boat back allows
+//                under an hour at the pier (E8; --not-mine reads every day's list as the guide's suggestions only)
 //   S1 water     a stop across the water (an island, a place the guide says is reached by boat, a place the map puts
 //                across the water) reached with no boat since the town's side, or a town stop reached from it without a
 //                boat back: a walk or taxi to an island (Nov 18 "ferries that drive on land"; Lokrum as a 16 min taxi)
@@ -178,6 +181,20 @@ function checkDay(d, p, ctx) {
     // with a single way has no such chip.)
     unsure.filter(x => /bus|metro|tram|transit/.test(kindOf(x)) && !said(x) && !((x.options || []).length > 1)).forEach(x => add('about', 'S2', `the ${kindOf(x)} back (${x.min} min, from the ${x.source || 'no source'}) has no timetable behind it and nothing on it says it is an estimate`));
   }
+  // ---- boat (E8, R-06): on a day with a time to be back, a boat with no timetable behind it is planned only because the
+  // traveler chose that boat or the place across the water (their own ride choice or sights list, read from the trip, never
+  // the planner's mark), it says so,
+  // and the boat back allows an hour at the pier for the next sailing (Richard, Nov 21; Nov 18 Sorrento ferry, E8).
+  if (D0) { const lastV = its.reduce((a, x, j) => (x.t === 'stop' || (x.t === 'meal' && !x.onBoard)) ? j : a, -1);
+    const sayNo = x => /no timetable|not confirmed|no sailing times|check the (timetable|sailings)/i.test([x.note, x.how, ...(x.steps || [])].join(' '));
+    const atPier = x => isFinite(+x.pier) && x.pier != null ? +x.pier : Math.max(0, ...[x.note, ...(x.steps || [])].join(' ').match(/up to (\d+) min at the pier|(an hour) at the pier/gi)?.map(m => /hour/.test(m) ? 60 : +m.match(/\d+/)[0]) || [0]);
+    its.forEach((x, j) => { if (x.t !== 'ride' || !/ferry|boat/.test(kindOf(x)) || x.source === 'timetable') return;
+      const prevS = its.slice(0, j).reverse().find(y => y.t !== 'ride'), nextS = its.slice(j + 1).find(y => y.t !== 'ride'); // the places the boat's ride runs between (a walk to the pier may come first)
+      const what = `${kindOf(x)} ${(prevS && prevS.name) || '?'} to ${(nextS && nextS.name) || '?'}`;
+      const pickedStop = y => y && y.id != null && (d.selected || []).map(String).includes(String(y.id)) && !(d.wantsOnly && !d.own); // a sight on the traveler's own list
+      if (!(pickedStop(prevS) || pickedStop(nextS) || (ctx && ctx.chose && ctx.chose(x.from, x.to)))) return add('boat', 'S1', `a ${what} with no timetable behind it, planned on a day with a time to be back though the traveler chose neither that boat nor the place it goes to`);
+      if (!sayNo(x)) add('boat', 'S1', `the traveler's ${what} has no timetable behind it and nothing on it says so`);
+      if (j > lastV && atPier(x) < 60) add('boat', 'S1', `the traveler's ${what} back has no sailing times known, but allows only ${atPier(x)} min at the pier (an hour is needed)`); }); }
   // ---- before: nothing before the traveler can be there
   const e0 = earliest(d), st = toMin(d.startTime);
   visits.forEach(x => {
@@ -259,7 +276,7 @@ if (require.main === module) {
   // --warn rule,rule lists a known finding without failing the run. It is allowed ONLY for S2 rules (wrong on screen).
   // An S1 rule (could miss a flight, train or ship) can never be warned: asking for it is refused and the rule still
   // fails (Richard, Nov 23: "the S1 warning exception is a serious design flaw"). A safety finding always blocks.
-  const S1 = ['error', 'gone', 'margin', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water', 'notetime'];
+  const S1 = ['error', 'gone', 'margin', 'reach', 'leaveby', 'before', 'night', 'unverified', 'boat', 'backwait', 'water', 'notetime'];
   const asked = String(arg('warn', '') || '').split(',').filter(Boolean), refused = asked.filter(k => S1.includes(k)), WARN = asked.filter(k => !S1.includes(k));
   if (refused.length) console.log(`REFUSED --warn ${refused.join(',')}: S1 safety rules always fail the run; no warn-only path`);
   const found = {}, ex = {}, SHOW = +arg('show', 6);
@@ -277,6 +294,12 @@ if (require.main === module) {
   const UNC = !!arg('unconfirmed');
   const unconfirm = (bb, alter) => { const c2 = JSON.parse(JSON.stringify(bb)); for (const c of Object.values(c2.cities || {})) for (const x of [].concat(c.sites || [], c.farther || [])) if (x.travelNote) x.travelNote = 'Not confirmed: ' + (alter ? String(x.travelNote).replace(/\d+/g, n => String(+n * 3 + 7)) : x.travelNote); return c2; };
   const sig = p => p && p.items ? p.items.map(x => [x.t, x.name || '', x.at, x.min, x.wait || 0].join('/')).join('|') : String(p && p.error || '');
+  // The traveler's own ride choices (trip.legModes: a boat they picked for a ride, either way round, or a ride near it).
+  const choseOf = b => (a, z) => Object.entries(b.legModes || {}).some(([k, v]) => /ferry|boat/i.test(JSON.stringify(v)) && (() => { const n = String(k).match(/-?\d+\.\d+/g); if (!n || n.length < 4) return false; const P = { lat: +n[0], lng: +n[1] }, Q = { lat: +n[2], lng: +n[3] };
+    return (hav(P, a) < 1 && hav(Q, z) < 1) || (hav(P, z) < 1 && hav(Q, a) < 1); })());
+  // --not-mine: every day's list read as the guide's suggestions only (the traveler ticked nothing), so a place across the
+  // water is never their choice: a boat with no timetable must then never be planned on a day with a time to be back.
+  if (arg('not-mine')) for (const t of trips) t.b = Object.assign({}, t.b, { legModes: {}, days: t.b.days.map(d => Object.assign({}, d, { wantsOnly: true, own: false })) });
   let days = 0, planned = 0;
   for (const { name, b } of trips) {
     let plans, bb; try { bb = E.applyPlaces(b, places); if (NOTT) bb.answers = NOTT; plans = E.planTrip(bb); } catch (e) { (found.error = (found.error || 0) + 1); (ex.error = ex.error || []).push(name + ': ' + e.message); continue; }
@@ -284,10 +307,10 @@ if (require.main === module) {
       if (pa && pb) b.days.forEach((d, i) => { if (sig(pa[i]) !== sig(pb[i])) { const A = (pa[i] && pa[i].items) || [], B = (pb[i] && pb[i].items) || [], k = A.findIndex((x, j) => !B[j] || x.at !== B[j].at || x.min !== B[j].min || (x.wait || 0) !== (B[j].wait || 0));
         found.notetime = (found.notetime || 0) + 1; (ex.notetime = ex.notetime || []).push(`S1 ${name} day ${i + 1} ${d.type} ${d.city || ''}: a time moved when only the numbers in unconfirmed travel words changed` + (k >= 0 ? ` (${A[k].t} ${A[k].name || A[k].kind || ''}: ${A[k].min} min at ${clk(A[k].at)} vs ${B[k] ? B[k].min + ' min at ' + clk(B[k].at) : 'gone'})` : '')); } }); }
     b.days.forEach((d, i) => { days++; const p = plans[i]; if (p && p.items) planned++;
-      for (const f of checkDay(d, p, { places: places[d.city], wet: wetOf(bb, d) })) { const k = f.rule; found[k] = (found[k] || 0) + 1; (ex[k] = ex[k] || []).push(`${f.sev} ${name} day ${i + 1} ${d.type}${d.mode && /arrival|departure/.test(d.type) ? '/' + d.mode : ''} ${d.city || ''}: ${f.msg}`); } });
+      for (const f of checkDay(d, p, { places: places[d.city], wet: wetOf(bb, d), chose: choseOf(b) })) { const k = f.rule; found[k] = (found[k] || 0) + 1; (ex[k] = ex[k] || []).push(`${f.sev} ${name} day ${i + 1} ${d.type}${d.mode && /arrival|departure/.test(d.type) ? '/' + d.mode : ''} ${d.city || ''}: ${f.msg}`); } });
   }
   console.log(`Independent safety check: ${trips.length} trips, ${days} days, ${planned} planned`);
-  const order = ['error', 'gone', 'margin', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water', 'notetime', 'about', 'physics', 'clock', 'drift', 'slowride', 'lunchshut', 'lunchlate'];
+  const order = ['error', 'gone', 'margin', 'reach', 'leaveby', 'before', 'night', 'unverified', 'boat', 'backwait', 'water', 'notetime', 'about', 'physics', 'clock', 'drift', 'slowride', 'lunchshut', 'lunchlate'];
   for (const k of order) { const n = found[k] || 0; console.log(`${n ? (WARN.includes(k) ? 'WARN' : 'FAIL') : 'ok  '} ${k.padEnd(9)} ${n}`); (ex[k] || []).slice(0, SHOW).forEach(e => console.log('       ' + e)); }
   if (lunchUntested.n) { console.log(`NOT TESTED lunchshut: ${lunchUntested.n} lunches with map hours not judged (the opening_hours library is not installed: npm i --no-save opening_hours@3.16.0)`); }
   if (process.env.ALL) fs.writeFileSync(process.env.ALL, JSON.stringify(ex, null, 1));

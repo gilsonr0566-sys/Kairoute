@@ -16,6 +16,13 @@ const ROOT = path.join(__dirname, '..', '..'), N = +arg('n', 150), ONLY = (arg('
 
 // Each: the file, the exact text, what it becomes, and the real bug it stands for.
 const MUTANTS = [
+  // E8 (Nov 18-22, Richard's Naples-Sorrento ferry; Nov 21 rule): on a day with a time to be back, a boat no timetable
+  // confirms is planned only as the traveler's own choice, said, with an hour at the pier for the boat back. Caught by the
+  // independent check's boat rule (saved trips, and the same trips with every list read as the guide's suggestions only).
+  { id: 'boat-back-quarter-hour', corpus: true, file: '10-travel.js', from: 'E.PIER_BACK = 60;', to: 'E.PIER_BACK = 15;',
+    was: 'E8: a boat back with no sailing times planned with 15 min at the pier, not the hour between sailings' },
+  { id: 'boat-guide-pick-as-mine', notMine: true, file: '90-timeline.js', from: 'ownBoat = !!(leg.mine || (isleStop && !isleStop.guideWish && (isleStop.wish || isleStop.insideWish)));', to: 'ownBoat = !!(leg.mine || (isleStop && (isleStop.wish || isleStop.insideWish)));',
+    was: 'E8 / first-timer walk Nov 22: a boat with no timetable to a place only the guide suggested, planned as if the traveler had chosen it (Château d\'If)' },
   // Nov 23 (rides thread review): a line with no timetable planned with half the gap between departures on the way back to
   // the ship, a train or a plane (and to the bags or the cable car on the way). Caught by the independent check's backwait.
   { id: 'back-ride-half-gap', nott: true, file: '10-travel.js', from: '.filter(o => o && isFinite(o.min))', to: '.filter(o => o && isFinite(o.min)).map(o => o.noTimetable && +o.every > 0 && isFinite(+o.wait) ? Object.assign({}, o, { wait: Math.round(Math.min(+o.every, 60) / 2) + 3, min: o.min - (+o.wait - Math.round(Math.min(+o.every, 60) / 2) - 3) }) : o)',
@@ -71,6 +78,8 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
   // the saved test trips, which hold them (Delos from Mykonos, Capri, Santorini).
   const anyCorpus = MUTANTS.some(m => m.corpus && (!ONLY.length || ONLY.includes(m.id)));
   const baseCorpus = anyCorpus ? counts((await run('node', ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'])).out) : {};
+  const anyNotMine = MUTANTS.some(m => m.notMine && (!ONLY.length || ONLY.includes(m.id)));
+  const baseNotMine = anyNotMine ? counts((await run('node', ['tools/truth/oracle.cjs', '--corpus', '--not-mine'])).out) : {};
   const baseOld = counts(base.out), baseOra = counts(baseOracle.out), baseOraNT = baseOracleNT ? counts(baseOracleNT.out) : {};
   if (!Object.keys(baseOld).length || !Object.keys(baseOra).length) { console.log('NOT TESTED: the checks did not run on the real engine\n' + base.out.slice(-2000) + baseOracle.out.slice(-2000)); process.exit(1); }
   const already = [...Object.keys(baseOld).filter(k => baseOld[k]), ...Object.keys(baseOra).filter(k => baseOra[k])];
@@ -84,8 +93,8 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
     if (txt.split(m.from).length !== 2) { rows.push({ m, planted: false }); continue; }
     fs.writeFileSync(f, txt.replace(m.from, m.to));
     const env = { ENGINE_SRC: src, NOZIG: '1', SLOW_MS: '60000' };
-    const [old, ora] = await Promise.all([run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7'], env), run('node', (m.corpus ? ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'] : ['tools/truth/oracle.cjs', '--trips', trips]).concat(m.nott ? ['--no-timetable'] : []), env)]);
-    const o = more(counts(old.out), baseOld), n = more(counts(ora.out), m.corpus ? baseCorpus : m.nott ? baseOraNT : baseOra);
+    const [old, ora] = await Promise.all([run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7'], env), run('node', (m.notMine ? ['tools/truth/oracle.cjs', '--corpus', '--not-mine'] : m.corpus ? ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'] : ['tools/truth/oracle.cjs', '--trips', trips]).concat(m.nott ? ['--no-timetable'] : []), env)]);
+    const o = more(counts(old.out), baseOld), n = more(counts(ora.out), m.notMine ? baseNotMine : m.corpus ? baseCorpus : m.nott ? baseOraNT : baseOra);
     rows.push({ m, planted: true, old: o, oracle: n });
   } };
   await Promise.all(Array.from({ length: LANES }, lane));
@@ -102,7 +111,7 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
   // Spec v2 T1: every safety rule of the independent check must be shown to bite by at least one planted defect in this
   // run. A rule no planted defect raised is NOT TESTED (it might never fire), and blocks like a miss.
   let uncovered = [];
-  if (!ONLY.length) { const SAFETY = ['gone', 'margin', 'reach', 'leaveby', 'before', 'night', 'unverified', 'backwait', 'water', 'notetime'];
+  if (!ONLY.length) { const SAFETY = ['gone', 'margin', 'reach', 'leaveby', 'before', 'night', 'unverified', 'boat', 'backwait', 'water', 'notetime'];
     const raised = new Set(rows.filter(r => r.planted).flatMap(r => r.oracle.map(x => String(x).split(' ')[0])));
     uncovered = SAFETY.filter(k => !raised.has(k));
     console.log(uncovered.length ? uncovered.map(k => `NOT TESTED coverage: no planted defect made the safety rule "${k}" fire`).join('\n') : `Every safety rule (${SAFETY.join(', ')}) was made to fire by a planted defect.`); }
