@@ -9,7 +9,8 @@
 //          length, timed at 4.5 km/h, an ordinary adult pace with no stops
 //   taxi   BRouter car profile: the drive time with empty roads (the least any taxi can take)
 //   train, metro, tram, bus   Deutsche Bahn's journey planner (v6.db.transport.rest, HAFAS: most European rail and
-//          many cities' local lines; not used by the app): the fastest real connection near the planned time
+//          many cities' local lines; not used by the app; v6.db.transport.rest stopped resolving Nov 2026, db.emmabyte.de runs
+//          the same service): the fastest real connection near the planned time
 //   ferry  no free independent timetable exists: counted as NOT CHECKED, never as a pass
 // A ride the plan shows FASTER than the real-world least time is "too fast" (planned 5 min or more under it, and 25%
 // or more). On the ride back on a ship, train or flight day (any ride after the day's last visit) a too-fast ride is S1:
@@ -75,7 +76,7 @@ async function db(r) {
   r0 = r.from; const when = nextDate(r.date || new Date().toISOString().slice(0, 10), r.at || 600);
   const q = new URLSearchParams({ 'from.latitude': r.from.lat, 'from.longitude': r.from.lng, 'from.address': r.fromName || 'start', 'to.latitude': r.to.lat, 'to.longitude': r.to.lng, 'to.address': r.toName || 'end',
     departure: when.toISOString(), results: '6', stopovers: 'false', remarks: 'false', walkingSpeed: 'normal' });
-  let res, last; for (const host of ['v6.db.transport.rest', 'v5.db.transport.rest']) { try { res = await fetch(`https://${host}/journeys?` + q, { headers: UA }); if (res.ok) break; last = new Error('db ' + res.status); res = null; } catch (e) { last = new Error(host + ': ' + e.message + (e.cause ? ' (' + (e.cause.code || e.cause.message || e.cause) + ')' : '')); res = null; } }
+  let res, last; for (const host of ['v6.db.transport.rest', 'db.emmabyte.de', 'v5.db.transport.rest']) { try { res = await fetch(`https://${host}/journeys?` + q, { headers: UA }); if (res.ok) break; last = new Error('db ' + res.status); res = null; } catch (e) { last = new Error(host + ': ' + e.message + (e.cause ? ' (' + (e.cause.code || e.cause.message || e.cause) + ')' : '')); res = null; } }
   if (!res) throw new Error('db journey planner: ' + (last && last.message || 'no answer'));
   const j = await res.json(), js = (j.journeys || []).map(x => { const L = x.legs || [], a = L[0], z = L[L.length - 1];
     const dep = new Date(a.plannedDeparture || a.departure), arr = new Date(z.plannedArrival || z.arrival);
