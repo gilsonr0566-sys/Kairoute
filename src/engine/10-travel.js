@@ -252,7 +252,7 @@
       const isle = p => E.byBoat(p.travelNote) || E.waterOnly(p) || !!p.acrossWater, note = noteFor(a, b);
       // The traveler's choice, as a kind (a row of a timetable answer picked earlier counts as its kind).
       const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || (/^note\|/.test(String(wantRaw)) ? String(wantRaw).slice(5) : wantRaw); // a note's way is its kind
-      const opts = [];
+      const opts = []; let offMap = null;
       // Two stops on two different islands, each across the water from the start, are a boat apart too; a stop the map
       // puts across the water is a boat away however close it looks (Round 1: an island off an old town planned as "Walk 6 min").
       const across = p => p.acrossWater ? String(p.acrossWater) : "", apart = isle(a) !== isle(b) || (across(a) && across(b) && across(a) !== across(b));
@@ -306,7 +306,14 @@
         // By road: a taxi or car, on the road network's time when the places database has it, else the road estimate.
         // The guide's own time for the ride (a winding road it knows) is the floor, never the label.
         if (d >= 0.6 || !opts.length) {
-          const r = pinned && pinned.mode !== "walk" && pinned.mode !== "boat" ? { km: pinned.km || d * 1.3, min: Math.round(pinned.min) } : rCar ? ((g, c) => c.min > g.min ? c : g)(road(d), { km: rCar.km, min: Math.round(rCar.min * 1.15 + 10), routed: true }) : road(d), said = d > 5 ? saidMin(note) : 0;
+          const r = pinned && pinned.mode !== "walk" && pinned.mode !== "boat" ? { km: pinned.km || d * 1.3, min: Math.round(pinned.min) } : rCar ? ((g, c) => c.min > g.min ? c : g)(road(d), { km: rCar.km, min: Math.round(rCar.min * 1.15 + 10), routed: true }) : road(d);
+          // A guide's ride time far beyond the road to the map point (over twice it, and 30 min more) is about another spot
+          // than the one on the map (real-world check, Nov 24: a ranch "about 1 hour 30 minutes" from the city, mapped 10 km
+          // out, a 13 min drive): not used, and said. On the way to a ship, train or plane the longer time is kept (the place
+          // may really be that far), and said too.
+          const said0 = d > 5 ? saidMin(note) : 0, hardEnd = !!(b.backToShip || b.deadline);
+          if (said0 > 2 * r.min && said0 - r.min >= 30) offMap = { said: said0, road: r.min, km: d, kept: hardEnd };
+          const said = offMap && !hardEnd ? 0 : said0;
           // A stop far from any road a car can drive (a car-free old town on the water, Round 1: taxis between the
           // sights): the taxi starts or ends at the nearest road, and the walk to it is part of the ride. Between two such
           // stops within a walk, no taxi at all.
@@ -361,6 +368,7 @@
       for (const o of opts) if (!o.source) o.source = o.ans ? "timetable" : o.mapped ? "map" : "estimate";
       const notes = [];
       if (note && d > 5) notes.push(E.unconfirmedNote(note) ? "An earlier AI guide said (not confirmed, not a timetable): " + note.trim().replace(/^\s*not confirmed:?\s*/i, "").replace(/\s+/g, " ") : "The guide says: " + note.trim().replace(/\s+/g, " "));
+      if (offMap) notes.push("The guide gives about " + offMap.said + " min for this ride, but the map puts the place only " + Math.round(offMap.km) + " km away (about " + offMap.road + " min by road), so the guide may mean another spot: check where you are going." + (offMap.kept ? " The guide's longer time is kept for the way back." : ""));
       if (missing.length) notes.push("The guide names " + missing.map(k => k === "ferry" ? "a ferry" : "a " + k).join(" and ") + ", but no timetable for it is known here, so this ride is planned " + (pick.kind === "taxi" ? "by taxi" : "as " + pick.how) + ": check at the " + (missing.includes("ferry") && missing.length === 1 ? "pier" : "station") + " or with your hotel.");
       // The ride back to a ship, train or plane on a time no timetable confirms: said, with the extra time already in it.
       if ((b.backToShip || b.deadline) && pick.kind !== "walk" && pick.source !== "timetable" && pick.min >= 30)

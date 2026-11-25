@@ -501,7 +501,7 @@
       // said, never "the other stops fill the time" (odd-trips roomleft, Nov 24: a museum given up "for time" on a day with
       // 2 h 12 min free at its end; with it in any order a cathedral was reached 2 min after its last entry).
       else if (c.r.late && !c.r.over && x.why === "didn't fit in the time") { const L = c.r.items.find(y => y.t === "stop" && y.late > 0);
-        if (L) { x.why = String(L.id) === String(x.stop.id) ? "fits in today's free time only after its last entry, whatever the order" : "fits in today's free time only if " + String(L.name).split(",")[0] + " is reached after its last entry (" + Math.max(1, Math.round(L.late)) + " min late)"; x.needs = null; } }
+        if (L) { x.why = String(L.id) === String(x.stop.id) ? "fits in today's free time only after its last entry (" + Math.max(1, Math.round(L.late)) + " min late), whatever the order" : "fits in today's free time only if " + String(L.name).split(",")[0] + " is reached after its last entry (" + Math.max(1, Math.round(L.late)) + " min late)"; x.needs = null; } }
     }
     if (cur.noLunch === "time" && lunchWanted(win)) { const t = trimForLunch(keep, win, ctx, cur.r.end); if (t) { keep = t.keep; cur = t.cur; } }
     // Spare time is the traveler's (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to fill
