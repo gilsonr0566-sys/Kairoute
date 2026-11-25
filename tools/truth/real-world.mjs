@@ -36,18 +36,26 @@ const clk = m => m == null || !isFinite(m) ? '?' : `${String(Math.floor(m / 60) 
 const kindOf = x => { const k = String(x.kind || x.mode || '').toLowerCase(); return /walk/.test(k) ? 'walk' : /taxi|car|drive/.test(k) ? 'taxi' : /ferry|boat|tender|water/.test(k) ? 'ferry' : /train|rail/.test(k) ? 'train' : /metro|subway|tram|light/.test(k) ? 'metro' : /bus/.test(k) ? 'bus' : /lift|cable|funic/.test(k) ? 'lift' : k || 'other'; };
 
 // ---- 1. Every ride on every saved test trip's plan
+const pt = p => (+p.lat).toFixed(4) + ',' + (+p.lng).toFixed(4), known = new Map();
+try { for (const r of JSON.parse(fs.readFileSync(CACHE || path.join(ROOT, 'tools', 'truth', 'real-world-cache.json'), 'utf8')).rides || []) known.set(`${r.kind}|${pt(r.from)}|${pt(r.to)}`, r); } catch (e) { }
 const rides = [];
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   const name = f.replace(/\.json$/, ''); if (ONLY.length && !ONLY.includes(name)) continue;
-  let plans; const b = JSON.parse(fs.readFileSync(path.join(dir, f)));
-  try { plans = E.planTrip(E.applyPlaces(b, places)); } catch (e) { console.log(`FAIL ${name}: does not plan (${e.message})`); continue; }
+  const b = JSON.parse(fs.readFileSync(path.join(dir, f)));
+  // Planned twice: with no street routes (the helper out of reach) and with the street routes measured so far, the plan a
+  // traveler sees and the one the release gate compares (real-world-gate.cjs). A street route can change a ride (a taxi
+  // where the line said walk), and that ride must be measured too, or the gate never finds its time.
+  for (const withRoutes of [false, true]) { let plans; const bb = E.applyPlaces(b, places);
+  if (withRoutes) { if (!known.size) continue; bb.routes = (a, z) => { if (!a || !z || !isFinite(a.lat) || !isFinite(z.lat)) return null; const f = known.get('walk|' + pt(a) + '|' + pt(z)) || known.get('walk|' + pt(z) + '|' + pt(a)), c = known.get('taxi|' + pt(a) + '|' + pt(z)) || known.get('taxi|' + pt(z) + '|' + pt(a));
+    return f || c ? Object.assign({}, f && f.realKm ? { foot: { km: f.realKm } } : {}, c && c.realKm ? { car: { km: c.realKm, min: c.real } } : {}) : null; }; }
+  try { plans = E.planTrip(bb); } catch (e) { console.log(`FAIL ${name}: does not plan (${e.message})`); continue; }
   b.days.forEach((d, i) => { const p = plans[i]; if (!p || !p.items) return; const its = p.items;
     // The ride back: the day's last ride on a ship, train or flight day (it ends at the pier, station or airport).
     const lastRide = its.map(x => x.t).lastIndexOf('ride'), hard = /port|departure|embark/.test(d.type);
     its.forEach((x, j) => { if (x.t !== 'ride' || !x.from || !x.to || !(x.min > 0)) return;
       const prev = its[j - 1], at = x.at != null ? x.at : prev && prev.at != null ? prev.at + (prev.min || 0) : null;
       rides.push({ trip: name, day: i + 1, date: d.date, type: d.type, city: d.city, kind: kindOf(x), label: x.how || x.kind || x.mode, min: x.min, wait: x.wait || 0, km: x.km,
-        at, from: x.from, to: x.to, back: hard && j === lastRide, straight: hav(x.from, x.to), toName: (its[j + 1] && its[j + 1].name) || '', fromName: (its[j - 1] && its[j - 1].name) || '' }); }); });
+        at, from: x.from, to: x.to, back: hard && j === lastRide, straight: hav(x.from, x.to), toName: (its[j + 1] && its[j + 1].name) || '', fromName: (its[j - 1] && its[j - 1].name) || '', routed: withRoutes }); }); }); }
 }
 // The same two points and kind asked once.
 const key = r => `${r.kind}|${r.from.lat.toFixed(4)},${r.from.lng.toFixed(4)}|${r.to.lat.toFixed(4)},${r.to.lng.toFixed(4)}`;
@@ -58,6 +66,18 @@ const asks = [...uniq.entries()].sort((a, b) => (b[1].some(r => r.back) - a[1].s
 // ---- 2. The independent sources
 async function brouter(r, profile) { // the public server asks for patience when busy: wait and ask again, 3 times
   for (let t = 0; ; t++) { try { return await brouter1(r, profile); } catch (e) { if (t >= 3 || !/retry later|fetch failed|watchdog|timeout/i.test(e.message)) throw e; await sleep(8000 * (t + 1)); } } }
+// A pier, quay or ship berth is often a short path the router can't join to the streets ("target island detected",
+// "no track found"), and those are exactly the rides back to a ship (Nov 25: 27 rides, 10 of them rides back, had no real
+// time for this alone). Then the stuck end is moved along the straight line towards the other end, 150 m and then 400 m,
+// until the router joins it to a street, and the metres moved are added back (on foot at 4.5 km/h, by car at 20 km/h, a
+// port road's pace), so the real time is the router's plus that last bit, never less.
+async function brouterNear(r, profile) {
+  try { return await brouter(r, profile); } catch (e) { if (!/island|no track found/i.test(e.message)) throw e;
+    const mv = (p, q, m) => { const d = hav(p, q) * 1000; if (d < m * 2) return null; const f = m / d; return { lat: p.lat + (q.lat - p.lat) * f, lng: p.lng + (q.lng - p.lng) * f }; };
+    for (const m of [150, 400]) for (const ends of /target island/i.test(e.message) ? [['to'], ['from', 'to']] : [['to'], ['from'], ['from', 'to']]) {
+      const a = ends.includes('from') ? mv(r.from, r.to, m) : r.from, z = ends.includes('to') ? mv(r.to, r.from, m) : r.to; if (!a || !z) continue;
+      await sleep(2500); try { const b = await brouter({ from: a, to: z }, profile); return { km: b.km + ends.length * m / 1000, sec: b.sec + ends.length * m / 1000 / (/car/.test(profile) ? 20 : 4.5) * 3600, moved: ends.length * m }; } catch (e2) { if (!/island|no track found/i.test(e2.message)) throw e2; } }
+    throw e; } }
 async function brouter1(r, profile) {
   const u = `https://brouter.de/brouter?lonlats=${r.from.lng},${r.from.lat}|${r.to.lng},${r.to.lat}&profile=${profile}&alternativeidx=0&format=geojson`;
   const res = await fetch(u, { headers: UA }); if (!res.ok) throw new Error('brouter ' + res.status + ' ' + (await res.text()).slice(0, 80));
@@ -91,8 +111,8 @@ const rows = [], notChecked = {}; let lastB = 0, lastD = 0;
 const pace = async (t, gap) => { const w = t + gap - Date.now(); if (w > 0) await sleep(w); return Date.now(); };
 for (const [, group] of asks) { const r = group[0], row = { ...r, n: group.length, back: group.some(x => x.back) };
   try {
-    if (r.kind === 'walk') { lastB = await pace(lastB, 2500); const b = await brouter(r, 'hiking-mountain'); row.realKm = +b.km.toFixed(2); row.real = Math.round(b.km / 4.5 * 60); row.src = 'BRouter foot, 4.5 km/h'; row.planned = r.min; }
-    else if (r.kind === 'taxi') { lastB = await pace(lastB, 2500); const b = await brouter(r, 'car-fast'); row.realKm = +b.km.toFixed(2); row.real = Math.round(b.sec / 60); row.src = 'BRouter car, empty roads'; row.planned = r.min; }
+    if (r.kind === 'walk') { lastB = await pace(lastB, 2500); const b = await brouterNear(r, 'hiking-mountain'); row.realKm = +b.km.toFixed(2); row.real = Math.round(b.km / 4.5 * 60); row.src = 'BRouter foot, 4.5 km/h' + (b.moved ? `, last ${b.moved} m to the street added` : ''); row.planned = r.min; }
+    else if (r.kind === 'taxi') { lastB = await pace(lastB, 2500); const b = await brouterNear(r, 'car-fast'); row.realKm = +b.km.toFixed(2); row.real = Math.round(b.sec / 60); row.src = 'BRouter car, empty roads' + (b.moved ? `, last ${b.moved} m to the street added` : ''); row.planned = r.min; }
     else if (/train|metro|bus/.test(r.kind)) { lastD = await pace(lastD, 700); const j = await db(r); row.real = Math.round(j.min); row.src = 'DB journey planner: ' + j.lines; row.planned = r.min + r.wait; }
     else { (notChecked[r.kind] = notChecked[r.kind] || []).push(row); continue; }
   } catch (e) { row.err = String(e.message || e).slice(0, 120); (notChecked[r.kind] = notChecked[r.kind] || []).push(row); continue; }
