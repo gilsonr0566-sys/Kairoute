@@ -39,13 +39,15 @@ const kindOf = x => { const k = String(x.kind || x.mode || '').toLowerCase(); re
 const pt = p => (+p.lat).toFixed(4) + ',' + (+p.lng).toFixed(4), known = new Map();
 try { for (const r of JSON.parse(fs.readFileSync(CACHE || path.join(ROOT, 'tools', 'truth', 'real-world-cache.json'), 'utf8')).rides || []) known.set(`${r.kind}|${pt(r.from)}|${pt(r.to)}`, r); } catch (e) { }
 const rides = [];
-for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
+// The plan with routes goes first, over every trip, in the gate's own order: the engine keeps what it worked out for a
+// trip (its starting picks), so a trip planned once without routes plans again the same way, unlike the gate's.
+for (const withRoutes of [true, false]) for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
   const name = f.replace(/\.json$/, ''); if (ONLY.length && !ONLY.includes(name)) continue;
-  const b = JSON.parse(fs.readFileSync(path.join(dir, f)));
+  const b = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
   // Planned twice: with no street routes (the helper out of reach) and with the street routes measured so far, the plan a
   // traveler sees and the one the release gate compares (real-world-gate.cjs). A street route can change a ride (a taxi
   // where the line said walk), and that ride must be measured too, or the gate never finds its time.
-  for (const withRoutes of [false, true]) { let plans; const bb = E.applyPlaces(b, places);
+  { let plans; const bb = E.applyPlaces(b, places);
   if (withRoutes) { if (!known.size) continue; bb.routes = (a, z) => { if (!a || !z || !isFinite(a.lat) || !isFinite(z.lat)) return null; const f = known.get('walk|' + pt(a) + '|' + pt(z)) || known.get('walk|' + pt(z) + '|' + pt(a)), c = known.get('taxi|' + pt(a) + '|' + pt(z)) || known.get('taxi|' + pt(z) + '|' + pt(a));
     return f || c ? Object.assign({}, f && f.realKm ? { foot: { km: f.realKm } } : {}, c && c.realKm ? { car: { km: c.realKm, min: c.real } } : {}) : null; }; }
   try { plans = E.planTrip(bb); } catch (e) { console.log(`FAIL ${name}: does not plan (${e.message})`); continue; }
@@ -76,7 +78,7 @@ async function brouterNear(r, profile) {
     const mv = (p, q, m) => { const d = hav(p, q) * 1000; if (d < m * 2) return null; const f = m / d; return { lat: p.lat + (q.lat - p.lat) * f, lng: p.lng + (q.lng - p.lng) * f }; };
     for (const m of [150, 400]) for (const ends of /target island/i.test(e.message) ? [['to'], ['from', 'to']] : [['to'], ['from'], ['from', 'to']]) {
       const a = ends.includes('from') ? mv(r.from, r.to, m) : r.from, z = ends.includes('to') ? mv(r.to, r.from, m) : r.to; if (!a || !z) continue;
-      await sleep(2500); try { const b = await brouter({ from: a, to: z }, profile); return { km: b.km + ends.length * m / 1000, sec: b.sec + ends.length * m / 1000 / (/car/.test(profile) ? 20 : 4.5) * 3600, moved: ends.length * m }; } catch (e2) { if (!/island|no track found/i.test(e2.message)) throw e2; } }
+      await sleep(2500); try { const b = await brouter({ from: a, to: z }, profile); if (b.km > 3 * hav(r.from, r.to) + 2) continue; /* a moved end joined to the wrong shore (Nov 25, Dubrovnik: 16 km for 2.9 km straight): not a measure */ return { km: b.km + ends.length * m / 1000, sec: b.sec + ends.length * m / 1000 / (/car/.test(profile) ? 20 : 4.5) * 3600, moved: ends.length * m }; } catch (e2) { if (!/island|no track found/i.test(e2.message)) throw e2; } }
     throw e; } }
 async function brouter1(r, profile) {
   const u = `https://brouter.de/brouter?lonlats=${r.from.lng},${r.from.lat}|${r.to.lng},${r.to.lat}&profile=${profile}&alternativeidx=0&format=geojson`;
