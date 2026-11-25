@@ -2,7 +2,8 @@
 // a phone, so an escape found on a test trip (not the example trip) can be confirmed fixed, or not, on the live app.
 // The trip is put on the device the way tools/client/steady-all.cjs does. The app asks its own helper as usual (street
 // routes, islands): this is the plan a traveler gets.
-// env: URL (default Beta 2 live), TRIP = corpus file name (e.g. g09-kotor), DAY = day number, 1 = first (default 2).
+// env: URL (default Beta 2 live), TRIP = corpus file name (e.g. g09-kotor), DAY = day number, 1 = first (default 2),
+//   PICKS = optional sight ids the traveler picked that day (comma-separated).
 'use strict';
 const { chromium } = require('playwright'), fs = require('fs'), path = require('path');
 const URL = process.env.URL || 'https://gilsonr0566-sys.github.io/Kairoute-Beta2/', TRIP = process.env.TRIP || 'g09-kotor', DAY = +(process.env.DAY || 2) - 1;
@@ -10,6 +11,7 @@ const c = JSON.parse(fs.readFileSync(path.join(__dirname, 'beta2', 'corpus', TRI
 const days = c.days.map(d => { const x = Object.assign({}, d); delete x.i; delete x.sites; delete x.wx; delete x.missing; delete x.order;
   if (/port|embark/.test(d.type) && d.point && !d.point.unknown && !x.pier) x.pier = { name: d.point.name, lat: d.point.lat, lng: d.point.lng }; /* the pier the traveler names from their cruise documents, as the app asks */
   for (const k of ['portArrive', 'allAboard', 'boardAt', 'startTime', 'time']) if (typeof x[k] === 'number') x[k] = String(Math.floor(x[k] / 60)).padStart(2, '0') + ':' + String(x[k] % 60).padStart(2, '0'); /* the corpus keeps engine minutes, the app keeps clock times */
+  if (process.env.PICKS && c.days.indexOf(d) === DAY) { x.selected = process.env.PICKS.split(','); x.ownList = true; } /* PICKS: the traveler's own list for that day (comma-separated sight ids) */
   x.cityKey = d.city; x.destination = d.city && c.cities[d.city] ? c.cities[d.city].name : d.destination || ''; return x; });
 const seed = { trip: JSON.stringify({ id: 'live-' + TRIP, name: c.name || TRIP, style: c.style || 'mix', active: DAY, days, lodging: {}, journal: {}, prefs: c.prefs || {}, legModes: c.legModes || {} }), cities: JSON.stringify(c.cities) };
 (async () => { const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 412, height: 915 }, hasTouch: true, isMobile: true });

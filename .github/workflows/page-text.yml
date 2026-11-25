@@ -10,6 +10,9 @@ on:
       trip:
         description: "Saved test trip (tools/beta2/corpus file name) to print a day of; day = its day number"
         default: ""
+      picks:
+        description: "With trip: the sight ids picked that day (comma-separated)"
+        default: ""
 permissions:
   contents: read
 jobs:
@@ -27,4 +30,5 @@ jobs:
           URL: ${{ inputs.url }}
           DAY: ${{ inputs.day }}
           TRIP: ${{ inputs.trip }}
+          PICKS: ${{ inputs.picks }}
         run: npm i playwright@1.65.1 && npx playwright install chromium && if [ -n "$TRIP" ]; then node tools/live-trip-text.cjs; elif [ -n "$DAY" ]; then node tools/live-day-text.cjs; else node tools/page-text.cjs; fi
