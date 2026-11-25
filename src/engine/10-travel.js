@@ -138,6 +138,11 @@
   E.makeTravel = (prefs, legModes, legs, lines, answers, piers, routes) => {
     const walk = (prefs && prefs.walk) || "medium", lim = WALK_LIMIT[walk] || WALK_LIMIT.medium, speed = walk === "low" ? 3.6 : 4.5, modes = legModes || {}, memo = new Map(), memoEnd = new Map(), memoBags = new Map(), memoFixed = new Map();
     const walkMinOf = km => Math.max(1, Math.round(km * 1.3 / speed * 60));
+    // The street routes known so far, both ways round, for rides near them (see calc): asked of the app once per travel.
+    let nearList = null; const knownNear = () => { if (nearList) return nearList.length ? nearList : null; nearList = [];
+      const all = typeof routes === "function" && typeof routes.known === "function" ? routes.known() || [] : [];
+      for (const r of all) if (r && E.hasPos(r.a) && E.hasPos(r.b) && (r.car || r.foot)) { nearList.push(r); nearList.push({ a: r.b, b: r.a, car: r.car, foot: r.foot }); }
+      return nearList.length ? nearList : null; };
     // The traveler's ride choice belongs to the two places, whichever way the day goes between them (Nov 18: the train
     // picked between two trips out was lost when the day ran them the other way round). A choice also holds for a ride close
     // enough to it (E.nearRide); one made the same way round wins, then the closest.
@@ -241,7 +246,15 @@
       // guess: up a hill, round a harbour or over a mountain road it is far short (real-world check, Nov 24: a taxi over a
       // mountain road planned 23 min, 42-50 by road; a walk to an island planned 18 min straight over the water, 55 over the
       // bridge). A known route is never made shorter than the guess, which stays the floor.
-      const rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;
+      let rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;
+      // No route asked for these two points yet, but one known for a ride with both ends close by (the lunch place next
+      // door to one already timed, the same hill from another hotel): that one, with the walk or drive between the ends,
+      // never the straight-line guess. Else a place not yet asked always looks nearer than one the map has timed, and the
+      // plan keeps choosing the untimed one (live check, Nov 25, Kotor: lunch moved from a timed restaurant to the one
+      // next door, and the ride down the mountain went back to the 27 min guess, about an hour by road).
+      if (!pinned && !rt && knownNear()) { const n = E.nearRide(a, b, knownNear(), r => [r.a, r.b]);
+        if (n) { const add = (E.hav(a, n.A) + E.hav(b, n.B)) * 1.3, x = n.x;
+          rt = { near: true, car: x.car ? { km: x.car.km + add, min: x.car.min + E.nearGap(a, b, n, true) } : null, foot: x.foot ? { km: x.foot.km + add } : null }; } }
       // A router answer far beyond any real road (more than 10 times the straight line and 20 km) is a wrong snap across a
       // harbour or onto another road, never a route: it is left out and the guess stands.
       const sane = r => r.km <= d * 10 + 20;

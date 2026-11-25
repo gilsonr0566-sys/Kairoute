@@ -6758,6 +6758,11 @@ async function fetchRoutes(legs, then) {
 // ride shorter than the guess). routeTimeOf(a, b) gives { foot: { km }, car: { km, min } } as known so far.
 const rtMem = new Map(), rtAsked = new Set(); let rtQueue = [], rtBusy = false;
 const rtKey = (m, a, b) => m + ":" + (+a.lat).toFixed(4) + "," + (+a.lng).toFixed(4) + ">" + (+b.lat).toFixed(4) + "," + (+b.lng).toFixed(4);
+// Every street route known so far, as { a, b, car, foot } (R-33: the engine times a ride near a known one from it).
+function routeKnown() { const by = new Map();
+  for (const [k, v] of rtMem) { const m = /^(foot|car):(-?[\d.]+),(-?[\d.]+)>(-?[\d.]+),(-?[\d.]+)$/.exec(k); if (!m || !v || !isFinite(v.km)) continue; const pk = m.slice(2).join(",");
+    const r = by.get(pk) || { a: { lat: +m[2], lng: +m[3] }, b: { lat: +m[4], lng: +m[5] }, car: null, foot: null }; r[m[1]] = v; by.set(pk, r); }
+  return [...by.values()]; }
 function routeTimeOf(a, b) { const f = rtMem.get(rtKey("foot", a, b)), c = rtMem.get(rtKey("car", a, b)); return f || c ? { foot: f || null, car: c || null } : null; }
 async function askRouteTimes(pairs) {
   for (const [m, a, b] of pairs) { const k = rtKey(m, a, b); if (rtAsked.has(k) || rtMem.has(k)) continue; rtAsked.add(k);

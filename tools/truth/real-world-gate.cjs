@@ -26,6 +26,8 @@ function compare(engineFile) {
     const bb = E.applyPlaces(b, places), pt = p => (+p.lat).toFixed(4) + ',' + (+p.lng).toFixed(4);
     bb.routes = (a, z) => { if (!a || !z || !isFinite(a.lat) || !isFinite(z.lat)) return null; const f = route.get('walk|' + pt(a) + '|' + pt(z)) || route.get('walk|' + pt(z) + '|' + pt(a)), c = route.get('taxi|' + pt(a) + '|' + pt(z)) || route.get('taxi|' + pt(z) + '|' + pt(a));
       return f || c ? Object.assign({}, f && f.realKm ? { foot: { km: f.realKm } } : {}, c && c.realKm ? { car: { km: c.realKm, min: c.real } } : {}) : null; };
+    // All the measured routes, as the app hands the engine every route it knows (a ride near a timed one is timed from it).
+    bb.routes.known = () => [...route.values()].filter(r => r.realKm && /walk|taxi/.test(r.kind)).map(r => ({ a: r.from, b: r.to, car: r.kind === 'taxi' ? { km: r.realKm, min: r.real } : null, foot: r.kind === 'walk' ? { km: r.realKm } : null }));
     try { plans = E.planTrip(bb); } catch (e) { out.bad.push(`${name}: does not plan (${e.message})`); continue; }
     b.days.forEach((d, i) => { const p = plans[i]; if (!p || !p.items) return; const its = p.items, lastRide = its.map(x => x.t).lastIndexOf('ride'), hard = /port|departure|embark/.test(d.type);
       its.forEach((x, j) => { if (x.t !== 'ride' || !x.from || !x.to || !(x.min > 0)) return;
@@ -50,7 +52,7 @@ if (require.main === module) {
   // Planted: street routes ignored and taxis without the start-up minutes, the kind of change no self-agreeing check sees.
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'rw-plant-')); fs.cpSync(SRC, tmp, { recursive: true });
   const f = path.join(tmp, 'engine', '10-travel.js'); let s = fs.readFileSync(f, 'utf8');
-  const P = [['const rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;', 'const rt = null;'], ['add = 10 + 5 * Math.min(1, d / 40)', 'add = 0']];
+  const P = [['let rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;', 'let rt = null;'], ['if (!pinned && !rt && knownNear())', 'if (false)'], ['add = 10 + 5 * Math.min(1, d / 40)', 'add = 0']];
   for (const [a, b] of P) { if (!s.includes(a)) { console.log('FAIL the planted copy could not be made: the engine text it changes is gone'); process.exit(1); } s = s.replace(a, b); }
   fs.writeFileSync(f, s);
   const o = cp.spawnSync(process.execPath, ['-e', `process.stdout.write(JSON.stringify(require(${JSON.stringify(__filename)}).compare(${JSON.stringify(path.join(ROOT, 'tools', 'beta2', 'engine.cjs'))})))`], { env: Object.assign({}, process.env, { ENGINE_SRC: tmp }), encoding: 'utf8', maxBuffer: 1 << 26 });

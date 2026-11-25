@@ -102,6 +102,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     bucket.days = bucket.days.map((x, i) => i === ai ? Object.assign({}, x, { alone: true }) : x);
     bucket.answers = (a, b) => answerOf(a, b);
     bucket.routes = (a, b) => typeof routeTimeOf === "function" ? routeTimeOf(a, b) : null;
+    if (typeof routeKnown === "function") bucket.routes.known = routeKnown;
     let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
     const mm = { k, plans, bucket, used: new Map() }; recentAlone.set(k, mm); if (recentAlone.size > 40) recentAlone.delete(recentAlone.keys().next().value); return mm;
   }
@@ -130,6 +131,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     bucket.answers = (a, b) => { const r = answerOf(a, b); used.set(a.lat + "," + a.lng + ">" + b.lat + "," + b.lng, { a, b, sig: answerSig(a, b) }); return r; };
     // Real routes known so far: a route arriving replans only when the plans asked for that pair (see answers above).
     bucket.routes = (a, b) => { const r = typeof routeTimeOf === "function" ? routeTimeOf(a, b) : null; used.set("r|" + a.lat + "," + a.lng + ">" + b.lat + "," + b.lng, { a, b, route: true, sig: JSON.stringify(r) }); return r; };
+    if (typeof routeKnown === "function") bucket.routes.known = routeKnown;
     let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
     askRoutes(plans);
     // A day still on the app's own seeding (the traveler hasn't ticked or unticked anything there) shows what the

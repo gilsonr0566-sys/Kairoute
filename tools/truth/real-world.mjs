@@ -49,7 +49,8 @@ for (const withRoutes of [true, false]) for (const f of fs.readdirSync(dir).filt
   // where the line said walk), and that ride must be measured too, or the gate never finds its time.
   { let plans; const bb = E.applyPlaces(b, places);
   if (withRoutes) { if (!known.size) continue; bb.routes = (a, z) => { if (!a || !z || !isFinite(a.lat) || !isFinite(z.lat)) return null; const f = known.get('walk|' + pt(a) + '|' + pt(z)) || known.get('walk|' + pt(z) + '|' + pt(a)), c = known.get('taxi|' + pt(a) + '|' + pt(z)) || known.get('taxi|' + pt(z) + '|' + pt(a));
-    return f || c ? Object.assign({}, f && f.realKm ? { foot: { km: f.realKm } } : {}, c && c.realKm ? { car: { km: c.realKm, min: c.real } } : {}) : null; }; }
+    return f || c ? Object.assign({}, f && f.realKm ? { foot: { km: f.realKm } } : {}, c && c.realKm ? { car: { km: c.realKm, min: c.real } } : {}) : null; };
+    bb.routes.known = () => [...known.values()].filter(r => r.realKm && /walk|taxi/.test(r.kind)).map(r => ({ a: r.from, b: r.to, car: r.kind === 'taxi' ? { km: r.realKm, min: r.real } : null, foot: r.kind === 'walk' ? { km: r.realKm } : null })); }
   try { plans = E.planTrip(bb); } catch (e) { console.log(`FAIL ${name}: does not plan (${e.message})`); continue; }
   b.days.forEach((d, i) => { const p = plans[i]; if (!p || !p.items) return; const its = p.items;
     // The ride back: the day's last ride on a ship, train or flight day (it ends at the pier, station or airport).

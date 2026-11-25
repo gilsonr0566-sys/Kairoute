@@ -50,6 +50,17 @@ function run(E) {
     t(r.kind === want, `${lab}: the ride is a ${want} (got ${r.kind})`);
     if (r.kind === want) t(r.min === (want === 'walk' ? foot : taxi), `${lab}: the ${want} takes ${want === 'walk' ? foot : taxi} min (got ${r.min})`);
   }
+  // 2b. A ride with no route asked yet, both ends close to a ride the map has timed (R-33, Nov 25 Kotor: lunch next door
+  // to a timed restaurant went back to the straight-line guess): timed from the known ride, never shorter than it.
+  for (const d0 of [2, 6, 15]) for (const off of [0.05, 0.3]) {
+    const B = east(d0), B2 = { lat: B.lat + off / 111.2, lng: B.lng }, d = E.hav(A, B), fk = d * 4, car = { km: fk, min: Math.round(fk / 30 * 60) };
+    const routes = (a, b) => (a === A && b === B ? { car, foot: null } : null); routes.known = () => [{ a: A, b: B, car, foot: null }];
+    const r = E.makeTravel({ walk: 'medium' }, {}, null, null, null, null, routes).estimate(A, B2), floor = Math.round(car.min * 1.15 + 10);
+    t(r.kind === 'taxi' && r.min >= floor, `${d.toFixed(1)} km, end ${Math.round(off * 1000)} m from a ride timed at ${car.min} min by road: a taxi of at least ${floor} min (got ${r.kind} ${r.min})`);
+    // and the same ride the other way round
+    const r2 = E.makeTravel({ walk: 'medium' }, {}, null, null, null, null, routes).estimate(B2, A);
+    t(r2.kind === 'taxi' && r2.min >= floor, `${d.toFixed(1)} km back, start ${Math.round(off * 1000)} m from a timed ride: a taxi of at least ${floor} min (got ${r2.kind} ${r2.min})`);
+  }
   // 3. A bus answered by a timetable: taken only when quicker than the walk, unless the taxi saves a great deal.
   for (const d0 of [1.0, 2.5, 6, 20]) for (const bm of [8, 25, 60, 140]) for (const mode of ['bus', 'metro']) {
     const B = east(d0), d = E.hav(A, B), ans = () => [{ id: 'x1', mode, label: mode === 'bus' ? 'Bus 7' : 'M2', min: bm, steps: [mode === 'bus' ? 'Bus 7' : 'M2'] }];
@@ -125,6 +136,7 @@ if (require.main === module) {
     ['the extra time back to a ship from 20 min', '10-travel.js', 'if (o.min < 30) continue;', 'if (o.min < 20) continue;'],
     ['a guide\'s ride time used however far it is from the map point', '10-travel.js', 'if (said0 > 2 * r.min && said0 - r.min >= 30) offMap', 'if (false) offMap'],
     ['a ship day planned with the guide time dropped on the ride out', '95-plan.js', 'tr = win && win.hard ? trHard() : trAll;', 'tr = trAll;'],
+    ['a ride next to one the map has timed falls back to the straight-line guess', '10-travel.js', 'if (!pinned && !rt && knownNear())', 'if (false)'],
     ['the best order searched by a shortcut above 5 stops', '60-route.js', 'sorted.length <= 10 ? exact', 'sorted.length <= 5 ? exact'],
     ['a bus taken when the taxi saves a great deal', '10-travel.js', 'E.publicWins = (pub, roadMin) => !(roadMin < pub - 40 && roadMin < pub * 0.6);', 'E.publicWins = (pub, roadMin) => !(roadMin < pub - 90 && roadMin < pub * 0.6);'],
   ];
