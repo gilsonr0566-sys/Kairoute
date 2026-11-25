@@ -234,6 +234,11 @@
   };
   const planAll = bucket => {
     const prefs = bucket.prefs || {}, style = bucket.style || "mix", tr = E.makeTravel(prefs, bucket.legModes, bucket.legs, bucket.transit, bucket.answers, E.piersOf(bucket), bucket.routes), ledger = E.makeLedger();
+    // On a day with a time to be back (a ship, a train or a plane), a guide's ride time that may be about another spot than
+    // the map's is kept on every ride to or from that place, not only the ride back (R-12; Nov 24 review of the rule: if the
+    // guide is right, the day runs up to an hour behind before the ride back).
+    const trAll = tr; let trH = null;
+    const trHard = () => trH || (trH = E.makeTravel(Object.assign({}, prefs, { keepGuideTime: true }), bucket.legModes, bucket.legs, bucket.transit, bucket.answers, E.piersOf(bucket), bucket.routes));
     const guides = E.sortFar(bucket.cities || {}), days = bucket.days || [], out = new Array(days.length).fill(null);
     // Each day knows where its place's own sights are, so a gate far from all of them is caught (part 3).
     const spots = key => ((guides[key] || {}).sites || []).filter(s => isFinite(s.lat)).map(s => ({ lat: s.lat, lng: s.lng }));
@@ -298,7 +303,7 @@
     const planDay = (i, again) => {
       const d = days[i];
       if (d.noShore || d.type === "sea") return { plan: { i, error: "At sea or staying aboard: no time ashore." } };
-      const win = wins[i];
+      const win = wins[i], tr = win && win.hard ? trHard() : trAll;
       if (win.error) return { plan: Object.assign({ i, error: win.error }, win.askNight ? { askNight: true, depAt: win.depAt } : {}) };
       const city = guides[d.city];
       if (!city) return { plan: { i, error: "no guide" } };

@@ -96,6 +96,17 @@ function run(E) {
     const got = E.bestOrder(stops, from, to, cost), gc = E.pathCost(got, from, to, cost);
     const best = Math.min(...perms(stops).map(p => E.pathCost(p, from, to, cost)));
     t(gc <= best + 1e-6, `the best order of ${n} stops is the shortest of every order (${best.toFixed(1)}; got ${gc.toFixed(1)})`); }
+  // 8. On a day with a time to be back, a guide's time that may be about another spot is kept on every ride to or from
+  //    the place, the ride out too (if the guide is right, the day would run an hour behind before the ride back).
+  { const fs = require('fs'), path = require('path'), ROOT = path.join(__dirname, '..', '..'), PD = path.join(ROOT, 'tools', 'places', 'data'), places = {};
+    for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
+    const b = JSON.parse(fs.readFileSync(path.join(__dirname, 'corpus', 'g09-kotor.json'))), d = b.days.find(x => x.type === 'port'), c = b.cities[d.city], P = d.point;
+    (c.farther = c.farther || []).push({ id: 'ranch-x', name: 'Test Ranch', lat: P.lat, lng: P.lng + 0.12, minutes: 60, far: true, tags: [], travelNote: 'Driving from the port takes about 1 hour 30 minutes.' });
+    d.selected = ['ranch-x']; d.own = true;
+    const plan = E.planTrip(E.applyPlaces(b, places))[b.days.indexOf(d)], its = (plan && plan.items) || [], k = its.findIndex(x => x.t === 'stop' && x.id === 'ranch-x');
+    const out = k > 0 ? its[k - 1] : null;
+    t(out && out.t === 'ride' && out.min >= 90, `on a ship day, the ride out to a place whose guide gives 90 min (mapped ${E.hav(P, { lat: P.lat, lng: P.lng + 0.12 }).toFixed(1)} km away) keeps the 90 min (got ${out ? out.min : 'no ride'})`);
+    t(out && /may mean another spot/.test(out.note || ''), `that ride says the guide may mean another spot (note: ${(out && out.note) || 'none'})`); }
   return bad;
 }
 
@@ -113,6 +124,7 @@ if (require.main === module) {
     ['the swapped ride keeps the old words', '10-travel.js', 'mode: E.modeOfKind(o.kind), kind: o.kind, how: o.how,', 'mode: E.modeOfKind(o.kind), kind: o.kind, how: leg.how,'],
     ['the extra time back to a ship from 20 min', '10-travel.js', 'if (o.min < 30) continue;', 'if (o.min < 20) continue;'],
     ['a guide\'s ride time used however far it is from the map point', '10-travel.js', 'if (said0 > 2 * r.min && said0 - r.min >= 30) offMap', 'if (false) offMap'],
+    ['a ship day planned with the guide time dropped on the ride out', '95-plan.js', 'tr = win && win.hard ? trHard() : trAll;', 'tr = trAll;'],
     ['the best order searched by a shortcut above 5 stops', '60-route.js', 'sorted.length <= 10 ? exact', 'sorted.length <= 5 ? exact'],
     ['a bus taken when the taxi saves a great deal', '10-travel.js', 'E.publicWins = (pub, roadMin) => !(roadMin < pub - 40 && roadMin < pub * 0.6);', 'E.publicWins = (pub, roadMin) => !(roadMin < pub - 90 && roadMin < pub * 0.6);'],
   ];

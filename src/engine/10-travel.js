@@ -311,7 +311,7 @@
           // than the one on the map (real-world check, Nov 24: a ranch "about 1 hour 30 minutes" from the city, mapped 10 km
           // out, a 13 min drive): not used, and said. On the way to a ship, train or plane the longer time is kept (the place
           // may really be that far), and said too.
-          const said0 = d > 5 ? saidMin(note) : 0, hardEnd = !!(b.backToShip || b.deadline);
+          const said0 = d > 5 ? saidMin(note) : 0, hardEnd = !!(b.backToShip || b.deadline || (prefs && prefs.keepGuideTime));
           if (said0 > 2 * r.min && said0 - r.min >= 30) offMap = { said: said0, road: r.min, km: d, kept: hardEnd };
           const said = offMap && !hardEnd ? 0 : said0;
           // A stop far from any road a car can drive (a car-free old town on the water, Round 1: taxis between the
@@ -368,7 +368,7 @@
       for (const o of opts) if (!o.source) o.source = o.ans ? "timetable" : o.mapped ? "map" : "estimate";
       const notes = [];
       if (note && d > 5) notes.push(E.unconfirmedNote(note) ? "An earlier AI guide said (not confirmed, not a timetable): " + note.trim().replace(/^\s*not confirmed:?\s*/i, "").replace(/\s+/g, " ") : "The guide says: " + note.trim().replace(/\s+/g, " "));
-      if (offMap) notes.push("The guide gives about " + offMap.said + " min for this ride, but the map puts the place only " + Math.round(offMap.km) + " km away (about " + offMap.road + " min by road), so the guide may mean another spot: check where you are going." + (offMap.kept ? " The guide's longer time is kept for the way back." : ""));
+      if (offMap) notes.push("The guide gives about " + offMap.said + " min for this ride, but the map puts the place only " + Math.round(offMap.km) + " km away (about " + offMap.road + " min by road), so the guide may mean another spot: check where you are going." + (offMap.kept ? " The guide's longer time is kept today, a day with a time to be back." : ""));
       if (missing.length) notes.push("The guide names " + missing.map(k => k === "ferry" ? "a ferry" : "a " + k).join(" and ") + ", but no timetable for it is known here, so this ride is planned " + (pick.kind === "taxi" ? "by taxi" : "as " + pick.how) + ": check at the " + (missing.includes("ferry") && missing.length === 1 ? "pier" : "station") + " or with your hotel.");
       // The ride back to a ship, train or plane on a time no timetable confirms: said, with the extra time already in it.
       if ((b.backToShip || b.deadline) && pick.kind !== "walk" && pick.source !== "timetable" && pick.min >= 30)
