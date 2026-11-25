@@ -16,14 +16,14 @@ permissions:
 jobs:
   compare:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
         with: { ref: "${{ github.event_name == 'schedule' && 'claude/project-thread-xrdp7v' || github.ref }}" }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - name: Every ride on the saved test trips against BRouter and the DB journey planner
-        run: node tools/truth/real-world.mjs --max 450 --out real-world.json --cache tools/truth/real-world-cache.json 2>&1 | tee real-world.txt
+        run: node tools/truth/real-world.mjs --max 650 --out real-world.json --cache tools/truth/real-world-cache.json 2>&1 | tee real-world.txt
       # The measured times are kept on the Beta 2 branch, where the release gate compares every plan with them offline
       # (tools/truth/real-world-gate.cjs). Only the times file is committed; nothing is published.
       - name: Keep the measured times for the release gate
