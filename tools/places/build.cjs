@@ -162,6 +162,7 @@ async function whsNear(p, km) {
 // ---- OpenStreetMap
 // Map queries are slow when busy: each mirror gets a long wait and a second try before the next one is asked.
 const OVERPASS = ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter', 'https://overpass.private.coffee/api/interpreter'];
+const OVERPASS_ALL = OVERPASS.concat(['https://maps.mail.ru/osm/tools/overpass/api/interpreter']);
 async function overpass(ql) {
   for (let round = 0; round < 2; round++)
     for (const u of OVERPASS) { const j = await get(u, { method: 'POST', body: 'data=' + encodeURIComponent(ql), headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' } }, 1, 200000);
@@ -173,11 +174,13 @@ async function overpass(ql) {
 }
 // The same, but a lookup that failed every try is null, never "nothing here" (an island outline missing because the
 // server was busy must not read as "no island").
+// Every map server at once, the first good answer wins (as the helper's /islands does): one after another, busy servers
+// used up every try (Nov 24 refresh: "the map could not be asked" for Venice and Kotor, so their island answers stayed old).
 async function overpassOrNull(ql) {
-  for (let round = 0; round < 2; round++)
-    for (const u of OVERPASS) { const j = await get(u, { method: 'POST', body: 'data=' + encodeURIComponent(ql), headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' } }, 1, 200000);
-      if (j && Array.isArray(j.elements) && !(j.remark && /runtime error|timed out|out of memory/i.test(j.remark))) return j.elements;
-      if (j) console.log('   map server:', String(j.remark).slice(0, 120)); await sleep(5000); }
+  const ask = u => get(u, { method: 'POST', body: 'data=' + encodeURIComponent(ql), headers: { 'User-Agent': UA, 'Content-Type': 'application/x-www-form-urlencoded' } }, 1, 200000)
+    .then(j => j && Array.isArray(j.elements) && !(j.remark && /runtime error|timed out|out of memory/i.test(j.remark)) ? j.elements : Promise.reject(new Error(j ? String(j.remark).slice(0, 120) : 'no answer')));
+  for (let round = 0; round < 3; round++) {
+    try { return await Promise.any(OVERPASS_ALL.map(ask)); } catch (e) { console.log('   map servers:', (e.errors || []).map(x => x.message).join(' | ').slice(0, 200)); await sleep(20000); } }
   console.log('   map lookup failed after every try');
   return null;
 }
