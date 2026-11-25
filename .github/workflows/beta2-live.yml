@@ -39,18 +39,19 @@ jobs:
           HELPER_WAIT: "150000"
           GUIDE_WAIT: "480000"
         run: node tools/beta2/live-trip.cjs
+      - name: Print the saved trips (so they can be replayed without the helper)
+        if: always()
+        run: |
+          node -e "const fs=require('fs'),z=require('zlib'),d='tools/beta2/snapshots';for(const f of fs.readdirSync(d).filter(f=>/^(live|g[0-9])/.test(f))){const b=z.gzipSync(fs.readFileSync(d+'/'+f)).toString('base64');console.log('SNAP-BEGIN '+f);for(let i=0;i<b.length;i+=4000)console.log('SNAP '+b.slice(i,i+4000));console.log('SNAP-END')}"
       - name: Places files from free sources (Wikidata, OpenStreetMap, Wikivoyage)
         if: always()
+        timeout-minutes: 75
         env:
           PLACES_EXTRA: ${{ matrix.batch == '5' && '1' || '' }}
         run: node tools/places/build.cjs
       - name: New engine side by side on these places
         if: always()
         run: SHOW=1 node tools/beta2/compare.cjs '^(live|g[0-9])' || true
-      - name: Print the saved trips (so they can be replayed without the helper)
-        if: always()
-        run: |
-          node -e "const fs=require('fs'),z=require('zlib'),d='tools/beta2/snapshots';for(const f of fs.readdirSync(d).filter(f=>/^(live|g[0-9])/.test(f))){const b=z.gzipSync(fs.readFileSync(d+'/'+f)).toString('base64');console.log('SNAP-BEGIN '+f);for(let i=0;i<b.length;i+=4000)console.log('SNAP '+b.slice(i,i+4000));console.log('SNAP-END')}"
       - name: Stop the test stand-in (writes what it kept)
         if: always()
         run: sh tools/test-helper.sh stop
