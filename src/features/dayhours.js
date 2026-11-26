@@ -51,11 +51,11 @@ function setDayHours(d, startStr, endStr) {
   const plan = buildPlan(d); if (!plan || plan.error) return false;
   const lim = hoursLimits(d, plan); if (!lim) return false;
   let s = lim.startFixed ? lim.from : toMin(startStr || d.startTime);
-  if (!isFinite(s)) s = lim.from;
+  if (!KEngine.fin(s)) s = lim.from;
   s = Math.max(lim.minStart, Math.min(22 * 60, s));
   // The end the traveler had stays put when only the start moves (later start = shorter day, earlier = longer).
   let e = endStr ? toMin(endStr) : plan.endBy;
-  if (!isFinite(e)) e = plan.endBy;
+  if (!KEngine.fin(e)) e = plan.endBy;
   e = Math.max(s + 60, Math.min(lim.maxEnd, e));
   const h = Math.max(HRS_MIN, hoursBetween(s, e));
   snapTimes(d);

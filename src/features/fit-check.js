@@ -37,7 +37,7 @@ function fixedWhy(d, newSight) {
 }
 // The smallest change to today's times that fits everything: start earlier (same finish), or finish later.
 function timeOptions(d, sel) {
-  if (timesFixed(d) || !isFinite(+d.hours) || !d.startTime) return [];
+  if (timesFixed(d) || !KEngine.fin(d.hours) || !d.startTime) return [];
   const out = [], st = toMin(d.startTime), h0 = +d.hours;
   for (let x = 30; x <= 240 && st - x >= 6 * 60; x += 30) { const t = { startTime: fmt(st - x), hours: h0 + x / 60 }, r = fitTrial(d, sel, t); if (fitsAll(r)) { out.push(Object.assign({ kind: "earlier", end: r.m.endBy }, t)); break; } }
   for (let h = h0 + 0.5; h <= h0 + 6; h += 0.5) { const r = fitTrial(d, sel, { hours: h }); if (!r.m || r.m.endBy > 23 * 60) break; if (fitsAll(r)) { out.push({ kind: "later", hours: h, end: r.m.endBy }); break; } }

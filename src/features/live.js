@@ -123,7 +123,7 @@ const overlap = (a, b, c, d) => Math.max(0, Math.min(b, d) - Math.max(a, c));
 // ---------- 2. Weather (Open-Meteo, free and keyless, through the worker so a city is fetched once for everyone) ----------
 let wxCache = {}, wxAsked = {};
 const WX_DAYS = 16;
-function wxKey(city) { const p = city && ((city.sites || [])[0] || {}); return isFinite(p.lat) ? (+p.lat).toFixed(1) + "," + (+p.lng).toFixed(1) : null; }
+function wxKey(city) { const p = city && ((city.sites || [])[0] || {}); return KEngine.fin(p.lat) ? (+p.lat).toFixed(1) + "," + (+p.lng).toFixed(1) : null; }
 function daysAhead(iso) { const t = todayISO(); return Math.round((new Date(iso + "T12:00:00Z") - new Date(t + "T12:00:00Z")) / 864e5); }
 function wxFetch(city) {
   const k = wxKey(city); if (!k || wxAsked[k]) return;
@@ -403,7 +403,7 @@ function legTo(from, to) {
   if (r) { const m = foot ? r.min : r.min + 10; return m >= est.min ? (foot ? { min: m, how: "Walk", src: "street route" } : { min: m, how: "Taxi", src: "street route + 10 min to find a taxi" }) : { min: est.min, how: est.how, transit: est.transit, src: "the day plan's time (more cautious than the street route)" }; }
   if (freeAI && !legAsked[k]) { legAsked[k] = 1;
     fetch(freeAI.url + "/route", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ legs: [{ m: foot ? "foot" : "car", a: [+from.lng, +from.lat], b: [+to.lng, +to.lat] }] }) })
-      .then(x => x.ok ? x.json() : null).then(j => { const rt = j && j.routes && j.routes[0]; if (rt && isFinite(rt.min)) { realLegs[k] = rt; alarmTick(); } }).catch(() => {}); }
+      .then(x => x.ok ? x.json() : null).then(j => { const rt = j && j.routes && j.routes[0]; if (rt && KEngine.fin(rt.min)) { realLegs[k] = rt; alarmTick(); } }).catch(() => {}); }
   return { min: est.min, how: est.how, transit: est.transit, src: "estimate" };
 }
 let alarmFired = {}, liveArrived = {};
@@ -434,7 +434,7 @@ function alarmState(d, plan, opt) {
     // No stop at all (straight from the airport to the ship): from the start (or the top of a cable car ridden up), on the
     // plan's own ride with its extra time (Nov 21, Bahamas test trip: "leave by 1:43" from a 47-min estimate while the plan's ride was 1 h with the extra).
     // From the bags left in storage (no stop after them): the place is named, never the step ("From Leave your bags in ...").
-    if (j >= 0 && its[j].place && isFinite(its[j].place.lat)) { from = its[j].type === "fixed" && its[j].head && /bags/i.test(its[j].place.name || "") ? Object.assign({}, its[j].place, { name: "the luggage storage" }) : its[j].place; let m = 0, how = "";
+    if (j >= 0 && its[j].place && KEngine.fin(its[j].place.lat)) { from = its[j].type === "fixed" && its[j].head && /bags/i.test(its[j].place.name || "") ? Object.assign({}, its[j].place, { name: "the luggage storage" }) : its[j].place; let m = 0, how = "";
       for (let k = j + 1; k < its.length; k++) { const it = its[k]; if (it.type === "travel") { m += it.leg.min || 0; how = how || it.leg.how || ""; }
         else if (it.type === "fixed" && !/bags/i.test((it.place && it.place.name) || "")) m += (it.place && it.place.minutes) || 0; else if (it.type === "fixed" || it.type === "end") break; }
       const lt = legTo(from, target); leg = /street route/.test(lt.src || "") && lt.min > m ? lt : { min: m, how: how || lt.how, transit: lt.transit, src: "the day plan's own ride back" }; } }
@@ -469,9 +469,9 @@ function rideBack(d, plan, st) {
   let ri = -1; for (let k = end - 1; k > 0; k--) { const it = plan.items[k]; if (it.type === "travel" && it.leg.transit && (it.leg.transit.deps || []).length) { ri = k; break; } if (it.type === "travel" && it.leg.mode !== "walk" && it.leg.min > 25) break; }
   if (ri < 1) return null;
   const ti = plan.items[ri], o = ti.leg.transit, at = plan.items[ri - 1], origin = at && at.place, land = plan.items[ri + 1] && plan.items[ri + 1].place;
-  if (!origin || !isFinite(origin.lat)) return null;
+  if (!origin || !KEngine.fin(origin.lat)) return null;
   // After the ride: the walk from where it arrives to the ship (a meal there can be skipped in a pinch).
-  const after = land && isFinite(land.lat) && hav(land, st.point) > 0.05 ? legTo(land, st.point).min : 0;
+  const after = land && KEngine.fin(land.lat) && hav(land, st.point) > 0.05 ? legTo(land, st.point).min : 0;
   const here = st.from, toPoint = hav(here, st.point), toOrigin = hav(here, origin), span = hav(origin, st.point);
   if (toPoint < 2 || toOrigin > toPoint) return null; // already near the ship, or closer to it than to the ride
   const slack = ti.leg.slack || 0, safe = safeDeps(o, st.backBy - after, slack);
@@ -674,7 +674,7 @@ async function camLookup(file) {
   const pos = await camPosition(), plan = buildPlan(d), todays = plan && !plan.error ? plan.stops.map(i => i.place) : [];
   let cands = [];
   if (pos) {
-    cands = allSites(city).filter(s => isFinite(s.lat)).map(s => ({ name: s.name, kind: s.category || "", m: Math.round(hav(pos, s) * 1000), site: s })).filter(c => c.m <= 700).sort((a, b) => a.m - b.m).slice(0, 12);
+    cands = allSites(city).filter(s => KEngine.fin(s.lat)).map(s => ({ name: s.name, kind: s.category || "", m: Math.round(hav(pos, s) * 1000), site: s })).filter(c => c.m <= 700).sort((a, b) => a.m - b.m).slice(0, 12);
     cam.msg = "Looking at what's around you…"; camSheet();
     if (freeAI) try { const r = await fetch(`${freeAI.url}/nearsights?lat=${pos.lat.toFixed(4)}&lng=${pos.lng.toFixed(4)}&r=300`); const j = r.ok ? await r.json() : null;
       ((j && j.sights) || []).forEach(x => { if (cands.length >= 20 || cands.some(c => nameMatch(c.name, x.name) || nameMatch(x.name, c.name))) return; const m = Math.round(hav(pos, x) * 1000); if (m <= 400) cands.push({ name: x.name, kind: String(x.kind || "").replace(/_/g, " "), m, osm: x }); }); } catch (e) {}

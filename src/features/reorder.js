@@ -101,7 +101,7 @@ function dragMove(e) { const st = dragSt; if (!st) return; e.preventDefault(); s
 // busy phone the finger is often lifted before that paint, and the stop landed where it was a moment earlier, or nowhere).
 function dragEnd(cancel, e) {
   const st = dragSt; if (!st) return;
-  if (!cancel) { if (e && isFinite(e.clientY)) st.y = e.clientY; dragTarget(); }
+  if (!cancel) { if (e && KEngine.fin(e.clientY)) st.y = e.clientY; dragTarget(); }
   dragSt = null;
   if (st.raf) cancelAnimationFrame(st.raf);
   st.row.classList.remove("dragging"); st.row.style.transform = ""; document.body.classList.remove("dragging-on");

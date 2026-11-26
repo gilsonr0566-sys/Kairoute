@@ -317,7 +317,7 @@
   };
   const checkedFind = (place, city, L) => {
     if (!BYNAME) { BYNAME = new Map(); L.forEach(c => [c.name].concat(c.aka || []).forEach(n => { const k = fold(n); if (k) (BYNAME.get(k) || BYNAME.set(k, []).get(k)).push(c); })); }
-    const here = E.fin(+place.lat) && E.fin(+place.lng) && (+place.lat || +place.lng) ? { lat: +place.lat, lng: +place.lng } : null, town = fold(city);
+    const here = E.fin(place.lat) && E.fin(place.lng) && (+place.lat || +place.lng) ? { lat: +place.lat, lng: +place.lng } : null, town = fold(city);
     const near = (c, km) => here && c.lat != null ? E.hav(here, c) <= km : null;
     // Same name: in the same town (or within 15 km when the town isn't named the same way).
     for (const c of BYNAME.get(fold(place.name)) || []) { const d = near(c, 15); if (d === true || (d === null && town && (" " + town + " ").includes(" " + fold(c.city) + " "))) return c; }

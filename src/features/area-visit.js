@@ -34,7 +34,7 @@ function areaParse(d, pts) {
 async function areaScan(city) {
   if (!city || typeof fetch !== "function") return;
   const k = keyOf(city.city); if (areaAsked[k] && Date.now() - areaAsked[k] < 600000) return; areaAsked[k] = Date.now();
-  const need = allSites(city).filter(s => !s.quick && !s.far && isFinite(s.lat) && isFinite(s.lng) && !(areaKey(s) in areaMem)).slice(0, 80);
+  const need = allSites(city).filter(s => !s.quick && !s.far && KEngine.fin(s.lat) && KEngine.fin(s.lng) && !(areaKey(s) in areaMem)).slice(0, 80);
   if (!need.length) return;
   const q = areaQuery(need);
   for (const ep of AREA_EPS) {
@@ -58,7 +58,7 @@ function areaIs(a, A) {
 }
 // Sight M stands inside area A (by the map's boundaries).
 function inArea(M, A) {
-  if (!M || !A || M === A || M.id === A.id || !isFinite(M.lat) || !isFinite(A.lat) || M.quick || A.quick) return false;
+  if (!M || !A || M === A || M.id === A.id || !KEngine.fin(M.lat) || !KEngine.fin(A.lat) || M.quick || A.quick) return false;
   const L = areaMem[areaKey(M)]; if (!L || !L.length) return false;
   if (sameSight(M, A) || hav(M, A) > AREA_NEAR) return false;
   return L.some(a => areaIs(a, A));
@@ -84,7 +84,7 @@ function areaBlock(A, mem, d) {
     mustSee: !!(A.mustSee || order.some(m => m.mustSee)), unesco: !!(A.unesco || order.some(m => m.unesco)), fame: Math.max(A.fame || 0, ...order.map(m => m.fame || 0)),
     oh: parts[0].oh, cw: parts[0].cw, show: null, far: !!(A.far || order.some(m => m.far)) });
   b.areaFull = b.minutes;
-  if (ownOrd) { const v = Math.min(...b.foldOf.map(x => ownOrd.has(x.id) ? ownOrd.get(x.id) : Infinity)); if (isFinite(v)) ownOrd.set(b.id, v); }
+  if (ownOrd) { const v = Math.min(...b.foldOf.map(x => ownOrd.has(x.id) ? ownOrd.get(x.id) : Infinity)); if (KEngine.fin(v)) ownOrd.set(b.id, v); }
   return b;
 }
 // The day's picks with every area and the picked sights inside it made into one visit. Nested areas (the Sistine
@@ -121,7 +121,7 @@ function areaHead(it) {
 }
 // Test hooks (tools/area-check.cjs): the map's answers, sights added to a day's guide, and what the plan made of them.
 if (typeof window !== "undefined") window.__kairouteArea = {
-  mem: () => areaMem, keysFor: i => allSites(cityFor(trip.days[i])).filter(x => isFinite(x.lat)).map(x => ({ id: x.id, key: areaKey(x) })), set: m => { areaMem = Object.assign({}, areaMem, m); Object.values(cities).forEach(c => { if (c) c.areaV = (c.areaV || 0) + 1; }); planGen++; dataGen++; }, inArea: (a, b) => inArea(a, b), query: areaQuery, parse: areaParse,
+  mem: () => areaMem, keysFor: i => allSites(cityFor(trip.days[i])).filter(x => KEngine.fin(x.lat)).map(x => ({ id: x.id, key: areaKey(x) })), set: m => { areaMem = Object.assign({}, areaMem, m); Object.values(cities).forEach(c => { if (c) c.areaV = (c.areaV || 0) + 1; }); planGen++; dataGen++; }, inArea: (a, b) => inArea(a, b), query: areaQuery, parse: areaParse,
   addSites: (i, list) => { const c = cityFor(trip.days[i]); list.forEach(x => { const o = (c.sites || []).find(y => y.id === x.id); if (o) Object.assign(o, x); else c.sites.push(x); }); planGen++; return allSites(c).map(x => x.id); },
   plan: i => { const d = trip.days[i]; bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const p = buildPlan(d); if (!p || p.error) return { error: p && p.error };
     let lv = null; try { const st = alarmState(d, p, { before: true }); lv = { at: st.leaveBy, from: st.from && st.from.name }; } catch (e) { lv = { err: String(e) }; }

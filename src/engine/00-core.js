@@ -38,7 +38,7 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
       if ((yi > lat) !== (yj > lat) && lng < (xj - xi) * (lat - yi) / (yj - yi) + xi) inside = !inside; }
     return inside; };
   E.islandAt = (shapes, pt) => {
-    if (!Array.isArray(shapes) || !pt || !E.fin(+pt.lat) || !E.fin(+pt.lng)) return null;
+    if (!Array.isArray(shapes) || !pt || !E.fin(pt.lat) || !E.fin(pt.lng)) return null;
     const lat = +pt.lat, lng = +pt.lng; let best = null, ba = Infinity;
     for (const s of shapes) for (const f of (s && s.rings) || []) { if (!Array.isArray(f) || f.length < 8) continue; const b = boxOf(f);
       if (lat < b.s || lat > b.n || lng < b.w || lng > b.e || b.a >= ba) continue;

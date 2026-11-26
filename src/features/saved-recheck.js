@@ -40,7 +40,7 @@ function recheckSaved(city) {
   if (!city || typeof city !== "object") return city;
   const aiCity = !!(city.ai && !city.builtin);
   if (aiCity && !city.grounded) return null;
-  for (const k of ["sites", "farther"]) if (Array.isArray(city[k])) city[k] = city[k].filter(s => s && s.name && isFinite(+s.lat) && isFinite(+s.lng)).map(s => recheckSight(s, city));
+  for (const k of ["sites", "farther"]) if (Array.isArray(city[k])) city[k] = city[k].filter(s => s && s.name && KEngine.fin(s.lat) && KEngine.fin(s.lng)).map(s => recheckSight(s, city));
   if (aiCity) {
     // Places to eat: only places on the map; the AI's ranking, style and price band are not a source.
     if (Array.isArray(city.restaurants)) city.restaurants = city.restaurants.filter(r => r && r.onMap).map(r => Object.assign(r, { top: false, style: "", price: "" }));

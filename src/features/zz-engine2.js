@@ -21,7 +21,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   // vanished, and the train he then picked "wasn't known"). Each ride reads the answer kept for the trip's own dates,
   // in date order, the first one found (a Friday ride on a Friday's timetable when the trip has one).
   // One date for each kind of timetable day (weekday, Saturday, Sunday) in the trip, earliest first: three looks at most.
-  const tripDates = () => { const seen = new Map(); for (const dt of (trip.days || []).map(d => d.date).filter(Boolean).sort()) { const t = Date.parse(dt + "T12:00:00Z"); if (!isFinite(t)) continue; const k = dayKind(new Date(t).getUTCDay()); if (!seen.has(k)) seen.set(k, dt); } return [...seen.values()]; };
+  const tripDates = () => { const seen = new Map(); for (const dt of (trip.days || []).map(d => d.date).filter(Boolean).sort()) { const t = Date.parse(dt + "T12:00:00Z"); if (!KEngine.fin(t)) continue; const k = dayKind(new Date(t).getUTCDay()); if (!seen.has(k)) seen.set(k, dt); } return [...seen.values()]; };
   // Asked for thousands of rides on every replan: each pair's answer is kept until an answer arrives (nearGen) or the
   // trip's dates change.
   let peekMemo = new Map(), peekGen = "";
@@ -34,7 +34,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   const askRides = ep => { (ep && ep.items || []).forEach(x => { if (x.t === "ride" && x.from && x.to && x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift") { try { transitFor(x.from, x.to); } catch (e) {} } }); };
   // R-33: every walk and taxi the plans take is asked for its real route once (see askRouteTimes in main.js).
   const askRoutes = plans => { const pairs = [];
-    (plans || []).forEach(ep => (ep && ep.items || []).forEach(x => { if (x.t !== "ride" || !x.from || !x.to || !isFinite(+x.from.lat) || !isFinite(+x.to.lat)) return; const d = hav(x.from, x.to); if (d < 0.15) return;
+    (plans || []).forEach(ep => (ep && ep.items || []).forEach(x => { if (x.t !== "ride" || !x.from || !x.to || !KEngine.fin(x.from.lat) || !KEngine.fin(x.to.lat)) return; const d = hav(x.from, x.to); if (d < 0.15) return;
       if (x.mode === "walk" || d <= 3) pairs.push(["foot", x.from, x.to]); if (x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift" && d > 0.5) pairs.push(["car", x.from, x.to]); }));
     if (pairs.length && typeof askRouteTimes === "function") setTimeout(() => askRouteTimes(pairs), 0); };
   const routeSig = (a, b) => JSON.stringify(typeof routeTimeOf === "function" ? routeTimeOf(a, b) : null);
@@ -65,8 +65,8 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         const shapes = own.shapes.map(x => { const h = x.walk == null && by.get(x.id); return h && h.walk != null ? Object.assign({}, x, { walk: h.walk }) : x; });
         out = out || Object.assign({}, P2); out[key] = Object.assign({}, P, { islands: Object.assign({}, own, { shapes }) }); continue; }
       if (got) { out = out || Object.assign({}, P2); out[key] = Object.assign({ key }, P || {}, { islands: got }); continue; }
-      const d = (bucket.days || []).find(x => x && x.city === key && ((x.point && isFinite(+x.point.lat)) || (x.lodging && isFinite(+x.lodging.lat))));
-      const c = d && (d.point && isFinite(+d.point.lat) ? d.point : d.lodging); if (c) setTimeout(() => askIsles(key, c), 0); }
+      const d = (bucket.days || []).find(x => x && x.city === key && ((x.point && KEngine.fin(x.point.lat)) || (x.lodging && KEngine.fin(x.lodging.lat))));
+      const c = d && (d.point && KEngine.fin(d.point.lat) ? d.point : d.lodging); if (c) setTimeout(() => askIsles(key, c), 0); }
     return out || P2; }
   if (typeof window !== "undefined") { window.__kairouteIsles = () => ({ gen: islesGen, keys: Object.keys(islesMem), set: (k, v) => { islesMem[k] = v; islesGen++; nearGen++; } }); window.__kairoutePlacesWithIsles = b => placesWithIsles(b); }
   // The whole trip planned once per change (the traveler's trip, an answer arriving, the guides, the date).
@@ -83,7 +83,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       const have = new Set(allSites(city).map(x => String(x.id)));
       const app = (s, far) => Object.assign({ id: s.id, name: s.name, lat: s.lat, lng: s.lng, minutes: s.minutes || 30, category: s.category || "Sight", summary: s.blurb || "",
         mustSee: false, quick: false, unesco: !!s.unesco, fromPlaces: true }, far ? { far: true, town: s.town, townName: s.townName, travel: s.travelNote || "" } : {}, s.web ? { web: s.web } : {});
-      const addS = (bc.sites || []).filter(s => !have.has(String(s.id)) && isFinite(s.lat)), addF = (bc.farther || []).filter(s => !have.has(String(s.id)) && isFinite(s.lat));
+      const addS = (bc.sites || []).filter(s => !have.has(String(s.id)) && KEngine.fin(s.lat)), addF = (bc.farther || []).filter(s => !have.has(String(s.id)) && KEngine.fin(s.lat));
       if (addS.length) city.sites = (city.sites || []).concat(addS.map(s => app(s, false)));
       if (addF.length) city.farther = (city.farther || []).concat(addF.map(s => app(s, true))); });
   }
@@ -165,11 +165,11 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   // something to take along; none known, the card says to bring it from the ship or hotel (Richard, Nov 22, Pompeii:
   // "If there is no restaurants in this area, we need to suggest bringing a meal or grabbing something at the previous stop").
   function packedBuy(items, city) {
-    const pts = items.filter(it => (it.type === "stop" || it.type === "start") && it.place && isFinite(it.place.lat));
+    const pts = items.filter(it => (it.type === "stop" || it.type === "start") && it.place && KEngine.fin(it.place.lat));
     const visit = pts.length && pts[pts.length - 1].type === "stop" ? pts[pts.length - 1].place : null, prev = pts.length > 1 ? pts[pts.length - 2] : null;
     const out = { inVisit: visit ? visit.name || "" : "" };
     if (!prev || !prev.place) return out;
-    const P = prev.place, eat = ((city || {}).restaurants || []).filter(r => r && !r.generic && !r.crowdDrop && isFinite(+r.lat) && E.mealPlace(r) && hav(P, r) <= 0.6 && (!visit || hav(visit, r) > 0.6))
+    const P = prev.place, eat = ((city || {}).restaurants || []).filter(r => r && !r.generic && !r.crowdDrop && KEngine.fin(r.lat) && E.mealPlace(r) && hav(P, r) <= 0.6 && (!visit || hav(visit, r) > 0.6))
       .sort((a, b) => hav(P, a) - hav(P, b) || String(a.name).localeCompare(String(b.name)))[0];
     out.buyNear = prev.type === "start" ? (P.name || String(prev.label || "").replace(/^Leave\s+/i, "") || "your start") : P.name || ""; // the place, never the step's label ("Leave Hotel in Plaka")
     if (eat) out.buy = { name: eat.name, lat: +eat.lat, lng: +eat.lng };
@@ -195,8 +195,8 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
           leg.key = E.pairKey(x.pairFrom || x.from, x.pairTo || x.to); leg.choice = x.choice;
           // On the way back to the ship, train or plane, a way that would arrive after the time to be back is not offered
           // (stop-card review, Nov 22: slower ways to the ship were still offered beside the one planned).
-          const nx = ep.items[k + 1], leave = nx && nx.t === "end" && isFinite(nx.at) ? nx.at - (x.min || 0) : null;
-          const inTime = o => !(w.hard && leave != null && isFinite(ep.endBy) && o.id !== x.choice && leave + o.min > ep.endBy);
+          const nx = ep.items[k + 1], leave = nx && nx.t === "end" && KEngine.fin(nx.at) ? nx.at - (x.min || 0) : null;
+          const inTime = o => !(w.hard && leave != null && KEngine.fin(ep.endBy) && o.id !== x.choice && leave + o.min > ep.endBy);
           leg.choices = x.options.filter(inTime).map(o => Object.assign({ id: o.id, label: o.how, min: o.min, kind: UIKIND[o.kind] || "car" }, o.kind !== "walk" && o.source !== "timetable" ? { est: true } : {})); // est: no timetable confirms its time
         }
         items.push({ type: "travel", leg, time: (items.length ? items[items.length - 1].time + (items[items.length - 1].dur || 0) : ep.start) }); return;

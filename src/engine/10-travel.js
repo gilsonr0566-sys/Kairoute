@@ -101,7 +101,7 @@
   // the start of a day keeps the full gap too: the cautious side.
   E.toFixedEnd = b => !!(b && (b.backToShip || b.deadline || b.fixed));
   E.expectWait = (o, toDeadline) => {
-    if (!o || !o.noTimetable || toDeadline || (Array.isArray(o.deps) && o.deps.length) || !(+o.every > 0) || !E.fin(+o.wait)) return o;
+    if (!o || !o.noTimetable || toDeadline || (Array.isArray(o.deps) && o.deps.length) || !(+o.every > 0) || !E.fin(o.wait)) return o;
     const w = Math.round(Math.min(+o.every, 60) / 2) + (o.mode === "ferry" ? 10 : 3);
     return w < +o.wait ? Object.assign({}, o, { wait: w, min: o.min - (+o.wait - w), waitMax: +o.wait, minMax: o.min }) : o; };
   E.UNKNOWN_RIDE = 45; // minutes for a ride to or from a place not on the map: a guess, said as one

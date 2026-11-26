@@ -24,7 +24,7 @@ function zoneFmt(tz) { let f = zoneFmts.get(tz); if (f === undefined) { try { f 
 function zoneOk(tz) { return !!zoneFmt(tz); }
 function dayCoords(d) {
   const c = typeof cityFor === "function" ? cityFor(d) : null; if (!c) return null;
-  const st = c.starts || {}, p = isFinite(c.lat) ? c : [].concat(...Object.values(st)).find(x => x && isFinite(x.lat)) || (c.sites || []).find(x => isFinite(x.lat));
+  const st = c.starts || {}, p = KEngine.fin(c.lat) ? c : [].concat(...Object.values(st)).find(x => x && KEngine.fin(x.lat)) || (c.sites || []).find(x => KEngine.fin(x.lat));
   return { lat: p ? +p.lat : NaN, lng: p ? +p.lng : NaN, country: c.country || "", city: c };
 }
 // { tz, known }: known is true once the zone is certain (saved, or a single-zone country); false while estimated.
@@ -35,7 +35,7 @@ function dayZone(d) {
   if (country === "spain" && c && c.lng < -12) return { tz: "Atlantic/Canary", known: true };
   if (country === "portugal") return { tz: c && c.lng < -20 ? "Atlantic/Azores" : c && c.lng < -12 ? "Atlantic/Madeira" : "Europe/Lisbon", known: true };
   if (ONE_ZONE[country] && zoneOk(ONE_ZONE[country])) return { tz: ONE_ZONE[country], known: true };
-  if (c && isFinite(c.lat)) { zoneLookup(d, c); const h = Math.round(c.lng / 15); return { tz: h === 0 ? "Etc/GMT" : `Etc/GMT${h > 0 ? "-" : "+"}${Math.abs(h)}`, known: false }; }
+  if (c && KEngine.fin(c.lat)) { zoneLookup(d, c); const h = Math.round(c.lng / 15); return { tz: h === 0 ? "Etc/GMT" : `Etc/GMT${h > 0 ? "-" : "+"}${Math.abs(h)}`, known: false }; }
   return { tz: deviceZone(), known: false };
 }
 // One lookup per place while online (Open-Meteo answers the zone for any coordinates); saved on the day.
@@ -45,7 +45,7 @@ function zoneLookup(d, c) {
   return zoneAsked[k] = fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat.toFixed(3)}&longitude=${c.lng.toFixed(3)}&timezone=auto&forecast_days=1&daily=sunrise`)
     .then(r => r.ok ? r.json() : null).then(j => {
       if (!j || !j.timezone || !zoneOk(j.timezone)) { zoneAsked[k] = 0; return false; }
-      let changed = false; for (const x of trip.days) { const cx = dayCoords(x); if (cx && isFinite(cx.lat) && !x.tz && cx.lat.toFixed(2) + "," + cx.lng.toFixed(2) === k) { x.tz = j.timezone; changed = true; } }
+      let changed = false; for (const x of trip.days) { const cx = dayCoords(x); if (cx && KEngine.fin(cx.lat) && !x.tz && cx.lat.toFixed(2) + "," + cx.lng.toFixed(2) === k) { x.tz = j.timezone; changed = true; } }
       if (changed) { save(); render(); }
       return true;
     }).catch(() => { zoneAsked[k] = 0; return false; });
@@ -54,7 +54,7 @@ function zoneLookup(d, c) {
 // saved on the day, so it's there with no signal). Resolves to dayZone(d) either way.
 function ensureDayZone(d) {
   const z = dayZone(d); if (z.known || !d) return Promise.resolve(z);
-  const c = dayCoords(d); if (!c || !isFinite(c.lat)) return Promise.resolve(z);
+  const c = dayCoords(d); if (!c || !KEngine.fin(c.lat)) return Promise.resolve(z);
   return Promise.resolve(zoneLookup(d, c)).then(() => dayZone(d));
 }
 function deviceZone() { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"; } catch (e) { return "UTC"; } }

@@ -1,6 +1,6 @@
 // Beta 2 engine tests: each piece on its own (made-up days) and against the old engine (saved test trips).
 // Pure Node, no browser, no internet, no AI. Usage: node tools/beta2/engine-test.cjs
-const E = require('./engine.cjs'), fs = require('fs'), path = require('path');
+const E = require('./engine.cjs'), fs = require('fs'), path = require('path'); globalThis.KEngine = globalThis.KEngine || E; // the app's own code, run here on its own, reads numbers through KEngine.fin as in the app
 let fails = 0, oks = 0; const ok = (c, msg) => { if (c) oks++; else { fails++; console.log('FAIL ' + msg); if (process.env.FAIL_FAST) process.exit(1); } };
 const dir = path.join(__dirname, 'snapshots');
 const tr = E.makeTravel({ walk: 'medium' }, {});

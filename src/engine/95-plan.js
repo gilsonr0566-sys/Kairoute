@@ -758,7 +758,7 @@
     const keys = Object.keys(modes); if (!keys.length) return modes;
     const pts = []; const seen = new Set(), dig = (x, depth) => { if (!x || typeof x !== "object" || depth > 12 || seen.has(x)) return; seen.add(x);
       if (Array.isArray(x)) { for (const y of x) dig(y, depth + 1); return; }
-      if (x.lat != null && x.lng != null && E.fin(+x.lat) && E.fin(+x.lng)) pts.push({ lat: +x.lat, lng: +x.lng });
+      if (x.lat != null && x.lng != null && E.fin(x.lat) && E.fin(x.lng)) pts.push({ lat: +x.lat, lng: +x.lng });
       for (const k in x) if (typeof x[k] === "object") dig(x[k], depth + 1); };
     // (the trip-wide lists of road times, piers and ferry links name every city's spots: a ride from one of them starts at a
     // place of the group's own, so only the group's own facts are read)

@@ -34,7 +34,7 @@ async function grpCall(body, query) {
 // phone plans with the same rides as the owner's, so the same sights fit in the same order from the first minute (outside
 // test, Nov 22: a member's order differed until their own phone had asked for the rides).
 function grpRides() {
-  const pts = []; trip.days.forEach(d => { const c = cityFor(d), s = c && (c.sites || []).find(x => isFinite(x.lat)); if (s) pts.push(s); });
+  const pts = []; trip.days.forEach(d => { const c = cityFor(d), s = c && (c.sites || []).find(x => KEngine.fin(x.lat)); if (s) pts.push(s); });
   const out = {}; if (typeof transitMem !== "object" || !pts.length) return out;
   for (const k in transitMem) { const n = k.split("|")[0].split(",").map(Number), m = transitMem[k]; if (n.length < 4 || !m || !(m.opts || []).length || m.partial) continue;
     if (!pts.some(p => hav(p, { lat: n[0], lng: n[1] }) <= 80)) continue;

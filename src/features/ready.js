@@ -146,7 +146,7 @@ function lockTimes(d, city, w) {
 function lockSeqOut(seq) {
   return seq.map(x => {
     if (x.mealOf) { const n = Object.assign({}, x); delete n.mealOf; delete n.alts; return { meal: x.mealOf.label, q: x.mealOf.quick ? 1 : 0, bk: x.mealOf.booked ? 1 : 0, node: n }; }
-    return Object.assign({ id: x.id, n: x.name, la: isFinite(x.lat) ? +(+x.lat).toFixed(5) : undefined, lo: isFinite(x.lng) ? +(+x.lng).toFixed(5) : undefined, min: x.minutes || 0, sf: x.shortFrom || 0, b: x.bonus ? 1 : 0, a: x.along ? 1 : 0 }, x.foldOf ? { inc: x.foldOf.map(y => y.id), incn: x.foldOf.map(y => y.name), incp: x.foldOf.map(y => isFinite(y.lat) ? [+(+y.lat).toFixed(5), +(+y.lng).toFixed(5)] : null) } : {});
+    return Object.assign({ id: x.id, n: x.name, la: KEngine.fin(x.lat) ? +(+x.lat).toFixed(5) : undefined, lo: KEngine.fin(x.lng) ? +(+x.lng).toFixed(5) : undefined, min: x.minutes || 0, sf: x.shortFrom || 0, b: x.bonus ? 1 : 0, a: x.along ? 1 : 0 }, x.foldOf ? { inc: x.foldOf.map(y => y.id), incn: x.foldOf.map(y => y.name), incp: x.foldOf.map(y => KEngine.fin(y.lat) ? [+(+y.lat).toFixed(5), +(+y.lng).toFixed(5)] : null) } : {});
   });
 }
 // What changed in the day's times, in a few plain words.

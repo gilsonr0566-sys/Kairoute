@@ -41,7 +41,7 @@ function mealPrefsFor(d) {
   return Object.keys(out).length ? out : null;
 }
 function engineBucket(withOld) {
-  const n = v => (isFinite(+v) ? +v : null);
+  const n = v => (KEngine.fin(v) ? +v : null);
   const pt = p => p ? { id: p.id || null, name: p.name || "", lat: n(p.lat), lng: n(p.lng), unknown: !!p.unknown || (typeof unsurePoint === "function" && unsurePoint(p)), notGate: !!p.notGate, ask: Array.isArray(p.ask) && p.ask.length > 1 ? p.ask.map(String) : null } : null;
   const ints = (() => { try { return interestWords(); } catch (e) { console.warn("engineBucket: interests", e); return []; } })();
   const cityOut = {}, dayOut = [], waterHomes = {};
@@ -76,7 +76,7 @@ function engineBucket(withOld) {
       if (!cm.sites) { cm.sites = (city.sites || []).map(s => siteFacts(city, s)); cm.farther = (city.farther || []).map(s => Object.assign(siteFacts(city, s), { far: true })); }
       cityOut[ck] = { key: ck, name: city.city, srcGuide: !!city.srcGuide,
         sites: cm.sites, farther: cm.farther,
-        restaurants: (city.restaurants || []).filter(r => isFinite(+r.lat)).map(r => ({ id: keyOf(r.name), name: r.name, lat: +r.lat, lng: +r.lng, kind: r.kind || "", cuisine: r.cuisine || "",
+        restaurants: (city.restaurants || []).filter(r => KEngine.fin(r.lat)).map(r => ({ id: keyOf(r.name), name: r.name, lat: +r.lat, lng: +r.lng, kind: r.kind || "", cuisine: r.cuisine || "",
           recommended: !!r.recommended, bothGuides: !!r.bothGuides, top: !!r.top, crowdTop: !!r.crowdTop, good: gGood(r.g || gOf(r)), drop: !!r.crowdDrop || gBad(r.g || gOf(r)) })) };
     }
     const L = city ? lodgingFor(d, city) : null; let P = null; try { P = city ? dayPoint(d, city) : null; } catch (e) { P = null; }
@@ -139,9 +139,9 @@ function engineBucket(withOld) {
     // What's still missing from the bucket for this day. Planning a day waits until its bucket is complete (or says
     // plainly what it planned without), so a plan is never made from half the pieces and then changed as the rest arrive.
     facts.missing = [!city && !noShore(d) ? "guide" : "", city && !noShore(d) && !L && d.type !== "port" ? "hotel" : "", city && !noShore(d) && !P && d.type !== "land" ? "arrival or departure point" : "",
-      d.type === "port" && !(isFinite(facts.portArrive) && isFinite(facts.allAboard)) ? "ship times" : "", d.type === "embark" && !isFinite(facts.allAboard) ? "all-aboard time" : ""].filter(Boolean);
+      d.type === "port" && !(KEngine.fin(facts.portArrive) && KEngine.fin(facts.allAboard)) ? "ship times" : "", d.type === "embark" && !KEngine.fin(facts.allAboard) ? "all-aboard time" : ""].filter(Boolean);
     dayOut.push(facts);
-    if (city && !noShore(d)) { const h = waterHomes[ck] || (waterHomes[ck] = { city, pts: [] }); [P, L, A].forEach(x => { if (x && isFinite(+x.lat) && !h.pts.some(y => hav(x, y) < 0.2)) h.pts.push(x); }); }
+    if (city && !noShore(d)) { const h = waterHomes[ck] || (waterHomes[ck] = { city, pts: [] }); [P, L, A].forEach(x => { if (x && KEngine.fin(x.lat) && !h.pts.some(y => hav(x, y) < 0.2)) h.pts.push(x); }); }
   });
   // Which stops are across the water and how far each is from a road: asked of the map once per place, in the background.
   if (typeof waterCheck === "function") Object.values(waterHomes).forEach(h => { try { waterCheck(h.city, h.pts); } catch (e) { console.warn("water check", e); } });

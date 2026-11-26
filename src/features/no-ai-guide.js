@@ -34,7 +34,7 @@ async function guideNoAI(d, quiet) {
 }
 async function sourceGuide(d) {
   const label = d.destination, src = await sourcesFor(label);
-  if (!src || !Array.isArray(src.stops) || !src.center || !isFinite(src.center.lat)) return null;
+  if (!src || !Array.isArray(src.stops) || !src.center || !KEngine.fin(src.center.lat)) return null;
   const area = bareName(src.area || label) || bareName(label), port = bareName(label);
   const title = keyOf(area) && keyOf(port) && !keyOf(port).includes(keyOf(area)) && !keyOf(area).includes(keyOf(port)) ? area + " (from " + port + ")" : area;
   const tmp = { city: title, country: "", sites: [], farther: [], starts: {}, restaurants: [] };
@@ -73,14 +73,14 @@ async function srcStarts(label, area, port, centre, d) {
   const ask = { airport: [A + " airport", A + " international airport"], station: [A + " railway station", A + " central station"], cruise: ["Port of " + Pn, Pn + " cruise terminal", "Cruise pier"] };
   const names = [...ask.airport, ...ask.station, ...ask.cruise];
   let res = null;
-  try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: names.slice(0, 8), center: centre && isFinite(centre.lat) ? { lat: centre.lat, lng: centre.lng } : undefined }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) res = j.results; } } catch (e) {}
+  try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: label, names: names.slice(0, 8), center: centre && KEngine.fin(centre.lat) ? { lat: centre.lat, lng: centre.lng } : undefined }) }); if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) res = j.results; } } catch (e) {}
   // R: the answers, one per name in N; C: where the search was centred (the city, or the port itself on a second look).
   const found = (k, R = res, N = names, C = centre) => {
     // A port named apart from its city can be a long way out (a port 180 km from the capital it serves).
     const K = SG_KIND[k], lim = k === "cruise" && gate ? 300 : K.km, cands = [];
     N.forEach((n, i) => { if (!ask[k].includes(n)) return; const x = (R && R[i]) || {};
       (x.wiki || []).forEach(w => { if (w.lat != null && K.re.test(w.title || "")) cands.push({ name: w.title, lat: +w.lat, lng: +w.lng, any: n === "Cruise pier", wiki: true, about: String(w.extract || "") }); });
-      (x.map || []).forEach(m => { if (isFinite(m.lat) && (K.re.test(m.name || "") || K.map.test(m.kind || ""))) cands.push({ name: m.name || n, lat: +m.lat, lng: +m.lng, kind: m.kind || "", any: n === "Cruise pier", fit: (K.map.test(m.kind || "") ? 2 : 0) + (k === "cruise" && /cruise|terminal|wharf|pier/i.test(m.name || "") ? 2 : 0) }); }); });
+      (x.map || []).forEach(m => { if (KEngine.fin(m.lat) && (K.re.test(m.name || "") || K.map.test(m.kind || ""))) cands.push({ name: m.name || n, lat: +m.lat, lng: +m.lng, kind: m.kind || "", any: n === "Cruise pier", fit: (K.map.test(m.kind || "") ? 2 : 0) + (k === "cruise" && /cruise|terminal|wharf|pier/i.test(m.name || "") ? 2 : 0) }); }); });
     // The plain "Cruise pier" search (asked last) only counts a place that names itself a cruise pier: a private island
     // or small port whose pier has no "Port of ..." name (Nov 18: CocoCay's pier is mapped as "Royal Caribbean Cruise
     // Pier"), never a nearby fishing or ferry pier.
@@ -125,7 +125,7 @@ async function srcStarts(label, area, port, centre, d) {
   // from its own encyclopedia article (Round 2 re-check: a port 120 km from the city it serves was searched for only
   // around the city, and nothing was found).
   if (gate && freeAI && starts.cruise.length === 1 && starts.cruise[0].unknown && Array.isArray(res)) {
-    const at = res.flatMap(x => (x && x.wiki) || []).find(w => w && w.lat != null && isFinite(w.lat) && isFinite(w.lng) && nameMatch(Pn, w.title || ""));
+    const at = res.flatMap(x => (x && x.wiki) || []).find(w => w && w.lat != null && KEngine.fin(w.lat) && KEngine.fin(w.lng) && nameMatch(Pn, w.title || ""));
     if (at) try { const r = await fetch(freeAI.url + "/ground", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ city: Pn, names: ask.cruise, center: { lat: +at.lat, lng: +at.lng } }) });
       if (r.ok) { const j = await r.json(); if (Array.isArray(j.results)) { const p = found("cruise", j.results, ask.cruise, { lat: +at.lat, lng: +at.lng });
         if (p) starts.cruise = (Array.isArray(p) ? p : [p]).map(x => ({ name: x.name, lat: x.lat, lng: x.lng, note: "" })); } } } catch (e) {}
@@ -141,7 +141,7 @@ async function findHotelNoAI(name, d) {
   try {
     const r = await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(bareName(d.destination)) + "&q=" + encodeURIComponent(name)); if (!r.ok) return null;
     const j = await r.json(), list = (j && j.places) || [];
-    const hit = list.find(p => isFinite(p.lat) && (nameMatch(name, p.name) || (p.names || []).some(n => nameMatch(name, n)))) || list.find(p => isFinite(p.lat) && /hotel|guest|hostel|apartment|motel|tourism/.test((p.kind || "") + " " + (p.cat || "")));
+    const hit = list.find(p => KEngine.fin(p.lat) && (nameMatch(name, p.name) || (p.names || []).some(n => nameMatch(name, n)))) || list.find(p => KEngine.fin(p.lat) && /hotel|guest|hostel|apartment|motel|tourism/.test((p.kind || "") + " " + (p.cat || "")));
     return hit ? { name: hit.name || name, lat: +hit.lat, lng: +hit.lng, addr: hit.addr || "" } : null;
   } catch (e) { return null; }
 }
@@ -159,7 +159,7 @@ async function farNoAI(city, src, quiet) {
   if ((city.farther || []).some(x => !x.noAI)) return;
   const centre = srcCentre(city, src); if (!centre) return;
   const all = allSites(city), have = y => all.some(s => sameSight(y, s) || (s.merged || []).some(m => sameSight(y, m)));
-  const cands = src.next.filter(y => y && y.name && isFinite(y.lat) && y.km >= 8 && y.km <= 120 && !have(y) && keyOf(y.name) !== keyOf(city.city)).slice(0, 8);
+  const cands = src.next.filter(y => y && y.name && KEngine.fin(y.lat) && y.km >= 8 && y.km <= 120 && !have(y) && keyOf(y.name) !== keyOf(city.city)).slice(0, 8);
   if (!cands.length) { city.farNoAIV = FARNOAI_V; return; }
   farNoAIBusy[k] = true;
   try {
@@ -168,7 +168,7 @@ async function farNoAI(city, src, quiet) {
     let added = 0; city.farther = city.farther || [];
     cands.forEach((y, i) => {
       if (added >= 4) return;
-      const opts = ((res[i] && res[i].opts) || []).filter(o => o && isFinite(o.min) && o.min > 0 && o.min <= 120 && (!o.every || o.every <= 120) && o.kind);
+      const opts = ((res[i] && res[i].opts) || []).filter(o => o && KEngine.fin(o.min) && o.min > 0 && o.min <= 120 && (!o.every || o.every <= 120) && o.kind);
       if (!opts.length) return;
       const o = opts.sort((a, b) => a.min - b.min)[0], mins = Math.round(o.min / 5) * 5 || o.min;
       const travel = `${o.kind} from ${o.from || city.city}, about ${mins} min one way`;

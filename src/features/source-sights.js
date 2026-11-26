@@ -136,9 +136,9 @@ const SRC_FAME_LEN = { Landmark: [[40, 20]], Museum: [[120, 180], [80, 150], [50
 const srcMinutes = (cat, base, sl) => { const b = (SRC_FAME_LEN[cat] || []).find(([at]) => (sl || 0) >= at); return b ? Math.max(base, b[1]) : base; };
 // The guide's own centre: the middle of its written sights (a gateway port's guide is about the city it serves).
 function srcCentre(city, src) {
-  const pts = (city.sites || []).filter(x => !x.srcOnly && !x.quick && isFinite(x.lat));
+  const pts = (city.sites || []).filter(x => !x.srcOnly && !x.quick && KEngine.fin(x.lat));
   if (pts.length >= 3) { const la = pts.map(x => x.lat).sort((a, b) => a - b), ln = pts.map(x => x.lng).sort((a, b) => a - b); return { lat: la[pts.length >> 1], lng: ln[pts.length >> 1] }; }
-  return src && src.center && isFinite(src.center.lat) ? src.center : pts[0] || null;
+  return src && src.center && KEngine.fin(src.center.lat) ? src.center : pts[0] || null;
 }
 // One or two plain sentences from the travel guide that lists the place (English first, then the local one).
 function srcSummary(x, cat, area) {
@@ -177,7 +177,7 @@ const srcBare = (x, area) => { const a = keyOf(area); if (!a) return x; const n 
 // A place inside a bigger stop's grounds (the Erechtheion on the Acropolis, a fountain on its square) is one of that
 // stop's parts, never a stop of its own: the same reach the big-stop parts use (see partCands).
 function srcReach(s) {
-  if (!s || !isFinite(s.lat) || s.far || s.quick) return 0;
+  if (!s || !KEngine.fin(s.lat) || s.far || s.quick) return 0;
   const t = (s.category || "") + " " + s.name;
   return /castle|palace|citadel|fortress|kremlin|acropolis|archaeolog|ancient|forum|agora|monaster|abbey|park|garden|campus|cemetery|island|hill|complex/i.test(t) ? 0.45 : /square|plaza|piazza|platz|market/i.test(t) ? 0.2 : /old town|historic|quarter|district|village/i.test(t) ? 0.35 : AREA_CAT.test(t) ? 0.2 : 0;
 }
@@ -189,7 +189,7 @@ const srcPartOf = (x, s, src) => {
   if (srcFamed(x)) return false;
   // Nor is a museum travelers list on its own and many languages write about (the museum below a citadel, not in it).
   if ((x.sl || 0) >= 30 && (x.src || []).some(t => /Wikivoyage/.test(t)) && srcKind(x.name, x.local)[1] === "Museum") return false;
-  const r = srcReach(s); if (!r || x.lat == null || !isFinite(s.lat) || hav(x, s) > r || (x.sl || 0) >= srcFame(s, src)) return false;
+  const r = srcReach(s); if (!r || x.lat == null || !KEngine.fin(s.lat) || hav(x, s) > r || (x.sl || 0) >= srcFame(s, src)) return false;
   // A museum, church or palace across from a park or on a square is its own visit; inside a castle's or an
   // ancient site's grounds it is part of that visit.
   return !/^(Museum|Church|Mosque|Synagogue|Temple|Shrine|Palace|Castle or fort|Catacombs)$/.test(srcKind(x.name, x.local)[1]) || SRC_GROUNDS.test((s.category || "") + " " + s.name);
@@ -240,7 +240,7 @@ function srcShowName(n, area) {
 }
 if (typeof window !== "undefined") window.__kairouteShowName = (n, a) => srcShowName(n, a);
 function srcWholeOf(s, src, all, depth) {
-  const stops = (src && src.stops) || [], x = s.wd && stops.find(y => y.wd === s.wd); if (!x || !isFinite(s.lat)) return null;
+  const stops = (src && src.stops) || [], x = s.wd && stops.find(y => y.wd === s.wd); if (!x || !KEngine.fin(s.lat)) return null;
   for (const id of Array.isArray(x.partOf) ? x.partOf : []) {
     const W = stops.find(y => y.wd === id); if (!W || W.lat == null || hav(W, s) > 1 || !srcKnown(W) || srcNotPlace(W)) continue;
     // A tower beside a church or palace (St Mark's Campanile, Big Ben) is climbed or seen on its own.
@@ -253,7 +253,7 @@ function srcWholeOf(s, src, all, depth) {
   // whose own whole isn't on the list, standing within 300 m of a museum that is: seen inside that museum (R-16, Paris
   // live check Nov 24: the Venus de Milo was offered as a stop of its own next to the Louvre).
   if (srcHas2(x, /^creative-work$/) && !srcHas2(x, /^(building|structure|monument|fountain|bridge|tower|park|garden|square|archaeological|church|chapel)$/)) {
-    const m = all.filter(o => o !== s && isFinite(o.lat) && hav(o, s) <= 0.3 && (o.wd ? srcIsMuseum(stops.find(y => y.wd === o.wd) || o) : srcIsMuseum(o))).sort((a, b) => hav(a, s) - hav(b, s))[0];
+    const m = all.filter(o => o !== s && KEngine.fin(o.lat) && hav(o, s) <= 0.3 && (o.wd ? srcIsMuseum(stops.find(y => y.wd === o.wd) || o) : srcIsMuseum(o))).sort((a, b) => hav(a, s) - hav(b, s))[0];
     if (m) return m; }
   // Named inside a museum's own description, within a kilometre: that museum, when it is on the list.
   for (const W of stops) {
@@ -262,7 +262,7 @@ function srcWholeOf(s, src, all, depth) {
   }
   // A guide's own museum with such a description (its built-in card's summary).
   for (const o of all) {
-    if (o === s || o.wd === x.wd || !isFinite(o.lat) || hav(o, s) > 1 || !srcIsMuseum(o) || !srcNamedInside(x, o)) continue;
+    if (o === s || o.wd === x.wd || !KEngine.fin(o.lat) || hav(o, s) > 1 || !srcIsMuseum(o) || !srcNamedInside(x, o)) continue;
     return o;
   }
   return null;
@@ -284,8 +284,8 @@ function sourceSights(city, src) {
   for (const s of allSites(city)) if (s.srcOnly && !s.enN) { const en = enSight({ name: s.name, local: s.local, sl: s.fame }, s.category); if (en) Object.assign(s, en); s.enN = 1; }
   // A sight a saved guide got from the sources takes the sources' checked point now (the helper cross-checks the travel
   // guide, the encyclopedia and the map: Nov 22, a synagogue had been 2 km out of the old town it stands in).
-  for (const s of allSites(city)) if (s.srcOnly && s.wd) { const x = src.stops.find(y => y.wd === s.wd); if (!x || x.lat == null || !isFinite(x.lat)) continue;
-    if (!isFinite(s.lat) || hav(s, x) > 0.05) { s.lat = x.lat; s.lng = x.lng; } if (x.posDoubt) s.posDoubt = true; else delete s.posDoubt;
+  for (const s of allSites(city)) if (s.srcOnly && s.wd) { const x = src.stops.find(y => y.wd === s.wd); if (!x || x.lat == null || !KEngine.fin(x.lat)) continue;
+    if (!KEngine.fin(s.lat) || hav(s, x) > 0.05) { s.lat = x.lat; s.lng = x.lng; } if (x.posDoubt) s.posDoubt = true; else delete s.posDoubt;
     // Its kind and visit length from the facts, where the saved one is still the old name-word guess (never a length
     // the traveler or a big stop's parts changed).
     if (srcKnown(x) && !s.parts && s.baseMin == null) { const [, oc, om] = srcKind(s.srcName || s.name, s.local), [, cat, m0] = srcKindOf(x), m = srcMinutes(cat, m0, x.sl);
@@ -312,7 +312,7 @@ function sourceSights(city, src) {
   { const mine = new Set(((typeof trip !== "undefined" && trip && trip.days) || []).flatMap(d => (d.mine || []).map(String)));
     const twin = s => { const m = /^wv~(Q\d+)$/.exec(String(s.id)); if (!m || !s.fromGuide || mine.has(String(s.id))) return false;
       const x = src.stops.find(y => y.wd === m[1]), en = keyOf((x && x.name) || "");
-      return allSites(city).some(t => t !== s && !/^wv~/.test(String(t.id)) && (!isFinite(t.lat) || !isFinite(s.lat) || hav(t, s) <= 2) &&
+      return allSites(city).some(t => t !== s && !/^wv~/.test(String(t.id)) && (!KEngine.fin(t.lat) || !KEngine.fin(s.lat) || hav(t, s) <= 2) &&
         (t.wd === m[1] || (en && en.split(" ").length >= 2 && (keyOf(t.name) === en || keyOf(t.srcName || "") === en)))); };
     for (const k of ["sites", "farther"]) if (Array.isArray(city[k])) city[k] = city[k].filter(s => !twin(s)); }
   // Day trips (rule R-15 and R-16, Nov 24, Kusadasi): one the facts show is no place to go (an inscription kept in a
@@ -323,7 +323,7 @@ function sourceSights(city, src) {
     if (Array.isArray(city.farther)) {
       city.farther = city.farther.filter(s => { if (mine.has(String(s.id)) || s.town) return true; const x = facts(s); return !(x && farNotPlace(x)); });
       const rank = s => (mine.has(String(s.id)) ? 1e6 : 0) + (s.mustSee ? 1e4 : 0) + (s.unesco ? 1e3 : 0) + (s.fame || 0) + (/town|village|city/i.test(s.category || "") ? -50 : 0);
-      const outing = [...city.farther].filter(s => !s.town && isFinite(s.lat) && isFinite(s.lng)).sort((a, b) => rank(b) - rank(a)), gone = new Set();
+      const outing = [...city.farther].filter(s => !s.town && KEngine.fin(s.lat) && KEngine.fin(s.lng)).sort((a, b) => rank(b) - rank(a)), gone = new Set();
       outing.forEach((s, i) => { if (gone.has(s)) return; for (const t of outing.slice(i + 1)) if (!gone.has(t) && !mine.has(String(t.id)) && hav(s, t) <= 3) { gone.add(t); s.alsoNames = (s.alsoNames || []).concat(t.name); } });
       if (gone.size) city.farther = city.farther.filter(s => !gone.has(s)); } }
   // A sight a saved guide got from the sources that the facts now show is no place to visit (an organisation, an event, a
@@ -421,9 +421,9 @@ const twinSaint = n => ((/\b(?:st\.?|saint|san|santa|sant'?|santo|são|sankt)\s+
 // The famous place a look-alike name could be mistaken for: a "St Paul Outside the Walls" next to the city's best
 // known basilica, or two churches of the same saint.
 function twinOf(s, city) {
-  const w = (TWIN_WORD.exec(s.name) || [])[1]; if (!w || !isFinite(s.lat)) return null;
+  const w = (TWIN_WORD.exec(s.name) || [])[1]; if (!w || !KEngine.fin(s.lat)) return null;
   const lw = w.toLowerCase(), rel = TWIN_REL.test(s.name), sn = twinSaint(s.name);
-  const c = allSites(city).filter(x => x !== s && isFinite(x.lat) && hav(x, s) > 0.3 && x.name.toLowerCase().includes(lw) && ((rel && !TWIN_REL.test(x.name) && (x.mustSee || (x.fame || 0) >= 60)) || (sn && twinSaint(x.name) === sn)));
+  const c = allSites(city).filter(x => x !== s && KEngine.fin(x.lat) && hav(x, s) > 0.3 && x.name.toLowerCase().includes(lw) && ((rel && !TWIN_REL.test(x.name) && (x.mustSee || (x.fame || 0) >= 60)) || (sn && twinSaint(x.name) === sn)));
   return c.sort((a, b) => (b.mustSee ? 1 : 0) - (a.mustSee ? 1 : 0) || (b.fame || 0) - (a.fame || 0))[0] || null;
 }
 function twinNote(s, city) {

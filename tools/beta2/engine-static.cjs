@@ -35,4 +35,13 @@ for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.js'))) {
     if (re.test(code)) { bad++; console.log(`FAIL ${f}: names a place in its code (${n}); engine rules must be general`); }
     else if (re.test(notes)) { bad++; console.log(`FAIL ${f}: names a place in a comment (${n}); write the example generically`); } }
 }
+// The same number rule in the app's own code (src/main.js, src/features, src/end.js): the global isFinite reads a saved
+// value of null as 0 (a pier saved with no latitude passed as a place on the map; testing thread, Nov 26), and so does a
+// "+" put before the value given to fin, since +null is 0 (E59 class follow-up).
+const FIN_PLUS = /\bfin\(\s*\+(?!\+)/, appFiles = ['main.js', 'end.js'].map(f => path.join(dir, '..', f)).concat(fs.readdirSync(path.join(dir, '..', 'features')).filter(f => f.endsWith('.js')).map(f => path.join(dir, '..', 'features', f)));
+for (const f of appFiles.concat(fs.readdirSync(dir).filter(f => f.endsWith('.js')).map(f => path.join(dir, f)))) { const { code } = split(fs.readFileSync(f, 'utf8')), rel = path.relative(path.join(dir, '..', '..'), f);
+  if (!f.includes(path.sep + 'engine' + path.sep) && BANNED[0][0].test(code)) { bad++; console.log(`FAIL ${rel}: ${BANNED[0][1]} (KEngine.fin in the app)`); }
+  if (FIN_PLUS.test(code)) { bad++; console.log(`FAIL ${rel}: fin(+x) reads a missing value as 0 (+null is 0): give fin the value itself`); } }
+{ const hit = ['if (E.fin(+d.lat)) x();', 'KEngine.fin( +p.lng)'], fine = ['E.fin(d.lat)', 'E.fin(a) + 1', 'fin(++i)'];
+  if (!hit.every(c => FIN_PLUS.test(split(c).code)) || fine.some(c => FIN_PLUS.test(split(c).code))) { bad++; console.log('FAIL the checker misses fin(+x), or flags a safe form'); } }
 console.log(bad ? `${bad} problems` : 'Engine code check passed'); process.exit(bad ? 1 : 0);

@@ -20,7 +20,7 @@ function dayMeals(d, city) {
     const o = Object.assign({}, m);
     if (p.at && /^\d\d:\d\d$/.test(p.at)) { const t = toMin(p.at); o.from = t; o.to = t + 10; o.at = p.at; }
     const k = p.pick;
-    if (k && k.name && isFinite(k.lat) && isFinite(k.lng)) {
+    if (k && k.name && KEngine.fin(k.lat) && KEngine.fin(k.lng)) {
       // The guide's own entry when it still has it (its rating, hours and cuisine stay current), else the saved one.
       const live = city && (city.restaurants || []).find(r => !r.generic && keyOf(r.name) === keyOf(k.name) && hav(r, k) < 0.2);
       o.pick = Object.assign({}, live || { name: k.name, lat: k.lat, lng: k.lng, cuisine: k.cuisine || "", kind: k.kind || "local", price: k.price || "", why: "" }, { mine: true });
@@ -35,8 +35,8 @@ function mealChoices(d, plan, label) {
   const item = plan.items.find(x => (x.type === "meal" || x.type === "evening") && x.meal && x.meal.label === label && x.place);
   const cur = item ? item.place : null;
   // Near today's sights (named by the sight), or on a day without one, near where the day starts or ends.
-  const sights = plan.items.filter(x => x.type === "stop" && x.place && isFinite(x.place.lat)).map(x => x.place);
-  const stops = sights.length ? sights : plan.items.filter(x => (x.type === "start" || x.type === "end" || x.type === "fixed") && x.place && isFinite(x.place.lat)).map(x => x.place);
+  const sights = plan.items.filter(x => x.type === "stop" && x.place && KEngine.fin(x.place.lat)).map(x => x.place);
+  const stops = sights.length ? sights : plan.items.filter(x => (x.type === "start" || x.type === "end" || x.type === "fixed") && x.place && KEngine.fin(x.place.lat)).map(x => x.place);
   // Never a place another day of the trip already eats at, so no place is planned twice.
   const taken = new Set();
   trip.days.forEach(o => { if (o === d || cityFor(o) !== city) return; let p = null; try { p = buildPlan(o); } catch (e) {} if (!p || p.error) return;
@@ -44,9 +44,9 @@ function mealChoices(d, plan, label) {
   (plan.items || []).forEach(x => { if ((x.type === "meal" || x.type === "evening") && x.place && x !== item && !x.place.generic) taken.add(keyOf(x.place.name)); });
   const radius = item && item.type === "evening" ? 0.8 : 0.6;
   const near = r => { let b = Infinity, at = null; for (const s of stops) { const k = hav(s, r); if (k < b) { b = k; at = s; } } return { km: b, at }; };
-  const fromLunch = r => cur && !cur.generic && isFinite(cur.lat) ? hav(cur, r) : Infinity; // close to where the meal is now also counts
+  const fromLunch = r => cur && !cur.generic && KEngine.fin(cur.lat) ? hav(cur, r) : Infinity; // close to where the meal is now also counts
   const alts = new Set(((cur && cur.alts) || []).map(a => keyOf(a.name)));
-  const out = (city.restaurants || []).filter(r => !r.generic && !r.crowdDrop && isFinite(r.lat) && !(cur && keyOf(r.name) === keyOf(cur.name)) && !taken.has(keyOf(r.name)) && !mealShut(r, label, d.date))
+  const out = (city.restaurants || []).filter(r => !r.generic && !r.crowdDrop && KEngine.fin(r.lat) && !(cur && keyOf(r.name) === keyOf(cur.name)) && !taken.has(keyOf(r.name)) && !mealShut(r, label, d.date))
     .map(r => Object.assign({ r, alt: alts.has(keyOf(r.name)) }, near(r))).filter(x => x.at && Math.min(x.km, fromLunch(x.r)) <= radius);
   const good = x => (x.alt ? 10 : 0) + (x.r.crowdTop ? 3 : 0) + (x.r.top ? 2 : 0) + (x.r.recommended ? 2 : 0) + (gGood(gOf(x.r)) ? 2 : 0) - x.km * 6;
   return out.sort((a, b) => good(b) - good(a)).slice(0, 6);

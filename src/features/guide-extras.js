@@ -52,7 +52,7 @@ async function gxNearDirect(what, lat, lng) {
     try {
       const r = await fetch(ep, { method: "POST", body: "data=" + encodeURIComponent(q), headers: { "content-type": "application/x-www-form-urlencoded" }, signal: AbortSignal.timeout(15000) });
       if (!r.ok) continue; const d = await r.json(); if (d.remark && !(d.elements || []).length) continue;
-      const list = (d.elements || []).map(e => { const t = e.tags || {}, la = e.lat != null ? e.lat : e.center && e.center.lat, ln = e.lon != null ? e.lon : e.center && e.center.lon; if (!isFinite(la)) return null;
+      const list = (d.elements || []).map(e => { const t = e.tags || {}, la = e.lat != null ? e.lat : e.center && e.center.lat, ln = e.lon != null ? e.lon : e.center && e.center.lon; if (!KEngine.fin(la)) return null;
         return what === "view" ? { name: t["name:en"] || t.name || "", local: t.name && t["name:en"] && t.name !== t["name:en"] ? t.name : undefined, lat: +(+la).toFixed(5), lng: +(+ln).toFixed(5), wd: t.wikidata || undefined, desc: (t.description || "").slice(0, 160) || undefined }
           : { kind: t.amenity === "bank" ? "atm" : t.amenity, name: t["name:en"] || t.name || t.operator || t.brand || "", lat: +(+la).toFixed(5), lng: +(+ln).toFixed(5), fee: t.fee || undefined, hours: t.opening_hours || undefined, wheelchair: t.wheelchair || undefined, access: t.access || undefined }; }).filter(x => x && (what !== "view" || x.name));
       return what === "view" ? { spots: list.slice(0, 120), source: "OpenStreetMap" } : { places: list.slice(0, 120), source: "OpenStreetMap" };
@@ -60,9 +60,9 @@ async function gxNearDirect(what, lat, lng) {
   }
   return null;
 }
-const gxStopsOf = plan => plan.items.filter(i => i.type === "stop" && i.place && isFinite(i.place.lat));
+const gxStopsOf = plan => plan.items.filter(i => i.type === "stop" && i.place && KEngine.fin(i.place.lat));
 function gxCenter(city) {
-  const pts = (city.sites || []).filter(x => isFinite(x.lat)).slice(0, 12);
+  const pts = (city.sites || []).filter(x => KEngine.fin(x.lat)).slice(0, 12);
   return pts.length ? { lat: pts.reduce((a, x) => a + x.lat, 0) / pts.length, lng: pts.reduce((a, x) => a + x.lng, 0) / pts.length } : null;
 }
 const gxMapLink = p => `https://www.google.com/maps/search/?api=1&query=${p.lat.toFixed(5)},${p.lng.toFixed(5)}`;
@@ -112,7 +112,7 @@ function gxLight(d, city) {
 }
 // Where the plan has the traveler at a given time (the stop they're at, or the last one they left).
 function gxWhereAt(plan, t) {
-  let at = null; for (const it of plan.items) { if (it.time > t) break; if (it.place && isFinite(it.place.lat)) at = it; }
+  let at = null; for (const it of plan.items) { if (it.time > t) break; if (it.place && KEngine.fin(it.place.lat)) at = it; }
   return at;
 }
 function gxViewpoints(plan) {
@@ -184,7 +184,7 @@ function gxStopWarnings(s, city) {
 const GX_AMEN = [["toilets", /rest ?room|toilet|bathroom|\bwc\b|lavator|loo\b|washroom|pee\b/i, "Public restrooms"], ["drinking_water", /water|fountain|refill|thirst/i, "Drinking water"], ["pharmacy", /pharmac|chemist|drug ?store|medicine|plaster|band-?aid/i, "Pharmacies"], ["atm", /\batm\b|cash|money machine|bank|withdraw/i, "Cash machines"]];
 async function askExtra(site, city, q) {
   const want = GX_AMEN.filter(a => a[1].test(q)); if (!want.length || !freeAI) return "";
-  const here = (geoPos && geoState === "on" && geoPos.acc < 500) ? geoPos : site && isFinite(site.lat) ? site : (() => { try { const p = buildPlan(day()); const s = p && gxStopsOf(p)[0]; return s ? s.place : null; } catch (e) { return null; } })();
+  const here = (geoPos && geoState === "on" && geoPos.acc < 500) ? geoPos : site && KEngine.fin(site.lat) ? site : (() => { try { const p = buildPlan(day()); const s = p && gxStopsOf(p)[0]; return s ? s.place : null; } catch (e) { return null; } })();
   if (!here) return "";
   const key = "amen:" + gxR3(here.lat) + "," + gxR3(here.lng);
   let v = gxCache[key] && gxCache[key].v;
@@ -235,7 +235,7 @@ function gxThemeLink(s, city) {
 // Film and TV: real filming locations from Wikidata, near each stop.
 function gxFilm(p) { return gxGet("film:" + gxR3(p.lat) + "," + gxR3(p.lng), `/x/film?lat=${gxR3(p.lat)}&lng=${gxR3(p.lng)}`); }
 function gxFilmAt(s) {
-  if (!freeAI || !isFinite(s.lat)) return [];
+  if (!freeAI || !KEngine.fin(s.lat)) return [];
   const v = gxFilm(s); if (!v || !v.places) return [];
   return v.places.filter(f => hav(f, s) <= 0.25 || keyOf(f.name).includes(keyOf(s.name)) || keyOf(s.name).includes(keyOf(f.name))).flatMap(f => f.works).slice(0, 4);
 }

@@ -310,7 +310,7 @@ function youCompassStart(fromTap) {
     const ev = "ondeviceorientationabsolute" in window ? "deviceorientationabsolute" : "deviceorientation";
     youCompass = { ev, fn: e => {
       let h = null;
-      if (typeof e.webkitCompassHeading === "number" && isFinite(e.webkitCompassHeading)) h = e.webkitCompassHeading; // iPhone, iPad
+      if (typeof e.webkitCompassHeading === "number" && KEngine.fin(e.webkitCompassHeading)) h = e.webkitCompassHeading; // iPhone, iPad
       else if ((e.absolute || ev === "deviceorientationabsolute") && e.alpha != null) h = 360 - e.alpha; // Android
       if (h == null) return;
       const turn = (screen.orientation && screen.orientation.angle) || window.orientation || 0;

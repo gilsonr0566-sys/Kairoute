@@ -252,7 +252,7 @@ function scriptOwners(city) {
   const by = new Map(); for (const s of sites) { const sc = scriptFor(s, city); if (sc) { if (!by.has(sc)) by.set(sc, []); by.get(sc).push(s); } }
   const owner = new Map(), walk = new Map();
   for (const [sc, cands] of by) { const o = scriptOwner(sc, cands); if (!o) continue; owner.set(sc.id, o);
-    for (const s of sites) if (s !== o && isFinite(+s.lat) && isFinite(+o.lat) && hav(s, o) <= SCRIPT_WALK_KM && scriptPartFor(sc, s) >= 0) { if (!walk.has(s)) walk.set(s, []); walk.get(s).push(o.id); } }
+    for (const s of sites) if (s !== o && KEngine.fin(s.lat) && KEngine.fin(o.lat) && hav(s, o) <= SCRIPT_WALK_KM && scriptPartFor(sc, s) >= 0) { if (!walk.has(s)) walk.set(s, []); walk.get(s).push(o.id); } }
   const out = { sig, owner, walk }; scriptOwnMemo.set(city, out); return out;
 }
 // Puts the script on the stop as its parts (the same parts the voice tour and the day plan already show). The AI

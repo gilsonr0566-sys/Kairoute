@@ -61,7 +61,7 @@ function waterAcross(pts, homes, isl, homeIsl, onFoot, far) {
     const other = (mine && known.length) || (!mine && walk === false && far && far(i));
     if (!(walk === "ferry" || walk === "none" || (walk === false && other))) return;
     // The island's name; without the map's answer, stops close together share the first one's name (one island, one boat).
-    const near = !mine && named.find(x => typeof hav === "function" && isFinite(+p.lat) && hav(x.p, p) <= 2);
+    const near = !mine && named.find(x => typeof hav === "function" && KEngine.fin(p.lat) && hav(x.p, p) <= 2);
     out[p.id] = mine ? mine.name : near ? near.name : (p.name || "an island"); named.push({ p, name: out[p.id] }); });
   return out;
 }
@@ -88,14 +88,14 @@ async function waterRoadGaps(pts) {
     // Every point as a source and one destination: the answer's "sources" are each point snapped to its nearest road.
     const r = await waterFetch(`https://router.project-osrm.org/table/v1/driving/${coords}?destinations=0`, { signal: AbortSignal.timeout(20000) });
     const k = await r.json(); if (!k || k.code !== "Ok" || !Array.isArray(k.sources)) return null;
-    return k.sources.map(w => isFinite(w && w.distance) ? Math.round(w.distance) : null);
+    return k.sources.map(w => KEngine.fin(w && w.distance) ? Math.round(w.distance) : null);
   } catch (e) { return null; }
 }
 // Ask once per place (and again only when its stops change); the answers become the sights' own fields.
 function waterCheck(city, homes) {
   if (!city || typeof fetch !== "function" || (typeof navigator !== "undefined" && navigator.onLine === false)) return;
-  const stops = allSites(city).filter(s => isFinite(+s.lat) && isFinite(+s.lng)).slice(0, 80);
-  const starts = (homes || []).filter(p => p && isFinite(+p.lat) && isFinite(+p.lng)).slice(0, 6);
+  const stops = allSites(city).filter(s => KEngine.fin(s.lat) && KEngine.fin(s.lng)).slice(0, 80);
+  const starts = (homes || []).filter(p => p && KEngine.fin(p.lat) && KEngine.fin(p.lng)).slice(0, 6);
   if (!stops.length || !starts.length) return;
   const sig = WATER_STORE_V + "|" + stops.map(s => s.id).join(",") + "|" + starts.map(p => (+p.lat).toFixed(3) + "," + (+p.lng).toFixed(3)).join(";");
   if (city.waterSig === sig || waterAsked.get(keyOf(city.city)) === sig) return;
