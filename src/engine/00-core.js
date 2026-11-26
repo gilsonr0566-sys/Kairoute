@@ -2,7 +2,6 @@
 // no page, no storage, no internet, no app state. The same files load in the app and in Node (tools/beta2/engine.cjs).
 var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
 (function (E) {
-  const R = x => x * Math.PI / 180;
   // Straight-line km between two places.
   E.hav = (a, b) => { const dLa = (b.lat - a.lat) * Math.PI / 180, dLo = (b.lng - a.lng) * Math.PI / 180;
     const h = Math.sin(dLa / 2) ** 2 + Math.cos(a.lat * Math.PI / 180) * Math.cos(b.lat * Math.PI / 180) * Math.sin(dLo / 2) ** 2; return 2 * 6371 * Math.asin(Math.sqrt(h)); };
@@ -67,7 +66,7 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
     return !(TREAT.test(said) || /^(cafe|ice_cream|bakery|confectionery|pastry)$/i.test(String(r.amenity || r.kind || ""))) || MEAL.test(String(r.cuisine || "") + " " + String(r.amenity || "")); };
   // A café or bar by name may serve a light lunch, but a restaurant nearby is the better lunch: the lunch search counts a
   // café as farther away than it is.
-  E.cafeName = r => /\b(caf[eéè]s?|caff[eèé]|kafe|kafeneio|bar)\b/i.test(String((r && r.name) || "")) && !MEAL.test(String((r && r.name) || "") + " " + String((r && r.cuisine) || ""));
+  E.cafeName = r => /(?<![\p{L}\p{N}])(caf[eéè]s?|caff[eèé]|kafe|kafeneio|bar)(?![\p{L}\p{N}])/iu.test(String((r && r.name) || "")) && /* whole words, accents counted as letters: "Café Central" was not a café to the old test, whose word edge stopped at the é */ !MEAL.test(String((r && r.name) || "") + " " + String((r && r.cuisine) || ""));
   // A name in Greek or Cyrillic letters, written in Latin letters by the standard fixed rules (Greek: ELOT 743, as on
   // Greek road and station signs; Cyrillic: the common English spelling), so a traveler reading English can read it
   // and match it to the signs ("Ζευγολατιό" is "Zevgolatio"). Names already in Latin letters pass through as they are.
@@ -105,8 +104,11 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
     const got = latinMemo.get(s0); if (got != null) return got; const r = latinOf(s0); if (latinMemo.size < 5000) latinMemo.set(s0, r); return r;
   };
   const latinOf = s1 => {
-    const s0 = /[\u3040-\u30ff]/.test(s1) ? kanaOf(s1) : s1;
-    const s = s0.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC");
+    // Each run of kana is read on its own, and only Greek loses its accents (they mark stress, not another letter). Until
+    // Nov 25 the whole line went through both: "Train from きょうと, about 65 min" came out "Train From Kyoto, Abot 65 Min",
+    // a Cyrillic й, ё or ї lost its mark ("Yurii", "Kiiv") and a café beside a Greek word lost its é.
+    const s0 = s1.replace(/[\u3040-\u30ff]+/g, kanaOf);
+    const s = s0.replace(/[\u0370-\u03ff\u1f00-\u1fff]+/g, g => g.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC"));
     let out = "";
     for (let k = 0; k < s.length;) {
       const c = s[k], lo = c.toLowerCase(), two = (lo + (s[k + 1] || "")).toLowerCase(), up = c !== lo;
@@ -114,7 +116,10 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
       if (GRV[two] != null) { const nx = (s[k + 2] || "").toLowerCase(); r = GRV[two] + (/[αεηιοωυβγδζλμνρ]/.test(nx) ? "v" : "f"); n = 2; }
       else if (GR2[two] != null) { r = GR2[two]; n = 2; if (two === "μπ" && k > 0 && /[α-ω]/i.test(s[k - 1])) r = "mp"; }
       else if (GR1[lo] != null) r = GR1[lo]; else if (CY[lo] != null) r = CY[lo]; else r = c;
-      if (up && r) r = r[0].toUpperCase() + r.slice(1);
+      // A capital that takes two Latin letters is "Th" in a word and "TH" in a name written all in capitals, as signs are
+      // ("ΑΘΗΝΑ" is ATHINA; it came out "AThINA").
+      if (up && r) { const nx = s[k + n], pv = s[k - 1], cap = ch => !!ch && ch !== ch.toLowerCase(), low = ch => !!ch && ch !== ch.toUpperCase();
+        r = cap(nx) || (cap(pv) && !low(nx)) ? r.toUpperCase() : r[0].toUpperCase() + r.slice(1); }
       out += r; k += n;
     }
     return out;
@@ -123,13 +128,26 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   // another script (Hebrew, Arabic, kanji, Thai...) is never shown. A name gives way to the plain word given ("the stop",
   // "Train"); in a sentence, the name after "to", "from" or "at" becomes "the stop", after "take" or "ride" "the line", and
   // any other is left out (round 2 outside test, Nov 23: Hebrew train lines, Japanese station names).
-  const OTHER = /[^\u0000-\u024F\u1E00-\u1EFF\u2000-\u206F\u20A0-\u20CF]/;
+  // Another script: any character that belongs to a writing system other than Latin. Signs every script shares (digits,
+  // punctuation, symbols, arrows, the app's own icons) and accents belong to none, so they pass. (Until Nov 25 this was a
+  // list of code ranges: it called a wavy-dash icon, a trademark sign and an arrow "another script".)
+  const OTHER = /[^\p{Script=Latin}\p{Script=Common}\p{Script=Inherited}\p{Script=Braille}]/u; // Braille dot patterns are used as icons (the drag handle), never as a name
+  // THE test for "the traveler can't read this" (R-11): one definition for the engine, the app's screens, voice and print,
+  // and the checks. Latin letters with accents, digits, punctuation and symbols pass; any other script does not.
+  E.otherScript = t => OTHER.test(String(t == null ? "" : t));
   E.cap = n => String(n == null ? "" : n).replace(/^\p{Ll}/u, c => c.toUpperCase());
   E.say = (name, plain) => { const t = E.latin(name); if (!OTHER.test(t)) return t;
-    if (plain != null) { const left = t.replace(/[^\u0000-\u024F\u1E00-\u1EFF]+/g, " ").replace(/[()\[\]\-–,·:]+\s*$/g, "").replace(/\(\s*\)/g, "").replace(/\s+/g, " ").trim(); return /[A-Za-z]{3}/.test(left) ? left : plain; }
+    if (plain != null) { // the readable part: emptied brackets go first, then loose ends; a part wholly in brackets stands without them
+      let left = t.replace(/[^\u0000-\u024F\u1E00-\u1EFF]+/g, " ").replace(/\(\s*\)|\[\s*\]/g, " ").replace(/\s+/g, " ").replace(/^[\s,·:;\-–\/]+|[\s,·:;\-–\/(\[]+$/g, "");
+      const whole = /^[(\[]([^()\[\]]+)[)\]]$/.exec(left); if (whole) left = whole[1].trim();
+      return /[A-Za-z]{3}/.test(left) ? left : plain; }
     return t.replace(/(\b(?:to|from|at|towards|via|for|into)\s+)?([^\u0000-\u024F\u1E00-\u1EFF\s][^\u0000-\u024F\u1E00-\u1EFF]*(?:\s+[^\u0000-\u024F\u1E00-\u1EFF\s][^\u0000-\u024F\u1E00-\u1EFF]*)*)/gi,
       (m, pre, run, at, all) => { const b = all.slice(0, at); return pre ? pre + "the stop" : /\b(take|ride|board|catch)\s+the\s+$/i.test(b) ? "line" : /\b(take|ride|board|catch)\s+$/i.test(b) ? "the line" : ""; })
       .replace(/the stop (station|stop|pier)\b/gi, "the $1").replace(/\(\s*\)/g, "").replace(/\s+([,.;)])/g, "$1").replace(/\s{2,}/g, " ").trim(); };
+  // The name a thing is shown under (R-11): its English name when it has one a traveler can read, else its own name in
+  // Latin letters, else the plain word for what it is. Every screen, the voice and the printed plan use this one rule.
+  E.shownName = (x, plain) => { const en = x && x.en; if (typeof en === "string" && en.trim() && !E.otherScript(en)) return en.trim();
+    return E.say(x && x.name, plain == null ? "Local sight" : plain); };
   E.PAD_MAX = 45; // longest ride each way for a trip out added to fill a day in town // lunch on the go: bought and eaten on the way, minutes
   // A meal starts at most this long after its last orders (Nov 20 phone check: lunch at 3:47 pm after a day trip counted as
   // lunch). The leak report's "odd hour" is the same line.

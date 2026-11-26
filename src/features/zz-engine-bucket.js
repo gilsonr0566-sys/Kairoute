@@ -128,7 +128,7 @@ function engineBucket(withOld) {
         // Each place to eat, the same facts as a sight for that date (Nov 19 fold: one hours rule): closed that day, and its
         // open spans when its hours are known. A table the traveler booked has no hours limit.
         (city.restaurants || []).forEach(r0 => { const r = Object.assign({}, r0, { hours: hoursOf(r0) }), w = r.booked ? null : siteWindow(r, d.date, city);
-          on.eats[keyOf(r.name)] = { closed: !r.booked && siteClosed(r, d.date, city), oh: w && w.spans.length ? { spans: w.spans, last: null } : null }; });
+          on.eats[typeof KEngine !== "undefined" && KEngine.eatKey ? KEngine.eatKey(r.name) : keyOf(r.name)] = /* the planner's own filing key (never empty for a name in another script) */ { closed: !r.booked && siteClosed(r, d.date, city), oh: w && w.spans.length ? { spans: w.spans, last: null } : null }; });
         cm.dates.set(d.date, on); }
       facts.sites = on.sites; facts.eats = on.eats;
       // The date's calendar in this place: its country, and the public holiday (or the eve of one), from the app's own

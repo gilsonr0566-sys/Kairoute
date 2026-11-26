@@ -18,7 +18,9 @@ const PLANTING = new Set(['tools/truth/real-world-gate.cjs' /* plants street rou
   'tools/ui/pinned-band-check.cjs' /* plants "no band behind pinned pieces" on every run (R-32) */,
   'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */,
   'tools/ui/net-words-check.cjs' /* plants an unguarded "when you're online" message on every run (R-18) */,
-  'tools/ui/saved-recheck.cjs' /* runs the build with the saved-content re-check switched off and must find problems (R-30) */]);
+  'tools/ui/saved-recheck.cjs' /* runs the build with the saved-content re-check switched off and must find problems (R-30) */,
+  'tools/truth/name-mutants.cjs' /* plants 10 real name bugs in the planner on every run (R-11) */,
+  'tools/ui/screen-language-check.cjs' /* plants names in 7 scripts in every source and on the page itself, and runs the build with the names rules switched off, where it must find them (R-11) */]);
 const GATE = rd('.github/workflows/beta2-gate.yml');
 const DEFECTS = new Set(['mutants.cjs', 'sight-mutants.cjs'].flatMap(f => (fs.readFileSync(path.join(__dirname, f), 'utf8').match(/id: '([a-z-]+)'/g) || []).map(s => s.slice(5, -1))));
 const SCREEN = (() => { const s = fs.readFileSync(path.join(__dirname, 'screen-rule-proof.cjs'), 'utf8'); return new Set([...s.matchAll(/^  '([^']+)': \[/gm)].map(m => m[1])); })();

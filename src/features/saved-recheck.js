@@ -48,6 +48,13 @@ function recheckSaved(city) {
     if (city.basics) { for (const k of ["tipping", "safety", "emergency", "plugs", "water"]) city.basics[k] = ""; city.basics.phrases = []; }
     city.gettingAround = [];
   }
+  // Names (R-11): a guide saved before the names rule, copied from the first app or holding a place added from the map
+  // keeps its names as they came. Every sight's name passes the planner's one names pass each time the guide is opened
+  // (English name, else Latin letters, else "Local sight"); the name as it came is kept for matching the sources again.
+  if (typeof KEngine !== "undefined" && KEngine.namesIn && KEngine.otherScript && window.__kairoutePlant !== "names-in-off" && window.__kairoutePlant !== "names-off") {
+    for (const k of ["sites", "farther"]) for (const s of city[k] || []) if (s && typeof s.name === "string" && KEngine.otherScript(s.name)) { if (!s.srcName) s.srcName = s.name; if (!(s.en && !KEngine.otherScript(s.en)) && KEngine.otherScript(KEngine.latin(s.name)) && !/[A-Za-z]{3}/.test(s.name)) s.localOnly = true; }
+    KEngine.namesIn({ cities: { c: city } });
+  }
   city.rechecked = Date.now();
   return city;
 }
