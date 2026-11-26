@@ -1,7 +1,10 @@
 // R-33: a walk or taxi whose real route is known is never planned on the straight-line guess. Made-up rides only (no
 // internet): a walk whose street route goes round the water, a taxi over a mountain road, and the floor (a route
-// shorter than the guess never shortens it). Then a copy of the engine with real routes ignored is planted on every run,
-// and this check must fail on it (a check that can't fail proves nothing).
+// shorter than the guess never shortens it), and hills (E48): a walk's time adds 1 min for every 10 m it climbs and
+// 1 min for every 30 m of a steep way down, says so on the ride, and a big climb is not walked when a ride is quicker;
+// a walk with no known climb never gets a guessed one. Then copies of the engine are planted on every run (real routes
+// ignored; the climb ignored; the steep way down ignored; the hill left out of the walk-or-ride choice), and this check
+// must fail on each (a check that can't fail proves nothing).
 // Usage: node tools/beta2/route-time-check.cjs
 'use strict';
 const fs = require('fs'), os = require('os'), path = require('path'), cp = require('child_process');
@@ -37,23 +40,43 @@ function run(E) {
   const b2 = JSON.parse(JSON.stringify(trip)); b2.routes = (p, q) => long(p, q) ? { car: { km: E.hav(p, q) * 6.4, min: 60 } } : null; b2.routes.known = () => [];
   const then = rides(E.planTrip(b2)).filter(x => x.min < 79);
   t(!then.length, `once the street routes arrive (60 min by road), the plans are made again with them, never kept on the guess (got ${then.map(x => x.min + ' min').join(', ')})`);
+  // Hills (R-33, E48). A cliff town: 0.61 km straight, the path 0.9 km, 120 m up.
+  const lo = { name: 'Low town', lat: 36.4195, lng: 25.427 }, hi = { name: 'High town', lat: 36.425, lng: 25.427 }, near = { name: 'Terrace', lat: 36.4227, lng: 25.427 }, far = { name: 'Hill fort', lat: 36.4317, lng: 25.427 };
+  const one = (rt, to, w) => E.makeTravel({ walk: w || 'medium' }, {}, null, null, null, null, () => rt).estimate(lo, to || hi), wk = r => r.kind === 'walk' ? r : (r.options || []).find(o => o.kind === 'walk');
+  const up = one({ foot: { km: 0.9, up: 120, down: 0 } }), flat = one({ foot: { km: 0.9, up: null, down: null } });
+  t(flat.kind === 'walk' && flat.min === 12 && !(flat.steps || []).length, `a 0.9 km walk with no known climb is 12 min at 4.5 km/h and says nothing of a hill: never a guessed climb (got ${flat.how} ${flat.min} min, ${JSON.stringify(flat.steps)})`);
+  t(wk(up) && wk(up).min === 24, `a 0.9 km walk that climbs 120 m is 12 min + 12 min for the climb (1 min per 10 m), 24 min (got ${wk(up) && wk(up).min})`);
+  t(wk(up) && /Uphill: about 120 m of climb, 12 min more/.test((wk(up).steps || []).join(' ')), `the walk says its climb (got ${JSON.stringify(wk(up) && wk(up).steps)})`);
+  const slow = one({ foot: { km: 0.9, up: 120, down: 0 } }, hi, 'low');
+  t(!wk(slow) || wk(slow).min === 30, `a slow walker (3.6 km/h) takes 15 min for 0.9 km and 15 min for the 120 m climb, 30 min (got ${wk(slow) && wk(slow).min})`);
+  const dn = one({ foot: { km: 0.5, up: 0, down: 160 } }, near), gentle = one({ foot: { km: 2.4, up: 0, down: 100 } }, { name: 'Shore', lat: 36.4357, lng: 25.427 });
+  t(wk(dn) && wk(dn).min === 11, `a steep way down (160 m in 0.5 km) is 7 min + 4 min (1 min per 30 m beyond an 8% slope), 11 min (got ${wk(dn) && wk(dn).min})`);
+  t(!wk(gentle) || wk(gentle).min === 32, `a gentle way down (100 m in 2.4 km) costs nothing extra: 32 min (got ${wk(gentle) && wk(gentle).min})`);
+  const big = one({ foot: { km: 1.6, up: 250, down: 0 }, car: { km: 3, min: 8 } }, far), same = one({ foot: { km: 1.6 }, car: { km: 3, min: 8 } }, far);
+  t(same.kind === 'walk' && big.kind !== 'walk', `a 1.6 km walk is walked on the flat, and not when it climbs 250 m (46 min) with a ride at hand (flat: ${same.how} ${same.min} min; hill: ${big.how} ${big.min} min)`);
   return bad;
 }
 const real = run(require('./engine.cjs'));
 for (const m of real) console.log('FAIL ' + m);
-// Planted: the engine with real routes ignored, and plans kept although a route arrived.
-const PLANTS = [['real routes ignored', '10-travel.js', 'let rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;', 'let rt = null;'],
-  ['plans kept although a street route arrived', '95-plan.js', ' && routesSame(got)) {', ') {']];
+// Planted, one at a time: each must be seen.
+const PLANTS = [
+  ['real routes ignored', '10-travel.js', 'let rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;', 'let rt = null;'],
+  ['plans kept although a street route arrived', '95-plan.js', ' && routesSame(got)) {', ') {'],
+  ['the climb ignored', '10-travel.js', 'const u = isFinite(up) && up > 0 ? up : 0,', 'const u = 0,'],
+  ['the steep way down ignored', '10-travel.js', 'Math.max(0, down - 80 * (km > 0 ? km : 0)) : 0; return', '0 : 0; return'],
+  ['the hill left out of the walk-or-ride choice', '10-travel.js', 'Math.max(d, (rFoot.km + hill * speed / 60) / 1.3)', 'Math.max(d, rFoot.km / 1.3)'],
+  ['a climb guessed where none is known (every walk 100 m up)', '10-travel.js', 'const hill = rFoot ? E.climbMin(rFoot.up, rFoot.down, rFoot.km, speed) : 0;', 'const hill = rFoot ? E.climbMin(isFinite(rFoot.up) && rFoot.up != null ? rFoot.up : 100, rFoot.down, rFoot.km, speed) : 0;'],
+];
 let blind = 0;
-for (const [name, file, want, put] of PLANTS) {
+for (const [name, file, want, to] of PLANTS) {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'route-plant-')); fs.cpSync(SRC, tmp, { recursive: true });
   const f = path.join(tmp, 'engine', file), s = fs.readFileSync(f, 'utf8');
-  if (!s.includes(want)) { console.log('FAIL the planted copy (' + name + ') could not be made: the engine text it changes is gone'); process.exit(1); }
-  fs.writeFileSync(f, s.replace(want, put));
+  if (!s.includes(want)) { console.log(`FAIL the planted copy "${name}" could not be made: the engine text it changes is gone`); process.exit(1); }
+  fs.writeFileSync(f, s.replace(want, to));
   const out = cp.spawnSync(process.execPath, ['-e', `const E=require(${JSON.stringify(path.join(__dirname, 'engine.cjs'))});process.stdout.write(JSON.stringify((${run.toString()})(E)))`], { cwd: __dirname, env: Object.assign({}, process.env, { ENGINE_SRC: tmp }), encoding: 'utf8' });
   let planted = []; try { planted = JSON.parse(out.stdout); } catch (e) { console.log('FAIL planted run broke: ' + (out.stderr || '').slice(0, 300)); process.exit(1); }
   fs.rmSync(tmp, { recursive: true, force: true });
   console.log(`planted (${name}): ${planted.length} finding(s)${planted.length ? '' : ' - BLIND'}`); if (!planted.length) blind++;
 }
-console.log(`route-time-check: ${real.length ? real.length + ' failed' : 'all passed'}${blind ? ', but a planted copy went unseen' : ''}`);
+console.log(`route-time-check: ${real.length ? real.length + ' failed' : 'all passed'}${blind ? ', but ' + blind + ' planted copies went unseen' : `; planted ${PLANTS.length} of ${PLANTS.length} caught`}`);
 process.exit(real.length || blind ? 1 : 0);

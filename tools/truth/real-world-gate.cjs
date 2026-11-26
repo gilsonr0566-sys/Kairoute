@@ -1,6 +1,6 @@
 // R-33 / R-12 in the release gate: every ride on every saved test trip's plan is compared, offline, with the real-world
-// least times the nightly real-world check measured (BRouter for walks and taxis, the DB journey planner for trains, metro
-// and buses; tools/truth/real-world-cache.json, kept by tools/truth/real-world.mjs --cache). Second fault audit (Nov 24):
+// least times the nightly real-world check measured (BRouter for walks and taxis, the operators' own timetable files
+// for trains, metro, buses and ferries; tools/truth/real-world-cache.json, kept by tools/truth/real-world.mjs --cache). Second fault audit (Nov 24):
 // ride-time bugs gave plausible rides that every check in the gate compared only with the app itself; the real-world
 // check would see them, but only the night after a release. A ride planned faster than the real world allows (5 min or
 // more under it, and 25% or more) fails; on the ride back on a ship, train or flight day it is S1.
@@ -11,7 +11,7 @@
 const fs = require('fs'), os = require('os'), path = require('path'), cp = require('child_process');
 const ROOT = path.join(__dirname, '..', '..'), SRC = path.join(ROOT, 'src');
 const MIN = +((process.argv.indexOf('--min') > 0 && process.argv[process.argv.indexOf('--min') + 1]) || 40);
-const kindOf = x => { const k = String(x.kind || x.mode || '').toLowerCase(); return /walk/.test(k) ? 'walk' : /taxi|car|drive/.test(k) ? 'taxi' : /ferry|boat|tender|water/.test(k) ? 'ferry' : /train|rail/.test(k) ? 'train' : /metro|subway|tram|light/.test(k) ? 'metro' : /bus/.test(k) ? 'bus' : /lift|cable|funic/.test(k) ? 'lift' : k || 'other'; };
+const kindOf = x => { const k = String(x.kind || x.mode || '').toLowerCase(); return x.mode === 'lift' || /^(cable car|funicular|lift)\b/i.test(x.how || '') ? 'lift' : /walk/.test(k) ? 'walk' : /taxi|car|drive/.test(k) ? 'taxi' : /ferry|boat|tender|water/.test(k) ? 'ferry' : /train|rail/.test(k) ? 'train' : /metro|subway|tram|light/.test(k) ? 'metro' : /bus/.test(k) ? 'bus' : /lift|cable|funic/.test(k) ? 'lift' : k || 'other'; };
 const ck = (kind, a, b) => `${kind}|${(+a.lat).toFixed(4)},${(+a.lng).toFixed(4)}|${(+b.lat).toFixed(4)},${(+b.lng).toFixed(4)}`;
 
 function compare(engineFile) {
@@ -25,14 +25,14 @@ function compare(engineFile) {
     // The street routes the app asks the helper for (R-33), here the measured ones: the plan is the one a traveler sees.
     const bb = E.applyPlaces(b, places), pt = p => (+p.lat).toFixed(4) + ',' + (+p.lng).toFixed(4);
     bb.routes = (a, z) => { if (!a || !z || !isFinite(a.lat) || !isFinite(z.lat)) return null; const f = route.get('walk|' + pt(a) + '|' + pt(z)) || route.get('walk|' + pt(z) + '|' + pt(a)), c = route.get('taxi|' + pt(a) + '|' + pt(z)) || route.get('taxi|' + pt(z) + '|' + pt(a));
-      return f || c ? Object.assign({}, f && f.realKm ? { foot: { km: f.realKm } } : {}, c && c.realKm ? { car: { km: c.realKm, min: c.real } } : {}) : null; };
+      return f || c ? Object.assign({}, f && f.realKm ? { foot: { km: f.realKm, up: f.up } } : {}, c && c.realKm ? { car: { km: c.realKm, min: c.real } } : {}) : null; };
     // All the measured routes, as the app hands the engine every route it knows (a ride near a timed one is timed from it).
-    bb.routes.known = () => [...route.values()].filter(r => r.realKm && /walk|taxi/.test(r.kind)).map(r => ({ a: r.from, b: r.to, car: r.kind === 'taxi' ? { km: r.realKm, min: r.real } : null, foot: r.kind === 'walk' ? { km: r.realKm } : null }));
+    bb.routes.known = () => [...route.values()].filter(r => r.realKm && /walk|taxi/.test(r.kind)).map(r => ({ a: r.from, b: r.to, car: r.kind === 'taxi' ? { km: r.realKm, min: r.real } : null, foot: r.kind === 'walk' ? { km: r.realKm, up: r.up } : null }));
     try { plans = E.planTrip(bb); } catch (e) { out.bad.push(`${name}: does not plan (${e.message})`); continue; }
     b.days.forEach((d, i) => { const p = plans[i]; if (!p || !p.items) return; const its = p.items, lastRide = its.map(x => x.t).lastIndexOf('ride'), hard = /port|departure|embark/.test(d.type);
       its.forEach((x, j) => { if (x.t !== 'ride' || !x.from || !x.to || !(x.min > 0)) return;
         const kind = kindOf(x), k = ck(kind, x.from, x.to), m = cache.get(k);
-        const planned = /train|metro|bus/.test(kind) ? x.min + (x.wait || 0) : x.min, back = hard && j === lastRide, id = k + '|' + planned;
+        const planned = /train|metro|bus|ferry/.test(kind) ? x.min + (x.wait || 0) : x.min, back = hard && j === lastRide, id = k + '|' + planned;
         if (seen.has(id)) return; seen.add(id);
         // Tallies for the readiness score (tools/truth/readiness-score.cjs): every different ride on the plans, by kind,
         // how many have a real-world time, how many of those are right, and rides back with no real-world time.

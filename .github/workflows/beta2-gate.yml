@@ -101,7 +101,7 @@ jobs:
       - run: sh build-beta2.sh
       - name: Saved test trips (snapshots; the saved ones, then the sample trip and no-AI trips made fresh in the built app)
         run: mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/ && node tools/beta2/snapshot.cjs && node tools/beta2/noai-trips.cjs
-      - run: (node tools/beta2/engine-test.cjs && node tools/beta2/route-time-check.cjs && node tools/beta2/best-ride-check.cjs && node tools/truth/real-world-gate.cjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - run: (node tools/beta2/engine-test.cjs && node tools/beta2/route-time-check.cjs && node tools/beta2/best-ride-check.cjs && node tools/truth/real-world-gate.cjs && node tools/truth/gtfs-times-test.mjs && node tools/truth/plan-ledger.cjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
         run: node tools/beta2/hours-test.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()

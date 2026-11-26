@@ -133,6 +133,14 @@
     const kmLat = 6371 * Math.PI / 180;
     for (const x of list) { const e = endsOf(x); if (!e || !e[0] || !e[1]) continue; if (Math.abs(e[0].lat - a.lat) * kmLat > tol + 1e-6 || Math.abs(e[1].lat - b.lat) * kmLat > tol + 1e-6) continue; const off = Math.max(E.hav(e[0], a), E.hav(e[1], b)); if (off <= tol && (!best || off < best.off)) best = { x, A: e[0], B: e[1], off }; }
     return best; };
+  // R-33, E48: the minutes a hill adds to a walk. A street route gives a walk's length, never its slope, and a walk's
+  // time came from the length alone: 21 walks up to hilltop ruins, castle hills and cliff towns were planned 5
+  // to 12 min short (real-world check, Nov 24). Walkers' rule of thumb (Naismith, 1892, still the standard): 1 minute
+  // more for every 10 m climbed. Coming down costs nothing on a gentle street, and 1 minute for every 30 m dropped
+  // beyond a steep 8% (steps and steep lanes: Langmuir's correction). A slow walker (3.6 km/h) climbs slower in the
+  // same proportion. up, down in metres (from the helper's height reading along the route), km the route's length;
+  // no height known: 0, never a guessed climb.
+  E.climbMin = (up, down, km, speed) => { const u = isFinite(up) && up > 0 ? up : 0, dn = isFinite(down) && down > 0 ? Math.max(0, down - 80 * (km > 0 ? km : 0)) : 0; return Math.round((u / 10 + dn / 30) * 4.5 / (speed > 0 ? speed : 4.5)); };
   E.nearGap = (a, b, n, byRoad) => n ? E.gapMin(E.hav(a, n.A), byRoad) + E.gapMin(E.hav(b, n.B), byRoad) : 0;
   const roadMemos = new Map();
   E.makeTravel = (prefs, legModes, legs, lines, answers, piers, routes) => {
@@ -241,7 +249,7 @@
       // said "no train").
       const got = modeOf(a, b), nearOnly = got && typeof got === "object", wantRaw = nearOnly ? got.near : got;
       const pin = (legs && legs[E.pairKey(a, b)]) || roadNear(a, b), pinned = pin && isFinite(pin.min) ? pin : null;
-      // R-33: the real route between the two points, from a street router (routes(a, b): { foot: { km }, car: { km, min } },
+      // R-33: the real route between the two points, from a street router (routes(a, b): { foot: { km, up, down }, car: { km, min } },
       // either may be missing), wherever the places files have no time for it. The straight line times 1.3 is only a
       // guess: up a hill, round a harbour or over a mountain road it is far short (real-world check, Nov 24: a taxi over a
       // mountain road planned 23 min, 42-50 by road; a walk to an island planned 18 min straight over the water, 55 over the
@@ -261,7 +269,10 @@
       const rFoot = rt && rt.foot && isFinite(rt.foot.km) && rt.foot.km > 0 && sane(rt.foot) ? rt.foot : null, rCar = rt && rt.car && isFinite(rt.car.km) && isFinite(rt.car.min) && rt.car.km > 0 && sane(rt.car) ? rt.car : null;
       // How far the walk really is, in the straight-line terms the walking limits are set in: a street route longer than
       // the guess makes the walk as far as it really is, so a long way round is not taken on foot when a ride is quicker.
-      const dw = rFoot ? Math.max(d, rFoot.km / 1.3) : d;
+      // The hill's minutes (E.climbMin), and the hill as extra distance: a climb that adds 10 min is as far as another
+      // 750 m, so a steep way up is not taken on foot when a ride is quicker, and the walking limits see it.
+      const hill = rFoot ? E.climbMin(rFoot.up, rFoot.down, rFoot.km, speed) : 0;
+      const dw = rFoot ? Math.max(d, (rFoot.km + hill * speed / 60) / 1.3) : d;
       const isle = p => E.byBoat(p.travelNote) || E.waterOnly(p) || !!p.acrossWater, note = noteFor(a, b);
       // The traveler's choice, as a kind (a row of a timetable answer picked earlier counts as its kind).
       const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || (/^note\|/.test(String(wantRaw)) ? String(wantRaw).slice(5) : wantRaw); // a note's way is its kind
@@ -295,8 +306,10 @@
         }
       } else {
         // On foot: any ride up to 4 km may be walked.
-        const onFoot = pinned && pinned.mode === "walk" ? Math.round(pinned.min) : Math.max(2, Math.round(Math.max(d * 1.3, rFoot ? rFoot.km : 0) / speed * 60));
-        if (dw <= WALK_EITHER || (pinned && pinned.mode === "walk")) opts.push({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: rFoot ? Math.max(d * 1.3, rFoot.km) : d * 1.3, steps: [] });
+        const onFoot = pinned && pinned.mode === "walk" ? Math.round(pinned.min) : Math.max(2, Math.round(Math.max(d * 1.3, rFoot ? rFoot.km : 0) / speed * 60) + hill);
+        // The walk as an option: with its climb said, when the hill adds 3 min or more.
+        const walkOpt = () => Object.assign({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: rFoot ? Math.max(d * 1.3, rFoot.km) : d * 1.3, steps: hill >= 3 && !(pinned && pinned.mode === "walk") ? [(rFoot.up >= 10 ? "Uphill: about " + Math.round(rFoot.up / 10) * 10 + " m of climb" : "A steep way down") + ", " + hill + " min more than a flat walk"] : [] }, hill ? { hill } : {});
+        if (dw <= WALK_EITHER || (pinned && pinned.mode === "walk")) opts.push(walkOpt());
         // Public transport: the timetable's answers, one per kind; a line mapped on OpenStreetMap for a kind they don't
         // have (a stop within a short walk of each end). On a walk short enough, only when it is quicker than walking.
         const pub = answered(a, b, d, wantRaw);
@@ -337,7 +350,7 @@
           }
         }
         // Nothing else reaches it (two stops far from any road, farther apart than a walk): the walk is offered, on its time.
-        if (!opts.length) opts.push({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: rFoot ? Math.max(d * 1.3, rFoot.km) : d * 1.3, steps: [] });
+        if (!opts.length) opts.push(walkOpt());
         // Never a way far slower than the road (Round 1, Nov 20: a ferry to another island offered for a ride across the
         // city, a coach with 6 changes taking 13 h): over twice the taxi's time and 20 min more, it isn't offered, unless it is
         // the traveler's own choice.
