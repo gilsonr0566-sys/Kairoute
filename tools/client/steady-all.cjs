@@ -169,10 +169,10 @@ const SPINNERS = () => [...document.querySelectorAll('.spinner, [aria-busy="true
   if (counts.trips && !counts.resumes) { fails.push({ rule: 'NOT TESTED' }); console.log('FAIL NOT TESTED [RESUME-LEFT] no trip could start and exit a tour'); by['NOT TESTED'] = (by['NOT TESTED'] || 0) + 1; }
   for (const [k, n] of Object.entries(by)) console.log(`FAIL ${k} ${n}`);
   // Proof, every run: each planted defect (a way this class has gone wrong before) must be caught by its rule.
-  if (!PLANT && !process.env.NO_PROOF) {
+  if (!PLANT && !process.env.NO_PROOF && !/^[1-9]\d*\//.test(process.env.PART || '')) { // the proof runs once, in part 0 of a split run
     const { spawnSync } = require('child_process');
     for (const [plant, rule] of [['redraw', 'STEADY-REDRAW'], ['settle', 'SETTLES'], ['wait', 'WAIT-ENDS'], ['pinbox', 'PIN-STEADY']]) {
-      const r = spawnSync(process.execPath, [__filename, FILE], { env: Object.assign({}, process.env, { PLANT: plant, TRIPS: plant === 'pinbox' ? 'example' : 'g01', SIZES: 'phone', NO_PROOF: '1' }), encoding: 'utf8', timeout: 900000 });
+      const r = spawnSync(process.execPath, [__filename, FILE], { env: Object.assign({}, process.env, { PLANT: plant, TRIPS: plant === 'pinbox' ? 'example' : 'g01', SIZES: 'phone', NO_PROOF: '1', PART: '' }), encoding: 'utf8', timeout: 900000 });
       const caught = r.status === 1 && new RegExp('^FAIL ' + rule + ' [0-9]', 'm').test(r.stdout || '');
       console.log(`${caught ? 'ok  ' : 'FAIL'} planted ${plant}: ${caught ? 'caught by ' + rule : 'NOT caught by ' + rule + ' (the check is blind)'}`);
       if (!caught) fails.push({ rule: 'PROOF', where: plant, why: 'planted defect not caught' });
