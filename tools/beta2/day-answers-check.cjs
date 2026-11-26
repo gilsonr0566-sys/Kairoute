@@ -1,4 +1,4 @@
-// Day rules (R-36, R-21, R-01, R-07), checked on every saved test trip with the places files, each with a planted copy that must fail:
+// Day rules (R-36, R-21, R-01, R-07; R-21 roomleft), checked on every saved test trip with the places files, each with a planted copy that must fail:
 //  R-36 (small hours): arriving in the small hours (before 5 am), the traveler sleeps first. No sight or meal is planned
 //    before 5 am; the night at the hotel is a step of the day (odd trips, Nov 25: a 00:15 train planned a city square at
 //    1:11 am). Every arrival day of every saved trip is planned again with the arrival moved to 00:15.
@@ -45,6 +45,13 @@ function run(E) {
       if (!p) return; boards++;
       t(!p.items || !(p.endBy > 24 * 60), `${f} day ${i + 1}: with no boarding time and a flight landing 30 min before all aboard (${E.clock(d.allAboard)}), the ship is taken as the next night's (the day ends ${E.clock(p.endBy)} +1 day) instead of saying it can't be made`); });
   }
+  // A pick given up "for time" while the day has room comes back (R-21 roomleft; odd trips, Nov 26: a stop opening later
+  // was tried back only in the shortest-distance order, where it came first, waited for opening and ran the day over).
+  { const f = 'g05-edinburgh.json', trip = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')), i = trip.days.findIndex(d => /land/.test(d.type));
+    const b = JSON.parse(JSON.stringify(trip)); Object.assign(b.days[i], { startTime: '07:30', hours: 2.5, selected: ['src-q1547466', 'src-q2502213', 'src-q1670994', 'src-q2441562', 'src-q3106882'], wantsOnly: true, own: true });
+    let p = null; try { p = E.planTrip(E.applyPlaces(b, places))[i]; } catch (e) { t(false, `${f} day ${i + 1}: does not plan a 7:30 to 10:00 day of 5 picks (${e.message})`); }
+    const names = p && p.items ? p.items.filter(x => x.t === 'stop').map(x => x.name) : [];
+    if (p) t(names.some(n => /St Giles/.test(n)), `${f} day ${i + 1}: 7:30 to 10:00 with 5 picks plans only ${names.join(', ') || 'nothing'}; St Giles' Cathedral (opens 9:00, fits after) is given up for time`); }
   // A cruise pier is never an air or cargo terminal (the map search for a port gave an air cargo terminal by the airport).
   for (const n of ['Terminal de Carga Aérea', 'Air Cargo Terminal', 'Container Terminal', 'Aeroporto João Paulo II']) t(!E.cruiseOk({ name: n }), `"${n}" is taken for a cruise pier`);
   for (const n of ['Portas do Mar', 'Prince George Wharf', 'Terminal Marítimo', 'Cruise and Container Terminal']) t(E.cruiseOk({ name: n }), `"${n}" is kept out of cruise piers`);
@@ -58,6 +65,7 @@ const PLANTS = [
   ['a small-hours arrival goes sightseeing at once', '30-window.js', 'if (E.fin(arrive) && arrive < E.NIGHT_DEP && morning - at > 30)', 'if (false)'],
   ['a missing boarding time read as midnight', '30-window.js', 'const depAt = ship ? (Number.isFinite(d.boardAt) ? d.boardAt : d.allAboard)', 'const depAt = ship ? (isFinite(d.boardAt) ? +d.boardAt : d.allAboard)'],
   ['an air cargo terminal taken for a cruise pier', '30-window.js', 'const NOT_SHIP = /\\b(cargo|carga|freight|container|air ?port|aeroporto|aeropuerto|a[eé]roport|a[eé]rea|aerial)\\b/i;', 'const NOT_SHIP = /^$/;'],
+  ['a stop given up for time tried back only in the shortest order', '70-day.js', '(quickOver(E.bestOrder(keep.concat([x.stop]), win.head[win.head.length - 1], win.tail.length ? win.tail[0] : null, ctx.tr.min)) && quickOver(kept.concat([x.stop])) && quickOver([x.stop].concat(kept)))', 'quickOver(E.bestOrder(keep.concat([x.stop]), win.head[win.head.length - 1], win.tail.length ? win.tail[0] : null, ctx.tr.min))'],
   ['a tick taken by another day left unsaid', '95-plan.js', 'out.forEach((p, i) => { if (!p || !p.items || p.safe || !days[i]) return; const d = days[i], c = guides[d.city]', 'out.forEach((p, i) => { if (true) return; const d = days[i], c = guides[d.city]'],
 ];
 let blind = 0;

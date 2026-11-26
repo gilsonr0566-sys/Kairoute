@@ -493,7 +493,11 @@
       // A stop whose visit is longer than all the time left (with a lunch shortened to the quickest), or that runs the day
       // over even in the best order with no lunch at all, can't come back: not tried (each try plans the day with its lunch,
       // seconds on a phone for a day of many picks; Nov 22 odd-trips run).
-      if ((x.stop.minutes || 0) > win.endBy - cur.r.end + 30 || (() => { const r = E.walkDay(E.bestOrder(keep.concat([x.stop]), win.head[win.head.length - 1], win.tail.length ? win.tail[0] : null, ctx.tr.min), win, ctx.tr.estimate, ctx.siteDay); return r.over > 0; })()) continue;
+      // The shortest way round is not always the order that fits: a stop that opens later fits after the day's other stops,
+      // not first (odd-trips roomleft, Nov 26: a library opening at 9 was put first on a 7:30 to 10:00 day, waited, ran the
+      // day over, and was never tried back). It is tried after and before the stops as kept too.
+      const quickOver = order => E.walkDay(order, win, ctx.tr.estimate, ctx.siteDay).over > 0, kept = cur.r.items.filter(y => y.t === "stop").map(y => keep.find(k => String(k.id) === String(y.id))).filter(Boolean);
+      if ((x.stop.minutes || 0) > win.endBy - cur.r.end + 30 || (quickOver(E.bestOrder(keep.concat([x.stop]), win.head[win.head.length - 1], win.tail.length ? win.tail[0] : null, ctx.tr.min)) && quickOver(kept.concat([x.stop])) && quickOver([x.stop].concat(kept)))) continue;
       // Nor, on a day of more than 10 stops (one pass of single moves and reversed runs repairs it), one that runs the day over
       // or leaves a stop late in every order that pass can reach, timed with no lunch at all: lunch only adds time. A late stop
       // long enough to have lunch inside it (which shortens the visit) still counts as able to fit (Nov 23 odd-trips run: 35

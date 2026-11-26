@@ -140,6 +140,10 @@ const bucketOf = (shape, days) => { const cs = {}, used = days.filter(d => d.cit
 const out = {}, examples = {}, add = (k, trip, m) => { if (ONLY.length && !ONLY.includes(k)) return; out[k] = (out[k] || 0) + 1; (examples[k] = examples[k] || []).length < 400 && examples[k].push(trip + ': ' + m); };
 // At the traveler's own pace (walks little: 3.6 km/h, as the engine and leaks.cjs walk it).
 const walkMin = (km, prefs) => km * 1.3 / ((prefs || {}).walk === 'low' ? 3.6 : 4.5) * 60;
+// The climb between a walk's two ends, from the places file's ground heights (Naismith: 1 min per 10 m up), read here on
+// its own from the file, not from the planner (a ride up a hill is no slower than the walk it replaced; Nov 26).
+const eleAt = (city, p) => { const H = (places[city] || {}).heights || []; let best = null, bd = 0.06; for (const h of H) { const d = E.hav(p, { lat: h[0], lng: h[1] }); if (d <= bd) { bd = d; best = h[2]; } } return best; };
+const climbMin = (city, a, z, prefs) => { const ha = eleAt(city, a), hz = eleAt(city, z); return ha != null && hz != null && hz > ha ? (hz - ha) / 10 * ((prefs || {}).walk === 'low' ? 4.5 / 3.6 : 1) : 0; };
 const said = p => (p.explain || []).join(' ');
 let tripsN = 0, daysN = 0, plannedN = 0;
 const checkTrip = (name, b, edits) => {
@@ -172,7 +176,7 @@ const checkTrip = (name, b, edits) => {
     // rides
     its.forEach((x, k) => { if (x.t !== 'ride') return; const a = its.slice(0, k).reverse().find(y => y.t !== 'ride' && E.hasPos(y)), z = its.slice(k + 1).find(y => y.t !== 'ride' && E.hasPos(y));
       const km = a && z ? E.hav(a, z) : x.km; if (x.mode !== 'lift' && a && z && km > 0.05 && !(x.min > 0)) add('zero', tag, `${a.name} > ${z.name} ${km.toFixed(2)} km`);
-      if (x.mode && x.mode !== 'walk' && x.mode !== 'lift' && x.mode !== 'boat' && km > 0 && km < 3 && x.min > walkMin(km, b.prefs) + 5 && !x.bags && !(z && (z.t === 'end' || /bags/i.test(z.name || ''))) && !(a && /bags/i.test(a.name || ''))) add('walk', tag, `${x.mode} ${x.min} min for ${km.toFixed(2)} km (walk ~${Math.round(walkMin(km, b.prefs))}) ${a && a.name} > ${z && z.name}`); });
+      if (x.mode && x.mode !== 'walk' && x.mode !== 'lift' && x.mode !== 'boat' && km > 0 && km < 3 && x.min > walkMin(km, b.prefs) + climbMin(d.city, a, z, b.prefs) + 5 && !x.bags && !(z && (z.t === 'end' || /bags/i.test(z.name || ''))) && !(a && /bags/i.test(a.name || ''))) add('walk', tag, `${x.mode} ${x.min} min for ${km.toFixed(2)} km (walk ~${Math.round(walkMin(km, b.prefs) + climbMin(d.city, a, z, b.prefs))}) ${a && a.name} > ${z && z.name}`); });
     // walkpref: a traveler who walks little (Walks little, 0.8 km) is not sent on a walk well past it when a ride exists.
     if (b.prefs.walk === 'low') its.forEach((x, k) => { if (x.t !== 'ride' || x.mode !== 'walk' || x.pinned) return; const a = its.slice(0, k).reverse().find(y => y.t !== 'ride' && E.hasPos(y)), z = its.slice(k + 1).find(y => y.t !== 'ride' && E.hasPos(y));
       if (a && z && E.hav(a, z) > 1.2 && (x.options || []).some(o => o.kind !== 'walk')) add('walkpref', tag, `walks little, but walks ${E.hav(a, z).toFixed(2)} km straight (${x.min} min) ${a.name} > ${z.name}`); });
