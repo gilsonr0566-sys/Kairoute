@@ -27,9 +27,8 @@ const seed = { trip: JSON.stringify({ id: 'live-' + TRIP, name: c.name || TRIP, 
   // live list's own tick boxes ("Pick <name>") and make them the day's own list.
   const names = (process.env.PICKS || '').split(',').filter(x => x && !/^src-|^q\d/.test(x));
   if (names.length) { await p.evaluate(i => window.__kairouteGo('sites', i), DAY);
-    for (let t = 0; t < 30; t++) { await p.waitForTimeout(3000); const n = await p.evaluate(ns => [...document.querySelectorAll('input[data-site]')].filter(x => ns.some(n => (x.getAttribute('aria-label') || '').toLowerCase().includes(n.toLowerCase()))).length, names); if (n >= names.length) break; } // the live guide arrives from the helper
-    const ids = await p.evaluate(ns => [...document.querySelectorAll('input[data-site]')].filter(x => ns.some(n => (x.getAttribute('aria-label') || '').toLowerCase().includes(n.toLowerCase()))).map(x => x.dataset.site), names);
-    console.log('PICKED ' + JSON.stringify(ids)); if (ids.length < names.length) console.log('LIVE LIST ' + JSON.stringify(await p.evaluate(() => [...document.querySelectorAll('input[data-site]')].map(x => x.getAttribute('aria-label')))) + '\n' + (await p.evaluate(() => (document.querySelector('main') || document.body).innerText)).slice(0, 1500)); await p.evaluate(([i, ids]) => window.__kairouteEdit(i, { selected: [...new Set(ids)], ownList: true }), [DAY, ids]); }
+    for (let t = 0; t < 30; t++) { await p.waitForTimeout(3000); const r = await p.evaluate(([i, re]) => window.__kairouteDay(i, re, { ownList: true }), [DAY, names.join('|')]).catch(() => null); // the live guide arrives from the helper
+      if (r && !Array.isArray(r)) { console.log('PICKED ' + names.join('|')); break; } if (t === 29) console.log('PICKED [] LIVE LIST ' + JSON.stringify(r)); } }
   await p.evaluate(i => window.__kairouteGo('plan', i), DAY); await p.waitForTimeout(25000); // helper answers (routes, islands) arrive
   await p.evaluate(() => document.querySelectorAll('#view details').forEach(d => { d.open = true; })).catch(() => {});
   console.log(`\n===== ${TRIP} day ${DAY + 1} ${days[DAY].destination} (${days[DAY].type}) =====\n` + await p.evaluate(() => (document.querySelector('main') || document.body).innerText));
