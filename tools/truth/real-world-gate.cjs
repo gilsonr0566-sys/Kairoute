@@ -25,9 +25,9 @@ function compare(engineFile) {
     // The street routes the app asks the helper for (R-33), here the measured ones: the plan is the one a traveler sees.
     const bb = E.applyPlaces(b, places), pt = p => (+p.lat).toFixed(4) + ',' + (+p.lng).toFixed(4);
     bb.routes = (a, z) => { if (!a || !z || !isFinite(a.lat) || !isFinite(z.lat)) return null; const f = route.get('walk|' + pt(a) + '|' + pt(z)) || route.get('walk|' + pt(z) + '|' + pt(a)), c = route.get('taxi|' + pt(a) + '|' + pt(z)) || route.get('taxi|' + pt(z) + '|' + pt(a));
-      return f || c ? Object.assign({}, f && f.realKm ? { foot: { km: f.realKm } } : {}, c && c.realKm ? { car: { km: c.realKm, min: c.real } } : {}) : null; };
+      return f || c ? Object.assign({}, f && f.realKm ? { foot: { km: f.realKm, up: f.up } } : {}, c && c.realKm ? { car: { km: c.realKm, min: c.real } } : {}) : null; };
     // All the measured routes, as the app hands the engine every route it knows (a ride near a timed one is timed from it).
-    bb.routes.known = () => [...route.values()].filter(r => r.realKm && /walk|taxi/.test(r.kind)).map(r => ({ a: r.from, b: r.to, car: r.kind === 'taxi' ? { km: r.realKm, min: r.real } : null, foot: r.kind === 'walk' ? { km: r.realKm } : null }));
+    bb.routes.known = () => [...route.values()].filter(r => r.realKm && /walk|taxi/.test(r.kind)).map(r => ({ a: r.from, b: r.to, car: r.kind === 'taxi' ? { km: r.realKm, min: r.real } : null, foot: r.kind === 'walk' ? { km: r.realKm, up: r.up } : null }));
     try { plans = E.planTrip(bb); } catch (e) { out.bad.push(`${name}: does not plan (${e.message})`); continue; }
     b.days.forEach((d, i) => { const p = plans[i]; if (!p || !p.items) return; const its = p.items, lastRide = its.map(x => x.t).lastIndexOf('ride'), hard = /port|departure|embark/.test(d.type);
       its.forEach((x, j) => { if (x.t !== 'ride' || !x.from || !x.to || !(x.min > 0)) return;

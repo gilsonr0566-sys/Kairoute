@@ -6,7 +6,8 @@
 // sources the helper reads (OpenStreetMap's foot and car routers, Transitous). If one of those sources is wrong, the app
 // and the check are wrong together. This plans every saved test trip and asks, for each ride on the plan:
 //   walk   BRouter (brouter.de; a different router from the helper's OSRM and Valhalla), foot profile: the real path
-//          length, timed at 4.5 km/h, an ordinary adult pace with no stops
+//          length, timed at 4.5 km/h, an ordinary adult pace with no stops, plus 1 min for every 10 m the path climbs
+//          (BRouter's own height data, not the app's; E48: a walk's time from its length alone is short on every hill)
 //   taxi   BRouter car profile: the drive time with empty roads (the least any taxi can take)
 //   train, metro, tram, bus, ferry   the OPERATORS' OWN PUBLISHED TIMETABLE FILES (open GTFS feeds, found through the
 //          Mobility Database catalog and read by tools/truth/gtfs-times.mjs with its own arithmetic; the app never opens
@@ -54,8 +55,8 @@ for (const withRoutes of [true, false]) for (const f of fs.readdirSync(dir).filt
   // where the line said walk), and that ride must be measured too, or the gate never finds its time.
   { let plans; const bb = E.applyPlaces(b, places);
   if (withRoutes) { if (!known.size) continue; bb.routes = (a, z) => { if (!a || !z || !isFinite(a.lat) || !isFinite(z.lat)) return null; const f = known.get('walk|' + pt(a) + '|' + pt(z)) || known.get('walk|' + pt(z) + '|' + pt(a)), c = known.get('taxi|' + pt(a) + '|' + pt(z)) || known.get('taxi|' + pt(z) + '|' + pt(a));
-    return f || c ? Object.assign({}, f && f.realKm ? { foot: { km: f.realKm } } : {}, c && c.realKm ? { car: { km: c.realKm, min: c.real } } : {}) : null; };
-    bb.routes.known = () => [...known.values()].filter(r => r.realKm && /walk|taxi/.test(r.kind)).map(r => ({ a: r.from, b: r.to, car: r.kind === 'taxi' ? { km: r.realKm, min: r.real } : null, foot: r.kind === 'walk' ? { km: r.realKm } : null })); }
+    return f || c ? Object.assign({}, f && f.realKm ? { foot: { km: f.realKm, up: f.up } } : {}, c && c.realKm ? { car: { km: c.realKm, min: c.real } } : {}) : null; };
+    bb.routes.known = () => [...known.values()].filter(r => r.realKm && /walk|taxi/.test(r.kind)).map(r => ({ a: r.from, b: r.to, car: r.kind === 'taxi' ? { km: r.realKm, min: r.real } : null, foot: r.kind === 'walk' ? { km: r.realKm, up: r.up } : null })); }
   try { plans = E.planTrip(bb); } catch (e) { console.log(`FAIL ${name}: does not plan (${e.message})`); continue; }
   b.days.forEach((d, i) => { const p = plans[i]; if (!p || !p.items) return; const its = p.items;
     // The ride back: the day's last ride on a ship, train or flight day (it ends at the pier, station or airport).
@@ -84,13 +85,13 @@ async function brouterNear(r, profile) {
     const mv = (p, q, m) => { const d = hav(p, q) * 1000; if (d < m * 2) return null; const f = m / d; return { lat: p.lat + (q.lat - p.lat) * f, lng: p.lng + (q.lng - p.lng) * f }; };
     for (const m of [150, 400]) for (const ends of /target island/i.test(e.message) ? [['to'], ['from', 'to']] : [['to'], ['from'], ['from', 'to']]) {
       const a = ends.includes('from') ? mv(r.from, r.to, m) : r.from, z = ends.includes('to') ? mv(r.to, r.from, m) : r.to; if (!a || !z) continue;
-      await sleep(2500); try { const b = await brouter({ from: a, to: z }, profile); if (b.km > 3 * hav(r.from, r.to) + 2) continue; /* a moved end joined to the wrong shore (Nov 25, Dubrovnik: 16 km for 2.9 km straight): not a measure */ return { km: b.km + ends.length * m / 1000, sec: b.sec + ends.length * m / 1000 / (/car/.test(profile) ? 20 : 4.5) * 3600, moved: ends.length * m }; } catch (e2) { if (!/island|no track found/i.test(e2.message)) throw e2; } }
+      await sleep(2500); try { const b = await brouter({ from: a, to: z }, profile); if (b.km > 3 * hav(r.from, r.to) + 2) continue; /* a moved end joined to the wrong shore (Nov 25, Dubrovnik: 16 km for 2.9 km straight): not a measure */ return { up: b.up, km: b.km + ends.length * m / 1000, sec: b.sec + ends.length * m / 1000 / (/car/.test(profile) ? 20 : 4.5) * 3600, moved: ends.length * m }; } catch (e2) { if (!/island|no track found/i.test(e2.message)) throw e2; } }
     throw e; } }
 async function brouter1(r, profile) {
   const u = `https://brouter.de/brouter?lonlats=${r.from.lng},${r.from.lat}|${r.to.lng},${r.to.lat}&profile=${profile}&alternativeidx=0&format=geojson`;
   const res = await fetch(u, { headers: UA }); if (!res.ok) throw new Error('brouter ' + res.status + ' ' + (await res.text()).slice(0, 80));
   const j = await res.json(), p = j.features && j.features[0] && j.features[0].properties; if (!p) throw new Error('brouter: no route');
-  return { km: +p['track-length'] / 1000, sec: +p['total-time'] };
+  return { km: +p['track-length'] / 1000, sec: +p['total-time'], up: isFinite(+p['filtered ascend']) ? +p['filtered ascend'] : null };
 }
 // The timetable kinds, all at once before the street rides: each place's timetable files are read once.
 const TT = /^(train|metro|bus|ferry)$/, ttAsks = asks.filter(([, g]) => TT.test(g[0].kind)).map(([, g]) => g[0]);
@@ -105,7 +106,7 @@ const rows = [], notChecked = {}; let lastB = 0;
 const pace = async (t, gap) => { const w = t + gap - Date.now(); if (w > 0) await sleep(w); return Date.now(); };
 for (const [, group] of asks) { const r = group[0], row = { ...r, n: group.length, back: group.some(x => x.back) };
   try {
-    if (r.kind === 'walk') { lastB = await pace(lastB, 2500); const b = await brouterNear(r, 'hiking-mountain'); row.realKm = +b.km.toFixed(2); row.real = Math.round(b.km / 4.5 * 60); row.src = 'BRouter foot, 4.5 km/h' + (b.moved ? `, last ${b.moved} m to the street added` : ''); row.planned = r.min; }
+    if (r.kind === 'walk') { lastB = await pace(lastB, 2500); const b = await brouterNear(r, 'hiking-mountain'); row.realKm = +b.km.toFixed(2); row.up = b.up; row.real = Math.round(b.km / 4.5 * 60 + (b.up > 0 ? b.up / 10 : 0)); row.src = 'BRouter foot, 4.5 km/h' + (b.up >= 30 ? ` and 1 min per 10 m of the ${Math.round(b.up)} m climb` : '') + (b.moved ? `, last ${b.moved} m to the street added` : ''); row.planned = r.min; }
     else if (r.kind === 'taxi') { lastB = await pace(lastB, 2500); const b = await brouterNear(r, 'car-fast'); row.realKm = +b.km.toFixed(2); row.real = Math.round(b.sec / 60); row.src = 'BRouter car, empty roads' + (b.moved ? `, last ${b.moved} m to the street added` : ''); row.planned = r.min; }
     else if (TT.test(r.kind)) { const j = tt.get(r); if (!j) throw new Error('timetable files: the catalog of open feeds was not given (--gtfs-catalog)'); if (j.err) { if (r.kind === 'ferry' && /no open feed|no timetabled boat/.test(j.err)) { (notChecked[r.kind] = notChecked[r.kind] || []).push(row); continue; } throw new Error(j.err); }
       row.real = Math.round(j.min); row.src = j.src; row.planned = r.min + r.wait; }
@@ -131,6 +132,8 @@ for (const k of kinds) { const a = rows.filter(r => r.kind === k), nc = (notChec
 const show = (title, list) => { if (!list.length) return; console.log(`\n${title}`); list.slice(0, 25).forEach(r => console.log(`${r.sev === 'S1' ? 'FAIL S1' : r.sev || '  '} ${r.trip} day ${r.day} ${r.type} ${r.city || ''}: ${r.kind} ${r.fromName || '?'} > ${r.toName || '?'} (${r.km != null ? r.km + ' km' : ''}) planned ${r.planned} min at ${clk(r.at)}, real ${r.real} min${r.realKm != null ? ' (' + r.realKm + ' km)' : ''} [${r.src}]${r.back ? ' RIDE BACK' : ''}${r.n > 1 ? ` (on ${r.n} plans)` : ''}`)); };
 show('Planned faster than the real world allows:', rows.filter(r => r.verdict === 'too fast').sort((a, b) => (b.sev === 'S1') - (a.sev === 'S1') || (b.real - b.planned) - (a.real - a.planned)));
 show('Planned far slower than the real world:', rows.filter(r => r.verdict === 'too slow').sort((a, b) => (b.planned - b.real) - (a.planned - a.real)));
+{ const t = rows.filter(r => TT.test(r.kind)); if (t.length) { console.log('\nTrain, metro, bus and ferry rides against the operators\' timetables:');
+  t.slice(0, 60).forEach(r => console.log(`  ${r.verdict === 'ok' ? 'ok ' : r.sev} ${r.trip} day ${r.day} ${r.city || ''}: ${r.label} planned ${r.planned} min at ${clk(r.at)}, timetable ${r.real} min [${String(r.src).slice(0, 150)}]${r.back ? ' RIDE BACK' : ''}`)); } }
 const errs = Object.values(notChecked).flat().filter(r => r.err);
 if (errs.length) { console.log(`\nNOT CHECKED, the source gave no answer (${errs.length}):`); const by = {}; errs.forEach(r => { const k = r.err.replace(/\d+/g, '#'); by[k] = (by[k] || 0) + 1; }); Object.entries(by).forEach(([k, n]) => console.log(`  ${n} x ${k}`)); }
 const nos = Object.entries(notChecked).map(([k, l]) => [k, l.filter(r => !r.err).length]).filter(([, n]) => n);
@@ -143,7 +146,7 @@ if (CACHE) { // the real least time of every ride measured, by kind and its two 
   let old = []; try { old = JSON.parse(fs.readFileSync(CACHE, 'utf8')).rides || []; } catch (e) { }
   const ck = r => `${r.kind}|${(+r.from.lat).toFixed(4)},${(+r.from.lng).toFixed(4)}|${(+r.to.lat).toFixed(4)},${(+r.to.lng).toFixed(4)}`, by = new Map(old.map(r => [ck(r), r]));
   const day = new Date().toISOString().slice(0, 10);
-  for (const r of rows) if (r.real > 0) by.set(ck(r), { kind: r.kind, from: { lat: +(+r.from.lat).toFixed(4), lng: +(+r.from.lng).toFixed(4) }, to: { lat: +(+r.to.lat).toFixed(4), lng: +(+r.to.lng).toFixed(4) }, real: r.real, realKm: r.realKm, src: r.src.split(':')[0], measured: day });
+  for (const r of rows) if (r.real > 0) by.set(ck(r), { kind: r.kind, from: { lat: +(+r.from.lat).toFixed(4), lng: +(+r.from.lng).toFixed(4) }, to: { lat: +(+r.to.lat).toFixed(4), lng: +(+r.to.lng).toFixed(4) }, real: r.real, realKm: r.realKm, ...(r.up != null ? { up: Math.round(r.up) } : {}), src: r.src.split(':')[0], measured: day });
   const all = [...by.values()].sort((a, b) => ck(a) < ck(b) ? -1 : 1).slice(-4000);
   fs.writeFileSync(CACHE, JSON.stringify({ note: 'Real least ride times measured by tools/truth/real-world.mjs (BRouter for walks and taxis, operators\' timetable files for trains, metro, buses and ferries). Read by tools/truth/real-world-gate.cjs.', rides: all }, null, 0).replace(/\},\{/g, '},\n{') + '\n');
   console.log(`\nKept ${all.length} real-world ride times in ${CACHE}`);

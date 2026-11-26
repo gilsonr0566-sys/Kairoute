@@ -80,7 +80,8 @@ async function rows(zip, names, file, each) {
 const sec = t => { const m = /^(\d+):(\d\d)(?::(\d\d))?/.exec(t || ''); return m ? +m[1] * 3600 + +m[2] * 60 + +(m[3] || 0) : NaN; };
 const ymd = d => d.toISOString().slice(0, 10).replace(/-/g, '');
 // weekday: 0 Sunday .. 6 Saturday. today: Date (the timetable day is the next such weekday the feed still covers).
-export async function readFeed(zip, box, weekday, today = new Date()) {
+// win: [from, to] seconds after midnight; only departures inside it are kept (a big city's buses run to millions a day).
+export async function readFeed(zip, box, weekday, today = new Date(), win = [0, 40 * 3600]) {
   const names = members(zip), F = { stops: [], conns: [], routes: new Map(), day: null, dated: false };
   const sid = new Map();
   await rows(zip, names, 'stops.txt', r => { const lat = +r.stop_lat, lng = +r.stop_lon; if (!isFinite(lat) || !isFinite(lng) || (!lat && !lng)) return;
@@ -104,9 +105,9 @@ export async function readFeed(zip, box, weekday, today = new Date()) {
   await rows(zip, names, 'stop_times.txt', r => { const t = trips.get(r.trip_id); if (!t) return; const s = sid.get(r.stop_id); if (s == null) return;
     const a = sec(r.arrival_time), dp = sec(r.departure_time); if (!isFinite(a) && !isFinite(dp)) return; t.st.push([+r.stop_sequence, s, isFinite(a) ? a : dp, isFinite(dp) ? dp : a]); });
   const freq = new Map(); await rows(zip, names, 'frequencies.txt', r => { const h = +r.headway_secs, a = sec(r.start_time), z = sec(r.end_time); if (h > 0 && isFinite(a) && isFinite(z)) { if (!freq.has(r.trip_id)) freq.set(r.trip_id, []); freq.get(r.trip_id).push([a, z, h]); } });
-  let tn = 0; const push = (st, shift, route) => { const id = tn++; for (let i = 0; i + 1 < st.length; i++) { const dep = st[i][3] + shift, arr = st[i + 1][2] + shift; if (arr >= dep && st[i][1] !== st[i + 1][1]) F.conns.push({ dep, arr, from: st[i][1], to: st[i + 1][1], trip: id, route }); } };
+  let tn = 0; const push = (st, shift, route) => { const id = tn++; for (let i = 0; i + 1 < st.length; i++) { const dep = st[i][3] + shift, arr = st[i + 1][2] + shift; if (arr >= dep && dep >= win[0] && dep <= win[1] && st[i][1] !== st[i + 1][1]) F.conns.push({ dep, arr, from: st[i][1], to: st[i + 1][1], trip: id, route }); } };
   for (const [id, t] of trips) { if (t.st.length < 2) continue; t.st.sort((x, y) => x[0] - y[0]); const rt = F.routes.get(t.route) || { name: t.route, type: 3 }, fq = freq.get(id);
-    if (!fq) push(t.st, 0, rt); else { const t0 = t.st[0][3]; for (const [a, z, h] of fq) for (let s = a; s < z; s += h) push(t.st, s - t0, rt); } }
+    if (!fq) push(t.st, 0, rt); else { const t0 = t.st[0][3]; for (const [a, z, h] of fq) for (let s = Math.max(a, a + Math.ceil((win[0] - 6 * 3600 - a) / h) * h); s < z && s <= win[1]; s += h) push(t.st, s - t0, rt); } }
   return F;
 }
 
@@ -168,8 +169,9 @@ export async function gtfsTimes(rides, { catalog, tmp = fs.mkdtempSync(path.join
     const box = [Math.min(...pts.map(p => p.lat)) - pad, Math.min(...pts.map(p => p.lng)) - pad, Math.max(...pts.map(p => p.lat)) + pad, Math.max(...pts.map(p => p.lng)) + pad];
     // Feeds per ride (a day trip's train needs the national feed, a metro ride the city's), read once for the group.
     const want = new Map(); for (const r of g.rides) for (const f of feedsFor(catalog, [r.from, r.to])) want.set(f.id, f);
-    const read = new Map();
-    for (const f of want.values()) { try { const zip = await fetchFeed(f, tmp), F = await readFeed(zip, box, g.wd, today); if (F.dated && (today - new Date(F.dated.replace(/(\d{4})(\d\d)(\d\d)/, '$1-$2-$3'))) / 864e5 > 400) { log(`  ${gk}: ${f.provider}: timetable file ended ${F.dated}, too old to count`); continue; }
+    const read = new Map(), ats = g.rides.map(r => isFinite(r.at) ? r.at : 600), win = [(Math.min(...ats) - 5) * 60, (Math.max(...ats) + SEARCH_MIN + 8 * 60) * 60];
+    for (const f of want.values()) { try { const zip = await fetchFeed(f, tmp), F = await readFeed(zip, box, g.wd, today, win);
+      if (F.conns.length > 6e6) { log(`  ${gk}: ${f.provider}: ${F.conns.length} legs, too many to read here: left out`); continue; } if (F.dated && (today - new Date(F.dated.replace(/(\d{4})(\d\d)(\d\d)/, '$1-$2-$3'))) / 864e5 > 400) { log(`  ${gk}: ${f.provider}: timetable file ended ${F.dated}, too old to count`); continue; }
       if (F.conns.length) { read.set(f.id, Object.assign(F, { feed: f })); log(`  ${gk}: ${f.provider}: ${F.conns.length} legs between stops on ${F.day}${F.dated ? ' (timetable ended ' + F.dated + ')' : ''}`); } else log(`  ${gk}: ${f.provider}: no departures in this area that day`); } catch (e) { log(`  ${gk}: ${String(e.message || e).slice(0, 140)}`); } }
     if (!read.size) { for (const r of g.rides) out.set(r, { err: want.size ? 'timetable files: none could be read for this place' : 'timetable files: no open feed covers this place' }); continue; }
     const N = network([...read.values()]);

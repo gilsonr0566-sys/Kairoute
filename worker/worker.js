@@ -2,6 +2,7 @@ import { extras, Group } from "./extras.js";
 import { allOptions, ferriesNear, keptFerries, ferryKey, topRides } from "./transit.js";
 import { departures } from "./departures.js";
 import { islandsData } from "./islands.js";
+import { climbOf, along, upDown } from "./climb.js";
 export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
 // and answers. Usage is counted from real token counts.
@@ -1304,7 +1305,7 @@ async function valhallaLeg(l) {
   return { c, km: Math.round(t.summary.length * 1000) / 1000, min: Math.round(t.summary.time / 60), src: "valhalla" };
 }
 async function routeLeg(l, env, ctx) {
-  const key = (await codeKey("leg", [routeLeg, osrmLeg, valhallaLeg, decodePoly])) + `${l.m}:${r5(l.a[0])},${r5(l.a[1])};${r5(l.b[0])},${r5(l.b[1])}`;
+  const key = (await codeKey("leg", [routeLeg, osrmLeg, valhallaLeg, decodePoly, climbOf, along, upDown])) + `${l.m}:${r5(l.a[0])},${r5(l.a[1])};${r5(l.b[0])},${r5(l.b[1])}`;
   const hit = await env.USAGE.get(key, "json"); if (hit) return hit;
   let res = null;
   const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -1314,6 +1315,10 @@ async function routeLeg(l, env, ctx) {
     try { res = await osrmLeg(l); break; } catch (e) { try { res = await valhallaLeg(l); break; } catch (e2) {} }
   }
   if (!res) return null;
-  ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: 90 * 86400 }));
+  // A walk also carries the metres it climbs and drops (climb.js: free height data along the route's own path), so its
+  // time counts the hill (R-33, E48). No height answer: no `up`, and the leg is kept one day only, to be asked again.
+  let hill = true;
+  if (l.m === "foot") { const cl = await climbOf(res.c).catch(() => null); if (cl) { res.up = cl.up; res.down = cl.down; } else hill = false; }
+  ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (hill ? 90 : 1) * 86400 }));
   return res;
 }
