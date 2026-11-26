@@ -8,7 +8,7 @@
 // function. Part 3 plants each known way this has gone wrong in a copy of the build and must fail on every one.
 // Usage: node tools/beta2/day-trips-check.cjs [beta2-site/index.html] [--no-plants]
 'use strict';
-const { chromium } = require('playwright'), path = require('path'), fs = require('fs'), os = require('os'), { spawnSync } = require('child_process');
+const { chromium } = require('playwright'), path = require('path'), fs = require('fs'), os = require('os'), { spawn } = require('child_process');
 const argv = process.argv.slice(2), FILE = path.resolve(argv.find(a => !a.startsWith('--')) || 'beta2-site/index.html'), PLANTS = !argv.includes('--no-plants');
 const MOCK = 'https://mock.test', C = { lat: 41.9, lng: 12.48 }, at = (dx, dy) => ({ lat: +(C.lat + dy / 111).toFixed(5), lng: +(C.lng + dx / 83).toFixed(5) });
 const km = p => Math.hypot((p.lat - C.lat) * 111, (p.lng - C.lng) * 83);
@@ -269,13 +269,15 @@ const PLANT = [
   let bad = fails.length, planted = 0;
   if (!fails.length && PLANTS) {
     const html = fs.readFileSync(FILE, 'utf8'), tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'day-trips-'));
-    for (const m of PLANT.filter(m => !process.env.ONLY || process.env.ONLY.split(',').includes(m.id))) {
+    // Four planted copies at a time, each in its own process: one after another they outran the gate's 15 minutes.
+    const todo = PLANT.filter(m => !process.env.ONLY || process.env.ONLY.split(',').includes(m.id));
+    await Promise.all([0, 1, 2, 3].map(async () => { while (todo.length) { const m = todo.shift();
       if (html.split(m.from).length !== 2) { bad++; console.log(`NOT TESTED ${m.id}: its text is not in the build once (the code moved on: update the planted bug)`); continue; }
       const f = path.join(tmp, m.id + '.html'); fs.writeFileSync(f, html.replace(m.from, m.to));
-      const r = spawnSync('node', [__filename, f, '--no-plants'], { encoding: 'utf8', env: Object.assign({}, process.env, { DAYTRIP_PLANTED: '1' }) }), caught = r.status !== 0;
+      const code = await new Promise(done => { const c = spawn('node', [__filename, f, '--no-plants'], { stdio: 'ignore', env: Object.assign({}, process.env, { DAYTRIP_PLANTED: '1' }) }); c.on('exit', done); c.on('error', () => done(0)); }), caught = code !== 0 && code !== null;
       if (!caught) bad++; else planted++;
       console.log(`${caught ? 'caught' : 'MISSED'} ${m.id}: ${m.was}`);
-    }
+    } }));
   }
   console.log(`day-trips-check: ${n} checks, ${fails.length} failed${PLANTS && !fails.length ? `; ${planted} of ${PLANT.length} planted bugs caught` : ''}`);
   process.exit(bad ? 1 : 0);

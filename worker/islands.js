@@ -156,7 +156,9 @@ export async function landingData(wd, env, codeKey) {
   // The outline: the island or island group itself, and the islands that are its members. Anything the map files
   // under this encyclopedia id counts, whatever its tags: the id says it is the island (live check, Nov 26: Hvar's
   // outline was not found by its 'place' tag).
-  const els = await overpass(`[out:json][timeout:40];(way["wikidata"="${wd}"];relation["wikidata"="${wd}"];)->.i;(.i;relation(r.i);)->.all;.all out tags geom;`, 40000);
+  // Asked for with its members ('out geom'): with tags only, a big island drawn from many pieces of coast came back
+  // with no pieces at all (live check, Nov 26: Hvar and Lantau found on the map, with no outline).
+  const els = await overpass(`[out:json][timeout:40];(way["wikidata"="${wd}"];relation["wikidata"="${wd}"];)->.i;(.i;relation(r.i);)->.all;.all out geom;`, 40000);
   if (!els) return { error: "Busy", status: 503 };
   const shapes = [];
   for (const el of els) for (const r of rings(el)) { if (r.length < 4) continue; const f = flat(simplify(r, 0.0003)); if (f.length >= 8) shapes.push(f); if (shapes.length >= 60) break; }
@@ -168,7 +170,7 @@ export async function landingData(wd, env, codeKey) {
     if (!ps) return { error: "Busy", status: 503 };
     piers = piersOn(shapes, ps.map(e => ({ name: (e.tags && (e.tags["name:en"] || e.tags.int_name || e.tags.name)) || "", lat: e.lat ?? (e.center && e.center.lat), lng: e.lon ?? (e.center && e.center.lon) })));
   }
-  const res = { wd, outline: shapes.length > 0, shapes: shapes.length, found: els.length, piers: piers.slice(0, 40) };
+  const res = { wd, outline: shapes.length > 0, shapes: shapes.length, found: els.length, parts: els.reduce((n, e) => n + (e.geometry ? 1 : 0) + (e.members || []).filter(m => m.geometry).length, 0), piers: piers.slice(0, 40) };
   await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (piers.length ? 60 : 14) * 86400 });
   return res;
 }

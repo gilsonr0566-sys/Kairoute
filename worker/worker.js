@@ -1147,7 +1147,7 @@ async function mapSights(c, UA) {
 // The kinds of place the app reads (see the kinds lookup in sourcesData): Wikidata class -> one plain word. A place is
 // told by what it is, never by the words in its name.
 const SIGHT_KINDS = { Q811979: "structure", Q618123: "feature", Q41176: "building", Q839954: "archaeological", Q15661340: "ancient-city", Q54831: "amphitheatre", Q162875: "mausoleum",
-  Q22698: "park", Q1107656: "garden", Q35145263: "natural", Q40080: "beach", Q8502: "mountain", Q23442: "island", Q33837: "island", Q46169: "park", Q34038: "waterfall", Q39614: "cemetery", Q6017969: "viewpoint",
+  Q22698: "park", Q1107656: "garden", Q35145263: "natural", Q40080: "beach", Q8502: "mountain", Q23442: "island", Q33837: "island", Q1402592: "island", Q46169: "park", Q34038: "waterfall", Q39614: "cemetery", Q6017969: "viewpoint",
   Q33506: "museum", Q207694: "art-museum", Q16970: "church", Q2977: "cathedral", Q32815: "mosque", Q34627: "synagogue", Q44539: "temple", Q108325: "chapel", Q44613: "monastery",
   Q23413: "castle", Q57821: "fortification", Q16560: "palace", Q174782: "square", Q12280: "bridge", Q4989906: "monument", Q179700: "statue", Q483453: "fountain", Q12518: "tower", Q11303: "skyscraper", Q2105463: "observation-deck",
   Q24354: "theatre", Q153562: "opera-house", Q1060829: "concert-hall", Q483110: "stadium", Q641226: "arena", Q1076486: "sports-venue", Q37654: "market", Q43501: "zoo", Q2281788: "aquarium", Q194195: "amusement-park",

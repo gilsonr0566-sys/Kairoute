@@ -180,7 +180,8 @@ function tripPlace(y) {
   // district, a park or a rural area is a place to go, whatever the encyclopedia's classes say (live check, Nov 26: the
   // encyclopedia calls towns and islands "regions" too, so Sintra, Lantau and the Princes' Islands were kept out).
   if (/^(country|airport|itinerary|topic)$/.test(y.vt || "")) return false;
-  const guidePlace = /^(city|district|park|rural)$/.test(y.vt || "");
+  // A part of the city's own guide ("Istanbul/Princes' Islands") is one of its district pages, whatever else it is called.
+  const guidePlace = /^(city|district|park|rural)$/.test(y.vt || "") || !!y.part;
   if (!srcKnown(y)) return guidePlace || !TRIP_NOT_NAME.test(y.name);   // facts not known: its name alone must not say otherwise
   if (farNotPlace(y)) return false;
   if (!guidePlace && srcHas2(y, TRIP_NOT) && !srcHas2(y, TRIP_PLACE)) return false;
@@ -259,16 +260,16 @@ async function classicTrips(city, src, quiet) {
       return ps.length ? ps.map(p => ({ lat: p.lat, lng: p.lng, pier: p.name && !nonLatin(p.name) ? p.name : "" })) : [{ lat: y.lat, lng: y.lng, noPier: true }]; });
     const flat = []; targets.forEach((ts, i) => ts.forEach(t => { if (!t.home) flat.push({ i, t }); }));
     const lines = new Array(flat.length).fill(undefined);
-    for (let at = 0; at < flat.length; at += 8) { const part = flat.slice(at, at + 8); let res = null;
+    for (let at = 0; at < flat.length; at += 8) { const part = flat.slice(at, at + 8); let res = null, why = "";
       try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: [+centre.lat, +centre.lng], b: [+x.t.lat, +x.t.lng], dow: 3 })) }) });
-        if (r.ok) res = ((await r.json()) || {}).results || []; } catch (e) {}
-      part.forEach((x, n) => { lines[at + n] = res ? res[n] || null : undefined; }); }
+        if (r.ok) res = ((await r.json()) || {}).results || []; else why = " (" + r.status + ")"; } catch (e) { why = " (" + String(e && e.name || e) + ")"; }
+      part.forEach((x, n) => { lines[at + n] = res ? res[n] || null : undefined; if (!res) x.why = why; }); }
     const ways = [], log = tripsLog[k] = [], last = tripsTries[k] >= 3;
     for (let i = 0; i < cands.length; i++) { const y = cands[i]; let best = null, unknown = !targets[i].length;
       if (targets[i][0] && targets[i][0].home) { log.push({ name: y.name, at: "a pier in town", lines: [], got: "the city stands on it" }); continue; }
       const L = { name: y.name, at: !targets[i].length ? "piers not answered" : targets[i][0].noPier ? (y.noOutline ? "no outline on the map" : "no pier on the map") : targets[i][0].pier != null ? targets[i].length + " pier(s)" : "its point", lines: [] }; log.push(L);
       flat.forEach((x, n) => { if (x.i !== i) return; const r = lines[n];
-        L.lines.push(r === undefined ? "not answered" : r === null ? "no answer" : (r.partial ? "partial " : "") + ((r.opts || []).map(o => o && (o.kind || o.mode) + " " + o.min + (o.noTimetable ? " map" : "")).join(", ") || "none"));
+        L.lines.push(r === undefined ? "not answered" + (x.why || "") : r === null ? "no answer" : (r.partial ? "partial " : "") + ((r.opts || []).map(o => o && (o.kind || o.mode) + " " + o.min + (o.noTimetable ? " map" : "")).join(", ") || "none"));
         if (r === undefined || r === null || (r.partial && !(r.opts || []).length)) { unknown = true; return; }
         for (const o of r.opts || []) if (o && o.kind && isFinite(o.min) && o.min > 0 && o.min <= TRIP_LINE_MIN && (!o.every || o.every <= 120) && (!best || o.min < best.line.min)) best = { line: o, at: x.t }; });
       // No line (asked and answered: a line not asked about yet is not "no line"): the road, when a drive really goes
@@ -312,7 +313,7 @@ if (typeof window !== "undefined") {
   window.__kairouteFarNoAI = farNoAI;
   window.__kairouteClassicTrips = (city, src) => classicTrips(city, src, true);
   window.__kairouteTripLog = city => tripsLog[keyOf(city.city)] || [];
-  window.__kairouteTripWhy = (city, src, re) => { const c = srcCentre(city, src), rx = new RegExp(re, "i"); return (src.far || []).concat((src.next || []).map(x => Object.assign({ next: true }, x))).filter(y => rx.test(y.name) || rx.test(y.voy || "")).map(y => ({ name: y.name, wd: y.wd, voy: y.voy, said: y.said, part: !!y.part, next: !!y.next, sl: y.sl, kinds: y.kinds, km: c ? +hav(c, y).toFixed(1) : null, place: tripPlace(Object.assign({ km: c ? hav(c, y) : null }, y)) })); };
+  window.__kairouteTripWhy = (city, src, re) => { const c = srcCentre(city, src), rx = new RegExp(re, "i"); return (src.far || []).concat((src.next || []).map(x => Object.assign({ next: true }, x))).filter(y => rx.test(y.name) || rx.test(y.voy || "")).map(y => ({ name: y.name, wd: y.wd, voy: y.voy, said: y.said, part: !!y.part, next: !!y.next, sl: y.sl, vt: y.vt, kinds: y.kinds, km: c ? +hav(c, y).toFixed(1) : null, place: tripPlace(Object.assign({ km: c ? hav(c, y) : null }, y)) })); };
   window.__kairouteTripCands = (city, src) => tripCands(city, src).map(y => ({ name: y.name, kinds: (y.kinds || []).join("/"), km: +y.km.toFixed(1), sl: y.sl || 0, next: !!y.next, part: !!y.part, said: y.said || 0, unesco: !!y.unesco, isle: tripIsle(y), score: Math.round(tripScore(y)) }));
   // Test hook: build a city's guide from its sources alone (as with the AI switched off) for day i.
   window.__kairouteSourceGuide = async i => { const d = trip.days[i]; const c = await sourceGuide(d); return c ? { city: c.city, main: c.sites.filter(x => !x.quick).length, quick: c.sites.filter(x => x.quick).length, must: c.sites.filter(x => x.mustSee).map(x => x.name), eats: c.restaurants.length, starts: Object.fromEntries(Object.entries(c.starts).map(([k, v]) => [k, v.map(p => p.name + (p.unknown ? " (unknown)" : ""))])) } : null; };
