@@ -1352,7 +1352,9 @@ function dayPoint(d, city) {
   const listKey = d.type === "port" || d.type === "embark" ? "cruise" : MODES[d.mode].list;
   // The pier the traveler named from their cruise documents and picked on the map (when the map search found none):
   // a real place they confirmed, never a guess (Nov 21 outside check: Dubrovnik and Reykjavik port days stayed blank).
-  if (listKey === "cruise" && d.pier && isFinite(+d.pier.lat) && isFinite(+d.pier.lng)) return { name: d.pier.name, lat: +d.pier.lat, lng: +d.pier.lng, note: "The pier you named, found on the map.", own: true };
+  // An air, cargo or container terminal is no pier, even one saved before the app knew it (E58): the day asks again.
+  const shipOk = p => typeof KEngine === "undefined" || !KEngine.notShipPlace || !KEngine.notShipPlace(p);
+  if (listKey === "cruise" && d.pier && isFinite(+d.pier.lat) && isFinite(+d.pier.lng) && shipOk(d.pier)) return { name: d.pier.name, lat: +d.pier.lat, lng: +d.pier.lng, note: "The pier you named, found on the map.", own: true };
   // The same for an airport or station the guide doesn't list (first-time traveler walk, Nov 22: Rome's arrival and
   // leaving days said "Choose your arrival airport" with no airport to choose, and stopped there).
   // An airport that is no airport a traveler flies to (a terminal, a heliport, one closed or not built yet: round 6a
@@ -2072,7 +2074,7 @@ async function pierSearch() {
   const ss = allSites(city).filter(x => isFinite(+x.lat)), mid = ss.length ? { lat: ss.map(x => +x.lat).sort((a, b) => a - b)[ss.length >> 1], lng: ss.map(x => +x.lng).sort((a, b) => a - b)[ss.length >> 1] } : null;
   const ask = async q => { try { const r = freeAI ? await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(bareName(d.destination)) + "&q=" + encodeURIComponent(q)) : null, j = r && r.ok ? await r.json() : null;
     return ((j && j.places) || []).filter(m => isFinite(+m.lat) && isFinite(+m.lng) && (!mid || hav(mid, m) <= 60)); } catch (e) { return []; } };
-  const add = (list, near) => list.filter(m => !PIER_NOT.test(String(m.kind || "")) && (!near || near.some(a => hav(a, m) <= 3))).forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " "), addr: m.addr || "", km: mid ? hav(mid, m) : null }); });
+  const add = (list, near) => list.filter(m => !PIER_NOT.test(String(m.kind || "")) && !(typeof KEngine !== "undefined" && KEngine.notShipPlace && KEngine.notShipPlace(m)) && (!near || near.some(a => hav(a, m) <= 3))).forEach(m => { if (!f.results.some(y => hav(y, m) < 0.05)) f.results.push({ name: m.name, lat: +(+m.lat).toFixed(5), lng: +(+m.lng).toFixed(5), kind: String(m.kind || "").replace(/_/g, " "), addr: m.addr || "", km: mid ? hav(mid, m) : null }); });
   const got = await ask(f.q);
   // An airport or station: only places the map calls one (or named as one), within reach of the city.
   if (kind !== "cruise") { const K = typeof SG_KIND !== "undefined" ? SG_KIND[kind] : null;

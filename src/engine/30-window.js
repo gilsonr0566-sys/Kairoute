@@ -35,10 +35,13 @@
   E.GATE_OUT = 25; // km: a port named apart from its city ("Port (City)") lies at least this far out of the city
   // (an air or cargo terminal is no pier either: the map search for a port gave "Terminal de Carga Aérea", an air cargo
   // terminal by the airport, and a ship day was planned to end there; odd trips, Nov 25)
-  const CRUISE_NOT = /\b(ferry|ferries|marine highway|old (port|harbou?r)|vieux[- ]port|porto (antico|vecchio)|stara luka|eski liman|puerto viejo|alter hafen|cargo|carga|freight|container|air ?port|aeroporto|aeropuerto|a[eé]roport|a[eé]rea|aerial)\b/i;
+  const CRUISE_NOT = /\b(ferry|ferries|marine highway|old (port|harbou?r)|vieux[- ]port|porto (antico|vecchio)|stara luka|eski liman|puerto viejo|alter hafen)\b/i;
+  // No ship ties up at an air, cargo or container terminal: never a pier, from a guide, the map or a name the traveler typed.
+  const NOT_SHIP = /\b(cargo|carga|freight|container|air ?port|aeroporto|aeropuerto|a[eé]roport|a[eé]rea|aerial)\b/i;
+  E.notShipPlace = c => { const n = String((c && c.name) || ""); return NOT_SHIP.test(n) && !/cruise/i.test(n); };
   E.cruiseOk = c => { const n = String((c && c.name) || "").trim(); if (!n) return false;
     if (n.length > 70 || /[.!?;]\s|\d+\s*(jd|eur|usd|euros?|dollars?|hours?)\b/i.test(n) || n.split(/\s+/).length > 9) return false; // a sentence
-    if (CRUISE_NOT.test(n) && !/cruise/i.test(n)) return false;
+    if ((CRUISE_NOT.test(n) || NOT_SHIP.test(n)) && !/cruise/i.test(n)) return false;
     // An article about a whole port (no map kind) says nothing about where the ships tie up.
     if (c.wiki && !c.kind && /^(port|harbou?r) of\b/i.test(n) && !/cruise|terminal|pier|wharf|berth/i.test(n)) return false;
     return true; };

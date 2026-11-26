@@ -666,7 +666,14 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       if (picks.length !== 1) why = 'the map answers offered: ' + JSON.stringify(picks) + ' (the one 200 km away must not be)';
       else { await tapSel(p, '[data-pierpick="0"]'); await p.waitForTimeout(1200);
         const r = await p.evaluate(() => ({ err: (document.querySelector('.card.empty') || {}).innerText || '', first: (document.querySelector('.timeline .tl.first') || {}).innerText || '' }));
-        if (r.err || !/Molo Angioino/.test(r.first)) why = 'after the pick: ' + (r.err || r.first).replace(/\s+/g, ' ').slice(0, 160); } }
+        if (r.err || !/Molo Angioino/.test(r.first)) why = 'after the pick: ' + (r.err || r.first).replace(/\s+/g, ' ').slice(0, 160);
+        // R-07 on the screen (E58): a pier saved as an air cargo terminal (an older trip kept what the map once offered) is
+        // never planned from: the day asks for the pier again. Back to the pier picked above afterwards.
+        if (!why) { const pier0 = await p.evaluate(i => { let k = 0, was = null; window.__kairouteEdit('all', d => { if (k++ === i) was = d.pier ? JSON.parse(JSON.stringify(d.pier)) : null; return {}; }); return JSON.stringify(was); }, i);
+          await p.evaluate(i => { window.__kairouteEdit(i, { pier: { name: 'Terminal de Carga Aérea', lat: 40.884, lng: 14.29 } }); window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, i); await p.waitForTimeout(1200);
+          const r2 = await p.evaluate(() => ({ form: !!document.querySelector('#pierform #pier-name'), first: (document.querySelector('.timeline .tl.first') || {}).innerText || '' }));
+          check('A pier saved as an air or cargo terminal is never planned from: the day asks for the pier again', r2.form && !/Carga/.test(r2.first), r2.first.replace(/\s+/g, ' ').slice(0, 160) || 'no pier form');
+          await p.evaluate(([i, x]) => window.__kairouteEdit(i, { pier: JSON.parse(x) }), [i, pier0]); } } }
     check('A port whose pier the map can\'t find asks for its name, and the pier picked on the map plans the day', !why, why); }
   await ctx.close(); srv.close(); await browser.close();
   const leaks = results.filter(r => !r.ok);
