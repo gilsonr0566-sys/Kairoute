@@ -260,7 +260,9 @@ async function classicTrips(city, src, quiet) {
       return ps.length ? ps.map(p => ({ lat: p.lat, lng: p.lng, pier: p.name && !nonLatin(p.name) ? p.name : "" })) : [{ lat: y.lat, lng: y.lng, noPier: true }]; });
     const flat = []; targets.forEach((ts, i) => ts.forEach(t => { if (!t.home) flat.push({ i, t }); }));
     const lines = new Array(flat.length).fill(undefined);
-    for (let at = 0; at < flat.length; at += 8) { const part = flat.slice(at, at + 8); let res = null, why = "";
+    // Three at a time: eight trips a day out in one ask took the helper longer than the page waits (live check, Nov 26:
+    // every first ask of eight timed out after 60 s, three tries running).
+    for (let at = 0; at < flat.length; at += 3) { const part = flat.slice(at, at + 3); let res = null, why = "";
       try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: [+centre.lat, +centre.lng], b: [+x.t.lat, +x.t.lng], dow: 3 })) }) });
         if (r.ok) res = ((await r.json()) || {}).results || []; else why = " (" + r.status + ")"; } catch (e) { why = " (" + String(e && e.name || e) + ")"; }
       part.forEach((x, n) => { lines[at + n] = res ? res[n] || null : undefined; if (!res) x.why = why; }); }

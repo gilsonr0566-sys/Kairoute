@@ -1003,7 +1003,7 @@ async function famousData(label, env, ctx) {
     const hm = new Map(((hj && hj.results && hj.results.bindings) || []).map(b => [b.item.value.split("/").pop(), +b.un.value]));
     [...main, ...far].forEach(x => { if (hm.has(x.wd)) { x.heritage = true; x.unesco = hm.get(x.wd) === 1; } }); }
   const res = Object.assign({ area, port, center, main, far }, farMissed ? { farMissed: true } : {});
-  await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (farMissed ? 1 : 30) * 86400 }); // kept before the next stage starts (see voyageKept)
+  await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: farMissed ? 3 * 3600 : 30 * 86400 }); // kept before the next stage starts (see voyageKept)
   return res;
 }
 
@@ -1339,7 +1339,9 @@ async function sourcesData(label, env, ctx) {
   lap("next");
   const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T };
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
-  const ttl = { expirationTtl: (enV.pages && fam.main.length && !mapMissed && !fam.farMissed ? 30 : 1) * 86400 };
+  // One whose places a day out could not be read (rule R-36) is asked again after 3 hours: a day without the city's
+  // day trips is a long time (live check, Nov 26: Istanbul's guide links were missed on one run in two).
+  const ttl = { expirationTtl: fam.farMissed ? 3 * 3600 : (enV.pages && fam.main.length && !mapMissed ? 30 : 1) * 86400 };
   ctx.waitUntil(Promise.all([env.USAGE.put(key, JSON.stringify(res), ttl), placeKey ? env.USAGE.put(placeKey, JSON.stringify(res), ttl) : null]));
   return res;
 }
