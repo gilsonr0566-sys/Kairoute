@@ -10,15 +10,18 @@ on:
       live:
         description: "1 = ask the live helper instead of this branch's helper code"
         default: ""
-  push:
-    branches: ["claude/project-thread-s5o355"]
-    paths: ["tools/beta2/day-trips-live.cjs", "tools/beta2/day-trips-expect.json", ".github/workflows/daytrip-probe.yml"]
 permissions:
   contents: read
 jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    # Six jobs side by side, each with every sixth city: one job asked all 22 cities in turn and was cut off at its
+    # 90 minutes after six of them (Nov 26; a city takes 6 to 23 minutes).
+    strategy:
+      fail-fast: false
+      matrix:
+        part: [0, 1, 2, 3, 4, 5]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,6 +32,8 @@ jobs:
       - env:
           ONLY: ${{ inputs.only || '' }}
           LIVE: ${{ inputs.live || '' }}
+          PART: ${{ matrix.part }}
+          PARTS: 6
         run: |
           if [ -z "$LIVE" ]; then node tools/beta2/local-helper.mjs 8790 & sleep 3; export HELPER=http://localhost:8790/workers.dev; fi
           node tools/beta2/day-trips-live.cjs beta2-site/index.html

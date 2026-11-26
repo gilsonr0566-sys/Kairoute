@@ -6,7 +6,8 @@
 const { chromium } = require('playwright'), path = require('path'), fs = require('fs');
 const FILE = path.resolve(process.argv[2] || 'beta2-site/index.html');
 const H = (process.env.HELPER || JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'ai.json'))).url).replace(/\/$/, '');
-const CITIES = JSON.parse(fs.readFileSync(path.join(__dirname, 'day-trips-expect.json'))).cities.filter(c => !process.env.ONLY || new RegExp(process.env.ONLY, 'i').test(c.city));
+const CITIES = JSON.parse(fs.readFileSync(path.join(__dirname, 'day-trips-expect.json'))).cities.filter(c => !process.env.ONLY || new RegExp(process.env.ONLY, 'i').test(c.city))
+  .filter((c, i) => !(+process.env.PARTS > 1) || i % +process.env.PARTS === +process.env.PART);   // PART of PARTS: every n-th city, so a run splits over jobs
 (async () => {
   // The page is a file, so the live helper sees origin "null" and its CORS rule refuses it (every ask a TypeError): the test
   // browser alone skips that rule for the live helper; the app's own page on its own site is let in by the helper as usual.
