@@ -50,7 +50,7 @@ Four parts, 25 points each:
 
 | Part | What is measured | Full 25 points when |
 |---|---|---|
-| Fault audit catch rate | Average share of fresh random planted bugs the release gate catches, per area (`docs/qa/fault-audit-latest.json`, updated after each audit run) | 90% or more on average |
+| Fault audit catch rate | Average share of fresh random planted bugs the release gate catches, per area (`docs/qa/fault-audit-latest.json`, updated after each audit run). Bugs noticed only by the plan ledger are not counted: the ledger says a plan changed, not that it is wrong | 90% or more on average |
 | Real-world ride accuracy | For each kind of ride on the saved trips' plans (walk, taxi, train, metro, bus, ferry), the share of rides whose time a source the app doesn't use confirms as right. A ride with no outside time is not counted as right, so a kind with no outside source scores 0. Kinds count equally | every ride of every kind confirmed right |
 | Clean days | Whole days in a row, up to yesterday (Central), with 0 serious escapes and at most 1 other (`docs/qa/escapes.md`). A bad day resets it | 7 days |
 | Real-world coverage of Richard's questions | `docs/qa/COVERAGE.md`, "Real-world score per question": yes 1, partly 0.5, no 0 | all 10 questions checked against the real world |
