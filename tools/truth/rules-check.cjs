@@ -14,7 +14,7 @@ const START = '2026-11-23T23:30:00Z';
 // Checks that plant their own bad input on every run (so naming one counts as a proof).
 const PLANTING = new Set(['tools/truth/real-world-gate.cjs' /* plants street routes ignored + taxis without start-up (R-33) */, 'tools/beta2/best-ride-check.cjs' /* plants 10 ride bugs of the fault audit's kind (R-12) */, 'tools/islands-walk-check.mjs' /* plants the helper's walk test trusting the fastest way alone (R-06) */, 'tools/beta2/isles-any-city-check.cjs' /* plants the app without the helper's island outlines (R-06) */, 'tools/beta2/route-time-check.cjs' /* plants the engine with real routes ignored (R-33) */, 'tools/truth/language-check.cjs', 'tools/client/steady-all.cjs' /* plants a redraw drop, endless change and endless lookup on every run (R-25, R-31) */, 'tools/truth/screen-rule-proof.cjs', 'tools/truth/no-warn-check.cjs',
   'tools/truth/report-check.cjs', 'tools/truth/rules-check.cjs', 'tools/truth/mutants.cjs', 'tools/truth/sight-mutants.cjs',
-  'tools/beta2/day-trips-check.cjs' /* plants 14 day-trip bugs on every run (R-36) */, 'tools/day-trips-helper-check.mjs' /* plants 3 helper bugs on every run (R-36) */,
+  'tools/beta2/day-trips-check.cjs' /* plants 18 day-trip bugs on every run (R-36) */, 'tools/day-trips-helper-check.mjs' /* plants 3 helper bugs on every run (R-36) */,
   'tools/ui/steady-sights-check.cjs' /* plants a re-sort after a tap on every run (R-28) */,
   'tools/ui/pinned-band-check.cjs' /* plants "no band behind pinned pieces" on every run (R-32) */,
   'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */,

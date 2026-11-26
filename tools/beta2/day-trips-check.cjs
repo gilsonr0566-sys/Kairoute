@@ -25,6 +25,9 @@ const FAR = [
   far('Test Field Stadium', 'Q505', ['building', 'stadium', 'structure'], 71, 8, -6, { said: 1 }),
   far('Testport Grand Prix', 'Q520', ['event', 'occurrence'], 73, 13, -8, { said: 3 }),                    // a race with a travel-guide page: not a place to go
   far('Testport Sea Bridge', 'Q521', ['bridge', 'structure'], 66, -9, -7, { said: 3 }),
+  far('Testport Island Airport', 'Q522', ['airport', 'island', 'structure'], 84, -14, 12, { said: 7 }),    // an airport on an island of its own (Hong Kong)
+  far('Testport Old Quarter', 'Q523', ['settlement'], 60, 7, 4, { voy: 'Testport/Old Quarter', part: true, said: 8 }), // a district of the city itself, in town (Kadıköy, Bondi)
+  far('Testland', 'Q524', ['island', 'region'], 260, 16, -14, { said: 5 }),                                // the country the city is in (Japan from Kyoto)
   far('Testshire Province', 'Q506', ['admin-area'], 95, 20, 20, { said: 4 }),
   far('Old Testa Ruins', 'Q507', ['ancient-city', 'archaeological'], 45, 40, 5, { unesco: true, heritage: true }), // a heritage site with no line: by road
   far('Test Cape Village', 'Q508', ['settlement'], 50, -30, 10, { said: 3 }),                             // the drive takes a car ferry
@@ -48,13 +51,14 @@ const near = (b, p, m) => Math.hypot((b[0] - p.lat) * 111, (b[1] - p.lng) * 83) 
 const line = (mode, kind, from, min, more) => Object.assign({ mode, kind, label: kind, operator: 'Test Lines', from, to: '', ride: min - 15, wait: 10, every: 60, access: { how: 'walk', min: 5, km: 0.3 }, egress: { how: 'walk', min: 0, km: 0 }, min, km: 20, stops: 0, src: 'test copy' }, more || {});
 const byName = n => FAR.concat(NEXT).find(x => x.name === n);
 function transitFor(b) {
+  if (state.partialAt && near(b, state.partialAt)) return { opts: [], partial: true };
   if (near(b, PIERS.Q501[1])) return { opts: [line('ferry', 'Ferry', 'Testport Harbour', 75, { noTimetable: true, src: 'OpenStreetMap w1' })] };
   if (near(b, PIERS.Q501[0])) return { opts: [line('ferry', 'Ferry', 'Testport Harbour', 110, { noTimetable: true, src: 'OpenStreetMap w2' })] };
   if (near(b, byName('Testholm'))) return { opts: [line('ferry', 'Ferry', 'Stream Quay', 50)] };
   if (near(b, PIERS.Q503[0])) return { opts: [line('ferry', 'Ferry', 'East Quay', 45)] };
   if (near(b, PIERS.Q516[0])) return { opts: [line('ferry', 'Ferry', 'East Quay', 40)] };
   if (near(b, byName('Far Testerly'))) return { opts: [line('train', 'Train', 'Testport Central', 150)] };
-  for (const n of ['Testbury', 'Testim', 'Testyma', 'Testa Abbey', 'Testmoor', 'Testford', 'Testwick', 'Testby', 'Little Testing', 'Testport International Airport', 'Test Field Stadium', 'Testshire Province', 'Testport Grand Prix', 'Testport Sea Bridge'])
+  for (const n of ['Testbury', 'Testim', 'Testyma', 'Testa Abbey', 'Testmoor', 'Testford', 'Testwick', 'Testby', 'Little Testing', 'Testport International Airport', 'Test Field Stadium', 'Testshire Province', 'Testport Grand Prix', 'Testport Sea Bridge', 'Testport Island Airport', 'Testport Old Quarter', 'Testland'])
     if (near(b, byName(n))) return { opts: [line('train', 'Train', 'Testport Central', 40)] };
   return { opts: [] };
 }
@@ -64,7 +68,7 @@ function roadFor(b) {
   if (near(b, byName('Far Testerly'))) return { min: 100, km: 95, ferry: false };
   return { none: true };
 }
-const state = { busy: 0, asked: [] };
+const state = { busy: 0, asked: [], partialAt: null };
 function helper(r) {
   const u = new URL(r.request().url()), j = o => r.fulfill({ contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify(o) }), city = u.searchParams.get('city') || '';
   if (r.request().method() === 'OPTIONS') return r.fulfill({ status: 204, headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers': 'content-type', 'access-control-allow-methods': 'POST, GET, OPTIONS' } });
@@ -110,6 +114,9 @@ async function run(file) {
       ok(T + 'a heritage site with no line is offered by road', has('Old Testa Ruins'));
       ok(T + 'a place "Go next" names beyond its first eight links is offered', has('Testby'));
       ok(T + 'an airport is never a day trip', !has('Testport International Airport'));
+      ok(T + 'an airport is never a day trip, even on an island of its own (Hong Kong International, live check Nov 26)', !has('Testport Island Airport'));
+      ok(T + 'a district of the city itself, in town, is not a day trip (Kadıköy, Bondi Beach, live check Nov 26)', !has('Testport Old Quarter'));
+      ok(T + 'the country or island group the city is in is not a day trip (Japan from Kyoto, live check Nov 26)', !/Testland\b/.test(t));
       ok(T + 'a race or a bridge with a travel-guide page is never a day trip', !has('Testport Grand Prix') && !has('Testport Sea Bridge'));
       ok(T + 'a stadium is never a day trip', !has('Test Field Stadium'));
       ok(T + 'a province is never a day trip', !has('Testshire Province'));
@@ -172,7 +179,19 @@ async function run(file) {
     state.busy = 1; const again = await p2.evaluate(async a => { const c = { city: 'Testport', country: 'Testland', sites: [], farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, a.src);
       const n1 = await window.__kairouteClassicTrips(c, a.src), open1 = !!c.tripsOpen, n2 = await window.__kairouteClassicTrips(c, a.src); return { n1, open1, n2, open2: !!c.tripsOpen, names: c.farther.map(s => s.name) }; }, { src: SOURCES });
     ok('once the service answers, the day trips it could not ask about are asked again and offered', again.open1 && again.n1 + again.n2 === 6 && !again.open2 && again.names.includes('Testholm'), again);
-    state.busy = 0; await p2.close(); }
+    state.busy = 0; await p2.close();
+    // One place's line not answered yet (a partial answer): the places ranked after it wait, so lesser ones never fill the list first.
+    const p3 = await b.newPage(); await p3.route('**/*', r => { const u = r.request().url(); if (u.startsWith(MOCK)) return helper(r); return /^file:/.test(u) ? r.continue() : r.abort(); });
+    await p3.goto('file://' + file); await p3.waitForTimeout(800); await p3.evaluate(m => window.__kairouteMockHelper(m, null, true), MOCK);
+    state.partialAt = PIERS.Q503[0];
+    const w1 = await p3.evaluate(async a => { const c = window.__tc = { city: 'Testport', country: 'Testland', sites: [], farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, a.src);
+      const cands = window.__kairouteTripCands(c, a.src).map(x => x.name); await window.__kairouteClassicTrips(c, a.src); return { cands, open: !!c.tripsOpen, names: c.farther.map(s => s.name) }; }, { src: SOURCES });
+    const before = w1.cands.slice(0, w1.cands.indexOf('Testa Islands'));
+    ok('while a better-ranked place is still being asked about, no place ranked after it is offered (Enköping before Sigtuna, live check Nov 26)', w1.open && w1.cands.includes('Testa Islands') && w1.names.every(n => before.includes(n)), w1);
+    state.partialAt = null;
+    const w2 = await p3.evaluate(async a => { const c = window.__tc; await window.__kairouteClassicTrips(c, a.src); return { open: !!c.tripsOpen, names: c.farther.map(s => s.name) }; }, { src: SOURCES });
+    ok('once it is answered the list fills in rank order', !w2.open && w2.names.length === 6 && w2.names.includes('Testa Islands'), w2);
+    await p3.close(); }
   await b.close();
 }
 // Planted bugs: each puts back, in a copy of the build, one way day trips have really gone wrong.
@@ -187,6 +206,14 @@ const PLANT = [
     was: 'fame alone: Salerno and Benevento ahead of Capri and Sorrento for Naples (probe, Nov 25)' },
   { id: 'thing-as-day-trip', from: 'if (srcHas2(y, TRIP_NOT) && !srcHas2(y, TRIP_PLACE)) return false;', to: '',
     was: 'a race, a bridge or a road with a travel-guide page offered as a day out: only places are day trips' },
+  { id: 'island-airport-as-day-trip', from: 'if (srcHas2(y, TRIP_NEVER) && !srcHas2(y, /^settlement$/)) return false;', to: '',
+    was: 'Hong Kong International Airport, on its own island, ranked as a day trip (live check, Nov 26)' },
+  { id: 'town-district-as-day-trip', from: 'if (y.part && !y.next && !srcHas2(y, /^island$/) && y.km != null && y.km < TRIP_PART_KM) return false;', to: '',
+    was: 'districts of the city itself offered as days out: Kadıköy, Bondi Beach, the business district (live check, Nov 26)' },
+  { id: 'country-as-day-trip', from: 'if (srcHas2(y, /^region$/) && !y.unesco && !y.next) return false;', to: '',
+    was: '"Japan" ranked first as a day trip from Kyoto, "Cyclades" from Mykonos (live check, Nov 26)' },
+  { id: 'lesser-place-jumps-queue', from: 'else if (unknown) { open = true; if (!last) break; } }', to: 'else if (unknown) { open = true; } }',
+    was: 'Enköping offered from Stockholm while Sigtuna and Uppsala were still unanswered (live check, Nov 26)' },
   { id: 'province-as-day-trip', from: 'if (srcHas2(y, /^(admin-area|region)$/) && !srcHas2(y, TRIP_PLACE) && !y.unesco) return false;', to: '',
     was: 'provinces and counties have travel-guide pages too (Split-Dalmatia County, Nov 25 probe)' },
   { id: 'drive-with-a-ferry', from: '&& !j.ferry && !j.none) best', to: '&& !j.none) best',
