@@ -169,7 +169,7 @@ async function findHotelNoAI(name, d) {
 // A way that couldn't be asked (a service busy) is asked again the next time; nothing is guessed in between.
 const TRIPS_V = 2, TRIP_MAX = 6, TRIP_ASK = 16, TRIP_FAME = 20, TRIP_KM_MIN = 6, TRIP_KM = 100, TRIP_LINE_MIN = 120, TRIP_ROAD_KM = 75, TRIP_ROAD_MIN = 90, TRIP_ONE_KM = 3, TRIP_PART_KM = 15;
 const TRIP_NOT = /^(airport|station|university|school|hospital|hotel|office-building|business|stadium|arena|sports-venue|street|road|bridge|organization|event|occurrence|language|creative-work|term|continent)$/;
-const TRIP_NEVER = /^(airport|station|stadium|arena|sports-venue|bridge|street|road)$/;
+const TRIP_NEVER = /^(airport|station|stadium|arena|sports-venue)$/;
 const TRIP_PLACE = /^(settlement|island|old-town|archaeological|ancient-city|castle|fortification|palace|park|garden|natural|mountain|beach|waterfall|monastery|museum|art-museum|amusement-park|zoo)$/;
 const TRIP_NOT_NAME = /\b(airport|railway station|train station|university|stadium|arena|bridge|motorway|highway|expressway|prison|hospital|province|county|district|region|prefecture|municipality)\b/i;
 const tripIsle = y => srcHas2(y, /^island$/) && !srcHas2(y, /^settlement$/);
@@ -179,7 +179,7 @@ function tripPlace(y) {
   if (!srcKnown(y)) return !TRIP_NOT_NAME.test(y.name);                 // facts not known: its name alone must not say otherwise
   if (farNotPlace(y)) return false;
   if (srcHas2(y, TRIP_NOT) && !srcHas2(y, TRIP_PLACE)) return false;
-  // An airport, a station, a stadium or a bridge is never a day out, even one built on an island of its own.
+  // An airport, a station or a stadium is never a day out, even one built on an island of its own.
   if (srcHas2(y, TRIP_NEVER) && !srcHas2(y, /^settlement$/)) return false;
   // A country, an archipelago or a delta is where the city is, not a place to go for a day, unless the city's guide
   // sends readers on to it by name or it is a heritage site (live check, Nov 26: "Japan" from Kyoto, "Cyclades" from Mykonos).

@@ -191,6 +191,12 @@ async function run(file) {
     state.partialAt = null;
     const w2 = await p3.evaluate(async a => { const c = window.__tc; await window.__kairouteClassicTrips(c, a.src); return { open: !!c.tripsOpen, names: c.farther.map(s => s.name) }; }, { src: SOURCES });
     ok('once it is answered the list fills in rank order', !w2.open && w2.names.length === 6 && w2.names.includes('Testa Islands'), w2);
+    // A place whose line is not answered yet is never offered "by road, no line was found": that would be a guess.
+    state.partialAt = byName('Old Testa Ruins');
+    const w3 = await p3.evaluate(async a => { const c = { city: 'Testport', country: 'Testland', sites: [], farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, a.src);
+      await window.__kairouteClassicTrips(c, a.src); return { open: !!c.tripsOpen, names: c.farther.map(s => s.name) }; }, { src: SOURCES });
+    ok('a place whose line is not answered yet is not offered by road with "no line was found"', w3.open && !w3.names.includes('Old Testa Ruins'), w3);
+    state.partialAt = null;
     await p3.close(); }
   await b.close();
 }
@@ -220,7 +226,7 @@ const PLANT = [
     was: 'a drive that takes a car ferry offered as "by road" (rule R-06: across water means a boat)' },
   { id: 'estimate-as-timetable', from: 'if (o.noTimetable) return `', to: 'if (false) return `',
     was: 'a map line\'s estimated time shown as a timetable\'s (no untrue statements, Nov 22)' },
-  { id: 'trip-guessed-when-busy', from: 'if (best) ways.push({ y, way: best }); else if (unknown) open = true; }', to: 'if (best) ways.push({ y, way: best }); }',
+  { id: 'trip-guessed-when-busy', from: 'else if (unknown) { open = true; if (!last) break; } }', to: 'else if (unknown) { if (!last) break; } }',
     was: 'a busy service read as "no way there": the day trips never came back' },
   { id: 'app-leads-with-day-trip', from: 'const far = (city.farther || []).filter(x => !x.classic && !taken[x.id]', to: 'const far = (city.farther || []).filter(x => !taken[x.id]',
     was: 'the app put an optional day trip on a day by itself (Richard, Nov 18: never)' },
