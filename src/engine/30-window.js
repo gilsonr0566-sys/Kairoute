@@ -132,6 +132,11 @@
       w.start = E.toMin(d.time) + m.clear; w.head = [P, Object.assign(fixed(L, "Check in or drop bags", 20), { bags: true })]; w.tail = [L];
       // A late arrival's day ends no sooner than the traveler reaches the hotel (Nov 23: a 9:30 pm flight gave a day from
       // 10:45 pm to 11:00 pm and a plan reaching the hotel at 12:14 am, past its own end).
+      // Arriving in the small hours (before E.NIGHT_DEP), the traveler sleeps first: the day's sights start in the morning
+      // (the day's start time, else 9 am), never at 1 am (odd trips, Nov 25: a 00:15 train planned a city square at
+      // 1:11 am and then waited for a cathedral to open). The night at the hotel is a step of the day, said as one.
+      { const arrive = E.toMin(d.time), st = E.toMin(d.startTime), morning = isFinite(st) && st >= 6 * 60 && st <= 12 * 60 ? st : 9 * 60, at = w.start + chain(w.head, tr);
+        if (isFinite(arrive) && arrive < E.NIGHT_DEP && morning - at > 30) { w.head.push(fixed(L, "Sleep and rest at the hotel until " + E.clock(morning), morning - at)); w.nightArrive = true; } }
       w.sightFrom = w.start + chain(w.head, tr); w.endBy = Math.max(w.sightFrom, Math.min(23 * 60, lunchIn(w.sightFrom, d.hours)));
     } else if (d.type === "departure" || d.type === "embark") {
       const ship = d.type === "embark", m = ship ? E.MODES.ship : E.MODES[d.mode] || E.MODES.flight;

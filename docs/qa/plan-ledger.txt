@@ -2934,11 +2934,11 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 
 #odd 300 odd trips (seed 1), one fingerprint per day
 #odd odd001-cruise af65cd92ac 2eaf1237c2 d18ce07d9a 6e74827de4 f853952602 7615f285b1
-#odd odd002-multicity 72e94a874d 8c50e6c99a 1a8debab19 d3ef98c6a8 6e8c6d7179 793b4089c9
+#odd odd002-multicity d0ce27ebfc 8c50e6c99a 1a8debab19 d3ef98c6a8 6e8c6d7179 793b4089c9
 #odd odd003-hop 7bedfd1546
 #odd odd004-stay ac57240937 6178230d76 b1f7f8121b 5a27c6522c
 #odd odd005-cruise f585318ae9 f73ef84a27 50415aac50 928c2442bf d3f31873e5 11bf2a33b0 745c9cca18 0742f9f4ea
-#odd odd006-multicity cc4852374c 6ad39b7e2c e6c8c785c4 d6fbd7525e 22941bd190 6024d1cb7a bf94ff3db3 d94939a5aa 9fd7b583bf
+#odd odd006-multicity 73e2d7a823 aafe0f5034 9501d93a16 69f1229911 22941bd190 6024d1cb7a bf94ff3db3 d94939a5aa 9fd7b583bf
 #odd odd007-hop 907cea1ea9
 #odd odd008-stay 2e67cf2661 1b8e73ef91 c7e1a4d088 495a6c95ac 392dc410a4
 #odd odd009-cruise ed6164d1de e77f442d92 1b5763e758 07f043ad84 6b469e5e7e c48b2d25b2
@@ -2946,10 +2946,10 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd011-hop 383ba7df79
 #odd odd012-stay 056a6de4d9 99ae8c0002 acae924dbc
 #odd odd013-cruise d23ab9ee63 3c68c832f3 9cd2887f2f 53cc191d2c 2042a5330f
-#odd odd014-multicity c279b020da c56a5fb3b6 cbb776ca4d dfd577818d 100125a597 62580a1546
+#odd odd014-multicity 15bce6ac47 354d8f93c6 fc8eb7f6ec dfd577818d 100125a597 62580a1546
 #odd odd015-hop c568d112ef
 #odd odd016-stay d51333f68e 63e6e85797 41bbaa5461 8404c7b91d 4baf662fc5
-#odd odd017-cruise 8f1abc52e7 ea8cbce42a 10f0b7fdc7 d5cc8b5c4a 2bd72f669d 6c73f03ccb ddb603cd40 0d7dd8d852 476a777a55 ac943b12ec 927099b3d1
+#odd odd017-cruise fa11c33cee b91e65f8c2 10f0b7fdc7 d5cc8b5c4a 2bd72f669d 6c73f03ccb ddb603cd40 0d7dd8d852 476a777a55 ac943b12ec 927099b3d1
 #odd odd018-multicity 43b4c803be 44a2fc756b c57a988d8b d93e966c5d f8e15ecb19 803f146abf bcc952c156
 #odd odd019-hop 0b00220ea5
 #odd odd020-stay 213081145e 72178d1962 d4d00c75f6 c97bf66eda
@@ -2958,15 +2958,15 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd023-hop 9b36d8042e
 #odd odd024-stay d0e0106a47 e871ed5008
 #odd odd025-cruise 24b2284acf 8e21c5b1af 674ccd8e58 284001cd67 7201524ee2
-#odd odd026-multicity 040810f20f a42e913cdc d0bb4cbf3d 55689c126d 6fe2a79f12 a5a9d2078a
+#odd odd026-multicity 040810f20f a42e913cdc cdecef456b f37dfc78d9 737d2cc25d a5a9d2078a
 #odd odd027-hop 8490d3ebf6
 #odd odd028-stay f548f0fdc7 491bc97bd4
 #odd odd029-cruise 99ca020637 29c3c7e385 1b5763e758 ad8e456583
-#odd odd030-multicity a2c522a36d 9dad0e6dc8 ddeef89d33 7b95ea5b58 c004da07d4 4518c0a560
+#odd odd030-multicity cb1e746527 9dad0e6dc8 ddeef89d33 7b95ea5b58 c004da07d4 4518c0a560
 #odd odd031-hop ffc0e20ca5
 #odd odd032-stay f75f0a4a33 bed188a833 c0f9c94098 bba6e48e16 6176e4b0ea
 #odd odd033-cruise a0538adb9b 1cf7d164d5 1b5763e758 47e1ea3b94 8610ce4665 1befbc2cfe a0fe2850d0
-#odd odd034-multicity d9e5d42ea7 e768ef5141 0ec8dd46f8 7946d1ab37 de833a9b11
+#odd odd034-multicity 480ceff08c e768ef5141 0ec8dd46f8 7946d1ab37 de833a9b11
 #odd odd035-hop 833cb87f3c
 #odd odd036-stay dd3287aa4d 6dfe2cca21
 #odd odd037-cruise c0861e69fd 3d1528c4d3 dfc262ab5a 8f9c19272c e55b6d8fc5 67312544c6 4094d9a400 aa85aebf31
@@ -2977,8 +2977,8 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd042-multicity 0f701c1015 92635c9e38 89a6e59ef8 4ef7b0d17e c2a06bb423 b4b1bac1f0
 #odd odd043-hop d7fea3900c
 #odd odd044-stay 44676325c9 8286f40195
-#odd odd045-cruise 0763dba68b beee2aeb86 1b5763e758 f2183d1f0c c5b8ddcbe5 5a5d7e50ac 9e4fd7096b
-#odd odd046-multicity 99b67d98e0 926240b92b 73c4c74371 5545ad092b 7a1398a10b 077003a0a8 0dc49b9c7b 41cc23497f
+#odd odd045-cruise 019af8efdf beee2aeb86 1b5763e758 f2183d1f0c c5b8ddcbe5 5a5d7e50ac 9e4fd7096b
+#odd odd046-multicity 99b67d98e0 926240b92b 73c4c74371 5545ad092b f1baf18d23 077003a0a8 0dc49b9c7b 41cc23497f
 #odd odd047-hop 2f25c5a087
 #odd odd048-stay 09e6381589 846ccda4b2 1680bff0f7
 #odd odd049-cruise 02478732f2 5f0475e92a 50e1b38588 1195ffb3be 80eafd0c27 df1770cc0a 8db5eca4f5 42af076d7b
@@ -2986,7 +2986,7 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd051-hop f6ad44fe0a
 #odd odd052-stay 4dba7f4ca9 df84d5c3e8 984d1709eb 744a3e08d8
 #odd odd053-cruise d030347cc8 0f9a937b28 f42e3e7ab3 4217144cb9 918a26bda3 beee2f19ee
-#odd odd054-multicity dc0ac78e3f 60236ea1c3 9f3e936629 2a42c6327a 6f68b11b5c 821557d553
+#odd odd054-multicity a7d249d087 9f6e67e1e6 9f3e936629 2a42c6327a 6f68b11b5c 821557d553
 #odd odd055-hop 6ad288310a
 #odd odd056-stay 439b226990 ea0ddb1b51 7b2dc1b520
 #odd odd057-cruise ea506c5a78 96ddbcf30c 99270652ed 053aec2f79 a8d6f73b30 6cd3042582 212b9fa33b f04ac95ed9
@@ -2998,7 +2998,7 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd063-hop 8de8e92461
 #odd odd064-stay 0e3e6be799 e093ca265d
 #odd odd065-cruise 8023e0db2e d062999915 692a18ab5e f87a270840 7d9304c3cd 3e3187d98d
-#odd odd066-multicity 7fe7b2f7cc f76047352b f6578292d2 d00a289b3f c7607920b9 e01e293631 edf78ded72 8081de854b 59a48c1f12
+#odd odd066-multicity 7fe7b2f7cc f76047352b f6578292d2 d00a289b3f c7607920b9 e01e293631 56cab37352 64c811ce9e 59a48c1f12
 #odd odd067-hop 42dd9fc8ee
 #odd odd068-stay 6df598d344 61bfe145e7 2f4b7445a0 295de35b3c 4aeda3dc32
 #odd odd069-cruise 25a71f3d12 8cb0be271c 4986839bb3 63f54d0afc 918a26bda3 974698e87c 60771bf48c 9ca7b6f39e e0c637fb41
@@ -3018,10 +3018,10 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd083-hop 9120f9c23a
 #odd odd084-stay 15f8591e83 87c8f557a2 2ab1603909 77c90d35d3
 #odd odd085-cruise 468e52af4a f43895fdf7 18bf8fb498 65335b4d89 4dda117589 7901df49c3 f856b5d73c d5b2188c8b cc7fc2ac5b
-#odd odd086-multicity 39d2829f6b 7ca113c9ec 19a454a35e 65ecb9498b e01001f90e 3e29f30b6a
+#odd odd086-multicity 063b7fe434 7ca113c9ec 19a454a35e 65ecb9498b e01001f90e 3e29f30b6a
 #odd odd087-hop 6f442a79bb
 #odd odd088-stay 245806afb3 63654eee04 96a1a94250 902878c7ba ac4e3ab002
-#odd odd089-cruise 1bf3f54c3a 17a70f0572 df237319b3 ac87a0b32c a1ab16e1df 69887cd0c6 c55a04116c 05d30ecbbe 1d26d3649e
+#odd odd089-cruise d547dd0751 17a70f0572 df237319b3 ac87a0b32c a1ab16e1df 69887cd0c6 c55a04116c 05d30ecbbe 1d26d3649e
 #odd odd090-multicity 23b54ee5d5 8618b41ff1 6fe89abec0 aa5dd4bbef cdfdce0791 ffe357a7b8 ed54d544ed 7efddd2d48 1c5a6dee0b
 #odd odd091-hop ff3b5109fe
 #odd odd092-stay 01545820ed 8141bc55d6
@@ -3030,11 +3030,11 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd095-hop a12344c348
 #odd odd096-stay e68980efbb 7e5f3b0453 875c479186
 #odd odd097-cruise 5a5ef450e4 d11b50ee67 1b5763e758 71b74b989b a0a5696b87 bd0666f783 f37019ae8c
-#odd odd098-multicity 56648c24d9 0789a52410 415020d23b 7d8d9f98b6 de70d970c6 c489259a91
+#odd odd098-multicity 56648c24d9 0789a52410 ac7f2f5cfd 7d8d9f98b6 c4ee8652f3 d6ae37b2a6
 #odd odd099-hop 33a8d870d8
 #odd odd100-stay d889777b12 21781e73aa 56ff37e624
 #odd odd101-cruise a048a99bc4 e76e144bcd 844b619552 a95b6ca171 2d998442b9 6beb5b9b20 9bcc3ed85a
-#odd odd102-multicity e1efc607fa 23f355e463 dcdb782fb3 661d9893bb c60c915a88 30e1ed4bc9
+#odd odd102-multicity c23308e48a 23f355e463 dcdb782fb3 661d9893bb f73edb2862 ea6b37a647
 #odd odd103-hop ae4cdb8ee7
 #odd odd104-stay 3f13de8f71 6e39c60c21 89249eb1fc
 #odd odd105-cruise 83a1ff286a 8700c1e50e cf5a96a4e3 f2183d1f0c 42235bd011 3de9ac2009 2da52a247d fc95a2a9d0 6b69a9b879 620b63ceff
@@ -3049,15 +3049,15 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd114-multicity dd62128242 830fd0461a 7f7461792d 2a48f63f6a 6883180f2d 6693394128 20bd34fc9b fe9564bcec 45004e8bfa 22a8fa32e3 af5c45d185
 #odd odd115-hop b5937765e1
 #odd odd116-stay b51c3df46b dc38336b1e 358e95a6d5 bb92dc6d5d b78fc0ae6f
-#odd odd117-cruise 4b75a49222 22a17b2966 1b5763e758 14276c5e34 918a26bda3 947ef15b47
-#odd odd118-multicity 76d625ace3 334a357af8 74bf79ccfd fdf98ad20e 59bf026a08 450cc9ae87
+#odd odd117-cruise 6ebc62d8be 22a17b2966 1b5763e758 14276c5e34 918a26bda3 947ef15b47
+#odd odd118-multicity e7a13c2e92 334a357af8 74bf79ccfd fdf98ad20e 59bf026a08 450cc9ae87
 #odd odd119-hop 3cb3746a4c
 #odd odd120-stay 427ff8dc36 845e0bb961 f465b3e67d
-#odd odd121-cruise 4910ee67ae b634daf7cb 94067bc6c1 4217144cb9 8a40cb2e68 dd547d75e5 01f8479dfb 5ed5132b8a 6d1d14071f
+#odd odd121-cruise 459c7aa2aa b634daf7cb 94067bc6c1 4217144cb9 8a40cb2e68 dd547d75e5 01f8479dfb 5ed5132b8a 6d1d14071f
 #odd odd122-multicity a4636775ee 5e8a56e3b8 c3486008d6 3e34b66dee de2bb314ae 299a89fc96 cf39dda94c 4fe76f9066 3ffa77f24d d800d34b7c
 #odd odd123-hop e5580320c0
 #odd odd124-stay a49b133cf9 78a91fa8b1 f843c97c33
-#odd odd125-cruise bf49cdd52b 16c422bec3 1b5763e758 77f853f1e3 e9f0f65c93 b94d03a706 9da114e8a4
+#odd odd125-cruise a6b71fa78d 16c422bec3 1b5763e758 77f853f1e3 e9f0f65c93 b94d03a706 9da114e8a4
 #odd odd126-multicity 08aa84ca3c fa5fa05862 c6b1ceac96 5fdcfef4ca 3d97d7c3f7 a91ae58b36 903df4e51b e4da00e825 eb7f0242b8
 #odd odd127-hop 9f46bd9f69
 #odd odd128-stay a97bdebcb3 7c541c8136 e6ffb8491f b7f6bd34e2
@@ -3070,19 +3070,19 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd135-hop a441cb7856
 #odd odd136-stay 7b0a915fab 497b95b2f0 9713903b18 52d67dd7c4
 #odd odd137-cruise 0e93c67462 3a724a548e 1f617e1ed0 aa610132d7 d2e4ab5fd9 111c3b834c 3a0103c3af
-#odd odd138-multicity b5cfc1458f 026ac6adc1 d901c34138 86123ef3d5 046773f884 0dbb6e670b 384fe01f08 6fc0b137d8 66bf919827 3ca9c44b5b 52bfa160a5
+#odd odd138-multicity b5cfc1458f 026ac6adc1 d901c34138 d6440b2d98 046773f884 0dbb6e670b 384fe01f08 6fc0b137d8 66bf919827 3ca9c44b5b 52bfa160a5
 #odd odd139-hop a4ea1500e3
 #odd odd140-stay 940cfb6bfc f1cbcf5327
 #odd odd141-cruise fd8d95b8aa 8e21c5b1af 1b5763e758 8eee5a031e bd02e87876
-#odd odd142-multicity c9fa703c38 a0c571968e 16e99243f7 5bf77cfa36 d42b84d7ac 30ce65abb2 6a3f0606b7 3c8cb26ebc 5b73579353 088e704e24
+#odd odd142-multicity 607ad485dc a0c571968e 16e99243f7 5bf77cfa36 d42b84d7ac 30ce65abb2 6a3f0606b7 3c8cb26ebc 5b73579353 088e704e24
 #odd odd143-hop 6a7087dc48
 #odd odd144-stay eec5ebedd0 a84606d03a
 #odd odd145-cruise 43e1ef654d 15dfb24b85 1cc4dded90 595831db84 918a26bda3 f4bd1e5592 bae7e4b994 01225345e4 1386f00c24
 #odd odd146-multicity 2eb7f2fbfa 9b3714c429 a839ef7fb8 ccc23bb79a d7502df904 7f3f266b39 46afb33457 67b9c8ee7a
 #odd odd147-hop 7bdeb54b41
 #odd odd148-stay 0313216cf7 6e6a3dde2d 7c0f53aa15
-#odd odd149-cruise 8c1a640c59 f2d7f7ec21 f11f80e087 9c2694d527 a35548d452 d01286feef cfea315ccd 284a510d71
-#odd odd150-multicity 144e5626e2 fb572b9ce6 a8c41a0e12 c7883f6f86 3e1a880254 2472f4d6c9
+#odd odd149-cruise c4067e098b f2d7f7ec21 f11f80e087 9c2694d527 a35548d452 d01286feef cfea315ccd 284a510d71
+#odd odd150-multicity 144e5626e2 fb572b9ce6 b7c583fafb 7356d35129 1499d233c6 2472f4d6c9
 #odd odd151-hop 05fe849987
 #odd odd152-stay a7805a64ed 6e223c80c3 1f291a04b7 219a5289c9
 #odd odd153-cruise 024b74f2d0 ab70bf2a8c 1b5763e758 55d7922519 8f41770df7 d01286feef 01f8479dfb f12c81f834 0d2f91f20d
@@ -3098,11 +3098,11 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd163-hop 9e632b94c1
 #odd odd164-stay 3f83597304 bcbb88de52 3d3cad3d56
 #odd odd165-cruise 922ba156d4 ff9c68f438 6238304055 8dd78a38be 3483a68ba2 13ee5f9b23 aedeb6c9f4
-#odd odd166-multicity 186f61dce7 ac836fd523 08c9357a04 0141c99d1c 0c135df0ef 0861cd1494 e58142bffa cc337d2657 11975a0c0a 5317bcba8e 051cb5e514
+#odd odd166-multicity 186f61dce7 ac836fd523 08c9357a04 0141c99d1c 0c135df0ef 0861cd1494 e58142bffa 62fecae912 67d472d126 5a60b8eaea 051cb5e514
 #odd odd167-hop ae4dd93cf2
 #odd odd168-stay 550ba2cd7c 8d0a861e34 ad5fe5d9f6 a967d2a94f 1f46ed7cd2
 #odd odd169-cruise d67bda7d14 2072f90b2b 1b5763e758 9e7ca3c1cc 75b698552c c99f54e652 3f9a0a9301
-#odd odd170-multicity d023daa208 67400679f6 e9de8ab99a cf2ed4a17c dee16cbe29 6720e02752 f884b099e7 938cd1e3b9
+#odd odd170-multicity 8b198c678b 8bfcb4bd67 e9de8ab99a 356fd577ef dee16cbe29 6720e02752 f884b099e7 938cd1e3b9
 #odd odd171-hop 420378d7c5
 #odd odd172-stay a895409ea4 3af21f5e00 e0ddfcadda 2430531077
 #odd odd173-cruise 72986d35d4 153dfe0e82 fdb02cf9ca 2fba3ff5f8 c5b8ddcbe5 d01286feef e9ce915cfa 53a4cbff3c
@@ -3114,7 +3114,7 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd179-hop 420378d7c5
 #odd odd180-stay de0c0ce56e af0d39006c 10083f9b02 45a554b302 af3200166d
 #odd odd181-cruise 00969798d5 59f34c0c45 27025d2485 44b73e2bf2 fb37dc772c dbd6eba176 5515f02d7e 055b1c5b93
-#odd odd182-multicity faf61a2d04 721d6dd6ac af07c99bc1 9d5f089c78 b2511ae06b 3474f8d106 314c4f3565 9960b2b52c
+#odd odd182-multicity dfbda390ad 721d6dd6ac af07c99bc1 9d5f089c78 b2511ae06b 3474f8d106 314c4f3565 9960b2b52c
 #odd odd183-hop 8d80fba79d
 #odd odd184-stay 34cd9314ac d27013f306
 #odd odd185-cruise 0d1ffcd9fe 8e21c5b1af 1b5763e758 ec123cc627
@@ -3122,21 +3122,21 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd187-hop 71261a3000
 #odd odd188-stay 017104779b a15e5f08c2 06d02cde2f 39ce1c5245
 #odd odd189-cruise 7a068f4ce5 8e21c5b1af 68565438b2 191899d775 03d4314570 a5e8ad0f17 c30d688e21 ca2a54bd23 c434d3132a
-#odd odd190-multicity d961a1819b af7a641f67 f56f389d01 cf261af50e c47974c2e0 e99c450f6a fd7f591782 ebe443e164 f333378f2a
+#odd odd190-multicity d961a1819b af7a641f67 f56f389d01 cf261af50e 6e9d62e530 fdf1a3aad5 f072acea37 ebe443e164 da2bad5184
 #odd odd191-hop 72eb74d1eb
 #odd odd192-stay 0eaf9e41c1 716938e83e 86b892a4af adb5ec9146
 #odd odd193-cruise 0261b857bf 9a97d3e2e0 1b5763e758 1266bd23ed 2d869a3e62 d1f796681e
-#odd odd194-multicity 5482c01772 d6ca5ad85d ee335977bf 14eb99c566 bcc81be8f7 f9e363ecaf
+#odd odd194-multicity b9fd3e78db d6ca5ad85d ee335977bf b911126eb0 6a3519c7aa f9e363ecaf
 #odd odd195-hop 873abbab4f
 #odd odd196-stay bece2ee7cf 0c7d1b6857 81232b9514
 #odd odd197-cruise 9f735b7065 293f5f83df abf8272909 ff942a59a6 cac66d6d20 0a259044ac ba76661868 a990c7b4fb
-#odd odd198-multicity 25143e9b9c 6faa4ee741 84a261a1bc 37e90fb5dd 2851fd4f25 9baf0e9bbe
+#odd odd198-multicity e39f0c4390 6faa4ee741 84a261a1bc 37e90fb5dd 2851fd4f25 9baf0e9bbe
 #odd odd199-hop b14977484d
 #odd odd200-stay 203d74de0c 8cb1471157 8ea3a9523d a4558b425a a910c246cf
 #odd odd201-cruise b889b70401 5f93b61422 5c4a153495 4db853e862 4c5ad77a3a dab344e03e 9aeba51c35 040f280432 e087860606
-#odd odd202-multicity 03af6b8e32 1fd1966b9c 199afb2230 8210662fd7 1d64b5befe 01326453da 6a40d5f4e6 97f605c239 664d5a4a8d 2233379e6d 3a41c5de1a
+#odd odd202-multicity 03af6b8e32 1fd1966b9c 199afb2230 8210662fd7 554a45a6e1 da8181280b b6aa558850 97f605c239 664d5a4a8d 2233379e6d 3a41c5de1a
 #odd odd203-hop 404c931642
-#odd odd204-stay 9620728965 4b8337697d ac7d044e22 866303962f
+#odd odd204-stay 555bd465a5 4b8337697d ac7d044e22 866303962f
 #odd odd205-cruise f15ceb3d3d 99229fb4f3 e90660de2a a28392e8c5 c5b8ddcbe5 f4bd1e5592 cbef2c3a5b d289327e88
 #odd odd206-multicity 83656660f0 832f384f3e 7f16ff79b0 bf0ac951b2 e9efe8180b
 #odd odd207-hop a1bfc59fa4
@@ -3146,7 +3146,7 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd211-hop 3e2fdbbb2c
 #odd odd212-stay e2152948e2 a176e01ac2 93bc9bfb88
 #odd odd213-cruise 5281ef8796 601a370415 a1a25303c2 9eb42f3f90 c1cc06f443 68a9e4fb93
-#odd odd214-multicity 4bfa8c37c5 3498053888 09acf0af64 fccc860fe2 0deac50d2f 9b08b45593 9db36ebda6 6b4d7c6267 51d6f821ca 8b78825c7f 8903aa8df9 3bafb950e8
+#odd odd214-multicity 4bfa8c37c5 3498053888 09acf0af64 fccc860fe2 0deac50d2f 9b08b45593 9db36ebda6 6b4d7c6267 27b3d39003 9f4a8362e1 a16e310c7d ac9da2cec7
 #odd odd215-hop 2f45052f6e
 #odd odd216-stay 3c147e9b9f f1e3708fba d974e17029 7803729150
 #odd odd217-cruise 978b6ea34d 0c2348b5e4 aa0c300ea2 72899fb4c3
@@ -3178,7 +3178,7 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd243-hop 25a4e37a83
 #odd odd244-stay 47e9170a01 54f93f3d94 96180e5eed 2d8badb47b
 #odd odd245-cruise 1f4fc080d1 0bd4d73fa0 111d741d9a 4217144cb9 29f4370640 e7269e64a0 6fa1255939
-#odd odd246-multicity 7f80934b98 57ca1a9896 e4bb758cdc fbd6b04678 aee94b3ccb 3e75de6d3f 245927c8be 948c728c3d 474b3029b9 494f1884b2
+#odd odd246-multicity 7f80934b98 57ca1a9896 e4bb758cdc fbd6b04678 92ec31fa09 3e75de6d3f facb046b76 948c728c3d 474b3029b9 494f1884b2
 #odd odd247-hop 02cfee6300
 #odd odd248-stay 8e59001b3d 4a35f29f7d 9a1ebab6a8 c8903cf041 07d5ca32dc
 #odd odd249-cruise c97728c145 8e21c5b1af b00e2cc975 4217144cb9 6ebb276e48 db76fee493
@@ -3193,8 +3193,8 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd258-multicity 6472e036f9 2c3ee9ae4c 52ecf0a849 a7f61928f4 73265ec166 03d3e4223d
 #odd odd259-hop 7763a1b920
 #odd odd260-stay c45d487c86 8264fbbc66
-#odd odd261-cruise ddd7f20075 18a0b04b35 ce57b234dc c0deda69a5 0bc1319d3c f9c86dfcff 96f8e1f692
-#odd odd262-multicity 892889d7a8 4d8e891582 2e20fe1ca0 5dbe08c851 7d62c91f5e e9472f8868 4e199992eb a1419c3d03
+#odd odd261-cruise 885b40fbd9 7a4a22e2f3 ce57b234dc c0deda69a5 0bc1319d3c f9c86dfcff 96f8e1f692
+#odd odd262-multicity 892889d7a8 4d8e891582 adbd920d51 5dbe08c851 7d62c91f5e e9472f8868 4e199992eb a1419c3d03
 #odd odd263-hop 664ae5a5a7
 #odd odd264-stay e57dabc99e 3f26160a43 48e73ee654
 #odd odd265-cruise 2fbb6c16db ceb9b7641c e2f3989bcf ef6bc54dee 788f13b968 6da4a16a5b 691749a6d8
@@ -3209,12 +3209,12 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd274-multicity de30c7bf81 9531798215 ccb633c8a8 a3554947ba aa544ac4ad c35b8cfd69 925ec2cbcf fbc76268fb 2a6c0c5fe1
 #odd odd275-hop 39aa2ba983
 #odd odd276-stay 91706da664 7f3b5ca4d5 3a2b21ac78
-#odd odd277-cruise c530b2b9a1 d348ae6684 e0d2469566 225d154b5a 918a26bda3 a43e26263a bae7e4b994 589f0b4621 717ff7a4cf
-#odd odd278-multicity 03bb618999 82ada98761 a91ec206ee 050513700c 6a4a8bbfa5 14182c5d2c ea31d0b989
+#odd odd277-cruise 5d8de929dd 89fe5ac3a7 e0d2469566 225d154b5a 918a26bda3 a43e26263a bae7e4b994 589f0b4621 717ff7a4cf
+#odd odd278-multicity 243a3767ca bc02b68b62 11a556938c cee2c683f0 6a4a8bbfa5 14182c5d2c ea31d0b989
 #odd odd279-hop 69c868e9ba
 #odd odd280-stay 01694a6438 e899dd9258 8ffdcc5848
 #odd odd281-cruise c62fc8cf9e 3f9243e0d4 33cd92a2dc 1ec06de0fe cdd2ccb026
-#odd odd282-multicity 4625d82af8 dc2bf51ae3 e880735e55 04bf17733a 8553d577e9
+#odd odd282-multicity 37b3bde13d 252b28220a 2686b7b83d 04bf17733a 8553d577e9
 #odd odd283-hop b67747ea49
 #odd odd284-stay a7c0ef1b66 c651fe3d16 f99a26c0c9 fb71732c7f 0d416389dc
 #odd odd285-cruise e7e3f9ed7c 3499243db6 23d9c60995 84399902bd c5b8ddcbe5 a530bd1e32 f21c58b836
