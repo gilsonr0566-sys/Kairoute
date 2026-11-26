@@ -8,7 +8,9 @@ const FILE = path.resolve(process.argv[2] || 'beta2-site/index.html');
 const H = (process.env.HELPER || JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'ai.json'))).url).replace(/\/$/, '');
 const CITIES = JSON.parse(fs.readFileSync(path.join(__dirname, 'day-trips-expect.json'))).cities.filter(c => !process.env.ONLY || new RegExp(process.env.ONLY, 'i').test(c.city));
 (async () => {
-  const b = await chromium.launch(); let bad = 0, open = 0; const lines = [];
+  // The page is a file, so the live helper sees origin "null" and its CORS rule refuses it (every ask a TypeError): the test
+  // browser alone skips that rule for the live helper; the app's own page on its own site is let in by the helper as usual.
+  const b = await chromium.launch(process.env.HELPER ? {} : { args: ['--disable-web-security'] }); let bad = 0, open = 0; const lines = [];
   const one = async c => {
     const p = await b.newPage(), log = []; p.on('console', m => { if (/Kairoute added/.test(m.text())) log.push(m.text()); });
     await p.goto('file://' + FILE); await p.waitForTimeout(800);
