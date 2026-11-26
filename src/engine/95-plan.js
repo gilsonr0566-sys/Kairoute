@@ -290,7 +290,8 @@
       const home = wins[idx[0]].head[wins[idx[0]].head.length - 1];
       // The traveler already picked a day out of town on this stay: the app adds no other on its own.
       const pickedFar = idx.some(i => sel[i].some(id => { const s = allById.get(String(id)); return s && s.far; }));
-      const outing = pickedFar ? null : E.pickDayTrip(stay.map(x => Object.assign({}, x, { wishes: x.picked ? [1] : [] })), sights, farRanked.filter(s => !wishDay.has(String(s.id))), s => tr.min(home, s), AREA_KM);
+      // Nor a day trip that is only offered (a classic day trip the sources added, rule R-36): the traveler picks those.
+      const outing = pickedFar ? null : E.pickDayTrip(stay.map(x => Object.assign({}, x, { wishes: x.picked ? [1] : [] })), sights, farRanked.filter(s => !wishDay.has(String(s.id)) && !s.offerOnly), s => tr.min(home, s), AREA_KM);
       if (outing) { dayTrip.set(outing.day, outing.ids); outing.ids.forEach(id => areaDay.set(key + "|" + id, outing.day)); }
       const split = E.splitAreas(stay.filter(x => !outing || x.i !== outing.day), sights);
       split.forEach((v, k) => areaDay.set(key + "|" + k, v));

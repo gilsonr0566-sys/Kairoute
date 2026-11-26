@@ -167,7 +167,7 @@ async function findHotelNoAI(name, d) {
 // 4. Up to 6 for a city, whether or not its guide already has day trips of its own. They are offered in the list for
 //    the traveler to pick: the app never puts one on a day itself (never a day's leading pick).
 // A way that couldn't be asked (a service busy) is asked again the next time; nothing is guessed in between.
-const TRIPS_V = 2, TRIP_MAX = 6, TRIP_ASK = 10, TRIP_FAME = 20, TRIP_KM_MIN = 6, TRIP_KM = 100, TRIP_LINE_MIN = 120, TRIP_ROAD_KM = 75, TRIP_ROAD_MIN = 90, TRIP_ONE_KM = 3;
+const TRIPS_V = 2, TRIP_MAX = 6, TRIP_ASK = 16, TRIP_FAME = 20, TRIP_KM_MIN = 6, TRIP_KM = 100, TRIP_LINE_MIN = 120, TRIP_ROAD_KM = 75, TRIP_ROAD_MIN = 90, TRIP_ONE_KM = 3;
 const TRIP_NOT = /^(airport|station|university|school|hospital|hotel|office-building|business|stadium|arena|sports-venue|street|road|bridge|organization|event|occurrence|language|creative-work|term|continent)$/;
 const TRIP_PLACE = /^(settlement|island|old-town|archaeological|ancient-city|castle|fortification|palace|park|garden|natural|mountain|beach|waterfall|monastery|museum|art-museum|amusement-park|zoo)$/;
 const TRIP_NOT_NAME = /\b(airport|railway station|train station|university|stadium|arena|bridge|motorway|highway|expressway|prison|hospital|province|county|district|region|prefecture|municipality)\b/i;
@@ -184,7 +184,7 @@ function tripPlace(y) {
 }
 // How much a place is a classic day out of this city: what the city's own guide says of it first ("Go next", a part of
 // the city's guide, each link to it up to five), a heritage site, then how well known it is.
-const tripScore = y => (y.next ? 40 : 0) + (y.part ? 30 : 0) + 10 * Math.min(5, y.said || 0) + (y.unesco ? 30 : 0) + (y.sl || 0) / 2;
+const tripScore = y => (y.next ? 30 : 0) + (y.part ? 30 : 0) + 10 * Math.min(5, y.said || 0) + (y.unesco ? 30 : 0) + (y.sl || 0) / 2;
 // The classic day trips the sources know for this city that its guide lacks, best first (steps 1 and 2).
 function tripCands(city, src) {
   const centre = srcCentre(city, src); if (!centre || !src) return [];
@@ -248,8 +248,9 @@ async function classicTrips(city, src, quiet) {
       flat.forEach((x, n) => { if (x.i !== i) return; const r = lines[n];
         if (r === undefined || r === null || (r.partial && !(r.opts || []).length)) { unknown = true; return; }
         for (const o of r.opts || []) if (o && o.kind && isFinite(o.min) && o.min > 0 && o.min <= TRIP_LINE_MIN && (!o.every || o.every <= 120) && (!best || o.min < best.line.min)) best = { line: o, at: x.t }; });
-      // No line: the road, when a drive really goes there without a boat. Never to an island.
-      if (!best && !tripIsle(y) && y.km <= TRIP_ROAD_KM) { const j = await getJ(`/roadway?a=${(+centre.lat).toFixed(4)},${(+centre.lng).toFixed(4)}&b=${(+y.lat).toFixed(4)},${(+y.lng).toFixed(4)}`);
+      // No line (asked and answered: a line not asked about yet is not "no line"): the road, when a drive really goes
+      // there without a boat. Never to an island.
+      if (!best && !unknown && !tripIsle(y) && y.km <= TRIP_ROAD_KM) { const j = await getJ(`/roadway?a=${(+centre.lat).toFixed(4)},${(+centre.lng).toFixed(4)}&b=${(+y.lat).toFixed(4)},${(+y.lng).toFixed(4)}`);
         if (!j) unknown = true; else if (isFinite(j.min) && j.min > 0 && j.min + 10 <= TRIP_ROAD_MIN && !j.ferry && !j.none) best = { road: { min: j.min + 10, km: j.km }, at: { lat: y.lat, lng: y.lng } }; }
       if (best) ways.push({ y, way: best }); else if (unknown) open = true; }
     city.farther = city.farther || [];

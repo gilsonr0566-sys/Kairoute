@@ -54,6 +54,9 @@ function engineBucket(withOld) {
     religiousOk: religiousOk(s), srcOnly: !!s.srcOnly, hasGuide: !!s.guide, recommended: !!(s.unesco || (s.src || []).some(t => /Wikivoyage/.test(t))),
     likes: ints.reduce((a, w) => a + (((s.category || "") + " " + (s.summary || "")).toLowerCase().includes(w) ? 1 : 0), 0),
     travelNote: typeof s.travel === "string" ? s.travel : "", show: s.show || null,
+    // A classic day trip the sources added (rule R-36) is offered in the list and named in spare time, never put on a
+    // day by the planner itself.
+    offerOnly: !!s.classic,
     // From the map (water-check.js): on another island with no way there but a boat; how far the nearest road is.
     ...(s.acrossWater ? { acrossWater: s.acrossWater } : {}), ...(s.roadGap > 0 ? { roadGap: +s.roadGap } : {}),
     // A sight of a day-trip town (from the places files) keeps its town (Nov 23 outside test: without it the engine planned
