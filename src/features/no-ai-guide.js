@@ -246,7 +246,9 @@ async function classicTrips(city, src, quiet) {
   try {
     const getJ = async u => { try { const r = await fetch(freeAI.url + u); if (r.ok) return await r.json(); if (r.status < 500 && r.status !== 429) return {}; } catch (e) {} return null; };
     // Where each is reached: an island at its piers (the two nearest the city), any other place at its own point.
-    const targets = await Promise.all(cands.map(async y => {
+    // Two islands at a time: asked all at once, the free map servers refused most of the asks (live check, Nov 26).
+    const inTurn = async (list, n, fn) => { const out = new Array(list.length); let at = 0; await Promise.all(Array.from({ length: n }, async () => { while (at < list.length) { const i = at++; out[i] = await fn(list[i]); } })); return out; };
+    const targets = await inTurn(cands, 2, async y => {
       if (!tripIsle(y) || !y.wd) return [{ lat: y.lat, lng: y.lng }];
       const j = await getJ("/landing?wd=" + encodeURIComponent(y.wd)); if (!j) { open = true; return []; }
       const ps = (j.piers || []).filter(p => isFinite(p.lat) && isFinite(p.lng)).sort((a, b) => hav(centre, a) - hav(centre, b)).slice(0, 2);
@@ -254,7 +256,7 @@ async function classicTrips(city, src, quiet) {
       // Mykonos, "New Providence" from Nassau; live check, Nov 26).
       if (ps.length && hav(centre, ps[0]) <= TRIP_KM_MIN) return [{ home: true }];
       if (!ps.length) y.noOutline = !j.outline;
-      return ps.length ? ps.map(p => ({ lat: p.lat, lng: p.lng, pier: p.name && !nonLatin(p.name) ? p.name : "" })) : [{ lat: y.lat, lng: y.lng, noPier: true }]; }));
+      return ps.length ? ps.map(p => ({ lat: p.lat, lng: p.lng, pier: p.name && !nonLatin(p.name) ? p.name : "" })) : [{ lat: y.lat, lng: y.lng, noPier: true }]; });
     const flat = []; targets.forEach((ts, i) => ts.forEach(t => { if (!t.home) flat.push({ i, t }); }));
     const lines = new Array(flat.length).fill(undefined);
     for (let at = 0; at < flat.length; at += 8) { const part = flat.slice(at, at + 8); let res = null;

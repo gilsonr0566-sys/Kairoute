@@ -32,6 +32,14 @@ const CITIES = JSON.parse(fs.readFileSync(path.join(__dirname, 'day-trips-expect
     out.push('  ranked: ' + r.cands.map(x => `${x.name} (${x.score}${x.next ? ' next' : ''}${x.part ? ' part' : ''}${x.said ? ' said' + x.said : ''}${x.unesco ? ' unesco' : ''}${x.isle ? ' island' : ''} ${x.kinds}, ${x.km} km)`).join('; '));
     for (const l of r.log || []) out.push(`  . ${l.name}: ${l.got} (asked at ${l.at}; lines: ${(l.lines || []).join(' | ') || 'not asked'}${l.road ? '; road: ' + l.road : ''})`);
     for (const w of r.why || []) out.push(`  ? ${w.w}: ${JSON.stringify(w.got).slice(0, 700)}`);
+    // An island asked for with no outline on the map: what the helper and each map server say about it, one by one.
+    const seen = new Set();
+    for (const w of r.why || []) for (const g of w.got || []) { if (!g.wd || seen.has(g.wd) || !(g.kinds || []).includes('island') || !(r.log || []).some(l => l.name === g.name && /no outline/.test(l.at))) continue; seen.add(g.wd);
+      try { const j = await (await fetch(H + '/landing?wd=' + g.wd)).json(); out.push(`  # ${g.name} ${g.wd} helper: ${JSON.stringify(Object.assign({}, j, { piers: (j.piers || []).length })).slice(0, 200)}`); } catch (e) { out.push(`  # ${g.name} helper: ${e.message}`); }
+      for (const ep of ['https://overpass-api.de/api/interpreter', 'https://overpass.private.coffee/api/interpreter', 'https://maps.mail.ru/osm/tools/overpass/api/interpreter']) {
+        try { const q = await fetch(ep, { method: 'POST', body: 'data=' + encodeURIComponent(`[out:json][timeout:25];(node["wikidata"="${g.wd}"];way["wikidata"="${g.wd}"];relation["wikidata"="${g.wd}"];);out tags 20;`), headers: { 'content-type': 'application/x-www-form-urlencoded', 'user-agent': 'day-trips-check' }, signal: AbortSignal.timeout(30000) });
+          const t = await q.text(); let d = ''; try { const j = JSON.parse(t); d = (j.remark ? 'remark ' + j.remark + '; ' : '') + (j.elements || []).map(e => e.type + ' ' + e.id + ' ' + ['place', 'type', 'natural', 'boundary'].map(k => e.tags && e.tags[k] ? k + '=' + e.tags[k] : '').filter(Boolean).join(',')).join(' | '); } catch (e) { d = t.slice(0, 80).replace(/\s+/g, ' '); }
+          out.push(`  #   ${ep.split('/')[2]}: ${q.status} ${d || 'nothing'}`); } catch (e) { out.push(`  #   ${ep.split('/')[2]}: ${e.message}`); } } }
     if (!r.centre) out.push('  no centre in the sources');
     for (const t of r.trips) out.push(`  + ${t.name} [${t.cat}] (${t.way})${t.landing ? ' at ' + t.landing : ''}: ${t.travel}`);
     if (r.open) { open++; out.push('  NOT FINAL: a way could not be asked (a service was busy) after 3 tries'); }
@@ -41,7 +49,9 @@ const CITIES = JSON.parse(fs.readFileSync(path.join(__dirname, 'day-trips-expect
     if (wrong.length) { bad++; out.push('  WRONG: ' + wrong.map(t => t.name).join(', ')); }
     lines.push(out.join('\n')); console.log(out.join('\n'));
   };
-  const todo = CITIES.slice(); await Promise.all([0, 1, 2].map(async () => { while (todo.length) await one(todo.shift()); }));
+  const todo = CITIES.slice(); // One city at a time, as one traveler's phone would ask: three at once had the free map servers refuse most asks
+  // (live check, Nov 26).
+  while (todo.length) await one(todo.shift());
   console.log(`\nday-trips-live: ${CITIES.length} cities, ${bad} with an expected day trip missing or a wrong one, ${open} not tested or not final`);
   await b.close(); process.exit(bad ? 1 : 0);
 })();
