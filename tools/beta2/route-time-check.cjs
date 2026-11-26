@@ -27,18 +27,33 @@ function run(E) {
   t(taxi(m).source === 'roads', `that taxi time says it comes from the road map, not an estimate (got ${taxi(m).source})`);
   const fl = (p, q) => (p === b && q === c) || (p === c && q === b) ? { car: { km: 12, min: 5 } } : null, f = E.makeTravel({}, {}, null, null, null, null, fl).estimate(b, c);
   t(taxi(f).min >= taxi(g).min, `a route shorter than the guess never shortens the ride (got ${taxi(f).min}, guess ${taxi(g).min})`);
+  // Plans kept from before a street route arrived are made again with it (live check, Nov 25, Kotor: the app held the
+  // 48 min road up the mountain, and the plan kept the 31 min guess). The same saved trip is planned with no route known,
+  // then again once routes are known for its long rides: no taxi on a known route may keep the guess.
+  const trip = require('./corpus/g09-kotor.json'), long = (p, q) => E.hav(p, q) > 3;
+  const rides = ps => [].concat(...ps.filter(Boolean).map(p => (p.items || []).filter(x => x.t === 'ride' && x.kind === 'taxi' && x.from && x.to && long(x.from, x.to))));
+  const b1 = JSON.parse(JSON.stringify(trip)); b1.routes = () => null; const first = rides(E.planTrip(b1));
+  t(first.some(x => x.min < 79), `the saved Kotor trip has a long taxi on the guess before any route is known (got ${first.map(x => x.min).join(', ') || 'none'})`);
+  const b2 = JSON.parse(JSON.stringify(trip)); b2.routes = (p, q) => long(p, q) ? { car: { km: E.hav(p, q) * 6.4, min: 60 } } : null; b2.routes.known = () => [];
+  const then = rides(E.planTrip(b2)).filter(x => x.min < 79);
+  t(!then.length, `once the street routes arrive (60 min by road), the plans are made again with them, never kept on the guess (got ${then.map(x => x.min + ' min').join(', ')})`);
   return bad;
 }
 const real = run(require('./engine.cjs'));
 for (const m of real) console.log('FAIL ' + m);
-// Planted: the engine with real routes ignored.
-const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'route-plant-')); fs.cpSync(SRC, tmp, { recursive: true });
-const f = path.join(tmp, 'engine', '10-travel.js'), s = fs.readFileSync(f, 'utf8'), want = 'let rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;';
-if (!s.includes(want)) { console.log('FAIL the planted copy could not be made: the engine text it changes is gone'); process.exit(1); }
-fs.writeFileSync(f, s.replace(want, 'const rt = null;'));
-const out = cp.spawnSync(process.execPath, ['-e', `const E=require(${JSON.stringify(path.join(__dirname, 'engine.cjs'))});process.stdout.write(JSON.stringify((${run.toString()})(E)))`], { env: Object.assign({}, process.env, { ENGINE_SRC: tmp }), encoding: 'utf8' });
-let planted = []; try { planted = JSON.parse(out.stdout); } catch (e) { console.log('FAIL planted run broke: ' + (out.stderr || '').slice(0, 300)); process.exit(1); }
-fs.rmSync(tmp, { recursive: true, force: true });
-console.log(`planted (real routes ignored): ${planted.length} finding(s)${planted.length ? '' : ' - BLIND'}`);
-console.log(`route-time-check: ${real.length ? real.length + ' failed' : 'all passed'}${planted.length ? '' : ', but the planted copy went unseen'}`);
-process.exit(real.length || !planted.length ? 1 : 0);
+// Planted: the engine with real routes ignored, and plans kept although a route arrived.
+const PLANTS = [['real routes ignored', '10-travel.js', 'let rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;', 'let rt = null;'],
+  ['plans kept although a street route arrived', '95-plan.js', ' && routesSame(got)) {', ') {']];
+let blind = 0;
+for (const [name, file, want, put] of PLANTS) {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'route-plant-')); fs.cpSync(SRC, tmp, { recursive: true });
+  const f = path.join(tmp, 'engine', file), s = fs.readFileSync(f, 'utf8');
+  if (!s.includes(want)) { console.log('FAIL the planted copy (' + name + ') could not be made: the engine text it changes is gone'); process.exit(1); }
+  fs.writeFileSync(f, s.replace(want, put));
+  const out = cp.spawnSync(process.execPath, ['-e', `const E=require(${JSON.stringify(path.join(__dirname, 'engine.cjs'))});process.stdout.write(JSON.stringify((${run.toString()})(E)))`], { cwd: __dirname, env: Object.assign({}, process.env, { ENGINE_SRC: tmp }), encoding: 'utf8' });
+  let planted = []; try { planted = JSON.parse(out.stdout); } catch (e) { console.log('FAIL planted run broke: ' + (out.stderr || '').slice(0, 300)); process.exit(1); }
+  fs.rmSync(tmp, { recursive: true, force: true });
+  console.log(`planted (${name}): ${planted.length} finding(s)${planted.length ? '' : ' - BLIND'}`); if (!planted.length) blind++;
+}
+console.log(`route-time-check: ${real.length ? real.length + ' failed' : 'all passed'}${blind ? ', but a planted copy went unseen' : ''}`);
+process.exit(real.length || blind ? 1 : 0);

@@ -778,13 +778,21 @@
       const sig = JSON.stringify(sub) + "|" + lines;
       const store = idx.some(i => days[i].alone) ? keptAlone : kept;
       let got = store.get(sig);
-      if (got && got.asked.every(([a, b, was]) => JSON.stringify(bucket.answers ? bucket.answers(a, b) : null) === was)) { store.delete(sig); store.set(sig, got); }
+      // R-33: a street route arriving changes the plans that read it, as a ride answer does (the street routes are a
+      // function, so the signature above can't see them: live check, Nov 25, Kotor: the app held the 48 min road up the
+      // mountain, and the kept plans still showed the 31 min guess). The routes read, and every route known when one near
+      // was looked for, are checked again before kept plans are used.
+      const R = typeof bucket.routes === "function" ? bucket.routes : null, knownSig = k => k.reduce((n, r) => n + (r && r.car ? 1 : 0) + (r && r.foot ? 1 : 0), 0), knownNow = () => R && typeof R.known === "function" ? knownSig(R.known() || []) : 0; // (routes are only ever added: their count tells)
+      const routesSame = g => g.routesAsked.every(([a, b, was]) => JSON.stringify(R ? R(a, b) || null : null) === was) && (g.known == null || knownNow() === g.known);
+      if (got && got.asked.every(([a, b, was]) => JSON.stringify(bucket.answers ? bucket.answers(a, b) : null) === was) && routesSame(got)) { store.delete(sig); store.set(sig, got); }
       else {
-        const asked = [];
+        const asked = [], routesAsked = []; let known = null;
         if (bucket.answers) sub.answers = (a, b) => { const r = bucket.answers(a, b); asked.push([a, b, JSON.stringify(r)]); return r; };
+        if (R) { sub.routes = (a, b) => { const r = R(a, b) || null; routesAsked.push([a, b, JSON.stringify(r)]); return r; };
+          if (typeof R.known === "function") sub.routes.known = () => { const k = R.known() || []; known = knownSig(k); return k; }; }
         if (bucket.transit) sub.transit = bucket.transit;
         const plans = planAll(sub); plans.forEach((p, k) => { if (p) p.i = idx[k]; });
-        got = { plans, asked }; store.set(sig, got); if (store.size > KEEP) store.delete(store.keys().next().value);
+        got = { plans, asked, routesAsked, known }; store.set(sig, got); if (store.size > KEEP) store.delete(store.keys().next().value);
       }
       idx.forEach((i, k) => { out[i] = got.plans[k]; });
     }
