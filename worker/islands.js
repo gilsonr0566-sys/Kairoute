@@ -136,4 +136,59 @@ export async function islandsData(centre, env, codeKey, sha) {
   if (!open) await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: 30 * 86400 });
   return res;
 }
+// Where the boats land on an island or island group a day out of a city (rule R-37, Nov 25: Hvar, the Princes' Islands
+// and Lantau were never offered as day trips, because the encyclopedia's point for an island is its middle, kilometres
+// from any pier, so no boat was ever found "near" it). The map's own outline of the place (the island or archipelago
+// that carries its encyclopedia id) and the ferry terminals on it or on a pier just off it: real mapped piers, never a
+// guessed one. No outline or no pier on the map: an empty list, and the app then says nothing about a boat.
+export const LAND_M = 400;
+export function piersOn(shapes, piers) {
+  const out = [];
+  for (const p of piers || []) { if (!isFinite(p.lat) || !isFinite(p.lng)) continue;
+    if (!(shapes || []).some(f => inRing(f, p.lat, p.lng) || nearRing(f, p.lat, p.lng, LAND_M))) continue;
+    if (out.some(q => hav(q, p) < 0.25)) continue;   // one landing, mapped twice (the terminal and its building)
+    out.push({ name: String(p.name || "").slice(0, 60), lat: +(+p.lat).toFixed(5), lng: +(+p.lng).toFixed(5) }); }
+  return out;
+}
+export async function landingData(wd, env, codeKey) {
+  if (!/^Q\d+$/.test(String(wd || ""))) return { error: "Bad request", status: 400 };
+  const key = (await codeKey("ld", [rings, simplify, piersOn, landingData])) + wd, hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  // The outline: the island or island group itself, and the islands that are its members. Anything the map files
+  // under this encyclopedia id counts, whatever its tags: the id says it is the island (live check, Nov 26: Hvar's
+  // outline was not found by its 'place' tag).
+  // Asked for with its members ('out geom'): with tags only, a big island drawn from many pieces of coast came back
+  // with no pieces at all (live check, Nov 26: Hvar and Lantau found on the map, with no outline).
+  const els = await overpass(`[out:json][timeout:40];(way["wikidata"="${wd}"];relation["wikidata"="${wd}"];)->.i;(.i;relation(r.i);)->.all;.all out geom;`, 40000);
+  if (!els) return { error: "Busy", status: 503 };
+  const shapes = [];
+  for (const el of els) for (const r of rings(el)) { if (r.length < 4) continue; const f = flat(simplify(r, 0.0003)); if (f.length >= 8) shapes.push(f); if (shapes.length >= 60) break; }
+  let piers = [];
+  if (shapes.length) {
+    const la = [], ln = []; for (const f of shapes) for (let i = 0; i < f.length; i += 2) { la.push(f[i]); ln.push(f[i + 1]); }
+    const pad = 0.006, box = [Math.min(...la) - pad, Math.min(...ln) - pad, Math.max(...la) + pad, Math.max(...ln) + pad].map(n => n.toFixed(4)).join(",");
+    const ps = await overpass(`[out:json][timeout:30];(node["amenity"="ferry_terminal"](${box});way["amenity"="ferry_terminal"](${box}););out tags center 200;`, 30000);
+    if (!ps) return { error: "Busy", status: 503 };
+    piers = piersOn(shapes, ps.map(e => ({ name: (e.tags && (e.tags["name:en"] || e.tags.int_name || e.tags.name)) || "", lat: e.lat ?? (e.center && e.center.lat), lng: e.lon ?? (e.center && e.center.lon) })));
+  }
+  const res = { wd, outline: shapes.length > 0, shapes: shapes.length, found: els.length, parts: els.reduce((n, e) => n + (e.geometry ? 1 : 0) + (e.members || []).filter(m => m.geometry).length, 0), piers: piers.slice(0, 40) };
+  await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (piers.length ? 60 : 14) * 86400 });
+  return res;
+}
+// The way by road to a place a day out (rule R-37): the road router's drive, and whether it takes a boat on the way (a
+// drive with a car ferry in it is no "about 40 min by road"). { min, km, ferry } or, when no road goes there, { none: true }.
+// Kept 90 days; a router that didn't answer keeps nothing and is asked again.
+export async function roadWay(a, b, env, codeKey) {
+  const r3 = n => (+n).toFixed(3), key = (await codeKey("rw", [roadWay])) + [a.lat, a.lng, b.lat, b.lng].map(r3).join(","), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  let j = null;
+  try { const r = await fetch(`https://routing.openstreetmap.de/routed-car/route/v1/driving/${(+a.lng).toFixed(5)},${(+a.lat).toFixed(5)};${(+b.lng).toFixed(5)},${(+b.lat).toFixed(5)}?steps=true&overview=false`, { headers: UA, signal: AbortSignal.timeout(15000) }); if (r.ok || r.status === 400) j = await r.json(); } catch (e) {}
+  if (!j || !j.code) return { error: "Busy", status: 503 };
+  let res;
+  if (j.code === "NoRoute") res = { none: true };
+  else if (j.code !== "Ok" || !j.routes || !j.routes[0]) return { error: "Busy", status: 503 };
+  else { const rt = j.routes[0], w = (j.waypoints || [])[1], off = w && w.location ? hav({ lat: w.location[1], lng: w.location[0] }, b) : 0;
+    // A road that ends more than 2 km from the place doesn't reach it (an island with no roads: the nearest mainland road).
+    res = off > 2 ? { none: true } : { min: Math.round(rt.duration / 60), km: +(rt.distance / 1000).toFixed(1), ferry: (rt.legs || []).some(l => (l.steps || []).some(st => st.mode === "ferry")) }; }
+  await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: 90 * 86400 });
+  return res;
+}
 export { walkTo as _walkTo };

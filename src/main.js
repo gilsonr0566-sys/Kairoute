@@ -1279,7 +1279,8 @@ function defaultSelection(city, style, d) {
   // people stop there. On a city stay, the town's own top sights take the first day and the day trip a later one.
   let lead = null;
   if (d && (d.type === "port" || d.type === "land")) {
-    const far = (city.farther || []).filter(x => !taken[x.id] && religiousOk(x) && !shut(x) && (x.mustSee || x.unesco || fameW(x) > 1));
+    // A classic day trip the sources added (R-37) is offered in the list, never put on a day by the app itself.
+    const far = (city.farther || []).filter(x => !x.classic && !taken[x.id] && religiousOk(x) && !shut(x) && (x.mustSee || x.unesco || fameW(x) > 1));
     far.sort((a, b) => fameW(b) - fameW(a) || (b.fame || 0) - (a.fame || 0) || (b.mustSee ? 1 : 0) - (a.mustSee ? 1 : 0));
     // On a port day the lead is the best-known trip that is short from the ship: the most famous far place overall can be
     // too far (live Naples, Nov 16: Mount Vesuvius, 1 h 45 each way, outranked Pompeii, so no day trip led at all).
@@ -3378,7 +3379,10 @@ function farGaps(city, src) {
   return (src.far || []).filter(y => y && y.name && KEngine.fin(y.lat) && y.km >= 8 && y.km <= 100 && (y.sl || 0) >= 25 && !farNotPlace(y) && !inGuide(y)).sort((a, b) => (b.sl || 0) - (a.sl || 0)).slice(0, 10);
 }
 async function fillFarther(city, src) {
-  const k = keyOf(city.city); if (farFilling[k] || city.farFillV === FARFILL_V) return;
+  const k = keyOf(city.city);
+  // With no AI, the classic day trips rule (R-37) runs for every guide, one an AI once filled included.
+  if (!aiReady() && city.farFillV === FARFILL_V) { if (freeAI) farNoAI(city, src); return; }
+  if (farFilling[k] || city.farFillV === FARFILL_V) return;
   if ((city.farther || []).some(farUntimed)) { city.farther = city.farther.filter(x => !farUntimed(x)); keepFills(city); }
   if (!aiReady()) { if (freeAI) farNoAI(city, src); return; }
   const cands = farGaps(city, src); if (!cands.length) { city.farFillV = FARFILL_V; return; }
@@ -6316,7 +6320,7 @@ function siteCard(s, d, plan, nr) {
       <div class="tags">${s.mustSee ? `<span class="tag must">Must-see</span>` : ""}${unescoTag(s)}${sightKind(s, city) === "local" ? `<span class="tag local">Local favorite</span>` : `<span class="tag">Famous sight</span>`}${!on && plan && (plan.bonus || []).some(x => x.id === s.id) ? `<span class="tag bonus">On your plan as an optional stop</span>` : ""}${s.indoor ? `<span class="tag">Indoors</span>` : ""}${closedOn(s, d.date) && cl ? `<span class="tag nofit">${esc(cl)}</span>` : ""}</div>
       ${twinNote(s, city)}${partsPick(s)}${s.show && s.show.what ? `<p class="travelnote">⏱ ${esc(showLine(s))}</p>` : ""}${nextDoor(s, city)}
       ${s.posDoubt ? `<p class="travelnote"><b>Where it is isn't sure:</b> the travel guide and the encyclopedia put it in different places, so the ride times to and from it may be wrong. Check the spot on a map before you go.</p>` : ""}
-      ${s.far && txt(s.travel) ? (/^Not confirmed: /.test(s.travel) ? `<p class="travelnote">Getting there, not confirmed (an earlier AI guide's words, not a timetable): ${esc(unitText(s.travel.replace(/^Not confirmed: /, "")))}</p>` : `<p class="travelnote">Getting there, as the travel guide says (not a checked timetable): ${esc(unitText(s.travel))}</p>`) : ""}
+      ${s.far && txt(s.travel) ? (/^Not confirmed: /.test(s.travel) ? `<p class="travelnote">Getting there, not confirmed (an earlier AI guide's words, not a timetable): ${esc(unitText(s.travel.replace(/^Not confirmed: /, "")))}</p>` : s.classic && s.travelSrc ? `<p class="travelnote tripway" data-way="${esc(s.travelSrc)}">Getting there: ${esc(unitText(s.travel))}</p>` : `<p class="travelnote">Getting there, as the travel guide says (not a checked timetable): ${esc(unitText(s.travel))}</p>`) : ""}
       ${hrs ? `<p class="travelnote">${esc(hrs)}${cl ? " · " + esc(cl) : ""}</p>` : ""}
       ${P().access !== "none" && txt(s.access) ? `<p class="travelnote"><b>Access:</b> ${esc(s.access)}</p>` : ""}
       ${srcNote(s)}${fs === false ? `<button type="button" class="btn ghost small" data-act="fitask" data-id="${esc(s.id)}">Ways to fit it in</button>` : ""}

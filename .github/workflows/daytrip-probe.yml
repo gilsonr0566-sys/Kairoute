@@ -1,0 +1,34 @@
+name: Day trips live check
+# Rule R-37: what the built app offers as classic day trips for real cities, from this branch's helper code run on
+# GitHub (free sources only, AI off) or from the live helper. Prints; publishes nothing.
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Only cities matching (blank: all)"
+        default: ""
+      live:
+        description: "1 = ask the live helper instead of this branch's helper code"
+        default: ""
+  push:
+    branches: ["claude/project-thread-s5o355"]
+    paths: ["tools/beta2/day-trips-live.cjs", "tools/beta2/day-trips-expect.json", ".github/workflows/daytrip-probe.yml"]
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - env:
+          ONLY: ${{ inputs.only || '' }}
+          LIVE: ${{ inputs.live || '' }}
+        run: |
+          if [ -z "$LIVE" ]; then node tools/beta2/local-helper.mjs 8790 & sleep 3; export HELPER=http://localhost:8790/workers.dev; fi
+          node tools/beta2/day-trips-live.cjs beta2-site/index.html

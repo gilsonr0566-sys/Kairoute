@@ -1,7 +1,7 @@
 import { extras, Group } from "./extras.js";
 import { allOptions, ferriesNear, keptFerries, ferryKey, topRides } from "./transit.js";
 import { departures } from "./departures.js";
-import { islandsData } from "./islands.js";
+import { islandsData, landingData, roadWay } from "./islands.js";
 import { climbOf, along, upDown } from "./climb.js";
 export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
@@ -120,7 +120,7 @@ function aiGate(env, path, lim) {
   return gate;
 }
 // Memory of kept answers (see the fetch handler). Only these content prefixes; everything else reads the store.
-const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3|p2|gc|gr|ev|gq|fp|wx|wv|dp|bk|tr|ns|nv|fx|fm|sr|leg|xn|kh|xf|vy|sx|is)(\.[0-9a-f]{10})?:/, MEMO_MS = 600000, MEMO = new Map();
+const MEMO_KEYS = /^(tr6|fp1|rt1|ns1|ns2|fx2|bz1|g|fm6|fm8|sr8|gr5|gq1|ev1|dp1|p2|kh4|gc2|nv1|fq|sp1|wd|xw1|xn1|xf1|wx1|wv1|bk1|s3|p2|gc|gr|ev|gq|fp|wx|wv|dp|bk|tr|ns|nv|fx|fm|sr|leg|xn|kh|xf|vy|sx|is|ld|rw)(\.[0-9a-f]{10})?:/, MEMO_MS = 600000, MEMO = new Map();
 let memoChars = 0; // kept under ~30 MB of the Worker's 128 MB memory
 function memoStore(kv) {
   if (!kv || kv.__memo) return kv;
@@ -383,6 +383,19 @@ const HANDLER = {
     if (url.pathname === "/islands") {
       const lat = +url.searchParams.get("lat"), lng = +url.searchParams.get("lng"); if (!isFinite(lat) || !isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
       const r = await islandsData({ lat, lng }, env, codeKey, sha); if (r.error) return Response.json({ error: r.error }, { status: r.status || 500, headers: h });
+      return Response.json(r, { headers: h });
+    }
+    // /landing?wd=Q…: the mapped ferry terminals on an island or island group a day out of a city (islands.js, rule
+    // R-37), so the boat to an island day trip is looked for at its piers, not at the middle of the island.
+    if (url.pathname === "/landing") {
+      const r = await landingData(String(url.searchParams.get("wd") || ""), env, codeKey); if (r.error) return Response.json({ error: r.error }, { status: r.status || 500, headers: h });
+      return Response.json(r, { headers: h });
+    }
+    // /roadway?a=lat,lng&b=lat,lng: the drive to a place a day out, and whether it takes a boat (islands.js, rule R-37).
+    if (url.pathname === "/roadway") {
+      const pt = v => { const m = /^(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)$/.exec(String(v || "")); return m && Math.abs(+m[1]) <= 90 && Math.abs(+m[2]) <= 180 ? { lat: +m[1], lng: +m[2] } : null; };
+      const a = pt(url.searchParams.get("a")), b = pt(url.searchParams.get("b")); if (!a || !b) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
+      const r = await roadWay(a, b, env, codeKey); if (r.error) return Response.json({ error: r.error }, { status: r.status || 500, headers: h });
       return Response.json(r, { headers: h });
     }
     // /sources?city=: every source Kairoute uses for a city, gathered and cross-checked (see sourcesData).
@@ -879,9 +892,43 @@ export default HANDLER;
 // What the handler's own worked-out answers are built from (the handler and the modules it reads).
 const HCODE = () => [HANDLER.fetch, allOptions, ferriesNear, keptFerries, ferryKey, topRides, departures, extras];
 
+// Travel destinations a day out of a city (rule R-37): the rows of the encyclopedia's answer, one per place (a place with
+// two travel-guide pages keeps the first), and how they join the fame list: a place on both lists is marked as having
+// its own travel-guide page (voy), one only the travel guide knows is added after the fame list's own.
+const DEST_KM = 100, DEST_MAX = 40;
+export function destRows(bindings) { const seen = new Set(), out = [];
+  for (const b of bindings || []) { const id = b.item.value.split("/").pop(); if (seen.has(id)) continue; seen.add(id);
+    const m = /Point\(([-\d.]+) ([-\d.]+)\)/.exec(b.loc.value), name = b.itemLabel && b.itemLabel.value; if (!m || !name || /^Q\d+$/.test(name)) continue;
+    out.push({ name, wd: id, sl: +b.sl.value, lat: +(+m[2]).toFixed(5), lng: +(+m[1]).toFixed(5), km: +(+b.dist.value).toFixed(1), voy: String(b.title.value).slice(0, 80) }); }
+  return out; }
+export function mergeDests(far, dest) { const byId = new Map(far.map(x => [x.wd, x])), out = far.slice(); let n = 0;
+  for (const d of dest || []) { const f = byId.get(d.wd); if (f) { f.voy = d.voy; continue; } if (n++ < DEST_MAX) out.push(d); }
+  return out; }
+export function farSaid(far, enV) { const links = (enV && enV.links) || {}, title = String((enV && enV.title) || "");
+  for (const f of far || []) { if (!f || !f.voy) continue; const t = f.voy.charAt(0).toUpperCase() + f.voy.slice(1);
+    f.said = links[t] || 0; if (title && t.startsWith(title + "/")) f.part = true; }
+  return far; }
+// What kind of page the travel guide itself files a place under (rule R-37): every Wikivoyage article sits in a status
+// category of its kind ("Usable cities", "Guide districts", "Outline regions", "Usable parks", "Outline countries",
+// "Usable airports", "Outline rural areas", "Usable itineraries") or "<Kind> articles". A country, an airport or an
+// itinerary is no day out; a city, a district, a park or a rural area is a place to go.
+export function voyKind(cats) {
+  const K = [[/^countr|^continent/, "country"], [/^airport/, "airport"], [/^itinerar/, "itinerary"], [/^(huge |big )?cit(y|ies)$/, "city"], [/^districts?$/, "district"], [/^parks?$/, "park"], [/^rural areas?$/, "rural"], [/^(regions?|states?|extra-?hierarchical regions?)$/, "region"], [/^(topics?|phrasebooks?|dive guides?|events?)$/, "topic"]];
+  for (const c of cats || []) { const m = /^(?:Category:)?(?:(?:Outline|Usable|Guide|Star|Stub) (.+)|(.+) articles)$/i.exec(String(c)); if (!m) continue;
+    const w = (m[1] || m[2]).toLowerCase().trim(); for (const [re, k] of K) if (re.test(w)) return k; }
+  return ""; }
+async function voyTypes(list, UA) {
+  const titles = [...new Set((list || []).map(x => x && x.voy).filter(Boolean))], kind = new Map();
+  const parts = []; for (let i = 0; i < titles.length && i < 100; i += 25) parts.push(titles.slice(i, i + 25));
+  await Promise.all(parts.map(async part => { let j = null;
+    try { const r = await fetch("https://en.wikivoyage.org/w/api.php?action=query&format=json&formatversion=2&redirects=1&prop=categories&cllimit=500&titles=" + encodeURIComponent(part.join("|")), { headers: UA, signal: AbortSignal.timeout(9000) }); if (r.ok) j = await r.json(); } catch (e) {}
+    const q = (j && j.query) || {}, to = new Map((q.normalized || []).concat(q.redirects || []).map(x => [x.to, x.from]));
+    for (const pg of q.pages || []) { const k = voyKind((pg.categories || []).map(c => c.title)); if (!k) continue; kind.set(pg.title, k); let t = pg.title; for (let n = 0; n < 2 && to.has(t); n++) { t = to.get(t); kind.set(t, k); } } }));
+  for (const x of list || []) { if (!x || !x.voy) continue; const k = kind.get(x.voy) || kind.get(x.voy.charAt(0).toUpperCase() + x.voy.slice(1)) || kind.get(x.voy.replace(/_/g, " ")); if (k) x.vt = k; }
+  return list; }
 // The best-known places in and around a city (see /famous).
 async function famousData(label, env, ctx) {
-  const key = (await codeKey("fm", [famousData, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = (await codeKey("fm", [famousData, destRows, mergeDests, DEST_KM, DEST_MAX, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   // Each outside read kept as soon as it comes back, so a stopped ask loses nothing (R-34, see sourcesData).
   const sxKey = await codeKey("sx", []);
@@ -932,10 +979,24 @@ async function famousData(label, env, ctx) {
   // The day trips out (80 km round) are the slowest question here (Bath, Nov 24: 81 s with its retry), longer than the app
   // waits for one ask: it gets what is left of 40 s of this ask, one try (R-34). When it doesn't answer in time the fame
   // list is kept a day only, so a later ask fills the trips in (the answer itself is kept the moment it comes back).
-  const farLeft = 40000 - (Date.now() - t0), farGot = farLeft >= 5000 ? await famous(center, 80, 25, NOT_TOWN, 120, 200000, farLeft, 1) : null;
-  const farRaw = farGot || [], farMissed = !farGot;
+  // The places a day out that travelers go to (rule R-37, Nov 25: Hvar, the Princes' Islands, Lantau and Manly were in
+  // no guide): every place within 100 km that the travel guide (English Wikivoyage) has a page of its own for, with how
+  // well known it is. The fame list above is cut at its 25 best known, and around a big city those are stadiums, bridges
+  // and suburbs; this list is asked for apart, so a classic day trip is never crowded out. Asked at the same time as the
+  // fame list, in the same budget; when it doesn't answer, the answer is kept a day only (as for the fame list).
+  const dests = async (c, ms) => {
+    const q = `SELECT ?item ?itemLabel ?sl ?loc ?dist ?title WHERE { SERVICE wikibase:around { ?item wdt:P625 ?loc . bd:serviceParam wikibase:center "Point(${c.lng} ${c.lat})"^^geo:wktLiteral . bd:serviceParam wikibase:radius "${DEST_KM}" . bd:serviceParam wikibase:distance ?dist . }
+      ?voy schema:about ?item ; schema:isPartOf <https://en.wikivoyage.org/> ; schema:name ?title . ?item wikibase:sitelinks ?sl .
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "en,mul" . } } ORDER BY DESC(?sl) LIMIT 80`;
+    const j = await getJ("https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q), ms, 1);
+    return j ? destRows((j.results && j.results.bindings) || []) : null;
+  };
+  const farLeft = 40000 - (Date.now() - t0);
+  const [farGot, destGot] = farLeft >= 5000 ? await Promise.all([famous(center, 80, 25, NOT_TOWN, 120, 200000, farLeft, 1), dests(center, farLeft)]) : [null, null];
+  const farRaw = farGot || [], farMissed = !farGot || !destGot;
   const mainIds = new Set(main.map(x => x.wd)), lc = s => s.toLowerCase();
-  const far = farRaw.filter(x => x.km > 6 && !mainIds.has(x.wd) && lc(x.name) !== lc(area) && lc(x.name) !== lc(port)).slice(0, 25);
+  const farOk = x => x.km > 6 && !mainIds.has(x.wd) && lc(x.name) !== lc(area) && lc(x.name) !== lc(port) && !(selfId && x.wd === selfId);
+  const far = mergeDests(farRaw.filter(farOk).slice(0, 25), (destGot || []).filter(farOk));
   main = main.filter(x => lc(x.name) !== lc(area) && lc(x.name) !== lc(port) && !(selfId && x.wd === selfId)).slice(0, 45);
   // Heritage status (UNESCO World Heritage, or a national heritage register) for every place found.
   const hids = [...main, ...far].map(x => x.wd);
@@ -943,7 +1004,7 @@ async function famousData(label, env, ctx) {
     const hm = new Map(((hj && hj.results && hj.results.bindings) || []).map(b => [b.item.value.split("/").pop(), +b.un.value]));
     [...main, ...far].forEach(x => { if (hm.has(x.wd)) { x.heritage = true; x.unesco = hm.get(x.wd) === 1; } }); }
   const res = Object.assign({ area, port, center, main, far }, farMissed ? { farMissed: true } : {});
-  await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (farMissed ? 1 : 30) * 86400 }); // kept before the next stage starts (see voyageKept)
+  await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: farMissed ? 3 * 3600 : 30 * 86400 }); // kept before the next stage starts (see voyageKept)
   return res;
 }
 
@@ -995,7 +1056,7 @@ function parseListings(wt) {
 // started from scratch). Each Wikivoyage stage is kept as soon as it is read, before the next starts, so asking again
 // picks up where the last ask stopped (R-29: kept answers carry the code's fingerprint like every other answer).
 async function voyageKept(host, title, UA, env) {
-  const key = (await codeKey("vy", [voyagePages, parseListings, voyageNext])) + (await sha(host + "|" + String(title).toLowerCase())), hit = await env.USAGE.get(key);
+  const key = (await codeKey("vy", [voyagePages, parseListings, voyageNext, voyageLinks])) + (await sha(host + "|" + String(title).toLowerCase())), hit = await env.USAGE.get(key);
   if (hit) return JSON.parse(hit);
   const v = await voyagePages(host, title, UA); if (v && v.pages) await env.USAGE.put(key, JSON.stringify(v), { expirationTtl: 30 * 86400 });
   return v;
@@ -1007,7 +1068,15 @@ async function voyagePages(host, title, UA) {
   const esc = top.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), subs = [...new Set([...top.wt.matchAll(new RegExp("\\[\\[" + esc + "/([^|\\]#]+)", "g"))].map(m => top.title + "/" + m[1].trim()))].slice(0, 14);
   const more = (await Promise.all(subs.map(get))).filter(Boolean);
   const listings = [top, ...more].flatMap(p => parseListings(p.wt));
-  return { pages: 1 + more.length, title: top.title, listings, next: voyageNext(top.wt) };
+  return { pages: 1 + more.length, title: top.title, listings, next: voyageNext(top.wt), links: voyageLinks(top.wt) };
+}
+// How often a city's own travel-guide page links to each other page ("[[Capri]]", "[[Sydney/Manly|Manly]]"): what the
+// guide to this city itself sends its readers to (rule R-37). Page title -> count, the 300 most linked.
+export function voyageLinks(wt) {
+  const n = new Map();
+  for (const m of String(wt || "").matchAll(/\[\[\s*:?([^|\]#{}<>]+?)\s*(?:#[^|\]]*)?(?:\|[^\]]*)?\]\]/g)) { let t = m[1].replace(/_/g, " ").replace(/\s+/g, " ").trim(); if (!t || /^(file|image|category|wikipedia|w|wikt|commons|special|template|wikivoyage|[a-z]{2,3}):/i.test(t)) continue;
+    t = t.charAt(0).toUpperCase() + t.slice(1); n.set(t, (n.get(t) || 0) + 1); }
+  return Object.fromEntries([...n].sort((a, b) => b[1] - a[1]).slice(0, 300));
 }
 // The places travelers suggest for a day out: the links in a Wikivoyage page's "Go next" and "Day trips" sections,
 // each with the traveler's own line about it ("Toledo: the old capital, 30 min by high-speed train").
@@ -1042,7 +1111,7 @@ async function voyageNextPlaces(next, center, UA) {
   next.forEach((x, i) => {
     const t0 = norm.get(x.title) || x.title, t = redir.get(t0) || t0, p = pages.find(q => q.title === t);
     const c = p && p.coordinates && p.coordinates[0]; if (!c || p.missing) return;
-    out.push({ name: t.replace(/\s*\(.*?\)\s*$/, ""), wd: (p.pageprops && p.pageprops.wikibase_item) || undefined, lat: +(+c.lat).toFixed(5), lng: +(+c.lon).toFixed(5), km: +kmOf({ lat: c.lat, lng: c.lon }, center).toFixed(1), rank: i, note: x.note });
+    out.push({ name: t.replace(/\s*\(.*?\)\s*$/, ""), voy: t, wd: (p.pageprops && p.pageprops.wikibase_item) || undefined, lat: +(+c.lat).toFixed(5), lng: +(+c.lon).toFixed(5), km: +kmOf({ lat: c.lat, lng: c.lon }, center).toFixed(1), rank: i, note: x.note });
   });
   return out;
 }
@@ -1079,7 +1148,7 @@ async function mapSights(c, UA) {
 // The kinds of place the app reads (see the kinds lookup in sourcesData): Wikidata class -> one plain word. A place is
 // told by what it is, never by the words in its name.
 const SIGHT_KINDS = { Q811979: "structure", Q618123: "feature", Q41176: "building", Q839954: "archaeological", Q15661340: "ancient-city", Q54831: "amphitheatre", Q162875: "mausoleum",
-  Q22698: "park", Q1107656: "garden", Q35145263: "natural", Q40080: "beach", Q8502: "mountain", Q23442: "island", Q34038: "waterfall", Q39614: "cemetery", Q6017969: "viewpoint",
+  Q22698: "park", Q1107656: "garden", Q35145263: "natural", Q40080: "beach", Q8502: "mountain", Q23442: "island", Q33837: "island", Q1402592: "island", Q46169: "park", Q34038: "waterfall", Q39614: "cemetery", Q6017969: "viewpoint",
   Q33506: "museum", Q207694: "art-museum", Q16970: "church", Q2977: "cathedral", Q32815: "mosque", Q34627: "synagogue", Q44539: "temple", Q108325: "chapel", Q44613: "monastery",
   Q23413: "castle", Q57821: "fortification", Q16560: "palace", Q174782: "square", Q12280: "bridge", Q4989906: "monument", Q179700: "statue", Q483453: "fountain", Q12518: "tower", Q11303: "skyscraper", Q2105463: "observation-deck",
   Q24354: "theatre", Q153562: "opera-house", Q1060829: "concert-hall", Q483110: "stadium", Q641226: "arena", Q1076486: "sports-venue", Q37654: "market", Q43501: "zoo", Q2281788: "aquarium", Q194195: "amusement-park",
@@ -1106,7 +1175,7 @@ function placeOf(listing, wd, map, wholes) {
   return out("listing", listing, true);
 }
 async function sourcesData(label, env, ctx) {
-  const key = (await codeKey("sr", [sourcesData, placeOf, SIGHT_KINDS, mapSights, MAP_SIGHT, parseListings, voyagePages, voyageNext, voyageNextPlaces, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = (await codeKey("sr", [sourcesData, placeOf, SIGHT_KINDS, mapSights, MAP_SIGHT, parseListings, voyagePages, voyageNext, voyageNextPlaces, voyageLinks, farSaid, voyKind, voyTypes, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   // Every outside read here (Wikidata, its query service, the map server) is kept on its own as soon as it comes back
   // (R-34): a city nobody has opened takes 55 to 220 s to gather, longer than the app waits for one ask (60 s), and an
@@ -1166,7 +1235,7 @@ async function sourcesData(label, env, ctx) {
   // The famous places a day out (fam.far) get the same facts: what they are decides whether they are a place to go at
   // all (Nov 23, Kusadasi: "Seikilos epitaph", an inscription kept in a museum abroad, was offered as a day trip).
   const farById = new Map((fam.far || []).filter(f => f && /^Q\d+$/.test(f.wd || "") && !byId.has(f.wd)).map(f => [f.wd, f]));
-  const ids = [...byId.keys()].slice(0, 200).concat([...farById.keys()].slice(0, 25)), chunks = []; for (let k = 0; k < ids.length; k += 50) chunks.push(ids.slice(k, k + 50));
+  const ids = [...byId.keys()].slice(0, 200).concat([...farById.keys()].slice(0, 70)), chunks = []; for (let k = 0; k < ids.length; k += 50) chunks.push(ids.slice(k, k + 50));
   const answers = await Promise.all(chunks.map(part => {
     const V = `VALUES ?item { ${part.map(x => "wd:" + x).join(" ")} }`, H2 = { headers: { ...UA, accept: "application/sparql-results+json" } }, url = q => "https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q);
     return Promise.all([getJ(url(`SELECT ?item ?h ?w ?loc ?lab ?sl ?whole ?wloc WHERE { ${V} OPTIONAL { ?item wdt:P1435 ?h } OPTIONAL { ?item wdt:P856 ?w } OPTIONAL { ?item wdt:P625 ?loc } OPTIONAL { ?item rdfs:label ?lab FILTER(LANG(?lab) = "en") } OPTIONAL { ?item rdfs:label ?mlab FILTER(LANG(?mlab) = "mul") } OPTIONAL { ?item wikibase:sitelinks ?sl } OPTIONAL { ?item wdt:P361|wdt:P276 ?whole . OPTIONAL { ?whole wdt:P625 ?wloc } } }`), 25000, H2),
@@ -1261,11 +1330,19 @@ async function sourcesData(label, env, ctx) {
     { name: S.lcVoy, n: lcV.listings.length, pages: lcV.pages, none: !localVoy }, { name: S.localWiki, n: stops.filter(x => x.src.includes(S.localWiki)).length, none: !lang },
 { name: "Heritage registers and UNESCO", n: stops.filter(x => x.unesco || x.heritage).length }];
   // Day outs travelers suggest (Wikivoyage "Go next" / "Day trips"), with how famous each is where the fame list has it.
-  const next = (await voyageNextPlaces(enV.next, center, UA)).map(x => { const f = (fam.far || []).find(y => (x.wd && y.wd === x.wd) || fold(y.name) === fold(x.name)); return f ? Object.assign(x, { sl: f.sl || 0, unesco: !!f.unesco, heritage: !!f.heritage }) : x; });
+  const next = (await voyageNextPlaces(enV.next, center, UA)).map(x => { const f = (fam.far || []).find(y => (x.wd && y.wd === x.wd) || fold(y.name) === fold(x.name)); return f ? Object.assign(x, { sl: f.sl || 0, unesco: !!f.unesco, heritage: !!f.heritage }, f.kinds ? { kinds: f.kinds } : {}, f.gone ? { gone: true } : {}) : x; });
+  // What this city's own travel-guide page says of each place a day out (rule R-37): how often the page links to that
+  // place's page (said), and whether that page is a part of this city's own guide ("Sydney/Manly": part).
+  farSaid(fam.far, enV);
+  // And what kind of page the travel guide files each under (a city, a district, a park; or a country, a region, an airport).
+  next.forEach(x => { if (!x.voy) x.voy = x.title || x.name; });
+  await voyTypes((fam.far || []).concat(next), UA);
   lap("next");
   const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T };
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
-  const ttl = { expirationTtl: (enV.pages && fam.main.length && !mapMissed && !fam.farMissed ? 30 : 1) * 86400 };
+  // One whose places a day out could not be read (rule R-37) is asked again after 3 hours: a day without the city's
+  // day trips is a long time (live check, Nov 26: Istanbul's guide links were missed on one run in two).
+  const ttl = { expirationTtl: fam.farMissed ? 3 * 3600 : (enV.pages && fam.main.length && !mapMissed ? 30 : 1) * 86400 };
   ctx.waitUntil(Promise.all([env.USAGE.put(key, JSON.stringify(res), ttl), placeKey ? env.USAGE.put(placeKey, JSON.stringify(res), ttl) : null]));
   return res;
 }

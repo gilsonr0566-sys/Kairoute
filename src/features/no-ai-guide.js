@@ -145,45 +145,187 @@ async function findHotelNoAI(name, d) {
     return hit ? { name: hit.name || name, lat: +hit.lat, lng: +hit.lng, addr: hit.addr || "" } : null;
   } catch (e) { return null; }
 }
-// Day trips with no AI (Nov 17): the places travelers suggest for a day out in the city's travel guide (Wikivoyage
-// "Go next" / "Day trips", from the helper's /sources), each offered only when a real public transport line or ferry
-// gets there within 2 hours, with a service at least every 2 hours. The ride found names the trip's "Getting
-// there" ("Train from Madrid Chamartín, about 35 min one way"); the planner then times it from the day's own start
-// like any other stop. A place with no such line (an island with a few sailings, a village only reached by car) is
-// left out, never guessed. The traveler's own line from the guide is its description. Up to 4, once per guide, and
-// only for a guide with no day trips of its own.
-const FARNOAI_V = 1, farNoAIBusy = {};
-async function farNoAI(city, src, quiet) {
-  const k = keyOf(city.city); if (!freeAI || farNoAIBusy[k] || city.farNoAIV === FARNOAI_V || !src || !Array.isArray(src.next) || !src.next.length) return;
-  // A guide that already has its own day trips (a built-in or written guide) keeps them as they are.
-  if ((city.farther || []).some(x => !x.noAI)) return;
-  const centre = srcCentre(city, src); if (!centre) return;
-  const all = allSites(city), have = y => all.some(s => sameSight(y, s) || (s.merged || []).some(m => sameSight(y, m)));
-  const cands = src.next.filter(y => y && y.name && KEngine.fin(y.lat) && y.km >= 8 && y.km <= 120 && !have(y) && keyOf(y.name) !== keyOf(city.city)).slice(0, 8);
-  if (!cands.length) { city.farNoAIV = FARNOAI_V; return; }
-  farNoAIBusy[k] = true;
-  try {
-    const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: cands.map(y => ({ a: [+centre.lat, +centre.lng], b: [+y.lat, +y.lng], dow: 3 })) }) });
-    if (!r.ok) return; const j = await r.json(), res = (j && j.results) || [];
-    let added = 0; city.farther = city.farther || [];
-    cands.forEach((y, i) => {
-      if (added >= 4) return;
-      const opts = ((res[i] && res[i].opts) || []).filter(o => o && KEngine.fin(o.min) && o.min > 0 && o.min <= 120 && (!o.every || o.every <= 120) && o.kind);
-      if (!opts.length) return;
-      const o = opts.sort((a, b) => a.min - b.min)[0], mins = Math.round(o.min / 5) * 5 || o.min;
-      const travel = `${o.kind} from ${o.from || city.city}, about ${mins} min one way`;
-      const note = String(y.note || "").replace(new RegExp("^" + y.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*[-–—:,]?\\s*", "i"), "").trim();
-      const st = normSite({ id: keyOf(y.name).replace(/ /g, "-") + "-far", name: y.name, lat: y.lat, lng: y.lng, minutes: 180, kind: "touristy", far: true, category: "Day trip", travel,
-        summary: note.length > 20 ? note : `A day out that travelers suggest from ${city.city}.` }, 0);
-      Object.assign(st, { far: true, fame: y.sl || 0, unesco: !!y.unesco, heritage: !!y.heritage, src: ["Wikivoyage (English)"], wd: y.wd, famousFix: true, noAI: true });
-      city.farther.push(st); added++;
-    });
-    city.farNoAIV = FARNOAI_V;
-    if (added) { keepFills(city); try { console.info("Kairoute added " + added + " day trips from the travel guide for " + city.city); } catch (e) {} if (quiet) return; save(); if (["plan", "sites", "guide"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
-  } catch (e) {} finally { farNoAIBusy[k] = false; }
+// ---- Classic day trips (rule R-37) ----
+// Every city's guide offers its well-known day trips, the ones reached by boat included, in every city, from free
+// sources alone (no AI, nothing invented). Nov 25: Hvar from Split, the Princes' Islands from Istanbul, Lantau from
+// Hong Kong and Manly from Sydney were in no guide. The cause was the same everywhere: with the AI off, day trips came
+// only from the first eight links of the travel guide's "Go next" list, only for a guide with no day trips of its own,
+// and only where a line was found near the encyclopedia's point for the place, which for an island is its middle,
+// kilometres from any pier. The rule, the same for every city:
+// 1. What is a classic day trip: a real place 6 to 100 km out that this city's own travel guide (Wikivoyage) sends
+//    its readers to (it lists it under "Go next", links to its page, or keeps it as a part of the city's own guide,
+//    like "Sydney/Manly"), or that is a UNESCO World Heritage Site with a travel-guide page; known in 20+ Wikipedia
+//    languages unless "Go next" names it or it is UNESCO; a place to go by the encyclopedia's facts (never an
+//    airport, a stadium, a bridge, a university, a region or an organisation); not already in the guide.
+// 2. The ones the city's guide says most about first, then the best known (fame alone put Salerno and Benevento ahead
+//    of Capri and Sorrento for Naples), never the first ones mentioned; two of them within 3 km, or of one name, are
+//    one outing.
+// 3. Each needs a real way there, or it is left out: a train, bus or boat line within 2 hours (the timetables, then the
+//    map's lines); for an island, looked for at the ferry terminals the map shows on that island, the nearest to the
+//    city first, and the trip is planned to that pier; else a drive of up to 90 minutes that takes no boat. Its
+//    "Getting there" says which of these it is, and a time that is no timetable's says so.
+// 4. Up to 6 for a city, whether or not its guide already has day trips of its own. They are offered in the list for
+//    the traveler to pick: the app never puts one on a day itself (never a day's leading pick).
+// A way that couldn't be asked (a service busy) is asked again the next time; nothing is guessed in between.
+const TRIPS_V = 2, TRIP_MAX = 6, TRIP_ASK = 16, TRIP_FAME = 20, TRIP_KM_MIN = 6, TRIP_KM = 100, TRIP_LINE_MIN = 120, TRIP_BOAT_KM = 40, TRIP_ROAD_KM = 75, TRIP_ROAD_MIN = 90, TRIP_ONE_KM = 3, TRIP_PART_KM = 15;
+const TRIP_NOT = /^(airport|station|university|school|hospital|hotel|office-building|business|stadium|arena|sports-venue|street|road|bridge|organization|event|occurrence|language|creative-work|term|continent)$/;
+const TRIP_NEVER = /^(airport|station|stadium|arena|sports-venue)$/;
+const TRIP_PLACE = /^(settlement|island|old-town|archaeological|ancient-city|castle|fortification|palace|park|garden|natural|mountain|beach|waterfall|monastery|museum|art-museum|amusement-park|zoo)$/;
+const TRIP_NOT_NAME = /\b(airport|railway station|train station|university|stadium|arena|bridge|motorway|highway|expressway|prison|hospital|province|county|district|region|prefecture|municipality)\b/i;
+const tripIsle = y => srcHas2(y, /^island$/) && !srcHas2(y, /^settlement$/);
+// What a place a day out is, by the facts: a place to go, or not.
+function tripPlace(y) {
+  if (!y || y.gone || y.localName || nonLatin(y.name)) return false;   // shown in the traveler's language or not at all (R-11)
+  // What the travel guide itself files the page under: a country, an airport or an itinerary is no day out; a city, a
+  // district, a park or a rural area is a place to go, whatever the encyclopedia's classes say (live check, Nov 26: the
+  // encyclopedia calls towns and islands "regions" too, so Sintra, Lantau and the Princes' Islands were kept out).
+  if (/^(country|airport|itinerary|topic)$/.test(y.vt || "")) return false;
+  // A part of the city's own guide ("Istanbul/Princes' Islands") is one of its district pages, whatever else it is called.
+  const guidePlace = /^(city|district|park|rural)$/.test(y.vt || "") || !!y.part;
+  if (!srcKnown(y)) return guidePlace || !TRIP_NOT_NAME.test(y.name);   // facts not known: its name alone must not say otherwise
+  if (farNotPlace(y)) return false;
+  if (!guidePlace && srcHas2(y, TRIP_NOT) && !srcHas2(y, TRIP_PLACE)) return false;
+  // An airport, a station or a stadium is never a day out, even one built on an island of its own.
+  if (srcHas2(y, TRIP_NEVER) && !srcHas2(y, /^settlement$/)) return false;
+  // A page the travel guide files as a region (a coast, a delta, a county, an island group) is a day out only when it
+  // is an island, a heritage site, or the city's guide sends readers on to it by name.
+  if (y.vt === "region" && !srcHas2(y, /^island$/) && !y.unesco && !y.next) return false;
+  // A district of the city itself is a day out only when it is out of town: an island, or 15 km out (Manly, Lantau and
+  // the Princes' Islands yes; Kadıköy, Bondi Beach and the business district no).
+  if (y.part && !y.next && !srcHas2(y, /^island$/) && y.km != null && y.km < TRIP_PART_KM) return false;
+  // A province, county or district is an area, not a place to go (unless it is the heritage site itself).
+  if (!y.vt && srcHas2(y, /^(admin-area|region)$/) && !srcHas2(y, TRIP_PLACE) && !y.unesco) return false;
+  return true;
 }
+// How much a place is a classic day out of this city: what the city's own guide says of it first ("Go next", a part of
+// the city's guide, each link to it up to five), a heritage site, then how well known it is.
+const tripScore = y => (y.next ? 30 : 0) + (y.part ? 30 : 0) + 10 * Math.min(5, y.said || 0) + (y.unesco ? 30 : 0) + (y.sl || 0) / 2;
+// The classic day trips the sources know for this city that its guide lacks, best first (steps 1 and 2).
+function tripCands(city, src) {
+  const centre = srcCentre(city, src); if (!centre || !src) return [];
+  const all = allSites(city), names = [city.city, src.area].map(n => keyOf(String(n || "").replace(/\s*\(.*\)/, "").split(",")[0])).filter(Boolean);
+  const have = y => all.some(s => !s.lineOpen && ((y.wd && s.wd === y.wd) || sameSight(y, s) || (s.merged || []).some(m => sameSight(y, m)) || (s.alsoNames || []).some(n => keyOf(n) === keyOf(y.name))));
+  const pool = [];
+  const put = (y, ev) => { if (!y || !y.name || !KEngine.fin(y.lat) || !KEngine.fin(y.lng)) return;
+    const was = pool.find(x => (y.wd && x.wd === y.wd) || keyOf(x.name) === keyOf(y.name) && hav(x, y) <= TRIP_ONE_KM);
+    if (was) { Object.assign(was, ev); for (const k of ["sl", "kinds", "note", "voy", "vt", "said", "part"]) if (was[k] == null && y[k] != null) was[k] = y[k]; if (y.unesco) was.unesco = true; if (y.heritage) was.heritage = true; return; }
+    pool.push(Object.assign({}, y, ev, { km: hav(centre, y) })); };
+  for (const y of src.far || []) if (y && y.voy && (y.said > 0 || y.part || y.unesco)) put(y, {});
+  for (const y of src.next || []) put(y, { next: true });
+  const score = y => tripScore(y);
+  const ok = pool.filter(y => y.km > TRIP_KM_MIN && y.km <= TRIP_KM && !names.includes(keyOf(y.name)) && tripPlace(y) && ((y.sl || 0) >= TRIP_FAME || y.unesco || y.next) && !have(y))
+    .sort((a, b) => score(b) - score(a) || a.km - b.km);
+  // One outing once: the same name twice (an island and its town), or two places within 3 km; a town or a sight has a
+  // real spot to go to, so it stays ahead of the island it stands on.
+  const out = [];
+  for (const y of ok) { const k = out.findIndex(x => keyOf(x.name) === keyOf(y.name) || hav(x, y) <= TRIP_ONE_KM);
+    if (k < 0) { out.push(y); continue; }
+    if (keyOf(out[k].name) === keyOf(y.name) && tripIsle(out[k]) && !tripIsle(y)) out[k] = Object.assign({}, y, { sl: Math.max(y.sl || 0, out[k].sl || 0), unesco: y.unesco || out[k].unesco, next: y.next || out[k].next }); }
+  return out.slice(0, TRIP_ASK);
+}
+// The words for how you get there, from the way found (step 3): a timetable's line, a line the map shows, or the road.
+function tripTravel(way, cityName) {
+  const five = m => Math.max(5, Math.round(m / 5) * 5);
+  if (way.road) return `By road (taxi or car), about ${five(way.road.min)} min one way by the road route. Kairoute doesn't know of a train, bus or boat line for this trip.`;
+  const o = way.line, from = o.from && !nonLatin(o.from) ? o.from : cityName, boat = /ferry/i.test(o.mode || o.kind || "");
+  if (way.noTime) return `${o.kind} from ${from}: the map shows the route, but Kairoute doesn't know its times or how long it takes. Check both before you go.`;
+  if (o.noTimetable) return `${o.kind} from ${from}: the map shows the ${boat ? "route" : "line"}, but its times are not confirmed. About ${five(o.min)} min one way is an estimate; check the times before you go.`;
+  return `${o.kind} from ${from}, about ${five(o.min)} min one way by its timetable. Check the times for your day.`;
+}
+const tripsBusy = {}, tripsTries = {}, tripsLog = {};
+async function classicTrips(city, src, quiet) {
+  const k = keyOf(city.city); if (!freeAI || tripsBusy[k] || !src || (!Array.isArray(src.far) && !Array.isArray(src.next))) return 0;
+  // Once per guide for what the sources hold now: asked again when their lists grow, or when a way couldn't be asked.
+  const sig = TRIPS_V + ":" + (src.far || []).length + ":" + (src.next || []).length;
+  if (city.tripsSig === sig && !city.tripsOpen) return 0;
+  if ((tripsTries[k] || 0) >= 3) return 0;
+  const centre = srcCentre(city, src); if (!centre) return 0;
+  const room = TRIP_MAX - (city.farther || []).filter(x => x.classic).length;
+  const cands = room > 0 || (city.farther || []).some(x => x.lineOpen) ? tripCands(city, src) : [];
+  if (!cands.length) { city.tripsSig = sig; delete city.tripsOpen; return 0; }
+  tripsBusy[k] = true; tripsTries[k] = (tripsTries[k] || 0) + 1;
+  let open = false, added = 0;
+  try {
+    const getJ = async u => { try { const r = await fetch(freeAI.url + u); if (r.ok) return await r.json(); if (r.status < 500 && r.status !== 429) return {}; } catch (e) {} return null; };
+    // Where each is reached: an island at its piers (the two nearest the city), any other place at its own point.
+    // Two islands at a time: asked all at once, the free map servers refused most of the asks (live check, Nov 26).
+    const inTurn = async (list, n, fn) => { const out = new Array(list.length); let at = 0; await Promise.all(Array.from({ length: n }, async () => { while (at < list.length) { const i = at++; out[i] = await fn(list[i]); } })); return out; };
+    const targets = await inTurn(cands, 2, async y => {
+      if (!tripIsle(y) || !y.wd) return [{ lat: y.lat, lng: y.lng }];
+      const j = await getJ("/landing?wd=" + encodeURIComponent(y.wd)); if (!j) { open = true; return []; }
+      const ps = (j.piers || []).filter(p => KEngine.fin(p.lat) && KEngine.fin(p.lng)).sort((a, b) => hav(centre, a) - hav(centre, b)).slice(0, 2);
+      // An island or island group with a pier in town is the one the city stands on, not a day out ("Cyclades" from
+      // Mykonos, "New Providence" from Nassau; live check, Nov 26).
+      if (ps.length && hav(centre, ps[0]) <= TRIP_KM_MIN) return [{ home: true }];
+      if (!ps.length) y.noOutline = !j.outline;
+      return ps.length ? ps.map(p => ({ lat: p.lat, lng: p.lng, pier: p.name && !nonLatin(p.name) ? p.name : "" })) : [{ lat: y.lat, lng: y.lng, noPier: true }]; });
+    const flat = []; targets.forEach((ts, i) => ts.forEach(t => { if (!t.home) flat.push({ i, t }); }));
+    const lines = new Array(flat.length).fill(undefined);
+    // Three at a time: eight trips a day out in one ask took the helper longer than the page waits (live check, Nov 26:
+    // every first ask of eight timed out after 60 s, three tries running).
+    for (let at = 0; at < flat.length; at += 3) { const part = flat.slice(at, at + 3); let res = null, why = "";
+      try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: [+centre.lat, +centre.lng], b: [+x.t.lat, +x.t.lng], dow: 3 })) }) });
+        if (r.ok) res = ((await r.json()) || {}).results || []; else why = " (" + r.status + ")"; } catch (e) { why = " (" + String(e && e.name || e) + ")"; }
+      part.forEach((x, n) => { lines[at + n] = res ? res[n] || null : undefined; if (!res) x.why = why; }); }
+    const ways = [], log = tripsLog[k] = [], last = tripsTries[k] >= 3;
+    for (let i = 0; i < cands.length; i++) { const y = cands[i]; let best = null, boat = null, part = false, unknown = !targets[i].length;
+      if (targets[i][0] && targets[i][0].home) { log.push({ name: y.name, at: "a pier in town", lines: [], got: "the city stands on it" }); continue; }
+      const L = { name: y.name, at: !targets[i].length ? "piers not answered" : targets[i][0].noPier ? (y.noOutline ? "no outline on the map" : "no pier on the map") : targets[i][0].pier != null ? targets[i].length + " pier(s)" : "its point", lines: [] }; log.push(L);
+      flat.forEach((x, n) => { if (x.i !== i) return; const r = lines[n];
+        L.lines.push(r === undefined ? "not answered" + (x.why || "") : r === null ? "no answer" : (r.partial ? "partial " : "") + ((r.opts || []).map(o => o && (o.kind || o.mode) + " " + o.min + (o.noTimetable ? " map" : "")).join(", ") || "none"));
+        if (r === undefined || r === null || (r.partial && !(r.opts || []).length)) { unknown = true; return; }
+        if (r.partial) part = true;
+        for (const o of r.opts || []) if (o && o.kind && KEngine.fin(o.min) && o.min > 0 && o.min <= TRIP_LINE_MIN && (!o.every || o.every <= 120) && (!best || o.min < best.line.min)) best = { line: o, at: x.t };
+          // A boat the map shows with no timetable, to a pier near by: its guessed time runs long (the Princes' Islands,
+          // 19 km from Istanbul, guessed at 3 hours; live check, Nov 26), so the guess neither rules the place out nor is
+          // shown: the card says a boat goes and that Kairoute doesn't know its times.
+          else if (o && o.kind && o.noTimetable && /ferry/i.test(o.mode || o.kind || "") && KEngine.fin(o.min) && o.min > TRIP_LINE_MIN && hav(centre, x.t) <= TRIP_BOAT_KM && !boat) boat = { line: o, at: x.t, noTime: true }; });
+      if (!best && boat) best = boat;
+      // No line (asked and answered: a line not asked about yet is not "no line"): the road, when a drive really goes
+      // there without a boat. Never to an island.
+      if (!best && (!unknown || last) && !tripIsle(y) && y.km <= TRIP_ROAD_KM) { const j = await getJ(`/roadway?a=${(+centre.lat).toFixed(4)},${(+centre.lng).toFixed(4)}&b=${(+y.lat).toFixed(4)},${(+y.lng).toFixed(4)}`);
+        L.road = !j ? "not answered" : j.none ? "none" : j.min + " min" + (j.ferry ? " with a ferry" : "");
+        if (!j) unknown = true; else if (KEngine.fin(j.min) && j.min > 0 && j.min + 10 <= TRIP_ROAD_MIN && !j.ferry && !j.none) best = { road: { min: j.min + 10, km: j.km }, at: { lat: y.lat, lng: y.lng } }; }
+      L.got = best ? (best.road ? "road" : "line") : unknown ? "unknown" : "no way";
+      // Offered by road, or by a boat with no times, while the timetable was still being read: asked again another time.
+      const more = !!best && ((unknown && !!best.road) || (!!best.noTime && part));
+      if (best) ways.push({ y, way: best, lineOpen: more });
+      if (best && (unknown || more)) open = true;   // offered by road on the last try: the line is asked about again another time
+      // A way not answered yet: asked again later, and the places ranked after it wait for it, so the list never fills
+      // with lesser places while a better one is still being asked about (live check, Nov 26: Enköping offered from
+      // Stockholm while Sigtuna and Uppsala were unanswered). On the last try of a session what is known is offered.
+      else if (unknown) { open = true; if (!last) break; } }
+    city.farther = city.farther || [];
+    for (const { y, way, lineOpen } of ways) {
+      const note = String(y.note || "").replace(new RegExp("^" + y.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*[-–—:,]?\\s*", "i"), "").trim();
+      const cat = (() => { const c = srcKnown(y) ? srcKindOf(y)[1] : ""; return c && !/^(Sight|Landmark)$/.test(c) && !tripIsle(y) && !srcHas2(y, /^settlement$/) ? c : "Day trip"; })();
+      const about = y.unesco ? "A UNESCO World Heritage Site" : tripIsle(y) ? "An island" : srcHas2(y, /^settlement$/) ? "A town" : "A place";
+      const st = normSite({ id: (y.wd ? "trip-" + y.wd : keyOf(y.name).replace(/ /g, "-") + "-far"), name: srcShowName(y.name, ""), lat: way.at.lat, lng: way.at.lng, minutes: 180, kind: "touristy", far: true, category: cat, travel: tripTravel(way, city.city),
+        summary: note.length > 20 ? note : `${about} a day out from ${String(city.city).replace(/\s*\(.*\)/, "")} that the travel guide has a page of its own for.` }, 0);
+      Object.assign(st, { far: true, fame: y.sl || 0, unesco: !!y.unesco, heritage: !!y.heritage, src: [y.next ? "Wikivoyage (English)" : "Wikivoyage (its own page)", "Wikidata (Wikipedia in many languages)"], wd: y.wd, famousFix: true, noAI: true, classic: true,
+        travelSrc: way.road ? "road" : way.line.noTimetable ? "map" : "timetable" });
+      if (way.at.pier) st.landing = way.at.pier;
+      // A day trip offered by road while its line was not answered takes the line once it is known.
+      const was = (city.farther || []).find(s => s.id === st.id && s.lineOpen);
+      if (was) { if (!lineOpen) { delete was.lineOpen; if (!way.road) { Object.assign(was, { travel: st.travel, travelSrc: st.travelSrc, lat: st.lat, lng: st.lng }); added++; } } continue; }
+      if (added >= room) continue;
+      if (lineOpen) st.lineOpen = true;
+      if (allSites(city).some(s => s.id === st.id)) continue;
+      city.farther.push(st); added++;
+    }
+    city.tripsSig = sig; if (open) city.tripsOpen = true; else delete city.tripsOpen;
+    if (added) { keepFills(city); try { console.info("Kairoute added " + added + " classic day trips for " + city.city); } catch (e) {} if (!quiet) { save(); if (["plan", "sites", "guide"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } } }
+  } catch (e) {} finally { tripsBusy[k] = false; }
+  return added;
+}
+// The name older code and saved hooks know this step by.
+const farNoAI = (city, src, quiet) => classicTrips(city, src, quiet);
 if (typeof window !== "undefined") {
   window.__kairouteFarNoAI = farNoAI;
+  window.__kairouteClassicTrips = (city, src) => classicTrips(city, src, true);
+  window.__kairouteTripLog = city => tripsLog[keyOf(city.city)] || [];
+  window.__kairouteTripWhy = (city, src, re) => { const c = srcCentre(city, src), rx = new RegExp(re, "i"); return (src.far || []).concat((src.next || []).map(x => Object.assign({ next: true }, x))).filter(y => rx.test(y.name) || rx.test(y.voy || "")).map(y => ({ name: y.name, wd: y.wd, voy: y.voy, said: y.said, part: !!y.part, next: !!y.next, sl: y.sl, vt: y.vt, kinds: y.kinds, km: c ? +hav(c, y).toFixed(1) : null, place: tripPlace(Object.assign({ km: c ? hav(c, y) : null }, y)) })); };
+  window.__kairouteTripCands = (city, src) => tripCands(city, src).map(y => ({ name: y.name, kinds: (y.kinds || []).join("/"), km: +y.km.toFixed(1), sl: y.sl || 0, next: !!y.next, part: !!y.part, said: y.said || 0, unesco: !!y.unesco, isle: tripIsle(y), score: Math.round(tripScore(y)) }));
   // Test hook: build a city's guide from its sources alone (as with the AI switched off) for day i.
   window.__kairouteSourceGuide = async i => { const d = trip.days[i]; const c = await sourceGuide(d); return c ? { city: c.city, main: c.sites.filter(x => !x.quick).length, quick: c.sites.filter(x => x.quick).length, must: c.sites.filter(x => x.mustSee).map(x => x.name), eats: c.restaurants.length, starts: Object.fromEntries(Object.entries(c.starts).map(([k, v]) => [k, v.map(p => p.name + (p.unknown ? " (unknown)" : ""))])) } : null; };
 }

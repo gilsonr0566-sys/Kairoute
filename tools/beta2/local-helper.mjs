@@ -13,7 +13,8 @@ http.createServer(async (q, r) => {
   const path = q.url.replace(/^\/workers\.dev/, "") || "/";
   const req = new Request("http://localhost" + path, { method: q.method, headers: Object.assign({}, q.headers, { origin: "https://gilsonr0566-sys.github.io" }), body: /GET|HEAD/.test(q.method) ? undefined : Buffer.concat(chunks) });
   const waits = []; let res;
-  try { res = await W.fetch(req, env, { waitUntil: p => waits.push(p), passThroughOnException() {} }); } catch (e) { res = new Response(JSON.stringify({ error: String(e && e.message) }), { status: 500 }); }
+  try { res = await W.fetch(req, env, { waitUntil: p => waits.push(p), passThroughOnException() {} }); } catch (e) { console.log("local helper: " + path.slice(0, 60) + " threw " + String(e && e.stack || e).slice(0, 400)); res = new Response(JSON.stringify({ error: String(e && e.message) }), { status: 500 }); }
+  if (res.status >= 500) console.log("local helper: " + path.slice(0, 60) + " answered " + res.status);
   const h = {}; res.headers.forEach((v, k) => { h[k] = v; }); h["access-control-allow-origin"] = "*";
   r.writeHead(res.status, h); r.end(Buffer.from(await res.arrayBuffer()));
   Promise.allSettled(waits);
