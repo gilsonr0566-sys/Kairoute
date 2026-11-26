@@ -1589,6 +1589,150 @@ day 3 2026-11-13 land corpus christi | 09:00 to 18:00
   says: Bring lunch for 1:10 pm at Padre Island: places to eat there aren't in the guide yet.
   says: A shorter visit to King Ranch (3 h 30 min instead of 6 h) so the rest of the day fits.
 
+## f01-naples-capri
+day 1 2027-06-09 sea | no plan
+day 2 2027-06-10 port naples | 07:30 to 17:04 | leave by --:--
+  07:30 start: Stazione Marittima (Naples cruise terminal)
+  Fast ferry to Ferry pier 65 min
+  Walk from the ferry at Ferry pier 27 min
+  09:02 stop: Capri 240 min
+  walk 5 min
+  13:07 meal Lunch: 2 Pini 60 min
+  Walk to the ferry at Ferry pier 27 min
+  Fast ferry from Ferry pier 150 min (40 kept)
+  17:04 end: Stazione Marittima (Naples cruise terminal) 0 min
+  says: In Capri, places to eat on the map beside it: Al Buco, 2 Pini or La Giara (check reviews before you go).
+  says: Lunch at 2 Pini is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 2:07 pm.
+  says: Also worth seeing here, not on your list: Spaccanapoli and the historic center, Sansevero Chapel (Veiled Christ), Naples Cathedral and the Chapel of San Gennaro, Piazza del Plebiscito and the Royal Palace and 5 more.
+  says: Free time: about 1 h 11 min left after the last stop, before the time to be back (6:15 pm). Linger where you like.
+
+## f02-split-hvar
+day 1 2027-07-14 sea | no plan
+day 2 2027-07-15 port split croatia | 08:30 to 08:30
+  08:30 start: TTTS - Trgovačko transportni terminal Split
+  walk 0 min
+  08:30 end: TTTS - Trgovačko transportni terminal Split 0 min
+  suggested: Diocletian's Palace; Stadion Poljud; Archaeological Museum Split
+  says: Also worth seeing here, but not in today's time: Diocletian's Palace and Stadion Poljud.
+  says: Nothing left to plan here: every sight in the guide for Split, Croatia is on your other day. The day is yours until 5:15 pm.
+
+## f03-seattle-bainbridge
+day 1 2027-06-19 sea | no plan
+day 2 2027-06-20 port seattle washington | 07:30 to 15:30 | leave by --:--
+  07:30 start: Port of Seattle
+  Ferry 105 min
+  09:15 stop: Bainbridge Island 160 min
+  walk 0 min
+  11:55 meal Lunch: A lunch you bring 20 min
+  Ferry 195 min (45 kept)
+  15:30 end: Port of Seattle 0 min
+  says: Bring lunch for 11:55 am at Bainbridge Island: places to eat there aren't in the guide yet.
+  says: Leave for the ship by 12:15 pm.
+  says: Also worth seeing here, not on your list: Space Needle and Columbia Center.
+
+## f04-stockholm-vaxholm
+day 1 2027-06-22 sea | no plan
+day 2 2027-06-23 port stockholm sweden | 08:30 to 13:49 | leave by --:--
+  08:30 start: Stockholm Cruise Center - Magasin 9
+  Taxi or car 21 min
+  09:00 stop: Vasa Museum 90 min (hours not confirmed)
+  walk 12 min
+  10:42 stop: Skansen 90 min (hours not confirmed)
+  walk 8 min
+  12:20 meal Lunch: Café Flickorna Helin och Voltaire 60 min
+  Taxi or car 29 min (10 kept)
+  13:49 end: Stockholm Cruise Center - Magasin 9 0 min
+  suggested: Skogskyrkogården; National Library of Sweden; Stockholm Olympic Stadium; National Museum of Science and Technology
+  says: Leave for the ship by 3:46 pm.
+  says: Opening hours not confirmed for Vasa Museum and Skansen on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Also worth seeing here, not on your list: Skogskyrkogården, National Library of Sweden, Stockholm Olympic Stadium and National Museum of Science and Technology.
+  says: Free time: about 2 h 26 min left after the last stop, before the time to be back (4:15 pm). Linger where you like.
+
+## f05-istanbul-princes
+day 1 2027-05-13 land istanbul turkey | 09:00 to 13:15
+  09:00 start: Hotel in central Istanbul
+  Taxi or car 18 min
+  09:18 stop: Galata Tower 60 min
+  Taxi or car 19 min
+  10:37 stop: Hagia Sophia 75 min
+  walk 6 min
+  11:58 meal Lunch: Buhara 93 Restaurant 60 min
+  Taxi or car 17 min
+  13:15 end: Hotel in central Istanbul 0 min
+  18:30 evening Dinner: Tostçu İbrahim 75 min
+  suggested: Sultan Ahmed Mosque; Süleymaniye Mosque; Topkapı Palace; Chora Church
+  says: Free time: about 4 h 45 min left after the last stop, before the day ends (6:00 pm). Linger where you like.
+day 2 2027-05-14 departure istanbul turkey | 09:00 to 10:36 | leave by --:--
+  09:00 start: Hotel in central Istanbul
+  walk 0 min
+  09:00 fixed: Collect bags 15 min
+  Taxi or car 81 min (20 kept)
+  10:36 end: Istanbul Airport 0 min
+  suggested: Topkapı Palace; Chora Church; Zeyrek Mosque; Sokollu Mehmed Pasha I Mosque
+  says: Collect your bags at 2:54 pm and leave for the airport by 3:09 pm.
+  says: Nothing left to plan here: every sight in the guide for Istanbul, Turkey is on your other day. The day is yours until 4:30 pm.
+
+## f06-hongkong-lantau
+day 1 2027-03-09 land hong kong | 09:00 to 12:56
+  09:00 start: Hotel in central Hong Kong
+  Taxi or car 20 min
+  09:20 stop: Clock Tower in Tsim Sha Tsui 40 min (hours not confirmed)
+  walk 27 min
+  10:27 stop: Central Plaza 40 min (hours not confirmed)
+  walk 10 min
+  11:45 meal Lunch: Vincenzo Capuano 60 min
+  walk 11 min
+  12:56 end: Hotel in central Hong Kong 0 min
+  18:30 evening Dinner: Yakiniku Like 75 min
+  suggested: International Commerce Centre; Jamia Mosque; Hong Kong Museum of Art; Avenue of Stars; Hong Kong Park; Kowloon Mosque and Islamic Centre
+  says: Free time: about 28 min before lunch at 11:45 am. Linger where you are or look around nearby.
+  says: Opening hours not confirmed for Clock Tower in Tsim Sha Tsui and Central Plaza on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 2 2027-03-10 departure hong kong | 09:00 to 10:34 | leave by --:--
+  09:00 start: Hotel in central Hong Kong
+  walk 0 min
+  09:00 fixed: Collect bags 15 min
+  Taxi or car 79 min (20 kept)
+  10:34 end: Hong Kong International Airport 0 min
+  suggested: International Commerce Centre; Jamia Mosque; Hong Kong Museum of Art; Kowloon Mosque and Islamic Centre
+  says: Collect your bags at 1:26 pm and leave for the airport by 1:41 pm.
+  says: Nothing left to plan here: every sight in the guide for Hong Kong is on your other day. The day is yours until 3:00 pm.
+
+## f07-helsinki-ferry
+day 1 2027-06-08 arrival helsinki finland | 10:50 to 14:47
+  10:50 start: Port of Helsinki
+  Taxi or car 15 min
+  11:05 fixed: Check in or drop bags 20 min
+  Taxi or car 25 min
+  11:50 stop: Suomenlinna 90 min (hours not confirmed)
+  Taxi or car 24 min
+  13:44 meal Lunch: My Salad Bar 60 min
+  walk 3 min
+  14:47 end: Hotel in central Helsinki 0 min
+  18:30 evening Dinner: Napule 75 min
+  suggested: Helsinki Cathedral; Helsinki Olympic Stadium; Ateneum; Presidential Palace; Esplanadi park; Eduskuntatalo
+  says: Opening hours not confirmed for Suomenlinna on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 3 h 43 min left after the last stop, before the day ends (6:30 pm). Linger where you like.
+day 2 2027-06-09 departure helsinki finland | 09:00 to 09:40 | leave by --:--
+  09:00 start: Hotel in central Helsinki
+  walk 0 min
+  09:00 fixed: Collect bags 15 min
+  Taxi or car 25 min (10 kept)
+  09:40 end: Port of Helsinki 0 min
+  suggested: Helsinki Cathedral; Helsinki Olympic Stadium; Ateneum; Eduskuntatalo
+  says: Collect your bags at 4:10 pm and leave for the ferry terminal by 4:25 pm.
+  says: Nothing left to plan here: every sight in the guide for Helsinki, Finland is on your other day. The day is yours until 4:50 pm.
+
+## f08-sydney-manly
+day 1 2027-02-15 sea | no plan
+day 2 2027-02-16 port sydney australia | 07:30 to 07:30
+  07:30 start: Port Jackson
+  walk 0 min
+  07:30 end: Port Jackson 0 min
+  suggested: Sydney Opera House; Australian Museum; St Mary’s Cathedral; Queen Victoria Building
+  says: Also worth seeing here, but not in today's time: Sydney Opera House.
+  says: Nothing left to plan here: every sight in the guide for Sydney, Australia is on your other day. The day is yours until 5:15 pm.
+
 ## g01-istanbul
 day 1 2027-05-13 land istanbul turkey | 09:00 to 13:03
   09:00 start: Hotel in central Istanbul, Turkey
@@ -2789,303 +2933,303 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
   says: Opening hours not confirmed for Chocolatería San Ginés and Casa Gallardo on this date: planned between 9:00 am and 5:00 pm. Check before you go.
 
 #odd 300 odd trips (seed 1), one fingerprint per day
-#odd odd001-cruise af65cd92ac 2eaf1237c2 d18ce07d9a 6e74827de4 f853952602 0c78c00157
-#odd odd002-multicity 6c3659f506 ba4cb6811f c980b06793 d6eee25938 d19a1f49f2 8f9c7ed36b
-#odd odd003-hop aaadee5189
-#odd odd004-stay e1386d4abb f4b6b38325
-#odd odd005-cruise d664b787f8 d7a6221a53 1b726a94bb 4217144cb9 123415e473 25e10516b0
-#odd odd006-multicity 4f3eb87b05 dc758fb751 3083a3c1b4 e5de6d0875 cad7050314 ae72aeefbb cbdf1e7d7a
-#odd odd007-hop a2c4b463ce
-#odd odd008-stay c9fd863a0f 6ae7c654c1 e73cb8612c 845fc67fcb
-#odd odd009-cruise 7ac0fa7232 8e21c5b1af e2654111fe 0c6be9f72b
-#odd odd010-multicity 545cee679a 1c9c410019 93a0e2cbe8 342488859d 18d3a03762 57b95d41ff
-#odd odd011-hop 680bf436c5
-#odd odd012-stay 3bf0917210 b94a09c987 a7e881fea0 6eee1b8bed
-#odd odd013-cruise 57bd9cd849 2976300e52 1f707fbf72 5cc3b7faea 49d7acf1e2 9eeaf03493 e339e53dbe c002efe563 d1fef20266
-#odd odd014-multicity 14f8cac285 d27e9d45e3 7253a8ebe8 19f7f2aeb4 1fc31e1246 b508e828c0
-#odd odd015-hop 1c9860d8ef
-#odd odd016-stay 67d9c88124 6d6cec15da e92dde46e3 5074cf2c21
-#odd odd017-cruise 1920d77602 0f7b4db435 1b5763e758 e39433c1c1 918a26bda3 d01286feef dd15e2e6ab d82d946351 81e08fb99b
-#odd odd018-multicity 28d2740c82 2516326a40 d87a70808f fdee11f321 76388fe847 5d721ca3eb
-#odd odd019-hop 016e46c486
-#odd odd020-stay 970d5ea0b9 8657fa76db 8e637aef72
-#odd odd021-cruise 0e2783c614 2a08774ea1 1d7d7fee9d 1dbae739ac 94998e1583 ee8f613fe8 e21cbcc5c7 9810fbe893 ed5b35f54d
-#odd odd022-multicity 278fac1e43 21444a1b7a c1aa6ae267 0cce0555de aadd2d5817 f9079fa646 166f6fc724
-#odd odd023-hop 528f4c56d2
-#odd odd024-stay 8ca6c7bacf 25a69c77f7 1c6a83b424 d1c210396f f6b8a2d816
-#odd odd025-cruise 102f3c10ae 39babd89f4 10bad6f7ac 1183a362a2 b02d871cc5
-#odd odd026-multicity f3f88db360 18ffc802e6 0541591a16 6fc9bbab87 5a9ccfeec2 1a0c58c13a
-#odd odd027-hop 09f44e6362
-#odd odd028-stay 3b2531ed3e 6237dfc40c 7ee6617d1b f512a6a3e8 728c58b9ae
-#odd odd029-cruise 00b14eb97e 4cfe98fa4e 91883d1bb2 bebc4e1e08 3336bf5021 b2f99f3e75 01f8479dfb 9b26255349 6e672e5822
-#odd odd030-multicity 4995ef2278 8c7eb868fb dccd792724 ce70fb1926 17d29a30b3 12c038f8b0
-#odd odd031-hop 8fdf4a3fac
-#odd odd032-stay a8556b313a 36edb06813
-#odd odd033-cruise b15a38d46d f104c0a400 c6521ee986 4e0b40c951 3389094088 90fa64f884
-#odd odd034-multicity 0012d67e97 d72a7d728a 1925feaeca ec5917f763
-#odd odd035-hop f4cb469512
-#odd odd036-stay 7d91203689 6803d2a64b b9d76a5b4d f26ce8fb77
-#odd odd037-cruise c8d227bea3 6b886b2d1f f321baab87 d60dff926e 82e6d001ff 8bd981bca3 c062a6de29 047ab4f360 37f1ea03ff
-#odd odd038-multicity 30a198e60a d8aa5b8e13 4d8fa2652a 973eb111b3 e7b4a8119c 71fa51ced5 df9c70923a 5e0aff5670
-#odd odd039-hop 6ad288310a
-#odd odd040-stay 18dd87e1fb 695c331c76 b7901248a9 92a587ef94
-#odd odd041-cruise 4253a58e32 e9ea3dd02b 286dd40414 ab2d3b74bc 7bb7b74175 d01286feef f222e80a15 3314f64458 d6dd40e001
-#odd odd042-multicity 8ff878ea80 b31d2aa160 51175eed59 50672ffcd3 e4b36eba12 a844efe834 a38b5f7a94
-#odd odd043-hop dc744e9c0b
-#odd odd044-stay c89a74b886 2d25ba96dc
-#odd odd045-cruise 5bcc50a512 8e21c5b1af 1b5763e758 cbd6c5c24b a5a8197bca 19697559ff
-#odd odd046-multicity 1b48edc881 2d70d27d33 2866e5da42 1b6367de81 e925493470 84d343cd0f 01853bd7f1 d24fc3fbcd b24f4c9300 2ff27ecb63
-#odd odd047-hop 8fdf4a3fac
-#odd odd048-stay 3cf518f66f 9fe8147ffe ec2fc06455 39a6f8276a
-#odd odd049-cruise b440718213 0f9e8d3b91 b40cde4633 93e18df489 d4d4238803 7bb1c64a49
-#odd odd050-multicity 6baf69f856 78ac932fe9 e6194d2252 638e2805e3 ddbe2b0a87 4713045867 5247973dde a4b531f11d 982c02ab7a bf46c7f2f4 39631b8708 9ea195ea36
-#odd odd051-hop fc4807fda2
-#odd odd052-stay bea0cf0ae9 71422f7ec7
-#odd odd053-cruise b413fb8e7f 4f9aa7f5ea 1b5763e758 607c9baeb1 918a26bda3 6c717341e9
-#odd odd054-multicity fb5c21fd01 92d5707fa2 41ce5c89c3 bf3f0b6f22 10b26919c9 84a4b71847 6fcac073f8 e903c6cbd3
-#odd odd055-hop 631cad5d59
-#odd odd056-stay e32b2162a8 1bee4afc0d
-#odd odd057-cruise b8fd3e4f07 630da22d6b 1b5763e758 8289516a30 397dceabed 5d894796c4 01f8479dfb 9d1dcbb735 92ad4b5ba5
-#odd odd058-multicity 8bef80fd41 a2ad62f368 1c6bfb6ffd b3264e610d c56b6ca69c 2e8e3d894c 5eb9997f5b d8d6f2057f 365662328e
-#odd odd059-hop 52e8c99d61
-#odd odd060-stay 45d04ca05d b113437cfa b858bf8343 413e5b24fd aa115164f0
-#odd odd061-cruise 382d13e9a5 4598906b7d f057b465fb af23568f8d dc4b136e94 c1c34a0d35
-#odd odd062-multicity 86a7b022d7 580ca49691 92c50c4516 1463f5544a 1d9d229d29 02d5d7e4ab e0b99c987b 3e2c271bb7
-#odd odd063-hop 34400ddd0c
-#odd odd064-stay 1ca122b4f0 144eb7b891 de8f419ffe 1c66c1cb7c 3121349495
-#odd odd065-cruise 683c26bb39 5b57de790d 1b5763e758 dc6706ca85 eb1454fd7f
-#odd odd066-multicity cb1c80451d e654a1a5ca c3ddb0d240 322ef529e8 bedb7ed2c5
-#odd odd067-hop 74433304f0
-#odd odd068-stay 6557509472 172e38d504 0711cefd8c
-#odd odd069-cruise fce9c2157d 4248e8307e 6c9e281b04 139f63ab31 36dd3b60f7 f4bd1e5592 a97af848f4 cd0d7de7f9
-#odd odd070-multicity 9c632c149a 28d4fe811a c3219ccbed ac2162aff7 0488bf6df7 0291ef24e2
-#odd odd071-hop 977c92beda
-#odd odd072-stay dcdddcf257 e08a11a024 f27f3d4eaf 1d59d46d4f 45df24f84a
-#odd odd073-cruise 8e28dee16e 40d49fa397 1b5763e758 b5b5b73f0a d84878ac1c 7a4dc7dc92 71b5205edd
-#odd odd074-multicity 3a5637fe41 bbc9aecb34 975afd6258 2d749e89aa 4e9e447382 845da53122
-#odd odd075-hop 90f2a11ddc
-#odd odd076-stay 1130542eda b431d90b25 01cb70d921
-#odd odd077-cruise 5bafa458bc bb4d8d6c8d 1b5763e758 4217144cb9 53a172671f 3c73eda608 b8ed721ed8 8f0aab7667
-#odd odd078-multicity b2096f0a02 aa717c3298 3bf3adec8a a42939140f 880fe31726 953378af20 db1be56640 71a50aa42b 4b279596bd
-#odd odd079-hop 780fbd741f
-#odd odd080-stay 6a47be53f9 0831b5220b c27389ac8d 96be8f04d7
-#odd odd081-cruise 53748ae519 55d1db5f81 ff4781fc91 e891719db6 0f8eb5aa41 39ad370cdd
-#odd odd082-multicity 4f89de3bda 0e5c783856 38523533b4 ded5bc33f0 b3409a4f69 8112461a44 4557150de6 3e9955b0f5
-#odd odd083-hop 2f2f2c605a
-#odd odd084-stay 7083824ae1 032b01c35b 167ed45ebc 0f90b11d5b 76bcbf2a2e
-#odd odd085-cruise 9f735b7065 8e21c5b1af 22b52d5020 9dbd6e90a3 4afd4fa8ea
-#odd odd086-multicity 6158a0ebbb 23db099f7c eac85bd23c 801decc265 f9b197309e 485bb65d40
-#odd odd087-hop 7f8c5324d7
-#odd odd088-stay 4f3d779cac fefc5e1594 74c8346b34 c91193fb61 80c6e9a9a9
-#odd odd089-cruise 041d296187 8f1150b722 9441e03f7e bd9927aec4 fa976fbd7c
-#odd odd090-multicity 285befb803 770b705f4f 300d18dac0 ea1c8329e6 ea12584f6f 70c6250a8e 4de82f86f9 f379ac03b6
-#odd odd091-hop 1dab6520c9
-#odd odd092-stay a657dcd90e 175b0c3fdc 9974a1f476 247745a51e 67f76c2782
-#odd odd093-cruise 623f145ece f620d8d2a3 14116d8015 4217144cb9 9c9ca22754 db654ffa26 955b729a6d 1d9a667331 30d4caed6e 2a91a01669
-#odd odd094-multicity 4e2b596420 81aa1abe2a b0c1436c6c 549b30fb59 39f5cb95e4 0866cb81bb
-#odd odd095-hop 1d32b9c1fd
-#odd odd096-stay d216e2ce0b 7599022d1a 9c45cc78c6 09d5e990a9
-#odd odd097-cruise 5a2aeb2fc4 48fc940e10 1b5763e758 073974f8ee 7c3b8be730 d01286feef 72e3ef071f 42c419a19f
-#odd odd098-multicity c9f3eadaeb c9c2404b2f 08d0771f1f ec123cc627 0cf80cd713 a874119dde 2e1e8430ab df92201aa4 0bc971eee9
-#odd odd099-hop 0320ec3f10
-#odd odd100-stay a2df8fcb60 877d7d74f4 870b1376f3
-#odd odd101-cruise 435a14292c 8e21c5b1af 4c583b4553 929f4c2dab a683761e3c 4b52a35026 752d2dcd71
-#odd odd102-multicity 55afe91642 c7f33e20e5 da0f13c7dd 06398297cd 9f5b85d436 1519634389 564e96c6b0 74442ec282 975875992d c5a852295c 21c9e60e40 a5494ba666
-#odd odd103-hop a479cf6dc4
-#odd odd104-stay c73a9650ff fc3faed18e
-#odd odd105-cruise 563342356f 1814b4fef5 11da2e8b09 4217144cb9 7210ca61aa 679ca7270f afb48b4e4c 35f7b306b3 44a2a47486
-#odd odd106-multicity 7c76f95719 444c13e1a5 d5d843072b 3bfc7333e0 3861e8dfbc 20b82f232a 0f6789f688
-#odd odd107-hop e0fb49a67c
-#odd odd108-stay 773ff72c12 82e5078e9f
-#odd odd109-cruise f89aef0aa4 4f8a11f636 1b5763e758 ec9521d77f dc4edc357b 016bd038df
-#odd odd110-multicity 199f214eba 4708f914f0 ccd3920b99 872544dbec 055ad41bf6 958d5e8bdf 16c20fd7af 91363acd76 8c40b2766c 58fcc6232b
-#odd odd111-hop 9145462290
-#odd odd112-stay 5e71de11a7 2fc6300426 05dd21fd17 24dbbbec62 bd47699400
-#odd odd113-cruise b113342a7c 5e2367c329 176c052c99 f014dd6e2f caed0c797f 9025bb21c4 b50e6a2a02
-#odd odd114-multicity 6eddbdfd96 ddf822cef8 4b5dc09bf7 78b44050d8 4a93af6a7a bd862207c6 90a5da2990
-#odd odd115-hop 31f754e0f6
-#odd odd116-stay 202d1b4f91 0bf1c27e3a 0fa5497cf1
-#odd odd117-cruise 7a653a409c e7e0e51c3f 18047277d0 4217144cb9 02df8ce32d d01286feef 48201e948c
-#odd odd118-multicity 5e0e6ad912 aa73077def 9529403e5e c35a1ae95f a4a76ffcca f3e2a650b2 66fc6e2689
-#odd odd119-hop d615cc7d36
-#odd odd120-stay 9b35e9c99f d8d485c921 bdfdb45730 bc326b8e04 33d5321151
-#odd odd121-cruise 346abe0167 5af14af1ae 81c03767d1 aa87fbb272 11d610dc94
-#odd odd122-multicity ad9b7aa8a2 4363431985 b75a8bd1aa 0f7ce66a5c f0b7c962d5 b01e66819d b13a625446 f8af23a6f5 bc24895e23 7cb38af888 aec9e463a1
-#odd odd123-hop fc8fb083ad
-#odd odd124-stay 590adcb6b7 2dbb1e5193 677bed76a8 1f15cf35c3 943bb63948
-#odd odd125-cruise cea00ce605 defcbe5725 1b5763e758 fb00278f6e 918a26bda3 81683ebe2c
-#odd odd126-multicity 81ee04aecc 1ef5dd8011 9b0292ffd5 9eebca73d3
-#odd odd127-hop 7020418e32
-#odd odd128-stay 1cb229133a b380bf23bb
-#odd odd129-cruise 920512a284 74a6e7db7f 08ee5c8f24 e0ec7f50b3 8580377de6
-#odd odd130-multicity cc02a47c63 a1289c0399 87a358a4d0 4b9c2e055d 635f549ae5 1676a4ccbf 3734eed8db 221ca32f5c 2e58fee8fa
-#odd odd131-hop dc07fa0266
-#odd odd132-stay e3fb7621cc a644ef2cd6 ed837a3af1 85af77f702
-#odd odd133-cruise 72f21e5cde ee768eda9d 1b5763e758 2c2d8c662d 3be4f305fd c4575ddca0 01f8479dfb e32cf4c8d8 a2c2689d85
-#odd odd134-multicity c6428be2fd 0a58d784a6 20ee33de42 c2a6d48b43 3587e07e09
-#odd odd135-hop f0b1bcfbb9
-#odd odd136-stay 669f0a0531 aabe7eeaa3 0902eed00b
-#odd odd137-cruise 1490a6f97f e40a22f425 1b5763e758 583634b657 448ebaf24e d01286feef d3898685cf
-#odd odd138-multicity a4632fc090 44573b8258 ea13f0ba32 b91ce85e20 7a957fdd7f
-#odd odd139-hop 2e905ea351
-#odd odd140-stay 7d5dadea3f 6cdc6b3dc6
-#odd odd141-cruise e3bbb272d2 6e8a305840 10bad6f7ac 7074737e6b e49e6d659e f4bd1e5592 5eb7d169e7 14a1759895
-#odd odd142-multicity e21ebeedbf efa8e7c27f 2e98ad6202 a4bfda9710 248af13706
-#odd odd143-hop 4ea0591aa0
-#odd odd144-stay 48737530db 03d456904e f7e0b249d0
-#odd odd145-cruise 43c39d09b9 740824ad74 e6b4ad39b8 512c2cc00a 4d1ff121d7 4dce788e50 8ab8bb5c49 99ef9861d4
-#odd odd146-multicity 49c86e484e e209e61a56 83c93def8d aeb63b25ba
-#odd odd147-hop 157a4601be
-#odd odd148-stay 9f6b72eeec 48b6b730ea
-#odd odd149-cruise 8884c8b261 1f47c39a3e ad4006e01b edf1f5f834 bb079fd79b 0c902a0fe2
-#odd odd150-multicity 672850cf9d dd9b0b3997 f59a57536b 4a0d71d315 3c2eaeb345 dcc78adf24 c9ea9309db 813f05096f 1b57b3c439 611529a4a0 c30c178238 7dc5f06155
-#odd odd151-hop 095d6a61d0
-#odd odd152-stay fd1d42a1d9 2729f3d00b d18013fc2e 4354e189f5
-#odd odd153-cruise 6b4a299a9a 8e21c5b1af 6c54d5c368 693908628f 9b04f1042e
-#odd odd154-multicity 882d1cb561 82d3396d1d 2e15567e1a 01f6e3a31b d225a9344b 127a0ada2d
-#odd odd155-hop 5194b1f2f5
-#odd odd156-stay b5ba546e4b 9bae729046 603bbada85 5b653ef3f4
-#odd odd157-cruise 4129d17eb0 d51487188b 1b5763e758 30f9687941 fcffa82c41 f6ccbd8a3b 4cca69a3b8 7c9c232ec9
-#odd odd158-multicity b67d648148 3a67ea3739 c46904f83b a273698c7b 049d37c7c9 f12b649659 d5f5c7ed7c 24dd74af8e
-#odd odd159-hop ff3b5109fe
-#odd odd160-stay 8ebafac4b6 39eac6d411 d2a5843a3c d380b0abb0 af93471274
-#odd odd161-cruise 8201dedf5a 02ee6fb88e 2467e1f7ce 5535f1b966 98bf52b623 ed56a5f80b
-#odd odd162-multicity 4b0e07307f 39c31a35c2 bd02ded02d cfa5059184 bdadeb761e 94781ebf49
-#odd odd163-hop 40c550e423
-#odd odd164-stay f1eea5acde 04921d6654 3932f6290d 6279f4a95e
-#odd odd165-cruise a5bb09fe3f a9085a6942 374c19bec4 70194d9a6c 918a26bda3 abed5b14bd d9a6069349
-#odd odd166-multicity 6b5c06b494 3f74ae6090 44e32955c6 68568e80ae a43835ec10 ff19f5e0d9 4774194795 faedc4924a
-#odd odd167-hop 833cb87f3c
-#odd odd168-stay 30f8a5b164 e77fd96e67 a7d8397967
-#odd odd169-cruise 762045aefc 016a43b676 1b5763e758 9696942ac6 401a9115f2 6571b28160 f0ae03241a
-#odd odd170-multicity 59cd5a3ea3 f222ff4f6d 920f524ceb 6860b3e96f 09fc5d40d4 42e7efb014 0f9eccb973 8920b343dd 928a291b44
-#odd odd171-hop 8c42a2cf1f
-#odd odd172-stay e8e869b284 e791c98c9f 010a9cbc72 f56bce4709
-#odd odd173-cruise 230a12eee5 8e21c5b1af e06c9a7ae1 4217144cb9 19ad8a721e b936eb1f0a f69f9890e3
-#odd odd174-multicity 8f7f32f742 7146a516f0 6c12e0cec1 11e2817e52 af3491cc98 59fd459a6c
-#odd odd175-hop 67ed5445e6
-#odd odd176-stay df6f6cfaab 3bc7b6b706 a7ae447826 53a7a2659a
-#odd odd177-cruise 729889fa72 8e21c5b1af 10bad6f7ac dccb799d4f 672713a1b6 ffc39a1138 ce03535fec
-#odd odd178-multicity 0fdc17e643 3298ad9515 b9e6961409 44de027902 8799a8fe2b 0fabc153b6 633c93591c ca0fa2b545 f6fcf4a8eb
-#odd odd179-hop 780fbd741f
-#odd odd180-stay b916e31adc 94a91ab2c2 71d43b05da 5b520aca89
-#odd odd181-cruise f884796bd4 8e21c5b1af 99d8784e69 f1d772582a
-#odd odd182-multicity 21c03539ce 23a08a66fa 81b5f6e164 1d93e3ba43 12f6c681d4 85aa64c14a
-#odd odd183-hop 196421546b
-#odd odd184-stay 4c0dd91364 c1907e4f15 223873ad2d
-#odd odd185-cruise a646357d8e 0b695c4e1b 1b5763e758 2832eef2a1 9d3ac33cfd 33eb5a1296
-#odd odd186-multicity 86282d5cdb 6ea6be4521 2ab769a246 31045c46c6 23be406c30
-#odd odd187-hop 7cbe7cffb3
-#odd odd188-stay 88dbfdea18 05e81ff7e1 e33c233906
-#odd odd189-cruise 3c6e5caee3 952ed240dd 9a780b06fb 0f7ce66a5c
-#odd odd190-multicity 3b37b50e2e fa5b4956d3 c8ac5e9c75 372a1a35b0 4f28b2d391 4b527e5a60
-#odd odd191-hop c161aec852
-#odd odd192-stay d659b21090 4eaab390b2
-#odd odd193-cruise 98dd2a6463 bb813013b2 27e8ca3873 4217144cb9 aa055cb7b0 b255ebcb30 2e5e1eb4ea 376acdc1f7
-#odd odd194-multicity 50ffc861b3 1cc3c0d1c1 35456a9d4e 96b3ab1163 da5d4eb100 ec175dad47
-#odd odd195-hop 4ff124125a
-#odd odd196-stay c5cdbc37cf ac58b23a03
-#odd odd197-cruise b414814624 c0ac2270e2 30780c171a 56bdcd8e93 3f6fc902e7 1e670c938f 5188df4186 24f9b86fbe 1a9319c197 af2fc2567d
-#odd odd198-multicity a51cc27a14 6a5af4e7b5 1ffc4ce607 1dbbf741bb 1298eccbbe a52ecd4af7 a23a882292 7e2ae81c05
-#odd odd199-hop d3b0216b7a
-#odd odd200-stay 9e14774c50 c98d38b70e b58fcba104 528c4b9884 b9a3bd96fd
-#odd odd201-cruise 2fac72f128 33cbad10a8 d641668408 cccd5a1b5a 8c1619fab9 1b52e536f3 e0f4e390a5 4fa5748488
-#odd odd202-multicity 93a956514d ace59b363d 5066ce622d 40bb9a6f81 38632b61e1 21d6660657 f8d28a0663 16f1f146f2
-#odd odd203-hop 4635eeb227
-#odd odd204-stay 14a97c9939 5581ae1600
-#odd odd205-cruise 7ac5674138 d42aff1f60 a7b3ee125d e789a9f089 a7bb587ebc 2a3edf8607 01f8479dfb 0a30f52520
-#odd odd206-multicity abb4d4690c fa36aae120 194158d50e 44655123e4 8338789bdb e67456499a b4e85dce42 c7b1fc421d 42203f38a6 f3c0f50afd
-#odd odd207-hop f29367716f
-#odd odd208-stay d7574e32f5 2b8ebd1b28 dcdcd46383
-#odd odd209-cruise 8402741732 8e21c5b1af 2dcb2f9a9a f2183d1f0c f819d1ff1f 9762036e1e 7f1da72a12 c3fad656d4 724cb6a0ee
-#odd odd210-multicity 83550199a0 4ea80df0c0 23486dab5a 36a673b125 438b24683f
-#odd odd211-hop 23fd1444f2
-#odd odd212-stay 942682658a dbaa05bfcc
-#odd odd213-cruise 89ca99f425 39492c2891 b29aec47db 367ef90e8c 69b02ab465 5352a64f57 fc7c3dbe6c
-#odd odd214-multicity 6628569489 4662286ddd f065894ac9 aba4504a52 e2189cbe64 01f3e3131c
-#odd odd215-hop 98c11a9411
-#odd odd216-stay 11099f08d1 b63cf0cb3f
-#odd odd217-cruise 2420cfcff9 454851a7ec c45fb7cba8 4217144cb9 8589576354 e7b13293ce b3c62299c1
-#odd odd218-multicity fc0c5a8e0c 4ece1e11ba ff4bc207ad 4932d35b3b 9872679b8e 468cc040b5
-#odd odd219-hop c0156eec3b
-#odd odd220-stay 4f35a7ce58 1dba233c8c 0c99a67fad 8ff9380683
-#odd odd221-cruise b6621fbd4b 2a213faec1 b653ab0409 7d184b5844 73c60972fe cef5b76efc
-#odd odd222-multicity e2bae2c499 47999d194d 7c1311f2cc 1bca078327 fa6d14ee63 37d67bd472 6cb814f530
-#odd odd223-hop a4bf659f81
-#odd odd224-stay e16e9c68de f580ab3fd4
-#odd odd225-cruise 09307b4ed6 53285bf484 1b5763e758 896207d23b 5a3dad553c 0d012b1798 76a43c9577
-#odd odd226-multicity efe111203d b55761aeac e05f91f776 3bd1b08b28 cdd2ccb026 f963ce92c3 1801ec51e3 0e786e4ceb f0d3d9fa69
-#odd odd227-hop 651f99bb3b
-#odd odd228-stay 7bae7af0a6 6c2666caf4
-#odd odd229-cruise fecae12804 6fdeea5d4f 3bef66612a ecec7f748a bf1dfd3523
-#odd odd230-multicity cb88ae29d9 e50443a01e d6cb8cfb48 80db80e92b 131a7d0ae3 99b42238df 38d7759849 6fd1362790 c3a972c976 ef1f01fe35
-#odd odd231-hop 0e83683c72
-#odd odd232-stay f9adbaffcd f7048af5dd
-#odd odd233-cruise c153293bcf 8e21c5b1af 74da92f35b c111be070a a73f9f59fd d2a900ea2f ff72bb8f49 0213c18865
-#odd odd234-multicity 3712b19881 3b5de8da4a 0d7cc7be2d 759452f5b7 dbf9be0eed f2c62cf938 a2b6813c6e
-#odd odd235-hop 1e2e0d1854
-#odd odd236-stay 45aaaa65cb 4f6852ba3a 50a98112c0 09dbb15ba4 3a6bb9a186
-#odd odd237-cruise 8641160f7f 8917e3ac0c d975b75b32 4a96e8b46c 05454b7eee d01286feef 3d7bd542a7
-#odd odd238-multicity c2461d5998 7bb48a76a9 67379c9ceb d38550d0f0 da664ece23
-#odd odd239-hop 6a2781f061
-#odd odd240-stay 803f737769 3ddaaf0a0a 8d3ace6ac8 e436b8b86d 60ba8ef85e
-#odd odd241-cruise 041d296187 971020b812 551eb3b2aa 37175341a6 db23515d1a
-#odd odd242-multicity baa8bd8cc8 206eb5ca26 326a97ee40 8207497a99 be1ffd4bb3 20319ec62a
-#odd odd243-hop c1e2fcedf1
-#odd odd244-stay 1bc6f4a7be 41afe02b7c d93994f949
-#odd odd245-cruise 7e611db342 d6b8b950d3 5454a95eb7 0bee0f7c9d 6e63ebc21e 49f46a0e04 122d01859d
-#odd odd246-multicity ea877d5a34 74a597fb85 1ebe1f28ad 0240a05395 5deec711d5 0f8b50e4d3 bcf311e118 2107faa4d1 45666f69f7 6325d1f610 0ebed1d7af
-#odd odd247-hop 54228c0033
-#odd odd248-stay 3ebbd7e229 381fe58632 32f7a96df3
-#odd odd249-cruise 60e6ab8525 25f352c715 1b5763e758 3f2687adde
-#odd odd250-multicity c07797a3af 598e7c6d4f 426e5054aa 245f044473
-#odd odd251-hop fdcb498455
-#odd odd252-stay 7ce14cc624 eb6a1c35a8
-#odd odd253-cruise 81ffd36c6a 2ea1c490a7 1b5763e758 4217144cb9 aebc7f02e1 fb981b0f02 e35fc6214b
-#odd odd254-multicity cbcf81130b e260486270 6abc9f35a0 70c8927cff 3b0addb1fb 25eaa89f45
-#odd odd255-hop f4a5429dd8
-#odd odd256-stay 8e275824f9 80bc2ea681 701ec48b41
-#odd odd257-cruise b176ba1e50 29ea0e6d82 10bad6f7ac 639156540b 621bdfbac7 9a520554cb
-#odd odd258-multicity f132e60ebe 8d79435a0b 3730ec29c1 e055e84e51 284b096231
-#odd odd259-hop a6c9837feb
-#odd odd260-stay e8aea89299 f93b096805 a6be100187 fd4de092c0 6b353caf5f
-#odd odd261-cruise b3a6171dad 67bdfb3719 f90edaccaf 806060c768 36769dc187
-#odd odd262-multicity 7a0b987e4a e5e8fcae16 a2900b2b6d 19873657a6 1dbc798042 1f8c2bce90 fc13d9da31
-#odd odd263-hop 00b61f3c5b
-#odd odd264-stay b57e9c3c59 2c73f554a7 f0167af427 5b3d1eafe3 0c89a7c2b4
-#odd odd265-cruise aca4a3393d 570d3d58d5 10bad6f7ac 4217144cb9 cce0d9dc3b b1e38a2e01
-#odd odd266-multicity 6632e72343 8260348c7f f70f14988b 085f6388d0 2f28fbc066
-#odd odd267-hop 99c4a9cbf4
-#odd odd268-stay dc11c8eabf 110969e89a
-#odd odd269-cruise fc56673098 67abac6c30 1b5763e758 4217144cb9 b9cdd67c07 d01286feef 1e95abc64d 1bce480721 4b279596bd
-#odd odd270-multicity d87d7686d0 ed2f765e7f c8dbd3e268 cc3220041d 88d65dcb83 c380295ad9 4fdc149d43 012ed67336 49e430c002 90e8c6893c
-#odd odd271-hop 10f5e38875
-#odd odd272-stay 07cff9af22 b54bb0ce52 7a3372c97b
-#odd odd273-cruise c03748aa68 4bf4d35ac1 abd559389b 1fa52c884c aca3ed7f54 cdb7545036 01f8479dfb 0258e76040
-#odd odd274-multicity b2ecbb0883 3884360eb5 54727067e0 408ca6070b c390f32673 705466959e 2782835f80 a1cd237c5b c1d7b6327b
-#odd odd275-hop dc2e5e1222
-#odd odd276-stay 9b9a2bc21f 681f289d38 1f8e14efc0 f12015758e dcc0ae70b6
-#odd odd277-cruise 54e0bd3ac6 5dd702a32d 1b5763e758 dddadd863e 918a26bda3 5729bbdf1f a66c89cae8 e8b22491c8 284e26e4e9
-#odd odd278-multicity d145b9652b 78c741ce48 c0223f9168 2be0ad31f8 3e90192218 fb877c9db6 e54e357854 643b6c024a a3f260f012 f200d1a333
-#odd odd279-hop 823499f101
-#odd odd280-stay f827b23df8 01c73d472d 8e10cf76d2 771724599b
-#odd odd281-cruise f092c7613c c77a080085 de9f9109b9 4217144cb9 a38f9daaa9 45eb53c154 9ab49bec67 5e227b1b1e bd260426fd 2f9d964d41
-#odd odd282-multicity 5a149d5b66 12820294d7 668650bf57 87921e08e6 b41bd551e8 98f560f602
-#odd odd283-hop aba5e264b9
-#odd odd284-stay 1dc9c138af 5729ff9dae 60eee12473 92c139e87b
-#odd odd285-cruise 0149c8ed87 680b0c0236 618bf9fc61 5f65e30520 a92b20ed63 d01286feef 663f48af0e
-#odd odd286-multicity 354cbd64f1 e0c10cd88e c839bc0199 27752b8cd0 157a4dca07 003e6b28ab 9d0b6441ae 9eeeb1aa61 bd5649d268 3ff85bbd21
-#odd odd287-hop 690e73901b
-#odd odd288-stay 12c4956fe2 2d0810a9f8 dd2c286b41 7c67350793
-#odd odd289-cruise ee19ddaf16 85ab78eaf0 9785dda779 95243f3dd8 918a26bda3 6d2a4fc6f3 b38d10868b 7f3bef9240
-#odd odd290-multicity 6f96c8f9c2 3799e33eee d3de8792ff 741ada8adc e12dbc5761 5c7c245105
-#odd odd291-hop bb165fae73
-#odd odd292-stay 362bd71fc3 8ec8d26571 cb7917ccec c771f8bf63
-#odd odd293-cruise e164e3f73f 6182fa8642 5afbfd6bf5 4217144cb9 f77e02c64d
-#odd odd294-multicity 334ac4a898 6ea6be4521 21e42bde17 d319f0fc44
-#odd odd295-hop 9efe9bffed
-#odd odd296-stay 88fcc4da4e 9f4dd7e127 7cfe7e80e1 2b73f4f06b 6e65a88baa
-#odd odd297-cruise f19969a148 7b616c9700 7db36e41b5 4217144cb9 918a26bda3 4e6efac9bb 1c4af8514f 988d1408c0 96ca675f99
-#odd odd298-multicity 94274b33db 5b19ff8b63 99f5e15434 f325c8cbf6 5902629979 c6e63f926f 5225ee6326 caeb224842
-#odd odd299-hop 9bd38662bd
-#odd odd300-stay 863dbf3d71 d320a324ae 74babb1b3c 91f6595d7a
+#odd odd001-cruise af65cd92ac 2eaf1237c2 d18ce07d9a 6e74827de4 f853952602 7615f285b1
+#odd odd002-multicity 72e94a874d 8c50e6c99a 1a8debab19 d3ef98c6a8 6e8c6d7179 793b4089c9
+#odd odd003-hop 7bedfd1546
+#odd odd004-stay ac57240937 6178230d76 b1f7f8121b 5a27c6522c
+#odd odd005-cruise f585318ae9 f73ef84a27 50415aac50 928c2442bf d3f31873e5 11bf2a33b0 745c9cca18 0742f9f4ea
+#odd odd006-multicity cc4852374c 6ad39b7e2c e6c8c785c4 d6fbd7525e 22941bd190 6024d1cb7a bf94ff3db3 d94939a5aa 9fd7b583bf
+#odd odd007-hop 907cea1ea9
+#odd odd008-stay 2e67cf2661 1b8e73ef91 c7e1a4d088 495a6c95ac 392dc410a4
+#odd odd009-cruise ed6164d1de e77f442d92 1b5763e758 07f043ad84 6b469e5e7e c48b2d25b2
+#odd odd010-multicity e7ee6377a3 d81994dd95 d110d1aeae b7d371fa3a c8501121c3 a5bd48f784
+#odd odd011-hop 383ba7df79
+#odd odd012-stay 056a6de4d9 99ae8c0002 acae924dbc
+#odd odd013-cruise d23ab9ee63 3c68c832f3 9cd2887f2f 53cc191d2c 2042a5330f
+#odd odd014-multicity c279b020da c56a5fb3b6 cbb776ca4d dfd577818d 100125a597 62580a1546
+#odd odd015-hop c568d112ef
+#odd odd016-stay d51333f68e 63e6e85797 41bbaa5461 8404c7b91d 4baf662fc5
+#odd odd017-cruise 8f1abc52e7 ea8cbce42a 10f0b7fdc7 d5cc8b5c4a 2bd72f669d 6c73f03ccb ddb603cd40 0d7dd8d852 476a777a55 ac943b12ec 927099b3d1
+#odd odd018-multicity 43b4c803be 44a2fc756b c57a988d8b d93e966c5d f8e15ecb19 803f146abf bcc952c156
+#odd odd019-hop 0b00220ea5
+#odd odd020-stay 213081145e 72178d1962 d4d00c75f6 c97bf66eda
+#odd odd021-cruise 628deb8809 751166b30d b915a76a28 80bfb8a99a 5cd4dfbaf3 f4bd1e5592 4a6830014b 0a4c53fbb7 cbbf9d4e76
+#odd odd022-multicity 971ee5db55 114b92ae35 4755b2452c 6d8d82d781 6d98508e90 7c6486ca11
+#odd odd023-hop 9b36d8042e
+#odd odd024-stay d0e0106a47 e871ed5008
+#odd odd025-cruise 24b2284acf 8e21c5b1af 674ccd8e58 284001cd67 7201524ee2
+#odd odd026-multicity 040810f20f a42e913cdc d0bb4cbf3d 55689c126d 6fe2a79f12 a5a9d2078a
+#odd odd027-hop 8490d3ebf6
+#odd odd028-stay f548f0fdc7 491bc97bd4
+#odd odd029-cruise 99ca020637 29c3c7e385 1b5763e758 ad8e456583
+#odd odd030-multicity a2c522a36d 9dad0e6dc8 ddeef89d33 7b95ea5b58 c004da07d4 4518c0a560
+#odd odd031-hop ffc0e20ca5
+#odd odd032-stay f75f0a4a33 bed188a833 c0f9c94098 bba6e48e16 6176e4b0ea
+#odd odd033-cruise a0538adb9b 1cf7d164d5 1b5763e758 47e1ea3b94 8610ce4665 1befbc2cfe a0fe2850d0
+#odd odd034-multicity d9e5d42ea7 e768ef5141 0ec8dd46f8 7946d1ab37 de833a9b11
+#odd odd035-hop 833cb87f3c
+#odd odd036-stay dd3287aa4d 6dfe2cca21
+#odd odd037-cruise c0861e69fd 3d1528c4d3 dfc262ab5a 8f9c19272c e55b6d8fc5 67312544c6 4094d9a400 aa85aebf31
+#odd odd038-multicity d6dd4f6f88 d5a48c8d6c f0b8f0dae2 b8fd29fdfa 3d831d6245 524cc7097b
+#odd odd039-hop 2bd3da7f88
+#odd odd040-stay 504be267f3 96f81ca2c2 a05cce66b4 5324327c4c
+#odd odd041-cruise 4f050aa009 a908b8be9c 76fd6604f6 10b1f02f08 54f2d0bab5
+#odd odd042-multicity 0f701c1015 92635c9e38 89a6e59ef8 4ef7b0d17e c2a06bb423 b4b1bac1f0
+#odd odd043-hop d7fea3900c
+#odd odd044-stay 44676325c9 8286f40195
+#odd odd045-cruise 0763dba68b beee2aeb86 1b5763e758 f2183d1f0c c5b8ddcbe5 5a5d7e50ac 9e4fd7096b
+#odd odd046-multicity 99b67d98e0 926240b92b 73c4c74371 5545ad092b 7a1398a10b 077003a0a8 0dc49b9c7b 41cc23497f
+#odd odd047-hop 2f25c5a087
+#odd odd048-stay 09e6381589 846ccda4b2 1680bff0f7
+#odd odd049-cruise 02478732f2 5f0475e92a 50e1b38588 1195ffb3be 80eafd0c27 df1770cc0a 8db5eca4f5 42af076d7b
+#odd odd050-multicity d85a3ad2ab 0ee21182f3 72c8393b4e 9c8d93029f 639100fb4f c97f28c6bc
+#odd odd051-hop f6ad44fe0a
+#odd odd052-stay 4dba7f4ca9 df84d5c3e8 984d1709eb 744a3e08d8
+#odd odd053-cruise d030347cc8 0f9a937b28 f42e3e7ab3 4217144cb9 918a26bda3 beee2f19ee
+#odd odd054-multicity dc0ac78e3f 60236ea1c3 9f3e936629 2a42c6327a 6f68b11b5c 821557d553
+#odd odd055-hop 6ad288310a
+#odd odd056-stay 439b226990 ea0ddb1b51 7b2dc1b520
+#odd odd057-cruise ea506c5a78 96ddbcf30c 99270652ed 053aec2f79 a8d6f73b30 6cd3042582 212b9fa33b f04ac95ed9
+#odd odd058-multicity c1d113170d 4a505ebd26 02e4c9acc9 a5bddcd200 e5a01d1a8b a2e36433ad
+#odd odd059-hop 797ab21613
+#odd odd060-stay 0054957b52 1f2b3a5e1c 58f10dc916 1990b2c60d
+#odd odd061-cruise 690ecc27fb a5478d670a 7c8ce363f0 84202e87a9 7c248ca2fa 6d9ca7b584
+#odd odd062-multicity c8e49e46e5 6c790a1955 40b19ae28c 73b3ad307e 5aad0c3421 81574b6f52 7153cd19ef 73e5243c52 04d968f134 42650e7a83
+#odd odd063-hop 8de8e92461
+#odd odd064-stay 0e3e6be799 e093ca265d
+#odd odd065-cruise 8023e0db2e d062999915 692a18ab5e f87a270840 7d9304c3cd 3e3187d98d
+#odd odd066-multicity 7fe7b2f7cc f76047352b f6578292d2 d00a289b3f c7607920b9 e01e293631 edf78ded72 8081de854b 59a48c1f12
+#odd odd067-hop 42dd9fc8ee
+#odd odd068-stay 6df598d344 61bfe145e7 2f4b7445a0 295de35b3c 4aeda3dc32
+#odd odd069-cruise 25a71f3d12 8cb0be271c 4986839bb3 63f54d0afc 918a26bda3 974698e87c 60771bf48c 9ca7b6f39e e0c637fb41
+#odd odd070-multicity bf4195ca70 6d676a39ef 48abffa81d 38799c3bb5 37187cca66 05108d9a0f 120d80cbd2 0815b2c44e
+#odd odd071-hop 1b0316700a
+#odd odd072-stay 3f7e97927a 30a6530ef6
+#odd odd073-cruise f615f6ebae b5ff760cac d16f80217a 1b26ccb13a 5b7dc0ea99 b9646643b5 9e9e59e7e3
+#odd odd074-multicity c3d7c026a9 7c12eb6caa f2fe7b3697 9a20d87e8e 3596243aae eb1d6e082e 96d85575d8 c8ce197bb8 abdbf19807
+#odd odd075-hop 739285eea9
+#odd odd076-stay 2717116fca e7491b0bbb 3683cf4d9c ee35430321
+#odd odd077-cruise cbde7dc7a9 8484a7af98 8b8affa261 4217144cb9 141b3ba26e 57737ce837 9fb140a8c7 b819984183 7e7212f7d8
+#odd odd078-multicity b85e1bd53c f314e13618 c6d328ccb7 d6023d4d56 064df0a42c 57d1966854 d1cbe344e4 35d74c7df2
+#odd odd079-hop abf7ca309b
+#odd odd080-stay 1c865419ac 187d0780c5
+#odd odd081-cruise a8c39860bf de24dea91b 1fa45f94b9 289195d483 1bb9181519 63704993f1
+#odd odd082-multicity 8a0cd72be7 043fa1502e 62b50830e1 d0fb8e0137 4d6fbc0c92 3a80e24a00 1c2d70af0e 9fc5126a37
+#odd odd083-hop 9120f9c23a
+#odd odd084-stay 15f8591e83 87c8f557a2 2ab1603909 77c90d35d3
+#odd odd085-cruise 468e52af4a f43895fdf7 18bf8fb498 65335b4d89 4dda117589 7901df49c3 f856b5d73c d5b2188c8b cc7fc2ac5b
+#odd odd086-multicity 39d2829f6b 7ca113c9ec 19a454a35e 65ecb9498b e01001f90e 3e29f30b6a
+#odd odd087-hop 6f442a79bb
+#odd odd088-stay 245806afb3 63654eee04 96a1a94250 902878c7ba ac4e3ab002
+#odd odd089-cruise 1bf3f54c3a 17a70f0572 df237319b3 ac87a0b32c a1ab16e1df 69887cd0c6 c55a04116c 05d30ecbbe 1d26d3649e
+#odd odd090-multicity 23b54ee5d5 8618b41ff1 6fe89abec0 aa5dd4bbef cdfdce0791 ffe357a7b8 ed54d544ed 7efddd2d48 1c5a6dee0b
+#odd odd091-hop ff3b5109fe
+#odd odd092-stay 01545820ed 8141bc55d6
+#odd odd093-cruise a4817b24bc bb2d33a930 a4cb5ad102 4ff254f0d2 adb25105bb 2a3c24c16f 5af7d6431c 285ed1741b
+#odd odd094-multicity 3e6462c5ff a90ace8150 0f5b6d2f76 03d1e8c73a 402c4ea6cd 191c738b2d fb17c64871
+#odd odd095-hop a12344c348
+#odd odd096-stay e68980efbb 7e5f3b0453 875c479186
+#odd odd097-cruise 5a5ef450e4 d11b50ee67 1b5763e758 71b74b989b a0a5696b87 bd0666f783 f37019ae8c
+#odd odd098-multicity 56648c24d9 0789a52410 415020d23b 7d8d9f98b6 de70d970c6 c489259a91
+#odd odd099-hop 33a8d870d8
+#odd odd100-stay d889777b12 21781e73aa 56ff37e624
+#odd odd101-cruise a048a99bc4 e76e144bcd 844b619552 a95b6ca171 2d998442b9 6beb5b9b20 9bcc3ed85a
+#odd odd102-multicity e1efc607fa 23f355e463 dcdb782fb3 661d9893bb c60c915a88 30e1ed4bc9
+#odd odd103-hop ae4cdb8ee7
+#odd odd104-stay 3f13de8f71 6e39c60c21 89249eb1fc
+#odd odd105-cruise 83a1ff286a 8700c1e50e cf5a96a4e3 f2183d1f0c 42235bd011 3de9ac2009 2da52a247d fc95a2a9d0 6b69a9b879 620b63ceff
+#odd odd106-multicity ac1626ed2b f644146d3d 3d5ed49e4f ff06817937 4aade33aec b1e38a2e01
+#odd odd107-hop fbb4ecf202
+#odd odd108-stay 53654d3bfb a6179b8237 9a910e953c b269dd6969
+#odd odd109-cruise 4c95f52fc5 3f1e3d6c28 a0b0725e97 e2d19221ac adf6700676 31df13200f 33021430d7 24f9b86fbe 860a5ba6bb
+#odd odd110-multicity 441ee265f9 f58944ab17 dab5fc0755 436e759e69 2c4afe352f
+#odd odd111-hop db2caabde6
+#odd odd112-stay bf56e57770 5522f0e56d
+#odd odd113-cruise e30e165642 0865f5f1b4 1b5763e758 b29b96060d 918a26bda3 c6a7a74602 8736dc6700
+#odd odd114-multicity dd62128242 830fd0461a 7f7461792d 2a48f63f6a 6883180f2d 6693394128 20bd34fc9b fe9564bcec 45004e8bfa 22a8fa32e3 af5c45d185
+#odd odd115-hop b5937765e1
+#odd odd116-stay b51c3df46b dc38336b1e 358e95a6d5 bb92dc6d5d b78fc0ae6f
+#odd odd117-cruise 4b75a49222 22a17b2966 1b5763e758 14276c5e34 918a26bda3 947ef15b47
+#odd odd118-multicity 76d625ace3 334a357af8 74bf79ccfd fdf98ad20e 59bf026a08 450cc9ae87
+#odd odd119-hop 3cb3746a4c
+#odd odd120-stay 427ff8dc36 845e0bb961 f465b3e67d
+#odd odd121-cruise 4910ee67ae b634daf7cb 94067bc6c1 4217144cb9 8a40cb2e68 dd547d75e5 01f8479dfb 5ed5132b8a 6d1d14071f
+#odd odd122-multicity a4636775ee 5e8a56e3b8 c3486008d6 3e34b66dee de2bb314ae 299a89fc96 cf39dda94c 4fe76f9066 3ffa77f24d d800d34b7c
+#odd odd123-hop e5580320c0
+#odd odd124-stay a49b133cf9 78a91fa8b1 f843c97c33
+#odd odd125-cruise bf49cdd52b 16c422bec3 1b5763e758 77f853f1e3 e9f0f65c93 b94d03a706 9da114e8a4
+#odd odd126-multicity 08aa84ca3c fa5fa05862 c6b1ceac96 5fdcfef4ca 3d97d7c3f7 a91ae58b36 903df4e51b e4da00e825 eb7f0242b8
+#odd odd127-hop 9f46bd9f69
+#odd odd128-stay a97bdebcb3 7c541c8136 e6ffb8491f b7f6bd34e2
+#odd odd129-cruise 83135259e6 e72be420fd 03de09510c 4217144cb9 fa23211f30 07398ee49a 01f8479dfb 0bdcad4534 5ef7b81699
+#odd odd130-multicity cdb0ceed14 32e434b35e 71bd65a86b 6859e1b688 11498acc27 bf1bbbec36
+#odd odd131-hop 15a718c07f
+#odd odd132-stay e5eeac4df7 bd05206bd1 b8830921d9
+#odd odd133-cruise cd561d5395 b743af8ba5 681e6d0cf2 fa0fe01295 82fed2c454
+#odd odd134-multicity 658481bbbd d909146db3 d8ee5fce9c aed668ccb6 b8f1b3aac4 5b7a2c597a f2a674f5b5 c291405f2e
+#odd odd135-hop a441cb7856
+#odd odd136-stay 7b0a915fab 497b95b2f0 9713903b18 52d67dd7c4
+#odd odd137-cruise 0e93c67462 3a724a548e 1f617e1ed0 aa610132d7 d2e4ab5fd9 111c3b834c 3a0103c3af
+#odd odd138-multicity b5cfc1458f 026ac6adc1 d901c34138 86123ef3d5 046773f884 0dbb6e670b 384fe01f08 6fc0b137d8 66bf919827 3ca9c44b5b 52bfa160a5
+#odd odd139-hop a4ea1500e3
+#odd odd140-stay 940cfb6bfc f1cbcf5327
+#odd odd141-cruise fd8d95b8aa 8e21c5b1af 1b5763e758 8eee5a031e bd02e87876
+#odd odd142-multicity c9fa703c38 a0c571968e 16e99243f7 5bf77cfa36 d42b84d7ac 30ce65abb2 6a3f0606b7 3c8cb26ebc 5b73579353 088e704e24
+#odd odd143-hop 6a7087dc48
+#odd odd144-stay eec5ebedd0 a84606d03a
+#odd odd145-cruise 43e1ef654d 15dfb24b85 1cc4dded90 595831db84 918a26bda3 f4bd1e5592 bae7e4b994 01225345e4 1386f00c24
+#odd odd146-multicity 2eb7f2fbfa 9b3714c429 a839ef7fb8 ccc23bb79a d7502df904 7f3f266b39 46afb33457 67b9c8ee7a
+#odd odd147-hop 7bdeb54b41
+#odd odd148-stay 0313216cf7 6e6a3dde2d 7c0f53aa15
+#odd odd149-cruise 8c1a640c59 f2d7f7ec21 f11f80e087 9c2694d527 a35548d452 d01286feef cfea315ccd 284a510d71
+#odd odd150-multicity 144e5626e2 fb572b9ce6 a8c41a0e12 c7883f6f86 3e1a880254 2472f4d6c9
+#odd odd151-hop 05fe849987
+#odd odd152-stay a7805a64ed 6e223c80c3 1f291a04b7 219a5289c9
+#odd odd153-cruise 024b74f2d0 ab70bf2a8c 1b5763e758 55d7922519 8f41770df7 d01286feef 01f8479dfb f12c81f834 0d2f91f20d
+#odd odd154-multicity cd7db3ab49 0c0d5336d2 c5900f6e6a 33b283a3b9 9f2ae65f99 a58a28e339
+#odd odd155-hop 6947b25cc0
+#odd odd156-stay 415ce2b66e fbe7f299f4 4869a2f7ef bf3dea936e 942ec585e7
+#odd odd157-cruise d1717bd352 a426b66367 b4cd75b70e b535aeb4bc eab630cb97 461f9a3acf 5dfdc19fdf b1ed598261 97a14c1973
+#odd odd158-multicity 06f2638579 81aa1abe2a 41cddf3e11 97824bf900
+#odd odd159-hop f67f5cfcbb
+#odd odd160-stay 3cd5d0062f becb48b04a eeba701c64 d2775f98b5
+#odd odd161-cruise 407f462344 b162fdd54d 4c77b8e3c3 e6a6242c1a 58958b4cc2 c4909715a0 512fe9ac2f f596326017 8560f3914a
+#odd odd162-multicity d9112f066e 2fd67c61df 343b617222 ca1b70f95d
+#odd odd163-hop 9e632b94c1
+#odd odd164-stay 3f83597304 bcbb88de52 3d3cad3d56
+#odd odd165-cruise 922ba156d4 ff9c68f438 6238304055 8dd78a38be 3483a68ba2 13ee5f9b23 aedeb6c9f4
+#odd odd166-multicity 186f61dce7 ac836fd523 08c9357a04 0141c99d1c 0c135df0ef 0861cd1494 e58142bffa cc337d2657 11975a0c0a 5317bcba8e 051cb5e514
+#odd odd167-hop ae4dd93cf2
+#odd odd168-stay 550ba2cd7c 8d0a861e34 ad5fe5d9f6 a967d2a94f 1f46ed7cd2
+#odd odd169-cruise d67bda7d14 2072f90b2b 1b5763e758 9e7ca3c1cc 75b698552c c99f54e652 3f9a0a9301
+#odd odd170-multicity d023daa208 67400679f6 e9de8ab99a cf2ed4a17c dee16cbe29 6720e02752 f884b099e7 938cd1e3b9
+#odd odd171-hop 420378d7c5
+#odd odd172-stay a895409ea4 3af21f5e00 e0ddfcadda 2430531077
+#odd odd173-cruise 72986d35d4 153dfe0e82 fdb02cf9ca 2fba3ff5f8 c5b8ddcbe5 d01286feef e9ce915cfa 53a4cbff3c
+#odd odd174-multicity e03cbb5303 dae2555d13 d527ddb120 ab9b5e1058 95c1b3a44b f9845496b6 5ef285979c baacc955dd 3d11b7b4fa
+#odd odd175-hop 47f7cb19ce
+#odd odd176-stay e42b3a29e8 2157e3f26f
+#odd odd177-cruise 522e23c3d4 31727ae466 1b5763e758 eaafdc7b2e 627c0f144a a78d08656a bd518a0331 8ebb88fe9d
+#odd odd178-multicity b72d631bd3 f4f27cb6ff 133e27f4fa f1f054919c 70cdf4e921 906713e5e5 3d46e2b11a 69ffab285d 9b4b6410cc ef3dfba418 9329c5c638 f69faa274e
+#odd odd179-hop 420378d7c5
+#odd odd180-stay de0c0ce56e af0d39006c 10083f9b02 45a554b302 af3200166d
+#odd odd181-cruise 00969798d5 59f34c0c45 27025d2485 44b73e2bf2 fb37dc772c dbd6eba176 5515f02d7e 055b1c5b93
+#odd odd182-multicity faf61a2d04 721d6dd6ac af07c99bc1 9d5f089c78 b2511ae06b 3474f8d106 314c4f3565 9960b2b52c
+#odd odd183-hop 8d80fba79d
+#odd odd184-stay 34cd9314ac d27013f306
+#odd odd185-cruise 0d1ffcd9fe 8e21c5b1af 1b5763e758 ec123cc627
+#odd odd186-multicity 82de85c354 7fc8bf2222 6331d8c1ff c26de37565 238dbbdf0e 5a108668e7 7088fa41a6 def2896920 641a25a29e 6adb531cde f4af6e5cb9
+#odd odd187-hop 71261a3000
+#odd odd188-stay 017104779b a15e5f08c2 06d02cde2f 39ce1c5245
+#odd odd189-cruise 7a068f4ce5 8e21c5b1af 68565438b2 191899d775 03d4314570 a5e8ad0f17 c30d688e21 ca2a54bd23 c434d3132a
+#odd odd190-multicity d961a1819b af7a641f67 f56f389d01 cf261af50e c47974c2e0 e99c450f6a fd7f591782 ebe443e164 f333378f2a
+#odd odd191-hop 72eb74d1eb
+#odd odd192-stay 0eaf9e41c1 716938e83e 86b892a4af adb5ec9146
+#odd odd193-cruise 0261b857bf 9a97d3e2e0 1b5763e758 1266bd23ed 2d869a3e62 d1f796681e
+#odd odd194-multicity 5482c01772 d6ca5ad85d ee335977bf 14eb99c566 bcc81be8f7 f9e363ecaf
+#odd odd195-hop 873abbab4f
+#odd odd196-stay bece2ee7cf 0c7d1b6857 81232b9514
+#odd odd197-cruise 9f735b7065 293f5f83df abf8272909 ff942a59a6 cac66d6d20 0a259044ac ba76661868 a990c7b4fb
+#odd odd198-multicity 25143e9b9c 6faa4ee741 84a261a1bc 37e90fb5dd 2851fd4f25 9baf0e9bbe
+#odd odd199-hop b14977484d
+#odd odd200-stay 203d74de0c 8cb1471157 8ea3a9523d a4558b425a a910c246cf
+#odd odd201-cruise b889b70401 5f93b61422 5c4a153495 4db853e862 4c5ad77a3a dab344e03e 9aeba51c35 040f280432 e087860606
+#odd odd202-multicity 03af6b8e32 1fd1966b9c 199afb2230 8210662fd7 1d64b5befe 01326453da 6a40d5f4e6 97f605c239 664d5a4a8d 2233379e6d 3a41c5de1a
+#odd odd203-hop 404c931642
+#odd odd204-stay 9620728965 4b8337697d ac7d044e22 866303962f
+#odd odd205-cruise f15ceb3d3d 99229fb4f3 e90660de2a a28392e8c5 c5b8ddcbe5 f4bd1e5592 cbef2c3a5b d289327e88
+#odd odd206-multicity 83656660f0 832f384f3e 7f16ff79b0 bf0ac951b2 e9efe8180b
+#odd odd207-hop a1bfc59fa4
+#odd odd208-stay e81e39084f a39034fa99 286e866797
+#odd odd209-cruise 1145fdea11 95d783438d 996e3eeee9 7fc43292d5 512fff1705 9d10b68ef1
+#odd odd210-multicity 352eabea16 5b785380d2 64a0fcaf25 e83c9f715c 551bc29e46 4199647ed8 1b3ccdc6ca 95392c1128
+#odd odd211-hop 3e2fdbbb2c
+#odd odd212-stay e2152948e2 a176e01ac2 93bc9bfb88
+#odd odd213-cruise 5281ef8796 601a370415 a1a25303c2 9eb42f3f90 c1cc06f443 68a9e4fb93
+#odd odd214-multicity 4bfa8c37c5 3498053888 09acf0af64 fccc860fe2 0deac50d2f 9b08b45593 9db36ebda6 6b4d7c6267 51d6f821ca 8b78825c7f 8903aa8df9 3bafb950e8
+#odd odd215-hop 2f45052f6e
+#odd odd216-stay 3c147e9b9f f1e3708fba d974e17029 7803729150
+#odd odd217-cruise 978b6ea34d 0c2348b5e4 aa0c300ea2 72899fb4c3
+#odd odd218-multicity dd4ea38d5b 8c9495d388 1bcf440d47 c90ec4f281 0a0613a496 635db51ea3 6c31cab173 51e0f29a53
+#odd odd219-hop 2fadc1e87d
+#odd odd220-stay f4760c4a9c 37376af75d 83466a8d2a 98a1ec5f60
+#odd odd221-cruise d592d6e011 d685795a90 37f8949100 f2183d1f0c 918a26bda3 ac1ee709ac
+#odd odd222-multicity ad4ee8cbd7 6ed047ff6a 44cdf744b0 28cad1a88a 7083cecfb7
+#odd odd223-hop faf5bc097f
+#odd odd224-stay 83e223dce7 6e27ee393c 1bbefb59f0 2064c15054
+#odd odd225-cruise bc7d364a25 ab6bf87cb5 f7caa60d9f 4217144cb9 5c58056863 d01286feef dfc8800aad
+#odd odd226-multicity e03bf097c8 2493b0f1a4 3f689599f1 0f7ae9e598 c820abb432 e683c0c42b aa937361d6 22f78ade23 ee16aab0b5
+#odd odd227-hop 7bdeb54b41
+#odd odd228-stay 02b17052e6 525bcfac82 2a696c2b61
+#odd odd229-cruise 92be7a1b5b 22184c69dd 10bad6f7ac 4217144cb9 825dcdf1f7 1a37f8b0a6
+#odd odd230-multicity 09f534626d 97fb051ea4 dbae3821e2 ef332f31bf
+#odd odd231-hop f1a4c349dc
+#odd odd232-stay 9e58cbcda8 ee1adc7585
+#odd odd233-cruise bc8dedb7f3 6f27e448ca 9622170668 c38b4e2e66 918a26bda3 3d45ff7340 b44d690bfd
+#odd odd234-multicity bdbc1d2965 fc27c42792 71e37648fb 59883e7bfa
+#odd odd235-hop 420378d7c5
+#odd odd236-stay f079a6e6b7 5e91ec4483 d8d861d92d d9da1cd271
+#odd odd237-cruise 53717ce9b4 8e21c5b1af 367efc97b3 8eb682654a 2de3193d4c 0d0fe840fb 6745a84729
+#odd odd238-multicity a44ef14b80 1a37aeb836 068d2778f0 86b223478e 65da896c0b
+#odd odd239-hop 907cea1ea9
+#odd odd240-stay 9f7391abe0 9396ef088b c469bfa7b7 4844eaaf79
+#odd odd241-cruise e99523de4c 4c420d77f2 3070b50c26 e6a5001cf5 50b11220cd 06ff3439dd e0f4141008
+#odd odd242-multicity 2235e7bdee 3412fc5e57 1412bd9036 e958d3eae0 82bd0d6922 52bc7dec67 a2402ebe35
+#odd odd243-hop 25a4e37a83
+#odd odd244-stay 47e9170a01 54f93f3d94 96180e5eed 2d8badb47b
+#odd odd245-cruise 1f4fc080d1 0bd4d73fa0 111d741d9a 4217144cb9 29f4370640 e7269e64a0 6fa1255939
+#odd odd246-multicity 7f80934b98 57ca1a9896 e4bb758cdc fbd6b04678 aee94b3ccb 3e75de6d3f 245927c8be 948c728c3d 474b3029b9 494f1884b2
+#odd odd247-hop 02cfee6300
+#odd odd248-stay 8e59001b3d 4a35f29f7d 9a1ebab6a8 c8903cf041 07d5ca32dc
+#odd odd249-cruise c97728c145 8e21c5b1af b00e2cc975 4217144cb9 6ebb276e48 db76fee493
+#odd odd250-multicity c4e2cae262 be38a62c08 27f1d60464 f750cc1d02 a70e1086a7 c5ccd807e5 37be1c8603 adee60e178 8560f3914a
+#odd odd251-hop 0c0127fbf0
+#odd odd252-stay 94a46e51e0 a589fa7df7 60e7625377 3c38892ed6 87c0523e14
+#odd odd253-cruise a983fe2af7 29555b8d3a 3a3af725f8 4217144cb9 b5083886ce fbe5ca2a56 29140be5b4
+#odd odd254-multicity d4d0712bb6 91ea6c49eb 31e2236be4 79525b15a5 96ace410e1 0062c40cb4
+#odd odd255-hop dd660b9c2f
+#odd odd256-stay 0d489b8a14 2e4ed88818
+#odd odd257-cruise 7a36fd02b3 92cb98a95e 5c6a3aa395 f2183d1f0c 906ceea94d 03d3e4223d
+#odd odd258-multicity 6472e036f9 2c3ee9ae4c 52ecf0a849 a7f61928f4 73265ec166 03d3e4223d
+#odd odd259-hop 7763a1b920
+#odd odd260-stay c45d487c86 8264fbbc66
+#odd odd261-cruise ddd7f20075 18a0b04b35 ce57b234dc c0deda69a5 0bc1319d3c f9c86dfcff 96f8e1f692
+#odd odd262-multicity 892889d7a8 4d8e891582 2e20fe1ca0 5dbe08c851 7d62c91f5e e9472f8868 4e199992eb a1419c3d03
+#odd odd263-hop 664ae5a5a7
+#odd odd264-stay e57dabc99e 3f26160a43 48e73ee654
+#odd odd265-cruise 2fbb6c16db ceb9b7641c e2f3989bcf ef6bc54dee 788f13b968 6da4a16a5b 691749a6d8
+#odd odd266-multicity 3ee354dd18 54c39a8e6d 8ce94d84e9 4300f713c4 53fd3e8c22 eb7b6daab5
+#odd odd267-hop 5fd90b7ce7
+#odd odd268-stay 82194078a2 268e9f9379 b7bd586798
+#odd odd269-cruise 6361cdd467 2501d29166 1b5763e758 f815d371b5 ced3fac450 a813ef9134 01f8479dfb 38f05ed495 d4c66711d5
+#odd odd270-multicity 1bdf0639bf f3d5733105 8ece1be59a 4e9e1c456c
+#odd odd271-hop 12fc253e24
+#odd odd272-stay 3ce708e11c 1b5a70f681
+#odd odd273-cruise dd1d870626 ec65b38769 bf92d6a169 2d644532ad 09ce9280f6 786d5a3fbb
+#odd odd274-multicity de30c7bf81 9531798215 ccb633c8a8 a3554947ba aa544ac4ad c35b8cfd69 925ec2cbcf fbc76268fb 2a6c0c5fe1
+#odd odd275-hop 39aa2ba983
+#odd odd276-stay 91706da664 7f3b5ca4d5 3a2b21ac78
+#odd odd277-cruise c530b2b9a1 d348ae6684 e0d2469566 225d154b5a 918a26bda3 a43e26263a bae7e4b994 589f0b4621 717ff7a4cf
+#odd odd278-multicity 03bb618999 82ada98761 a91ec206ee 050513700c 6a4a8bbfa5 14182c5d2c ea31d0b989
+#odd odd279-hop 69c868e9ba
+#odd odd280-stay 01694a6438 e899dd9258 8ffdcc5848
+#odd odd281-cruise c62fc8cf9e 3f9243e0d4 33cd92a2dc 1ec06de0fe cdd2ccb026
+#odd odd282-multicity 4625d82af8 dc2bf51ae3 e880735e55 04bf17733a 8553d577e9
+#odd odd283-hop b67747ea49
+#odd odd284-stay a7c0ef1b66 c651fe3d16 f99a26c0c9 fb71732c7f 0d416389dc
+#odd odd285-cruise e7e3f9ed7c 3499243db6 23d9c60995 84399902bd c5b8ddcbe5 a530bd1e32 f21c58b836
+#odd odd286-multicity 3e3d4013c5 4b4800a536 f26724002b 446d768311 05bfc8b20e 6304cef843 7f7b8b31c4 9e3d6d235a
+#odd odd287-hop 036bdb568e
+#odd odd288-stay 7be71e22af 802f18a802 62bf66adc4
+#odd odd289-cruise b1440ac9da d56c286bcf 10bad6f7ac f2183d1f0c 8dc8cbbb32 a64e7024f9 902fd01812
+#odd odd290-multicity 98a1c7ef2f c173f5e71b c05f55d7d1 0b1eab50e0 4f101deeeb 132842b5db
+#odd odd291-hop 0972a8d938
+#odd odd292-stay eec87429f2 684df78208 f4c0b087ed fabe52fc22 76b4857aba
+#odd odd293-cruise ef878e0cae f923a7c8e8 aa80a6bd44 4b6b2f3aca 016aed1a6d d1650ebdb3
+#odd odd294-multicity 4346e0c4d3 58c2e57b29 d335aadbb0 35576751e5 057af351b0
+#odd odd295-hop c6e5a5ca09
+#odd odd296-stay ec06819ad6 608e3e0617 f3b2a1a15f
+#odd odd297-cruise 164c8509ef 5101e370ab 15e91bcaf8 5ed8ef317d 24866bc90b f0eb1b5052 d8883c3e6f b58cf09b13 db37f78cf0
+#odd odd298-multicity b43b2fc4fa 4b47d965db 32706b89c6 bcdbe19cce e4e2b9d1e8 4d315446a2 38ad59d372 7c5259f02a
+#odd odd299-hop 8fdf4a3fac
+#odd odd300-stay e22e4c370e 859cf1c146 52483b2900 d9b5451049 591b5af74e

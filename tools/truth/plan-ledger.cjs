@@ -21,7 +21,7 @@
 //
 // The trips are planned on a frozen copy of the place files (tools/truth/plan-ledger-places.json.gz, written by
 // --accept --places), so the nightly place refreshes do not move the ledger: only the planner's code and the saved
-// trips do. On every run two bugs are planted in a copy of the planner (lunch may start 30 min later; everyone walks a
+// trips do. On every run two bugs are planted in a copy of the planner (lunch may never start late; everyone walks a
 // little slower) and the check must fail on each.
 // Usage: node tools/truth/plan-ledger.cjs [--accept [--places]] [--show 12]
 'use strict';
@@ -104,8 +104,8 @@ if (require.main === module) {
   if (ch.length > SHOW) console.log(`    ... and ${ch.length - SHOW} more day(s)`);
   if (ch.length) console.log(`${ch.length} day(s) on ${new Set(ch.map(c => c.trip)).size} saved trip(s) are planned differently from the ledger. If every one of these changes is meant, run: node tools/truth/plan-ledger.cjs --accept   and commit docs/qa/plan-ledger.txt with the change (the diff is the record of what the change does to real trips). If any is not meant, it is a bug.`);
   // Planted: two edits no rule check notices. The ledger must see both.
-  const PLANTS = [['lunch may start 30 min later', '70-day.js', null], ['everyone walks a little slower', '10-travel.js', ['speed = walk === "low" ? 3.6 : 4.5', 'speed = walk === "low" ? 3.6 : 4.2']]];
-  { const core = fs.readFileSync(path.join(ROOT, 'src', 'engine', '00-core.js'), 'utf8'), m = /E\.MEAL_LATE = (\d+);/.exec(core); if (m) { PLANTS[0][1] = '00-core.js'; PLANTS[0][2] = [m[0], `E.MEAL_LATE = ${+m[1] + 30};`]; } }
+  const PLANTS = [['lunch may never start late (the late-lunch allowance lost)', '70-day.js', null], ['everyone walks a little slower', '10-travel.js', ['speed = walk === "low" ? 3.6 : 4.5', 'speed = walk === "low" ? 3.6 : 4.2']]];
+  { const core = fs.readFileSync(path.join(ROOT, 'src', 'engine', '00-core.js'), 'utf8'), m = /E\.MEAL_LATE = (\d+);/.exec(core); if (m) { PLANTS[0][1] = '00-core.js'; PLANTS[0][2] = [m[0], 'E.MEAL_LATE = 0;']; } }
   let blind = 0;
   // LEDGER_NO_PLANTS=1 (the fault audit, which plants its own bugs): the comparison alone.
   for (const [name, file, edit] of process.env.LEDGER_NO_PLANTS ? [] : PLANTS) {

@@ -54,6 +54,12 @@ function run(E) {
   t(!wk(gentle) || wk(gentle).min === 32, `a gentle way down (100 m in 2.4 km) costs nothing extra: 32 min (got ${wk(gentle) && wk(gentle).min})`);
   const big = one({ foot: { km: 1.6, up: 250, down: 0 }, car: { km: 3, min: 8 } }, far), same = one({ foot: { km: 1.6 }, car: { km: 3, min: 8 } }, far);
   t(same.kind === 'walk' && big.kind !== 'walk', `a 1.6 km walk is walked on the flat, and not when it climbs 250 m (46 min) with a ride at hand (flat: ${same.how} ${same.min} min; hill: ${big.how} ${big.min} min)`);
+  // A walk timed from a neighbour's route (R-33 near-route) keeps that route's climb, the right way round (E48).
+  const lo2 = { name: 'Low gate', lat: 36.4199, lng: 25.4272 }, hi2 = { name: 'High gate', lat: 36.4252, lng: 25.4271 };
+  const kn = () => null; kn.known = () => [{ a: lo, b: hi, foot: { km: 0.9, up: 120, down: 0 }, car: null }];
+  const nUp = E.makeTravel({ walk: 'medium' }, {}, null, null, null, null, kn).estimate(lo2, hi2), nDn = E.makeTravel({ walk: 'medium' }, {}, null, null, null, null, kn).estimate(hi2, lo2);
+  t(wk(nUp) && wk(nUp).min >= 22, `a walk next to one known to climb 120 m keeps the climb (about 24 min; got ${wk(nUp) && wk(nUp).min})`);
+  t(wk(nDn) && wk(nUp) && wk(nDn).min < wk(nUp).min, `the same walk the other way goes down, not up (got ${wk(nDn) && wk(nDn).min} down, ${wk(nUp) && wk(nUp).min} up)`);
   return bad;
 }
 const real = run(require('./engine.cjs'));
@@ -62,6 +68,7 @@ for (const m of real) console.log('FAIL ' + m);
 const PLANTS = [
   ['real routes ignored', '10-travel.js', 'let rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;', 'let rt = null;'],
   ['plans kept although a street route arrived', '95-plan.js', ' && routesSame(got)) {', ') {'],
+  ['a climb dropped on a walk timed from it', '10-travel.js', 'foot: x.foot ? { km: x.foot.km + add, up: x.foot.up, down: x.foot.down } : null', 'foot: x.foot ? { km: x.foot.km + add } : null'],
   ['the climb ignored', '10-travel.js', 'const u = isFinite(up) && up > 0 ? up : 0,', 'const u = 0,'],
   ['the steep way down ignored', '10-travel.js', 'Math.max(0, down - 80 * (km > 0 ? km : 0)) : 0; return', '0 : 0; return'],
   ['the hill left out of the walk-or-ride choice', '10-travel.js', 'Math.max(d, (rFoot.km + hill * speed / 60) / 1.3)', 'Math.max(d, rFoot.km / 1.3)'],

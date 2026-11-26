@@ -149,7 +149,7 @@
     // The street routes known so far, both ways round, for rides near them (see calc): asked of the app once per travel.
     let nearList = null; const knownNear = () => { if (nearList) return nearList.length ? nearList : null; nearList = [];
       const all = typeof routes === "function" && typeof routes.known === "function" ? routes.known() || [] : [];
-      for (const r of all) if (r && E.hasPos(r.a) && E.hasPos(r.b) && (r.car || r.foot)) { nearList.push(r); nearList.push({ a: r.b, b: r.a, car: r.car, foot: r.foot }); }
+      for (const r of all) if (r && E.hasPos(r.a) && E.hasPos(r.b) && (r.car || r.foot)) { nearList.push(r); nearList.push({ a: r.b, b: r.a, car: r.car, foot: r.foot ? Object.assign({}, r.foot, { up: r.foot.down, down: r.foot.up }) : null }); } // the way back climbs what the way out drops
       return nearList.length ? nearList : null; };
     // The traveler's ride choice belongs to the two places, whichever way the day goes between them (Nov 18: the train
     // picked between two trips out was lost when the day ran them the other way round). A choice also holds for a ride close
@@ -262,7 +262,7 @@
       // next door, and the ride down the mountain went back to the 27 min guess, about an hour by road).
       if (!pinned && !rt && knownNear()) { const n = E.nearRide(a, b, knownNear(), r => [r.a, r.b]);
         if (n) { const add = (E.hav(a, n.A) + E.hav(b, n.B)) * 1.3, x = n.x;
-          rt = { near: true, car: x.car ? { km: x.car.km + add, min: x.car.min + E.nearGap(a, b, n, true) } : null, foot: x.foot ? { km: x.foot.km + add } : null }; } }
+          rt = { near: true, car: x.car ? { km: x.car.km + add, min: x.car.min + E.nearGap(a, b, n, true) } : null, foot: x.foot ? { km: x.foot.km + add, up: x.foot.up, down: x.foot.down } : null }; } } // (the neighbour's measured climb, never a guessed one: E48)
       // A router answer far beyond any real road (more than 10 times the straight line and 20 km) is a wrong snap across a
       // harbour or onto another road, never a route: it is left out and the guess stands.
       const sane = r => r.km <= d * 10 + 20;
