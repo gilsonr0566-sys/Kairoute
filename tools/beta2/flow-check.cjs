@@ -277,9 +277,11 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
       const w = new Date(d.date + 'T12:00:00Z').getUTCDay(), kd = w === 0 ? 'su' : w === 6 ? 'sa' : 'wk', deps = []; for (let t = 7 * 60; t <= 19 * 60 + 30; t += 30) deps.push({ t });
       const f = { mode: 'ferry', label: 'Ferry', min: 60, ride: 50, wait: 5, every: 30, everySrc: 'timetable', km: 30, access: { how: 'walk', min: 5, km: 0.3 }, egress: { how: 'walk', min: 5, km: 0.3 }, steps: ['Ferry, 50 min'], deps };
       const A = { lat: o.lat, lng: o.lng }, B = { lat: x.lat, lng: x.lng }; window.__kairouteTransitSet([{ a: A, b: B, kd, opts: [f] }, { a: B, b: A, kd, opts: [f] }]); }, [ni, isle]);
-    for (const set of [[inland, isle], [isle, inl], [inland, isle, inl]].map(x => x.filter(Boolean)).filter(x => x.includes(isle))) {
+    // The island alone first: it fits the ship day on its own (checked above), so a ferry is always drawn to read; the sets
+    // with a mainland sight too are read when they fit (whether they fit moves with the day's hours and rides, Nov 26).
+    for (const set of [[isle], [inland, isle], [isle, inl], [inland, isle, inl]].map(x => x.filter(Boolean)).filter(x => x.includes(isle))) {
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('sites'); }, ni); await p.waitForTimeout(500);
-      const got = await setPicks(set); if (got === 'nofit') { skipped++; continue; } if (!got) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
+      const got = await setPicks(set); if (process.env.NAPLES_WHY) console.log('NAPLES pick', set.join('+'), got); if (got === 'nofit') { skipped++; continue; } if (!got) { bad.push(`could not pick ${set.join(' + ')}`); continue; }
       await p.evaluate(i => { window.__kairouteGo('day', i); window.__kairouteGo('plan'); }, ni); await p.waitForTimeout(800);
       // The map's lines are read once the day is planned and drawn (a slow phone took longer than 0.8 s: "no ferry drawn"
       // while the plan had both ferries, Nov 24): wait for the checks in flight, then read again while no ferry is drawn yet.
@@ -291,13 +293,14 @@ async function tapTimes(p) { const out = []; const n = await p.evaluate(() => wi
         const atPier = q => piers.some(pq => km(pq, q) <= 0.3), atIsle = q => boatAt.some(b => km(b, q) <= 0.05), onIsle = q => boatAt.some(b => km(b, q) <= 5);
         return window.__kairouteMapLegs().map(l => ({ kind: l.kind, a: l.a, b: l.b, ok: l.kind === 'ferry' ? (atPier(l.a) || atIsle(l.a)) && (atPier(l.b) || atIsle(l.b)) : !(atIsle(l.a) && !onIsle(l.b)) && !(atIsle(l.b) && !onIsle(l.a)) })); });
       ferries += r.filter(l => l.kind === 'ferry').length;
+      if (process.env.NAPLES_WHY) console.log('NAPLES', set.join('+'), JSON.stringify(r.map(l => l.kind)), JSON.stringify(((window => 0), await p.evaluate(i => ((window.__kairouteEngine2()[window.__kairouteDays().findIndex(x => /Naples/.test(x.dest))] || {}).items || []).map(x => x.t + ':' + (x.name || x.mode || '') + (x.mode ? '/' + x.mode : '')).join(' | ')))));
       r.filter(l => !l.ok).forEach(l => bad.push(`${set.join('+')}: a ${l.kind} line from ${l.a.map(n => n.toFixed(4))} to ${l.b.map(n => n.toFixed(4))}`));
       const tl = await p.$$eval('.tl', xs => xs.map(x => x.innerText.replace(/\s+/g, ' ')).join(' | '));
       if (set.length === 2 && set.includes(inland) && !/to the ferry at/i.test(tl)) bad.push(`${set.join('+')}: the day plan doesn't show the way to the ferry pier (${tl.slice(0, process.env.VERBOSE2 ? 3000 : 300)})`); }
     // A road route ending on the street 300 m from a terminal out on its pier: drawn to the street, not over the water.
     const road = await p.evaluate(() => window.__kairouteRoadEnds({ mode: 'car', a: [14.2600, 40.8500], b: [14.2550, 40.8380] }, [[14.2601, 40.8501], [14.2580, 40.8440], [14.2560, 40.8410]]));
     if (road.length !== 4 || road[road.length - 1][1] !== 40.8410) bad.push('a road line was joined over the water to a stop 300 m from the street');
-    check(`Every line on the Naples map is its kind of ride: ferries pier to pier (${ferries} drawn), nothing on land goes to the island, roads don't cross the harbour`, ferries > 0 && !bad.length, bad.slice(0, 3).join('; ') || 'no ferry drawn'); }
+    check(`Every line on the Naples map is its kind of ride: ferries pier to pier (${ferries} drawn), nothing on land goes to the island, roads don't cross the harbour`, ferries > 0 && !bad.length, bad.slice(0, 3).join('; ') || 'no ferry drawn (' + skipped + ' set(s) of picks did not fit the day)'); }
 
   // 2a1b. Free time is the traveler's (Nov 18, Richard: "I wouldn't do the suggested options. Just let them select to
   // fill the spots."): no day plan has a stop the app put there on its own. A day with free time says so in one row
