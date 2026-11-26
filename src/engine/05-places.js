@@ -171,6 +171,15 @@
         }
       }
     }
+    // Ground heights from the places file (R-33, E48): each point of a place gets the height read at it or within 60 m
+    // (ele, metres), so a walk with no street route still counts the climb between its two ends. A point with no reading
+    // near it keeps none: never a guessed height.
+    for (const [key, city] of Object.entries(guides)) { const P = places && places[key], H = ((P && P.heights) || []).filter(h => Array.isArray(h) && E.fin(h[0]) && E.fin(h[1]) && E.fin(h[2]));
+      if (!H.length) continue;
+      const at = p => { if (!p || typeof p !== "object" || !E.hasPos(p) || E.fin(p.ele)) return; let best = null, bd = 0.06;
+        for (const h of H) { const d = E.hav(p, { lat: h[0], lng: h[1] }); if (d <= bd) { bd = d; best = h; } } if (best) p.ele = best[2]; };
+      for (const k of Object.keys(city)) if (Array.isArray(city[k])) city[k].forEach(at);
+      for (const d of b.days || []) if (d.city === key) { at(d.point); at(d.hotel); } }
     return E.namesIn(b);
   };
   // THE names pass (R-11, Nov 25: "one app-wide rule applied at every source"). Every name the bucket holds for the

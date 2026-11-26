@@ -20,6 +20,8 @@ function merge(older, newer) {
   o.ports = pick(older.ports, newer.ports) || [];
   // Island outlines (R-06) are kept when a later build couldn't reach the map for them.
   if (older.islands && newer.islands) o.islands = Object.assign({}, older.islands, newer.islands, { shapes: pick(older.islands.shapes, newer.islands.shapes), centreShape: newer.islands.shapes ? newer.islands.centreShape : older.islands.centreShape });
+  // Ground heights: every point measured before is kept, a newer reading wins.
+  { const h = new Map(); for (const x of [].concat(older.heights || [], newer.heights || [])) if (Array.isArray(x) && x.length === 3) h.set(x[0] + ',' + x[1], x); if (h.size) o.heights = [...h.values()]; }
   o.dayTrips = [...new Set([...(older.dayTrips || []), ...(newer.dayTrips || [])])];
   for (const k of ['guideSights', 'mapPlaces', 'centre', 'wikivoyage', 'transit', 'lifts', 'cityEats', 'eatHours', 'piers', 'ferryLinks', 'roads']) o[k] = pick(older[k], newer[k]);
   o.missing = (newer.missing || older.missing || []).filter(m => !(m === 'a mapped cruise terminal or pier' && o.ports.some(p => p.cruise)) && !(m === 'travel guide page' && o.wikivoyage) && !(m === 'public transport lines on the map' && (o.transit || []).length));

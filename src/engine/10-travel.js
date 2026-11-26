@@ -271,8 +271,11 @@
       // the guess makes the walk as far as it really is, so a long way round is not taken on foot when a ride is quicker.
       // The hill's minutes (E.climbMin), and the hill as extra distance: a climb that adds 10 min is as far as another
       // 750 m, so a steep way up is not taken on foot when a ride is quicker, and the walking limits see it.
-      const hill = rFoot ? E.climbMin(rFoot.up, rFoot.down, rFoot.km, speed) : 0;
-      const dw = rFoot ? Math.max(d, (rFoot.km + hill * speed / 60) / 1.3) : d;
+      // No street route: the climb between the walk's two ends from the places file's ground heights (at least that much;
+      // a hill on the way between is not seen), never a guessed one (E48, Nov 26: Lycabettus planned 16 min, 38 real).
+      const ends = !rFoot && E.fin(a.ele) && E.fin(b.ele) && d > 0.15 ? { up: Math.max(0, b.ele - a.ele), down: Math.max(0, a.ele - b.ele), km: d * 1.3, ends: true } : null, climb = rFoot || ends;
+      const hill = climb ? E.climbMin(climb.up, climb.down, climb.km, speed) : 0;
+      const dw = rFoot ? Math.max(d, (rFoot.km + hill * speed / 60) / 1.3) : d + hill * speed / 60 / 1.3;
       const isle = p => E.byBoat(p.travelNote) || E.waterOnly(p) || !!p.acrossWater, note = noteFor(a, b);
       // The traveler's choice, as a kind (a row of a timetable answer picked earlier counts as its kind).
       const want = wantRaw == null ? null : OLD_CHOICE[wantRaw] || (/^note\|/.test(String(wantRaw)) ? String(wantRaw).slice(5) : wantRaw); // a note's way is its kind
@@ -308,7 +311,7 @@
         // On foot: any ride up to 4 km may be walked.
         const onFoot = pinned && pinned.mode === "walk" ? Math.round(pinned.min) : Math.max(2, Math.round(Math.max(d * 1.3, rFoot ? rFoot.km : 0) / speed * 60) + hill);
         // The walk as an option: with its climb said, when the hill adds 3 min or more.
-        const walkOpt = () => Object.assign({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: rFoot ? Math.max(d * 1.3, rFoot.km) : d * 1.3, steps: hill >= 3 && !(pinned && pinned.mode === "walk") ? [(rFoot.up >= 10 ? "Uphill: about " + Math.round(rFoot.up / 10) * 10 + " m of climb" : "A steep way down") + ", " + hill + " min more than a flat walk"] : [] }, hill ? { hill } : {});
+        const walkOpt = () => Object.assign({ id: "walk", kind: "walk", how: "Walk", min: onFoot, km: rFoot ? Math.max(d * 1.3, rFoot.km) : d * 1.3, steps: hill >= 3 && !(pinned && pinned.mode === "walk") ? [(climb && climb.up >= 10 ? "Uphill: " + (climb.ends ? "at least " : "about ") + Math.round(climb.up / 10) * 10 + " m of climb" : "A steep way down") + ", " + hill + " min more than a flat walk"] : [] }, hill ? { hill } : {});
         if (dw <= WALK_EITHER || (pinned && pinned.mode === "walk")) opts.push(walkOpt());
         // Public transport: the timetable's answers, one per kind; a line mapped on OpenStreetMap for a kind they don't
         // have (a stop within a short walk of each end). On a walk short enough, only when it is quicker than walking.

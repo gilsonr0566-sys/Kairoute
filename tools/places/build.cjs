@@ -27,6 +27,20 @@ async function get(url, opt = {}, tries = 4, wait = 60000) {
   }
   return null;
 }
+// Ground heights (R-33, E48): every point in the file a walk can start or end at (sights, towns, piers, ports, places to
+// eat), from Open Topo Data's free 30 m terrain set (100 points a request, 1 request a second, 1,000 a day). The engine
+// counts the climb between a walk's two ends when no street route is known (the helper out of reach): a walk up a hill
+// was planned as if flat (real-world check, Nov 26: Lycabettus 16 min, 38 real). Kept as [lat, lng, metres].
+async function heightsFor(pts) {
+  const seen = new Set(), list = [];
+  for (const p of pts) if (p && Number.isFinite(+p.lat) && Number.isFinite(+p.lng) && p.lat !== null && p.lng !== null) { const q = [+(+p.lat).toFixed(5), +(+p.lng).toFixed(5)], k = q[0].toFixed(4) + ',' + q[1].toFixed(4); if (!seen.has(k)) { seen.add(k); list.push(q); } }
+  const out = [];
+  for (let i = 0; i < list.length; i += 100) { const part = list.slice(i, i + 100);
+    const j = await get('https://api.opentopodata.org/v1/mapzen?locations=' + part.map(q => q[0] + ',' + q[1]).join('|'), {}, 4, 30000);
+    ((j && j.results) || []).forEach((x, k) => { if (x && typeof x.elevation === 'number' && Number.isFinite(x.elevation) && part[k]) out.push([part[k][0], part[k][1], Math.round(x.elevation)]); });
+    await sleep(1200); }
+  return out;
+}
 const hav = (a, b) => { const R = 6371, r = x => x * Math.PI / 180, dl = r(b.lat - a.lat), dg = r(b.lng - a.lng); const h = Math.sin(dl / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(dg / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
 const baseName = s => String(s || '').replace(/^cruise port of\s+/i, '').replace(/\s*\(.*?\)\s*/g, ' ').split(',')[0].trim();
 const qOf = id => { const m = /(?:^|-)q(\d+)$/i.exec(String(id)); return m ? 'Q' + m[1] : null; };
@@ -531,6 +545,9 @@ async function buildPlace(t) {
         if (sh) { Object.assign(fresh.islands, sh); console.log(`   ${sh.shapes.length} island outlines within ${sh.km} km (${sh.shapes.filter(x => x.walk === false).length} with no way there on foot: ${sh.shapes.filter(x => x.walk === false).map(x => x.name).slice(0, 12).join(', ')})${sh.big.length ? '; too big to keep: ' + sh.big.join(', ') : ''}`); }
         else console.log('   island outlines: the map could not be asked, the file keeps the ones it had');
         console.log(`   on ${fresh.islands.centre ? fresh.islands.centre.name : 'no mapped island'}; across the water: ${Object.entries(Object.assign({}, fresh.islands.towns, fresh.islands.sites)).filter(([, v]) => v.across).map(([k]) => k).join(', ') || 'none'}`); }
+      if (refresh.includes('heights')) { const saved = (() => { try { return JSON.parse(fs.readFileSync(path.join(OUT, t.key.replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '.json'))); } catch (e) { return {}; } })();
+        const pts = [].concat(Object.values(saved.sites || {}), saved.guideSights || [], Object.values(saved.towns || {}), saved.ports || [], saved.piers || [], saved.cityEats || [], t.sites || [], t.farther || [], saved.centre ? [saved.centre] : []);
+        fresh.heights = await heightsFor(pts); console.log(`   ground heights for ${fresh.heights.length} of ${pts.length} points`); }
       if (refresh.includes('lifts')) { fresh.lifts = await liftsNear(centre, 15); console.log(`   ${fresh.lifts.length} cable cars or funiculars`); }
       if (refresh.includes('ports') && t.port && !t.hasPorts) {
         const r = await portPoints(t.port, centre, !!t.island); fresh.ports = r.ports; fresh.missing = r.missing; fresh.portQuery = Object.assign({}, t.port, { island: !!t.island });
