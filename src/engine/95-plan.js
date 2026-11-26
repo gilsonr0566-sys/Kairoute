@@ -722,7 +722,7 @@
         const on = out.findIndex((o, j) => j !== i && holds(o)), says = (o, j) => j !== i && o && (o.explain || []).some(t => String(t).toLowerCase().startsWith(nm));
         const tk = out.findIndex((o, j) => says(o, j) && (days[j].selected || []).map(String).includes(id)), told = on >= 0 ? -1 : tk >= 0 ? tk : out.findIndex(says);
         const ticked = j => (days[j].selected || []).map(String).includes(id);
-        p.explain = (p.explain || []).concat([on >= 0 ? (ticked(on) ? `${sx.name} is ticked on ${dayWord(on)} too, and planned that day.` : `${sx.name} is planned on ${dayWord(on)}.`) : told >= 0 ? (ticked(told) ? `${sx.name} is ticked on ${dayWord(told)} too: see that day for why it isn't planned.` : `${sx.name}: see ${dayWord(told)} for why it isn't planned.`) : `${sx.name} didn't fit today.`]); } });
+        p.explain = (p.explain || []).concat([on >= 0 ? (ticked(on) ? `${sx.name} is ticked on ${dayWord(on)} too, and planned that day.` : `${sx.name} is planned on ${dayWord(on)}.`) : told >= 0 ? (ticked(told) ? `${sx.name} is ticked on ${dayWord(told)} too: see that day for why it isn't planned.` : `${sx.name}: see ${dayWord(told)} for why it isn't planned.`) : `${sx.name} is ticked but isn't planned today.`]); } });
     // A sight offered for free time is never one planned on any day.
     out.forEach(p => { if (p && p.suggest) p.suggest = p.suggest.filter(x => !plannedIds.has(String(x.id))); });
     // Each thing said once.
