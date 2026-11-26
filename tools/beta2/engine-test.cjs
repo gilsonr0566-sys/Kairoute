@@ -408,7 +408,8 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
     ps.forEach((p, i) => p && p.items && p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1], c = s.cities[s.days[i].city] || {};
       const site = it => it && it.id != null && [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(it.id));
       const boatEnd = x.pierName && x.mode !== 'boat' ? [] : [site(a), site(b)].filter(y => y && E.byBoat(y.travelNote)); // the walk or ride to a pier is on land
-      if (boatEnd.length === 1) { boats++; ok(x.mode === 'boat', `${f} day ${i}: the ride to or from ${boatEnd[0].name} crosses water but is planned as ${x.mode}`); } })); }
+      const same = boatEnd.length === 1 && a && b && E.hasPos(a) && E.hasPos(b) && E.hav(a, b) < 0.05; // a lunch you bring, eaten on the island itself: no water between
+      if (boatEnd.length === 1 && !same) { boats++; ok(x.mode === 'boat', `${f} day ${i}: the ride to or from ${boatEnd[0].name} crosses water but is planned as ${x.mode}`); } })); }
   console.log(`ok   ${boats} rides across water, every one by boat`); }
 
 // ---- Every ride is the kind it is drawn as (Nov 18, Richard: "floating cars and ferries that drive on land"): a boat
