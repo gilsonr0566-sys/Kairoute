@@ -56,7 +56,11 @@ const bad = await run(path.resolve("worker/islands.js"));
   ok("links on the city's page are counted by page, whatever the label, files and other sites left out", links["Sydney/Manly"] === 3 && links["Hvar"] === 1 && Object.keys(links).length === 2, links);
   W.farSaid(far, { title: "Sydney", links });
   const m = far.find(x => x.wd === "Q12"), h = far.find(x => x.wd === "Q10");
-  ok("a part of the city's own guide is marked so, with how often the city's page links to it", m.part === true && m.said === 3 && h.said === 1 && !h.part, { m, h }); }
+  ok("a part of the city's own guide is marked so, with how often the city's page links to it", m.part === true && m.said === 3 && h.said === 1 && !h.part, { m, h });
+  const vk = c => W.voyKind(c.map(x => "Category:" + x));
+  ok("the travel guide's own page kind is read from its status category: a city, a district, a park, a rural area", vk(["Has custom banner", "Usable cities"]) === "city" && vk(["Guide districts"]) === "district" && vk(["Outline parks"]) === "park" && vk(["Usable rural areas"]) === "rural" && vk(["Huge city articles"]) === "city", [vk(["Usable cities"]), vk(["Guide districts"])]);
+  ok("a country, a region, an airport and an itinerary are told apart from places to go", vk(["Outline countries"]) === "country" && vk(["Usable regions"]) === "region" && vk(["Usable airports"]) === "airport" && vk(["Guide itineraries"]) === "itinerary");
+  ok("a category that only mentions cities is not a page kind (\"Cities in Italy\")", vk(["Cities in Italy", "Has map markers"]) === ""); }
 bad.forEach(b => console.log("FAIL " + b));
 // Planted copies of islands.js (each must be caught).
 const txt = fs.readFileSync("worker/islands.js", "utf8"), dir = fs.mkdtempSync(path.join(os.tmpdir(), "dth-"));

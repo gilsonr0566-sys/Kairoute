@@ -153,8 +153,10 @@ export function piersOn(shapes, piers) {
 export async function landingData(wd, env, codeKey) {
   if (!/^Q\d+$/.test(String(wd || ""))) return { error: "Bad request", status: 400 };
   const key = (await codeKey("ld", [rings, simplify, piersOn, landingData])) + wd, hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
-  // The outline: the island or island group itself, and the islands that are its members.
-  const els = await overpass(`[out:json][timeout:40];(way["wikidata"="${wd}"]["place"~"^(island|islet|archipelago)$"];relation["wikidata"="${wd}"]["place"~"^(island|islet|archipelago)$"];)->.i;(.i;relation(r.i);)->.all;.all out tags geom;`, 40000);
+  // The outline: the island or island group itself, and the islands that are its members. Anything the map files
+  // under this encyclopedia id counts, whatever its tags: the id says it is the island (live check, Nov 26: Hvar's
+  // outline was not found by its 'place' tag).
+  const els = await overpass(`[out:json][timeout:40];(way["wikidata"="${wd}"];relation["wikidata"="${wd}"];)->.i;(.i;relation(r.i);)->.all;.all out tags geom;`, 40000);
   if (!els) return { error: "Busy", status: 503 };
   const shapes = [];
   for (const el of els) for (const r of rings(el)) { if (r.length < 4) continue; const f = flat(simplify(r, 0.0003)); if (f.length >= 8) shapes.push(f); if (shapes.length >= 60) break; }
@@ -166,7 +168,7 @@ export async function landingData(wd, env, codeKey) {
     if (!ps) return { error: "Busy", status: 503 };
     piers = piersOn(shapes, ps.map(e => ({ name: (e.tags && (e.tags["name:en"] || e.tags.int_name || e.tags.name)) || "", lat: e.lat ?? (e.center && e.center.lat), lng: e.lon ?? (e.center && e.center.lon) })));
   }
-  const res = { wd, outline: shapes.length > 0, piers: piers.slice(0, 40) };
+  const res = { wd, outline: shapes.length > 0, shapes: shapes.length, found: els.length, piers: piers.slice(0, 40) };
   await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (piers.length ? 60 : 14) * 86400 });
   return res;
 }

@@ -176,19 +176,24 @@ const tripIsle = y => srcHas2(y, /^island$/) && !srcHas2(y, /^settlement$/);
 // What a place a day out is, by the facts: a place to go, or not.
 function tripPlace(y) {
   if (!y || y.gone || y.localName || nonLatin(y.name)) return false;   // shown in the traveler's language or not at all (R-11)
-  if (!srcKnown(y)) return !TRIP_NOT_NAME.test(y.name);                 // facts not known: its name alone must not say otherwise
+  // What the travel guide itself files the page under: a country, an airport or an itinerary is no day out; a city, a
+  // district, a park or a rural area is a place to go, whatever the encyclopedia's classes say (live check, Nov 26: the
+  // encyclopedia calls towns and islands "regions" too, so Sintra, Lantau and the Princes' Islands were kept out).
+  if (/^(country|airport|itinerary|topic)$/.test(y.vt || "")) return false;
+  const guidePlace = /^(city|district|park|rural)$/.test(y.vt || "");
+  if (!srcKnown(y)) return guidePlace || !TRIP_NOT_NAME.test(y.name);   // facts not known: its name alone must not say otherwise
   if (farNotPlace(y)) return false;
-  if (srcHas2(y, TRIP_NOT) && !srcHas2(y, TRIP_PLACE)) return false;
+  if (!guidePlace && srcHas2(y, TRIP_NOT) && !srcHas2(y, TRIP_PLACE)) return false;
   // An airport, a station or a stadium is never a day out, even one built on an island of its own.
   if (srcHas2(y, TRIP_NEVER) && !srcHas2(y, /^settlement$/)) return false;
-  // A country, an archipelago or a delta is where the city is, not a place to go for a day, unless the city's guide
-  // sends readers on to it by name or it is a heritage site (live check, Nov 26: "Japan" from Kyoto, "Cyclades" from Mykonos).
-  if (srcHas2(y, /^region$/) && !y.unesco && !y.next) return false;
+  // A page the travel guide files as a region (a coast, a delta, a county, an island group) is a day out only when it
+  // is an island, a heritage site, or the city's guide sends readers on to it by name.
+  if (y.vt === "region" && !srcHas2(y, /^island$/) && !y.unesco && !y.next) return false;
   // A district of the city itself is a day out only when it is out of town: an island, or 15 km out (Manly, Lantau and
   // the Princes' Islands yes; Kadıköy, Bondi Beach and the business district no).
   if (y.part && !y.next && !srcHas2(y, /^island$/) && y.km != null && y.km < TRIP_PART_KM) return false;
   // A province, county or district is an area, not a place to go (unless it is the heritage site itself).
-  if (srcHas2(y, /^(admin-area|region)$/) && !srcHas2(y, TRIP_PLACE) && !y.unesco) return false;
+  if (!y.vt && srcHas2(y, /^(admin-area|region)$/) && !srcHas2(y, TRIP_PLACE) && !y.unesco) return false;
   return true;
 }
 // How much a place is a classic day out of this city: what the city's own guide says of it first ("Go next", a part of
@@ -198,11 +203,11 @@ const tripScore = y => (y.next ? 30 : 0) + (y.part ? 30 : 0) + 10 * Math.min(5, 
 function tripCands(city, src) {
   const centre = srcCentre(city, src); if (!centre || !src) return [];
   const all = allSites(city), names = [city.city, src.area].map(n => keyOf(String(n || "").replace(/\s*\(.*\)/, "").split(",")[0])).filter(Boolean);
-  const have = y => all.some(s => (y.wd && s.wd === y.wd) || sameSight(y, s) || (s.merged || []).some(m => sameSight(y, m)) || (s.alsoNames || []).some(n => keyOf(n) === keyOf(y.name)));
+  const have = y => all.some(s => !s.lineOpen && ((y.wd && s.wd === y.wd) || sameSight(y, s) || (s.merged || []).some(m => sameSight(y, m)) || (s.alsoNames || []).some(n => keyOf(n) === keyOf(y.name))));
   const pool = [];
   const put = (y, ev) => { if (!y || !y.name || !isFinite(y.lat) || !isFinite(y.lng)) return;
     const was = pool.find(x => (y.wd && x.wd === y.wd) || keyOf(x.name) === keyOf(y.name) && hav(x, y) <= TRIP_ONE_KM);
-    if (was) { Object.assign(was, ev); for (const k of ["sl", "kinds", "note", "voy", "said", "part"]) if (was[k] == null && y[k] != null) was[k] = y[k]; if (y.unesco) was.unesco = true; if (y.heritage) was.heritage = true; return; }
+    if (was) { Object.assign(was, ev); for (const k of ["sl", "kinds", "note", "voy", "vt", "said", "part"]) if (was[k] == null && y[k] != null) was[k] = y[k]; if (y.unesco) was.unesco = true; if (y.heritage) was.heritage = true; return; }
     pool.push(Object.assign({}, y, ev, { km: hav(centre, y) })); };
   for (const y of src.far || []) if (y && y.voy && (y.said > 0 || y.part || y.unesco)) put(y, {});
   for (const y of src.next || []) put(y, { next: true });
@@ -220,7 +225,7 @@ function tripCands(city, src) {
 // The words for how you get there, from the way found (step 3): a timetable's line, a line the map shows, or the road.
 function tripTravel(way, cityName) {
   const five = m => Math.max(5, Math.round(m / 5) * 5);
-  if (way.road) return `By road (taxi or car), about ${five(way.road.min)} min one way by the road route. No train, bus or boat line was found.`;
+  if (way.road) return `By road (taxi or car), about ${five(way.road.min)} min one way by the road route. Kairoute doesn't know of a train, bus or boat line for this trip.`;
   const o = way.line, from = o.from && !nonLatin(o.from) ? o.from : cityName, boat = /ferry/i.test(o.mode || o.kind || "");
   if (o.noTimetable) return `${o.kind} from ${from}: the map shows the ${boat ? "route" : "line"}, but its times are not confirmed. About ${five(o.min)} min one way is an estimate; check the times before you go.`;
   return `${o.kind} from ${from}, about ${five(o.min)} min one way by its timetable. Check the times for your day.`;
@@ -234,7 +239,7 @@ async function classicTrips(city, src, quiet) {
   if ((tripsTries[k] || 0) >= 3) return 0;
   const centre = srcCentre(city, src); if (!centre) return 0;
   const room = TRIP_MAX - (city.farther || []).filter(x => x.classic).length;
-  const cands = room > 0 ? tripCands(city, src) : [];
+  const cands = room > 0 || (city.farther || []).some(x => x.lineOpen) ? tripCands(city, src) : [];
   if (!cands.length) { city.tripsSig = sig; delete city.tripsOpen; return 0; }
   tripsBusy[k] = true; tripsTries[k] = (tripsTries[k] || 0) + 1;
   let open = false, added = 0;
@@ -245,8 +250,12 @@ async function classicTrips(city, src, quiet) {
       if (!tripIsle(y) || !y.wd) return [{ lat: y.lat, lng: y.lng }];
       const j = await getJ("/landing?wd=" + encodeURIComponent(y.wd)); if (!j) { open = true; return []; }
       const ps = (j.piers || []).filter(p => isFinite(p.lat) && isFinite(p.lng)).sort((a, b) => hav(centre, a) - hav(centre, b)).slice(0, 2);
+      // An island or island group with a pier in town is the one the city stands on, not a day out ("Cyclades" from
+      // Mykonos, "New Providence" from Nassau; live check, Nov 26).
+      if (ps.length && hav(centre, ps[0]) <= TRIP_KM_MIN) return [{ home: true }];
+      if (!ps.length) y.noOutline = !j.outline;
       return ps.length ? ps.map(p => ({ lat: p.lat, lng: p.lng, pier: p.name && !nonLatin(p.name) ? p.name : "" })) : [{ lat: y.lat, lng: y.lng, noPier: true }]; }));
-    const flat = []; targets.forEach((ts, i) => ts.forEach(t => flat.push({ i, t })));
+    const flat = []; targets.forEach((ts, i) => ts.forEach(t => { if (!t.home) flat.push({ i, t }); }));
     const lines = new Array(flat.length).fill(undefined);
     for (let at = 0; at < flat.length; at += 8) { const part = flat.slice(at, at + 8); let res = null;
       try { const r = await fetch(freeAI.url + "/transit", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pairs: part.map(x => ({ a: [+centre.lat, +centre.lng], b: [+x.t.lat, +x.t.lng], dow: 3 })) }) });
@@ -254,25 +263,26 @@ async function classicTrips(city, src, quiet) {
       part.forEach((x, n) => { lines[at + n] = res ? res[n] || null : undefined; }); }
     const ways = [], log = tripsLog[k] = [], last = tripsTries[k] >= 3;
     for (let i = 0; i < cands.length; i++) { const y = cands[i]; let best = null, unknown = !targets[i].length;
-      const L = { name: y.name, at: !targets[i].length ? "piers not answered" : targets[i][0].noPier ? "no pier on the map" : targets[i][0].pier != null ? targets[i].length + " pier(s)" : "its point", lines: [] }; log.push(L);
+      if (targets[i][0] && targets[i][0].home) { log.push({ name: y.name, at: "a pier in town", lines: [], got: "the city stands on it" }); continue; }
+      const L = { name: y.name, at: !targets[i].length ? "piers not answered" : targets[i][0].noPier ? (y.noOutline ? "no outline on the map" : "no pier on the map") : targets[i][0].pier != null ? targets[i].length + " pier(s)" : "its point", lines: [] }; log.push(L);
       flat.forEach((x, n) => { if (x.i !== i) return; const r = lines[n];
         L.lines.push(r === undefined ? "not answered" : r === null ? "no answer" : (r.partial ? "partial " : "") + ((r.opts || []).map(o => o && (o.kind || o.mode) + " " + o.min + (o.noTimetable ? " map" : "")).join(", ") || "none"));
         if (r === undefined || r === null || (r.partial && !(r.opts || []).length)) { unknown = true; return; }
         for (const o of r.opts || []) if (o && o.kind && isFinite(o.min) && o.min > 0 && o.min <= TRIP_LINE_MIN && (!o.every || o.every <= 120) && (!best || o.min < best.line.min)) best = { line: o, at: x.t }; });
       // No line (asked and answered: a line not asked about yet is not "no line"): the road, when a drive really goes
       // there without a boat. Never to an island.
-      if (!best && !unknown && !tripIsle(y) && y.km <= TRIP_ROAD_KM) { const j = await getJ(`/roadway?a=${(+centre.lat).toFixed(4)},${(+centre.lng).toFixed(4)}&b=${(+y.lat).toFixed(4)},${(+y.lng).toFixed(4)}`);
+      if (!best && (!unknown || last) && !tripIsle(y) && y.km <= TRIP_ROAD_KM) { const j = await getJ(`/roadway?a=${(+centre.lat).toFixed(4)},${(+centre.lng).toFixed(4)}&b=${(+y.lat).toFixed(4)},${(+y.lng).toFixed(4)}`);
         L.road = !j ? "not answered" : j.none ? "none" : j.min + " min" + (j.ferry ? " with a ferry" : "");
         if (!j) unknown = true; else if (isFinite(j.min) && j.min > 0 && j.min + 10 <= TRIP_ROAD_MIN && !j.ferry && !j.none) best = { road: { min: j.min + 10, km: j.km }, at: { lat: y.lat, lng: y.lng } }; }
       L.got = best ? (best.road ? "road" : "line") : unknown ? "unknown" : "no way";
-      if (best) ways.push({ y, way: best });
+      if (best) ways.push({ y, way: best, lineOpen: unknown && !!best.road });
+      if (best && unknown) open = true;   // offered by road on the last try: the line is asked about again another time
       // A way not answered yet: asked again later, and the places ranked after it wait for it, so the list never fills
       // with lesser places while a better one is still being asked about (live check, Nov 26: Enköping offered from
       // Stockholm while Sigtuna and Uppsala were unanswered). On the last try of a session what is known is offered.
       else if (unknown) { open = true; if (!last) break; } }
     city.farther = city.farther || [];
-    for (const { y, way } of ways) {
-      if (added >= room) break;
+    for (const { y, way, lineOpen } of ways) {
       const note = String(y.note || "").replace(new RegExp("^" + y.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*[-–—:,]?\\s*", "i"), "").trim();
       const cat = (() => { const c = srcKnown(y) ? srcKindOf(y)[1] : ""; return c && !/^(Sight|Landmark)$/.test(c) && !tripIsle(y) && !srcHas2(y, /^settlement$/) ? c : "Day trip"; })();
       const about = y.unesco ? "A UNESCO World Heritage Site" : tripIsle(y) ? "An island" : srcHas2(y, /^settlement$/) ? "A town" : "A place";
@@ -281,6 +291,11 @@ async function classicTrips(city, src, quiet) {
       Object.assign(st, { far: true, fame: y.sl || 0, unesco: !!y.unesco, heritage: !!y.heritage, src: [y.next ? "Wikivoyage (English)" : "Wikivoyage (its own page)", "Wikidata (Wikipedia in many languages)"], wd: y.wd, famousFix: true, noAI: true, classic: true,
         travelSrc: way.road ? "road" : way.line.noTimetable ? "map" : "timetable" });
       if (way.at.pier) st.landing = way.at.pier;
+      // A day trip offered by road while its line was not answered takes the line once it is known.
+      const was = (city.farther || []).find(s => s.id === st.id && s.lineOpen);
+      if (was) { if (!lineOpen) { delete was.lineOpen; if (!way.road) { Object.assign(was, { travel: st.travel, travelSrc: st.travelSrc, lat: st.lat, lng: st.lng }); added++; } } continue; }
+      if (added >= room) continue;
+      if (lineOpen) st.lineOpen = true;
       if (allSites(city).some(s => s.id === st.id)) continue;
       city.farther.push(st); added++;
     }

@@ -907,6 +907,24 @@ export function farSaid(far, enV) { const links = (enV && enV.links) || {}, titl
   for (const f of far || []) { if (!f || !f.voy) continue; const t = f.voy.charAt(0).toUpperCase() + f.voy.slice(1);
     f.said = links[t] || 0; if (title && t.startsWith(title + "/")) f.part = true; }
   return far; }
+// What kind of page the travel guide itself files a place under (rule R-36): every Wikivoyage article sits in a status
+// category of its kind ("Usable cities", "Guide districts", "Outline regions", "Usable parks", "Outline countries",
+// "Usable airports", "Outline rural areas", "Usable itineraries") or "<Kind> articles". A country, an airport or an
+// itinerary is no day out; a city, a district, a park or a rural area is a place to go.
+export function voyKind(cats) {
+  const K = [[/^countr|^continent/, "country"], [/^airport/, "airport"], [/^itinerar/, "itinerary"], [/^(huge |big )?cit(y|ies)$/, "city"], [/^districts?$/, "district"], [/^parks?$/, "park"], [/^rural areas?$/, "rural"], [/^(regions?|states?|extra-?hierarchical regions?)$/, "region"], [/^(topics?|phrasebooks?|dive guides?|events?)$/, "topic"]];
+  for (const c of cats || []) { const m = /^(?:Category:)?(?:(?:Outline|Usable|Guide|Star|Stub) (.+)|(.+) articles)$/i.exec(String(c)); if (!m) continue;
+    const w = (m[1] || m[2]).toLowerCase().trim(); for (const [re, k] of K) if (re.test(w)) return k; }
+  return ""; }
+async function voyTypes(list, UA) {
+  const titles = [...new Set((list || []).map(x => x && x.voy).filter(Boolean))], kind = new Map();
+  const parts = []; for (let i = 0; i < titles.length && i < 100; i += 25) parts.push(titles.slice(i, i + 25));
+  await Promise.all(parts.map(async part => { let j = null;
+    try { const r = await fetch("https://en.wikivoyage.org/w/api.php?action=query&format=json&formatversion=2&redirects=1&prop=categories&cllimit=500&titles=" + encodeURIComponent(part.join("|")), { headers: UA, signal: AbortSignal.timeout(9000) }); if (r.ok) j = await r.json(); } catch (e) {}
+    const q = (j && j.query) || {}, to = new Map((q.normalized || []).concat(q.redirects || []).map(x => [x.to, x.from]));
+    for (const pg of q.pages || []) { const k = voyKind((pg.categories || []).map(c => c.title)); if (!k) continue; kind.set(pg.title, k); let t = pg.title; for (let n = 0; n < 2 && to.has(t); n++) { t = to.get(t); kind.set(t, k); } } }));
+  for (const x of list || []) { if (!x || !x.voy) continue; const k = kind.get(x.voy) || kind.get(x.voy.charAt(0).toUpperCase() + x.voy.slice(1)) || kind.get(x.voy.replace(/_/g, " ")); if (k) x.vt = k; }
+  return list; }
 // The best-known places in and around a city (see /famous).
 async function famousData(label, env, ctx) {
   const key = (await codeKey("fm", [famousData, destRows, mergeDests, DEST_KM, DEST_MAX, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
@@ -1092,7 +1110,7 @@ async function voyageNextPlaces(next, center, UA) {
   next.forEach((x, i) => {
     const t0 = norm.get(x.title) || x.title, t = redir.get(t0) || t0, p = pages.find(q => q.title === t);
     const c = p && p.coordinates && p.coordinates[0]; if (!c || p.missing) return;
-    out.push({ name: t.replace(/\s*\(.*?\)\s*$/, ""), wd: (p.pageprops && p.pageprops.wikibase_item) || undefined, lat: +(+c.lat).toFixed(5), lng: +(+c.lon).toFixed(5), km: +kmOf({ lat: c.lat, lng: c.lon }, center).toFixed(1), rank: i, note: x.note });
+    out.push({ name: t.replace(/\s*\(.*?\)\s*$/, ""), voy: t, wd: (p.pageprops && p.pageprops.wikibase_item) || undefined, lat: +(+c.lat).toFixed(5), lng: +(+c.lon).toFixed(5), km: +kmOf({ lat: c.lat, lng: c.lon }, center).toFixed(1), rank: i, note: x.note });
   });
   return out;
 }
@@ -1156,7 +1174,7 @@ function placeOf(listing, wd, map, wholes) {
   return out("listing", listing, true);
 }
 async function sourcesData(label, env, ctx) {
-  const key = (await codeKey("sr", [sourcesData, placeOf, SIGHT_KINDS, mapSights, MAP_SIGHT, parseListings, voyagePages, voyageNext, voyageNextPlaces, voyageLinks, farSaid, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = (await codeKey("sr", [sourcesData, placeOf, SIGHT_KINDS, mapSights, MAP_SIGHT, parseListings, voyagePages, voyageNext, voyageNextPlaces, voyageLinks, farSaid, voyKind, voyTypes, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   // Every outside read here (Wikidata, its query service, the map server) is kept on its own as soon as it comes back
   // (R-34): a city nobody has opened takes 55 to 220 s to gather, longer than the app waits for one ask (60 s), and an
@@ -1315,6 +1333,9 @@ async function sourcesData(label, env, ctx) {
   // What this city's own travel-guide page says of each place a day out (rule R-36): how often the page links to that
   // place's page (said), and whether that page is a part of this city's own guide ("Sydney/Manly": part).
   farSaid(fam.far, enV);
+  // And what kind of page the travel guide files each under (a city, a district, a park; or a country, a region, an airport).
+  next.forEach(x => { if (!x.voy) x.voy = x.title || x.name; });
+  await voyTypes((fam.far || []).concat(next), UA);
   lap("next");
   const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T };
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
