@@ -1186,8 +1186,9 @@ async function sourcesData(label, env, ctx) {
   // test round 8b, Nov 24: 28 of 36 trips never got a guide). Now each ask picks up where the last one stopped.
   const sxKey = await codeKey("sx", []);
   let mapMissed = false;
+  let lastFail = "";   // the status of the last refused ask: said with factsMissed, never guessed
   const getJ = async (u, ms, opt, tries) => { const k = sxKey + (await sha(u + "|" + ((opt && opt.body) || ""))), hit = await env.USAGE.get(k); if (hit) return JSON.parse(hit);
-    for (let t = 0; t < (tries || 2); t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (r.ok) { const j = await r.json(); await env.USAGE.put(k, JSON.stringify(j), { expirationTtl: 30 * 86400 }).catch(() => {}); return j; } } catch (e) {} } return null; };
+    for (let t = 0; t < (tries || 2); t++) { try { const r = await fetch(u, Object.assign({ headers: { ...UA, accept: "application/json" }, signal: AbortSignal.timeout(ms || 20000) }, opt || {})); if (!r.ok) lastFail = "status " + r.status; if (r.ok) { const j = await r.json(); await env.USAGE.put(k, JSON.stringify(j), { expirationTtl: 30 * 86400 }).catch(() => {}); return j; } } catch (e) {} } return null; };
   const T = {}, t0 = Date.now(), lap = k => { T[k] = Date.now() - t0; };
   const fam = await famousData(label, env, ctx); lap("fame");
   if (fam.error) return fam;
@@ -1253,7 +1254,7 @@ async function sourcesData(label, env, ctx) {
   // place in the answer without its facts, sights and places a day out alike (live helper, Nov 26: three cities running
   // came back with no facts for any place a day out, so no island was known to be an island). An answer that still
   // lacks facts says so (factsMissed) and is kept 3 hours, not 30 days.
-  let factsMissed = false;
+  let factsMissed = false, factsWhy = ""; lastFail = "";
   try { const direct = new Map(), uq = q => "https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q), H3 = { headers: { ...UA, accept: "application/sparql-results+json" } };
     // Gone too: a building or fortress demolished or destroyed (P5817 state of use), or one with an end date (P576) that
     // is not an organisation (an abbey's community dissolved in 1790 leaves its church standing).
@@ -1277,7 +1278,7 @@ async function sourcesData(label, env, ctx) {
       }
     }
   } catch (e) {}
-  factsMissed = ids.some(id => { const x = byId.get(id) || farById.get(id); return !!x && !Array.isArray(x.kinds); });
+  factsMissed = ids.some(id => { const x = byId.get(id) || farById.get(id); return !!x && !Array.isArray(x.kinds); }); if (factsMissed) factsWhy = lastFail || "no answer in time, or the connection was refused";
   lap("kinds");
   for (const j of answers) {
     for (const b of (j && j.results && j.results.bindings) || []) {
@@ -1349,7 +1350,7 @@ async function sourcesData(label, env, ctx) {
   next.forEach(x => { if (!x.voy) x.voy = x.title || x.name; });
   await voyTypes((fam.far || []).concat(next), UA);
   lap("next");
-  const res = Object.assign({ area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T }, factsMissed ? { factsMissed: true } : {});
+  const res = Object.assign({ area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T }, factsMissed ? { factsMissed: true, factsWhy } : {});
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
   // One whose places a day out could not be read (rule R-37) is asked again after 3 hours: a day without the city's
   // day trips is a long time (live check, Nov 26: Istanbul's guide links were missed on one run in two).
