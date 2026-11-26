@@ -8,7 +8,7 @@ for (const d of [fixtures, snaps]) if (fs.existsSync(d)) for (const f of fs.read
 ['Athens', 'Naples', 'Pompeii', 'Sorrento', 'Corinth', 'Acropolis', 'Barcelona', 'Madrid', 'Rome', 'Paris', 'Nassau', 'Miami', 'Santorini', 'Mykonos', 'Messina', 'Prague', 'Corpus Christi', 'Piraeus'].forEach(n => names.add(n));
 // The app's own global state (the engine is handed everything it needs). The engine's own local "cities" (the bucket's)
 // is not the app's, so only the app's trip object is looked for.
-const BANNED = [[/(?<![.\w])isFinite\s*\(/, 'the global isFinite, which reads null, "" and true as finite numbers (a missing time as 0:00, E55): use E.fin, or Number.isFinite'], [/\bfetch\s*\(|XMLHttpRequest|WebSocket/, 'internet access'], [/localStorage|sessionStorage|indexedDB/, 'storage access'], [/\bdocument\.|\bwindow\./, 'page access'], [/catch\s*\([^)]*\)\s*\{\s*\}|catch\s*\{\s*\}/, 'an empty catch that hides an error'], [/\btrip\./, "the app's global state"]];
+const BANNED = [[/(?<![.\w])isFinite\s*\(/, 'the global isFinite, which reads null, "" and true as finite numbers (a missing time as 0:00, E58): use E.fin, or Number.isFinite'], [/\bfetch\s*\(|XMLHttpRequest|WebSocket/, 'internet access'], [/localStorage|sessionStorage|indexedDB/, 'storage access'], [/\bdocument\.|\bwindow\./, 'page access'], [/catch\s*\([^)]*\)\s*\{\s*\}|catch\s*\{\s*\}/, 'an empty catch that hides an error'], [/\btrip\./, "the app's global state"]];
 // Code and comments apart, read token by token (strings, template strings and regular expressions are skipped whole), so
 // a comment's prose is never read as code (outside audit, Nov 21: "whole trip." in a comment was flagged as the app's
 // state). Place names are looked for in both: an example in a comment is written generically too.
@@ -25,7 +25,7 @@ function split(src) { let code = '', notes = '', i = 0, prev = '';
 const once = [...new Map([...names].map(n => [n.toLowerCase(), n])).values()]; // one name once, whatever its case
 // Usage check of the reader itself: a place named in code is found as code, in a comment as a comment.
 { const t = split('const a = "x // y"; // Lisbon\nconst r = /a\\/b/; /* Oslo */ const z = Bergen;'); if (!/Bergen/.test(t.code) || /Lisbon|Oslo/.test(t.code) || !/Lisbon/.test(t.notes) || !/Oslo/.test(t.notes)) { bad++; console.log('FAIL the checker reads code and comments wrongly'); } }
-// Planted: the global isFinite is found, and the safe forms are not (R-01, E55).
+// Planted: the global isFinite is found, and the safe forms are not (R-01, E58).
 { const re = BANNED[0][0], hit = ['if (isFinite(d.boardAt)) x();', 'const ok = !isFinite (v);'], fine = ['Number.isFinite(v)', 'E.fin(v)', 'myisFinite(v)'];
   if (!hit.every(c => re.test(split(c).code)) || fine.some(c => re.test(split(c).code))) { bad++; console.log('FAIL the checker misses the global isFinite, or flags a safe form'); } }
 for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.js'))) {

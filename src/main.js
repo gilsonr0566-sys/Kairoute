@@ -3579,7 +3579,9 @@ const uniWords = n => String(n || "").toLowerCase().normalize("NFD").replace(/[\
 // Two names for one small place: they share a telling word, allowing for grammar ("Αγία Σωτήρα" and "Αγίου Σωτήρα").
 const PART_SMALL = new Set("the of and church chapel tomb saint st holy agios agia agiou agion panagia ναος εκκλησια αγιος αγια αγιου αγιων ταφος παναγια san santa santo chiesa iglesia".split(" "));
 const sameName = (a, b) => { const tell = n => uniWords(n).filter(t => t.length > 3 && !PART_SMALL.has(t)).map(t => t.slice(0, 5)); const ta = new Set(tell(a.name).concat(tell(a.local))); return tell(b.name).concat(tell(b.local)).some(t => ta.has(t)) && (!isFinite(a.lat) || !isFinite(b.lat) || hav(a, b) < 0.06); };
-const nonLatin = n => /[^\u0000-\u024f\s\d.,'’()\-–&]/.test(String(n || ""));
+// One definition of "not in letters the traveler reads" for the whole app: the planner's (R-11). (The older test here
+// also called Vietnamese accents and the euro sign another script.)
+const nonLatin = n => typeof KEngine !== "undefined" && KEngine.otherScript ? KEngine.otherScript(n) : /[^\u0000-\u024f\s\d.,'’()\-–&]/.test(String(n || ""));
 const plainName = n => String(n || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
 const GENERIC_NAME = /^(theat(re|er)|θεατρο|church|chapel|ναος|εκκλησια|museum|μουσειο|fountain|monument|statue|memorial|plaque|kirche|eglise|iglesia|chiesa|kostel|divadlo|teatro|theatre|cinema)$/;
 const factsCache = {};
@@ -4621,6 +4623,9 @@ if (typeof window !== "undefined") window.__kairouteAboard = i => {
 };
 if (typeof window !== "undefined") window.__kairouteGo = (v, i) => { if (typeof i === "number") trip.active = i; view = v; renderKeep(); toTop(); };
 function speakLines(id, lines, lc) {
+  // The guide speaks the traveler's language (R-11): a name in another script is said by the one names rule, in every
+  // voice (recorded, the device's own, the browser's). A phrase card's local words are spoken by speakPhrase, not here.
+  if (typeof window.__kairouteSay === "function" && window.__kairoutePlant !== "names-off" && window.__kairoutePlant !== "names-exit-off") lines = (lines || []).map(t => typeof t === "string" && KEngine.otherScript(t) ? window.__kairouteSay(t) : t);
   speakingId = id; audioMsg = "";
   speakDevice(id, lines, lc);
 }
@@ -6237,7 +6242,8 @@ const txt = v => blankish(v) ? "" : String(v).trim();
 // English only on screen (Richard, Nov 16: "12 minΕρέχθειο", "Local name: Ερέχθειο"): a name in another script
 // shows its English name when it has one, otherwise only its Latin-script part; the local name is never printed.
 const latinOnly = n => String(n || "").replace(/[^\u0000-ɏḀ-ỿ‐-‧€°]+/g, " ").replace(/\(\s*\)|\[\s*\]/g, " ").replace(/\s{2,}/g, " ").replace(/^[\s,·:;\-–/]+|[\s,·:;\-–/(]+$/g, "").trim();
-const showName = x => { const n = String((x && x.name) || ""); if (!nonLatin(n)) return n; if (x && x.en && !nonLatin(x.en)) return String(x.en); return latinOnly(n); };
+const showName = x => { const n = String((x && x.name) || ""); if (!nonLatin(n)) return n; if (x && x.en && !nonLatin(x.en)) return String(x.en);
+  if (typeof KEngine !== "undefined" && KEngine.say) return KEngine.say(n, latinOnly(n)); /* the one names rule: Greek, Cyrillic and kana in Latin letters, not cut out */ return latinOnly(n); };
 // Interest labels on a sight (Richard, Nov 16): the trip setup's own interests (same names as the setup), matched
 // from what the sources say the sight is (its category) and its name; never guessed.
 const SITE_INT = { history: /histor|ancient|ruin|archaeolog|castle|fortress|\bfort\b|palace|monument|memorial|roman|medieval|acropol|agora|temple|theat(er|re)|heritage|old town|city walls|tomb|citadel|forum|byzantin|venetian|ottoman/i,

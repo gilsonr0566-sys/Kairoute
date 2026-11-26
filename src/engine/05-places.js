@@ -17,10 +17,15 @@
   const copy = x => JSON.parse(JSON.stringify(x));
   // A name a traveler reading English can read: Latin letters (accents too), digits and punctuation. A place to eat on the
   // map named only in another script is left out: no one can find it by a name they can't read (Nov 19, a Hebrew name).
-  E.readable = name => !!name && !/[^\u0000-\u024F\u1E00-\u1EFF\u2000-\u206F\u20A0-\u20CF\s]/.test(String(name));
+  E.readable = name => !!name && !E.otherScript(name);
   // A place to eat that isn't open to the public: a staff or officers' canteen, a members' club (Nov 20 tester: a city hall's
   // staff cafeteria planned as dinner).
   E.notPublicEat = x => /\b(cafeteria|canteen|mensa|staff|employees?|officers'?|members'?|private)\b/i.test(String((x && x.name) || (typeof x === "string" ? x : ""))) || /^(private|no|members)$/i.test(String((x && x.access) || ""));
+  // An id made from a name is never empty and never shared by two places (R-11, Nov 25): a name in another script used
+  // to give no letters at all, so every such listing got the one id "wv~" and all but the first were dropped as repeats.
+  // The name is read in Latin letters first; one that still gives nothing takes its position.
+  const nameId = x => { const k = String(E.latin(x.name) || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim().replace(/ /g, "-");
+    return k || "at-" + (+x.lat).toFixed(5) + "-" + (+x.lng).toFixed(5); };
   const eatPos = x => x && E.fin(x[1]) && E.fin(x[2]) ? { lat: x[1], lng: x[2] } : null; // a map place to eat: [name, lat, lng, hours, kind]
   E.applyPlaces = (bucket, places) => {
     const b = copy(bucket), notes = b.placeNotes = [];
@@ -76,8 +81,8 @@
         const key = n => String(n || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
         // The same place under a longer name in the guide ("The Roman Forum" is in "Colosseum and Roman Forum", Nov 23).
         const bare = n => key(n).replace(/^the /, ""), within = (big, small) => small.split(" ").length >= 2 && (" " + big + " ").includes(" " + small + " ");
-        const more = P.guideSights.filter(x => !x.closedForGood && !(x.noEn && !E.readable(E.latin(x.name))) && E.fin(x.lat) && ![...(city.sites || []), ...(city.farther || [])].some(s => [x.name, x.en].filter(Boolean).some(n => key(s.name) === key(n) || within(bare(s.name), bare(n))) || (E.fin(s.lat) && E.hav(s, x) <= 0.15)))
-          .map((x, n) => Object.assign({ id: "wv~" + (x.wikidata || key(x.name).replace(/ /g, "-")), name: x.en || (x.noEn ? "Local sight" : x.name), ...(x.en || x.noEn ? { local: E.latin(x.name) } : {}), lat: x.lat, lng: x.lng, minutes: /museum|museo|musei|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
+        const more = P.guideSights.filter(x => x && x.name).filter(x => !x.closedForGood && !(x.noEn && !E.readable(E.latin(x.name))) && E.fin(x.lat) && ![...(city.sites || []), ...(city.farther || [])].some(s => [x.name, x.en].filter(Boolean).some(n => key(s.name) === key(n) || within(bare(s.name), bare(n))) || (E.fin(s.lat) && E.hav(s, x) <= 0.15)))
+          .map((x, n) => Object.assign({ id: "wv~" + (x.wikidata || nameId(x)), name: x.en || (x.noEn ? "Local sight" : x.name), ...(x.en || x.noEn ? { local: E.latin(x.name) } : {}), lat: x.lat, lng: x.lng, minutes: /museum|museo|musei|musée|museu|muzeum|galler/i.test(x.name) ? 60 : 30,
             editions: x.editions || 0, unesco: !!x.unesco, tags: ["from-guide"], category: "Sight", fromGuide: true, blurb: x.note || "" }, x.web ? { web: x.web } : {}, x.posDoubt ? { posDoubt: true } : {})).filter((x, i, a) => a.findIndex(y => y.id === x.id) === i);
         // Filled up to 30 sights, the best known first (a guide page can list 170: too many to choose from on a phone,
         // and slow to plan).
@@ -91,9 +96,9 @@
         // A place the guide names that is also on the map keeps the map's opening hours (Nov 23 real-map check: Sala Thai
         // planned for 11:45, before it opens at noon, because the guide's copy had no hours and the map's copy was dropped).
         for (const r of city.restaurants || []) { if (r.hours || !r.name) continue; const k = E.eatKey(r.name);
-          const m = P.cityEats.find(x => x.hours && x.name && E.eatKey(E.latin(x.name) || x.name) === k && (!E.fin(r.lat) || !E.fin(x.lat) || E.hav(r, x) <= 0.3)); if (m) r.hours = m.hours; }
+          const m = P.cityEats.find(x => x.hours && x.name && E.eatKey(x.name) === k && (!E.fin(r.lat) || !E.fin(x.lat) || E.hav(r, x) <= 0.3)); if (m) r.hours = m.hours; }
         city.restaurants = (city.restaurants || []).concat(P.cityEats.filter(x => x.name && !E.notPublicEat(x) && E.readable(E.latin(x.name) || x.name) && E.fin(x.lat) && E.fin(x.lng) && !have.has(E.eatKey(x.name)))
-          .map(x => Object.assign({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.say(x.name), lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }, x.hours ? { hours: x.hours } : {}))); }
+          .map(x => Object.assign({ id: "map~" + E.eatKey(x.name).replace(/ /g, "-"), name: E.say(x.name, "a local restaurant"), lat: x.lat, lng: x.lng,  kind: x.amenity || "restaurant", amenity: x.amenity || "restaurant", cuisine: x.cuisine || "", fromMap: true }, x.hours ? { hours: x.hours } : {}))); }
       // Opening hours of the places to eat on the map near the sights ([name, lat, lng, hours, kind]): a place the guide
       // names, with no hours of its own, takes the hours of the place on the map with its name within 200 m ("Sorbillo" is
       // the map's "Antonio Sorbillo"). Nov 23 real-map check: lunches planned before the place opens.
@@ -101,7 +106,7 @@
       // with no hours, while the map says it opens at 13:15).
       const mapHours = r => {
         if (r.hours || !r.name || !E.fin(r.lat) || !E.fin(r.lng)) return; const k = E.eatKey(r.name); if (k.length < 4) return;
-        const hit = E.nearby(P.eatHours, eatPos, r, 0.2).filter(x => x && x[0] && x[3]).map(x => ({ x, mk: E.eatKey(E.latin(x[0]) || x[0]) }))
+        const hit = E.nearby(P.eatHours, eatPos, r, 0.2).filter(x => x && x[0] && x[3]).map(x => ({ x, mk: E.eatKey(x[0]) }))
           .filter(o => o.mk && (o.mk === k || (o.mk.length >= 4 && (o.mk.includes(k) || k.includes(o.mk)))))
           .sort((a, b) => (b.mk === k) - (a.mk === k) || E.hav(r, { lat: a.x[1], lng: a.x[2] }) - E.hav(r, { lat: b.x[1], lng: b.x[2] }))[0];
         if (hit) { r.hours = hit.x[3]; if (hit.x[4]) r.mapKind = hit.x[4]; }
@@ -160,14 +165,37 @@
           const pts = (city.sites || []).filter(x => E.fin(x.lat));
           const cruise = P.ports.filter(p => p.cruise), town = pts.length ? { lat: pts.reduce((a, x) => a + x.lat, 0) / pts.length, lng: pts.reduce((a, x) => a + x.lng, 0) / pts.length } : d.point;
           const far = cruise.slice().sort((x, y) => E.hav(y, town) - E.hav(x, town) || String(x.name).localeCompare(String(y.name)))[0];
-          d.point = { id: null, name: far.name, lat: far.lat, lng: far.lng, unknown: false, from: "OpenStreetMap" };
-          notes.push({ day: d.i, note: cruise.length > 1 ? `Planned from ${far.name}, the cruise terminal farthest from town, until you know which one your ship uses.` : `Your ship docks at ${far.name}.` });
+          const farName = E.say(far.name, "the cruise terminal");
+          d.point = { id: null, name: farName, lat: far.lat, lng: far.lng, unknown: false, from: "OpenStreetMap" };
+          notes.push({ day: d.i, note: cruise.length > 1 ? `Planned from ${farName}, the cruise terminal farthest from town, until you know which one your ship uses.` : `Your ship docks at ${farName}.` });
         }
       }
     }
-    // A sight's name as a guide prints it, from every source (R-11, Nov 24): a capital first letter ("piazza Venezia" is
-    // Piazza Venezia, "place de la Concorde" is Place de la Concorde).
-    for (const city of Object.values(b.cities || {})) for (const k of ["sites", "farther"]) for (const s of city[k] || []) if (s && typeof s.name === "string") s.name = E.cap(s.name);
+    return E.namesIn(b);
+  };
+  // THE names pass (R-11, Nov 25: "one app-wide rule applied at every source"). Every name the bucket holds for the
+  // screen, whatever source it came from (the guide, the travel guide's listings, a town's own sights, the map, a
+  // looked-up pier, hotel, station or airport, a ride note), leaves here in the traveler's language: its English name
+  // when it has one, else Latin letters, else the plain word for what it is, with the readable local spelling kept for
+  // the "Local name" line. And as a guide prints it: a capital first letter ("piazza Venezia" is Piazza Venezia).
+  // Before this, each source had its own fix and a source without one (a guide listing with no English name, a town's
+  // sight, the cruise terminal's name, a sight kept from an older guide) went through as it came. Places to eat keep
+  // their own name here (their saved opening hours are filed under it); the plan's last step writes the shown one.
+  const PLAIN_AT = { point: d => d.type === "port" || d.type === "embark" || d.type === "disembark" ? "the cruise port" : d.mode === "train" ? "the station" : d.mode === "flight" ? "the airport" : "your starting point",
+    lodging: () => "your hotel", hotel: () => "your hotel", pier: () => "the pier" };
+  E.namesIn = b => {
+    const fix = (o, f, plain) => { if (o && typeof o[f] === "string" && E.otherScript(o[f])) o[f] = E.say(o[f], plain); };
+    for (const city of Object.values((b && b.cities) || {})) for (const k of ["sites", "farther"]) for (const s of (city && city[k]) || []) {
+      if (!s || typeof s.name !== "string") continue;
+      if (typeof s.en === "string" && E.otherScript(s.en)) delete s.en; // an "English name" in another script is not one
+      if (E.otherScript(s.name)) { const was = s.name; s.name = E.shownName(s); if (!s.local) { const l = E.say(was, ""); if (l && l !== s.name) s.local = l; } }
+      if (typeof s.local === "string" && E.otherScript(s.local)) { const l = E.say(s.local, ""); if (l && l !== s.name) s.local = l; else delete s.local; }
+      s.name = E.cap(s.name);
+      fix(s, "townName", "the town"); fix(s, "travelNote"); fix(s, "blurb");
+      for (const x of s.townSights || []) fix(x, "name", "Local sight");
+    }
+    for (const d of (b && b.days) || []) if (d) for (const f of Object.keys(PLAIN_AT)) fix(d[f], "name", PLAIN_AT[f](d));
+    for (const n of (b && b.placeNotes) || []) fix(n, "note");
     return b;
   };
 })(KEngine);

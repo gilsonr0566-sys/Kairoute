@@ -29,6 +29,8 @@ const SCREEN_CHECKS = [['screen-rule proof', ['tools/truth/screen-rule-proof.cjs
 const ONLY = (arg('area', '') || '').split(',').filter(Boolean);
 // The checks, in order of speed; the first that fails catches the bug (the rest are not run).
 const CHECKS = [
+  // Names and places, rule by rule (Nov 25): a third of a second, so first. Its expected values are written by hand.
+  ['names and places', ['tools/beta2/core-places-check.cjs']],
   ['engine-test', ['tools/beta2/engine-test.cjs'], { FAIL_FAST: '1' }],
   ['route times', ['tools/beta2/route-time-check.cjs']],
   ['best ride', ['tools/beta2/best-ride-check.cjs']],

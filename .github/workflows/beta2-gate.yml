@@ -114,6 +114,9 @@ jobs:
       - name: Every sight shown under its English name, never one of its other-language names, and planted names in six scripts all caught (R-11)
         if: always()
         run: node tools/beta2/names-check.cjs 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Names and places, rule by rule, every script and every source; the 10 planted name bugs all caught (R-11)
+        if: always()
+        run: (node tools/beta2/core-places-check.cjs && node tools/truth/name-mutants.cjs) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Keep this part's failing lines for the release report
         if: always()
         run: |
@@ -346,9 +349,33 @@ jobs:
           path: part
           if-no-files-found: ignore
 
+  language:
+    name: "11 Every screen in the traveler's language: every saved trip, every screen, names planted in every source"
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - run: node tools/ui/screen-language-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
+        if: always()
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          grep -E "^(FAIL|MISSED|NOT TESTED)|FAIL[ :]|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -v "^ok " | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-language
+          path: part
+          if-no-files-found: ignore
+
   report:
     name: "Release report"
-    needs: [code, safety, engine, leaks, phone, screen, odd-screen, words, feel, steady]
+    needs: [code, safety, engine, leaks, phone, screen, odd-screen, words, feel, steady, language]
     if: always()
     runs-on: ubuntu-latest
     steps:

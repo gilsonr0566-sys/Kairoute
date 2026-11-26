@@ -252,30 +252,30 @@ day 13 2027-07-12 port naples | 07:30 to 16:51 | leave by --:--
   says: Castel Capuano opens at 9:00 am, so the day starts at 8:36 am: leave the ship then.
   says: Leave for the ship by 5:35 pm.
   says: Opening hours not confirmed for Castel Capuano and Certosa di San Martino on this date: planned between 9:00 am and 5:00 pm. Check before you go.
-day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:39 | leave by --:--
+day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:42 | leave by --:--
   07:30 start: Civitavecchia cruise port
   Train FL5, Civitavecchia to Roma San Pietro 116 min
   09:26 stop: Palazzo della Cancelleria 30 min (hours not confirmed)
   Taxi or car 17 min
-  10:13 stop: Colosseum and Roman Forum 99 min
+  10:13 stop: Colosseum and Roman Forum 97 min
   walk 3 min
-  11:55 meal Lunch: RoYaL Art Cafè 20 min
-  walk 22 min
-  12:37 stop: Trevi Fountain 20 min
-  walk 10 min
-  13:07 stop: Pantheon 30 min
+  11:53 meal Lunch: Ristoro Della Salute 20 min
+  Taxi or car 17 min
+  12:30 stop: Piazza Navona 25 min
   walk 6 min
-  13:43 stop: Piazza Navona 25 min
-  walk 23 min
-  14:31 stop: Saint Peter's Square 30 min (hours not confirmed)
+  13:01 stop: Pantheon 30 min
+  walk 10 min
+  13:41 stop: Trevi Fountain 20 min
+  Taxi or car 18 min
+  14:19 stop: Saint Peter's Square 30 min (hours not confirmed)
   walk 5 min
-  15:06 stop: St Peter's Basilica 90 min
+  14:54 stop: St Peter's Basilica 90 min
   walk 8 min
-  16:44 stop: Vatican Museums 60 min
-  Taxi or car 115 min (25 kept)
-  19:39 end: Civitavecchia cruise port 0 min
-  says: Lunch at RoYaL Art Cafè is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
-  says: Leave for the ship by 5:50 pm.
+  16:32 stop: Vatican Museums 60 min
+  Taxi or car 130 min (40 kept)
+  19:42 end: Civitavecchia cruise port 0 min
+  says: Lunch at Ristoro Della Salute is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:35 pm.
   says: Opening hours not confirmed for Palazzo della Cancelleria and Saint Peter's Square on this date: planned between 9:00 am and 5:00 pm. Check before you go.
 day 15 2027-07-14 sea | no plan
 day 16 2027-07-15 arrival barcelona | 08:00 to 14:35
@@ -641,30 +641,30 @@ day 13 2027-07-12 port naples | 07:30 to 16:51 | leave by --:--
   says: Castel Capuano opens at 9:00 am, so the day starts at 8:36 am: leave the ship then.
   says: Leave for the ship by 5:35 pm.
   says: Opening hours not confirmed for Castel Capuano and Certosa di San Martino on this date: planned between 9:00 am and 5:00 pm. Check before you go.
-day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:39 | leave by --:--
+day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:42 | leave by --:--
   07:30 start: Civitavecchia cruise port
   Train FL5, Civitavecchia to Roma San Pietro 116 min
   09:26 stop: Palazzo della Cancelleria 30 min (hours not confirmed)
   Taxi or car 17 min
-  10:13 stop: Colosseum and Roman Forum 99 min
+  10:13 stop: Colosseum and Roman Forum 97 min
   walk 3 min
-  11:55 meal Lunch: RoYaL Art Cafè 20 min
-  walk 22 min
-  12:37 stop: Trevi Fountain 20 min
-  walk 10 min
-  13:07 stop: Pantheon 30 min
+  11:53 meal Lunch: Ristoro Della Salute 20 min
+  Taxi or car 17 min
+  12:30 stop: Piazza Navona 25 min
   walk 6 min
-  13:43 stop: Piazza Navona 25 min
-  walk 23 min
-  14:31 stop: Saint Peter's Square 30 min (hours not confirmed)
+  13:01 stop: Pantheon 30 min
+  walk 10 min
+  13:41 stop: Trevi Fountain 20 min
+  Taxi or car 18 min
+  14:19 stop: Saint Peter's Square 30 min (hours not confirmed)
   walk 5 min
-  15:06 stop: St Peter's Basilica 90 min
+  14:54 stop: St Peter's Basilica 90 min
   walk 8 min
-  16:44 stop: Vatican Museums 60 min
-  Taxi or car 115 min (25 kept)
-  19:39 end: Civitavecchia cruise port 0 min
-  says: Lunch at RoYaL Art Cafè is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
-  says: Leave for the ship by 5:50 pm.
+  16:32 stop: Vatican Museums 60 min
+  Taxi or car 130 min (40 kept)
+  19:42 end: Civitavecchia cruise port 0 min
+  says: Lunch at Ristoro Della Salute is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:35 pm.
   says: Opening hours not confirmed for Palazzo della Cancelleria and Saint Peter's Square on this date: planned between 9:00 am and 5:00 pm. Check before you go.
 day 15 2027-07-14 sea | no plan
 day 16 2027-07-15 arrival barcelona | 08:00 to 14:35
@@ -1025,30 +1025,30 @@ day 13 2027-07-12 port naples | 07:30 to 16:51 | leave by --:--
   says: Castel Capuano opens at 9:00 am, so the day starts at 8:36 am: leave the ship then.
   says: Leave for the ship by 5:35 pm.
   says: Opening hours not confirmed for Castel Capuano and Certosa di San Martino on this date: planned between 9:00 am and 5:00 pm. Check before you go.
-day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:39 | leave by --:--
+day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:42 | leave by --:--
   07:30 start: Civitavecchia cruise port
   Train FL5, Civitavecchia to Roma San Pietro 116 min
   09:26 stop: Palazzo della Cancelleria 30 min (hours not confirmed)
   Taxi or car 17 min
-  10:13 stop: Colosseum and Roman Forum 99 min
+  10:13 stop: Colosseum and Roman Forum 97 min
   walk 3 min
-  11:55 meal Lunch: RoYaL Art Cafè 20 min
-  walk 22 min
-  12:37 stop: Trevi Fountain 20 min
-  walk 10 min
-  13:07 stop: Pantheon 30 min
+  11:53 meal Lunch: Ristoro Della Salute 20 min
+  Taxi or car 17 min
+  12:30 stop: Piazza Navona 25 min
   walk 6 min
-  13:43 stop: Piazza Navona 25 min
-  walk 23 min
-  14:31 stop: Saint Peter's Square 30 min (hours not confirmed)
+  13:01 stop: Pantheon 30 min
+  walk 10 min
+  13:41 stop: Trevi Fountain 20 min
+  Taxi or car 18 min
+  14:19 stop: Saint Peter's Square 30 min (hours not confirmed)
   walk 5 min
-  15:06 stop: St Peter's Basilica 90 min
+  14:54 stop: St Peter's Basilica 90 min
   walk 8 min
-  16:44 stop: Vatican Museums 60 min
-  Taxi or car 115 min (25 kept)
-  19:39 end: Civitavecchia cruise port 0 min
-  says: Lunch at RoYaL Art Cafè is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
-  says: Leave for the ship by 5:50 pm.
+  16:32 stop: Vatican Museums 60 min
+  Taxi or car 130 min (40 kept)
+  19:42 end: Civitavecchia cruise port 0 min
+  says: Lunch at Ristoro Della Salute is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:35 pm.
   says: Opening hours not confirmed for Palazzo della Cancelleria and Saint Peter's Square on this date: planned between 9:00 am and 5:00 pm. Check before you go.
 day 15 2027-07-14 sea | no plan
 day 16 2027-07-15 arrival barcelona | 08:00 to 14:35
@@ -1409,30 +1409,30 @@ day 13 2027-07-12 port naples | 07:30 to 16:51 | leave by --:--
   says: Castel Capuano opens at 9:00 am, so the day starts at 8:36 am: leave the ship then.
   says: Leave for the ship by 5:35 pm.
   says: Opening hours not confirmed for Castel Capuano and Certosa di San Martino on this date: planned between 9:00 am and 5:00 pm. Check before you go.
-day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:39 | leave by --:--
+day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:42 | leave by --:--
   07:30 start: Civitavecchia cruise port
   Train FL5, Civitavecchia to Roma San Pietro 116 min
   09:26 stop: Palazzo della Cancelleria 30 min (hours not confirmed)
   Taxi or car 17 min
-  10:13 stop: Colosseum and Roman Forum 99 min
+  10:13 stop: Colosseum and Roman Forum 97 min
   walk 3 min
-  11:55 meal Lunch: RoYaL Art Cafè 20 min
-  walk 22 min
-  12:37 stop: Trevi Fountain 20 min
-  walk 10 min
-  13:07 stop: Pantheon 30 min
+  11:53 meal Lunch: Ristoro Della Salute 20 min
+  Taxi or car 17 min
+  12:30 stop: Piazza Navona 25 min
   walk 6 min
-  13:43 stop: Piazza Navona 25 min
-  walk 23 min
-  14:31 stop: Saint Peter's Square 30 min (hours not confirmed)
+  13:01 stop: Pantheon 30 min
+  walk 10 min
+  13:41 stop: Trevi Fountain 20 min
+  Taxi or car 18 min
+  14:19 stop: Saint Peter's Square 30 min (hours not confirmed)
   walk 5 min
-  15:06 stop: St Peter's Basilica 90 min
+  14:54 stop: St Peter's Basilica 90 min
   walk 8 min
-  16:44 stop: Vatican Museums 60 min
-  Taxi or car 115 min (25 kept)
-  19:39 end: Civitavecchia cruise port 0 min
-  says: Lunch at RoYaL Art Cafè is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
-  says: Leave for the ship by 5:50 pm.
+  16:32 stop: Vatican Museums 60 min
+  Taxi or car 130 min (40 kept)
+  19:42 end: Civitavecchia cruise port 0 min
+  says: Lunch at Ristoro Della Salute is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:35 pm.
   says: Opening hours not confirmed for Palazzo della Cancelleria and Saint Peter's Square on this date: planned between 9:00 am and 5:00 pm. Check before you go.
 day 15 2027-07-14 sea | no plan
 day 16 2027-07-15 arrival barcelona | 08:00 to 14:35
@@ -2801,30 +2801,30 @@ day 13 2027-07-12 port naples | 07:30 to 16:51 | leave by --:--
   says: Castel Capuano opens at 9:00 am, so the day starts at 8:36 am: leave the ship then.
   says: Leave for the ship by 5:35 pm.
   says: Opening hours not confirmed for Castel Capuano and Certosa di San Martino on this date: planned between 9:00 am and 5:00 pm. Check before you go.
-day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:39 | leave by --:--
+day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:42 | leave by --:--
   07:30 start: Civitavecchia cruise port
   Train FL5, Civitavecchia to Roma San Pietro 116 min
   09:26 stop: Palazzo della Cancelleria 30 min (hours not confirmed)
   Taxi or car 17 min
-  10:13 stop: Colosseum and Roman Forum 99 min
+  10:13 stop: Colosseum and Roman Forum 97 min
   walk 3 min
-  11:55 meal Lunch: RoYaL Art Cafè 20 min
-  walk 22 min
-  12:37 stop: Trevi Fountain 20 min
-  walk 10 min
-  13:07 stop: Pantheon 30 min
+  11:53 meal Lunch: Ristoro Della Salute 20 min
+  Taxi or car 17 min
+  12:30 stop: Piazza Navona 25 min
   walk 6 min
-  13:43 stop: Piazza Navona 25 min
-  walk 23 min
-  14:31 stop: Saint Peter's Square 30 min (hours not confirmed)
+  13:01 stop: Pantheon 30 min
+  walk 10 min
+  13:41 stop: Trevi Fountain 20 min
+  Taxi or car 18 min
+  14:19 stop: Saint Peter's Square 30 min (hours not confirmed)
   walk 5 min
-  15:06 stop: St Peter's Basilica 90 min
+  14:54 stop: St Peter's Basilica 90 min
   walk 8 min
-  16:44 stop: Vatican Museums 60 min
-  Taxi or car 115 min (25 kept)
-  19:39 end: Civitavecchia cruise port 0 min
-  says: Lunch at RoYaL Art Cafè is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
-  says: Leave for the ship by 5:50 pm.
+  16:32 stop: Vatican Museums 60 min
+  Taxi or car 130 min (40 kept)
+  19:42 end: Civitavecchia cruise port 0 min
+  says: Lunch at Ristoro Della Salute is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:35 pm.
   says: Opening hours not confirmed for Palazzo della Cancelleria and Saint Peter's Square on this date: planned between 9:00 am and 5:00 pm. Check before you go.
 day 15 2027-07-14 sea | no plan
 day 16 2027-07-15 arrival barcelona | 08:00 to 14:35
@@ -2966,17 +2966,17 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd031-hop ffc0e20ca5
 #odd odd032-stay f75f0a4a33 bed188a833 c0f9c94098 bba6e48e16 6176e4b0ea
 #odd odd033-cruise a0538adb9b 1cf7d164d5 1b5763e758 47e1ea3b94 8610ce4665 1befbc2cfe a0fe2850d0
-#odd odd034-multicity 480ceff08c e768ef5141 0ec8dd46f8 7946d1ab37 de833a9b11
+#odd odd034-multicity 878ea412dc 4b22f8e7f3 0ec8dd46f8 7946d1ab37 de833a9b11
 #odd odd035-hop 833cb87f3c
 #odd odd036-stay dd3287aa4d 6dfe2cca21
 #odd odd037-cruise c0861e69fd 3d1528c4d3 dfc262ab5a 8f9c19272c e55b6d8fc5 67312544c6 4094d9a400 aa85aebf31
 #odd odd038-multicity d6dd4f6f88 d5a48c8d6c f0b8f0dae2 b8fd29fdfa 3d831d6245 524cc7097b
 #odd odd039-hop 2bd3da7f88
-#odd odd040-stay 504be267f3 96f81ca2c2 a05cce66b4 5324327c4c
+#odd odd040-stay 504be267f3 be953e43b7 2b0302397f 702924c3a9
 #odd odd041-cruise 4f050aa009 a908b8be9c 76fd6604f6 10b1f02f08 54f2d0bab5
 #odd odd042-multicity 0f701c1015 92635c9e38 89a6e59ef8 4ef7b0d17e c2a06bb423 b4b1bac1f0
 #odd odd043-hop d7fea3900c
-#odd odd044-stay 44676325c9 8286f40195
+#odd odd044-stay ee7df21270 8286f40195
 #odd odd045-cruise 019af8efdf beee2aeb86 1b5763e758 f2183d1f0c c5b8ddcbe5 5a5d7e50ac 9e4fd7096b
 #odd odd046-multicity 99b67d98e0 926240b92b 73c4c74371 5545ad092b f1baf18d23 077003a0a8 0dc49b9c7b 41cc23497f
 #odd odd047-hop 2f25c5a087
@@ -2992,12 +2992,12 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd057-cruise ea506c5a78 96ddbcf30c 99270652ed 053aec2f79 a8d6f73b30 6cd3042582 212b9fa33b f04ac95ed9
 #odd odd058-multicity c1d113170d 4a505ebd26 02e4c9acc9 a5bddcd200 e5a01d1a8b a2e36433ad
 #odd odd059-hop 797ab21613
-#odd odd060-stay 0054957b52 1f2b3a5e1c 58f10dc916 1990b2c60d
+#odd odd060-stay c36ab4cb4a 4d2aa87858 d450246966 a09b883f23
 #odd odd061-cruise 690ecc27fb a5478d670a 7c8ce363f0 84202e87a9 7c248ca2fa 6d9ca7b584
-#odd odd062-multicity c8e49e46e5 6c790a1955 40b19ae28c 73b3ad307e 5aad0c3421 81574b6f52 7153cd19ef 73e5243c52 04d968f134 42650e7a83
+#odd odd062-multicity c8e49e46e5 6c790a1955 40b19ae28c 73b3ad307e 5aad0c3421 81574b6f52 ddb3a3dc74 73e5243c52 04d968f134 42650e7a83
 #odd odd063-hop 8de8e92461
 #odd odd064-stay 0e3e6be799 e093ca265d
-#odd odd065-cruise 8023e0db2e d062999915 692a18ab5e f87a270840 7d9304c3cd 3e3187d98d
+#odd odd065-cruise 8023e0db2e d062999915 692a18ab5e f87a270840 7d9304c3cd 01fe5b59ee
 #odd odd066-multicity 7fe7b2f7cc f76047352b f6578292d2 d00a289b3f c7607920b9 e01e293631 56cab37352 64c811ce9e 59a48c1f12
 #odd odd067-hop 42dd9fc8ee
 #odd odd068-stay 6df598d344 61bfe145e7 2f4b7445a0 295de35b3c 4aeda3dc32
@@ -3013,7 +3013,7 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd078-multicity b85e1bd53c f314e13618 c6d328ccb7 d6023d4d56 064df0a42c 57d1966854 d1cbe344e4 35d74c7df2
 #odd odd079-hop abf7ca309b
 #odd odd080-stay 1c865419ac 187d0780c5
-#odd odd081-cruise a8c39860bf de24dea91b 1fa45f94b9 289195d483 1bb9181519 63704993f1
+#odd odd081-cruise e05cecf0ed de24dea91b 1fa45f94b9 289195d483 1bb9181519 63704993f1
 #odd odd082-multicity 8a0cd72be7 043fa1502e 62b50830e1 d0fb8e0137 4d6fbc0c92 3a80e24a00 1c2d70af0e 9fc5126a37
 #odd odd083-hop 9120f9c23a
 #odd odd084-stay 15f8591e83 87c8f557a2 2ab1603909 77c90d35d3
@@ -3032,7 +3032,7 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd097-cruise 5a5ef450e4 d11b50ee67 1b5763e758 71b74b989b a0a5696b87 bd0666f783 f37019ae8c
 #odd odd098-multicity 56648c24d9 0789a52410 ac7f2f5cfd 7d8d9f98b6 c4ee8652f3 d6ae37b2a6
 #odd odd099-hop 33a8d870d8
-#odd odd100-stay d889777b12 21781e73aa 56ff37e624
+#odd odd100-stay d889777b12 21781e73aa 1337b626ed
 #odd odd101-cruise a048a99bc4 e76e144bcd 844b619552 a95b6ca171 2d998442b9 6beb5b9b20 9bcc3ed85a
 #odd odd102-multicity c23308e48a 23f355e463 dcdb782fb3 661d9893bb f73edb2862 ea6b37a647
 #odd odd103-hop ae4cdb8ee7
@@ -3044,7 +3044,7 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd109-cruise 4c95f52fc5 3f1e3d6c28 a0b0725e97 e2d19221ac adf6700676 31df13200f 33021430d7 24f9b86fbe 860a5ba6bb
 #odd odd110-multicity 441ee265f9 f58944ab17 dab5fc0755 436e759e69 2c4afe352f
 #odd odd111-hop db2caabde6
-#odd odd112-stay bf56e57770 5522f0e56d
+#odd odd112-stay bf56e57770 8ebd44eef4
 #odd odd113-cruise e30e165642 0865f5f1b4 1b5763e758 b29b96060d 918a26bda3 c6a7a74602 8736dc6700
 #odd odd114-multicity dd62128242 830fd0461a 7f7461792d 2a48f63f6a 6883180f2d 6693394128 20bd34fc9b fe9564bcec 45004e8bfa 22a8fa32e3 af5c45d185
 #odd odd115-hop b5937765e1
@@ -3106,11 +3106,11 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd171-hop 420378d7c5
 #odd odd172-stay a895409ea4 3af21f5e00 e0ddfcadda 2430531077
 #odd odd173-cruise 72986d35d4 153dfe0e82 fdb02cf9ca 2fba3ff5f8 c5b8ddcbe5 d01286feef e9ce915cfa 53a4cbff3c
-#odd odd174-multicity e03cbb5303 dae2555d13 d527ddb120 ab9b5e1058 95c1b3a44b f9845496b6 5ef285979c baacc955dd 3d11b7b4fa
+#odd odd174-multicity e03cbb5303 dae2555d13 d527ddb120 ab9b5e1058 e3f2dd44aa f9845496b6 5ef285979c baacc955dd 3d11b7b4fa
 #odd odd175-hop 47f7cb19ce
 #odd odd176-stay e42b3a29e8 2157e3f26f
 #odd odd177-cruise 522e23c3d4 31727ae466 1b5763e758 eaafdc7b2e 627c0f144a a78d08656a bd518a0331 8ebb88fe9d
-#odd odd178-multicity b72d631bd3 f4f27cb6ff 133e27f4fa f1f054919c 70cdf4e921 906713e5e5 3d46e2b11a 69ffab285d 9b4b6410cc ef3dfba418 9329c5c638 f69faa274e
+#odd odd178-multicity b72d631bd3 f4f27cb6ff 133e27f4fa f1f054919c 70cdf4e921 906713e5e5 3d46e2b11a 81190ef8dc 9b4b6410cc ef3dfba418 9329c5c638 f69faa274e
 #odd odd179-hop 420378d7c5
 #odd odd180-stay de0c0ce56e af0d39006c 10083f9b02 45a554b302 af3200166d
 #odd odd181-cruise 00969798d5 59f34c0c45 27025d2485 44b73e2bf2 fb37dc772c dbd6eba176 5515f02d7e 055b1c5b93
@@ -3128,20 +3128,20 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd193-cruise 0261b857bf 9a97d3e2e0 1b5763e758 1266bd23ed 2d869a3e62 d1f796681e
 #odd odd194-multicity b9fd3e78db d6ca5ad85d ee335977bf b911126eb0 6a3519c7aa f9e363ecaf
 #odd odd195-hop 873abbab4f
-#odd odd196-stay bece2ee7cf 0c7d1b6857 81232b9514
+#odd odd196-stay bece2ee7cf c5038c0b68 81232b9514
 #odd odd197-cruise 9f735b7065 293f5f83df abf8272909 ff942a59a6 cac66d6d20 0a259044ac ba76661868 a990c7b4fb
 #odd odd198-multicity e39f0c4390 6faa4ee741 84a261a1bc 37e90fb5dd 2851fd4f25 9baf0e9bbe
 #odd odd199-hop b14977484d
 #odd odd200-stay 203d74de0c 8cb1471157 8ea3a9523d a4558b425a a910c246cf
 #odd odd201-cruise b889b70401 5f93b61422 5c4a153495 4db853e862 4c5ad77a3a dab344e03e 9aeba51c35 040f280432 e087860606
-#odd odd202-multicity 03af6b8e32 1fd1966b9c 199afb2230 8210662fd7 554a45a6e1 da8181280b b6aa558850 97f605c239 664d5a4a8d 2233379e6d 3a41c5de1a
+#odd odd202-multicity 9588b436c8 1fd1966b9c 09d0bf1b23 8210662fd7 554a45a6e1 da8181280b b6aa558850 97f605c239 664d5a4a8d 2233379e6d 3a41c5de1a
 #odd odd203-hop 404c931642
 #odd odd204-stay 555bd465a5 4b8337697d ac7d044e22 866303962f
 #odd odd205-cruise f15ceb3d3d 99229fb4f3 e90660de2a a28392e8c5 c5b8ddcbe5 f4bd1e5592 cbef2c3a5b d289327e88
 #odd odd206-multicity 83656660f0 832f384f3e 7f16ff79b0 bf0ac951b2 e9efe8180b
 #odd odd207-hop a1bfc59fa4
 #odd odd208-stay e81e39084f a39034fa99 286e866797
-#odd odd209-cruise 1145fdea11 95d783438d 996e3eeee9 7fc43292d5 512fff1705 9d10b68ef1
+#odd odd209-cruise 1145fdea11 95d783438d 996e3eeee9 7fc43292d5 1721f77c54 9d10b68ef1
 #odd odd210-multicity 352eabea16 5b785380d2 64a0fcaf25 e83c9f715c 551bc29e46 4199647ed8 1b3ccdc6ca 95392c1128
 #odd odd211-hop 3e2fdbbb2c
 #odd odd212-stay e2152948e2 a176e01ac2 93bc9bfb88
@@ -3156,7 +3156,7 @@ day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
 #odd odd221-cruise d592d6e011 d685795a90 37f8949100 f2183d1f0c 918a26bda3 ac1ee709ac
 #odd odd222-multicity ad4ee8cbd7 6ed047ff6a 44cdf744b0 28cad1a88a 7083cecfb7
 #odd odd223-hop faf5bc097f
-#odd odd224-stay 83e223dce7 6e27ee393c 1bbefb59f0 2064c15054
+#odd odd224-stay 1eb1b0482b 57ecea88fe 8db6c4b3b8 2064c15054
 #odd odd225-cruise bc7d364a25 ab6bf87cb5 f7caa60d9f 4217144cb9 5c58056863 d01286feef dfc8800aad
 #odd odd226-multicity e03bf097c8 2493b0f1a4 3f689599f1 0f7ae9e598 c820abb432 e683c0c42b aa937361d6 22f78ade23 ee16aab0b5
 #odd odd227-hop 7bdeb54b41
