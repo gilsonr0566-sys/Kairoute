@@ -72,7 +72,8 @@ const SPINNERS = () => [...document.querySelectorAll('.spinner, [aria-busy="true
   const browser = await chromium.launch(), srv = await serve();
   // The saved test trips, and the example trip the app itself puts in front of a first-time traveler (its port days know
   // their piers, so the back-to-the-ship countdown shows; the saved trips' port days ask for the pier first).
-  const files = ['example', ...fs.readdirSync(CORPUS).filter(f => f.endsWith('.json')).sort()].filter(f => !ONLY.length || ONLY.some(o => f.startsWith(o)));
+  const files = ['example', ...fs.readdirSync(CORPUS).filter(f => f.endsWith('.json')).sort()].filter(f => !ONLY.length || ONLY.some(o => f.startsWith(o)))
+    .filter((f, i) => { const m = /^(\d+)\/(\d+)$/.exec(process.env.PART || ''); return !m || i % +m[2] === +m[1]; }); // PART=k/n: every n-th trip from the k-th (the gate runs the trips in parts side by side)
   for (const f of files) {
     let seed = { trip: null, cities: null }, name = 'example';
     if (f !== 'example') { let c; try { c = JSON.parse(fs.readFileSync(path.join(CORPUS, f), 'utf8')); } catch (e) { fail('NOT TESTED', f, 'trip file unreadable'); continue; }
