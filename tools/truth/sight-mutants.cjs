@@ -28,7 +28,7 @@ const MUTANTS = [
     was: 'Mosques labelled "Church" (Fable gap 11, Nov 22)' },
   { id: 'flat-visit-length', from: 'Sight: [[100, 90], [60, 60]]', to: 'Sight: []',
     was: 'Every sight a flat 40 minutes whatever its fame (Fable gap 11, Nov 22)' },
-  { id: 'same-name-far-merged', from: 'if (isFinite(a.lat) && isFinite(b.lat) && hav(a, b) > 5) return "";', to: '',
+  { id: 'same-name-far-merged', from: 'if (KEngine.fin(a.lat) && KEngine.fin(b.lat) && hav(a, b) > 5) return "";', to: '',
     was: "Lübeck's Holstentor took the id of a Hamburg place 59 km away (sight audit, Nov 23)" },
   { id: 'twin-listing-kept', from: 'city[k] = city[k].filter(s => !twin(s));', to: 'city[k] = city[k].filter(s => true);',
     was: '"Museo regionale di Messina" beside the "Regional Museum of Messina" (sight audit, Nov 23)' },
