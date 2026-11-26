@@ -20,7 +20,7 @@ const far = (name, wd, kinds, sl, dx, dy, more) => { const p = at(dx, dy); retur
 const FAR = [
   far('Testvar', 'Q501', ['feature', 'island', 'natural'], 63, 30, -20),                                   // an island: its point is its middle
   far('Testholm', 'Q502', ['admin-area', 'settlement'], 41, 10, 14, { said: 4 }),                          // a town by boat, on a timetable
-  far('Testa Islands', 'Q503', ['feature', 'island', 'natural'], 64, -12, -15, { voy: 'Testport/Testa Islands', part: true, unesco: true, heritage: true }), // a part of the city's own guide
+  far('Testa Islands', 'Q503', ['feature', 'island', 'natural'], 64, -12, -15, { voy: 'Testport/Testa Islands', part: true }), // a part of the city's own guide
   far('Testport International Airport', 'Q504', ['airport', 'structure'], 73, 12, 9, { said: 3 }),
   far('Test Field Stadium', 'Q505', ['building', 'stadium', 'structure'], 71, 8, -6, { said: 1 }),
   far('Testport Grand Prix', 'Q520', ['event', 'occurrence'], 73, 13, -8, { said: 3 }),                    // a race with a travel-guide page: not a place to go
