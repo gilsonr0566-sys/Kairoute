@@ -912,6 +912,9 @@ export function farSaid(far, enV) { const links = (enV && enV.links) || {}, titl
 // category of its kind ("Usable cities", "Guide districts", "Outline regions", "Usable parks", "Outline countries",
 // "Usable airports", "Outline rural areas", "Usable itineraries") or "<Kind> articles". A country, an airport or an
 // itinerary is no day out; a city, a district, a park or a rural area is a place to go.
+// A place's facts are complete only when its own batch was answered and so was the batch of every kind it has: a kind
+// not looked up must never read as "not that kind" (an island not known to be an island is asked about at its middle).
+export const factsReady = (id, okIds, direct, okClass) => okIds.has(id) && [...(direct.get(id) || [])].every(c => okClass.has(c));
 export function voyKind(cats) {
   const K = [[/^countr|^continent/, "country"], [/^airport/, "airport"], [/^itinerar/, "itinerary"], [/^(huge |big )?cit(y|ies)$/, "city"], [/^districts?$/, "district"], [/^parks?$/, "park"], [/^rural areas?$/, "rural"], [/^(regions?|states?|extra-?hierarchical regions?)$/, "region"], [/^(topics?|phrasebooks?|dive guides?|events?)$/, "topic"]];
   for (const c of cats || []) { const m = /^(?:Category:)?(?:(?:Outline|Usable|Guide|Star|Stub) (.+)|(.+) articles)$/i.exec(String(c)); if (!m) continue;
@@ -1246,20 +1249,27 @@ async function sourcesData(label, env, ctx) {
   // broadcaster, a football club and "continental Europe" had passed as sights; Hagia Sophia got a 40-minute visit). Two
   // small asks: each item's direct kinds, then which of SIGHT_KINDS each of those kinds falls under. A failed ask leaves
   // kinds unknown, never empty: the app then keeps its name rules.
+  // Each batch stands on its own (getJ already asks twice): one batch of six refused used to leave every
+  // place in the answer without its facts, sights and places a day out alike (live helper, Nov 26: three cities running
+  // came back with no facts for any place a day out, so no island was known to be an island). An answer that still
+  // lacks facts says so (factsMissed) and is kept 3 hours, not 30 days.
+  let factsMissed = false;
   try { const direct = new Map(), uq = q => "https://query.wikidata.org/sparql?format=json&query=" + encodeURIComponent(q), H3 = { headers: { ...UA, accept: "application/sparql-results+json" } };
     // Gone too: a building or fortress demolished or destroyed (P5817 state of use), or one with an end date (P576) that
     // is not an organisation (an abbey's community dissolved in 1790 leaves its church standing).
     const got = await Promise.all(chunks.map(part => getJ(uq(`SELECT ?item ?t ?end ?use WHERE { VALUES ?item { ${part.map(x => "wd:" + x).join(" ")} } ?item wdt:P31 ?t . OPTIONAL { ?item wdt:P576 ?end } OPTIONAL { ?item wdt:P5817 ?use } }`), 20000, H3)));
-    const ended = new Set(), razed = new Set();
-    if (got.every(Boolean)) {
-      for (const j of got) for (const b of j.results.bindings) { const k = b.item.value.split("/").pop(); (direct.get(k) || direct.set(k, new Set()).get(k)).add(b.t.value.split("/").pop());
+    const ended = new Set(), razed = new Set(), okIds = new Set(chunks.flatMap((part, k) => got[k] ? part : []));
+    if (got.some(Boolean)) {
+      for (const j of got) for (const b of (j && j.results.bindings) || []) { const k = b.item.value.split("/").pop(); (direct.get(k) || direct.set(k, new Set()).get(k)).add(b.t.value.split("/").pop());
         if (b.end) ended.add(k); if (b.use && /\/(Q56556915|Q30108381)$/.test(b.use.value)) razed.add(k); }
       const classes = [...new Set([...direct.values()].flatMap(v => [...v]))], up = new Map();
-      const cc = []; for (let k = 0; k < classes.length; k += 120) cc.push(classes.slice(k, k + 120));
+      const cc = []; for (let k = 0; k < classes.length; k += 60) cc.push(classes.slice(k, k + 60));
       const res = await Promise.all(cc.map(part => getJ(uq(`SELECT ?c ?w WHERE { VALUES ?c { ${part.map(x => "wd:" + x).join(" ")} } VALUES ?w { ${Object.keys(SIGHT_KINDS).map(x => "wd:" + x).join(" ")} } ?c wdt:P279* ?w }`), 25000, H3)));
-      if (res.every(Boolean)) {
-        for (const j of res) for (const b of j.results.bindings) { const c = b.c.value.split("/").pop(); (up.get(c) || up.set(c, new Set()).get(c)).add(SIGHT_KINDS[b.w.value.split("/").pop()]); }
-        for (const id of ids) { const x = byId.get(id) || farById.get(id); if (!x) continue; const ks = new Set(); for (const c of direct.get(id) || []) for (const k of up.get(c) || []) ks.add(k); x.kinds = [...ks].sort();
+      const okClass = new Set(cc.flatMap((part, k) => res[k] ? part : []));
+      if (res.some(Boolean)) {
+        for (const j of res) for (const b of (j && j.results.bindings) || []) { const c = b.c.value.split("/").pop(); (up.get(c) || up.set(c, new Set()).get(c)).add(SIGHT_KINDS[b.w.value.split("/").pop()]); }
+        // A place gets its facts only when its own batch and the batch of every one of its kinds were answered.
+        for (const id of okIds) { const x = byId.get(id) || farById.get(id); if (!x || !factsReady(id, okIds, direct, okClass)) continue; const ks = new Set(); for (const c of direct.get(id) || []) for (const k of up.get(c) || []) ks.add(k); x.kinds = [...ks].sort();
           if (razed.has(id) || (ended.has(id) && !ks.has("organization") && !ks.has("event") && !ks.has("occurrence"))) x.gone = true;
           // "Destroyed building or structure" (the Bastille: a castle and a prison, so the end-date rule spared it as an
           // organisation) is gone too, unless its ruins are an archaeological site to visit (Nov 23 sight check).
@@ -1267,6 +1277,7 @@ async function sourcesData(label, env, ctx) {
       }
     }
   } catch (e) {}
+  factsMissed = ids.some(id => { const x = byId.get(id) || farById.get(id); return !!x && !Array.isArray(x.kinds); });
   lap("kinds");
   for (const j of answers) {
     for (const b of (j && j.results && j.results.bindings) || []) {
@@ -1338,11 +1349,11 @@ async function sourcesData(label, env, ctx) {
   next.forEach(x => { if (!x.voy) x.voy = x.title || x.name; });
   await voyTypes((fam.far || []).concat(next), UA);
   lap("next");
-  const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T };
+  const res = Object.assign({ area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T }, factsMissed ? { factsMissed: true } : {});
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
   // One whose places a day out could not be read (rule R-37) is asked again after 3 hours: a day without the city's
   // day trips is a long time (live check, Nov 26: Istanbul's guide links were missed on one run in two).
-  const ttl = { expirationTtl: fam.farMissed ? 3 * 3600 : (enV.pages && fam.main.length && !mapMissed ? 30 : 1) * 86400 };
+  const ttl = { expirationTtl: fam.farMissed || factsMissed ? 3 * 3600 : (enV.pages && fam.main.length && !mapMissed ? 30 : 1) * 86400 };
   ctx.waitUntil(Promise.all([env.USAGE.put(key, JSON.stringify(res), ttl), placeKey ? env.USAGE.put(placeKey, JSON.stringify(res), ttl) : null]));
   return res;
 }
