@@ -29,7 +29,7 @@ const FAR = [
   far('Testport Old Quarter', 'Q523', ['settlement'], 60, 7, 4, { voy: 'Testport/Old Quarter', part: true, said: 8 }), // a district of the city itself, in town (Kadıköy, Bondi)
   far('Testland', 'Q524', ['feature', 'island', 'region'], 260, 16, -14, { said: 5, vt: 'country' }),
   far('Testra', 'Q526', ['admin-area', 'feature', 'organization', 'region'], 74, -20, 9, { said: 6, vt: 'city' }), // a town the encyclopedia files only as a municipality (Sintra)
-  far('Testa Delta', 'Q527', ['feature', 'region'], 60, 18, 12, { said: 5, vt: 'region' }),               // a region page: where the city is, not a place to go
+  far('Testa Delta', 'Q527', ['admin-area', 'feature', 'region', 'settlement'], 60, 18, 12, { said: 5, vt: 'region' }),               // a region page: where the city is, not a place to go
   far('Testport Isles', 'Q525', ['feature', 'island', 'region'], 70, 9, 9, { said: 5, vt: 'region' }),    // the island group the city itself stands on (Cyclades from Mykonos)                                // the country the city is in (Japan from Kyoto)
   far('Testshire Province', 'Q506', ['admin-area'], 95, 20, 20, { said: 4 }),
   far('Old Testa Ruins', 'Q507', ['ancient-city', 'archaeological'], 45, 40, 5, { unesco: true, heritage: true }), // a heritage site with no line: by road
@@ -221,7 +221,7 @@ const PLANT = [
     was: 'day trips read only from the "Go next" list: the Princes\' Islands, Lantau, Manly and Vaxholm in no guide (ferry test trips, Nov 25)' },
   { id: 'island-at-its-middle', from: 'if (!tripIsle(y) || !y.wd) return [{ lat: y.lat, lng: y.lng }];', to: 'if (true) return [{ lat: y.lat, lng: y.lng }];',
     was: 'the boat to an island looked for at the middle of the island: Hvar never offered from Split (Nov 25)' },
-  { id: 'own-trips-block-classics', from: 'const cands = room > 0 ? tripCands(city, src) : [];', to: 'const cands = room > 0 && !(city.farther || []).some(x => !x.noAI) ? tripCands(city, src) : [];',
+  { id: 'own-trips-block-classics', from: 'const cands = room > 0 || (city.farther || []).some(x => x.lineOpen) ? tripCands(city, src) : [];', to: 'const cands = room > 0 && !(city.farther || []).some(x => !x.noAI) ? tripCands(city, src) : [];',
     was: 'a guide with one day trip of its own never got another (the old rule)' },
   { id: 'fame-alone-ranks', from: 'if (y && y.voy && (y.said > 0 || y.part || y.unesco)) put(y, {});', to: 'if (y && y.voy) put(y, {});',
     was: 'fame alone: Salerno and Benevento ahead of Capri and Sorrento for Naples (probe, Nov 25)' },
@@ -235,7 +235,7 @@ const PLANT = [
     was: '"Japan" ranked first as a day trip from Kyoto, "Cyclades" from Mykonos (live check, Nov 26)' },
   { id: 'lesser-place-jumps-queue', from: 'else if (unknown) { open = true; if (!last) break; } }', to: 'else if (unknown) { open = true; } }',
     was: 'Enköping offered from Stockholm while Sigtuna and Uppsala were still unanswered (live check, Nov 26)' },
-  { id: 'province-as-day-trip', from: 'if (srcHas2(y, /^(admin-area|region)$/) && !srcHas2(y, TRIP_PLACE) && !y.unesco) return false;', to: '',
+  { id: 'province-as-day-trip', from: 'if (!y.vt && srcHas2(y, /^(admin-area|region)$/) && !srcHas2(y, TRIP_PLACE) && !y.unesco) return false;', to: '',
     was: 'provinces and counties have travel-guide pages too (Split-Dalmatia County, Nov 25 probe)' },
   { id: 'drive-with-a-ferry', from: '&& !j.ferry && !j.none) best', to: '&& !j.none) best',
     was: 'a drive that takes a car ferry offered as "by road" (rule R-06: across water means a boat)' },
@@ -257,7 +257,7 @@ const PLANT = [
     was: '"Pearl River Delta" ranked as a day trip from Hong Kong (live check, Nov 26)' },
   { id: 'home-island-as-day-trip', from: 'if (ps.length && hav(centre, ps[0]) <= TRIP_KM_MIN) return [{ home: true }];', to: '',
     was: '"Cyclades" ranked as a day trip from Mykonos, "New Providence" from Nassau: the islands the city stands on (live check, Nov 26)' },
-  { id: 'trips-uncapped', from: 'if (added >= room) break;', to: '',
+  { id: 'trips-uncapped', from: 'if (added >= room) continue;', to: '',
     was: 'every place with a line offered: quantity, not the classics' },
   { id: 'travel-guide-words-for-our-time', from: 's.classic && s.travelSrc ? `<p class="travelnote tripway"', to: 'false ? `<p class="travelnote tripway"',
     was: '"as the travel guide says" printed before a time the travel guide never gave' },
