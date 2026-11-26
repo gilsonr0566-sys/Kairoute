@@ -134,7 +134,7 @@
     for (const x of list) { const e = endsOf(x); if (!e || !e[0] || !e[1]) continue; if (Math.abs(e[0].lat - a.lat) * kmLat > tol + 1e-6 || Math.abs(e[1].lat - b.lat) * kmLat > tol + 1e-6) continue; const off = Math.max(E.hav(e[0], a), E.hav(e[1], b)); if (off <= tol && (!best || off < best.off)) best = { x, A: e[0], B: e[1], off }; }
     return best; };
   // R-33, E48: the minutes a hill adds to a walk. A street route gives a walk's length, never its slope, and a walk's
-  // time came from the length alone: 21 walks up to the Acropolis, Lycabettus, castle hills and cliff towns were planned 5
+  // time came from the length alone: 21 walks up to hilltop ruins, castle hills and cliff towns were planned 5
   // to 12 min short (real-world check, Nov 24). Walkers' rule of thumb (Naismith, 1892, still the standard): 1 minute
   // more for every 10 m climbed. Coming down costs nothing on a gentle street, and 1 minute for every 30 m dropped
   // beyond a steep 8% (steps and steep lanes: Langmuir's correction). A slow walker (3.6 km/h) climbs slower in the

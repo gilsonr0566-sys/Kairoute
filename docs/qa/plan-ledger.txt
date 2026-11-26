@@ -1,0 +1,3091 @@
+# Plan ledger: what the planner plans for every saved test trip, in plain words.
+# Kept by tools/truth/plan-ledger.cjs. Never edit by hand: run it with --accept and commit the result with the change that caused it.
+
+## athens-booked
+day 1 2027-06-30 arrival athens | 11:45 to 16:58
+  11:45 start: Athens Airport (Eleftherios Venizelos)
+  Metro M3, Athens Airport (AIA) to Syntagma 69 min
+  12:54 fixed: Check in or drop bags 20 min
+  walk 2 min
+  13:16 meal Lunch: Eat at Milton's 60 min
+  walk 3 min
+  14:19 stop: Athens Cathedral and the Little Metropolis 25 min
+  walk 3 min
+  14:47 stop: Panagia Kapnikarea 15 min (hours not confirmed)
+  walk 4 min
+  15:06 stop: Monastiraki and the flea market 45 min
+  walk 9 min
+  16:00 stop: Plaka and Anafiotika 30 min
+  walk 4 min
+  16:34 stop: Agia Ekaterini (St Catherine's Church) 20 min (hours not confirmed)
+  walk 4 min
+  16:58 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Psaras 75 min
+  says: Plaka and Anafiotika gets 30 min, the walk between Agia Ekaterini (St Catherine's Church) and Athens Cathedral and the Little Metropolis, which are stops of their own (on its own it gets 60 min).
+  says: Lunch at Eat at Milton's is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Opening hours not confirmed for Panagia Kapnikarea and Agia Ekaterini (St Catherine's Church) on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 16 min left after the last stop, before the day ends (7:14 pm). Linger where you like. Corinth Canal needs about 3 h 24 min there and back with the visit, more than the time left. Also a trip of its own: Temple of Poseidon at Sounion, about 4 h 29 min.
+day 2 2027-07-01 land athens | 09:00 to 15:31
+  09:00 start: Hotel in Plaka
+  walk 5 min
+  09:05 stop: Theatre of Dionysus 30 min
+  walk 4 min
+  09:39 stop: Acropolis and Parthenon 120 min
+  walk 4 min
+  11:43 stop: Acropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou) 30 min
+  walk 11 min
+  12:24 meal Lunch: Booked lunch in Plaka 60 min
+  walk 10 min
+  13:34 stop: Areopagus (Mars Hill) 25 min
+  walk 5 min
+  14:04 stop: Ancient Agora 75 min
+  walk 12 min
+  15:31 end: Hotel in Plaka 0 min
+  20:30 evening Dinner: Booked dinner in Psyrri 75 min
+  says: Free time: about 2 h 29 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Corinth Canal needs about 3 h 24 min there and back with the visit, more than the time left. Also a trip of its own: Temple of Poseidon at Sounion, about 4 h 29 min.
+day 3 2027-07-02 land athens | 09:00 to 16:32
+  09:00 start: Hotel in Plaka
+  walk 12 min
+  09:12 stop: Syntagma Square and the changing of the guard 30 min
+  walk 16 min
+  09:58 stop: Lycabettus Hill 60 min
+  walk 12 min
+  11:10 stop: Byzantine and Christian Museum 75 min
+  walk 27 min
+  13:00 meal Lunch: Microulee 60 min
+  walk 4 min
+  14:04 stop: National Archaeological Museum 120 min
+  Metro M1, Omonia to Monastiraki 28 min
+  16:32 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Scholarchion 75 min
+  says: Lunch at Microulee is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 1 h 28 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Corinth Canal needs about 3 h 24 min there and back with the visit, more than the time left. Also a trip of its own: Temple of Poseidon at Sounion, about 4 h 29 min.
+day 4 2027-07-03 land athens | 09:00 to 17:43
+  09:00 start: Hotel in Plaka
+  Train A4, Athina to Corinth 153 min
+  11:33 stop: Ancient Corinth 82 min
+  walk 2 min
+  12:57 meal Lunch: Tavernakigamprou 35 min
+  Taxi or car 18 min
+  13:50 stop: Acrocorinth 75 min
+  Train A4, Corinth to Athina 158 min
+  17:43 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: O glykyz 75 min
+  says: A day trip to Ancient Corinth: the main sights of Athens fit on your other days.
+  says: In Ancient Corinth, places to eat on the map beside it: Tavernakigamprou, Orestis Cafe or Taverna tou Gambrou (check reviews before you go).
+  says: Lunch at Tavernakigamprou is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+day 5 2027-07-04 embark athens | 09:00 to 16:13 | leave by --:--
+  09:00 start: Hotel in Plaka
+  walk 7 min
+  09:07 stop: Roman Agora and Tower of the Winds 40 min
+  walk 16 min
+  10:03 stop: Philopappos Hill 45 min
+  walk 14 min
+  11:02 stop: Acropolis Museum 90 min
+  walk 7 min
+  12:39 stop: Temple of Olympian Zeus and Hadrian's Arch 35 min
+  walk 9 min
+  13:23 stop: National Garden 30 min
+  walk 6 min
+  13:59 meal Lunch: Iliada 60 min
+  walk 5 min
+  15:04 fixed: Collect bags 15 min
+  Taxi or car 54 min (15 kept)
+  16:13 end: Piraeus cruise terminals 0 min
+  says: Lunch at Iliada is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave Iliada by 4:16 pm, collect your bags at 4:21 pm, and leave for the cruise terminal by 4:36 pm.
+  says: Free time: about 1 h 17 min left after the last stop, before the time to be back (5:30 pm). Linger where you like. Corinth Canal needs about 3 h 24 min there and back with the visit, more than the time left. Also a trip of its own: Temple of Poseidon at Sounion, about 4 h 29 min.
+day 6 2027-07-05 port heraklion | 07:30 to 15:14 | leave by --:--
+  07:30 start: Heraklion cruise port
+  Taxi or car 30 min
+  08:00 stop: Palace of Knossos 105 min
+  Taxi or car 29 min
+  10:14 stop: Agios Minas Cathedral 20 min
+  walk 5 min
+  10:39 stop: 1866 Street market 30 min
+  walk 3 min
+  11:12 stop: Lions Square and 25th August Street 30 min
+  walk 0 min
+  11:45 meal Lunch: Kirkor 35 min
+  walk 2 min
+  12:22 stop: Church of Saint Titus 20 min
+  walk 4 min
+  12:46 stop: Heraklion Archaeological Museum 75 min
+  walk 9 min
+  14:10 stop: Venetian harbor and Koules fortress 40 min
+  walk 24 min (15 kept)
+  15:14 end: Heraklion cruise port 0 min
+  says: Lions Square and 25th August Street gets 30 min, the walk to Church of Saint Titus, which is a stop of its own (on its own it gets 40 min).
+  says: Leave for the ship by 3:21 pm.
+day 7 2027-07-06 port kusadasi | 09:30 to 17:09 | leave by --:--
+  09:30 start: Kusadasi cruise port
+  Taxi or car 49 min
+  10:19 stop: Basilica of Saint John 45 min
+  walk 9 min
+  11:13 stop: Temple of Artemis 15 min
+  Taxi or car 18 min
+  11:46 stop: Ancient Ephesus 115 min
+  walk 0 min
+  13:41 meal Lunch: A lunch you bring 35 min
+  Taxi or car 22 min
+  14:38 stop: House of the Virgin Mary 45 min
+  Taxi or car 40 min
+  16:03 stop: Pigeon Island castle 30 min (hours not confirmed)
+  walk 36 min (25 kept)
+  17:09 end: Kusadasi cruise port 0 min
+  says: Bring lunch for 1:41 pm at Ancient Ephesus: places to eat there aren't in the guide yet.
+  says: Leave for the ship by 5:09 pm.
+  says: Opening hours not confirmed for Pigeon Island castle on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 8 2027-07-07 port santorini | 08:00 to 18:30 | leave by --:--
+  08:00 start: Fira old port (tender landing)
+  Cable car 0 min
+  08:00 fixed: Cable car up (with the queue) 20 min
+  walk 7 min
+  08:27 stop: Fira caldera path 60 min
+  walk 3 min
+  09:30 stop: Museum of Prehistoric Thera 45 min
+  Taxi or car 35 min
+  10:50 stop: Oia village 120 min (hours not confirmed)
+  walk 2 min
+  12:52 meal Lunch: Terpsi 35 min
+  Taxi or car 47 min
+  14:14 stop: Akrotiri prehistoric town 75 min
+  Taxi or car 30 min
+  15:59 stop: Pyrgos village 60 min (hours not confirmed)
+  Taxi or car 26 min
+  17:25 fixed: Cable car down (the queue is longest when ships leave) 50 min
+  Cable car 15 min (15 kept)
+  18:30 end: Fira old port (tender landing) 0 min
+  says: Lunch at Terpsi is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:44 pm.
+  says: Opening hours not confirmed for Oia village and Pyrgos village on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 9 2027-07-08 port mykonos | 08:30 to 14:17 | leave by --:--
+  08:30 start: Mykonos new port (Tourlos)
+  walk 20 min
+  09:00 stop: Archaeological Museum of Mykonos 60 min
+  walk 7 min
+  10:07 stop: Agricultural Museum 60 min (hours not confirmed)
+  walk 6 min
+  11:13 stop: Mykonos Town (Chora) lanes 40 min
+  walk 3 min
+  11:56 stop: Panagia Paraportiani church 20 min (hours not confirmed)
+  walk 2 min
+  12:18 meal Lunch: Sea Satin by Gryparis 60 min
+  walk 2 min
+  13:20 stop: Kato Mili windmills 30 min (hours not confirmed)
+  Taxi or car 27 min (10 kept)
+  14:17 end: Mykonos new port (Tourlos) 0 min
+  folded in: littlevenice
+  says: Mykonos Town (Chora) lanes gets 40 min, the walk between Panagia Paraportiani church and Kato Mili windmills, which are stops of their own (on its own it gets 75 min).
+  says: Little Venice is inside Mykonos Town (Chora) lanes: seen on that visit (10 min more), not a stop of its own.
+  says: Lunch at Sea Satin by Gryparis is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 7:18 pm.
+  says: Opening hours not confirmed for Agricultural Museum, Panagia Paraportiani church and Kato Mili windmills on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Time left for Delos island (About 30 to 40 minutes each way by boat from the old harbor. Boats leave from about 9:00): not added on its own, since boats keep their own timetable. If you go, take a boat back that lands you by 7:15 pm.
+day 10 2027-07-09 port chania | 08:30 to 14:42 | leave by --:--
+  08:30 start: Souda Bay cruise port
+  Taxi or car 30 min
+  09:00 stop: Church of Saint Nicholas, Splantzia 20 min
+  walk 4 min
+  09:24 stop: Municipal Market (Agora) 30 min
+  walk 9 min
+  10:03 stop: Old town lanes and Topanas 60 min
+  walk 6 min
+  11:09 stop: Firkas fortress and Maritime Museum 40 min
+  walk 4 min
+  11:53 stop: Venetian harbor and lighthouse 60 min (hours not confirmed)
+  walk 2 min
+  12:55 meal Lunch: Mixalis 60 min
+  Taxi or car 47 min (15 kept)
+  14:42 end: Souda Bay cruise port 0 min
+  suggested: Souda Bay War Cemetery
+  says: Lunch at Mixalis is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 3:58 pm.
+  says: Opening hours not confirmed for Venetian harbor and lighthouse on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 3 min left after the last stop, before the time to be back (4:45 pm). Linger where you like. Souda Bay War Cemetery (about 44 min there and back with the visit) fits in the time left: pick it to plan it. Also a trip of its own: Balos lagoon, about 5 h 36 min.
+day 11 2027-07-10 sea | no plan
+day 12 2027-07-11 port messina | 08:30 to 15:13 | leave by --:--
+  08:57 start: Messina cruise terminal
+  walk 3 min
+  09:00 stop: Galleria Vittorio Emanuele III 60 min (hours not confirmed)
+  walk 2 min
+  10:02 stop: Palazzo del Monte di Pietà 30 min (hours not confirmed)
+  walk 5 min
+  10:37 stop: Messina Cathedral and the astronomical clock 50 min
+  walk 2 min
+  11:29 stop: Santissima Annunziata dei Catalani 15 min (hours not confirmed)
+  walk 0 min
+  11:45 meal Lunch: La Piazzetta 60 min
+  Tram Line 28, Municipio to Brasile / Imbarchi Caronte 30 min
+  13:15 stop: Regional Museum of Messina 75 min
+  Tram Line 28, Brasile / Imbarchi Caronte to Municipio 43 min (15 kept)
+  15:13 end: Messina cruise terminal 0 min
+  suggested: Santa Maria Alemanna; Fountain of Neptune; Sant'Eustochia; Madonna della Lettera
+  says: Lunch at La Piazzetta is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Galleria Vittorio Emanuele III opens at 9:00 am, so the day starts at 8:57 am: leave the ship then.
+  says: Leave for the ship by 4:02 pm.
+  says: Opening hours not confirmed for Galleria Vittorio Emanuele III, Palazzo del Monte di Pietà and Santissima Annunziata dei Catalani on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 32 min left after the last stop, before the time to be back (4:45 pm). Linger where you like. Reggio Calabria (ancient Rhegium) needs about 4 h 34 min there and back with the visit, more than the time left. Also a trip of its own: Taormina, about 6 h 12 min.
+day 13 2027-07-12 port naples | 07:30 to 16:51 | leave by --:--
+  08:36 start: Stazione Marittima (Naples cruise terminal)
+  Metro Line 1, Municipio to Duomo 24 min
+  09:00 stop: Castel Capuano 30 min (hours not confirmed)
+  walk 7 min
+  09:37 stop: Naples Cathedral and the Chapel of San Gennaro 35 min
+  walk 10 min
+  10:22 stop: Spaccanapoli and the historic center 35 min
+  walk 2 min
+  10:59 stop: Sansevero Chapel (Veiled Christ) 40 min
+  walk 7 min
+  11:46 meal Lunch: Re Lazzarone 60 min
+  walk 3 min
+  12:49 stop: National Archaeological Museum 90 min
+  walk 24 min
+  14:43 stop: Certosa di San Martino 60 min (hours not confirmed)
+  walk 18 min
+  16:01 stop: Piazza del Plebiscito and the Royal Palace 40 min
+  walk 10 min
+  16:51 end: Stazione Marittima (Naples cruise terminal) 0 min
+  suggested: Castel Sant'Elmo
+  says: Spaccanapoli and the historic center gets 35 min, the walk to Sansevero Chapel (Veiled Christ), which is a stop of its own (on its own it gets 75 min).
+  says: Lunch at Re Lazzarone is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Castel Capuano opens at 9:00 am, so the day starts at 8:36 am: leave the ship then.
+  says: Leave for the ship by 5:35 pm.
+  says: Opening hours not confirmed for Castel Capuano and Certosa di San Martino on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:39 | leave by --:--
+  07:30 start: Civitavecchia cruise port
+  Train FL5, Civitavecchia to Roma San Pietro 116 min
+  09:26 stop: Palazzo della Cancelleria 30 min (hours not confirmed)
+  Taxi or car 17 min
+  10:13 stop: Colosseum and Roman Forum 99 min
+  walk 3 min
+  11:55 meal Lunch: RoYaL Art Cafè 20 min
+  walk 22 min
+  12:37 stop: Trevi Fountain 20 min
+  walk 10 min
+  13:07 stop: Pantheon 30 min
+  walk 6 min
+  13:43 stop: Piazza Navona 25 min
+  walk 23 min
+  14:31 stop: Saint Peter's Square 30 min (hours not confirmed)
+  walk 5 min
+  15:06 stop: St Peter's Basilica 90 min
+  walk 8 min
+  16:44 stop: Vatican Museums 60 min
+  Taxi or car 115 min (25 kept)
+  19:39 end: Civitavecchia cruise port 0 min
+  says: Lunch at RoYaL Art Cafè is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:50 pm.
+  says: Opening hours not confirmed for Palazzo della Cancelleria and Saint Peter's Square on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 15 2027-07-14 sea | no plan
+day 16 2027-07-15 arrival barcelona | 08:00 to 14:35
+  08:00 start: Moll Adossat cruise terminals
+  Taxi or car 24 min
+  08:24 fixed: Check in or drop bags 20 min
+  walk 10 min
+  08:54 stop: La Rambla & La Boqueria market 45 min
+  walk 8 min
+  09:47 stop: Gothic Quarter & Cathedral 60 min
+  walk 8 min
+  10:55 stop: Santa Maria del Mar 30 min
+  walk 5 min
+  11:30 stop: El Born Centre de Cultura 30 min
+  walk 4 min
+  12:04 stop: Museu Picasso 75 min
+  walk 2 min
+  13:21 meal Lunch: Bar del Pla 60 min
+  walk 14 min
+  14:35 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: El Nacional 75 min
+  suggested: Plaça de Catalunya; Pont del Bisbe; Palau de la Música Catalana; Parc de la Ciutadella; Tibidabo
+  says: Pont del Bisbe is part of the Gothic Quarter & Cathedral walk: seen on that visit, not a stop of its own today.
+  says: Free time: about 3 h 55 min left after the last stop, before the day ends (6:30 pm). Linger where you like. Tibidabo (about 2 h 50 min there and back with the visit) is a trip of its own: pick it for a day to plan it. Also a trip of its own: Sitges, about 3 h 48 min.
+day 17 2027-07-16 land barcelona | 09:00 to 16:48
+  09:00 start: Hotel near Plaça de Catalunya
+  Metro L2, Passeig de Gràcia to Sagrada Família 18 min
+  09:18 stop: Sagrada Família 90 min
+  walk 15 min
+  11:03 stop: Sant Pau Recinte Modernista 60 min
+  Metro L5, Sant Pau | Dos de Maig to Diagonal 27 min
+  12:30 meal Lunch: Frankfurt'als Barela 60 min
+  walk 0 min
+  13:30 stop: Gràcia squares 45 min
+  walk 13 min
+  14:28 stop: Casa Milà (La Pedrera) 60 min
+  walk 8 min
+  15:36 stop: Casa Batlló 60 min
+  walk 12 min
+  16:48 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: Tapas 24 75 min
+  suggested: Plaça de Catalunya; Casa Amatller; Mercat de Sant Antoni; Columbus Monument; Bunkers del Carmel
+  says: Lunch at Frankfurt'als Barela is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 1 h 12 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Tibidabo needs about 2 h 20 min there and back with the visit, more than the time left. Also a trip of its own: Sitges, about 3 h 48 min.
+day 18 2027-07-17 land barcelona | 09:30 to 14:37
+  09:30 start: Hotel near Plaça de Catalunya
+  Taxi or car 79 min
+  10:49 stop: Montserrat monastery 115 min
+  walk 0 min
+  12:44 meal Lunch: A lunch you bring 35 min
+  Taxi or car 78 min
+  14:37 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: Nineteen 75 min
+  suggested: Plaça de Catalunya; Palau de la Música Catalana; Parc de la Ciutadella; Montjuïc Castle
+  says: Bring lunch for 12:44 pm at Montserrat monastery: places to eat there aren't in the guide yet.
+  says: Free time: about 2 h 53 min left after the last stop, before the day ends (5:30 pm). Linger where you like. Tibidabo (about 2 h 50 min there and back with the visit) is a trip of its own: pick it for a day to plan it. Also a trip of its own: Sitges, about 3 h 48 min.
+day 19 2027-07-18 departure barcelona | 09:00 to 12:05 | leave by --:--
+  09:00 start: Hotel near Plaça de Catalunya
+  Metro L3, Catalunya to Vallcarca 30 min
+  09:30 stop: Park Güell 75 min
+  Metro L3, Vallcarca to Catalunya 30 min
+  11:15 fixed: Collect bags 15 min
+  Taxi or car 35 min (15 kept)
+  12:05 end: Barcelona Sants station 0 min
+  suggested: Plaça de Catalunya
+  says: Leave Park Güell by 11:10 am, collect your bags at 11:40 am, and leave for the station by 11:55 am.
+day 20 2027-07-18 arrival madrid | 16:00 to 16:34
+  16:00 start: Madrid Atocha station
+  Metro L1, Atocha to Sol 14 min
+  16:14 fixed: Check in or drop bags 20 min
+  walk 0 min
+  16:34 end: Hotel near Puerta del Sol 0 min
+  18:30 evening Dinner: Casa Labra 75 min
+  says: Free time: about 5 h left after the last stop, before the day ends (9:34 pm). Linger where you like. El Escorial monastery needs about 5 h 36 min there and back with the visit, more than the time left. Also a trip of its own: Toledo, about 7 h 56 min.
+day 21 2027-07-19 land madrid | 09:00 to 17:07
+  09:42 start: Hotel near Puerta del Sol
+  walk 18 min
+  10:00 stop: Prado Museum 120 min
+  walk 2 min
+  12:02 meal Lunch: Un sabor excepcional 60 min
+  walk 10 min
+  13:12 stop: Retiro Park 60 min
+  Metro L2, Retiro to Ópera 28 min
+  14:40 stop: Royal Palace 90 min
+  walk 11 min
+  16:21 stop: Plaza Mayor and Puerta del Sol 40 min
+  walk 6 min
+  17:07 end: Hotel near Puerta del Sol 0 min
+  18:30 evening Dinner: Chocolatería San Ginés 75 min
+  suggested: Cuatro Torres Business Area; Madrid Río; Arco de la Victoria; Nuevos Ministerios
+  says: Lunch at Un sabor excepcional is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Prado Museum opens at 10:00 am, so the day starts at 9:42 am.
+day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
+  09:00 start: Hotel near Puerta del Sol
+  walk 5 min
+  09:05 stop: Chocolatería San Ginés 25 min (hours not confirmed)
+  walk 16 min
+  09:46 stop: Casa Gallardo 30 min (hours not confirmed)
+  walk 14 min
+  10:30 stop: Almudena Cathedral 25 min
+  walk 16 min
+  11:11 fixed: Collect bags 15 min
+  Taxi or car 62 min (15 kept)
+  12:28 end: Madrid-Barajas Airport, Terminal 4 0 min
+  says: Leave Almudena Cathedral by 11:27 am, collect your bags at 11:43 am, and leave for the airport by 11:58 am.
+  says: Opening hours not confirmed for Chocolatería San Ginés and Casa Gallardo on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## athens-overfilled
+day 1 2027-06-30 arrival athens | 11:45 to 16:58
+  11:45 start: Athens Airport (Eleftherios Venizelos)
+  Metro M3, Athens Airport (AIA) to Syntagma 69 min
+  12:54 fixed: Check in or drop bags 20 min
+  walk 2 min
+  13:16 meal Lunch: Eat at Milton's 60 min
+  walk 3 min
+  14:19 stop: Athens Cathedral and the Little Metropolis 25 min
+  walk 3 min
+  14:47 stop: Panagia Kapnikarea 15 min (hours not confirmed)
+  walk 4 min
+  15:06 stop: Monastiraki and the flea market 45 min
+  walk 9 min
+  16:00 stop: Plaka and Anafiotika 30 min
+  walk 4 min
+  16:34 stop: Agia Ekaterini (St Catherine's Church) 20 min (hours not confirmed)
+  walk 4 min
+  16:58 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Psaras 75 min
+  says: Plaka and Anafiotika gets 30 min, the walk between Agia Ekaterini (St Catherine's Church) and Athens Cathedral and the Little Metropolis, which are stops of their own (on its own it gets 60 min).
+  says: Lunch at Eat at Milton's is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Opening hours not confirmed for Panagia Kapnikarea and Agia Ekaterini (St Catherine's Church) on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 16 min left after the last stop, before the day ends (7:14 pm). Linger where you like. Acrocorinth needs about 6 h 27 min there and back with the visit, more than the time left. Also a trip of its own: Delphi, about 9 h 54 min.
+day 2 2027-07-01 land athens | 09:00 to 15:18
+  09:00 start: Hotel in Plaka
+  walk 5 min
+  09:05 stop: Theatre of Dionysus 30 min
+  walk 4 min
+  09:39 stop: Acropolis and Parthenon 120 min
+  walk 5 min
+  11:45 meal Lunch: Karyatides 60 min
+  walk 2 min
+  12:47 stop: Acropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou) 30 min
+  walk 4 min
+  13:21 stop: Areopagus (Mars Hill) 25 min
+  walk 5 min
+  13:51 stop: Ancient Agora 75 min
+  walk 12 min
+  15:18 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Scholarchion 75 min
+  says: Lunch at Karyatides is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 2 h 42 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Acrocorinth needs about 6 h 29 min there and back with the visit, more than the time left. Also a trip of its own: Delphi, about 9 h 54 min.
+day 3 2027-07-02 land athens | 09:00 to 16:32
+  09:00 start: Hotel in Plaka
+  walk 12 min
+  09:12 stop: Syntagma Square and the changing of the guard 30 min
+  walk 16 min
+  09:58 stop: Lycabettus Hill 60 min
+  walk 12 min
+  11:10 stop: Byzantine and Christian Museum 75 min
+  walk 27 min
+  13:00 meal Lunch: Microulee 60 min
+  walk 4 min
+  14:04 stop: National Archaeological Museum 120 min
+  Metro M1, Omonia to Monastiraki 28 min
+  16:32 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: O glykyz 75 min
+  says: Lunch at Microulee is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 1 h 28 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Acrocorinth needs about 6 h 21 min there and back with the visit, more than the time left. Also a trip of its own: Delphi, about 9 h 54 min.
+day 4 2027-07-03 land athens | 09:00 to 18:03
+  09:00 start: Hotel in Plaka
+  Taxi or car 97 min
+  10:37 stop: Temple of Poseidon at Sounion 60 min
+  Taxi or car 158 min
+  14:15 meal Lunch: Taverna tou Gambrou 20 min
+  walk 2 min
+  14:37 stop: Ancient Corinth 60 min
+  Taxi or car 24 min
+  16:01 stop: Corinth Canal 30 min
+  Taxi or car 92 min
+  18:03 end: Hotel in Plaka 0 min
+  18:33 evening Dinner: Tavern Kalokerinos 75 min
+  left out: acrocorinth-far; delphi-far
+  says: Acrocorinth needs about 1 h 45 min (the visit and the rides to it and on), and today's other stops already fill the time until 6:00 pm.
+  says: Delphi needs about 7 h 25 min (the visit and the rides to it and on), and today's other stops already fill the time until 6:00 pm.
+  says: A shorter visit to Ancient Corinth (1 h instead of 2 h) so the rest of the day fits.
+  says: A shorter visit to Temple of Poseidon at Sounion (1 h instead of 1 h 15 min) so the rest of the day fits.
+  says: In Ancient Corinth, places to eat on the map beside it: Tavernakigamprou, Orestis Cafe or Taverna tou Gambrou (check reviews before you go).
+  says: Lunch at Taverna tou Gambrou is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+day 5 2027-07-04 embark athens | 09:00 to 16:13 | leave by --:--
+  09:00 start: Hotel in Plaka
+  walk 7 min
+  09:07 stop: Roman Agora and Tower of the Winds 40 min
+  walk 16 min
+  10:03 stop: Philopappos Hill 45 min
+  walk 14 min
+  11:02 stop: Acropolis Museum 90 min
+  walk 7 min
+  12:39 stop: Temple of Olympian Zeus and Hadrian's Arch 35 min
+  walk 9 min
+  13:23 stop: National Garden 30 min
+  walk 6 min
+  13:59 meal Lunch: Iliada 60 min
+  walk 5 min
+  15:04 fixed: Collect bags 15 min
+  Taxi or car 54 min (15 kept)
+  16:13 end: Piraeus cruise terminals 0 min
+  says: Lunch at Iliada is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave Iliada by 4:16 pm, collect your bags at 4:21 pm, and leave for the cruise terminal by 4:36 pm.
+  says: Free time: about 1 h 17 min left after the last stop, before the time to be back (5:30 pm). Linger where you like. Acrocorinth needs about 6 h 29 min there and back with the visit, more than the time left. Also a trip of its own: Delphi, about 9 h 54 min.
+day 6 2027-07-05 port heraklion | 07:30 to 15:14 | leave by --:--
+  07:30 start: Heraklion cruise port
+  Taxi or car 30 min
+  08:00 stop: Palace of Knossos 105 min
+  Taxi or car 29 min
+  10:14 stop: Agios Minas Cathedral 20 min
+  walk 5 min
+  10:39 stop: 1866 Street market 30 min
+  walk 3 min
+  11:12 stop: Lions Square and 25th August Street 30 min
+  walk 0 min
+  11:45 meal Lunch: Kirkor 35 min
+  walk 2 min
+  12:22 stop: Church of Saint Titus 20 min
+  walk 4 min
+  12:46 stop: Heraklion Archaeological Museum 75 min
+  walk 9 min
+  14:10 stop: Venetian harbor and Koules fortress 40 min
+  walk 24 min (15 kept)
+  15:14 end: Heraklion cruise port 0 min
+  says: Lions Square and 25th August Street gets 30 min, the walk to Church of Saint Titus, which is a stop of its own (on its own it gets 40 min).
+  says: Leave for the ship by 3:21 pm.
+day 7 2027-07-06 port kusadasi | 09:30 to 17:09 | leave by --:--
+  09:30 start: Kusadasi cruise port
+  Taxi or car 49 min
+  10:19 stop: Basilica of Saint John 45 min
+  walk 9 min
+  11:13 stop: Temple of Artemis 15 min
+  Taxi or car 18 min
+  11:46 stop: Ancient Ephesus 115 min
+  walk 0 min
+  13:41 meal Lunch: A lunch you bring 35 min
+  Taxi or car 22 min
+  14:38 stop: House of the Virgin Mary 45 min
+  Taxi or car 40 min
+  16:03 stop: Pigeon Island castle 30 min (hours not confirmed)
+  walk 36 min (25 kept)
+  17:09 end: Kusadasi cruise port 0 min
+  says: Bring lunch for 1:41 pm at Ancient Ephesus: places to eat there aren't in the guide yet.
+  says: Leave for the ship by 5:09 pm.
+  says: Opening hours not confirmed for Pigeon Island castle on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 8 2027-07-07 port santorini | 08:00 to 18:30 | leave by --:--
+  08:00 start: Fira old port (tender landing)
+  Cable car 0 min
+  08:00 fixed: Cable car up (with the queue) 20 min
+  walk 7 min
+  08:27 stop: Fira caldera path 60 min
+  walk 3 min
+  09:30 stop: Museum of Prehistoric Thera 45 min
+  Taxi or car 35 min
+  10:50 stop: Oia village 120 min (hours not confirmed)
+  walk 2 min
+  12:52 meal Lunch: Terpsi 35 min
+  Taxi or car 47 min
+  14:14 stop: Akrotiri prehistoric town 75 min
+  Taxi or car 30 min
+  15:59 stop: Pyrgos village 60 min (hours not confirmed)
+  Taxi or car 26 min
+  17:25 fixed: Cable car down (the queue is longest when ships leave) 50 min
+  Cable car 15 min (15 kept)
+  18:30 end: Fira old port (tender landing) 0 min
+  says: Lunch at Terpsi is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:44 pm.
+  says: Opening hours not confirmed for Oia village and Pyrgos village on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 9 2027-07-08 port mykonos | 08:30 to 14:17 | leave by --:--
+  08:30 start: Mykonos new port (Tourlos)
+  walk 20 min
+  09:00 stop: Archaeological Museum of Mykonos 60 min
+  walk 7 min
+  10:07 stop: Agricultural Museum 60 min (hours not confirmed)
+  walk 6 min
+  11:13 stop: Mykonos Town (Chora) lanes 40 min
+  walk 3 min
+  11:56 stop: Panagia Paraportiani church 20 min (hours not confirmed)
+  walk 2 min
+  12:18 meal Lunch: Sea Satin by Gryparis 60 min
+  walk 2 min
+  13:20 stop: Kato Mili windmills 30 min (hours not confirmed)
+  Taxi or car 27 min (10 kept)
+  14:17 end: Mykonos new port (Tourlos) 0 min
+  folded in: littlevenice
+  says: Mykonos Town (Chora) lanes gets 40 min, the walk between Panagia Paraportiani church and Kato Mili windmills, which are stops of their own (on its own it gets 75 min).
+  says: Little Venice is inside Mykonos Town (Chora) lanes: seen on that visit (10 min more), not a stop of its own.
+  says: Lunch at Sea Satin by Gryparis is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 7:18 pm.
+  says: Opening hours not confirmed for Agricultural Museum, Panagia Paraportiani church and Kato Mili windmills on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Time left for Delos island (About 30 to 40 minutes each way by boat from the old harbor. Boats leave from about 9:00): not added on its own, since boats keep their own timetable. If you go, take a boat back that lands you by 7:15 pm.
+day 10 2027-07-09 port chania | 08:30 to 14:42 | leave by --:--
+  08:30 start: Souda Bay cruise port
+  Taxi or car 30 min
+  09:00 stop: Church of Saint Nicholas, Splantzia 20 min
+  walk 4 min
+  09:24 stop: Municipal Market (Agora) 30 min
+  walk 9 min
+  10:03 stop: Old town lanes and Topanas 60 min
+  walk 6 min
+  11:09 stop: Firkas fortress and Maritime Museum 40 min
+  walk 4 min
+  11:53 stop: Venetian harbor and lighthouse 60 min (hours not confirmed)
+  walk 2 min
+  12:55 meal Lunch: Mixalis 60 min
+  Taxi or car 47 min (15 kept)
+  14:42 end: Souda Bay cruise port 0 min
+  suggested: Souda Bay War Cemetery
+  says: Lunch at Mixalis is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 3:58 pm.
+  says: Opening hours not confirmed for Venetian harbor and lighthouse on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 3 min left after the last stop, before the time to be back (4:45 pm). Linger where you like. Souda Bay War Cemetery (about 44 min there and back with the visit) fits in the time left: pick it to plan it. Also a trip of its own: Balos lagoon, about 5 h 36 min.
+day 11 2027-07-10 sea | no plan
+day 12 2027-07-11 port messina | 08:30 to 15:13 | leave by --:--
+  08:57 start: Messina cruise terminal
+  walk 3 min
+  09:00 stop: Galleria Vittorio Emanuele III 60 min (hours not confirmed)
+  walk 2 min
+  10:02 stop: Palazzo del Monte di Pietà 30 min (hours not confirmed)
+  walk 5 min
+  10:37 stop: Messina Cathedral and the astronomical clock 50 min
+  walk 2 min
+  11:29 stop: Santissima Annunziata dei Catalani 15 min (hours not confirmed)
+  walk 0 min
+  11:45 meal Lunch: La Piazzetta 60 min
+  Tram Line 28, Municipio to Brasile / Imbarchi Caronte 30 min
+  13:15 stop: Regional Museum of Messina 75 min
+  Tram Line 28, Brasile / Imbarchi Caronte to Municipio 43 min (15 kept)
+  15:13 end: Messina cruise terminal 0 min
+  suggested: Santa Maria Alemanna; Fountain of Neptune; Sant'Eustochia; Madonna della Lettera
+  says: Lunch at La Piazzetta is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Galleria Vittorio Emanuele III opens at 9:00 am, so the day starts at 8:57 am: leave the ship then.
+  says: Leave for the ship by 4:02 pm.
+  says: Opening hours not confirmed for Galleria Vittorio Emanuele III, Palazzo del Monte di Pietà and Santissima Annunziata dei Catalani on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 32 min left after the last stop, before the time to be back (4:45 pm). Linger where you like. Reggio Calabria (ancient Rhegium) needs about 4 h 34 min there and back with the visit, more than the time left. Also a trip of its own: Taormina, about 6 h 12 min.
+day 13 2027-07-12 port naples | 07:30 to 16:51 | leave by --:--
+  08:36 start: Stazione Marittima (Naples cruise terminal)
+  Metro Line 1, Municipio to Duomo 24 min
+  09:00 stop: Castel Capuano 30 min (hours not confirmed)
+  walk 7 min
+  09:37 stop: Naples Cathedral and the Chapel of San Gennaro 35 min
+  walk 10 min
+  10:22 stop: Spaccanapoli and the historic center 35 min
+  walk 2 min
+  10:59 stop: Sansevero Chapel (Veiled Christ) 40 min
+  walk 7 min
+  11:46 meal Lunch: Re Lazzarone 60 min
+  walk 3 min
+  12:49 stop: National Archaeological Museum 90 min
+  walk 24 min
+  14:43 stop: Certosa di San Martino 60 min (hours not confirmed)
+  walk 18 min
+  16:01 stop: Piazza del Plebiscito and the Royal Palace 40 min
+  walk 10 min
+  16:51 end: Stazione Marittima (Naples cruise terminal) 0 min
+  suggested: Castel Sant'Elmo
+  says: Spaccanapoli and the historic center gets 35 min, the walk to Sansevero Chapel (Veiled Christ), which is a stop of its own (on its own it gets 75 min).
+  says: Lunch at Re Lazzarone is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Castel Capuano opens at 9:00 am, so the day starts at 8:36 am: leave the ship then.
+  says: Leave for the ship by 5:35 pm.
+  says: Opening hours not confirmed for Castel Capuano and Certosa di San Martino on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:39 | leave by --:--
+  07:30 start: Civitavecchia cruise port
+  Train FL5, Civitavecchia to Roma San Pietro 116 min
+  09:26 stop: Palazzo della Cancelleria 30 min (hours not confirmed)
+  Taxi or car 17 min
+  10:13 stop: Colosseum and Roman Forum 99 min
+  walk 3 min
+  11:55 meal Lunch: RoYaL Art Cafè 20 min
+  walk 22 min
+  12:37 stop: Trevi Fountain 20 min
+  walk 10 min
+  13:07 stop: Pantheon 30 min
+  walk 6 min
+  13:43 stop: Piazza Navona 25 min
+  walk 23 min
+  14:31 stop: Saint Peter's Square 30 min (hours not confirmed)
+  walk 5 min
+  15:06 stop: St Peter's Basilica 90 min
+  walk 8 min
+  16:44 stop: Vatican Museums 60 min
+  Taxi or car 115 min (25 kept)
+  19:39 end: Civitavecchia cruise port 0 min
+  says: Lunch at RoYaL Art Cafè is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:50 pm.
+  says: Opening hours not confirmed for Palazzo della Cancelleria and Saint Peter's Square on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 15 2027-07-14 sea | no plan
+day 16 2027-07-15 arrival barcelona | 08:00 to 14:35
+  08:00 start: Moll Adossat cruise terminals
+  Taxi or car 24 min
+  08:24 fixed: Check in or drop bags 20 min
+  walk 10 min
+  08:54 stop: La Rambla & La Boqueria market 45 min
+  walk 8 min
+  09:47 stop: Gothic Quarter & Cathedral 60 min
+  walk 8 min
+  10:55 stop: Santa Maria del Mar 30 min
+  walk 5 min
+  11:30 stop: El Born Centre de Cultura 30 min
+  walk 4 min
+  12:04 stop: Museu Picasso 75 min
+  walk 2 min
+  13:21 meal Lunch: Bar del Pla 60 min
+  walk 14 min
+  14:35 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: El Nacional 75 min
+  suggested: Plaça de Catalunya; Pont del Bisbe; Palau de la Música Catalana; Parc de la Ciutadella; Tibidabo
+  says: Pont del Bisbe is part of the Gothic Quarter & Cathedral walk: seen on that visit, not a stop of its own today.
+  says: Free time: about 3 h 55 min left after the last stop, before the day ends (6:30 pm). Linger where you like. Tibidabo (about 2 h 50 min there and back with the visit) is a trip of its own: pick it for a day to plan it. Also a trip of its own: Sitges, about 3 h 48 min.
+day 17 2027-07-16 land barcelona | 09:00 to 16:48
+  09:00 start: Hotel near Plaça de Catalunya
+  Metro L2, Passeig de Gràcia to Sagrada Família 18 min
+  09:18 stop: Sagrada Família 90 min
+  walk 15 min
+  11:03 stop: Sant Pau Recinte Modernista 60 min
+  Metro L5, Sant Pau | Dos de Maig to Diagonal 27 min
+  12:30 meal Lunch: Frankfurt'als Barela 60 min
+  walk 0 min
+  13:30 stop: Gràcia squares 45 min
+  walk 13 min
+  14:28 stop: Casa Milà (La Pedrera) 60 min
+  walk 8 min
+  15:36 stop: Casa Batlló 60 min
+  walk 12 min
+  16:48 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: Tapas 24 75 min
+  suggested: Plaça de Catalunya; Casa Amatller; Mercat de Sant Antoni; Columbus Monument; Bunkers del Carmel
+  says: Lunch at Frankfurt'als Barela is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 1 h 12 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Tibidabo needs about 2 h 20 min there and back with the visit, more than the time left. Also a trip of its own: Sitges, about 3 h 48 min.
+day 18 2027-07-17 land barcelona | 09:30 to 14:37
+  09:30 start: Hotel near Plaça de Catalunya
+  Taxi or car 79 min
+  10:49 stop: Montserrat monastery 115 min
+  walk 0 min
+  12:44 meal Lunch: A lunch you bring 35 min
+  Taxi or car 78 min
+  14:37 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: Nineteen 75 min
+  suggested: Plaça de Catalunya; Palau de la Música Catalana; Parc de la Ciutadella; Montjuïc Castle
+  says: Bring lunch for 12:44 pm at Montserrat monastery: places to eat there aren't in the guide yet.
+  says: Free time: about 2 h 53 min left after the last stop, before the day ends (5:30 pm). Linger where you like. Tibidabo (about 2 h 50 min there and back with the visit) is a trip of its own: pick it for a day to plan it. Also a trip of its own: Sitges, about 3 h 48 min.
+day 19 2027-07-18 departure barcelona | 09:00 to 12:05 | leave by --:--
+  09:00 start: Hotel near Plaça de Catalunya
+  Metro L3, Catalunya to Vallcarca 30 min
+  09:30 stop: Park Güell 75 min
+  Metro L3, Vallcarca to Catalunya 30 min
+  11:15 fixed: Collect bags 15 min
+  Taxi or car 35 min (15 kept)
+  12:05 end: Barcelona Sants station 0 min
+  suggested: Plaça de Catalunya
+  says: Leave Park Güell by 11:10 am, collect your bags at 11:40 am, and leave for the station by 11:55 am.
+day 20 2027-07-18 arrival madrid | 16:00 to 16:34
+  16:00 start: Madrid Atocha station
+  Metro L1, Atocha to Sol 14 min
+  16:14 fixed: Check in or drop bags 20 min
+  walk 0 min
+  16:34 end: Hotel near Puerta del Sol 0 min
+  18:30 evening Dinner: Casa Labra 75 min
+  says: Free time: about 5 h left after the last stop, before the day ends (9:34 pm). Linger where you like. El Escorial monastery needs about 5 h 36 min there and back with the visit, more than the time left. Also a trip of its own: Toledo, about 7 h 56 min.
+day 21 2027-07-19 land madrid | 09:00 to 17:07
+  09:42 start: Hotel near Puerta del Sol
+  walk 18 min
+  10:00 stop: Prado Museum 120 min
+  walk 2 min
+  12:02 meal Lunch: Un sabor excepcional 60 min
+  walk 10 min
+  13:12 stop: Retiro Park 60 min
+  Metro L2, Retiro to Ópera 28 min
+  14:40 stop: Royal Palace 90 min
+  walk 11 min
+  16:21 stop: Plaza Mayor and Puerta del Sol 40 min
+  walk 6 min
+  17:07 end: Hotel near Puerta del Sol 0 min
+  18:30 evening Dinner: Chocolatería San Ginés 75 min
+  suggested: Cuatro Torres Business Area; Madrid Río; Arco de la Victoria; Nuevos Ministerios
+  says: Lunch at Un sabor excepcional is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Prado Museum opens at 10:00 am, so the day starts at 9:42 am.
+day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
+  09:00 start: Hotel near Puerta del Sol
+  walk 5 min
+  09:05 stop: Chocolatería San Ginés 25 min (hours not confirmed)
+  walk 16 min
+  09:46 stop: Casa Gallardo 30 min (hours not confirmed)
+  walk 14 min
+  10:30 stop: Almudena Cathedral 25 min
+  walk 16 min
+  11:11 fixed: Collect bags 15 min
+  Taxi or car 62 min (15 kept)
+  12:28 end: Madrid-Barajas Airport, Terminal 4 0 min
+  says: Leave Almudena Cathedral by 11:27 am, collect your bags at 11:43 am, and leave for the airport by 11:58 am.
+  says: Opening hours not confirmed for Chocolatería San Ginés and Casa Gallardo on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## athens-short
+day 1 2027-06-30 arrival athens | 11:45 to 16:47
+  11:45 start: Athens Airport (Eleftherios Venizelos)
+  Metro M3, Athens Airport (AIA) to Syntagma 69 min
+  12:54 fixed: Check in or drop bags 20 min
+  walk 2 min
+  13:16 stop: Plaka and Anafiotika 35 min
+  walk 5 min
+  13:56 meal Lunch: Iliada 60 min
+  walk 6 min
+  15:02 stop: National Garden 30 min
+  walk 5 min
+  15:37 stop: Syntagma Square and the changing of the guard 30 min
+  walk 10 min
+  16:17 stop: Athens Cathedral and the Little Metropolis 25 min
+  walk 5 min
+  16:47 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Psaras 75 min
+  says: Agia Ekaterini (St Catherine's Church) is part of the Plaka and Anafiotika walk: seen on that visit, not a stop of its own today.
+  says: Plaka and Anafiotika gets 35 min, the walk to Athens Cathedral and the Little Metropolis, which you picked as a stop of its own (on its own it gets 60 min).
+  says: Lunch at Iliada is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+day 2 2027-07-01 land athens | 09:00 to 16:22
+  09:00 start: Hotel in Plaka
+  walk 7 min
+  09:07 stop: Panagia Kapnikarea 15 min (hours not confirmed)
+  walk 25 min
+  09:47 stop: National Archaeological Museum 120 min
+  walk 21 min
+  12:08 stop: Lycabettus Hill 60 min
+  walk 5 min
+  13:13 meal Lunch: F 60 min
+  walk 7 min
+  14:20 stop: Byzantine and Christian Museum 75 min
+  walk 23 min
+  15:58 stop: Agia Ekaterini (St Catherine's Church) 20 min (hours not confirmed)
+  walk 4 min
+  16:22 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Scholarchion 75 min
+  suggested: Philopappos Hill
+  says: Lunch at F is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Opening hours not confirmed for Panagia Kapnikarea and Agia Ekaterini (St Catherine's Church) on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 38 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Corinth Canal needs about 3 h 24 min there and back with the visit, more than the time left. Also a trip of its own: Temple of Poseidon at Sounion, about 4 h 29 min.
+day 3 2027-07-02 land athens | 09:00 to 14:42
+  09:00 start: Hotel in Plaka
+  walk 5 min
+  09:05 stop: Theatre of Dionysus 30 min
+  walk 7 min
+  09:42 stop: Acropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou) 30 min
+  walk 4 min
+  10:16 stop: Areopagus (Mars Hill) 25 min
+  walk 5 min
+  10:46 stop: Ancient Agora 75 min
+  walk 6 min
+  12:07 stop: Monastiraki and the flea market 45 min
+  walk 3 min
+  12:55 stop: Roman Agora and Tower of the Winds 40 min
+  walk 5 min
+  13:40 meal Lunch: Stamatopoulos tavern 60 min
+  walk 2 min
+  14:42 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: O glykyz 75 min
+  suggested: Philopappos Hill
+  says: Lunch at Stamatopoulos tavern is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 3 h 18 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Corinth Canal needs about 3 h 24 min there and back with the visit, more than the time left. Also a trip of its own: Temple of Poseidon at Sounion, about 4 h 29 min.
+day 4 2027-07-03 land athens | 09:00 to 17:43
+  09:00 start: Hotel in Plaka
+  Train A4, Athina to Corinth 153 min
+  11:33 stop: Ancient Corinth 82 min
+  walk 2 min
+  12:57 meal Lunch: Tavernakigamprou 35 min
+  Taxi or car 18 min
+  13:50 stop: Acrocorinth 75 min
+  Train A4, Corinth to Athina 158 min
+  17:43 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Tavern Kalokerinos 75 min
+  says: A day trip to Ancient Corinth: the main sights of Athens fit on your other days.
+  says: In Ancient Corinth, places to eat on the map beside it: Tavernakigamprou, Orestis Cafe or Taverna tou Gambrou (check reviews before you go).
+  says: Lunch at Tavernakigamprou is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+day 5 2027-07-04 embark athens | 09:00 to 15:43 | leave by --:--
+  09:00 start: Hotel in Plaka
+  walk 8 min
+  09:08 stop: Temple of Olympian Zeus and Hadrian's Arch 35 min
+  walk 7 min
+  09:50 stop: Acropolis Museum 90 min
+  walk 7 min
+  11:27 stop: Acropolis and Parthenon 120 min
+  walk 4 min
+  13:31 meal Lunch: Xenious Zeus 60 min
+  walk 3 min
+  14:34 fixed: Collect bags 15 min
+  Taxi or car 54 min (15 kept)
+  15:43 end: Piraeus cruise terminals 0 min
+  suggested: Philopappos Hill
+  says: Lunch at Xenious Zeus is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave Xenious Zeus by 4:18 pm, collect your bags at 4:21 pm, and leave for the cruise terminal by 4:36 pm.
+  says: Free time: about 1 h 47 min left after the last stop, before the time to be back (5:30 pm). Linger where you like. Corinth Canal needs about 3 h 24 min there and back with the visit, more than the time left. Also a trip of its own: Temple of Poseidon at Sounion, about 4 h 29 min.
+day 6 2027-07-05 port heraklion | 07:30 to 15:14 | leave by --:--
+  07:30 start: Heraklion cruise port
+  Taxi or car 30 min
+  08:00 stop: Palace of Knossos 105 min
+  Taxi or car 29 min
+  10:14 stop: Agios Minas Cathedral 20 min
+  walk 5 min
+  10:39 stop: 1866 Street market 30 min
+  walk 3 min
+  11:12 stop: Lions Square and 25th August Street 30 min
+  walk 0 min
+  11:45 meal Lunch: Kirkor 35 min
+  walk 2 min
+  12:22 stop: Church of Saint Titus 20 min
+  walk 4 min
+  12:46 stop: Heraklion Archaeological Museum 75 min
+  walk 9 min
+  14:10 stop: Venetian harbor and Koules fortress 40 min
+  walk 24 min (15 kept)
+  15:14 end: Heraklion cruise port 0 min
+  says: Lions Square and 25th August Street gets 30 min, the walk to Church of Saint Titus, which is a stop of its own (on its own it gets 40 min).
+  says: Leave for the ship by 3:21 pm.
+day 7 2027-07-06 port kusadasi | 09:30 to 17:09 | leave by --:--
+  09:30 start: Kusadasi cruise port
+  Taxi or car 49 min
+  10:19 stop: Basilica of Saint John 45 min
+  walk 9 min
+  11:13 stop: Temple of Artemis 15 min
+  Taxi or car 18 min
+  11:46 stop: Ancient Ephesus 115 min
+  walk 0 min
+  13:41 meal Lunch: A lunch you bring 35 min
+  Taxi or car 22 min
+  14:38 stop: House of the Virgin Mary 45 min
+  Taxi or car 40 min
+  16:03 stop: Pigeon Island castle 30 min (hours not confirmed)
+  walk 36 min (25 kept)
+  17:09 end: Kusadasi cruise port 0 min
+  says: Bring lunch for 1:41 pm at Ancient Ephesus: places to eat there aren't in the guide yet.
+  says: Leave for the ship by 5:09 pm.
+  says: Opening hours not confirmed for Pigeon Island castle on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 8 2027-07-07 port santorini | 08:00 to 18:30 | leave by --:--
+  08:00 start: Fira old port (tender landing)
+  Cable car 0 min
+  08:00 fixed: Cable car up (with the queue) 20 min
+  walk 7 min
+  08:27 stop: Fira caldera path 60 min
+  walk 3 min
+  09:30 stop: Museum of Prehistoric Thera 45 min
+  Taxi or car 35 min
+  10:50 stop: Oia village 120 min (hours not confirmed)
+  walk 2 min
+  12:52 meal Lunch: Terpsi 35 min
+  Taxi or car 47 min
+  14:14 stop: Akrotiri prehistoric town 75 min
+  Taxi or car 30 min
+  15:59 stop: Pyrgos village 60 min (hours not confirmed)
+  Taxi or car 26 min
+  17:25 fixed: Cable car down (the queue is longest when ships leave) 50 min
+  Cable car 15 min (15 kept)
+  18:30 end: Fira old port (tender landing) 0 min
+  says: Lunch at Terpsi is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:44 pm.
+  says: Opening hours not confirmed for Oia village and Pyrgos village on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 9 2027-07-08 port mykonos | 08:30 to 14:17 | leave by --:--
+  08:30 start: Mykonos new port (Tourlos)
+  walk 20 min
+  09:00 stop: Archaeological Museum of Mykonos 60 min
+  walk 7 min
+  10:07 stop: Agricultural Museum 60 min (hours not confirmed)
+  walk 6 min
+  11:13 stop: Mykonos Town (Chora) lanes 40 min
+  walk 3 min
+  11:56 stop: Panagia Paraportiani church 20 min (hours not confirmed)
+  walk 2 min
+  12:18 meal Lunch: Sea Satin by Gryparis 60 min
+  walk 2 min
+  13:20 stop: Kato Mili windmills 30 min (hours not confirmed)
+  Taxi or car 27 min (10 kept)
+  14:17 end: Mykonos new port (Tourlos) 0 min
+  folded in: littlevenice
+  says: Mykonos Town (Chora) lanes gets 40 min, the walk between Panagia Paraportiani church and Kato Mili windmills, which are stops of their own (on its own it gets 75 min).
+  says: Little Venice is inside Mykonos Town (Chora) lanes: seen on that visit (10 min more), not a stop of its own.
+  says: Lunch at Sea Satin by Gryparis is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 7:18 pm.
+  says: Opening hours not confirmed for Agricultural Museum, Panagia Paraportiani church and Kato Mili windmills on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Time left for Delos island (About 30 to 40 minutes each way by boat from the old harbor. Boats leave from about 9:00): not added on its own, since boats keep their own timetable. If you go, take a boat back that lands you by 7:15 pm.
+day 10 2027-07-09 port chania | 08:30 to 14:42 | leave by --:--
+  08:30 start: Souda Bay cruise port
+  Taxi or car 30 min
+  09:00 stop: Church of Saint Nicholas, Splantzia 20 min
+  walk 4 min
+  09:24 stop: Municipal Market (Agora) 30 min
+  walk 9 min
+  10:03 stop: Old town lanes and Topanas 60 min
+  walk 6 min
+  11:09 stop: Firkas fortress and Maritime Museum 40 min
+  walk 4 min
+  11:53 stop: Venetian harbor and lighthouse 60 min (hours not confirmed)
+  walk 2 min
+  12:55 meal Lunch: Mixalis 60 min
+  Taxi or car 47 min (15 kept)
+  14:42 end: Souda Bay cruise port 0 min
+  suggested: Souda Bay War Cemetery
+  says: Lunch at Mixalis is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 3:58 pm.
+  says: Opening hours not confirmed for Venetian harbor and lighthouse on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 3 min left after the last stop, before the time to be back (4:45 pm). Linger where you like. Souda Bay War Cemetery (about 44 min there and back with the visit) fits in the time left: pick it to plan it. Also a trip of its own: Balos lagoon, about 5 h 36 min.
+day 11 2027-07-10 sea | no plan
+day 12 2027-07-11 port messina | 08:30 to 15:13 | leave by --:--
+  08:57 start: Messina cruise terminal
+  walk 3 min
+  09:00 stop: Galleria Vittorio Emanuele III 60 min (hours not confirmed)
+  walk 2 min
+  10:02 stop: Palazzo del Monte di Pietà 30 min (hours not confirmed)
+  walk 5 min
+  10:37 stop: Messina Cathedral and the astronomical clock 50 min
+  walk 2 min
+  11:29 stop: Santissima Annunziata dei Catalani 15 min (hours not confirmed)
+  walk 0 min
+  11:45 meal Lunch: La Piazzetta 60 min
+  Tram Line 28, Municipio to Brasile / Imbarchi Caronte 30 min
+  13:15 stop: Regional Museum of Messina 75 min
+  Tram Line 28, Brasile / Imbarchi Caronte to Municipio 43 min (15 kept)
+  15:13 end: Messina cruise terminal 0 min
+  suggested: Santa Maria Alemanna; Fountain of Neptune; Sant'Eustochia; Madonna della Lettera
+  says: Lunch at La Piazzetta is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Galleria Vittorio Emanuele III opens at 9:00 am, so the day starts at 8:57 am: leave the ship then.
+  says: Leave for the ship by 4:02 pm.
+  says: Opening hours not confirmed for Galleria Vittorio Emanuele III, Palazzo del Monte di Pietà and Santissima Annunziata dei Catalani on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 32 min left after the last stop, before the time to be back (4:45 pm). Linger where you like. Reggio Calabria (ancient Rhegium) needs about 4 h 34 min there and back with the visit, more than the time left. Also a trip of its own: Taormina, about 6 h 12 min.
+day 13 2027-07-12 port naples | 07:30 to 16:51 | leave by --:--
+  08:36 start: Stazione Marittima (Naples cruise terminal)
+  Metro Line 1, Municipio to Duomo 24 min
+  09:00 stop: Castel Capuano 30 min (hours not confirmed)
+  walk 7 min
+  09:37 stop: Naples Cathedral and the Chapel of San Gennaro 35 min
+  walk 10 min
+  10:22 stop: Spaccanapoli and the historic center 35 min
+  walk 2 min
+  10:59 stop: Sansevero Chapel (Veiled Christ) 40 min
+  walk 7 min
+  11:46 meal Lunch: Re Lazzarone 60 min
+  walk 3 min
+  12:49 stop: National Archaeological Museum 90 min
+  walk 24 min
+  14:43 stop: Certosa di San Martino 60 min (hours not confirmed)
+  walk 18 min
+  16:01 stop: Piazza del Plebiscito and the Royal Palace 40 min
+  walk 10 min
+  16:51 end: Stazione Marittima (Naples cruise terminal) 0 min
+  suggested: Castel Sant'Elmo
+  says: Spaccanapoli and the historic center gets 35 min, the walk to Sansevero Chapel (Veiled Christ), which is a stop of its own (on its own it gets 75 min).
+  says: Lunch at Re Lazzarone is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Castel Capuano opens at 9:00 am, so the day starts at 8:36 am: leave the ship then.
+  says: Leave for the ship by 5:35 pm.
+  says: Opening hours not confirmed for Castel Capuano and Certosa di San Martino on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:39 | leave by --:--
+  07:30 start: Civitavecchia cruise port
+  Train FL5, Civitavecchia to Roma San Pietro 116 min
+  09:26 stop: Palazzo della Cancelleria 30 min (hours not confirmed)
+  Taxi or car 17 min
+  10:13 stop: Colosseum and Roman Forum 99 min
+  walk 3 min
+  11:55 meal Lunch: RoYaL Art Cafè 20 min
+  walk 22 min
+  12:37 stop: Trevi Fountain 20 min
+  walk 10 min
+  13:07 stop: Pantheon 30 min
+  walk 6 min
+  13:43 stop: Piazza Navona 25 min
+  walk 23 min
+  14:31 stop: Saint Peter's Square 30 min (hours not confirmed)
+  walk 5 min
+  15:06 stop: St Peter's Basilica 90 min
+  walk 8 min
+  16:44 stop: Vatican Museums 60 min
+  Taxi or car 115 min (25 kept)
+  19:39 end: Civitavecchia cruise port 0 min
+  says: Lunch at RoYaL Art Cafè is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:50 pm.
+  says: Opening hours not confirmed for Palazzo della Cancelleria and Saint Peter's Square on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 15 2027-07-14 sea | no plan
+day 16 2027-07-15 arrival barcelona | 08:00 to 14:35
+  08:00 start: Moll Adossat cruise terminals
+  Taxi or car 24 min
+  08:24 fixed: Check in or drop bags 20 min
+  walk 10 min
+  08:54 stop: La Rambla & La Boqueria market 45 min
+  walk 8 min
+  09:47 stop: Gothic Quarter & Cathedral 60 min
+  walk 8 min
+  10:55 stop: Santa Maria del Mar 30 min
+  walk 5 min
+  11:30 stop: El Born Centre de Cultura 30 min
+  walk 4 min
+  12:04 stop: Museu Picasso 75 min
+  walk 2 min
+  13:21 meal Lunch: Bar del Pla 60 min
+  walk 14 min
+  14:35 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: El Nacional 75 min
+  suggested: Plaça de Catalunya; Pont del Bisbe; Palau de la Música Catalana; Parc de la Ciutadella; Tibidabo
+  says: Pont del Bisbe is part of the Gothic Quarter & Cathedral walk: seen on that visit, not a stop of its own today.
+  says: Free time: about 3 h 55 min left after the last stop, before the day ends (6:30 pm). Linger where you like. Tibidabo (about 2 h 50 min there and back with the visit) is a trip of its own: pick it for a day to plan it. Also a trip of its own: Sitges, about 3 h 48 min.
+day 17 2027-07-16 land barcelona | 09:00 to 16:48
+  09:00 start: Hotel near Plaça de Catalunya
+  Metro L2, Passeig de Gràcia to Sagrada Família 18 min
+  09:18 stop: Sagrada Família 90 min
+  walk 15 min
+  11:03 stop: Sant Pau Recinte Modernista 60 min
+  Metro L5, Sant Pau | Dos de Maig to Diagonal 27 min
+  12:30 meal Lunch: Frankfurt'als Barela 60 min
+  walk 0 min
+  13:30 stop: Gràcia squares 45 min
+  walk 13 min
+  14:28 stop: Casa Milà (La Pedrera) 60 min
+  walk 8 min
+  15:36 stop: Casa Batlló 60 min
+  walk 12 min
+  16:48 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: Tapas 24 75 min
+  suggested: Plaça de Catalunya; Casa Amatller; Mercat de Sant Antoni; Columbus Monument; Bunkers del Carmel
+  says: Lunch at Frankfurt'als Barela is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 1 h 12 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Tibidabo needs about 2 h 20 min there and back with the visit, more than the time left. Also a trip of its own: Sitges, about 3 h 48 min.
+day 18 2027-07-17 land barcelona | 09:30 to 14:37
+  09:30 start: Hotel near Plaça de Catalunya
+  Taxi or car 79 min
+  10:49 stop: Montserrat monastery 115 min
+  walk 0 min
+  12:44 meal Lunch: A lunch you bring 35 min
+  Taxi or car 78 min
+  14:37 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: Nineteen 75 min
+  suggested: Plaça de Catalunya; Palau de la Música Catalana; Parc de la Ciutadella; Montjuïc Castle
+  says: Bring lunch for 12:44 pm at Montserrat monastery: places to eat there aren't in the guide yet.
+  says: Free time: about 2 h 53 min left after the last stop, before the day ends (5:30 pm). Linger where you like. Tibidabo (about 2 h 50 min there and back with the visit) is a trip of its own: pick it for a day to plan it. Also a trip of its own: Sitges, about 3 h 48 min.
+day 19 2027-07-18 departure barcelona | 09:00 to 12:05 | leave by --:--
+  09:00 start: Hotel near Plaça de Catalunya
+  Metro L3, Catalunya to Vallcarca 30 min
+  09:30 stop: Park Güell 75 min
+  Metro L3, Vallcarca to Catalunya 30 min
+  11:15 fixed: Collect bags 15 min
+  Taxi or car 35 min (15 kept)
+  12:05 end: Barcelona Sants station 0 min
+  suggested: Plaça de Catalunya
+  says: Leave Park Güell by 11:10 am, collect your bags at 11:40 am, and leave for the station by 11:55 am.
+day 20 2027-07-18 arrival madrid | 16:00 to 16:34
+  16:00 start: Madrid Atocha station
+  Metro L1, Atocha to Sol 14 min
+  16:14 fixed: Check in or drop bags 20 min
+  walk 0 min
+  16:34 end: Hotel near Puerta del Sol 0 min
+  18:30 evening Dinner: Casa Labra 75 min
+  says: Free time: about 5 h left after the last stop, before the day ends (9:34 pm). Linger where you like. El Escorial monastery needs about 5 h 36 min there and back with the visit, more than the time left. Also a trip of its own: Toledo, about 7 h 56 min.
+day 21 2027-07-19 land madrid | 09:00 to 17:07
+  09:42 start: Hotel near Puerta del Sol
+  walk 18 min
+  10:00 stop: Prado Museum 120 min
+  walk 2 min
+  12:02 meal Lunch: Un sabor excepcional 60 min
+  walk 10 min
+  13:12 stop: Retiro Park 60 min
+  Metro L2, Retiro to Ópera 28 min
+  14:40 stop: Royal Palace 90 min
+  walk 11 min
+  16:21 stop: Plaza Mayor and Puerta del Sol 40 min
+  walk 6 min
+  17:07 end: Hotel near Puerta del Sol 0 min
+  18:30 evening Dinner: Chocolatería San Ginés 75 min
+  suggested: Cuatro Torres Business Area; Madrid Río; Arco de la Victoria; Nuevos Ministerios
+  says: Lunch at Un sabor excepcional is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Prado Museum opens at 10:00 am, so the day starts at 9:42 am.
+day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
+  09:00 start: Hotel near Puerta del Sol
+  walk 5 min
+  09:05 stop: Chocolatería San Ginés 25 min (hours not confirmed)
+  walk 16 min
+  09:46 stop: Casa Gallardo 30 min (hours not confirmed)
+  walk 14 min
+  10:30 stop: Almudena Cathedral 25 min
+  walk 16 min
+  11:11 fixed: Collect bags 15 min
+  Taxi or car 62 min (15 kept)
+  12:28 end: Madrid-Barajas Airport, Terminal 4 0 min
+  says: Leave Almudena Cathedral by 11:27 am, collect your bags at 11:43 am, and leave for the airport by 11:58 am.
+  says: Opening hours not confirmed for Chocolatería San Ginés and Casa Gallardo on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## corinth-day
+day 1 2027-06-30 arrival athens | 11:45 to 16:58
+  11:45 start: Athens Airport (Eleftherios Venizelos)
+  Metro M3, Athens Airport (AIA) to Syntagma 69 min
+  12:54 fixed: Check in or drop bags 20 min
+  walk 2 min
+  13:16 meal Lunch: Eat at Milton's 60 min
+  walk 3 min
+  14:19 stop: Athens Cathedral and the Little Metropolis 25 min
+  walk 3 min
+  14:47 stop: Panagia Kapnikarea 15 min (hours not confirmed)
+  walk 4 min
+  15:06 stop: Monastiraki and the flea market 45 min
+  walk 9 min
+  16:00 stop: Plaka and Anafiotika 30 min
+  walk 4 min
+  16:34 stop: Agia Ekaterini (St Catherine's Church) 20 min (hours not confirmed)
+  walk 4 min
+  16:58 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Psaras 75 min
+  says: Plaka and Anafiotika gets 30 min, the walk between Agia Ekaterini (St Catherine's Church) and Athens Cathedral and the Little Metropolis, which are stops of their own (on its own it gets 60 min).
+  says: Lunch at Eat at Milton's is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Opening hours not confirmed for Panagia Kapnikarea and Agia Ekaterini (St Catherine's Church) on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 16 min left after the last stop, before the day ends (7:14 pm). Linger where you like. Temple of Poseidon at Sounion needs about 4 h 29 min there and back with the visit, more than the time left. Also a trip of its own: Delphi, about 9 h 54 min.
+day 2 2027-07-01 land athens | 09:00 to 15:18
+  09:00 start: Hotel in Plaka
+  walk 5 min
+  09:05 stop: Theatre of Dionysus 30 min
+  walk 4 min
+  09:39 stop: Acropolis and Parthenon 120 min
+  walk 5 min
+  11:45 meal Lunch: Karyatides 60 min
+  walk 2 min
+  12:47 stop: Acropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou) 30 min
+  walk 4 min
+  13:21 stop: Areopagus (Mars Hill) 25 min
+  walk 5 min
+  13:51 stop: Ancient Agora 75 min
+  walk 12 min
+  15:18 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Scholarchion 75 min
+  says: Lunch at Karyatides is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 2 h 42 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Temple of Poseidon at Sounion needs about 4 h 29 min there and back with the visit, more than the time left. Also a trip of its own: Delphi, about 9 h 54 min.
+day 3 2027-07-02 land athens | 09:00 to 16:32
+  09:00 start: Hotel in Plaka
+  walk 12 min
+  09:12 stop: Syntagma Square and the changing of the guard 30 min
+  walk 16 min
+  09:58 stop: Lycabettus Hill 60 min
+  walk 12 min
+  11:10 stop: Byzantine and Christian Museum 75 min
+  walk 27 min
+  13:00 meal Lunch: Microulee 60 min
+  walk 4 min
+  14:04 stop: National Archaeological Museum 120 min
+  Metro M1, Omonia to Monastiraki 28 min
+  16:32 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: O glykyz 75 min
+  says: Lunch at Microulee is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 1 h 28 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Temple of Poseidon at Sounion needs about 4 h 29 min there and back with the visit, more than the time left. Also a trip of its own: Delphi, about 9 h 54 min.
+day 4 2027-07-03 land athens | 09:00 to 18:37
+  09:00 start: Hotel in Plaka
+  Taxi or car 87 min
+  10:27 stop: Corinth Canal 30 min
+  Taxi or car 27 min
+  11:24 stop: Ancient Corinth 120 min
+  Taxi or car 18 min
+  13:42 meal Lunch: Castro 60 min
+  walk 2 min
+  14:44 stop: Acrocorinth 75 min
+  Train A4, Corinth to Athina 158 min
+  18:37 end: Hotel in Plaka 0 min
+  19:07 evening Dinner: Tavern Kalokerinos 75 min
+  says: In Ancient Corinth, places to eat on the map beside it: Tavernakigamprou, Orestis Cafe or Taverna tou Gambrou (check reviews before you go).
+  says: Lunch at Castro is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+day 5 2027-07-04 embark athens | 09:00 to 16:13 | leave by --:--
+  09:00 start: Hotel in Plaka
+  walk 7 min
+  09:07 stop: Roman Agora and Tower of the Winds 40 min
+  walk 16 min
+  10:03 stop: Philopappos Hill 45 min
+  walk 14 min
+  11:02 stop: Acropolis Museum 90 min
+  walk 7 min
+  12:39 stop: Temple of Olympian Zeus and Hadrian's Arch 35 min
+  walk 9 min
+  13:23 stop: National Garden 30 min
+  walk 6 min
+  13:59 meal Lunch: Iliada 60 min
+  walk 5 min
+  15:04 fixed: Collect bags 15 min
+  Taxi or car 54 min (15 kept)
+  16:13 end: Piraeus cruise terminals 0 min
+  says: Lunch at Iliada is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave Iliada by 4:16 pm, collect your bags at 4:21 pm, and leave for the cruise terminal by 4:36 pm.
+  says: Free time: about 1 h 17 min left after the last stop, before the time to be back (5:30 pm). Linger where you like. Temple of Poseidon at Sounion needs about 4 h 29 min there and back with the visit, more than the time left. Also a trip of its own: Delphi, about 9 h 54 min.
+day 6 2027-07-05 port heraklion | 07:30 to 15:14 | leave by --:--
+  07:30 start: Heraklion cruise port
+  Taxi or car 30 min
+  08:00 stop: Palace of Knossos 105 min
+  Taxi or car 29 min
+  10:14 stop: Agios Minas Cathedral 20 min
+  walk 5 min
+  10:39 stop: 1866 Street market 30 min
+  walk 3 min
+  11:12 stop: Lions Square and 25th August Street 30 min
+  walk 0 min
+  11:45 meal Lunch: Kirkor 35 min
+  walk 2 min
+  12:22 stop: Church of Saint Titus 20 min
+  walk 4 min
+  12:46 stop: Heraklion Archaeological Museum 75 min
+  walk 9 min
+  14:10 stop: Venetian harbor and Koules fortress 40 min
+  walk 24 min (15 kept)
+  15:14 end: Heraklion cruise port 0 min
+  says: Lions Square and 25th August Street gets 30 min, the walk to Church of Saint Titus, which is a stop of its own (on its own it gets 40 min).
+  says: Leave for the ship by 3:21 pm.
+day 7 2027-07-06 port kusadasi | 09:30 to 17:09 | leave by --:--
+  09:30 start: Kusadasi cruise port
+  Taxi or car 49 min
+  10:19 stop: Basilica of Saint John 45 min
+  walk 9 min
+  11:13 stop: Temple of Artemis 15 min
+  Taxi or car 18 min
+  11:46 stop: Ancient Ephesus 115 min
+  walk 0 min
+  13:41 meal Lunch: A lunch you bring 35 min
+  Taxi or car 22 min
+  14:38 stop: House of the Virgin Mary 45 min
+  Taxi or car 40 min
+  16:03 stop: Pigeon Island castle 30 min (hours not confirmed)
+  walk 36 min (25 kept)
+  17:09 end: Kusadasi cruise port 0 min
+  says: Bring lunch for 1:41 pm at Ancient Ephesus: places to eat there aren't in the guide yet.
+  says: Leave for the ship by 5:09 pm.
+  says: Opening hours not confirmed for Pigeon Island castle on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 8 2027-07-07 port santorini | 08:00 to 18:30 | leave by --:--
+  08:00 start: Fira old port (tender landing)
+  Cable car 0 min
+  08:00 fixed: Cable car up (with the queue) 20 min
+  walk 7 min
+  08:27 stop: Fira caldera path 60 min
+  walk 3 min
+  09:30 stop: Museum of Prehistoric Thera 45 min
+  Taxi or car 35 min
+  10:50 stop: Oia village 120 min (hours not confirmed)
+  walk 2 min
+  12:52 meal Lunch: Terpsi 35 min
+  Taxi or car 47 min
+  14:14 stop: Akrotiri prehistoric town 75 min
+  Taxi or car 30 min
+  15:59 stop: Pyrgos village 60 min (hours not confirmed)
+  Taxi or car 26 min
+  17:25 fixed: Cable car down (the queue is longest when ships leave) 50 min
+  Cable car 15 min (15 kept)
+  18:30 end: Fira old port (tender landing) 0 min
+  says: Lunch at Terpsi is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:44 pm.
+  says: Opening hours not confirmed for Oia village and Pyrgos village on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 9 2027-07-08 port mykonos | 08:30 to 14:17 | leave by --:--
+  08:30 start: Mykonos new port (Tourlos)
+  walk 20 min
+  09:00 stop: Archaeological Museum of Mykonos 60 min
+  walk 7 min
+  10:07 stop: Agricultural Museum 60 min (hours not confirmed)
+  walk 6 min
+  11:13 stop: Mykonos Town (Chora) lanes 40 min
+  walk 3 min
+  11:56 stop: Panagia Paraportiani church 20 min (hours not confirmed)
+  walk 2 min
+  12:18 meal Lunch: Sea Satin by Gryparis 60 min
+  walk 2 min
+  13:20 stop: Kato Mili windmills 30 min (hours not confirmed)
+  Taxi or car 27 min (10 kept)
+  14:17 end: Mykonos new port (Tourlos) 0 min
+  folded in: littlevenice
+  says: Mykonos Town (Chora) lanes gets 40 min, the walk between Panagia Paraportiani church and Kato Mili windmills, which are stops of their own (on its own it gets 75 min).
+  says: Little Venice is inside Mykonos Town (Chora) lanes: seen on that visit (10 min more), not a stop of its own.
+  says: Lunch at Sea Satin by Gryparis is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 7:18 pm.
+  says: Opening hours not confirmed for Agricultural Museum, Panagia Paraportiani church and Kato Mili windmills on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Time left for Delos island (About 30 to 40 minutes each way by boat from the old harbor. Boats leave from about 9:00): not added on its own, since boats keep their own timetable. If you go, take a boat back that lands you by 7:15 pm.
+day 10 2027-07-09 port chania | 08:30 to 14:42 | leave by --:--
+  08:30 start: Souda Bay cruise port
+  Taxi or car 30 min
+  09:00 stop: Church of Saint Nicholas, Splantzia 20 min
+  walk 4 min
+  09:24 stop: Municipal Market (Agora) 30 min
+  walk 9 min
+  10:03 stop: Old town lanes and Topanas 60 min
+  walk 6 min
+  11:09 stop: Firkas fortress and Maritime Museum 40 min
+  walk 4 min
+  11:53 stop: Venetian harbor and lighthouse 60 min (hours not confirmed)
+  walk 2 min
+  12:55 meal Lunch: Mixalis 60 min
+  Taxi or car 47 min (15 kept)
+  14:42 end: Souda Bay cruise port 0 min
+  suggested: Souda Bay War Cemetery
+  says: Lunch at Mixalis is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 3:58 pm.
+  says: Opening hours not confirmed for Venetian harbor and lighthouse on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 3 min left after the last stop, before the time to be back (4:45 pm). Linger where you like. Souda Bay War Cemetery (about 44 min there and back with the visit) fits in the time left: pick it to plan it. Also a trip of its own: Balos lagoon, about 5 h 36 min.
+day 11 2027-07-10 sea | no plan
+day 12 2027-07-11 port messina | 08:30 to 15:13 | leave by --:--
+  08:57 start: Messina cruise terminal
+  walk 3 min
+  09:00 stop: Galleria Vittorio Emanuele III 60 min (hours not confirmed)
+  walk 2 min
+  10:02 stop: Palazzo del Monte di Pietà 30 min (hours not confirmed)
+  walk 5 min
+  10:37 stop: Messina Cathedral and the astronomical clock 50 min
+  walk 2 min
+  11:29 stop: Santissima Annunziata dei Catalani 15 min (hours not confirmed)
+  walk 0 min
+  11:45 meal Lunch: La Piazzetta 60 min
+  Tram Line 28, Municipio to Brasile / Imbarchi Caronte 30 min
+  13:15 stop: Regional Museum of Messina 75 min
+  Tram Line 28, Brasile / Imbarchi Caronte to Municipio 43 min (15 kept)
+  15:13 end: Messina cruise terminal 0 min
+  suggested: Santa Maria Alemanna; Fountain of Neptune; Sant'Eustochia; Madonna della Lettera
+  says: Lunch at La Piazzetta is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Galleria Vittorio Emanuele III opens at 9:00 am, so the day starts at 8:57 am: leave the ship then.
+  says: Leave for the ship by 4:02 pm.
+  says: Opening hours not confirmed for Galleria Vittorio Emanuele III, Palazzo del Monte di Pietà and Santissima Annunziata dei Catalani on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 32 min left after the last stop, before the time to be back (4:45 pm). Linger where you like. Reggio Calabria (ancient Rhegium) needs about 4 h 34 min there and back with the visit, more than the time left. Also a trip of its own: Taormina, about 6 h 12 min.
+day 13 2027-07-12 port naples | 07:30 to 16:51 | leave by --:--
+  08:36 start: Stazione Marittima (Naples cruise terminal)
+  Metro Line 1, Municipio to Duomo 24 min
+  09:00 stop: Castel Capuano 30 min (hours not confirmed)
+  walk 7 min
+  09:37 stop: Naples Cathedral and the Chapel of San Gennaro 35 min
+  walk 10 min
+  10:22 stop: Spaccanapoli and the historic center 35 min
+  walk 2 min
+  10:59 stop: Sansevero Chapel (Veiled Christ) 40 min
+  walk 7 min
+  11:46 meal Lunch: Re Lazzarone 60 min
+  walk 3 min
+  12:49 stop: National Archaeological Museum 90 min
+  walk 24 min
+  14:43 stop: Certosa di San Martino 60 min (hours not confirmed)
+  walk 18 min
+  16:01 stop: Piazza del Plebiscito and the Royal Palace 40 min
+  walk 10 min
+  16:51 end: Stazione Marittima (Naples cruise terminal) 0 min
+  suggested: Castel Sant'Elmo
+  says: Spaccanapoli and the historic center gets 35 min, the walk to Sansevero Chapel (Veiled Christ), which is a stop of its own (on its own it gets 75 min).
+  says: Lunch at Re Lazzarone is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Castel Capuano opens at 9:00 am, so the day starts at 8:36 am: leave the ship then.
+  says: Leave for the ship by 5:35 pm.
+  says: Opening hours not confirmed for Castel Capuano and Certosa di San Martino on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:39 | leave by --:--
+  07:30 start: Civitavecchia cruise port
+  Train FL5, Civitavecchia to Roma San Pietro 116 min
+  09:26 stop: Palazzo della Cancelleria 30 min (hours not confirmed)
+  Taxi or car 17 min
+  10:13 stop: Colosseum and Roman Forum 99 min
+  walk 3 min
+  11:55 meal Lunch: RoYaL Art Cafè 20 min
+  walk 22 min
+  12:37 stop: Trevi Fountain 20 min
+  walk 10 min
+  13:07 stop: Pantheon 30 min
+  walk 6 min
+  13:43 stop: Piazza Navona 25 min
+  walk 23 min
+  14:31 stop: Saint Peter's Square 30 min (hours not confirmed)
+  walk 5 min
+  15:06 stop: St Peter's Basilica 90 min
+  walk 8 min
+  16:44 stop: Vatican Museums 60 min
+  Taxi or car 115 min (25 kept)
+  19:39 end: Civitavecchia cruise port 0 min
+  says: Lunch at RoYaL Art Cafè is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:50 pm.
+  says: Opening hours not confirmed for Palazzo della Cancelleria and Saint Peter's Square on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 15 2027-07-14 sea | no plan
+day 16 2027-07-15 arrival barcelona | 08:00 to 14:35
+  08:00 start: Moll Adossat cruise terminals
+  Taxi or car 24 min
+  08:24 fixed: Check in or drop bags 20 min
+  walk 10 min
+  08:54 stop: La Rambla & La Boqueria market 45 min
+  walk 8 min
+  09:47 stop: Gothic Quarter & Cathedral 60 min
+  walk 8 min
+  10:55 stop: Santa Maria del Mar 30 min
+  walk 5 min
+  11:30 stop: El Born Centre de Cultura 30 min
+  walk 4 min
+  12:04 stop: Museu Picasso 75 min
+  walk 2 min
+  13:21 meal Lunch: Bar del Pla 60 min
+  walk 14 min
+  14:35 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: El Nacional 75 min
+  suggested: Plaça de Catalunya; Pont del Bisbe; Palau de la Música Catalana; Parc de la Ciutadella; Tibidabo
+  says: Pont del Bisbe is part of the Gothic Quarter & Cathedral walk: seen on that visit, not a stop of its own today.
+  says: Free time: about 3 h 55 min left after the last stop, before the day ends (6:30 pm). Linger where you like. Tibidabo (about 2 h 50 min there and back with the visit) is a trip of its own: pick it for a day to plan it. Also a trip of its own: Sitges, about 3 h 48 min.
+day 17 2027-07-16 land barcelona | 09:00 to 16:48
+  09:00 start: Hotel near Plaça de Catalunya
+  Metro L2, Passeig de Gràcia to Sagrada Família 18 min
+  09:18 stop: Sagrada Família 90 min
+  walk 15 min
+  11:03 stop: Sant Pau Recinte Modernista 60 min
+  Metro L5, Sant Pau | Dos de Maig to Diagonal 27 min
+  12:30 meal Lunch: Frankfurt'als Barela 60 min
+  walk 0 min
+  13:30 stop: Gràcia squares 45 min
+  walk 13 min
+  14:28 stop: Casa Milà (La Pedrera) 60 min
+  walk 8 min
+  15:36 stop: Casa Batlló 60 min
+  walk 12 min
+  16:48 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: Tapas 24 75 min
+  suggested: Plaça de Catalunya; Casa Amatller; Mercat de Sant Antoni; Columbus Monument; Bunkers del Carmel
+  says: Lunch at Frankfurt'als Barela is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 1 h 12 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Tibidabo needs about 2 h 20 min there and back with the visit, more than the time left. Also a trip of its own: Sitges, about 3 h 48 min.
+day 18 2027-07-17 land barcelona | 09:30 to 14:37
+  09:30 start: Hotel near Plaça de Catalunya
+  Taxi or car 79 min
+  10:49 stop: Montserrat monastery 115 min
+  walk 0 min
+  12:44 meal Lunch: A lunch you bring 35 min
+  Taxi or car 78 min
+  14:37 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: Nineteen 75 min
+  suggested: Plaça de Catalunya; Palau de la Música Catalana; Parc de la Ciutadella; Montjuïc Castle
+  says: Bring lunch for 12:44 pm at Montserrat monastery: places to eat there aren't in the guide yet.
+  says: Free time: about 2 h 53 min left after the last stop, before the day ends (5:30 pm). Linger where you like. Tibidabo (about 2 h 50 min there and back with the visit) is a trip of its own: pick it for a day to plan it. Also a trip of its own: Sitges, about 3 h 48 min.
+day 19 2027-07-18 departure barcelona | 09:00 to 12:05 | leave by --:--
+  09:00 start: Hotel near Plaça de Catalunya
+  Metro L3, Catalunya to Vallcarca 30 min
+  09:30 stop: Park Güell 75 min
+  Metro L3, Vallcarca to Catalunya 30 min
+  11:15 fixed: Collect bags 15 min
+  Taxi or car 35 min (15 kept)
+  12:05 end: Barcelona Sants station 0 min
+  suggested: Plaça de Catalunya
+  says: Leave Park Güell by 11:10 am, collect your bags at 11:40 am, and leave for the station by 11:55 am.
+day 20 2027-07-18 arrival madrid | 16:00 to 16:34
+  16:00 start: Madrid Atocha station
+  Metro L1, Atocha to Sol 14 min
+  16:14 fixed: Check in or drop bags 20 min
+  walk 0 min
+  16:34 end: Hotel near Puerta del Sol 0 min
+  18:30 evening Dinner: Casa Labra 75 min
+  says: Free time: about 5 h left after the last stop, before the day ends (9:34 pm). Linger where you like. El Escorial monastery needs about 5 h 36 min there and back with the visit, more than the time left. Also a trip of its own: Toledo, about 7 h 56 min.
+day 21 2027-07-19 land madrid | 09:00 to 17:07
+  09:42 start: Hotel near Puerta del Sol
+  walk 18 min
+  10:00 stop: Prado Museum 120 min
+  walk 2 min
+  12:02 meal Lunch: Un sabor excepcional 60 min
+  walk 10 min
+  13:12 stop: Retiro Park 60 min
+  Metro L2, Retiro to Ópera 28 min
+  14:40 stop: Royal Palace 90 min
+  walk 11 min
+  16:21 stop: Plaza Mayor and Puerta del Sol 40 min
+  walk 6 min
+  17:07 end: Hotel near Puerta del Sol 0 min
+  18:30 evening Dinner: Chocolatería San Ginés 75 min
+  suggested: Cuatro Torres Business Area; Madrid Río; Arco de la Victoria; Nuevos Ministerios
+  says: Lunch at Un sabor excepcional is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Prado Museum opens at 10:00 am, so the day starts at 9:42 am.
+day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
+  09:00 start: Hotel near Puerta del Sol
+  walk 5 min
+  09:05 stop: Chocolatería San Ginés 25 min (hours not confirmed)
+  walk 16 min
+  09:46 stop: Casa Gallardo 30 min (hours not confirmed)
+  walk 14 min
+  10:30 stop: Almudena Cathedral 25 min
+  walk 16 min
+  11:11 fixed: Collect bags 15 min
+  Taxi or car 62 min (15 kept)
+  12:28 end: Madrid-Barajas Airport, Terminal 4 0 min
+  says: Leave Almudena Cathedral by 11:27 am, collect your bags at 11:43 am, and leave for the airport by 11:58 am.
+  says: Opening hours not confirmed for Chocolatería San Ginés and Casa Gallardo on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## corpus-christi
+day 1 2026-11-11 land corpus christi | 09:00 to 16:14
+  09:00 start: Hotel near Bayfront
+  Taxi or car 18 min
+  09:18 stop: USS Lexington Museum on the Bay 150 min
+  walk 4 min
+  11:52 meal Lunch: Pier 99 60 min
+  walk 5 min
+  12:57 stop: Texas State Aquarium 180 min
+  Taxi or car 17 min
+  16:14 end: Hotel near Bayfront 0 min
+  18:30 evening Dinner: Thai Spice 75 min
+  suggested: Mirador de la Flor; Corpus Christi Cathedral; Artesian Park
+  says: Free time: about 1 h 46 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Nueces Bay needs about 2 h 56 min there and back with the visit, more than the time left. Also a trip of its own: Port Aransas, about 7 h 2 min.
+day 2 2026-11-12 land corpus christi | 09:00 to 16:04
+  09:00 start: Hotel near Bayfront
+  walk 0 min
+  09:00 stop: The Bayfront 70 min (hours not confirmed)
+  walk 7 min
+  11:00 stop: K Space Contemporary Gallery 45 min
+  walk 10 min
+  11:55 meal Lunch: Railroad Seafood Station & Brewing Co. 60 min
+  walk 14 min
+  13:09 stop: Art Museum of South Texas 90 min
+  Taxi or car 18 min
+  14:57 stop: Art Center of Corpus Christi 60 min
+  walk 7 min
+  16:04 end: Hotel near Bayfront 0 min
+  18:30 evening Dinner: Harrison's Landing 75 min
+  folded in: mirador-de-la-flor
+  suggested: Artesian Park; Corpus Christi Cathedral
+  says: Mirador de la Flor is right beside The Bayfront: seen on that visit (10 min more), not a stop of its own.
+  says: Opening hours not confirmed for The Bayfront on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 56 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Nueces Bay needs about 2 h 58 min there and back with the visit, more than the time left. Also a trip of its own: Port Aransas, about 7 h 2 min.
+day 3 2026-11-13 land corpus christi | 09:00 to 18:00
+  09:00 start: Hotel near Bayfront
+  Taxi or car 45 min
+  09:45 stop: Padre Island 205 min
+  walk 0 min
+  13:10 meal Lunch: A lunch you bring 35 min
+  walk 8 min
+  13:53 stop: King Ranch 210 min
+  Taxi or car 37 min
+  18:00 end: Hotel near Bayfront 0 min
+  18:30 evening Dinner: Marty McPies 75 min
+  says: A day trip to King Ranch: the main sights of Corpus Christi fit on your other days.
+  says: Bring lunch for 1:10 pm at Padre Island: places to eat there aren't in the guide yet.
+  says: A shorter visit to King Ranch (3 h 30 min instead of 6 h) so the rest of the day fits.
+
+## g01-istanbul
+day 1 2027-05-13 land istanbul turkey | 09:00 to 13:03
+  09:00 start: Hotel in central Istanbul, Turkey
+  walk 14 min
+  09:14 stop: Süleymaniye Mosque 30 min
+  walk 28 min
+  10:12 stop: Sultan Ahmed Mosque 30 min
+  walk 7 min
+  10:49 stop: Hagia Sophia 40 min
+  walk 2 min
+  11:45 meal Lunch: Matbah 60 min
+  Taxi or car 18 min
+  13:03 end: Hotel in central Istanbul, Turkey 0 min
+  18:30 evening Dinner: Gaziantep Restaurant 75 min
+  suggested: Sokollu Mehmed Pasha I Mosque; Basilica Cistern; Maiden's Tower; Istanbul Archaeology Museums; Zeyrek Mosque; Ecumenical Patriarchate of Constantinople; Galata Tower
+  says: Free time: about 4 h 57 min left after the last stop, before the day ends (6:00 pm). Linger where you like.
+day 2 2027-05-14 land istanbul turkey | 09:00 to 12:58
+  09:00 start: Hotel in central Istanbul, Turkey
+  Taxi or car 19 min
+  09:19 stop: Chora Church 30 min
+  Taxi or car 26 min
+  10:15 stop: Topkapı Palace 50 min
+  Taxi or car 16 min
+  11:45 meal Lunch: Kuru Fasulyeci Süleyman 60 min
+  walk 13 min
+  12:58 end: Hotel in central Istanbul, Turkey 0 min
+  18:30 evening Dinner: Meşhur Sarıyer Börekçisi 75 min
+  suggested: Zeyrek Mosque; Ecumenical Patriarchate of Constantinople; Galata Tower; Dolmabahçe Palace
+  says: Free time: about 24 min before lunch at 11:45 am. Linger where you are or look around nearby.
+
+## g02-vienna
+day 1 2027-05-10 land vienna austria | 09:00 to 17:57
+  09:00 start: Hotel in central Vienna, Austria
+  walk 2 min
+  09:02 stop: St. Stephen's Cathedral 30 min (hours not confirmed)
+  Taxi or car 23 min
+  09:55 stop: Ernst-Happel-Stadion 40 min (hours not confirmed)
+  Taxi or car 22 min
+  10:57 stop: Belvedere 40 min
+  Taxi or car 17 min
+  11:54 stop: Kunsthistorisches Museum 90 min
+  walk 7 min
+  13:31 meal Lunch: Green Door Bistro Vienna 60 min
+  walk 2 min
+  14:33 stop: Hofburg Palace 50 min
+  walk 8 min
+  15:31 stop: Vienna State Opera house 40 min (hours not confirmed)
+  Taxi or car 27 min
+  16:38 stop: Schönbrunn Palace 50 min
+  Taxi or car 29 min
+  17:57 end: Hotel in central Vienna, Austria 0 min
+  18:30 evening Dinner: Ristorante Firenze Enoteca 75 min
+  left out: src-q688704
+  says: Natural History Museum, Vienna needs about 25 min (the visit and the rides to it and on), and today's other stops already fill the time until 6:00 pm.
+  says: Opening hours not confirmed for St. Stephen's Cathedral, Ernst-Happel-Stadion and Vienna State Opera house on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 2 2027-05-11 land vienna austria | 09:00 to 12:47
+  09:00 start: Hotel in central Vienna, Austria
+  walk 19 min
+  09:19 stop: Karlskirche 40 min (hours not confirmed)
+  walk 19 min
+  11:45 meal Lunch: Aida 60 min
+  walk 2 min
+  12:47 end: Hotel in central Vienna, Austria 0 min
+  18:30 evening Dinner: Haas & Haas 75 min
+  suggested: Albertina; Innere Stadt; Musikverein; Hundertwasserhaus
+  says: Natural History Museum, Vienna is closed on Tuesday, and it didn't fit on Monday, the day it's open (it needs about 25 min (the visit and the rides to it and on), and today's other stops already fill the time until 6:00 pm).
+  says: Free time: about 87 min before lunch at 11:45 am. Linger where you are or look around nearby.
+  says: Opening hours not confirmed for Karlskirche on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## g03-lisbon
+day 1 2027-05-10 land lisbon portugal | 09:00 to 15:11
+  09:00 start: Hotel in central Lisbon, Portugal
+  Taxi or car 85 min
+  10:25 stop: Mafra 145 min
+  walk 7 min
+  12:57 meal Lunch: Restaurantes Olaza Real 35 min
+  Taxi or car 57 min
+  14:29 stop: Praça do Comércio 40 min (hours not confirmed)
+  walk 2 min
+  15:11 end: Hotel in central Lisbon, Portugal 0 min
+  18:30 evening Dinner: RIB - Beef & Wine Lisboa 75 min
+  suggested: Lisbon Cathedral; Palace of Mafra; Carmo Convent; Monastery of São Vicente de Fora; 25 de Abril Bridge
+  says: Belém Tower is closed on Monday, so it's planned on Tuesday.
+  says: Jerónimos Monastery is closed on Monday, so it's planned on Tuesday.
+  says: In Mafra, the travel guide suggests Churrasqueira Povoense.
+  says: Opening hours not confirmed for Praça do Comércio on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 49 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Ericeira needs about 4 h 16 min there and back with the visit, more than the time left. Also a trip of its own: Sintra, about 5 h 40 min.
+day 2 2027-05-11 land lisbon portugal | 09:00 to 14:19
+  09:00 start: Hotel in central Lisbon, Portugal
+  Taxi or car 33 min
+  09:33 stop: Jerónimos Monastery 30 min
+  walk 19 min
+  10:22 stop: Belém Tower 40 min
+  Taxi or car 36 min
+  11:38 stop: Castle of Saint George 50 min
+  walk 10 min
+  12:38 stop: Santa Justa Lift 30 min (hours not confirmed)
+  walk 6 min
+  13:14 meal Lunch: Da Prata 52 60 min
+  walk 5 min
+  14:19 end: Hotel in central Lisbon, Portugal 0 min
+  18:30 evening Dinner: Juicy 75 min
+  suggested: Lisbon Cathedral; 25 de Abril Bridge; Padrão dos Descobrimentos; National Museum of Ancient Art
+  says: Opening hours not confirmed for Santa Justa Lift on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 3 h 41 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Sintra needs about 5 h 40 min there and back with the visit, more than the time left. Also a trip of its own: Ericeira, about 6 h 10 min.
+
+## g04-barcelona
+day 1 2027-05-15 sea | no plan
+day 2 2027-05-16 port barcelona | 08:30 to 17:09 | leave by --:--
+  08:30 start: Moll Adossat cruise terminals
+  Taxi or car 31 min
+  09:01 stop: Sagrada Família 90 min
+  Metro L4, Verdaguer to Jaume I 27 min
+  10:58 stop: Gothic Quarter & Cathedral 60 min
+  walk 7 min
+  12:05 stop: Museu Picasso 75 min
+  Taxi or car 24 min
+  13:44 meal Lunch: La Torreta del Parc Güell 20 min
+  walk 2 min
+  14:06 stop: Park Güell 55 min
+  Metro L3, Vallcarca to Passeig de Gràcia 27 min
+  15:28 stop: Casa Batlló 60 min
+  Taxi or car 41 min (15 kept)
+  17:09 end: Moll Adossat cruise terminals 0 min
+  says: Pont del Bisbe is part of the Gothic Quarter & Cathedral walk: seen on that visit, not a stop of its own today.
+  says: Lunch at La Torreta del Parc Güell is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 4:34 pm.
+  says: La Rambla & La Boqueria market and Mercat de Sant Antoni are closed on this date.
+  says: Also worth seeing here, but not in today's time: Casa Milà (La Pedrera), Santa Maria del Mar, Palau de la Música Catalana, Sant Pau Recinte Modernista and 14 more.
+
+## g05-edinburgh
+day 1 2027-08-10 land edinburgh scotland | 09:00 to 18:05
+  09:00 start: Hotel in central Edinburgh, Scotland
+  Taxi or car 62 min
+  10:02 stop: Falkirk 180 min
+  walk 3 min
+  13:05 meal Lunch: Greek Theory 60 min
+  Taxi or car 67 min
+  15:12 stop: Holyrood Palace 50 min
+  Taxi or car 17 min
+  16:19 stop: Edinburgh Castle 50 min
+  walk 11 min
+  17:20 stop: Scott Monument 40 min
+  walk 5 min
+  18:05 end: Hotel in central Edinburgh, Scotland 0 min
+  18:35 evening Dinner: Twenty Princes Street 75 min
+  says: In Falkirk, the travel guide suggests Benny T's, Sanam Tandoori or Erawan Thai.
+day 2 2027-08-11 land edinburgh scotland | 09:00 to 13:59
+  09:00 start: Hotel in central Edinburgh, Scotland
+  walk 7 min
+  09:07 stop: Scottish National Portrait Gallery 90 min (hours not confirmed)
+  walk 12 min
+  10:49 stop: St Giles' Cathedral 30 min
+  walk 2 min
+  11:45 meal Lunch: Angels with Bagpipes 60 min
+  Taxi or car 17 min
+  13:02 stop: Royal Botanic Garden Edinburgh 40 min
+  Taxi or car 17 min
+  13:59 end: Hotel in central Edinburgh, Scotland 0 min
+  18:30 evening Dinner: Roti King 75 min
+  suggested: National Museum of Scotland; National Library of Scotland; St Mary's Cathedral; HMY Britannia
+  says: Free time: about 24 min before lunch at 11:45 am. Linger where you are or look around nearby.
+  says: Opening hours not confirmed for Scottish National Portrait Gallery on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## g06-kyoto
+day 1 2027-04-06 land kyoto japan | 09:00 to 16:17
+  09:00 start: Hotel in central Kyoto, Japan
+  Taxi or car 28 min
+  09:28 stop: Fushimi Inari-taisha 40 min
+  Taxi or car 22 min
+  10:30 stop: Kiyomizu-dera 40 min
+  Taxi or car 24 min
+  11:34 stop: Ginkaku-ji Temple 40 min
+  walk 3 min
+  12:17 meal Lunch: Fu-ka Ginkakuji 60 min
+  Taxi or car 30 min
+  13:47 stop: Historic Monuments of Ancient Kyoto 60 min
+  Taxi or car 22 min
+  15:09 stop: Kinkaku-ji Temple 40 min
+  Taxi or car 28 min
+  16:17 end: Hotel in central Kyoto, Japan 0 min
+  18:30 evening Dinner: Nowvelle vagne Kyoto 75 min
+  suggested: Shimogamo Shrine; Heian Jingū; Kyoto National Museum; Tōfuku-ji Temple; Nijō Castle; Ninna-ji Temple; Nishi Hongan-ji Temple
+  says: Free time: about 1 h 43 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Osaka needs about 5 h 20 min there and back with the visit, more than the time left. Also a trip of its own: Koka, about 6 h 10 min.
+day 2 2027-04-07 land kyoto japan | 09:00 to 17:55
+  09:00 start: Hotel in central Kyoto, Japan
+  Taxi or car 24 min
+  09:24 stop: Tō-ji Temple 40 min
+  Taxi or car 34 min
+  10:38 stop: Ryōan-ji Temple 40 min
+  walk 2 min
+  11:45 meal Lunch: Ryoanji Yudofu - Seigenin 60 min
+  Taxi or car 65 min
+  13:50 stop: Uji 180 min
+  Taxi or car 65 min
+  17:55 end: Hotel in central Kyoto, Japan 0 min
+  18:30 evening Dinner: Bungalow Terramachi 75 min
+  says: Free time: about 25 min before lunch at 11:45 am. Linger where you are or look around nearby.
+
+## g07-lehavre
+day 1 2027-06-11 sea | no plan
+day 2 2027-06-12 port paris from le havre france | no plan
+
+## g08-southampton
+day 1 2027-05-20 arrival southampton england | 14:15 to 17:24
+  14:15 start: Southampton Airport
+  Taxi or car 31 min
+  14:46 fixed: Check in or drop bags 20 min
+  walk 17 min
+  15:23 stop: Carnival Corporation 40 min (hours not confirmed)
+  walk 13 min
+  16:16 stop: World Sailing 40 min (hours not confirmed)
+  walk 28 min
+  17:24 end: Hotel in central Southampton, England 0 min
+  18:30 evening Dinner: Roosters Piri Piri 75 min
+  suggested: Central Parks
+  says: Opening hours not confirmed for Carnival Corporation and World Sailing on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 42 min left after the last stop, before the day ends (8:06 pm). Linger where you like. Winchester needs about 4 h 50 min there and back with the visit, more than the time left. Also a trip of its own: New Forest, about 5 h.
+day 2 2027-05-21 embark southampton england | 09:00 to 13:40 | leave by --:--
+  09:00 start: Hotel in central Southampton, England
+  walk 17 min
+  09:17 stop: Southampton Castle 50 min (hours not confirmed)
+  Taxi or car 25 min
+  10:32 stop: Netley Castle 50 min (hours not confirmed)
+  Taxi or car 28 min
+  11:50 meal Lunch: Mexigo 60 min
+  walk 4 min
+  12:54 fixed: Collect bags 15 min
+  Taxi or car 31 min (15 kept)
+  13:40 end: Port of Southampton 0 min
+  suggested: Bargate; Southampton Tudor House and Garden; Central Parks; Solent Sky
+  says: Leave Mexigo by 2:10 pm, collect your bags at 2:14 pm, and leave for the cruise terminal by 2:29 pm.
+  says: Opening hours not confirmed for Southampton Castle and Netley Castle on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 20 min left after the last stop, before the time to be back (3:00 pm). Linger where you like. Winchester needs about 4 h 50 min there and back with the visit, more than the time left. Also a trip of its own: New Forest, about 5 h.
+
+## g09-kotor
+day 1 2027-07-07 sea | no plan
+day 2 2027-07-08 port kotor montenegro | 09:00 to 15:18 | leave by --:--
+  09:00 start: Port of Kotor
+  Taxi or car 23 min
+  09:23 stop: Njeguši 40 min (hours not confirmed)
+  Taxi or car 25 min
+  10:28 stop: Dobrota 40 min (hours not confirmed)
+  Taxi or car 18 min
+  11:26 stop: Prčanj 40 min (hours not confirmed)
+  Taxi or car 27 min
+  12:33 stop: Škaljari 40 min (hours not confirmed)
+  walk 6 min
+  13:19 meal Lunch: Ladovina 20 min
+  walk 7 min
+  13:46 stop: Kotor Cathedral 30 min (hours not confirmed)
+  walk 2 min
+  14:18 stop: Fortifications of Kotor 40 min
+  walk 20 min (15 kept)
+  15:18 end: Port of Kotor 0 min
+  left out: src-q2518380
+  says: Muo needs about 40 min (the visit and the rides to it and on), and with today's other stops only 25 min is left before 3:45 pm.
+  says: Leave for the ship by 3:25 pm.
+  says: Opening hours not confirmed for Njeguši, Dobrota and Prčanj and 2 more on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## g10-dubrovnik
+day 1 2027-07-08 sea | no plan
+day 2 2027-07-09 port dubrovnik croatia | 08:30 to 15:31 | leave by --:--
+  08:30 start: Port of Portoc
+  Taxi or car 18 min
+  09:00 stop: Lovrijenac 40 min (hours not confirmed)
+  walk 5 min
+  09:45 stop: Franciscan Church and Monastery 30 min (hours not confirmed)
+  walk 4 min
+  10:19 stop: St Blaise's Church 30 min (hours not confirmed)
+  walk 2 min
+  10:51 stop: Dubrovnik Cathedral 30 min (hours not confirmed)
+  walk 2 min
+  11:23 stop: Sponza Palace 50 min (hours not confirmed)
+  walk 2 min
+  12:15 meal Lunch: Lokanda Peskarija 60 min
+  walk 0 min
+  13:15 stop: Rector's Palace, Dubrovnik 50 min
+  Taxi or car 17 min
+  14:22 stop: Dubrovnik Synagogue 30 min (hours not confirmed)
+  Taxi or car 39 min (15 kept)
+  15:31 end: Port of Portoc 0 min
+  says: Leave for the ship by 4:36 pm.
+  says: Opening hours not confirmed for Lovrijenac, Franciscan Church and Monastery and St Blaise's Church and 3 more on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 44 min left after the last stop, before the time to be back (5:15 pm). Linger where you like. Cavtat needs about 5 h 20 min there and back with the visit, more than the time left.
+
+## g11-juneau
+day 1 2027-06-14 sea | no plan
+day 2 2027-06-15 port juneau alaska | 07:30 to 12:47 | leave by --:--
+  08:49 start: Captain of the Port
+  walk 11 min
+  09:00 stop: Alaska State Capitol 40 min (hours not confirmed)
+  walk 2 min
+  09:42 stop: St. Nicholas Russian Orthodox Church 30 min
+  walk 3 min
+  10:15 stop: Wickersham House 40 min (hours not confirmed)
+  walk 11 min
+  11:45 meal Lunch: Seong's Sushi Bar & Chinese 60 min
+  walk 2 min
+  12:47 end: Captain of the Port 0 min
+  suggested: Juneau Arts & Humanities Council; Alaska State Centennial Museum; Goldbelt Tram; Sealaska Heritage Institute
+  says: Alaska State Capitol opens at 9:00 am, so the day starts at 8:49 am: leave the ship then.
+  says: Leave for the ship by 7:13 pm.
+  says: Free time: about 39 min before lunch at 11:45 am. Linger where you are or look around nearby.
+  says: Opening hours not confirmed for Alaska State Capitol and Wickersham House on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## g12-ketchikan
+day 1 2027-06-15 sea | no plan
+day 2 2027-06-16 port ketchikan alaska | 06:30 to 11:42 | leave by --:--
+  06:30 start: Ketchikan Harbor Seaplane Base
+  Taxi or car 29 min
+  06:59 stop: Saxman Totem Park 40 min
+  Taxi or car 25 min
+  08:04 stop: Tongass Historical Museum 90 min
+  walk 4 min
+  09:38 stop: Southeast Alaska Discovery Center 40 min (hours not confirmed)
+  walk 12 min
+  10:30 stop: Totem Heritage Center 40 min
+  Taxi or car 32 min (15 kept)
+  11:42 end: Ketchikan Harbor Seaplane Base 0 min
+  12:15 meal Lunch: Back on board 30 min
+  says: Lunchtime is too close to the time to be back at the ship (12:15 pm) to sit down ashore, so lunch is back on board at 12:15 pm.
+  says: Leave for the ship by 11:43 am.
+  says: Opening hours not confirmed for Southeast Alaska Discovery Center on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## g13-grandturk
+day 1 2027-02-09 sea | no plan
+day 2 2027-02-10 port grand turk turks and caicos | 08:30 to 13:22 | leave by --:--
+  08:30 start: Grand Turk Cruise Center Access Road
+  Taxi or car 27 min
+  09:00 stop: Grand Turk 40 min (hours not confirmed)
+  walk 15 min
+  09:55 stop: Her Majesty's Prison 40 min (hours not confirmed)
+  Taxi or car 16 min
+  10:51 stop: Palm Grove Sunset Cabana beach 40 min
+  walk 13 min
+  11:45 meal Lunch: Bird Cage Bar & Grille 60 min
+  Taxi or car 37 min (15 kept)
+  13:22 end: Grand Turk Cruise Center Access Road 0 min
+  suggested: Turks and Caicos National Museum
+  says: Leave for the ship by 3:38 pm.
+  says: Opening hours not confirmed for Grand Turk and Her Majesty's Prison on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 53 min left after the last stop, before the time to be back (4:15 pm). Linger where you like.
+
+## g14-mykonos
+day 1 2027-07-01 sea | no plan
+day 2 2027-07-02 port mykonos | 11:00 to 20:04 | leave by --:--
+  11:00 start: Mykonos new port (Tourlos)
+  Taxi or car 17 min
+  11:17 stop: Kato Mili windmills 30 min (hours not confirmed)
+  walk 3 min
+  11:50 stop: Mykonos Town (Chora) lanes 40 min
+  walk 0 min
+  12:30 meal Lunch: Kostas 60 min
+  walk 3 min
+  13:33 stop: Panagia Paraportiani church 20 min (hours not confirmed)
+  Boat to Delos 55 min
+  Walk from the ferry at Delos 7 min
+  14:55 stop: Delos island 150 min
+  Walk to the ferry at Delos 7 min
+  Boat from Delos to Old port 135 min (35 kept)
+  Walk from the ferry at Old port 17 min
+  20:04 end: Mykonos new port (Tourlos) 0 min
+  folded in: littlevenice
+  says: Mykonos Town (Chora) lanes gets 40 min, the walk between Panagia Paraportiani church and Kato Mili windmills, which you picked as stops of their own (on its own it gets 75 min).
+  says: Little Venice is inside Mykonos Town (Chora) lanes: seen on that visit (10 min more), not a stop of its own.
+  says: Lunch at Kostas is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:25 pm.
+  says: Boats keep their own timetable: take one back from Panagia Paraportiani church that lands you by 2:48 pm, well before the time to be back at the ship (9:45 pm).
+  says: Boats keep their own timetable: take one back from Delos island that lands you by 7:47 pm, well before the time to be back at the ship (9:45 pm).
+  says: Opening hours not confirmed for Kato Mili windmills and Panagia Paraportiani church on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 41 min left after the last stop, before the time to be back (9:45 pm). Linger where you like.
+
+## g15-pontadelgada
+day 1 2027-04-19 sea | no plan
+day 2 2027-04-20 port ponta delgada azores | 08:30 to 13:12 | leave by --:--
+  08:30 start: Terminal de Carga Aérea
+  Taxi or car 18 min
+  09:00 stop: Municipal Palace/Hall of Ponta Delgada 50 min (hours not confirmed)
+  walk 15 min
+  10:05 stop: São José 30 min (hours not confirmed)
+  walk 15 min
+  10:50 stop: Fort Saint Blaise 50 min (hours not confirmed)
+  walk 4 min
+  11:45 meal Lunch: Bella Italia 60 min
+  Taxi or car 27 min (10 kept)
+  13:12 end: Terminal de Carga Aérea 0 min
+  suggested: Carlos Machado Museum; Parish Church of São Sebastiao; Church of São Jose
+  says: Leave for the ship by 3:48 pm.
+  says: Opening hours not confirmed for Municipal Palace/Hall of Ponta Delgada, São José and Fort Saint Blaise on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 3 h 3 min left after the last stop, before the time to be back (4:15 pm). Linger where you like.
+
+## g16-halfmooncay
+day 1 2027-02-11 sea | no plan
+day 2 2027-02-12 port | no plan
+
+## g17-haifa
+day 1 2027-05-14 sea | no plan
+day 2 2027-05-15 port jerusalem from haifa israel | 06:30 to 17:23 | leave by --:--
+  07:05 start: Haifa Port
+  Taxi or car 115 min
+  09:00 stop: The Temple Institute 40 min (hours not confirmed)
+  walk 3 min
+  09:43 stop: Western Wall 40 min
+  walk 8 min
+  10:31 stop: Church of the Holy Sepulchre 30 min
+  Taxi or car 19 min
+  11:20 stop: Israel Museum 90 min
+  walk 8 min
+  12:58 stop: The Knesset 40 min (hours not confirmed)
+  walk 11 min
+  13:49 meal Lunch: HaIvrit 60 min
+  Taxi or car 154 min (40 kept)
+  17:23 end: Haifa Port 0 min
+  suggested: Tower of David; Gehenna; Mount Herzl; Greek Orthodox Patriarchate of Jerusalem
+  says: Dome of the Rock is closed on this date.
+  says: Al-Aqsa Mosque is closed on this date.
+  says: Bible Lands Museum is closed on this date.
+  says: The Temple Institute opens at 9:00 am, so the day starts at 7:05 am: leave the ship then.
+  says: Leave for the ship by 4:41 pm.
+  says: Opening hours not confirmed for The Temple Institute and The Knesset on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 52 min left after the last stop, before the time to be back (7:15 pm). Linger where you like. Abu Ghosh needs about 4 h 40 min there and back with the visit, more than the time left. Also a trip of its own: Tel Aviv, about 5 h 40 min.
+
+## g18-reykjavik
+day 1 2027-01-19 land reykjavik iceland | 09:00 to 17:42
+  09:00 start: Hotel in central Reykjavik, Iceland
+  Taxi or car 16 min
+  09:16 stop: Tjörnin 40 min (hours not confirmed)
+  walk 9 min
+  10:05 stop: Icelandic Phallological Museum 90 min
+  Taxi or car 26 min
+  12:01 stop: Viðey 40 min (hours not confirmed)
+  Taxi or car 46 min
+  13:27 meal Lunch: Krydd Veitingahús 35 min
+  walk 5 min
+  14:07 stop: Hafnarfjörður 165 min
+  Taxi or car 50 min
+  17:42 end: Hotel in central Reykjavik, Iceland 0 min
+  18:30 evening Dinner: Potturinn og Pannan 75 min
+  left out: src-q271466
+  says: Hallgrímskirkja would arrive 45 min after its last entry.
+  says: A shorter visit to Hafnarfjörður (2 h 45 min instead of 3 h) so the rest of the day fits.
+  says: In Hafnarfjörður, the travel guide suggests Tilveran, Viking village or Súfistinn.
+  says: Opening hours not confirmed for Tjörnin and Viðey on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 2 2027-01-20 land reykjavik iceland | 09:00 to 14:05
+  09:43 start: Hotel in central Reykjavik, Iceland
+  Taxi or car 17 min
+  10:00 stop: National Museum of Iceland 90 min
+  Taxi or car 28 min
+  11:58 stop: Imagine Peace Tower 40 min (hours not confirmed)
+  Taxi or car 22 min
+  13:00 meal Lunch: Loving Hut 60 min
+  walk 5 min
+  14:05 end: Hotel in central Reykjavik, Iceland 0 min
+  18:30 evening Dinner: Restó 75 min
+  suggested: Hallgrímskirkja; Alþingishúsið; Landakotskirkja; Perlan
+  says: National Museum of Iceland opens at 10:00 am, so the day starts at 9:43 am.
+  says: Opening hours not confirmed for Imagine Peace Tower on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 3 h 55 min left after the last stop, before the day ends (6:00 pm). Linger where you like.
+
+## g19-venice
+day 1 2027-05-15 land venice italy | 09:00 to 14:36
+  09:00 start: Hotel in central Venice, Italy
+  walk 3 min
+  09:03 stop: Santa Maria Gloriosa dei Frari 30 min (hours not confirmed)
+  walk 11 min
+  09:44 stop: Gallerie dell'Accademia 40 min
+  walk 9 min
+  10:33 stop: Santa Maria della Salute 30 min (hours not confirmed)
+  walk 12 min
+  11:15 stop: Church of San Giorgio Maggiore 30 min
+  walk 9 min
+  11:54 stop: Doge's Palace 50 min
+  walk 2 min
+  12:46 stop: St Mark's Basilica 30 min (hours not confirmed)
+  walk 2 min
+  13:18 meal Lunch: Leone D'Oro 60 min
+  walk 18 min
+  14:36 end: Hotel in central Venice, Italy 0 min
+  18:30 evening Dinner: Al Cafetier 75 min
+  suggested: Il Redentore; Correr Museum; Grassi Palace; Peggy Guggenheim Collection; Venetian Ghetto
+  says: Opening hours not confirmed for Santa Maria Gloriosa dei Frari, Santa Maria della Salute and St Mark's Basilica on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 3 h 24 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Mestre needs about 4 h 30 min there and back with the visit, more than the time left. Also a trip of its own: Padua, about 4 h 54 min.
+day 2 2027-05-16 land venice italy | 09:00 to 14:09
+  09:00 start: Hotel in central Venice, Italy
+  walk 8 min
+  09:08 stop: Ca' Pesaro 40 min (hours not confirmed)
+  walk 15 min
+  11:45 meal Lunch: Osteria Da Nico 60 min
+  walk 2 min
+  12:47 stop: Santi Giovanni e Paolo Church 30 min
+  walk 9 min
+  13:26 stop: Rialto Bridge 30 min
+  walk 13 min
+  14:09 end: Hotel in central Venice, Italy 0 min
+  18:30 evening Dinner: Muro Venezia San Stae 75 min
+  suggested: Venetian Ghetto; San Zaccaria Church; Il Redentore; Correr Museum
+  says: Free time: about 102 min before lunch at 11:45 am. Linger where you are or look around nearby.
+  says: Opening hours not confirmed for Ca' Pesaro on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## g20-dubai
+day 1 2027-07-20 land dubai uae | 09:00 to 16:25
+  09:00 start: Hotel in central Dubai, UAE
+  walk 11 min
+  09:11 stop: Grand Mosque 30 min (hours not confirmed)
+  walk 3 min
+  09:44 stop: Dubai Museum 90 min (hours not confirmed)
+  Taxi or car 21 min
+  11:35 stop: Dubai Frame 40 min
+  Taxi or car 20 min
+  12:35 meal Lunch: Alfie's 60 min
+  walk 0 min
+  13:35 stop: Emirates Towers 40 min (hours not confirmed)
+  Taxi or car 19 min
+  14:34 stop: Jumeirah Mosque 30 min
+  Taxi or car 28 min
+  15:32 stop: Al Bastakiya 40 min (hours not confirmed)
+  walk 13 min
+  16:25 end: Hotel in central Dubai, UAE 0 min
+  18:30 evening Dinner: Souk Parking 75 min
+  suggested: Iranian Mosque, Bur Dubai; Heritage Village
+  says: Museum of the Future is closed on this date.
+  says: Opening hours not confirmed for Grand Mosque, Dubai Museum and Emirates Towers and 1 more on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 35 min left after the last stop, before the day ends (6:00 pm). Linger where you like.
+day 2 2027-07-21 land dubai uae | 09:00 to 13:05
+  09:00 start: Hotel in central Dubai, UAE
+  Taxi or car 38 min
+  09:38 stop: Burj Khalifa 30 min (hours not confirmed)
+  walk 4 min
+  10:12 stop: The Dubai Fountain 30 min (hours not confirmed)
+  walk 8 min
+  10:50 stop: Dubai Aquarium and Underwater Zoo 30 min (hours not confirmed)
+  Taxi or car 37 min
+  11:57 meal Lunch: Aden Restaurant for Mandi, Madhbi & Madghod 60 min
+  walk 8 min
+  13:05 end: Hotel in central Dubai, UAE 0 min
+  18:30 evening Dinner: Sharda Vegetarian Restaurant 75 min
+  suggested: Iranian Mosque, Bur Dubai; Deira Clocktower; Safa Park; Jumeirah Beach
+  says: Opening hours not confirmed for Burj Khalifa, The Dubai Fountain and Dubai Aquarium and Underwater Zoo on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 4 h 55 min left after the last stop, before the day ends (6:00 pm). Linger where you like.
+
+## live-cococay
+day 1 2027-01-13 sea | no plan
+day 2 2027-01-14 port perfect day at cococay bahamas | 07:30 to 12:53 | leave by --:--
+  07:30 start: Royal Carribean Cruise Pier
+  walk 6 min
+  07:36 stop: Thrill Waterpark 40 min
+  walk 3 min
+  08:19 stop: Harbour Beach 40 min
+  walk 2 min
+  09:01 stop: Harbor Lagoon 40 min
+  walk 2 min
+  11:45 meal Lunch: Skipper's Grill 60 min
+  walk 8 min
+  12:53 end: Royal Carribean Cruise Pier 0 min
+  says: Your ship docks at Royal Carribean Cruise Pier.
+  says: Leave for the ship by 4:07 pm.
+  says: Free time: about 122 min before lunch at 11:45 am. Linger where you are or look around nearby.
+
+## live-hamburg-port
+day 1 2027-05-15 sea | no plan
+day 2 2027-05-16 port hamburg germany | 08:30 to 16:52 | leave by --:--
+  08:30 start: Cruise Center Altona
+  Taxi or car 26 min
+  09:00 stop: Chilehaus 40 min (hours not confirmed)
+  walk 15 min
+  09:55 stop: Speicherstadt 40 min (hours not confirmed)
+  walk 12 min
+  10:47 stop: Port of Hamburg 40 min (hours not confirmed)
+  walk 3 min
+  11:30 stop: Elbphilharmonie 40 min
+  Taxi or car 17 min
+  12:27 stop: Hamburger Kunsthalle 40 min
+  Taxi or car 19 min
+  13:26 meal Lunch: Ustam 35 min
+  walk 2 min
+  14:03 stop: St. Pauli 54 min (hours not confirmed)
+  Taxi or car 30 min
+  15:27 stop: Volksparkstadion 40 min
+  Taxi or car 45 min (15 kept)
+  16:52 end: Cruise Center Altona 0 min
+  says: Lunch at Ustam is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 4:30 pm.
+  says: Opening hours not confirmed for Chilehaus, Speicherstadt and Port of Hamburg and 1 more on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Museum für Hamburgische Geschichte is closed on this date.
+  says: Also worth seeing here, but not in today's time: Museum of Art and Crafts Hamburg and International Maritime Museum Hamburg.
+
+## live-hamburg-stay
+day 1 2027-05-11 land hamburg germany | 09:00 to 17:37
+  09:41 start: Hotel in central Hamburg, Germany
+  Taxi or car 19 min
+  10:00 stop: Museum of Art and Crafts Hamburg 90 min
+  walk 11 min
+  11:41 stop: Chilehaus 40 min (hours not confirmed)
+  walk 15 min
+  12:36 stop: Speicherstadt 40 min (hours not confirmed)
+  walk 2 min
+  13:18 meal Lunch: Vecchio Amore 60 min
+  walk 7 min
+  14:25 stop: Elbphilharmonie 40 min
+  walk 3 min
+  15:08 stop: Port of Hamburg 40 min (hours not confirmed)
+  Taxi or car 36 min
+  16:24 stop: Volksparkstadion 40 min
+  Taxi or car 33 min
+  17:37 end: Hotel in central Hamburg, Germany 0 min
+  18:30 evening Dinner: Old Commercial Room 75 min
+  suggested: Deutsches Schauspielhaus; Hansa-Theater; Kaiser-Wilhelm-Denkmal, Hamburg; Monument to the X-ray and Radium Martyrs of All Nations
+  says: Museum für Hamburgische Geschichte is closed on this date.
+  says: Museum of Art and Crafts Hamburg opens at 10:00 am, so the day starts at 9:41 am.
+  says: Opening hours not confirmed for Chilehaus, Speicherstadt and Port of Hamburg on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 2 2027-05-12 land hamburg germany | 09:00 to 18:05
+  09:00 start: Hotel in central Hamburg, Germany
+  walk 7 min
+  09:07 stop: St. Michaelis Church, Hamburg 30 min (hours not confirmed)
+  Taxi or car 16 min
+  10:00 stop: Hamburger Kunsthalle 40 min
+  Taxi or car 20 min
+  11:00 stop: St. Pauli 53 min (hours not confirmed)
+  walk 2 min
+  11:55 meal Lunch: Ustam 35 min
+  Taxi or car 100 min
+  14:10 stop: Itzehoe 135 min
+  Taxi or car 100 min
+  18:05 end: Hotel in central Hamburg, Germany 0 min
+  18:35 evening Dinner: Nom 75 min
+  says: A shorter visit to Itzehoe (2 h 15 min instead of 3 h) so the rest of the day fits.
+  says: In Itzehoe, the travel guide suggests Restaurant Himmel+Erde, Ristorante La Grappa or Sabai Jai.
+  says: Lunch at Ustam is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Opening hours not confirmed for St. Michaelis Church and St. Pauli on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 3 2027-05-13 land hamburg germany | 09:00 to 17:54
+  09:00 start: Hotel in central Hamburg, Germany
+  Taxi or car 90 min
+  10:30 stop: Buxtehude 98 min
+  walk 2 min
+  12:10 meal Lunch: Amadeus 35 min
+  Taxi or car 90 min
+  14:15 stop: Tierpark Hagenbeck 40 min
+  Taxi or car 34 min
+  15:29 stop: St. Catherine's Church, Hamburg 30 min (hours not confirmed)
+  walk 8 min
+  16:07 stop: International Maritime Museum Hamburg 90 min
+  Taxi or car 17 min
+  17:54 end: Hotel in central Hamburg, Germany 0 min
+  18:30 evening Dinner: Petit Bonheur 75 min
+  says: A shorter visit to Buxtehude (2 h 15 min instead of 3 h) so the rest of the day fits.
+  says: In Buxtehude, the travel guide suggests Amadeus, Hase & Igel or Hase & Igel.
+  says: Opening hours not confirmed for St. Catherine's Church on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## live-nassau
+day 1 2027-01-11 sea | no plan
+day 2 2027-01-12 port nassau bahamas | 08:30 to 15:47 | leave by --:--
+  08:30 start: Banana Bay Nassau's Port Shop
+  walk 12 min
+  08:42 stop: Fort Fincastle 50 min
+  walk 21 min
+  09:53 stop: Paradise Island 40 min (hours not confirmed)
+  Taxi or car 21 min
+  10:54 stop: Ardastra Gardens, Zoo and Conservation Centre 40 min
+  Taxi or car 27 min
+  12:01 meal Lunch: Wok N Roll Chinese Resturant &Bar 35 min
+  walk 5 min
+  12:41 stop: Cable Beach 40 min
+  Taxi or car 32 min
+  13:53 stop: National Art Gallery of The Bahamas 90 min
+  walk 24 min (15 kept)
+  15:47 end: Banana Bay Nassau's Port Shop 0 min
+  says: Leave for the ship by 3:51 pm.
+  says: Opening hours not confirmed for Paradise Island on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## noai-city
+day 1 2027-05-04 land paris | 09:00 to 14:11
+  09:00 start: Hotel in central Paris
+  walk 6 min
+  09:06 stop: Notre-Dame de Paris 40 min
+  Taxi or car 22 min
+  10:08 stop: UNESCO 40 min (hours not confirmed)
+  Taxi or car 20 min
+  11:08 stop: Arc de Triomphe 40 min
+  Taxi or car 16 min
+  12:04 stop: Eiffel Tower 40 min
+  Taxi or car 25 min
+  13:09 meal Lunch: Test Eatery 3-1 60 min
+  walk 2 min
+  14:11 end: Hotel in central Paris 0 min
+  18:30 evening Dinner: Test Eatery 3-0 75 min
+  suggested: Avenue des Champs-Élysées; Les Invalides; Grand Palais; Musée du quai Branly; Musée d'Orsay; Bibliothèque nationale de France; Sainte Chapelle
+  says: Louvre Museum is closed on Tuesday, so it's planned on Wednesday.
+  says: Opening hours not confirmed for UNESCO on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 3 h 49 min left after the last stop, before the day ends (6:00 pm). Linger where you like.
+day 2 2027-05-05 land paris | 09:00 to 14:08
+  09:00 start: Hotel in central Paris
+  Taxi or car 22 min
+  09:22 stop: Père Lachaise Cemetery 40 min (hours not confirmed)
+  Taxi or car 26 min
+  10:28 stop: Louvre Museum 90 min
+  walk 21 min
+  12:19 stop: Centre Georges Pompidou 40 min (hours not confirmed)
+  walk 6 min
+  13:05 meal Lunch: Pastasuta 60 min
+  walk 3 min
+  14:08 end: Hotel in central Paris 0 min
+  18:30 evening Dinner: Bistrot Marguerite 75 min
+  suggested: Avenue des Champs-Élysées; Bibliothèque nationale de France; Sainte Chapelle; Panthéon; Musée d'Orsay
+  says: Lunch at Pastasuta is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Opening hours not confirmed for Père Lachaise Cemetery and Centre Georges Pompidou on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 3 h 52 min left after the last stop, before the day ends (6:00 pm). Linger where you like.
+day 3 2027-05-06 land paris | 09:00 to 13:04
+  09:00 start: Hotel in central Paris
+  Taxi or car 19 min
+  09:19 stop: Place de la Concorde 15 min
+  walk 18 min
+  09:52 stop: Palais Garnier 40 min (hours not confirmed)
+  walk 3 min
+  11:45 meal Lunch: Test Eatery 11-0 60 min
+  Taxi or car 19 min
+  13:04 end: Hotel in central Paris 0 min
+  18:30 evening Dinner: Le Coupe Gorge 75 min
+  suggested: Musée d'Orsay; Avenue des Champs-Élysées; Bibliothèque nationale de France; Sainte Chapelle
+  says: Free time: about 70 min before lunch at 11:45 am. Linger where you are or look around nearby.
+  says: Opening hours not confirmed for Palais Garnier on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+## noai-island
+day 1 2027-01-13 sea | no plan
+day 2 2027-01-14 port example cay | 08:00 to 13:17 | leave by --:--
+  08:00 start: Example Cay pier
+  walk 4 min
+  08:04 stop: North Beach 40 min
+  walk 10 min
+  08:54 stop: Lagoon Water Park 40 min
+  walk 10 min
+  09:44 stop: Old Lighthouse 40 min (hours not confirmed)
+  walk 16 min
+  10:40 stop: South Beach 40 min
+  walk 10 min
+  11:30 stop: Hilltop Lookout 40 min
+  walk 3 min
+  12:13 meal Lunch: Test Eatery 3-0 60 min
+  walk 4 min
+  13:17 end: Example Cay pier 0 min
+  says: Leave for the ship by 3:41 pm.
+  says: Opening hours not confirmed for Old Lighthouse on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 28 min left after the last stop, before the time to be back (3:45 pm). Linger where you like.
+
+## noai-port
+day 1 2027-01-11 sea | no plan
+day 2 2027-01-12 port nassau bahamas | 08:30 to 15:16 | leave by --:--
+  08:30 start: Prince George Wharf
+  walk 18 min
+  09:00 stop: Paradise Island 40 min (hours not confirmed)
+  Taxi or car 21 min
+  10:01 stop: Ardastra Gardens, Zoo and Conservation Centre 40 min
+  Taxi or car 27 min
+  11:08 stop: Cable Beach 40 min
+  Taxi or car 32 min
+  12:20 stop: National Art Gallery of The Bahamas 90 min
+  walk 9 min
+  13:59 meal Lunch: Test Eatery 5-0 60 min
+  walk 17 min (15 kept)
+  15:16 end: Prince George Wharf 0 min
+  says: Leave for the ship by 3:58 pm.
+  says: Opening hours not confirmed for Paradise Island on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 3 2027-01-13 sea | no plan
+day 4 2027-01-14 port nassau bahamas | 10:30 to 12:58 | leave by --:--
+  10:30 start: Prince George Wharf
+  walk 13 min
+  10:43 stop: Fort Fincastle 50 min
+  walk 3 min
+  11:45 meal Lunch: Test Eatery 4-0 60 min
+  walk 13 min
+  12:58 end: Prince George Wharf 0 min
+  says: Leave for the ship by 1:32 pm.
+
+## noai-prague
+day 1 2027-05-11 land prague | 09:00 to 17:06
+  09:00 start: Hotel in central Prague
+  walk 2 min
+  09:02 stop: National Library of the Czech Republic 40 min (hours not confirmed)
+  walk 5 min
+  09:47 stop: Charles Bridge 30 min
+  walk 16 min
+  10:33 stop: St. Vitus Cathedral 30 min
+  walk 2 min
+  11:05 stop: Prague Castle 50 min
+  Taxi or car 17 min
+  12:12 stop: Dancing House 40 min (hours not confirmed)
+  walk 18 min
+  13:10 meal Lunch: Test Eatery 4-1 60 min
+  walk 5 min
+  14:15 stop: Vyšehrad 40 min (hours not confirmed)
+  Taxi or car 18 min
+  15:13 stop: Old Town 30 min
+  walk 4 min
+  15:47 stop: Prague Astronomical Clock 40 min
+  walk 3 min
+  16:30 stop: Church of Our Lady before Týn 30 min (hours not confirmed)
+  walk 6 min
+  17:06 end: Hotel in central Prague 0 min
+  18:30 evening Dinner: Test Eatery 2-1 75 min
+  suggested: Wenceslas Square; Powder Tower; House of the Black Our Lady; Lennon Wall
+  says: Old Town gets 30 min, the walk to Prague Astronomical Clock, which you picked as a stop of its own (on its own it gets 40 min).
+  says: Opening hours not confirmed for National Library of the Czech Republic, Dancing House and Vyšehrad and 1 more on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 2 2027-05-12 land prague | 09:00 to 12:50
+  09:00 start: Hotel in central Prague
+  walk 5 min
+  09:05 stop: Old New Synagogue 30 min
+  walk 2 min
+  09:37 stop: Old Jewish Cemetery 40 min
+  walk 6 min
+  11:45 meal Lunch: Test Eatery 3-0 60 min
+  walk 5 min
+  12:50 end: Hotel in central Prague 0 min
+  18:30 evening Dinner: Test Eatery 2-0 75 min
+  suggested: Powder Tower; Wenceslas Square; National Museum in Prague; House of the Black Our Lady
+  says: Free time: about 82 min before lunch at 11:45 am. Linger where you are or look around nearby.
+
+## sample-cruise
+day 1 2027-06-30 arrival athens | 11:45 to 16:58
+  11:45 start: Athens Airport (Eleftherios Venizelos)
+  Metro M3, Athens Airport (AIA) to Syntagma 69 min
+  12:54 fixed: Check in or drop bags 20 min
+  walk 2 min
+  13:16 meal Lunch: Eat at Milton's 60 min
+  walk 3 min
+  14:19 stop: Athens Cathedral and the Little Metropolis 25 min
+  walk 3 min
+  14:47 stop: Panagia Kapnikarea 15 min (hours not confirmed)
+  walk 4 min
+  15:06 stop: Monastiraki and the flea market 45 min
+  walk 9 min
+  16:00 stop: Plaka and Anafiotika 30 min
+  walk 4 min
+  16:34 stop: Agia Ekaterini (St Catherine's Church) 20 min (hours not confirmed)
+  walk 4 min
+  16:58 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Psaras 75 min
+  says: Plaka and Anafiotika gets 30 min, the walk between Agia Ekaterini (St Catherine's Church) and Athens Cathedral and the Little Metropolis, which are stops of their own (on its own it gets 60 min).
+  says: Lunch at Eat at Milton's is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Opening hours not confirmed for Panagia Kapnikarea and Agia Ekaterini (St Catherine's Church) on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 16 min left after the last stop, before the day ends (7:14 pm). Linger where you like. Corinth Canal needs about 3 h 24 min there and back with the visit, more than the time left. Also a trip of its own: Temple of Poseidon at Sounion, about 4 h 29 min.
+day 2 2027-07-01 land athens | 09:00 to 15:18
+  09:00 start: Hotel in Plaka
+  walk 5 min
+  09:05 stop: Theatre of Dionysus 30 min
+  walk 4 min
+  09:39 stop: Acropolis and Parthenon 120 min
+  walk 5 min
+  11:45 meal Lunch: Karyatides 60 min
+  walk 2 min
+  12:47 stop: Acropolis promenade (Dionysiou Areopagitou and Apostolou Pavlou) 30 min
+  walk 4 min
+  13:21 stop: Areopagus (Mars Hill) 25 min
+  walk 5 min
+  13:51 stop: Ancient Agora 75 min
+  walk 12 min
+  15:18 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Scholarchion 75 min
+  says: Lunch at Karyatides is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 2 h 42 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Corinth Canal needs about 3 h 24 min there and back with the visit, more than the time left. Also a trip of its own: Temple of Poseidon at Sounion, about 4 h 29 min.
+day 3 2027-07-02 land athens | 09:00 to 16:32
+  09:00 start: Hotel in Plaka
+  walk 12 min
+  09:12 stop: Syntagma Square and the changing of the guard 30 min
+  walk 16 min
+  09:58 stop: Lycabettus Hill 60 min
+  walk 12 min
+  11:10 stop: Byzantine and Christian Museum 75 min
+  walk 27 min
+  13:00 meal Lunch: Microulee 60 min
+  walk 4 min
+  14:04 stop: National Archaeological Museum 120 min
+  Metro M1, Omonia to Monastiraki 28 min
+  16:32 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: O glykyz 75 min
+  says: Lunch at Microulee is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 1 h 28 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Corinth Canal needs about 3 h 24 min there and back with the visit, more than the time left. Also a trip of its own: Temple of Poseidon at Sounion, about 4 h 29 min.
+day 4 2027-07-03 land athens | 09:00 to 17:43
+  09:00 start: Hotel in Plaka
+  Train A4, Athina to Corinth 153 min
+  11:33 stop: Ancient Corinth 82 min
+  walk 2 min
+  12:57 meal Lunch: Tavernakigamprou 35 min
+  Taxi or car 18 min
+  13:50 stop: Acrocorinth 75 min
+  Train A4, Corinth to Athina 158 min
+  17:43 end: Hotel in Plaka 0 min
+  18:30 evening Dinner: Tavern Kalokerinos 75 min
+  says: A day trip to Ancient Corinth: the main sights of Athens fit on your other days.
+  says: In Ancient Corinth, places to eat on the map beside it: Tavernakigamprou, Orestis Cafe or Taverna tou Gambrou (check reviews before you go).
+  says: Lunch at Tavernakigamprou is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+day 5 2027-07-04 embark athens | 09:00 to 16:13 | leave by --:--
+  09:00 start: Hotel in Plaka
+  walk 7 min
+  09:07 stop: Roman Agora and Tower of the Winds 40 min
+  walk 16 min
+  10:03 stop: Philopappos Hill 45 min
+  walk 14 min
+  11:02 stop: Acropolis Museum 90 min
+  walk 7 min
+  12:39 stop: Temple of Olympian Zeus and Hadrian's Arch 35 min
+  walk 9 min
+  13:23 stop: National Garden 30 min
+  walk 6 min
+  13:59 meal Lunch: Iliada 60 min
+  walk 5 min
+  15:04 fixed: Collect bags 15 min
+  Taxi or car 54 min (15 kept)
+  16:13 end: Piraeus cruise terminals 0 min
+  says: Lunch at Iliada is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave Iliada by 4:16 pm, collect your bags at 4:21 pm, and leave for the cruise terminal by 4:36 pm.
+  says: Free time: about 1 h 17 min left after the last stop, before the time to be back (5:30 pm). Linger where you like. Corinth Canal needs about 3 h 24 min there and back with the visit, more than the time left. Also a trip of its own: Temple of Poseidon at Sounion, about 4 h 29 min.
+day 6 2027-07-05 port heraklion | 07:30 to 15:14 | leave by --:--
+  07:30 start: Heraklion cruise port
+  Taxi or car 30 min
+  08:00 stop: Palace of Knossos 105 min
+  Taxi or car 29 min
+  10:14 stop: Agios Minas Cathedral 20 min
+  walk 5 min
+  10:39 stop: 1866 Street market 30 min
+  walk 3 min
+  11:12 stop: Lions Square and 25th August Street 30 min
+  walk 0 min
+  11:45 meal Lunch: Kirkor 35 min
+  walk 2 min
+  12:22 stop: Church of Saint Titus 20 min
+  walk 4 min
+  12:46 stop: Heraklion Archaeological Museum 75 min
+  walk 9 min
+  14:10 stop: Venetian harbor and Koules fortress 40 min
+  walk 24 min (15 kept)
+  15:14 end: Heraklion cruise port 0 min
+  says: Lions Square and 25th August Street gets 30 min, the walk to Church of Saint Titus, which is a stop of its own (on its own it gets 40 min).
+  says: Leave for the ship by 3:21 pm.
+day 7 2027-07-06 port kusadasi | 09:30 to 17:09 | leave by --:--
+  09:30 start: Kusadasi cruise port
+  Taxi or car 49 min
+  10:19 stop: Basilica of Saint John 45 min
+  walk 9 min
+  11:13 stop: Temple of Artemis 15 min
+  Taxi or car 18 min
+  11:46 stop: Ancient Ephesus 115 min
+  walk 0 min
+  13:41 meal Lunch: A lunch you bring 35 min
+  Taxi or car 22 min
+  14:38 stop: House of the Virgin Mary 45 min
+  Taxi or car 40 min
+  16:03 stop: Pigeon Island castle 30 min (hours not confirmed)
+  walk 36 min (25 kept)
+  17:09 end: Kusadasi cruise port 0 min
+  says: Bring lunch for 1:41 pm at Ancient Ephesus: places to eat there aren't in the guide yet.
+  says: Leave for the ship by 5:09 pm.
+  says: Opening hours not confirmed for Pigeon Island castle on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 8 2027-07-07 port santorini | 08:00 to 18:30 | leave by --:--
+  08:00 start: Fira old port (tender landing)
+  Cable car 0 min
+  08:00 fixed: Cable car up (with the queue) 20 min
+  walk 7 min
+  08:27 stop: Fira caldera path 60 min
+  walk 3 min
+  09:30 stop: Museum of Prehistoric Thera 45 min
+  Taxi or car 35 min
+  10:50 stop: Oia village 120 min (hours not confirmed)
+  walk 2 min
+  12:52 meal Lunch: Terpsi 35 min
+  Taxi or car 47 min
+  14:14 stop: Akrotiri prehistoric town 75 min
+  Taxi or car 30 min
+  15:59 stop: Pyrgos village 60 min (hours not confirmed)
+  Taxi or car 26 min
+  17:25 fixed: Cable car down (the queue is longest when ships leave) 50 min
+  Cable car 15 min (15 kept)
+  18:30 end: Fira old port (tender landing) 0 min
+  says: Lunch at Terpsi is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:44 pm.
+  says: Opening hours not confirmed for Oia village and Pyrgos village on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 9 2027-07-08 port mykonos | 08:30 to 14:17 | leave by --:--
+  08:30 start: Mykonos new port (Tourlos)
+  walk 20 min
+  09:00 stop: Archaeological Museum of Mykonos 60 min
+  walk 7 min
+  10:07 stop: Agricultural Museum 60 min (hours not confirmed)
+  walk 6 min
+  11:13 stop: Mykonos Town (Chora) lanes 40 min
+  walk 3 min
+  11:56 stop: Panagia Paraportiani church 20 min (hours not confirmed)
+  walk 2 min
+  12:18 meal Lunch: Sea Satin by Gryparis 60 min
+  walk 2 min
+  13:20 stop: Kato Mili windmills 30 min (hours not confirmed)
+  Taxi or car 27 min (10 kept)
+  14:17 end: Mykonos new port (Tourlos) 0 min
+  folded in: littlevenice
+  says: Mykonos Town (Chora) lanes gets 40 min, the walk between Panagia Paraportiani church and Kato Mili windmills, which are stops of their own (on its own it gets 75 min).
+  says: Little Venice is inside Mykonos Town (Chora) lanes: seen on that visit (10 min more), not a stop of its own.
+  says: Lunch at Sea Satin by Gryparis is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 7:18 pm.
+  says: Opening hours not confirmed for Agricultural Museum, Panagia Paraportiani church and Kato Mili windmills on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Time left for Delos island (About 30 to 40 minutes each way by boat from the old harbor. Boats leave from about 9:00): not added on its own, since boats keep their own timetable. If you go, take a boat back that lands you by 7:15 pm.
+day 10 2027-07-09 port chania | 08:30 to 14:42 | leave by --:--
+  08:30 start: Souda Bay cruise port
+  Taxi or car 30 min
+  09:00 stop: Church of Saint Nicholas, Splantzia 20 min
+  walk 4 min
+  09:24 stop: Municipal Market (Agora) 30 min
+  walk 9 min
+  10:03 stop: Old town lanes and Topanas 60 min
+  walk 6 min
+  11:09 stop: Firkas fortress and Maritime Museum 40 min
+  walk 4 min
+  11:53 stop: Venetian harbor and lighthouse 60 min (hours not confirmed)
+  walk 2 min
+  12:55 meal Lunch: Mixalis 60 min
+  Taxi or car 47 min (15 kept)
+  14:42 end: Souda Bay cruise port 0 min
+  suggested: Souda Bay War Cemetery
+  says: Lunch at Mixalis is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 3:58 pm.
+  says: Opening hours not confirmed for Venetian harbor and lighthouse on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 2 h 3 min left after the last stop, before the time to be back (4:45 pm). Linger where you like. Souda Bay War Cemetery (about 44 min there and back with the visit) fits in the time left: pick it to plan it. Also a trip of its own: Balos lagoon, about 5 h 36 min.
+day 11 2027-07-10 sea | no plan
+day 12 2027-07-11 port messina | 08:30 to 15:13 | leave by --:--
+  08:57 start: Messina cruise terminal
+  walk 3 min
+  09:00 stop: Galleria Vittorio Emanuele III 60 min (hours not confirmed)
+  walk 2 min
+  10:02 stop: Palazzo del Monte di Pietà 30 min (hours not confirmed)
+  walk 5 min
+  10:37 stop: Messina Cathedral and the astronomical clock 50 min
+  walk 2 min
+  11:29 stop: Santissima Annunziata dei Catalani 15 min (hours not confirmed)
+  walk 0 min
+  11:45 meal Lunch: La Piazzetta 60 min
+  Tram Line 28, Municipio to Brasile / Imbarchi Caronte 30 min
+  13:15 stop: Regional Museum of Messina 75 min
+  Tram Line 28, Brasile / Imbarchi Caronte to Municipio 43 min (15 kept)
+  15:13 end: Messina cruise terminal 0 min
+  suggested: Santa Maria Alemanna; Fountain of Neptune; Sant'Eustochia; Madonna della Lettera
+  says: Lunch at La Piazzetta is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Galleria Vittorio Emanuele III opens at 9:00 am, so the day starts at 8:57 am: leave the ship then.
+  says: Leave for the ship by 4:02 pm.
+  says: Opening hours not confirmed for Galleria Vittorio Emanuele III, Palazzo del Monte di Pietà and Santissima Annunziata dei Catalani on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 1 h 32 min left after the last stop, before the time to be back (4:45 pm). Linger where you like. Reggio Calabria (ancient Rhegium) needs about 4 h 34 min there and back with the visit, more than the time left. Also a trip of its own: Taormina, about 6 h 12 min.
+day 13 2027-07-12 port naples | 07:30 to 16:51 | leave by --:--
+  08:36 start: Stazione Marittima (Naples cruise terminal)
+  Metro Line 1, Municipio to Duomo 24 min
+  09:00 stop: Castel Capuano 30 min (hours not confirmed)
+  walk 7 min
+  09:37 stop: Naples Cathedral and the Chapel of San Gennaro 35 min
+  walk 10 min
+  10:22 stop: Spaccanapoli and the historic center 35 min
+  walk 2 min
+  10:59 stop: Sansevero Chapel (Veiled Christ) 40 min
+  walk 7 min
+  11:46 meal Lunch: Re Lazzarone 60 min
+  walk 3 min
+  12:49 stop: National Archaeological Museum 90 min
+  walk 24 min
+  14:43 stop: Certosa di San Martino 60 min (hours not confirmed)
+  walk 18 min
+  16:01 stop: Piazza del Plebiscito and the Royal Palace 40 min
+  walk 10 min
+  16:51 end: Stazione Marittima (Naples cruise terminal) 0 min
+  suggested: Castel Sant'Elmo
+  says: Spaccanapoli and the historic center gets 35 min, the walk to Sansevero Chapel (Veiled Christ), which is a stop of its own (on its own it gets 75 min).
+  says: Lunch at Re Lazzarone is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Castel Capuano opens at 9:00 am, so the day starts at 8:36 am: leave the ship then.
+  says: Leave for the ship by 5:35 pm.
+  says: Opening hours not confirmed for Castel Capuano and Certosa di San Martino on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 14 2027-07-13 port rome from civitavecchia | 07:30 to 19:39 | leave by --:--
+  07:30 start: Civitavecchia cruise port
+  Train FL5, Civitavecchia to Roma San Pietro 116 min
+  09:26 stop: Palazzo della Cancelleria 30 min (hours not confirmed)
+  Taxi or car 17 min
+  10:13 stop: Colosseum and Roman Forum 99 min
+  walk 3 min
+  11:55 meal Lunch: RoYaL Art Cafè 20 min
+  walk 22 min
+  12:37 stop: Trevi Fountain 20 min
+  walk 10 min
+  13:07 stop: Pantheon 30 min
+  walk 6 min
+  13:43 stop: Piazza Navona 25 min
+  walk 23 min
+  14:31 stop: Saint Peter's Square 30 min (hours not confirmed)
+  walk 5 min
+  15:06 stop: St Peter's Basilica 90 min
+  walk 8 min
+  16:44 stop: Vatican Museums 60 min
+  Taxi or car 115 min (25 kept)
+  19:39 end: Civitavecchia cruise port 0 min
+  says: Lunch at RoYaL Art Cafè is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Leave for the ship by 5:50 pm.
+  says: Opening hours not confirmed for Palazzo della Cancelleria and Saint Peter's Square on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 15 2027-07-14 sea | no plan
+day 16 2027-07-15 arrival barcelona | 08:00 to 14:35
+  08:00 start: Moll Adossat cruise terminals
+  Taxi or car 24 min
+  08:24 fixed: Check in or drop bags 20 min
+  walk 10 min
+  08:54 stop: La Rambla & La Boqueria market 45 min
+  walk 8 min
+  09:47 stop: Gothic Quarter & Cathedral 60 min
+  walk 8 min
+  10:55 stop: Santa Maria del Mar 30 min
+  walk 5 min
+  11:30 stop: El Born Centre de Cultura 30 min
+  walk 4 min
+  12:04 stop: Museu Picasso 75 min
+  walk 2 min
+  13:21 meal Lunch: Bar del Pla 60 min
+  walk 14 min
+  14:35 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: El Nacional 75 min
+  suggested: Plaça de Catalunya; Pont del Bisbe; Palau de la Música Catalana; Parc de la Ciutadella; Tibidabo
+  says: Pont del Bisbe is part of the Gothic Quarter & Cathedral walk: seen on that visit, not a stop of its own today.
+  says: Free time: about 3 h 55 min left after the last stop, before the day ends (6:30 pm). Linger where you like. Tibidabo (about 2 h 50 min there and back with the visit) is a trip of its own: pick it for a day to plan it. Also a trip of its own: Sitges, about 3 h 48 min.
+day 17 2027-07-16 land barcelona | 09:00 to 16:48
+  09:00 start: Hotel near Plaça de Catalunya
+  Metro L2, Passeig de Gràcia to Sagrada Família 18 min
+  09:18 stop: Sagrada Família 90 min
+  walk 15 min
+  11:03 stop: Sant Pau Recinte Modernista 60 min
+  Metro L5, Sant Pau | Dos de Maig to Diagonal 27 min
+  12:30 meal Lunch: Frankfurt'als Barela 60 min
+  walk 0 min
+  13:30 stop: Gràcia squares 45 min
+  walk 13 min
+  14:28 stop: Casa Milà (La Pedrera) 60 min
+  walk 8 min
+  15:36 stop: Casa Batlló 60 min
+  walk 12 min
+  16:48 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: Tapas 24 75 min
+  suggested: Plaça de Catalunya; Casa Amatller; Mercat de Sant Antoni; Columbus Monument; Bunkers del Carmel
+  says: Lunch at Frankfurt'als Barela is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Free time: about 1 h 12 min left after the last stop, before the day ends (6:00 pm). Linger where you like. Tibidabo needs about 2 h 20 min there and back with the visit, more than the time left. Also a trip of its own: Sitges, about 3 h 48 min.
+day 18 2027-07-17 land barcelona | 09:30 to 14:37
+  09:30 start: Hotel near Plaça de Catalunya
+  Taxi or car 79 min
+  10:49 stop: Montserrat monastery 115 min
+  walk 0 min
+  12:44 meal Lunch: A lunch you bring 35 min
+  Taxi or car 78 min
+  14:37 end: Hotel near Plaça de Catalunya 0 min
+  18:30 evening Dinner: Nineteen 75 min
+  suggested: Plaça de Catalunya; Palau de la Música Catalana; Parc de la Ciutadella; Montjuïc Castle
+  says: Bring lunch for 12:44 pm at Montserrat monastery: places to eat there aren't in the guide yet.
+  says: Free time: about 2 h 53 min left after the last stop, before the day ends (5:30 pm). Linger where you like. Tibidabo (about 2 h 50 min there and back with the visit) is a trip of its own: pick it for a day to plan it. Also a trip of its own: Sitges, about 3 h 48 min.
+day 19 2027-07-18 departure barcelona | 09:00 to 12:05 | leave by --:--
+  09:00 start: Hotel near Plaça de Catalunya
+  Metro L3, Catalunya to Vallcarca 30 min
+  09:30 stop: Park Güell 75 min
+  Metro L3, Vallcarca to Catalunya 30 min
+  11:15 fixed: Collect bags 15 min
+  Taxi or car 35 min (15 kept)
+  12:05 end: Barcelona Sants station 0 min
+  suggested: Plaça de Catalunya
+  says: Leave Park Güell by 11:10 am, collect your bags at 11:40 am, and leave for the station by 11:55 am.
+day 20 2027-07-18 arrival madrid | 16:00 to 16:34
+  16:00 start: Madrid Atocha station
+  Metro L1, Atocha to Sol 14 min
+  16:14 fixed: Check in or drop bags 20 min
+  walk 0 min
+  16:34 end: Hotel near Puerta del Sol 0 min
+  18:30 evening Dinner: Casa Labra 75 min
+  says: Free time: about 5 h left after the last stop, before the day ends (9:34 pm). Linger where you like. El Escorial monastery needs about 5 h 36 min there and back with the visit, more than the time left. Also a trip of its own: Toledo, about 7 h 56 min.
+day 21 2027-07-19 land madrid | 09:00 to 17:07
+  09:42 start: Hotel near Puerta del Sol
+  walk 18 min
+  10:00 stop: Prado Museum 120 min
+  walk 2 min
+  12:02 meal Lunch: Un sabor excepcional 60 min
+  walk 10 min
+  13:12 stop: Retiro Park 60 min
+  Metro L2, Retiro to Ópera 28 min
+  14:40 stop: Royal Palace 90 min
+  walk 11 min
+  16:21 stop: Plaza Mayor and Puerta del Sol 40 min
+  walk 6 min
+  17:07 end: Hotel near Puerta del Sol 0 min
+  18:30 evening Dinner: Chocolatería San Ginés 75 min
+  suggested: Cuatro Torres Business Area; Madrid Río; Arco de la Victoria; Nuevos Ministerios
+  says: Lunch at Un sabor excepcional is a place to eat on the map beside your stops (the guide names none on your way): check reviews before you go.
+  says: Prado Museum opens at 10:00 am, so the day starts at 9:42 am.
+day 22 2027-07-20 departure madrid | 09:00 to 12:28 | leave by --:--
+  09:00 start: Hotel near Puerta del Sol
+  walk 5 min
+  09:05 stop: Chocolatería San Ginés 25 min (hours not confirmed)
+  walk 16 min
+  09:46 stop: Casa Gallardo 30 min (hours not confirmed)
+  walk 14 min
+  10:30 stop: Almudena Cathedral 25 min
+  walk 16 min
+  11:11 fixed: Collect bags 15 min
+  Taxi or car 62 min (15 kept)
+  12:28 end: Madrid-Barajas Airport, Terminal 4 0 min
+  says: Leave Almudena Cathedral by 11:27 am, collect your bags at 11:43 am, and leave for the airport by 11:58 am.
+  says: Opening hours not confirmed for Chocolatería San Ginés and Casa Gallardo on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+
+#odd 300 odd trips (seed 1), one fingerprint per day
+#odd odd001-cruise af65cd92ac 2eaf1237c2 d18ce07d9a 6e74827de4 f853952602 0c78c00157
+#odd odd002-multicity 6c3659f506 ba4cb6811f c980b06793 d6eee25938 d19a1f49f2 8f9c7ed36b
+#odd odd003-hop aaadee5189
+#odd odd004-stay e1386d4abb f4b6b38325
+#odd odd005-cruise d664b787f8 d7a6221a53 1b726a94bb 4217144cb9 123415e473 25e10516b0
+#odd odd006-multicity 4f3eb87b05 dc758fb751 3083a3c1b4 e5de6d0875 cad7050314 ae72aeefbb cbdf1e7d7a
+#odd odd007-hop a2c4b463ce
+#odd odd008-stay c9fd863a0f 6ae7c654c1 e73cb8612c 845fc67fcb
+#odd odd009-cruise 7ac0fa7232 8e21c5b1af e2654111fe 0c6be9f72b
+#odd odd010-multicity 545cee679a 1c9c410019 93a0e2cbe8 342488859d 18d3a03762 57b95d41ff
+#odd odd011-hop 680bf436c5
+#odd odd012-stay 3bf0917210 b94a09c987 a7e881fea0 6eee1b8bed
+#odd odd013-cruise 57bd9cd849 2976300e52 1f707fbf72 5cc3b7faea 49d7acf1e2 9eeaf03493 e339e53dbe c002efe563 d1fef20266
+#odd odd014-multicity 14f8cac285 d27e9d45e3 7253a8ebe8 19f7f2aeb4 1fc31e1246 b508e828c0
+#odd odd015-hop 1c9860d8ef
+#odd odd016-stay 67d9c88124 6d6cec15da e92dde46e3 5074cf2c21
+#odd odd017-cruise 1920d77602 0f7b4db435 1b5763e758 e39433c1c1 918a26bda3 d01286feef dd15e2e6ab d82d946351 81e08fb99b
+#odd odd018-multicity 28d2740c82 2516326a40 d87a70808f fdee11f321 76388fe847 5d721ca3eb
+#odd odd019-hop 016e46c486
+#odd odd020-stay 970d5ea0b9 8657fa76db 8e637aef72
+#odd odd021-cruise 0e2783c614 2a08774ea1 1d7d7fee9d 1dbae739ac 94998e1583 ee8f613fe8 e21cbcc5c7 9810fbe893 ed5b35f54d
+#odd odd022-multicity 278fac1e43 21444a1b7a c1aa6ae267 0cce0555de aadd2d5817 f9079fa646 166f6fc724
+#odd odd023-hop 528f4c56d2
+#odd odd024-stay 8ca6c7bacf 25a69c77f7 1c6a83b424 d1c210396f f6b8a2d816
+#odd odd025-cruise 102f3c10ae 39babd89f4 10bad6f7ac 1183a362a2 b02d871cc5
+#odd odd026-multicity f3f88db360 18ffc802e6 0541591a16 6fc9bbab87 5a9ccfeec2 1a0c58c13a
+#odd odd027-hop 09f44e6362
+#odd odd028-stay 3b2531ed3e 6237dfc40c 7ee6617d1b f512a6a3e8 728c58b9ae
+#odd odd029-cruise 00b14eb97e 4cfe98fa4e 91883d1bb2 bebc4e1e08 3336bf5021 b2f99f3e75 01f8479dfb 9b26255349 6e672e5822
+#odd odd030-multicity 4995ef2278 8c7eb868fb dccd792724 ce70fb1926 17d29a30b3 12c038f8b0
+#odd odd031-hop 8fdf4a3fac
+#odd odd032-stay a8556b313a 36edb06813
+#odd odd033-cruise b15a38d46d f104c0a400 c6521ee986 4e0b40c951 3389094088 90fa64f884
+#odd odd034-multicity 0012d67e97 d72a7d728a 1925feaeca ec5917f763
+#odd odd035-hop f4cb469512
+#odd odd036-stay 7d91203689 6803d2a64b b9d76a5b4d f26ce8fb77
+#odd odd037-cruise c8d227bea3 6b886b2d1f f321baab87 d60dff926e 82e6d001ff 8bd981bca3 c062a6de29 047ab4f360 37f1ea03ff
+#odd odd038-multicity 30a198e60a d8aa5b8e13 4d8fa2652a 973eb111b3 e7b4a8119c 71fa51ced5 df9c70923a 5e0aff5670
+#odd odd039-hop 6ad288310a
+#odd odd040-stay 18dd87e1fb 695c331c76 b7901248a9 92a587ef94
+#odd odd041-cruise 4253a58e32 e9ea3dd02b 286dd40414 ab2d3b74bc 7bb7b74175 d01286feef f222e80a15 3314f64458 d6dd40e001
+#odd odd042-multicity 8ff878ea80 b31d2aa160 51175eed59 50672ffcd3 e4b36eba12 a844efe834 a38b5f7a94
+#odd odd043-hop dc744e9c0b
+#odd odd044-stay c89a74b886 2d25ba96dc
+#odd odd045-cruise 5bcc50a512 8e21c5b1af 1b5763e758 cbd6c5c24b a5a8197bca 19697559ff
+#odd odd046-multicity 1b48edc881 2d70d27d33 2866e5da42 1b6367de81 e925493470 84d343cd0f 01853bd7f1 d24fc3fbcd b24f4c9300 2ff27ecb63
+#odd odd047-hop 8fdf4a3fac
+#odd odd048-stay 3cf518f66f 9fe8147ffe ec2fc06455 39a6f8276a
+#odd odd049-cruise b440718213 0f9e8d3b91 b40cde4633 93e18df489 d4d4238803 7bb1c64a49
+#odd odd050-multicity 6baf69f856 78ac932fe9 e6194d2252 638e2805e3 ddbe2b0a87 4713045867 5247973dde a4b531f11d 982c02ab7a bf46c7f2f4 39631b8708 9ea195ea36
+#odd odd051-hop fc4807fda2
+#odd odd052-stay bea0cf0ae9 71422f7ec7
+#odd odd053-cruise b413fb8e7f 4f9aa7f5ea 1b5763e758 607c9baeb1 918a26bda3 6c717341e9
+#odd odd054-multicity fb5c21fd01 92d5707fa2 41ce5c89c3 bf3f0b6f22 10b26919c9 84a4b71847 6fcac073f8 e903c6cbd3
+#odd odd055-hop 631cad5d59
+#odd odd056-stay e32b2162a8 1bee4afc0d
+#odd odd057-cruise b8fd3e4f07 630da22d6b 1b5763e758 8289516a30 397dceabed 5d894796c4 01f8479dfb 9d1dcbb735 92ad4b5ba5
+#odd odd058-multicity 8bef80fd41 a2ad62f368 1c6bfb6ffd b3264e610d c56b6ca69c 2e8e3d894c 5eb9997f5b d8d6f2057f 365662328e
+#odd odd059-hop 52e8c99d61
+#odd odd060-stay 45d04ca05d b113437cfa b858bf8343 413e5b24fd aa115164f0
+#odd odd061-cruise 382d13e9a5 4598906b7d f057b465fb af23568f8d dc4b136e94 c1c34a0d35
+#odd odd062-multicity 86a7b022d7 580ca49691 92c50c4516 1463f5544a 1d9d229d29 02d5d7e4ab e0b99c987b 3e2c271bb7
+#odd odd063-hop 34400ddd0c
+#odd odd064-stay 1ca122b4f0 144eb7b891 de8f419ffe 1c66c1cb7c 3121349495
+#odd odd065-cruise 683c26bb39 5b57de790d 1b5763e758 dc6706ca85 eb1454fd7f
+#odd odd066-multicity cb1c80451d e654a1a5ca c3ddb0d240 322ef529e8 bedb7ed2c5
+#odd odd067-hop 74433304f0
+#odd odd068-stay 6557509472 172e38d504 0711cefd8c
+#odd odd069-cruise fce9c2157d 4248e8307e 6c9e281b04 139f63ab31 36dd3b60f7 f4bd1e5592 a97af848f4 cd0d7de7f9
+#odd odd070-multicity 9c632c149a 28d4fe811a c3219ccbed ac2162aff7 0488bf6df7 0291ef24e2
+#odd odd071-hop 977c92beda
+#odd odd072-stay dcdddcf257 e08a11a024 f27f3d4eaf 1d59d46d4f 45df24f84a
+#odd odd073-cruise 8e28dee16e 40d49fa397 1b5763e758 b5b5b73f0a d84878ac1c 7a4dc7dc92 71b5205edd
+#odd odd074-multicity 3a5637fe41 bbc9aecb34 975afd6258 2d749e89aa 4e9e447382 845da53122
+#odd odd075-hop 90f2a11ddc
+#odd odd076-stay 1130542eda b431d90b25 01cb70d921
+#odd odd077-cruise 5bafa458bc bb4d8d6c8d 1b5763e758 4217144cb9 53a172671f 3c73eda608 b8ed721ed8 8f0aab7667
+#odd odd078-multicity b2096f0a02 aa717c3298 3bf3adec8a a42939140f 880fe31726 953378af20 db1be56640 71a50aa42b 4b279596bd
+#odd odd079-hop 780fbd741f
+#odd odd080-stay 6a47be53f9 0831b5220b c27389ac8d 96be8f04d7
+#odd odd081-cruise 53748ae519 55d1db5f81 ff4781fc91 e891719db6 0f8eb5aa41 39ad370cdd
+#odd odd082-multicity 4f89de3bda 0e5c783856 38523533b4 ded5bc33f0 b3409a4f69 8112461a44 4557150de6 3e9955b0f5
+#odd odd083-hop 2f2f2c605a
+#odd odd084-stay 7083824ae1 032b01c35b 167ed45ebc 0f90b11d5b 76bcbf2a2e
+#odd odd085-cruise 9f735b7065 8e21c5b1af 22b52d5020 9dbd6e90a3 4afd4fa8ea
+#odd odd086-multicity 6158a0ebbb 23db099f7c eac85bd23c 801decc265 f9b197309e 485bb65d40
+#odd odd087-hop 7f8c5324d7
+#odd odd088-stay 4f3d779cac fefc5e1594 74c8346b34 c91193fb61 80c6e9a9a9
+#odd odd089-cruise 041d296187 8f1150b722 9441e03f7e bd9927aec4 fa976fbd7c
+#odd odd090-multicity 285befb803 770b705f4f 300d18dac0 ea1c8329e6 ea12584f6f 70c6250a8e 4de82f86f9 f379ac03b6
+#odd odd091-hop 1dab6520c9
+#odd odd092-stay a657dcd90e 175b0c3fdc 9974a1f476 247745a51e 67f76c2782
+#odd odd093-cruise 623f145ece f620d8d2a3 14116d8015 4217144cb9 9c9ca22754 db654ffa26 955b729a6d 1d9a667331 30d4caed6e 2a91a01669
+#odd odd094-multicity 4e2b596420 81aa1abe2a b0c1436c6c 549b30fb59 39f5cb95e4 0866cb81bb
+#odd odd095-hop 1d32b9c1fd
+#odd odd096-stay d216e2ce0b 7599022d1a 9c45cc78c6 09d5e990a9
+#odd odd097-cruise 5a2aeb2fc4 48fc940e10 1b5763e758 073974f8ee 7c3b8be730 d01286feef 72e3ef071f 42c419a19f
+#odd odd098-multicity c9f3eadaeb c9c2404b2f 08d0771f1f ec123cc627 0cf80cd713 a874119dde 2e1e8430ab df92201aa4 0bc971eee9
+#odd odd099-hop 0320ec3f10
+#odd odd100-stay a2df8fcb60 877d7d74f4 870b1376f3
+#odd odd101-cruise 435a14292c 8e21c5b1af 4c583b4553 929f4c2dab a683761e3c 4b52a35026 752d2dcd71
+#odd odd102-multicity 55afe91642 c7f33e20e5 da0f13c7dd 06398297cd 9f5b85d436 1519634389 564e96c6b0 74442ec282 975875992d c5a852295c 21c9e60e40 a5494ba666
+#odd odd103-hop a479cf6dc4
+#odd odd104-stay c73a9650ff fc3faed18e
+#odd odd105-cruise 563342356f 1814b4fef5 11da2e8b09 4217144cb9 7210ca61aa 679ca7270f afb48b4e4c 35f7b306b3 44a2a47486
+#odd odd106-multicity 7c76f95719 444c13e1a5 d5d843072b 3bfc7333e0 3861e8dfbc 20b82f232a 0f6789f688
+#odd odd107-hop e0fb49a67c
+#odd odd108-stay 773ff72c12 82e5078e9f
+#odd odd109-cruise f89aef0aa4 4f8a11f636 1b5763e758 ec9521d77f dc4edc357b 016bd038df
+#odd odd110-multicity 199f214eba 4708f914f0 ccd3920b99 872544dbec 055ad41bf6 958d5e8bdf 16c20fd7af 91363acd76 8c40b2766c 58fcc6232b
+#odd odd111-hop 9145462290
+#odd odd112-stay 5e71de11a7 2fc6300426 05dd21fd17 24dbbbec62 bd47699400
+#odd odd113-cruise b113342a7c 5e2367c329 176c052c99 f014dd6e2f caed0c797f 9025bb21c4 b50e6a2a02
+#odd odd114-multicity 6eddbdfd96 ddf822cef8 4b5dc09bf7 78b44050d8 4a93af6a7a bd862207c6 90a5da2990
+#odd odd115-hop 31f754e0f6
+#odd odd116-stay 202d1b4f91 0bf1c27e3a 0fa5497cf1
+#odd odd117-cruise 7a653a409c e7e0e51c3f 18047277d0 4217144cb9 02df8ce32d d01286feef 48201e948c
+#odd odd118-multicity 5e0e6ad912 aa73077def 9529403e5e c35a1ae95f a4a76ffcca f3e2a650b2 66fc6e2689
+#odd odd119-hop d615cc7d36
+#odd odd120-stay 9b35e9c99f d8d485c921 bdfdb45730 bc326b8e04 33d5321151
+#odd odd121-cruise 346abe0167 5af14af1ae 81c03767d1 aa87fbb272 11d610dc94
+#odd odd122-multicity ad9b7aa8a2 4363431985 b75a8bd1aa 0f7ce66a5c f0b7c962d5 b01e66819d b13a625446 f8af23a6f5 bc24895e23 7cb38af888 aec9e463a1
+#odd odd123-hop fc8fb083ad
+#odd odd124-stay 590adcb6b7 2dbb1e5193 677bed76a8 1f15cf35c3 943bb63948
+#odd odd125-cruise cea00ce605 defcbe5725 1b5763e758 fb00278f6e 918a26bda3 81683ebe2c
+#odd odd126-multicity 81ee04aecc 1ef5dd8011 9b0292ffd5 9eebca73d3
+#odd odd127-hop 7020418e32
+#odd odd128-stay 1cb229133a b380bf23bb
+#odd odd129-cruise 920512a284 74a6e7db7f 08ee5c8f24 e0ec7f50b3 8580377de6
+#odd odd130-multicity cc02a47c63 a1289c0399 87a358a4d0 4b9c2e055d 635f549ae5 1676a4ccbf 3734eed8db 221ca32f5c 2e58fee8fa
+#odd odd131-hop dc07fa0266
+#odd odd132-stay e3fb7621cc a644ef2cd6 ed837a3af1 85af77f702
+#odd odd133-cruise 72f21e5cde ee768eda9d 1b5763e758 2c2d8c662d 3be4f305fd c4575ddca0 01f8479dfb e32cf4c8d8 a2c2689d85
+#odd odd134-multicity c6428be2fd 0a58d784a6 20ee33de42 c2a6d48b43 3587e07e09
+#odd odd135-hop f0b1bcfbb9
+#odd odd136-stay 669f0a0531 aabe7eeaa3 0902eed00b
+#odd odd137-cruise 1490a6f97f e40a22f425 1b5763e758 583634b657 448ebaf24e d01286feef d3898685cf
+#odd odd138-multicity a4632fc090 44573b8258 ea13f0ba32 b91ce85e20 7a957fdd7f
+#odd odd139-hop 2e905ea351
+#odd odd140-stay 7d5dadea3f 6cdc6b3dc6
+#odd odd141-cruise e3bbb272d2 6e8a305840 10bad6f7ac 7074737e6b e49e6d659e f4bd1e5592 5eb7d169e7 14a1759895
+#odd odd142-multicity e21ebeedbf efa8e7c27f 2e98ad6202 a4bfda9710 248af13706
+#odd odd143-hop 4ea0591aa0
+#odd odd144-stay 48737530db 03d456904e f7e0b249d0
+#odd odd145-cruise 43c39d09b9 740824ad74 e6b4ad39b8 512c2cc00a 4d1ff121d7 4dce788e50 8ab8bb5c49 99ef9861d4
+#odd odd146-multicity 49c86e484e e209e61a56 83c93def8d aeb63b25ba
+#odd odd147-hop 157a4601be
+#odd odd148-stay 9f6b72eeec 48b6b730ea
+#odd odd149-cruise 8884c8b261 1f47c39a3e ad4006e01b edf1f5f834 bb079fd79b 0c902a0fe2
+#odd odd150-multicity 672850cf9d dd9b0b3997 f59a57536b 4a0d71d315 3c2eaeb345 dcc78adf24 c9ea9309db 813f05096f 1b57b3c439 611529a4a0 c30c178238 7dc5f06155
+#odd odd151-hop 095d6a61d0
+#odd odd152-stay fd1d42a1d9 2729f3d00b d18013fc2e 4354e189f5
+#odd odd153-cruise 6b4a299a9a 8e21c5b1af 6c54d5c368 693908628f 9b04f1042e
+#odd odd154-multicity 882d1cb561 82d3396d1d 2e15567e1a 01f6e3a31b d225a9344b 127a0ada2d
+#odd odd155-hop 5194b1f2f5
+#odd odd156-stay b5ba546e4b 9bae729046 603bbada85 5b653ef3f4
+#odd odd157-cruise 4129d17eb0 d51487188b 1b5763e758 30f9687941 fcffa82c41 f6ccbd8a3b 4cca69a3b8 7c9c232ec9
+#odd odd158-multicity b67d648148 3a67ea3739 c46904f83b a273698c7b 049d37c7c9 f12b649659 d5f5c7ed7c 24dd74af8e
+#odd odd159-hop ff3b5109fe
+#odd odd160-stay 8ebafac4b6 39eac6d411 d2a5843a3c d380b0abb0 af93471274
+#odd odd161-cruise 8201dedf5a 02ee6fb88e 2467e1f7ce 5535f1b966 98bf52b623 ed56a5f80b
+#odd odd162-multicity 4b0e07307f 39c31a35c2 bd02ded02d cfa5059184 bdadeb761e 94781ebf49
+#odd odd163-hop 40c550e423
+#odd odd164-stay f1eea5acde 04921d6654 3932f6290d 6279f4a95e
+#odd odd165-cruise a5bb09fe3f a9085a6942 374c19bec4 70194d9a6c 918a26bda3 abed5b14bd d9a6069349
+#odd odd166-multicity 6b5c06b494 3f74ae6090 44e32955c6 68568e80ae a43835ec10 ff19f5e0d9 4774194795 faedc4924a
+#odd odd167-hop 833cb87f3c
+#odd odd168-stay 30f8a5b164 e77fd96e67 a7d8397967
+#odd odd169-cruise 762045aefc 016a43b676 1b5763e758 9696942ac6 401a9115f2 6571b28160 f0ae03241a
+#odd odd170-multicity 59cd5a3ea3 f222ff4f6d 920f524ceb 6860b3e96f 09fc5d40d4 42e7efb014 0f9eccb973 8920b343dd 928a291b44
+#odd odd171-hop 8c42a2cf1f
+#odd odd172-stay e8e869b284 e791c98c9f 010a9cbc72 f56bce4709
+#odd odd173-cruise 230a12eee5 8e21c5b1af e06c9a7ae1 4217144cb9 19ad8a721e b936eb1f0a f69f9890e3
+#odd odd174-multicity 8f7f32f742 7146a516f0 6c12e0cec1 11e2817e52 af3491cc98 59fd459a6c
+#odd odd175-hop 67ed5445e6
+#odd odd176-stay df6f6cfaab 3bc7b6b706 a7ae447826 53a7a2659a
+#odd odd177-cruise 729889fa72 8e21c5b1af 10bad6f7ac dccb799d4f 672713a1b6 ffc39a1138 ce03535fec
+#odd odd178-multicity 0fdc17e643 3298ad9515 b9e6961409 44de027902 8799a8fe2b 0fabc153b6 633c93591c ca0fa2b545 f6fcf4a8eb
+#odd odd179-hop 780fbd741f
+#odd odd180-stay b916e31adc 94a91ab2c2 71d43b05da 5b520aca89
+#odd odd181-cruise f884796bd4 8e21c5b1af 99d8784e69 f1d772582a
+#odd odd182-multicity 21c03539ce 23a08a66fa 81b5f6e164 1d93e3ba43 12f6c681d4 85aa64c14a
+#odd odd183-hop 196421546b
+#odd odd184-stay 4c0dd91364 c1907e4f15 223873ad2d
+#odd odd185-cruise a646357d8e 0b695c4e1b 1b5763e758 2832eef2a1 9d3ac33cfd 33eb5a1296
+#odd odd186-multicity 86282d5cdb 6ea6be4521 2ab769a246 31045c46c6 23be406c30
+#odd odd187-hop 7cbe7cffb3
+#odd odd188-stay 88dbfdea18 05e81ff7e1 e33c233906
+#odd odd189-cruise 3c6e5caee3 952ed240dd 9a780b06fb 0f7ce66a5c
+#odd odd190-multicity 3b37b50e2e fa5b4956d3 c8ac5e9c75 372a1a35b0 4f28b2d391 4b527e5a60
+#odd odd191-hop c161aec852
+#odd odd192-stay d659b21090 4eaab390b2
+#odd odd193-cruise 98dd2a6463 bb813013b2 27e8ca3873 4217144cb9 aa055cb7b0 b255ebcb30 2e5e1eb4ea 376acdc1f7
+#odd odd194-multicity 50ffc861b3 1cc3c0d1c1 35456a9d4e 96b3ab1163 da5d4eb100 ec175dad47
+#odd odd195-hop 4ff124125a
+#odd odd196-stay c5cdbc37cf ac58b23a03
+#odd odd197-cruise b414814624 c0ac2270e2 30780c171a 56bdcd8e93 3f6fc902e7 1e670c938f 5188df4186 24f9b86fbe 1a9319c197 af2fc2567d
+#odd odd198-multicity a51cc27a14 6a5af4e7b5 1ffc4ce607 1dbbf741bb 1298eccbbe a52ecd4af7 a23a882292 7e2ae81c05
+#odd odd199-hop d3b0216b7a
+#odd odd200-stay 9e14774c50 c98d38b70e b58fcba104 528c4b9884 b9a3bd96fd
+#odd odd201-cruise 2fac72f128 33cbad10a8 d641668408 cccd5a1b5a 8c1619fab9 1b52e536f3 e0f4e390a5 4fa5748488
+#odd odd202-multicity 93a956514d ace59b363d 5066ce622d 40bb9a6f81 38632b61e1 21d6660657 f8d28a0663 16f1f146f2
+#odd odd203-hop 4635eeb227
+#odd odd204-stay 14a97c9939 5581ae1600
+#odd odd205-cruise 7ac5674138 d42aff1f60 a7b3ee125d e789a9f089 a7bb587ebc 2a3edf8607 01f8479dfb 0a30f52520
+#odd odd206-multicity abb4d4690c fa36aae120 194158d50e 44655123e4 8338789bdb e67456499a b4e85dce42 c7b1fc421d 42203f38a6 f3c0f50afd
+#odd odd207-hop f29367716f
+#odd odd208-stay d7574e32f5 2b8ebd1b28 dcdcd46383
+#odd odd209-cruise 8402741732 8e21c5b1af 2dcb2f9a9a f2183d1f0c f819d1ff1f 9762036e1e 7f1da72a12 c3fad656d4 724cb6a0ee
+#odd odd210-multicity 83550199a0 4ea80df0c0 23486dab5a 36a673b125 438b24683f
+#odd odd211-hop 23fd1444f2
+#odd odd212-stay 942682658a dbaa05bfcc
+#odd odd213-cruise 89ca99f425 39492c2891 b29aec47db 367ef90e8c 69b02ab465 5352a64f57 fc7c3dbe6c
+#odd odd214-multicity 6628569489 4662286ddd f065894ac9 aba4504a52 e2189cbe64 01f3e3131c
+#odd odd215-hop 98c11a9411
+#odd odd216-stay 11099f08d1 b63cf0cb3f
+#odd odd217-cruise 2420cfcff9 454851a7ec c45fb7cba8 4217144cb9 8589576354 e7b13293ce b3c62299c1
+#odd odd218-multicity fc0c5a8e0c 4ece1e11ba ff4bc207ad 4932d35b3b 9872679b8e 468cc040b5
+#odd odd219-hop c0156eec3b
+#odd odd220-stay 4f35a7ce58 1dba233c8c 0c99a67fad 8ff9380683
+#odd odd221-cruise b6621fbd4b 2a213faec1 b653ab0409 7d184b5844 73c60972fe cef5b76efc
+#odd odd222-multicity e2bae2c499 47999d194d 7c1311f2cc 1bca078327 fa6d14ee63 37d67bd472 6cb814f530
+#odd odd223-hop a4bf659f81
+#odd odd224-stay e16e9c68de f580ab3fd4
+#odd odd225-cruise 09307b4ed6 53285bf484 1b5763e758 896207d23b 5a3dad553c 0d012b1798 76a43c9577
+#odd odd226-multicity efe111203d b55761aeac e05f91f776 3bd1b08b28 cdd2ccb026 f963ce92c3 1801ec51e3 0e786e4ceb f0d3d9fa69
+#odd odd227-hop 651f99bb3b
+#odd odd228-stay 7bae7af0a6 6c2666caf4
+#odd odd229-cruise fecae12804 6fdeea5d4f 3bef66612a ecec7f748a bf1dfd3523
+#odd odd230-multicity cb88ae29d9 e50443a01e d6cb8cfb48 80db80e92b 131a7d0ae3 99b42238df 38d7759849 6fd1362790 c3a972c976 ef1f01fe35
+#odd odd231-hop 0e83683c72
+#odd odd232-stay f9adbaffcd f7048af5dd
+#odd odd233-cruise c153293bcf 8e21c5b1af 74da92f35b c111be070a a73f9f59fd d2a900ea2f ff72bb8f49 0213c18865
+#odd odd234-multicity 3712b19881 3b5de8da4a 0d7cc7be2d 759452f5b7 dbf9be0eed f2c62cf938 a2b6813c6e
+#odd odd235-hop 1e2e0d1854
+#odd odd236-stay 45aaaa65cb 4f6852ba3a 50a98112c0 09dbb15ba4 3a6bb9a186
+#odd odd237-cruise 8641160f7f 8917e3ac0c d975b75b32 4a96e8b46c 05454b7eee d01286feef 3d7bd542a7
+#odd odd238-multicity c2461d5998 7bb48a76a9 67379c9ceb d38550d0f0 da664ece23
+#odd odd239-hop 6a2781f061
+#odd odd240-stay 803f737769 3ddaaf0a0a 8d3ace6ac8 e436b8b86d 60ba8ef85e
+#odd odd241-cruise 041d296187 971020b812 551eb3b2aa 37175341a6 db23515d1a
+#odd odd242-multicity baa8bd8cc8 206eb5ca26 326a97ee40 8207497a99 be1ffd4bb3 20319ec62a
+#odd odd243-hop c1e2fcedf1
+#odd odd244-stay 1bc6f4a7be 41afe02b7c d93994f949
+#odd odd245-cruise 7e611db342 d6b8b950d3 5454a95eb7 0bee0f7c9d 6e63ebc21e 49f46a0e04 122d01859d
+#odd odd246-multicity ea877d5a34 74a597fb85 1ebe1f28ad 0240a05395 5deec711d5 0f8b50e4d3 bcf311e118 2107faa4d1 45666f69f7 6325d1f610 0ebed1d7af
+#odd odd247-hop 54228c0033
+#odd odd248-stay 3ebbd7e229 381fe58632 32f7a96df3
+#odd odd249-cruise 60e6ab8525 25f352c715 1b5763e758 3f2687adde
+#odd odd250-multicity c07797a3af 598e7c6d4f 426e5054aa 245f044473
+#odd odd251-hop fdcb498455
+#odd odd252-stay 7ce14cc624 eb6a1c35a8
+#odd odd253-cruise 81ffd36c6a 2ea1c490a7 1b5763e758 4217144cb9 aebc7f02e1 fb981b0f02 e35fc6214b
+#odd odd254-multicity cbcf81130b e260486270 6abc9f35a0 70c8927cff 3b0addb1fb 25eaa89f45
+#odd odd255-hop f4a5429dd8
+#odd odd256-stay 8e275824f9 80bc2ea681 701ec48b41
+#odd odd257-cruise b176ba1e50 29ea0e6d82 10bad6f7ac 639156540b 621bdfbac7 9a520554cb
+#odd odd258-multicity f132e60ebe 8d79435a0b 3730ec29c1 e055e84e51 284b096231
+#odd odd259-hop a6c9837feb
+#odd odd260-stay e8aea89299 f93b096805 a6be100187 fd4de092c0 6b353caf5f
+#odd odd261-cruise b3a6171dad 67bdfb3719 f90edaccaf 806060c768 36769dc187
+#odd odd262-multicity 7a0b987e4a e5e8fcae16 a2900b2b6d 19873657a6 1dbc798042 1f8c2bce90 fc13d9da31
+#odd odd263-hop 00b61f3c5b
+#odd odd264-stay b57e9c3c59 2c73f554a7 f0167af427 5b3d1eafe3 0c89a7c2b4
+#odd odd265-cruise aca4a3393d 570d3d58d5 10bad6f7ac 4217144cb9 cce0d9dc3b b1e38a2e01
+#odd odd266-multicity 6632e72343 8260348c7f f70f14988b 085f6388d0 2f28fbc066
+#odd odd267-hop 99c4a9cbf4
+#odd odd268-stay dc11c8eabf 110969e89a
+#odd odd269-cruise fc56673098 67abac6c30 1b5763e758 4217144cb9 b9cdd67c07 d01286feef 1e95abc64d 1bce480721 4b279596bd
+#odd odd270-multicity d87d7686d0 ed2f765e7f c8dbd3e268 cc3220041d 88d65dcb83 c380295ad9 4fdc149d43 012ed67336 49e430c002 90e8c6893c
+#odd odd271-hop 10f5e38875
+#odd odd272-stay 07cff9af22 b54bb0ce52 7a3372c97b
+#odd odd273-cruise c03748aa68 4bf4d35ac1 abd559389b 1fa52c884c aca3ed7f54 cdb7545036 01f8479dfb 0258e76040
+#odd odd274-multicity b2ecbb0883 3884360eb5 54727067e0 408ca6070b c390f32673 705466959e 2782835f80 a1cd237c5b c1d7b6327b
+#odd odd275-hop dc2e5e1222
+#odd odd276-stay 9b9a2bc21f 681f289d38 1f8e14efc0 f12015758e dcc0ae70b6
+#odd odd277-cruise 54e0bd3ac6 5dd702a32d 1b5763e758 dddadd863e 918a26bda3 5729bbdf1f a66c89cae8 e8b22491c8 284e26e4e9
+#odd odd278-multicity d145b9652b 78c741ce48 c0223f9168 2be0ad31f8 3e90192218 fb877c9db6 e54e357854 643b6c024a a3f260f012 f200d1a333
+#odd odd279-hop 823499f101
+#odd odd280-stay f827b23df8 01c73d472d 8e10cf76d2 771724599b
+#odd odd281-cruise f092c7613c c77a080085 de9f9109b9 4217144cb9 a38f9daaa9 45eb53c154 9ab49bec67 5e227b1b1e bd260426fd 2f9d964d41
+#odd odd282-multicity 5a149d5b66 12820294d7 668650bf57 87921e08e6 b41bd551e8 98f560f602
+#odd odd283-hop aba5e264b9
+#odd odd284-stay 1dc9c138af 5729ff9dae 60eee12473 92c139e87b
+#odd odd285-cruise 0149c8ed87 680b0c0236 618bf9fc61 5f65e30520 a92b20ed63 d01286feef 663f48af0e
+#odd odd286-multicity 354cbd64f1 e0c10cd88e c839bc0199 27752b8cd0 157a4dca07 003e6b28ab 9d0b6441ae 9eeeb1aa61 bd5649d268 3ff85bbd21
+#odd odd287-hop 690e73901b
+#odd odd288-stay 12c4956fe2 2d0810a9f8 dd2c286b41 7c67350793
+#odd odd289-cruise ee19ddaf16 85ab78eaf0 9785dda779 95243f3dd8 918a26bda3 6d2a4fc6f3 b38d10868b 7f3bef9240
+#odd odd290-multicity 6f96c8f9c2 3799e33eee d3de8792ff 741ada8adc e12dbc5761 5c7c245105
+#odd odd291-hop bb165fae73
+#odd odd292-stay 362bd71fc3 8ec8d26571 cb7917ccec c771f8bf63
+#odd odd293-cruise e164e3f73f 6182fa8642 5afbfd6bf5 4217144cb9 f77e02c64d
+#odd odd294-multicity 334ac4a898 6ea6be4521 21e42bde17 d319f0fc44
+#odd odd295-hop 9efe9bffed
+#odd odd296-stay 88fcc4da4e 9f4dd7e127 7cfe7e80e1 2b73f4f06b 6e65a88baa
+#odd odd297-cruise f19969a148 7b616c9700 7db36e41b5 4217144cb9 918a26bda3 4e6efac9bb 1c4af8514f 988d1408c0 96ca675f99
+#odd odd298-multicity 94274b33db 5b19ff8b63 99f5e15434 f325c8cbf6 5902629979 c6e63f926f 5225ee6326 caeb224842
+#odd odd299-hop 9bd38662bd
+#odd odd300-stay 863dbf3d71 d320a324ae 74babb1b3c 91f6595d7a

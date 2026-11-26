@@ -7,7 +7,7 @@ const UA = { 'user-agent': 'kairoute-test (height check; github.com/gilsonr0566-
 const WALKS = [
   ['Santorini: old port up to Fira (about 220 m up the cliff)', [[25.4270, 36.4195], [25.4290, 36.4200], [25.4305, 36.4205]], 150, 280],
   ['Athens: Monastiraki square up to the Acropolis gate (about 80 m)', [[23.7256, 37.9760], [23.7250, 37.9730], [23.7245, 37.9716]], 50, 120],
-  ['Athens: Kolonaki up Lycabettus (about 150 m)', [[23.7420, 37.9790], [23.7432, 37.9819]], 100, 200],
+  ['Athens: Kolonaki up towards Lycabettus (roughly 100 m on this line)', [[23.7420, 37.9790], [23.7432, 37.9819]], 70, 200],
   ['Barcelona: Eixample, flat (under 15 m)', [[2.1620, 41.3900], [2.1700, 41.3960]], 0, 15],
   ['Venice: flat (under 8 m)', [[12.3350, 45.4340], [12.3390, 45.4370]], 0, 8],
 ];

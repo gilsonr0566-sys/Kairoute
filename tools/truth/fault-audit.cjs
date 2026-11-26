@@ -45,6 +45,9 @@ const CHECKS = [
   ['independent check, no timetable', ['tools/truth/oracle.cjs', '--corpus', '--no-timetable']],
   ['odd trips', src => ['tools/beta2/odd-trips.cjs', '--n', '300', '--seed', '1', '--warn', 'walk', '--out', path.join(src, 'odd.json')], { NOZIG: '1', SLOW_MS: '60000' }],
   ['independent check on odd trips', src => ['tools/truth/oracle.cjs', '--trips', path.join(src, 'odd.json')]],
+  // Last on purpose: the plan ledger notices any change in what is planned for the saved and odd trips, whatever the
+  // rule (tools/truth/plan-ledger.cjs). The rule checks get the first chance, so the table shows what only it noticed.
+  ['plan ledger', ['tools/truth/plan-ledger.cjs'], { LEDGER_NO_PLANTS: '1' }],
 ];
 // Mutation operators: each finds candidate spots on a line (outside strings, regexes and comments, roughly) and returns
 // the changed line.
@@ -109,11 +112,11 @@ const run = (args, env, cwd) => new Promise(res => { const p = spawn('node', arg
   const counted = rows.filter(r => r.result !== 'not counted (does not load)');
   console.log(`Fault audit: ${counted.length} random bugs planted in the planner (seed ${arg('seed', 1)}), ${rows.length - counted.length} more did not load and are not counted\n`);
   if (notTested.length) console.log(`NOT TESTED (failed on the unchanged planner, so left out and never counted as catching): ${notTested.join(', ')}\n`);
-  console.log('| Area | Planted | Caught | Share | Caught first by the engine tests |\n|---|---|---|---|---|');
+  console.log('| Area | Planted | Caught | Share | Caught first by the engine tests | Noticed only by the plan ledger (no rule check failed) |\n|---|---|---|---|---|---|');
   for (const area of Object.keys(AREAS)) { const a = counted.filter(r => r.area === area); if (!a.length) continue; const c = a.filter(r => r.result === 'caught');
-    console.log(`| ${area} | ${a.length} | ${c.length} | ${Math.round(100 * c.length / a.length)}% | ${a.filter(r => r.by === 'engine-test').length} |`); }
+    console.log(`| ${area} | ${a.length} | ${c.length} | ${Math.round(100 * c.length / a.length)}% | ${a.filter(r => r.by === 'engine-test').length} | ${a.filter(r => r.by === 'plan ledger').length} |`); }
   const c = counted.filter(r => r.result === 'caught');
-  console.log(`| **All** | ${counted.length} | ${c.length} | ${Math.round(100 * c.length / Math.max(1, counted.length))}% | ${counted.filter(r => r.by === 'engine-test').length} |\n`);
+  console.log(`| **All** | ${counted.length} | ${c.length} | ${Math.round(100 * c.length / Math.max(1, counted.length))}% | ${counted.filter(r => r.by === 'engine-test').length} | ${counted.filter(r => r.by === 'plan ledger').length} |\n`);
   console.log('Missed (each could be a bug no check would notice, or a change that makes no difference; read them):');
   counted.filter(r => r.result === 'missed').forEach(r => console.log(`- [${r.area}] ${r.file}:${r.line + 1} ${r.op}: ${r.before}  =>  ${r.after}`));
   if (OUT) fs.writeFileSync(OUT, JSON.stringify(rows, null, 1));
