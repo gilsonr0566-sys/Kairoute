@@ -68,6 +68,8 @@ function run(E) {
     // Far north a degree east is short: a reading 50 m east of a point at 64.1 N (Reykjavik) still reaches it.
     { const n = E.applyPlaces({ cities: { rk: { key: 'rk', sites: [{ id: 'n1', name: 'Hill', lat: 64.1415, lng: -21.9265 }] } }, days: [] }, { rk: { key: 'rk', heights: [[64.1415, -21.9255, 70]] } });
       t(n.cities.rk.sites[0].ele === 70, `a ground height 50 m east at 64 N reaches the point (got ${n.cities.rk.sites[0].ele})`); }
+    { const n = E.applyPlaces({ cities: { sv: { key: 'sv', sites: [{ id: 'v1', name: 'Hill', lat: 78.2232, lng: 15.6267 }] } }, days: [] }, { sv: { key: 'sv', heights: [[78.2232, 15.6290, 40]] } });
+      t(n.cities.sv.sites[0].ele === 40, `a ground height 52 m east at 78 N (Svalbard) reaches the point (got ${n.cities.sv.sites[0].ele})`); }
     // Every plan reads the places file again (each "ways to fit it in" box plans the day dozens of times): a point looks
     // only at the readings near it, never the whole list (gate Nov 26: the full list made each plan 4 times slower and
     // the box took 2.7 s on a test phone). 300 sights and 6,000 readings over 20 km take under 60 distance sums a sight.
@@ -96,7 +98,7 @@ const PLANTS = [
   ['the hill left out of the walk-or-ride choice', '10-travel.js', 'Math.max(d, (rFoot.km + hill * speed / 60) / 1.3)', 'Math.max(d, rFoot.km / 1.3)'],
   ['a climb guessed where none is known (every walk 100 m up)', '10-travel.js', 'const hill = climb ? E.climbMin(climb.up, climb.down, climb.km, speed) : 0;', 'const hill = E.climbMin(climb && climb.up != null ? climb.up : 100, climb ? climb.down : 0, climb ? climb.km : d * 1.3, speed);'],
   ['the ends\' heights ignored with no street route', '10-travel.js', 'd > 0.15 ? { up: Math.max(0, b.ele - a.ele)', 'd > 1e9 ? { up: Math.max(0, b.ele - a.ele)'],
-  ['every ground height read for every point', '05-places.js', 'for (let i = -1; i <= 1; i++) for (let j = -2; j <= 2; j++) for (const h of grid.get((la + i) + "," + (ln + j)) || [])', 'for (const h of H)'],
+  ['every ground height read for every point', '05-places.js', 'for (let i = -1; i <= 1; i++) for (let j = -nj; j <= nj; j++) for (const h of grid.get((la + i) + "," + (ln + j)) || [])', 'for (const h of H)'],
   ['the places file\'s ground heights never given to the points', '05-places.js', 'if (best) p.ele = best[2]; };', '};'],
 ];
 let blind = 0;
