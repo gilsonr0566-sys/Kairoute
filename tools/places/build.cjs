@@ -82,7 +82,7 @@ async function islandShapes(centre, km) {
   const big = list.filter(e => !small.includes(e)).map(e => (e.tags && (e.tags['name:en'] || e.tags.name)) || String(e.id));
   const shapes = [];
   for (let i = 0; i < small.length; i += 60) { const part = small.slice(i, i + 60), ids = t => part.filter(e => e.type === t).map(e => e.id).join(',');
-    const ql = '[out:json][timeout:180];(' + (ids('way') ? `way(id:${ids('way')});` : '') + (ids('relation') ? `relation(id:${ids('relation')});` : '') + ');out tags geom;';
+    const ql = '[out:json][timeout:180];(' + (ids('way') ? `way(id:${ids('way')});` : '') + (ids('relation') ? `relation(id:${ids('relation')});` : '') + ');out geom;';
     const els = await overpassOrNull(ql); if (els === null) return null;
     for (const el of els) { const rs = IS.rings(el).map(r => IS.flat(IS.simplify(r, 0.0003))).filter(f => f.length >= 8); if (!rs.length) continue;
       shapes.push({ id: el.type[0] + el.id, name: (el.tags && (el.tags['name:en'] || el.tags.name)) || 'an island', rings: rs }); }

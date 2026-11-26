@@ -33,6 +33,16 @@ async function run(file) {
   const html = fs.readFileSync(SITE, 'utf8'); if (!html.includes(want)) { console.log('FAIL the planted copy could not be made: the app text it changes is gone'); process.exit(1); }
   const tmp = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'isles-plant-')), 'index.html'); fs.writeFileSync(tmp, html.replace(want, 'return P2; }'));
   const pl = await run(tmp); const seen = !pl.isle && !pl.fileIsle;
+  // Islands drawn as a relation (most big ones) keep their outline: every island outline question asks for the members'
+  // shapes ("out geom"). "out tags geom" returns a relation with no members, so no outline: 0 of 215 outlines in the place
+  // files came from a relation before Nov 26. The same check runs on a planted copy of the question with "out tags geom".
+  const isleAsks = src => (src.match(/[^\n]*(\^\(island\|islet\)|relation\(id:)[^\n]*geom[^\n]*/g) || []).filter(l => /relation/.test(l));
+  const membersLost = src => isleAsks(src).some(l => /out tags geom/.test(l));
+  const ROOT = path.join(__dirname, '..', '..'), asks = ['worker/islands.js', 'tools/places/build.cjs'].map(f => [f, fs.readFileSync(path.join(ROOT, f), 'utf8')]);
+  for (const [f, src] of asks) { if (!isleAsks(src).length) bad.push(`${f}: no island outline question found to check`); if (membersLost(src)) bad.push(`${f}: an island outline question asks "out tags geom", which drops the members of islands drawn as a relation`); }
+  const askSeen = membersLost(asks[0][1].replace(/out geom;`, 45000\)/, 'out tags geom;`, 45000)'));
+  console.log(`planted (island outline question drops relation members): ${askSeen ? 'caught' : 'NOT caught - BLIND'}`);
+  if (!askSeen) bad.push('the planted island question with "out tags geom" was not seen');
   for (const m of bad) console.log('FAIL ' + m);
   console.log(`planted (helper outlines left out): ${seen ? 'caught' : 'NOT caught - BLIND'}`);
   console.log(`isles-any-city-check: ${bad.length ? bad.length + ' failed' : 'all passed'}`);

@@ -111,7 +111,7 @@ export async function islandsData(centre, env, codeKey, sha) {
   const ok = base + "o:" + c.lat + "," + c.lng; let shapes = JSON.parse((await env.USAGE.get(ok)) || "null");
   if (!shapes) {
     // One question for the outlines themselves (the size is told from each one's box afterwards).
-    const els = await overpass(`[out:json][timeout:40];(way["place"~"^(island|islet)$"](around:${ISLE_KM * 1000},${c.lat},${c.lng});relation["place"~"^(island|islet)$"](around:${ISLE_KM * 1000},${c.lat},${c.lng}););out tags geom;`, 45000);
+    const els = await overpass(`[out:json][timeout:40];(way["place"~"^(island|islet)$"](around:${ISLE_KM * 1000},${c.lat},${c.lng});relation["place"~"^(island|islet)$"](around:${ISLE_KM * 1000},${c.lat},${c.lng}););out geom;`, 45000);
     if (!els) return { error: "Busy", status: 503 };
     shapes = [];
     for (const el of els) { const rs = rings(el).map(r => r).filter(r => r.length >= 4); if (!rs.length) continue;
