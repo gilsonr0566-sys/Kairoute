@@ -92,7 +92,7 @@ jobs:
   engine:
     name: "3 Engine: engine rules, opening hours, reasons, lunch"
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35  # day-answers-check plans every saved trip 6 times (5 plants), about 10 min (Nov 26)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
