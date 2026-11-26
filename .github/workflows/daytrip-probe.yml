@@ -1,5 +1,5 @@
 name: Day trips live check
-# Rule R-36: what the built app offers as classic day trips for real cities, from this branch's helper code run on
+# Rule R-37: what the built app offers as classic day trips for real cities, from this branch's helper code run on
 # GitHub (free sources only, AI off) or from the live helper. Prints; publishes nothing.
 on:
   workflow_dispatch:

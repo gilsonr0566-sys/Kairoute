@@ -9,7 +9,7 @@ const { chromium } = require('playwright'), fs = require('fs'), path = require('
 const URL = process.env.URL || 'https://gilsonr0566-sys.github.io/Kairoute-Beta2/', TRIP = process.env.TRIP || 'g09-kotor', DAY = +(process.env.DAY || 2) - 1;
 const c = JSON.parse(fs.readFileSync(path.join(__dirname, 'beta2', 'corpus', TRIP + '.json'), 'utf8'));
 const days = c.days.map(d => { const x = Object.assign({}, d); delete x.i; delete x.sites; delete x.wx; delete x.missing; delete x.order;
-  if (/port|embark/.test(d.type) && d.point && !d.point.unknown && !x.pier) x.pier = { name: d.point.name, lat: d.point.lat, lng: d.point.lng }; /* the pier the traveler names from their cruise documents, as the app asks */
+  if ((/port|embark/.test(d.type) || /ship|ferry/.test(d.mode || '')) && d.point && !d.point.unknown && !x.pier) x.pier = { name: d.point.name, lat: d.point.lat, lng: d.point.lng }; /* the pier or ferry terminal the traveler names from their documents, as the app asks */
   for (const k of ['portArrive', 'allAboard', 'boardAt', 'startTime', 'time']) if (typeof x[k] === 'number') x[k] = String(Math.floor(x[k] / 60)).padStart(2, '0') + ':' + String(x[k] % 60).padStart(2, '0'); /* the corpus keeps engine minutes, the app keeps clock times */
   if (process.env.PICKS && /^src-|^q\d/.test(process.env.PICKS) && c.days.indexOf(d) === DAY) { x.selected = process.env.PICKS.split(','); x.ownList = true; } /* PICKS: the traveler's own list for that day (comma-separated sight ids) */
   x.cityKey = d.city; x.destination = d.city && c.cities[d.city] ? c.cities[d.city].name : d.destination || ''; return x; });

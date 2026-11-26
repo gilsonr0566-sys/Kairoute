@@ -2,6 +2,7 @@ import { extras, Group } from "./extras.js";
 import { allOptions, ferriesNear, keptFerries, ferryKey, topRides } from "./transit.js";
 import { departures } from "./departures.js";
 import { islandsData, landingData, roadWay } from "./islands.js";
+import { climbOf, along, upDown } from "./climb.js";
 export { Group };
 // Kairoute AI helper. The website sends a prompt (and optional photos); this Worker asks Workers AI
 // and answers. Usage is counted from real token counts.
@@ -385,12 +386,12 @@ const HANDLER = {
       return Response.json(r, { headers: h });
     }
     // /landing?wd=Q…: the mapped ferry terminals on an island or island group a day out of a city (islands.js, rule
-    // R-36), so the boat to an island day trip is looked for at its piers, not at the middle of the island.
+    // R-37), so the boat to an island day trip is looked for at its piers, not at the middle of the island.
     if (url.pathname === "/landing") {
       const r = await landingData(String(url.searchParams.get("wd") || ""), env, codeKey); if (r.error) return Response.json({ error: r.error }, { status: r.status || 500, headers: h });
       return Response.json(r, { headers: h });
     }
-    // /roadway?a=lat,lng&b=lat,lng: the drive to a place a day out, and whether it takes a boat (islands.js, rule R-36).
+    // /roadway?a=lat,lng&b=lat,lng: the drive to a place a day out, and whether it takes a boat (islands.js, rule R-37).
     if (url.pathname === "/roadway") {
       const pt = v => { const m = /^(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)$/.exec(String(v || "")); return m && Math.abs(+m[1]) <= 90 && Math.abs(+m[2]) <= 180 ? { lat: +m[1], lng: +m[2] } : null; };
       const a = pt(url.searchParams.get("a")), b = pt(url.searchParams.get("b")); if (!a || !b) return Response.json({ error: "Bad request" }, { status: 400, headers: h });
@@ -891,7 +892,7 @@ export default HANDLER;
 // What the handler's own worked-out answers are built from (the handler and the modules it reads).
 const HCODE = () => [HANDLER.fetch, allOptions, ferriesNear, keptFerries, ferryKey, topRides, departures, extras];
 
-// Travel destinations a day out of a city (rule R-36): the rows of the encyclopedia's answer, one per place (a place with
+// Travel destinations a day out of a city (rule R-37): the rows of the encyclopedia's answer, one per place (a place with
 // two travel-guide pages keeps the first), and how they join the fame list: a place on both lists is marked as having
 // its own travel-guide page (voy), one only the travel guide knows is added after the fame list's own.
 const DEST_KM = 100, DEST_MAX = 40;
@@ -907,7 +908,7 @@ export function farSaid(far, enV) { const links = (enV && enV.links) || {}, titl
   for (const f of far || []) { if (!f || !f.voy) continue; const t = f.voy.charAt(0).toUpperCase() + f.voy.slice(1);
     f.said = links[t] || 0; if (title && t.startsWith(title + "/")) f.part = true; }
   return far; }
-// What kind of page the travel guide itself files a place under (rule R-36): every Wikivoyage article sits in a status
+// What kind of page the travel guide itself files a place under (rule R-37): every Wikivoyage article sits in a status
 // category of its kind ("Usable cities", "Guide districts", "Outline regions", "Usable parks", "Outline countries",
 // "Usable airports", "Outline rural areas", "Usable itineraries") or "<Kind> articles". A country, an airport or an
 // itinerary is no day out; a city, a district, a park or a rural area is a place to go.
@@ -978,7 +979,7 @@ async function famousData(label, env, ctx) {
   // The day trips out (80 km round) are the slowest question here (Bath, Nov 24: 81 s with its retry), longer than the app
   // waits for one ask: it gets what is left of 40 s of this ask, one try (R-34). When it doesn't answer in time the fame
   // list is kept a day only, so a later ask fills the trips in (the answer itself is kept the moment it comes back).
-  // The places a day out that travelers go to (rule R-36, Nov 25: Hvar, the Princes' Islands, Lantau and Manly were in
+  // The places a day out that travelers go to (rule R-37, Nov 25: Hvar, the Princes' Islands, Lantau and Manly were in
   // no guide): every place within 100 km that the travel guide (English Wikivoyage) has a page of its own for, with how
   // well known it is. The fame list above is cut at its 25 best known, and around a big city those are stadiums, bridges
   // and suburbs; this list is asked for apart, so a classic day trip is never crowded out. Asked at the same time as the
@@ -1070,7 +1071,7 @@ async function voyagePages(host, title, UA) {
   return { pages: 1 + more.length, title: top.title, listings, next: voyageNext(top.wt), links: voyageLinks(top.wt) };
 }
 // How often a city's own travel-guide page links to each other page ("[[Capri]]", "[[Sydney/Manly|Manly]]"): what the
-// guide to this city itself sends its readers to (rule R-36). Page title -> count, the 300 most linked.
+// guide to this city itself sends its readers to (rule R-37). Page title -> count, the 300 most linked.
 export function voyageLinks(wt) {
   const n = new Map();
   for (const m of String(wt || "").matchAll(/\[\[\s*:?([^|\]#{}<>]+?)\s*(?:#[^|\]]*)?(?:\|[^\]]*)?\]\]/g)) { let t = m[1].replace(/_/g, " ").replace(/\s+/g, " ").trim(); if (!t || /^(file|image|category|wikipedia|w|wikt|commons|special|template|wikivoyage|[a-z]{2,3}):/i.test(t)) continue;
@@ -1330,7 +1331,7 @@ async function sourcesData(label, env, ctx) {
 { name: "Heritage registers and UNESCO", n: stops.filter(x => x.unesco || x.heritage).length }];
   // Day outs travelers suggest (Wikivoyage "Go next" / "Day trips"), with how famous each is where the fame list has it.
   const next = (await voyageNextPlaces(enV.next, center, UA)).map(x => { const f = (fam.far || []).find(y => (x.wd && y.wd === x.wd) || fold(y.name) === fold(x.name)); return f ? Object.assign(x, { sl: f.sl || 0, unesco: !!f.unesco, heritage: !!f.heritage }, f.kinds ? { kinds: f.kinds } : {}, f.gone ? { gone: true } : {}) : x; });
-  // What this city's own travel-guide page says of each place a day out (rule R-36): how often the page links to that
+  // What this city's own travel-guide page says of each place a day out (rule R-37): how often the page links to that
   // place's page (said), and whether that page is a part of this city's own guide ("Sydney/Manly": part).
   farSaid(fam.far, enV);
   // And what kind of page the travel guide files each under (a city, a district, a park; or a country, a region, an airport).
@@ -1339,7 +1340,7 @@ async function sourcesData(label, env, ctx) {
   lap("next");
   const res = { area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T };
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
-  // One whose places a day out could not be read (rule R-36) is asked again after 3 hours: a day without the city's
+  // One whose places a day out could not be read (rule R-37) is asked again after 3 hours: a day without the city's
   // day trips is a long time (live check, Nov 26: Istanbul's guide links were missed on one run in two).
   const ttl = { expirationTtl: fam.farMissed ? 3 * 3600 : (enV.pages && fam.main.length && !mapMissed ? 30 : 1) * 86400 };
   ctx.waitUntil(Promise.all([env.USAGE.put(key, JSON.stringify(res), ttl), placeKey ? env.USAGE.put(placeKey, JSON.stringify(res), ttl) : null]));
@@ -1381,7 +1382,7 @@ async function valhallaLeg(l) {
   return { c, km: Math.round(t.summary.length * 1000) / 1000, min: Math.round(t.summary.time / 60), src: "valhalla" };
 }
 async function routeLeg(l, env, ctx) {
-  const key = (await codeKey("leg", [routeLeg, osrmLeg, valhallaLeg, decodePoly])) + `${l.m}:${r5(l.a[0])},${r5(l.a[1])};${r5(l.b[0])},${r5(l.b[1])}`;
+  const key = (await codeKey("leg", [routeLeg, osrmLeg, valhallaLeg, decodePoly, climbOf, along, upDown])) + `${l.m}:${r5(l.a[0])},${r5(l.a[1])};${r5(l.b[0])},${r5(l.b[1])}`;
   const hit = await env.USAGE.get(key, "json"); if (hit) return hit;
   let res = null;
   const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -1391,6 +1392,10 @@ async function routeLeg(l, env, ctx) {
     try { res = await osrmLeg(l); break; } catch (e) { try { res = await valhallaLeg(l); break; } catch (e2) {} }
   }
   if (!res) return null;
-  ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: 90 * 86400 }));
+  // A walk also carries the metres it climbs and drops (climb.js: free height data along the route's own path), so its
+  // time counts the hill (R-33, E48). No height answer: no `up`, and the leg is kept one day only, to be asked again.
+  let hill = true;
+  if (l.m === "foot") { const cl = await climbOf(res.c).catch(() => null); if (cl) { res.up = cl.up; res.down = cl.down; } else hill = false; }
+  ctx.waitUntil(env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (hill ? 90 : 1) * 86400 }));
   return res;
 }

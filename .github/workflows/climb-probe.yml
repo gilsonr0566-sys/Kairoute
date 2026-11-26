@@ -1,0 +1,18 @@
+name: Height service probe
+# The free height services behind hill-aware walk times (worker/climb.js, R-33): do they answer, and with the right
+# climb for walks whose climb is known? Weekly, and whenever the reader changes.
+on:
+  workflow_dispatch:
+  push:
+    paths: [worker/climb.js, tools/truth/climb-probe.mjs, .github/workflows/climb-probe.yml]
+  schedule:
+    - cron: "20 9 * * 1"
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node tools/truth/climb-probe.mjs

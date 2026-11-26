@@ -238,6 +238,7 @@ for (let n = 0; n < N; n++) {
   if (chance(0.25)) b.prefs.walk = pick(['low', 'high']); if (chance(0.15)) b.prefs.pace = pick(['relaxed', 'packed']);
   const name = `odd${String(n + 1).padStart(3, '0')}-${shape}`;
   trips.push({ name, b, edits });
+  if (process.env.MAKE_ONLY) continue; // only make the trips (tools/truth/plan-ledger.cjs plans them itself)
   const tt = Date.now(); const plans = checkTrip(name, b, edits); const ms = Date.now() - tt;
   if (process.env.PROGRESS) console.error(`${name} ${b.days.length} days ${ms} ms`);
   if (ms > SLOW_MS) add('slow', name, `whole trip planned in ${(ms / 1000).toFixed(1)} s (a phone is about 4 times slower)`);

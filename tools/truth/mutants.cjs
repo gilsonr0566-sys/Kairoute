@@ -51,7 +51,7 @@ const MUTANTS = [
     was: 'Ride times read from an earlier AI guide\'s unconfirmed travel words (Nov 24, P1: "Not confirmed" words still gave a crossing time)' },
   { id: 'port-margin-halved', corpus: true, file: '30-window.js', from: 'E.PORT_BUFFER = 45;', to: 'E.PORT_BUFFER = 22;',
     was: 'Back at the ship only 22 min before all aboard instead of the promised 45 (fault audit, Nov 24: halving the margins was caught by no check)' },
-  { id: 'border-passport-halved', file: '30-window.js', from: 'E.BORDER_NEED = { open: 45, passport: 90 };', to: 'E.BORDER_NEED = { open: 45, passport: 45 };',
+  { id: 'border-passport-halved', border: true, file: '30-window.js', from: 'E.BORDER_NEED = { open: 45, passport: 90 };', to: 'E.BORDER_NEED = { open: 45, passport: 45 };',
     was: 'At the station 45 min before a train across a passport border instead of 90 (fault audit, Nov 25: caught by no check)' },
   { id: 'off-before-arrival', file: '30-window.js', from: 'w.start = E.toMin(d.thru.time) + am.clear;', to: 'w.start = E.toMin(d.thru.time) - 150;',
     was: '"Off the ship 5:30 am" when the ship arrives at 7:00 am (weekly ladder, Nov 22)' },
@@ -80,6 +80,18 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
   const baseCorpus = anyCorpus ? counts((await run('node', ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'])).out) : {};
   const anyNotMine = MUTANTS.some(m => m.notMine && (!ONLY.length || ONLY.includes(m.id)));
   const baseNotMine = anyNotMine ? counts((await run('node', ['tools/truth/oracle.cjs', '--corpus', '--not-mine'])).out) : {};
+  // Mutants marked border: true are about trains across a passport border, which the odd trips may not hold at all (names
+  // thread, Nov 26: a new corpus left none in the gate's 100, so the mutant was missed every time). The independent check
+  // then runs on fixed trips: every saved trip whose last day leaves by train, with that train going on to a country
+  // outside the passport-free area (and one inside it, so both promises are planned), the same on every run.
+  const anyBorder = MUTANTS.some(m => m.border && (!ONLY.length || ONLY.includes(m.id))), borderTrips = path.join(tmp, 'border.json');
+  let baseBorder = {};
+  if (anyBorder) { const dir = path.join(ROOT, 'tools', 'beta2', 'corpus'), bt = [];
+    for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) { const b = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+      (b.days || []).forEach((d, i) => { if (d.type !== 'departure' || d.mode !== 'train' || !d.country) return;
+        for (const [to, tag] of [['United Kingdom', 'passport'], ['France', 'open']]) { if (to === d.country) continue; const c = JSON.parse(JSON.stringify(b)); c.days[i].toCountry = to; bt.push({ name: `${f.replace(/\.json$/, '')}-border-${tag}-day${i + 1}`, bucket: c }); } }); }
+    if (!bt.length) { console.log('NOT TESTED: no saved trip leaves by train, so no border trip could be made for border: true mutants'); process.exit(1); }
+    fs.writeFileSync(borderTrips, JSON.stringify(bt)); baseBorder = counts((await run('node', ['tools/truth/oracle.cjs', '--trips', borderTrips])).out); }
   const baseOld = counts(base.out), baseOra = counts(baseOracle.out), baseOraNT = baseOracleNT ? counts(baseOracleNT.out) : {};
   if (!Object.keys(baseOld).length || !Object.keys(baseOra).length) { console.log('NOT TESTED: the checks did not run on the real engine\n' + base.out.slice(-2000) + baseOracle.out.slice(-2000)); process.exit(1); }
   const already = [...Object.keys(baseOld).filter(k => baseOld[k]), ...Object.keys(baseOra).filter(k => baseOra[k])];
@@ -93,8 +105,8 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
     if (txt.split(m.from).length !== 2) { rows.push({ m, planted: false }); continue; }
     fs.writeFileSync(f, txt.replace(m.from, m.to));
     const env = { ENGINE_SRC: src, NOZIG: '1', SLOW_MS: '60000' };
-    const [old, ora] = await Promise.all([run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7'], env), run('node', (m.notMine ? ['tools/truth/oracle.cjs', '--corpus', '--not-mine'] : m.corpus ? ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'] : ['tools/truth/oracle.cjs', '--trips', trips]).concat(m.nott ? ['--no-timetable'] : []), env)]);
-    const o = more(counts(old.out), baseOld), n = more(counts(ora.out), m.notMine ? baseNotMine : m.corpus ? baseCorpus : m.nott ? baseOraNT : baseOra);
+    const [old, ora] = await Promise.all([run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7'], env), run('node', (m.border ? ['tools/truth/oracle.cjs', '--trips', borderTrips] : m.notMine ? ['tools/truth/oracle.cjs', '--corpus', '--not-mine'] : m.corpus ? ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'] : ['tools/truth/oracle.cjs', '--trips', trips]).concat(m.nott ? ['--no-timetable'] : []), env)]);
+    const o = more(counts(old.out), baseOld), n = more(counts(ora.out), m.border ? baseBorder : m.notMine ? baseNotMine : m.corpus ? baseCorpus : m.nott ? baseOraNT : baseOra);
     rows.push({ m, planted: true, old: o, oracle: n });
   } };
   await Promise.all(Array.from({ length: LANES }, lane));

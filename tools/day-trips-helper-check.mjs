@@ -1,4 +1,4 @@
-// R-36: the helper's part of the classic day trips rule, on made-up answers (no network): the piers of an island
+// R-37: the helper's part of the classic day trips rule, on made-up answers (no network): the piers of an island
 // (worker/islands.js landingData/piersOn), the drive to a place and whether it takes a boat (roadWay), and the list of
 // travel destinations joined to the fame list with what the city's own guide says of each (worker/worker.js destRows,
 // mergeDests, voyageLinks, farSaid). Two planted copies must be caught: piers counted only inside the coastline (a ferry

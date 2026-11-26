@@ -61,9 +61,15 @@ release gate or a nightly run, and say which.
 1. **Ride back to the ship, train or flight; every walk, taxi, train, metro and bus** (new today, `tools/truth/real-world.mjs`,
    nightly `.github/workflows/real-world.yml`): every ride on every saved trip's plan (881 rides, 411 different) is
    compared with sources the app never uses: **BRouter** for walks (real path length at 4.5 km/h) and taxis (drive time
-   on empty roads), **Deutsche Bahn's journey planner** for trains, metro, trams and buses (most of Europe's rail and many
-   city lines). The ride back on a ship, train or flight day planned faster than the real world allows is S1. Ferries are
-   counted as NOT CHECKED, never as passed.
+   on empty roads), and for trains, metro, trams, buses and ferries **the operators' own published timetable files**
+   (since Nov 25: open GTFS feeds found through the Mobility Database catalog, about 1,800 live feeds worldwide, read by
+   `tools/truth/gtfs-times.mjs` with its own arithmetic; Deutsche Bahn's journey planner, used first, stopped answering).
+   A walk's real time counts its climb (1 min per 10 m, from BRouter's height data). The ride back on a ship, train or
+   flight day planned faster than the real world allows is S1. A ferry whose operator publishes no open timetable is
+   counted as NOT CHECKED, never as passed. What this does not prove: the app's journey planner (Transitous) is fed
+   from the same operators' files, so a mistake inside an operator's own timetable is shared; everything between the
+   file and the screen (the planner's answer, the app's reading of it, lines taken from the map, waits, walks to the
+   stop) is checked.
 2. **Ride accuracy run that stalls** (17 of 87 rides last night): owned by the rides thread; asked to give the ride back its
    own time budget first so it is never the part that gets cut.
 3. **Opening hours beyond the 161**: grow the official list from the sights the saved trips actually plan, biggest first.

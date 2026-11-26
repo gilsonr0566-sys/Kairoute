@@ -1,4 +1,4 @@
-// Classic day trips check (rule R-36, Nov 25): every city's guide offers its well-known day trips, the ones reached by
+// Classic day trips check (rule R-37, Nov 25): every city's guide offers its well-known day trips, the ones reached by
 // boat included, from free sources alone. A made-up port city ("Testport") whose sources hold every kind of place that
 // once went wrong on a real one: an island the encyclopedia points to in its middle (Hvar), an island group that is a
 // part of the city's own travel guide (the Princes' Islands, Lantau), a town by boat (Vaxholm), a famous town the

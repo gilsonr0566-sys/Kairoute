@@ -145,7 +145,7 @@ async function findHotelNoAI(name, d) {
     return hit ? { name: hit.name || name, lat: +hit.lat, lng: +hit.lng, addr: hit.addr || "" } : null;
   } catch (e) { return null; }
 }
-// ---- Classic day trips (rule R-36) ----
+// ---- Classic day trips (rule R-37) ----
 // Every city's guide offers its well-known day trips, the ones reached by boat included, in every city, from free
 // sources alone (no AI, nothing invented). Nov 25: Hvar from Split, the Princes' Islands from Istanbul, Lantau from
 // Hong Kong and Manly from Sydney were in no guide. The cause was the same everywhere: with the AI off, day trips came

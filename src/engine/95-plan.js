@@ -290,7 +290,7 @@
       const home = wins[idx[0]].head[wins[idx[0]].head.length - 1];
       // The traveler already picked a day out of town on this stay: the app adds no other on its own.
       const pickedFar = idx.some(i => sel[i].some(id => { const s = allById.get(String(id)); return s && s.far; }));
-      // Nor a day trip that is only offered (a classic day trip the sources added, rule R-36): the traveler picks those.
+      // Nor a day trip that is only offered (a classic day trip the sources added, rule R-37): the traveler picks those.
       const outing = pickedFar ? null : E.pickDayTrip(stay.map(x => Object.assign({}, x, { wishes: x.picked ? [1] : [] })), sights, farRanked.filter(s => !wishDay.has(String(s.id)) && !s.offerOnly), s => tr.min(home, s), AREA_KM);
       if (outing) { dayTrip.set(outing.day, outing.ids); outing.ids.forEach(id => areaDay.set(key + "|" + id, outing.day)); }
       const split = E.splitAreas(stay.filter(x => !outing || x.i !== outing.day), sights);
@@ -711,6 +711,19 @@
       // With the numbers the other day's planner gave (what it needs and what was left there), never a bare "didn't fit".
       const qw = q && q.dropWhy && q.dropWhy[id], num = qw && /\d/.test(qw) ? " (it " + qw + ")" : "";
       if (k >= 0) p.explain[k] = m.inside ? m.name + " is inside " + m.inside + ", planned on " + dayWord(m.to) + ", but it didn't fit that day" + num + "." : m.name + " is closed on " + dayWord(m.from) + ", and it didn't fit on " + dayWord(m.to) + ", the day it's open" + num + "."; }
+    // Every tick is answered on its own day (R-21): a sight ticked on two days and taken by the other one is named here
+    // with that day, never left unsaid (odd trips, Nov 25: two churches ticked on Friday and Sunday were explained
+    // only on Sunday, and Friday's screen said nothing of them).
+    out.forEach((p, i) => { if (!p || !p.items || p.safe || !days[i]) return; const d = days[i], c = guides[d.city] || {}, all = [].concat(c.sites || [], c.farther || []);
+      const here = new Set(); p.items.forEach(x => { if (x.t === "stop") { here.add(String(x.id)); (x.includesIds || []).forEach(y => here.add(String(y))); } });
+      (p.dropped || []).concat(p.folded || []).forEach(x => here.add(String(x && x.id != null ? x.id : x)));
+      for (const id of (d.selected || []).map(String)) { if (here.has(id)) continue; const sx = all.find(y => String(y.id) === id); if (!sx || !sx.name) continue;
+        const nm = String(sx.name).toLowerCase(); if ((p.explain || []).some(t => String(t).toLowerCase().includes(nm))) continue;
+        const holds = o => !!(o && o.items && o.items.some(x => x.t === "stop" && (String(x.id) === id || (x.includesIds || []).map(String).includes(id))));
+        const on = out.findIndex((o, j) => j !== i && holds(o)), says = (o, j) => j !== i && o && (o.explain || []).some(t => String(t).toLowerCase().startsWith(nm));
+        const tk = out.findIndex((o, j) => says(o, j) && (days[j].selected || []).map(String).includes(id)), told = on >= 0 ? -1 : tk >= 0 ? tk : out.findIndex(says);
+        const ticked = j => (days[j].selected || []).map(String).includes(id);
+        p.explain = (p.explain || []).concat([on >= 0 ? (ticked(on) ? `${sx.name} is ticked on ${dayWord(on)} too, and planned that day.` : `${sx.name} is planned on ${dayWord(on)}.`) : told >= 0 ? (ticked(told) ? `${sx.name} is ticked on ${dayWord(told)} too: see that day for why it isn't planned.` : `${sx.name}: see ${dayWord(told)} for why it isn't planned.`) : `${sx.name} is ticked but isn't planned today.`]); } });
     // A sight offered for free time is never one planned on any day.
     out.forEach(p => { if (p && p.suggest) p.suggest = p.suggest.filter(x => !plannedIds.has(String(x.id))); });
     // Each thing said once.

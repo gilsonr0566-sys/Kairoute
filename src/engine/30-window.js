@@ -33,7 +33,9 @@
   // encyclopedia article placed in the old town, and a travel-guide sentence about the ferry to another country were each
   // taken for the cruise pier). A ferry terminal, an old port, a sentence or an article about the whole port is not a pier.
   E.GATE_OUT = 25; // km: a port named apart from its city ("Port (City)") lies at least this far out of the city
-  const CRUISE_NOT = /\b(ferry|ferries|marine highway|old (port|harbou?r)|vieux[- ]port|porto (antico|vecchio)|stara luka|eski liman|puerto viejo|alter hafen)\b/i;
+  // (an air or cargo terminal is no pier either: the map search for a port gave "Terminal de Carga Aérea", an air cargo
+  // terminal by the airport, and a ship day was planned to end there; odd trips, Nov 25)
+  const CRUISE_NOT = /\b(ferry|ferries|marine highway|old (port|harbou?r)|vieux[- ]port|porto (antico|vecchio)|stara luka|eski liman|puerto viejo|alter hafen|cargo|carga|freight|container|air ?port|aeroporto|aeropuerto|a[eé]roport|a[eé]rea|aerial)\b/i;
   E.cruiseOk = c => { const n = String((c && c.name) || "").trim(); if (!n) return false;
     if (n.length > 70 || /[.!?;]\s|\d+\s*(jd|eur|usd|euros?|dollars?|hours?)\b/i.test(n) || n.split(/\s+/).length > 9) return false; // a sentence
     if (CRUISE_NOT.test(n) && !/cruise/i.test(n)) return false;
@@ -132,6 +134,11 @@
       w.start = E.toMin(d.time) + m.clear; w.head = [P, Object.assign(fixed(L, "Check in or drop bags", 20), { bags: true })]; w.tail = [L];
       // A late arrival's day ends no sooner than the traveler reaches the hotel (Nov 23: a 9:30 pm flight gave a day from
       // 10:45 pm to 11:00 pm and a plan reaching the hotel at 12:14 am, past its own end).
+      // Arriving in the small hours (before E.NIGHT_DEP), the traveler sleeps first: the day's sights start in the morning
+      // (the day's start time, else 9 am), never at 1 am (odd trips, Nov 25: a 00:15 train planned a city square at
+      // 1:11 am and then waited for a cathedral to open). The night at the hotel is a step of the day, said as one.
+      { const arrive = E.toMin(d.time), st = E.toMin(d.startTime), morning = isFinite(st) && st >= 6 * 60 && st <= 12 * 60 ? st : 9 * 60, at = w.start + chain(w.head, tr);
+        if (isFinite(arrive) && arrive < E.NIGHT_DEP && morning - at > 30) { w.head.push(fixed(L, "Sleep and rest at the hotel until " + E.clock(morning), morning - at)); w.nightArrive = true; } }
       w.sightFrom = w.start + chain(w.head, tr); w.endBy = Math.max(w.sightFrom, Math.min(23 * 60, lunchIn(w.sightFrom, d.hours)));
     } else if (d.type === "departure" || d.type === "embark") {
       const ship = d.type === "embark", m = ship ? E.MODES.ship : E.MODES[d.mode] || E.MODES.flight;
@@ -160,7 +167,7 @@
       // Only a departure in the small hours is the next morning's (E.NIGHT_DEP): a 9:00 am train on a day set to start at
       // 9:00 is this morning's, and the day starts earlier to reach it (leaveEarly below), with no sights (first-timer walk,
       // Nov 22: it was taken as the next morning's, planned sights all day and left "free time 16 h 10 min").
-      const depAt = ship ? (isFinite(d.boardAt) ? d.boardAt : d.allAboard) : E.toMin(d.time);
+      const depAt = ship ? (Number.isFinite(d.boardAt) ? d.boardAt : d.allAboard) : E.toMin(d.time);
       // A flight or train typed in the small hours could be this very morning or late tonight: the traveler is asked once,
       // and the day is planned on the answer (d.nightDep: "morning" | "night"), never on a guess (Nov 23 oracle: 00:20 and
       // 3:10 departures were taken as tonight's and the day filled with sights). Ships keep their all-aboard rule.
@@ -182,7 +189,7 @@
     } else if (d.type === "port") {
       if (!P) return E.fail("Choose where the ship docks.");
       // All aboard after midnight (earlier on the clock than docking) is the next morning's.
-      const aboard = isFinite(d.allAboard) && isFinite(d.portArrive) && d.allAboard < d.portArrive ? d.allAboard + 24 * 60 : d.allAboard;
+      const aboard = Number.isFinite(d.allAboard) && Number.isFinite(d.portArrive) && d.allAboard < d.portArrive ? d.allAboard + 24 * 60 : d.allAboard;
       w.start = d.portArrive + (d.tender ? E.TENDER_ASHORE : 30); w.buffer = E.PORT_BUFFER + (d.tender ? E.TENDER_BACK : 0); w.endBy = aboard - w.buffer;
       w.head = [Object.assign({}, P, { leaveWhenReady: true })]; w.tail = [Object.assign({}, P, { backToShip: true })];
       const lf = P.lift;

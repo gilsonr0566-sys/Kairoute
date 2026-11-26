@@ -408,7 +408,8 @@ if (fs.existsSync(dir)) { let rides = 0, placed = 0;
     ps.forEach((p, i) => p && p.items && p.items.forEach((x, k) => { if (x.t !== 'ride') return; const a = p.items[k - 1], b = p.items[k + 1], c = s.cities[s.days[i].city] || {};
       const site = it => it && it.id != null && [...(c.sites || []), ...(c.farther || [])].find(y => String(y.id) === String(it.id));
       const boatEnd = x.pierName && x.mode !== 'boat' ? [] : [site(a), site(b)].filter(y => y && E.byBoat(y.travelNote)); // the walk or ride to a pier is on land
-      if (boatEnd.length === 1) { boats++; ok(x.mode === 'boat', `${f} day ${i}: the ride to or from ${boatEnd[0].name} crosses water but is planned as ${x.mode}`); } })); }
+      const same = boatEnd.length === 1 && a && b && E.hasPos(a) && E.hasPos(b) && E.hav(a, b) < 0.05; // a lunch you bring, eaten on the island itself: no water between
+      if (boatEnd.length === 1 && !same) { boats++; ok(x.mode === 'boat', `${f} day ${i}: the ride to or from ${boatEnd[0].name} crosses water but is planned as ${x.mode}`); } })); }
   console.log(`ok   ${boats} rides across water, every one by boat`); }
 
 // ---- Every ride is the kind it is drawn as (Nov 18, Richard: "floating cars and ferries that drive on land"): a boat
@@ -1074,8 +1075,8 @@ ok(E.readable('Café Ñandú') && E.readable("Joe's Bar & Grill") && !E.readable
     ok(E.bracketPlace('Warnemunde (Berlin), Germany') === 'Berlin' && E.bracketPlace('Kotor') === '', 'the place in brackets is read apart'); }
   // Round 1 S1-2: a cruise pier is a place ships tie up, never a ferry terminal, an old harbour, a sentence or an article
   // about the whole port; a port with several sure ones is asked.
-  { const bad = [{ name: 'Alaska Marine Highway Ferry Terminal', kind: 'ferry_terminal' }, { name: 'Old Port of Marseille' }, { name: 'Vieux-Port' }, { name: 'From Jordan to Egypt. (Aqaba Nuwaibee, 50JD, 3hours, taxi from center 5JD max)' }, { name: 'Port of Venice', wiki: true }];
-    const good = [{ name: 'Berth 2 Cruise Terminal' }, { name: 'Prince George Wharf' }, { name: 'Port of Venice', kind: 'harbour' }, { name: 'Marina Bay Cruise Centre' }, { name: 'Cruise and Ferry Terminal' }];
+  { const bad = [{ name: 'Alaska Marine Highway Ferry Terminal', kind: 'ferry_terminal' }, { name: 'Old Port of Marseille' }, { name: 'Vieux-Port' }, { name: 'From Jordan to Egypt. (Aqaba Nuwaibee, 50JD, 3hours, taxi from center 5JD max)' }, { name: 'Port of Venice', wiki: true }, { name: 'Terminal de Carga Aérea' }, { name: 'Air Cargo Terminal' }, { name: 'Container Terminal' }];
+    const good = [{ name: 'Berth 2 Cruise Terminal' }, { name: 'Prince George Wharf' }, { name: 'Port of Venice', kind: 'harbour' }, { name: 'Marina Bay Cruise Centre' }, { name: 'Cruise and Ferry Terminal' }, { name: 'Portas do Mar' }];
     const wrong = bad.filter(c => E.cruiseOk(c)).map(c => c.name).concat(good.filter(c => !E.cruiseOk(c)).map(c => '(kept out) ' + c.name));
     ok(!wrong.length, `cruise piers: ferry terminals, old harbours, sentences and whole-port articles are not piers (${wrong.join('; ')})`);
     const ch = E.gateChoices([{ name: 'Alaska Marine Highway Ferry Terminal', kind: 'ferry_terminal', lat: 55.37, lng: -131.72 }, { name: 'Berth 1 Cruise Ship Dock', lat: 55.342, lng: -131.646 }], 'cruise');

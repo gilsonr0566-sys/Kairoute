@@ -136,7 +136,7 @@ export async function islandsData(centre, env, codeKey, sha) {
   if (!open) await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: 30 * 86400 });
   return res;
 }
-// Where the boats land on an island or island group a day out of a city (rule R-36, Nov 25: Hvar, the Princes' Islands
+// Where the boats land on an island or island group a day out of a city (rule R-37, Nov 25: Hvar, the Princes' Islands
 // and Lantau were never offered as day trips, because the encyclopedia's point for an island is its middle, kilometres
 // from any pier, so no boat was ever found "near" it). The map's own outline of the place (the island or archipelago
 // that carries its encyclopedia id) and the ferry terminals on it or on a pier just off it: real mapped piers, never a
@@ -174,7 +174,7 @@ export async function landingData(wd, env, codeKey) {
   await env.USAGE.put(key, JSON.stringify(res), { expirationTtl: (piers.length ? 60 : 14) * 86400 });
   return res;
 }
-// The way by road to a place a day out (rule R-36): the road router's drive, and whether it takes a boat on the way (a
+// The way by road to a place a day out (rule R-37): the road router's drive, and whether it takes a boat on the way (a
 // drive with a car ferry in it is no "about 40 min by road"). { min, km, ferry } or, when no road goes there, { none: true }.
 // Kept 90 days; a router that didn't answer keeps nothing and is asked again.
 export async function roadWay(a, b, env, codeKey) {

@@ -1,4 +1,4 @@
-// Day trips, live (rule R-36): for real cities, what the built app offers as classic day trips from the helper's real
+// Day trips, live (rule R-37): for real cities, what the built app offers as classic day trips from the helper's real
 // answers (free sources only, AI off): the candidates it ranked, the way it found to each, and whether the day trips a
 // visitor expects are there. Runs on GitHub (the container can't reach the helper or the sources). Prints; changes nothing.
 // Usage: HELPER=http://localhost:8790/workers.dev node tools/beta2/day-trips-live.cjs beta2-site/index.html
