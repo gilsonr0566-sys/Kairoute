@@ -61,6 +61,15 @@ const bad = await run(path.resolve("worker/islands.js"));
   ok("the travel guide's own page kind is read from its status category: a city, a district, a park, a rural area", vk(["Has custom banner", "Usable cities"]) === "city" && vk(["Guide districts"]) === "district" && vk(["Outline parks"]) === "park" && vk(["Usable rural areas"]) === "rural" && vk(["Huge city articles"]) === "city", [vk(["Usable cities"]), vk(["Guide districts"])]);
   ok("a country, a region, an airport and an itinerary are told apart from places to go", vk(["Outline countries"]) === "country" && vk(["Usable regions"]) === "region" && vk(["Usable airports"]) === "airport" && vk(["Guide itineraries"]) === "itinerary");
   ok("a category that only mentions cities is not a page kind (\"Cities in Italy\")", vk(["Cities in Italy", "Has map markers"]) === ""); }
+// Facts asked in batches: a place has its facts only when its batch and the batches of all its kinds were answered.
+async function facts(F) { const out = [], ok = (what, cond, got) => { if (!cond) out.push(what + (got !== undefined ? " (got " + JSON.stringify(got) + ")" : "")); };
+  const direct = new Map([["Q1", new Set(["Qisland"])], ["Q2", new Set(["Qtown", "Qport"])], ["Q3", new Set(["Qtown"])]]), okIds = new Set(["Q1", "Q2", "Q3"]), okClass = new Set(["Qisland", "Qtown"]);
+  ok("a place whose batch and kinds were all answered has its facts", F("Q1", okIds, direct, okClass) === true && F("Q3", okIds, direct, okClass) === true);
+  ok("a place with one kind not looked up has no facts yet (never 'not that kind')", F("Q2", okIds, direct, okClass) === false);
+  ok("a place whose own batch was refused has no facts yet (never 'no kinds')", F("Q4", okIds, direct, okClass) === false);
+  ok("a place the encyclopedia gives no kind at all has its (empty) facts", F("Q5", new Set(["Q5"]), direct, okClass) === true);
+  return out; }
+bad.push(...await facts(W.factsReady));
 bad.forEach(b => console.log("FAIL " + b));
 // Planted copies of islands.js (each must be caught).
 const txt = fs.readFileSync("worker/islands.js", "utf8"), dir = fs.mkdtempSync(path.join(os.tmpdir(), "dth-"));
@@ -71,5 +80,7 @@ for (const [name, from, to] of PLANT) { if (txt.split(from).length !== 2) { cons
   const pf = path.join(dir, "islands-" + missed + Math.random().toString(36).slice(2) + ".js"); fs.writeFileSync(pf, txt.replace(from, to));
   let caught = 0; try { caught = (await run(pf)).length; } catch (e) { caught = 1; }
   console.log(caught ? `planted copy caught: ${name}` : `FAIL planted copy not caught: ${name}`); if (!caught) missed++; }
-console.log(`day-trips-helper-check: ${bad.length || missed ? "failed" : "passed, " + PLANT.length + " planted copies caught"}`);
+{ const lost = (await facts((id, okIds) => okIds.has(id))).length + (await facts((id, okIds, direct, okClass) => [...(direct.get(id) || [])].every(c => okClass.has(c)))).length >= 2 && (await facts(() => true)).length;
+  console.log(lost ? "planted copies caught: facts read from half an answer" : "FAIL planted copy not caught: facts read from half an answer"); if (!lost) missed++; }
+console.log(`day-trips-helper-check: ${bad.length || missed ? "failed" : "passed, " + (PLANT.length + 1) + " planted copies caught"}`);
 process.exit(bad.length || missed ? 1 : 0);

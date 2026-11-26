@@ -49,7 +49,7 @@ const NEXT = [...Array(8)].map((_, i) => nx('Hamlet ' + 'ABCDEFGH'[i], 'Q60' + i
   nx('Testvar', 'Q501', 30, -20, 'Testvar: an island of lavender fields and a walled harbour town.', 63), nx('Testby', 'Q519', -9, 12, 'Testby — a market town with a castle, an easy train ride.', 22)]);
 NEXT.find(x => x.name === 'Testby').kinds = ['settlement']; NEXT.find(x => x.name === 'Testvar').kinds = ['feature', 'island', 'natural'];
 const SOURCES = { area: 'Testport', lang: 'en', langName: 'English', center: C, sources: [], stops, eats: [], far: FAR, next: NEXT };
-const PIERS = { Q501: [Object.assign({ name: 'Old Grad Pier' }, at(34, -15)), Object.assign({ name: 'Testvar Town Pier' }, at(19, -22))], Q503: [Object.assign({ name: 'Big Isle Pier' }, at(-11, -14))], Q516: [Object.assign({ name: 'テスト' }, at(-19, 24))], Q530: [Object.assign({ name: 'Testora Pier' }, at(48, -29))], Q525: [Object.assign({ name: 'Town Quay' }, at(0.5, 0.4)), Object.assign({ name: 'Outer Isle Pier' }, at(10, 10))] };
+const PIERS = { Q501: [Object.assign({ name: 'Old Grad Pier' }, at(34, -15)), Object.assign({ name: 'Testvar Town Pier' }, at(19, -22))], Q503: [Object.assign({ name: 'Big Isle Pier' }, at(-11, -14))], Q516: [Object.assign({ name: 'テスト' }, at(-19, 24))], Q530: [Object.assign({ name: 'Testora Pier' }, at(48, -29))], Q531: [Object.assign({ name: 'Water Quay' }, at(-24, -18))], Q525: [Object.assign({ name: 'Town Quay' }, at(0.5, 0.4)), Object.assign({ name: 'Outer Isle Pier' }, at(10, 10))] };
 const near = (b, p, m) => Math.hypot((b[0] - p.lat) * 111, (b[1] - p.lng) * 83) <= (m || 0.3);
 const line = (mode, kind, from, min, more) => Object.assign({ mode, kind, label: kind, operator: 'Test Lines', from, to: '', ride: min - 15, wait: 10, every: 60, access: { how: 'walk', min: 5, km: 0.3 }, egress: { how: 'walk', min: 0, km: 0 }, min, km: 20, stops: 0, src: 'test copy' }, more || {});
 const byName = n => FAR.concat(NEXT).find(x => x.name === n);
@@ -57,6 +57,8 @@ function transitFor(b) {
   if (state.partialAt && near(b, state.partialAt)) return { opts: [], partial: true };
   if (near(b, PIERS.Q501[1])) return { opts: [line('ferry', 'Ferry', 'Testport Harbour', 75, { noTimetable: true, src: 'OpenStreetMap w1' })] };
   if (near(b, PIERS.Q501[0])) return { opts: [line('ferry', 'Ferry', 'Testport Harbour', 110, { noTimetable: true, src: 'OpenStreetMap w2' })] };
+  if (near(b, PIERS.Q531[0])) return { opts: [line('ferry', 'Ferry', 'Stream Quay', 60)] };
+  if (near(b, at(6, -5))) return { opts: [line('train', 'Train', 'Testport Central', 40)] };   // Testport Riverside, a district in town
   if (near(b, byName('Testholm'))) return { opts: [line('ferry', 'Ferry', 'Stream Quay', 50)] };
   // The slow-boat test: the only way to two islands is a ferry the map shows with no timetable, its time guessed long.
   if (state.slowBoat && near(b, PIERS.Q503[0])) return { opts: [line('ferry', 'Ferry', 'East Quay', 181, { noTimetable: true, src: 'OpenStreetMap w3' })] };
@@ -73,6 +75,8 @@ function roadFor(b) {
   if (near(b, byName('Old Testa Ruins'))) return { min: 48, km: 52, ferry: false };
   if (near(b, byName('Test Cape Village'))) return { min: 40, km: 35, ferry: true };
   if (near(b, byName('Far Testerly'))) return { min: 100, km: 95, ferry: false };
+  if (near(b, at(-26, -20))) return { min: 200, km: 60, ferry: true };   // Testwater: the drive takes a car ferry
+  if (near(b, at(6, -5))) return { min: 15, km: 8, ferry: false };
   return { none: true };
 }
 const state = { busy: 0, asked: [], partialAt: null, slowBoat: false };
@@ -228,6 +232,17 @@ async function run(file) {
     ok('its card shows no guessed minutes', !!w5.travel && !/\d+\s*min|\d+\s*h\b/.test(w5.travel), w5.travel);
     ok('an island far out (pier over 40 km) whose only boat has no timetable and a guessed time over two hours is not offered', w5.cands.includes('Testora') && !w5.names.includes('Testora'), w5);
     state.slowBoat = false; await p5.close();
+    // The encyclopedia's facts not answered (live helper, Nov 26: no place a day out had its facts): a place across the
+    // water is still found at its pier, because the road map says the drive takes a ferry; a district in town is still
+    // not a day out.
+    const p6 = await b.newPage(); await p6.route('**/*', r => { const u = r.request().url(); if (u.startsWith(MOCK)) return helper(r); return /^file:/.test(u) ? r.continue() : r.abort(); });
+    await p6.goto('file://' + file); await p6.waitForTimeout(800); await p6.evaluate(m => window.__kairouteMockHelper(m, null, true), MOCK);
+    const SRC6 = Object.assign({}, SOURCES, { far: FAR.concat([far('Testwater', 'Q531', undefined, 80, -26, -20, { said: 5, vt: 'city' }), far('Testport Riverside', 'Q532', undefined, 60, 6, -5, { voy: 'Testport/Riverside', part: true, said: 6, vt: 'district' })]) });
+    const w6 = await p6.evaluate(async a => { const c = { city: 'Testport', country: 'Testland', sites: [], farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, a.src);
+      const cands = window.__kairouteTripCands(c, a.src).map(x => x.name); await window.__kairouteClassicTrips(c, a.src); const r = c.farther.find(s => s.name === 'Testwater'); return { cands, travel: r && r.travel, landing: r && r.landing, names: c.farther.map(s => s.name) }; }, { src: SRC6 });
+    ok('with no facts answered, a place the road reaches only by ferry is asked about at its pier and offered by its boat', /^Ferry from Stream Quay, about 60 min/.test(w6.travel || '') && w6.landing === 'Water Quay', w6);
+    ok('with no facts answered, a district of the city in town is still not a day trip', !w6.cands.includes('Testport Riverside') && !w6.names.includes('Testport Riverside'), w6);
+    await p6.close();
     await p3.close(); }
   await b.close();
 }
@@ -239,9 +254,13 @@ const PLANT = [
     was: 'a guessed boat time of three hours printed on the card as "about 180 min"' },
   { id: 'slow-boat-any-distance', from: 'hav(centre, x.t) <= TRIP_BOAT_KM && !boat', to: '!boat',
     was: 'an island 70 km out offered as a day trip on a boat with no known times' },
+  { id: 'water-not-asked-of-road', from: 'else if (j.ferry || j.none) y.water = true;', to: '',
+    was: 'with the encyclopedia\'s facts not answered, Hvar was looked for at its middle and never offered from Split; Lamma the same from Hong Kong (live helper, Nov 26)' },
+  { id: 'town-district-when-facts-missing', from: 'if (y.part && !y.next && !srcHas2(y, /^island$/)', to: 'if (srcKnown(y) && y.part && !y.next && !srcHas2(y, /^island$/)',
+    was: 'Kadıköy, 7.5 km from the middle of Istanbul, offered as a day trip by road when the facts had not come (live helper, Nov 26)' },
   { id: 'trips-go-next-only', from: 'for (const y of src.far || []) if (y && y.voy && (y.said > 0 || y.part || y.unesco)) put(y, {});', to: '',
     was: 'day trips read only from the "Go next" list: the Princes\' Islands, Lantau, Manly and Vaxholm in no guide (ferry test trips, Nov 25)' },
-  { id: 'island-at-its-middle', from: 'if (!tripIsle(y) || !y.wd) return [{ lat: y.lat, lng: y.lng }];', to: 'if (true) return [{ lat: y.lat, lng: y.lng }];',
+  { id: 'island-at-its-middle', from: 'if (!tripWater(y) || !y.wd) return [{ lat: y.lat, lng: y.lng }];', to: 'if (true) return [{ lat: y.lat, lng: y.lng }];',
     was: 'the boat to an island looked for at the middle of the island: Hvar never offered from Split (Nov 25)' },
   { id: 'own-trips-block-classics', from: 'const cands = room > 0 || (city.farther || []).some(x => x.lineOpen) ? tripCands(city, src) : [];', to: 'const cands = room > 0 && !(city.farther || []).some(x => !x.noAI) ? tripCands(city, src) : [];',
     was: 'a guide with one day trip of its own never got another (the old rule)' },
@@ -269,7 +288,7 @@ const PLANT = [
     was: 'the app put an optional day trip on a day by itself (Richard, Nov 18: never)' },
   { id: 'planner-adds-day-trip', from: '&& !s.offerOnly), s => tr.min(home, s), AREA_KM);', to: '), s => tr.min(home, s), AREA_KM);',
     was: 'the planner put a classic day trip on a stay day by itself (found by this check, Nov 25)' },
-  { id: 'road-when-line-unknown', from: 'if (!best && (!unknown || last) && !tripIsle(y)', to: 'if (!best && !tripIsle(y)',
+  { id: 'road-when-line-unknown', from: 'if (!best && (!unknown || last) && !tripWater(y)', to: 'if (!best && !tripWater(y)',
     was: 'a place offered by road at once while its line was still being asked about (found by this check, Nov 25)' },
   { id: 'no-line-said-as-fact', from: "Kairoute doesn't know of a train, bus or boat line for this trip.", to: 'No train, bus or boat line was found.',
     was: '"No train, bus or boat line was found" for Pompeii from Naples, which has a train: the lookup had only come back empty (live check, Nov 26)' },

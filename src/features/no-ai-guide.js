@@ -173,6 +173,8 @@ const TRIP_NEVER = /^(airport|station|stadium|arena|sports-venue)$/;
 const TRIP_PLACE = /^(settlement|island|old-town|archaeological|ancient-city|castle|fortification|palace|park|garden|natural|mountain|beach|waterfall|monastery|museum|art-museum|amusement-park|zoo)$/;
 const TRIP_NOT_NAME = /\b(airport|railway station|train station|university|stadium|arena|bridge|motorway|highway|expressway|prison|hospital|province|county|district|region|prefecture|municipality)\b/i;
 const tripIsle = y => srcHas2(y, /^island$/) && !srcHas2(y, /^settlement$/);
+// Across water: an island by the facts, or a place the road map reaches only on a ferry or not at all.
+const tripWater = y => tripIsle(y) || !!y.water;
 // What a place a day out is, by the facts: a place to go, or not.
 function tripPlace(y) {
   if (!y || y.gone || y.localName || nonLatin(y.name)) return false;   // shown in the traveler's language or not at all (R-11)
@@ -182,6 +184,11 @@ function tripPlace(y) {
   if (/^(country|airport|itinerary|topic)$/.test(y.vt || "")) return false;
   // A part of the city's own guide ("Istanbul/Princes' Islands") is one of its district pages, whatever else it is called.
   const guidePlace = /^(city|district|park|rural)$/.test(y.vt || "") || !!y.part;
+  // A district of the city itself is a day out only when it is out of town: an island, or 15 km out (Manly, Lantau and
+  // the Princes' Islands yes; Kadıköy, Bondi Beach and the business district no). Asked before the facts are: with the
+  // facts not answered a district is not known to be an island, so near by it stays out (live helper, Nov 26: Kadıköy,
+  // 7.5 km from the middle of Istanbul, offered as a day trip by road when the encyclopedia's facts had not come).
+  if (y.part && !y.next && !srcHas2(y, /^island$/) && y.km != null && y.km < TRIP_PART_KM) return false;
   if (!srcKnown(y)) return guidePlace || !TRIP_NOT_NAME.test(y.name);   // facts not known: its name alone must not say otherwise
   if (farNotPlace(y)) return false;
   if (!guidePlace && srcHas2(y, TRIP_NOT) && !srcHas2(y, TRIP_PLACE)) return false;
@@ -190,9 +197,6 @@ function tripPlace(y) {
   // A page the travel guide files as a region (a coast, a delta, a county, an island group) is a day out only when it
   // is an island, a heritage site, or the city's guide sends readers on to it by name.
   if (y.vt === "region" && !srcHas2(y, /^island$/) && !y.unesco && !y.next) return false;
-  // A district of the city itself is a day out only when it is out of town: an island, or 15 km out (Manly, Lantau and
-  // the Princes' Islands yes; Kadıköy, Bondi Beach and the business district no).
-  if (y.part && !y.next && !srcHas2(y, /^island$/) && y.km != null && y.km < TRIP_PART_KM) return false;
   // A province, county or district is an area, not a place to go (unless it is the heritage site itself).
   if (!y.vt && srcHas2(y, /^(admin-area|region)$/) && !srcHas2(y, TRIP_PLACE) && !y.unesco) return false;
   return true;
@@ -250,8 +254,14 @@ async function classicTrips(city, src, quiet) {
     // Where each is reached: an island at its piers (the two nearest the city), any other place at its own point.
     // Two islands at a time: asked all at once, the free map servers refused most of the asks (live check, Nov 26).
     const inTurn = async (list, n, fn) => { const out = new Array(list.length); let at = 0; await Promise.all(Array.from({ length: n }, async () => { while (at < list.length) { const i = at++; out[i] = await fn(list[i]); } })); return out; };
+    // Whether a place is across water is asked of the road map when the facts don't say: they had not come, or they
+    // name a town that stands on an island (live helper, Nov 26: with no facts answered Hvar was looked for at its
+    // middle, found no line there, and its drive "with a ferry" ended the matter; Lamma had no road at all).
+    const roadOf = y => getJ(`/roadway?a=${(+centre.lat).toFixed(4)},${(+centre.lng).toFixed(4)}&b=${(+y.lat).toFixed(4)},${(+y.lng).toFixed(4)}`);
+    const roads = await inTurn(cands, 2, async y => { if (tripIsle(y) || !y.wd || (srcKnown(y) && !srcHas2(y, /^island$/))) return undefined;
+      const j = await roadOf(y); if (!j) open = true; else if (j.ferry || j.none) y.water = true; return j; });
     const targets = await inTurn(cands, 2, async y => {
-      if (!tripIsle(y) || !y.wd) return [{ lat: y.lat, lng: y.lng }];
+      if (!tripWater(y) || !y.wd) return [{ lat: y.lat, lng: y.lng }];
       const j = await getJ("/landing?wd=" + encodeURIComponent(y.wd)); if (!j) { open = true; return []; }
       const ps = (j.piers || []).filter(p => KEngine.fin(p.lat) && KEngine.fin(p.lng)).sort((a, b) => hav(centre, a) - hav(centre, b)).slice(0, 2);
       // An island or island group with a pier in town is the one the city stands on, not a day out ("Cyclades" from
@@ -271,6 +281,7 @@ async function classicTrips(city, src, quiet) {
     for (let i = 0; i < cands.length; i++) { const y = cands[i]; let best = null, boat = null, part = false, unknown = !targets[i].length;
       if (targets[i][0] && targets[i][0].home) { log.push({ name: y.name, at: "a pier in town", lines: [], got: "the city stands on it" }); continue; }
       const L = { name: y.name, at: !targets[i].length ? "piers not answered" : targets[i][0].noPier ? (y.noOutline ? "no outline on the map" : "no pier on the map") : targets[i][0].pier != null ? targets[i].length + " pier(s)" : "its point", lines: [] }; log.push(L);
+      if (roads[i]) L.road = roads[i].none ? "none" : roads[i].min + " min" + (roads[i].ferry ? " with a ferry" : "");
       flat.forEach((x, n) => { if (x.i !== i) return; const r = lines[n];
         L.lines.push(r === undefined ? "not answered" + (x.why || "") : r === null ? "no answer" : (r.partial ? "partial " : "") + ((r.opts || []).map(o => o && (o.kind || o.mode) + " " + o.min + (o.noTimetable ? " map" : "")).join(", ") || "none"));
         if (r === undefined || r === null || (r.partial && !(r.opts || []).length)) { unknown = true; return; }
@@ -283,7 +294,7 @@ async function classicTrips(city, src, quiet) {
       if (!best && boat) best = boat;
       // No line (asked and answered: a line not asked about yet is not "no line"): the road, when a drive really goes
       // there without a boat. Never to an island.
-      if (!best && (!unknown || last) && !tripIsle(y) && y.km <= TRIP_ROAD_KM) { const j = await getJ(`/roadway?a=${(+centre.lat).toFixed(4)},${(+centre.lng).toFixed(4)}&b=${(+y.lat).toFixed(4)},${(+y.lng).toFixed(4)}`);
+      if (!best && (!unknown || last) && !tripWater(y) && y.km <= TRIP_ROAD_KM) { const j = roads[i] || await roadOf(y);
         L.road = !j ? "not answered" : j.none ? "none" : j.min + " min" + (j.ferry ? " with a ferry" : "");
         if (!j) unknown = true; else if (KEngine.fin(j.min) && j.min > 0 && j.min + 10 <= TRIP_ROAD_MIN && !j.ferry && !j.none) best = { road: { min: j.min + 10, km: j.km }, at: { lat: y.lat, lng: y.lng } }; }
       L.got = best ? (best.road ? "road" : "line") : unknown ? "unknown" : "no way";
