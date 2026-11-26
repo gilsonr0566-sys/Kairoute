@@ -2,6 +2,9 @@
 // no page, no storage, no internet, no app state. The same files load in the app and in Node (tools/beta2/engine.cjs).
 var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
 (function (E) {
+  // A number, never a missing value: the global isFinite reads null, "" and true as finite (null as 0:00; E55, Nov 25:
+  // a missing boarding time taken as midnight). Every engine file uses this, never the global (engine-static refuses it).
+  E.fin = v => v != null && v !== "" && typeof v !== "boolean" && Number.isFinite(+v);
   const R = x => x * Math.PI / 180;
   // Straight-line km between two places.
   E.hav = (a, b) => { const dLa = (b.lat - a.lat) * Math.PI / 180, dLo = (b.lng - a.lng) * Math.PI / 180;
@@ -13,9 +16,9 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
   // thing within km, in list order. pos(x) gives the thing's { lat, lng } (or null).
   const NEAR_CELL = 0.0025, nearIdx = new WeakMap(); // about 280 m of latitude per cell
   E.nearby = (list, pos, pt, km) => {
-    if (!Array.isArray(list) || !pt || !isFinite(pt.lat) || !isFinite(pt.lng)) return [];
+    if (!Array.isArray(list) || !pt || !E.fin(pt.lat) || !E.fin(pt.lng)) return [];
     let ix = nearIdx.get(list); if (!ix || ix.pos !== pos || ix.n !== list.length) {
-      const cells = new Map(); list.forEach((x, i) => { const p = x && pos(x); if (!p || !isFinite(p.lat) || !isFinite(p.lng)) return;
+      const cells = new Map(); list.forEach((x, i) => { const p = x && pos(x); if (!p || !E.fin(p.lat) || !E.fin(p.lng)) return;
         const k = Math.floor(p.lat / NEAR_CELL) + "," + Math.floor(p.lng / NEAR_CELL); let c = cells.get(k); if (!c) cells.set(k, c = []); c.push(i); });
       ix = { pos, n: list.length, cells }; nearIdx.set(list, ix); }
     const dLat = Math.ceil(km / 111 / NEAR_CELL), dLng = Math.ceil(km / (111 * Math.max(0.05, Math.cos(pt.lat * Math.PI / 180))) / NEAR_CELL);
@@ -35,7 +38,7 @@ var KEngine = typeof KEngine !== "undefined" ? KEngine : {};
       if ((yi > lat) !== (yj > lat) && lng < (xj - xi) * (lat - yi) / (yj - yi) + xi) inside = !inside; }
     return inside; };
   E.islandAt = (shapes, pt) => {
-    if (!Array.isArray(shapes) || !pt || !isFinite(+pt.lat) || !isFinite(+pt.lng)) return null;
+    if (!Array.isArray(shapes) || !pt || !E.fin(+pt.lat) || !E.fin(+pt.lng)) return null;
     const lat = +pt.lat, lng = +pt.lng; let best = null, ba = Infinity;
     for (const s of shapes) for (const f of (s && s.rings) || []) { if (!Array.isArray(f) || f.length < 8) continue; const b = boxOf(f);
       if (lat < b.s || lat > b.n || lng < b.w || lng > b.e || b.a >= ba) continue;

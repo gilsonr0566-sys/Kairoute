@@ -22,7 +22,7 @@
   // without measuring to every stop in the city.
   const CELL = 0.01, gridMemo = new WeakMap();
   const gridOf = lines => { let g = gridMemo.get(lines); if (g) return g; g = new Map();
-    lines.forEach((l, li) => l.stops.forEach((st, si) => { if (!isFinite(st.lat)) return; const k = Math.floor(st.lat / CELL) + "," + Math.floor(st.lng / CELL); let c = g.get(k); if (!c) g.set(k, c = []); c.push([li, si]); }));
+    lines.forEach((l, li) => l.stops.forEach((st, si) => { if (!E.fin(st.lat)) return; const k = Math.floor(st.lat / CELL) + "," + Math.floor(st.lng / CELL); let c = g.get(k); if (!c) g.set(k, c = []); c.push([li, si]); }));
     gridMemo.set(lines, g); return g; };
   // A train whose stops are 4 km apart or more on average is a regional line: about 70 km/h between stops (a 75 km
   // regional ride takes about an hour, not two).
@@ -57,7 +57,7 @@
   // timetable lookup: a station within 12% of the ride (10 km at most), and the taxis together a third of the ride at most.
   // Trains out of town run about hourly: half an hour's wait is counted. Every step is said, the taxis too.
   E.transitOption = (a, b, lines, walkMin, far) => {
-    if (!lines || !lines.length || !a || !b || !isFinite(a.lat) || !isFinite(b.lat)) return null;
+    if (!lines || !lines.length || !a || !b || !E.fin(a.lat) || !E.fin(b.lat)) return null;
     const set = linesSet(lines), key = walkMin(10) + "|" + (far ? "far" + far.taxiMin(10) : "") + "|" + a.lat + "," + a.lng + "|" + b.lat + "," + b.lng;
     if (set.answers.has(key)) return set.answers.get(key);
     if (set.answers.size > 100000) set.answers.clear();

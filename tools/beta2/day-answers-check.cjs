@@ -55,8 +55,8 @@ function run(E) {
 const real = run(require('./engine.cjs'));
 for (const m of real.bad) console.log('FAIL ' + m);
 const PLANTS = [
-  ['a small-hours arrival goes sightseeing at once', '30-window.js', 'if (isFinite(arrive) && arrive < E.NIGHT_DEP && morning - at > 30)', 'if (false)'],
-  ['a missing boarding time read as midnight', '30-window.js', 'const depAt = ship ? (Number.isFinite(d.boardAt) ? d.boardAt : d.allAboard)', 'const depAt = ship ? (isFinite(d.boardAt) ? d.boardAt : d.allAboard)'],
+  ['a small-hours arrival goes sightseeing at once', '30-window.js', 'if (E.fin(arrive) && arrive < E.NIGHT_DEP && morning - at > 30)', 'if (false)'],
+  ['a missing boarding time read as midnight', '30-window.js', 'const depAt = ship ? (Number.isFinite(d.boardAt) ? d.boardAt : d.allAboard)', 'const depAt = ship ? (isFinite(d.boardAt) ? +d.boardAt : d.allAboard)'],
   ['an air cargo terminal taken for a cruise pier', '30-window.js', '|cargo|carga|freight|container|air ?port|aeroporto|aeropuerto|a[eé]roport|a[eé]rea|aerial)', ')'],
   ['a tick taken by another day left unsaid', '95-plan.js', 'out.forEach((p, i) => { if (!p || !p.items || p.safe || !days[i]) return; const d = days[i], c = guides[d.city]', 'out.forEach((p, i) => { if (true) return; const d = days[i], c = guides[d.city]'],
 ];

@@ -24,7 +24,7 @@
   // formulas; good to a minute or two, which is all "sunset" in an opening time can promise anyway. depth: the sun's
   // angle below the horizon (0.833 sunrise/sunset, 6 civil dawn/dusk).
   E.sunAt = (lat, lng, iso, offset, depth) => {
-    if (!isFinite(lat) || !isFinite(lng) || !isFinite(offset) || !ymd(iso)) return null;
+    if (!E.fin(lat) || !E.fin(lng) || !E.fin(offset) || !ymd(iso)) return null;
     const rad = Math.PI / 180, J = dt(iso).getTime() / 864e5 + 2440587.5, n = Math.round(J - 2451545.0 + 0.0008 - lng / 360);
     const Ms = (357.5291 + 0.98560028 * n) % 360, C = 1.9148 * Math.sin(Ms * rad) + 0.02 * Math.sin(2 * Ms * rad) + 0.0003 * Math.sin(3 * Ms * rad);
     const lam = (Ms + C + 180 + 102.9372) % 360, Jt = 2451545.0 + n - lng / 360 + 0.0053 * Math.sin(Ms * rad) - 0.0069 * Math.sin(2 * lam * rad);
@@ -202,7 +202,7 @@
   // Seasons in words: summer and winter as most sights mean them. Where "summer hours" start differs from place to
   // place (April, May, June; or end in September or October) the date is read both ways, and if the answers differ the
   // shorter hours are planned and the plan says the hours change around this date.
-  const seasonOf = (iso, lat) => { const m = ymd(iso).m, south = isFinite(lat) && lat < -10, mm = south ? ((m + 5) % 12) + 1 : m;
+  const seasonOf = (iso, lat) => { const m = ymd(iso).m, south = E.fin(lat) && lat < -10, mm = south ? ((m + 5) % 12) + 1 : m;
     return mm >= 6 && mm <= 8 ? ["summer"] : mm === 12 || mm <= 3 || mm === 11 ? ["winter"] : ["summer", "winter"]; };
   function toOsm(text, season) {
     let t = " " + String(text || "").toLowerCase().replace(/[–—−‒]/g, "-").replace(/\u00a0/g, " ").replace(/\s+/g, " ") + " ";
@@ -317,7 +317,7 @@
   };
   const checkedFind = (place, city, L) => {
     if (!BYNAME) { BYNAME = new Map(); L.forEach(c => [c.name].concat(c.aka || []).forEach(n => { const k = fold(n); if (k) (BYNAME.get(k) || BYNAME.set(k, []).get(k)).push(c); })); }
-    const here = isFinite(+place.lat) && isFinite(+place.lng) && (+place.lat || +place.lng) ? { lat: +place.lat, lng: +place.lng } : null, town = fold(city);
+    const here = E.fin(+place.lat) && E.fin(+place.lng) && (+place.lat || +place.lng) ? { lat: +place.lat, lng: +place.lng } : null, town = fold(city);
     const near = (c, km) => here && c.lat != null ? E.hav(here, c) <= km : null;
     // Same name: in the same town (or within 15 km when the town isn't named the same way).
     for (const c of BYNAME.get(fold(place.name)) || []) { const d = near(c, 15); if (d === true || (d === null && town && (" " + town + " ").includes(" " + fold(c.city) + " "))) return c; }

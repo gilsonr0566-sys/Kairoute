@@ -68,8 +68,8 @@
   // Every pier a boat may leave from: the ferry piers mapped for each place, and the port of a day the ship docks or sails
   // (a ship's port is on the water). [{ name, lat, lng }]
   E.piersOf = bucket => Object.assign(E.piersOnly(bucket), { links: (bucket.ferryLinks || []).slice() });
-  E.piersOnly = bucket => (bucket.piers || []).filter(p => p && isFinite(p.lat) && isFinite(p.lng)).concat((bucket.days || [])
-    .filter(d => d && d.point && isFinite(d.point.lat) && !d.point.unknown && (d.type === "port" || d.type === "embark" || ((d.type === "arrival" || d.type === "departure") && (d.mode === "ship" || d.mode === "ferry"))))
+  E.piersOnly = bucket => (bucket.piers || []).filter(p => p && E.fin(p.lat) && E.fin(p.lng)).concat((bucket.days || [])
+    .filter(d => d && d.point && E.fin(d.point.lat) && !d.point.unknown && (d.type === "port" || d.type === "embark" || ((d.type === "arrival" || d.type === "departure") && (d.mode === "ship" || d.mode === "ferry"))))
     .map(d => ({ name: d.point.name || "the port", lat: d.point.lat, lng: d.point.lng })));
   // A pier's name or a note in plain words, every word for a harbor read as "port" (harbour, porto, puerto, hafen, limani).
   E.pierWords = t => String(t || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, " ")
@@ -85,7 +85,7 @@
   // How each kind of ride is made, drawn and shown: mode is what the timeline and the map read (walk, ride = by road,
   // transit = on rails or a bus, boat), and every kind has its own icon in the app.
   E.RIDE_KINDS = Object.freeze(["walk", "metro", "tram", "train", "bus", "ferry", "taxi"]);
-  E.hasPos = p => !!p && (typeof p.lat === "number" && typeof p.lng === "number" ? isFinite(p.lat) && isFinite(p.lng) : p.lat != null && p.lng != null && p.lat !== "" && p.lng !== "" && isFinite(p.lat) && isFinite(p.lng));
+  E.hasPos = p => !!p && (typeof p.lat === "number" && typeof p.lng === "number" ? E.fin(p.lat) && E.fin(p.lng) : p.lat != null && p.lng != null && p.lat !== "" && p.lng !== "" && E.fin(p.lat) && E.fin(p.lng));
   E.SLOWER_THAN_WALK = 10; // most a way may be slower than a walk of up to twice the traveler's walking limit
   E.SPARE_RUN = 60; // minutes kept for a missed change on the way to the ship, a train or a plane (one train or bus later)
   // A line with no timetable, only how often it runs (or the usual for its kind): the helper plans the worst case, a
@@ -101,7 +101,7 @@
   // the start of a day keeps the full gap too: the cautious side.
   E.toFixedEnd = b => !!(b && (b.backToShip || b.deadline || b.fixed));
   E.expectWait = (o, toDeadline) => {
-    if (!o || !o.noTimetable || toDeadline || (Array.isArray(o.deps) && o.deps.length) || !(+o.every > 0) || !isFinite(+o.wait)) return o;
+    if (!o || !o.noTimetable || toDeadline || (Array.isArray(o.deps) && o.deps.length) || !(+o.every > 0) || !E.fin(+o.wait)) return o;
     const w = Math.round(Math.min(+o.every, 60) / 2) + (o.mode === "ferry" ? 10 : 3);
     return w < +o.wait ? Object.assign({}, o, { wait: w, min: o.min - (+o.wait - w), waitMax: +o.wait, minMax: o.min }) : o; };
   E.UNKNOWN_RIDE = 45; // minutes for a ride to or from a place not on the map: a guess, said as one
@@ -140,7 +140,7 @@
   // beyond a steep 8% (steps and steep lanes: Langmuir's correction). A slow walker (3.6 km/h) climbs slower in the
   // same proportion. up, down in metres (from the helper's height reading along the route), km the route's length;
   // no height known: 0, never a guessed climb.
-  E.climbMin = (up, down, km, speed) => { const u = isFinite(up) && up > 0 ? up : 0, dn = isFinite(down) && down > 0 ? Math.max(0, down - 80 * (km > 0 ? km : 0)) : 0; return Math.round((u / 10 + dn / 30) * 4.5 / (speed > 0 ? speed : 4.5)); };
+  E.climbMin = (up, down, km, speed) => { const u = E.fin(up) && up > 0 ? up : 0, dn = E.fin(down) && down > 0 ? Math.max(0, down - 80 * (km > 0 ? km : 0)) : 0; return Math.round((u / 10 + dn / 30) * 4.5 / (speed > 0 ? speed : 4.5)); };
   E.nearGap = (a, b, n, byRoad) => n ? E.gapMin(E.hav(a, n.A), byRoad) + E.gapMin(E.hav(b, n.B), byRoad) : 0;
   const roadMemos = new Map();
   E.makeTravel = (prefs, legModes, legs, lines, answers, piers, routes) => {
@@ -189,7 +189,7 @@
     // or the very row the traveler chose (Nov 18, an airport ride: three rows of the same metro ride).
     function answered(a, b, d, want) {
       if (!answers || d < 1.5) return [];
-      const got = (answers(a, b) || []).filter(o => o && isFinite(o.min)).map(o => E.expectWait(o, E.toFixedEnd(b))).slice().sort((x, y) => x.min - y.min || String(x.label).localeCompare(String(y.label)));
+      const got = (answers(a, b) || []).filter(o => o && E.fin(o.min)).map(o => E.expectWait(o, E.toFixedEnd(b))).slice().sort((x, y) => x.min - y.min || String(x.label).localeCompare(String(y.label)));
       const by = new Map();
       for (const o of got) { const k = E.lineKind(String(o.mode || o.kind || "train")), r = by.get(k);
         if (!r) { by.set(k, o); continue; } if (want != null && String(r.id) === String(want)) continue;
@@ -197,16 +197,16 @@
       // When to leave for each known departure of ANY answer of the kind (a train known by its own number shows once in
       // the sample; together the kind's answers say when a train runs at all): its departure less the walk to the stop.
       // The helper sends every departure of the kind with each answer (kindDeps); older answers have their own only.
-      const leaveOf = k => [...new Set(got.filter(o => E.lineKind(String(o.mode || o.kind || "train")) === k).flatMap(o => Array.isArray(o.kindDeps) && o.kindDeps.length ? o.kindDeps.map(q => q && isFinite(q.t) ? q.t - (+q.a || 0) : null) : (Array.isArray(o.deps) ? o.deps : []).map(q => q && isFinite(q.t) ? q.t - ((o.access && o.access.min) || 0) : null)).filter(x => x != null))].sort((x, y) => x - y);
+      const leaveOf = k => [...new Set(got.filter(o => E.lineKind(String(o.mode || o.kind || "train")) === k).flatMap(o => Array.isArray(o.kindDeps) && o.kindDeps.length ? o.kindDeps.map(q => q && E.fin(q.t) ? q.t - (+q.a || 0) : null) : (Array.isArray(o.deps) ? o.deps : []).map(q => q && E.fin(q.t) ? q.t - ((o.access && o.access.min) || 0) : null)).filter(x => x != null))].sort((x, y) => x - y);
       return [...by.entries()].map(([kind, o]) => ({ id: kind, kind, how: E.say(o.label, kind[0].toUpperCase() + kind.slice(1)), min: Math.round(o.min), ans: o, leaveTimes: leaveOf(kind), steps: Array.isArray(o.steps) ? o.steps.map(x => E.say(x)) : [] }));
     }
     // A boat leaves from a pier and lands at one (Nov 18, Richard's map: the ferry to an island left from a cathedral and
     // ran across the streets). The boat runs from the mapped pier nearest the land end (or the pier the guide's note
     // names) to the pier nearest the boat's place, and the way to or from each pier is a ride of its own. Returns
     // { parts, min, from, to } or null when both ends are at the water already or no pier is known near them.
-    const pierList = (piers || []).filter(p => p && isFinite(p.lat)).map(p => Object.assign({}, p, { name: String(p.name || "the pier").split(/\s[-–]\s|,/)[0].trim() })); // its own name, not the stops listed after it
+    const pierList = (piers || []).filter(p => p && E.fin(p.lat)).map(p => Object.assign({}, p, { name: String(p.name || "the pier").split(/\s[-–]\s|,/)[0].trim() })); // its own name, not the stops listed after it
     // The ferry routes the map draws, each by its two ends ({ a, b, name }): which pier sails to which.
-    const links = ((piers && piers.links) || []).filter(l => l && l.a && l.b && isFinite(l.a.lat) && isFinite(l.b.lat));
+    const links = ((piers && piers.links) || []).filter(l => l && l.a && l.b && E.fin(l.a.lat) && E.fin(l.b.lat));
     const nearestPier = (p, km) => { let best = null, bd = Infinity; for (const q of pierList) { const d = E.hav(p, q); if (d < bd || (d === bd && best && String(q.name) < String(best.name))) { best = q; bd = d; } } return best && bd <= km ? { q: best, d: bd } : null; };
     const plainPt = p => ({ lat: p.lat, lng: p.lng });
     const groundOf = (g, pierName, toPier, to) => Object.assign({ mode: g.mode, kind: g.kind, how: g.how + (toPier ? " to the ferry at " : " from the ferry at ") + pierName, min: g.min, km: g.km || 0, pierName, steps: g.steps || [] },
@@ -248,7 +248,7 @@
       // Jul 2: the train he picked for the ride home was carried to the ride out, which has no known train, and the app
       // said "no train").
       const got = modeOf(a, b), nearOnly = got && typeof got === "object", wantRaw = nearOnly ? got.near : got;
-      const pin = (legs && legs[E.pairKey(a, b)]) || roadNear(a, b), pinned = pin && isFinite(pin.min) ? pin : null;
+      const pin = (legs && legs[E.pairKey(a, b)]) || roadNear(a, b), pinned = pin && E.fin(pin.min) ? pin : null;
       // R-33: the real route between the two points, from a street router (routes(a, b): { foot: { km, up, down }, car: { km, min } },
       // either may be missing), wherever the places files have no time for it. The straight line times 1.3 is only a
       // guess: up a hill, round a harbour or over a mountain road it is far short (real-world check, Nov 24: a taxi over a
@@ -266,7 +266,7 @@
       // A router answer far beyond any real road (more than 10 times the straight line and 20 km) is a wrong snap across a
       // harbour or onto another road, never a route: it is left out and the guess stands.
       const sane = r => r.km <= d * 10 + 20;
-      const rFoot = rt && rt.foot && isFinite(rt.foot.km) && rt.foot.km > 0 && sane(rt.foot) ? rt.foot : null, rCar = rt && rt.car && isFinite(rt.car.km) && isFinite(rt.car.min) && rt.car.km > 0 && sane(rt.car) ? rt.car : null;
+      const rFoot = rt && rt.foot && E.fin(rt.foot.km) && rt.foot.km > 0 && sane(rt.foot) ? rt.foot : null, rCar = rt && rt.car && E.fin(rt.car.km) && E.fin(rt.car.min) && rt.car.km > 0 && sane(rt.car) ? rt.car : null;
       // How far the walk really is, in the straight-line terms the walking limits are set in: a street route longer than
       // the guess makes the walk as far as it really is, so a long way round is not taken on foot when a ride is quicker.
       // The hill's minutes (E.climbMin), and the hill as extra distance: a climb that adds 10 min is as far as another
@@ -435,7 +435,7 @@
   E.DEP_GAP = 60; E.DEP_FROM = 6 * 60;
   const leaveTimesOf = leg => { const a = leg && leg.ans; if (Array.isArray(leg && leg.leaveTimes) && leg.leaveTimes.length) return leg.leaveTimes;
     return a && Array.isArray(a.deps) ? a.deps.map(d => d && +d.t - ((a.access && a.access.min) || 0)).filter(isFinite).sort((x, y) => x - y) : []; };
-  E.runsAt = (leg, at, deadline) => { const a = leg && leg.ans; if (!a || !Array.isArray(a.deps) || !a.deps.length || !isFinite(at)) return true;
+  E.runsAt = (leg, at, deadline) => { const a = leg && leg.ans; if (!a || !Array.isArray(a.deps) || !a.deps.length || !E.fin(at)) return true;
     const ts = leaveTimesOf(leg), nx = ts.find(t => t >= at);
     if (nx != null && nx - at <= Math.max(E.DEP_GAP, 2 * (+a.every || 0))) return true;
     if (deadline) return false;
@@ -459,7 +459,7 @@
   // ship day: a local line that runs about every half hour all afternoon showed nothing between 3:20 and 4:35 pm, said as
   // "no departure"). { from, to, every } when the departures around `at` are much farther apart than the line's usual
   // gap (its stated interval, else the middle of its known gaps), on a line that runs at least every 40 minutes.
-  E.depGap = (leg, at) => { const ts = leaveTimesOf(leg); if (ts.length < 4 || !isFinite(at)) return null;
+  E.depGap = (leg, at) => { const ts = leaveTimesOf(leg); if (ts.length < 4 || !E.fin(at)) return null;
     const pv = ts.filter(t => t <= at).pop(), nx = ts.find(t => t >= at); if (pv == null || nx == null) return null;
     const gaps = ts.slice(1).map((t, k) => t - ts[k]).filter(g => g > 0).sort((x, y) => x - y), a = leg.ans || {};
     const every = +a.every > 0 ? +a.every : gaps.length ? gaps[Math.floor(gaps.length / 2)] : null;

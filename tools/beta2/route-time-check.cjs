@@ -69,7 +69,7 @@ const PLANTS = [
   ['real routes ignored', '10-travel.js', 'let rt = !pinned && typeof routes === "function" ? routes(a, b) || null : null;', 'let rt = null;'],
   ['plans kept although a street route arrived', '95-plan.js', ' && routesSame(got)) {', ') {'],
   ['a climb dropped on a walk timed from it', '10-travel.js', 'foot: x.foot ? { km: x.foot.km + add, up: x.foot.up, down: x.foot.down } : null', 'foot: x.foot ? { km: x.foot.km + add } : null'],
-  ['the climb ignored', '10-travel.js', 'const u = isFinite(up) && up > 0 ? up : 0,', 'const u = 0,'],
+  ['the climb ignored', '10-travel.js', 'const u = E.fin(up) && up > 0 ? up : 0,', 'const u = 0,'],
   ['the steep way down ignored', '10-travel.js', 'Math.max(0, down - 80 * (km > 0 ? km : 0)) : 0; return', '0 : 0; return'],
   ['the hill left out of the walk-or-ride choice', '10-travel.js', 'Math.max(d, (rFoot.km + hill * speed / 60) / 1.3)', 'Math.max(d, rFoot.km / 1.3)'],
   ['a climb guessed where none is known (every walk 100 m up)', '10-travel.js', 'const hill = rFoot ? E.climbMin(rFoot.up, rFoot.down, rFoot.km, speed) : 0;', 'const hill = rFoot ? E.climbMin(isFinite(rFoot.up) && rFoot.up != null ? rFoot.up : 100, rFoot.down, rFoot.km, speed) : 0;'],

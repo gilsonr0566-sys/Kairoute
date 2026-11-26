@@ -22,7 +22,7 @@
     r.lateMeal = r.items.reduce((a, x) => a + (x.lateMeal || 0), 0);
     // A meal at a time the traveler set is held like a booked table: being late for it costs ten times as much.
     r.mealPen = r.items.reduce((a, x) => a + (x.lateMeal || 0) * (x.pinned ? 10 : 1), 0);
-    r.lunchLate = r.items.reduce((a, x) => a + (x.t === "meal" && x.meal === "Lunch" && !x.pinned && isFinite(x.at) ? Math.max(0, x.at - E.LUNCH_BY) : 0), 0);
+    r.lunchLate = r.items.reduce((a, x) => a + (x.t === "meal" && x.meal === "Lunch" && !x.pinned && E.fin(x.at) ? Math.max(0, x.at - E.LUNCH_BY) : 0), 0);
     // A lunch made shorter than a sit-down lunch is a real loss, not a few minutes saved (Nov 23: with an hour to spare at the
     // end of the day, the order that squeezed lunch to 35 min to fit one more square won over the order that kept a full lunch
     // and ended later, and a day with a short lunch and the time to spare now looks for an order that gives it back): each minute lunch loses weighs about as much as a minute riding.
@@ -35,7 +35,7 @@
   // Lunch belongs in a day whose sightseeing runs at least four hours and through the middle of the day.
   // A day wants lunch when it is out over lunchtime: at least two hours of sightseeing, with room in the lunch hours for at
   // least a short lunch (Nov 19, Richard: a day landing at the airport and out from 13:40 still gets lunch).
-  const lunchWanted = E.lunchWanted = win => { const from = win.sightFrom || win.start, to = isFinite(win.sightTo) ? win.sightTo : win.endBy, L = E.MEALS[0];
+  const lunchWanted = E.lunchWanted = win => { const from = win.sightFrom || win.start, to = E.fin(win.sightTo) ? win.sightTo : win.endBy, L = E.MEALS[0];
     return to - from >= 120 && Math.min(to, L.to) - Math.max(from, L.from) >= E.TO_GO + 10; };
   // ONE hours rule for places to eat and sights alike (Nov 19 fold: lunch had its own "shut" flags and its own lunch-hour
   // spans beside the sights' hours). A place's facts for the date are { closed, oh } read the same way as a sight's; it
@@ -46,7 +46,7 @@
     // Within one day the list of places to eat and the ledger don't change, so each point is worked out once.
     if (!ctx.eatMemo) {
       ctx.eatMemo = new Map();
-      ctx.eatList = ctx.eats.filter(r => isFinite(r.lat) && isFinite(r.lng) && !r.drop && E.mealPlace(r) && E.readable(E.latin(r.name))).map(r => { // only a name the traveler can read
+      ctx.eatList = ctx.eats.filter(r => E.fin(r.lat) && E.fin(r.lng) && !r.drop && E.mealPlace(r) && E.readable(E.latin(r.name))).map(r => { // only a name the traveler can read
         const k = E.eatKey(r.name), f = ctx.eatFacts[k] || ctx.eatFacts[r.name && r.name.toLowerCase()] || {};
         return { r, k, f };
       });
@@ -71,15 +71,15 @@
   // ONE meal input from the day: the traveler's say on each meal (d.mealPrefs: place, time, skip) with any table they booked
   // (d.booked: its place at its time) taking that meal's place and time.
   E.mealInput = d => { const out = Object.assign({}, (d && d.mealPrefs) || {});
-    ((d && d.booked) || []).forEach(b => { if (!b || !b.label || !isFinite(b.from) || !b.place || !E.hasPos(b.place)) return;
+    ((d && d.booked) || []).forEach(b => { if (!b || !b.label || !E.fin(b.from) || !b.place || !E.hasPos(b.place)) return;
       out[b.label] = { pick: { name: b.place.name || "Your table", lat: b.place.lat, lng: b.place.lng }, at: String(Math.floor(b.from / 60)).padStart(2, "0") + ":" + String(b.from % 60).padStart(2, "0"), booked: true }; });
     return out; };
   E.mealPlan = (ctx, label) => {
     const p = (ctx.mealPrefs || {})[label] || {}, base = label === "Lunch" ? L : D, at = E.toMin(p.at);
     // A booked table is held at its own time and place, whatever its listed hours (the booking is the proof it serves then).
-    const meal = isFinite(at) ? Object.freeze(Object.assign({ label, from: at, to: at + 10, len: base.len, quick: base.quick, pinned: true }, p.booked ? { booked: true } : {})) : base;
+    const meal = E.fin(at) ? Object.freeze(Object.assign({ label, from: at, to: at + 10, len: base.len, quick: base.quick, pinned: true }, p.booked ? { booked: true } : {})) : base;
     let pick = null;
-    if (p.pick && isFinite(p.pick.lat) && isFinite(p.pick.lng)) {
+    if (p.pick && E.fin(p.pick.lat) && E.fin(p.pick.lng)) {
       const k = E.eatKey(p.pick.name), guide = (ctx.eats || []).find(r => E.eatKey(r.name) === k && E.hav(r, p.pick) <= 0.2);
       // A place the traveler chose that doesn't serve this meal that day (its listed hours): not planned there, and the plan
       // says why (Nov 19 review: a chosen restaurant skipped every check).
@@ -120,8 +120,8 @@
     // day's land (the start, the end, the other stops), it takes the island's facts, so the way on from it is the boat,
     // never a taxi over the sea (Nov 21 live check: lunch at an island's far end, then "Taxi or car, 24 mi" to the ship).
     const wet = p => !!p && (E.byBoat(p.travelNote) || E.waterOnly(p) || !!p.acrossWater);
-    const isles = order.filter(s => wet(s) && !s.mealOf && isFinite(s.lat)), land = win.head.concat(win.tail, order.filter(s => !wet(s) && !s.mealOf)).filter(p => p && isFinite(p.lat));
-    const isleOf = r => { if (!isles.length || !isFinite(r.lat)) return null; let best = null, bd = Infinity; for (const s of isles) { const d = E.hav(s, r); if (d < bd) { bd = d; best = s; } }
+    const isles = order.filter(s => wet(s) && !s.mealOf && E.fin(s.lat)), land = win.head.concat(win.tail, order.filter(s => !wet(s) && !s.mealOf)).filter(p => p && E.fin(p.lat));
+    const isleOf = r => { if (!isles.length || !E.fin(r.lat)) return null; let best = null, bd = Infinity; for (const s of isles) { const d = E.hav(s, r); if (d < bd) { bd = d; best = s; } }
       return land.every(p => E.hav(p, r) > bd) ? best : null; };
     const isleFacts = r => { const s = isleOf(r); return !s ? {} : Object.assign({ travelNote: r.travelNote || s.travelNote || "", onIsle: s.id }, s.wish && !s.guideWish ? { insideWish: true } : {}, s.acrossWater ? { acrossWater: s.acrossWater } : {}, E.waterOnly(s) ? { access: s.access } : {}); };
     const mealAt = (e, len, extra) => Object.assign({ id: "eat:" + e.k, eatKey: e.k, name: E.say(e.r.name), lat: e.r.lat, lng: e.r.lng, mealOf: L, len, quick: len < L.len, toGo: len === E.TO_GO, chosen: !!my.pick, fromMap: !!e.r.fromMap, packed: !!e.r.packed, travelNote: e.r.travelNote || "",
@@ -169,12 +169,12 @@
       // Places near the stop before, near the stop after and halfway: each costs what it takes them out of their way
       // (Nov 18, a city across a bay: not back over the bridge for lunch). After the last stop: near where the day ends.
       const a = pts[k], b = order[k] || (k === order.length && win.tail.length ? win.tail[0] : null);
-      const mid = b && isFinite(b.lat) ? { lat: (a.lat + b.lat) / 2, lng: (a.lng + b.lng) / 2 } : null;
+      const mid = b && E.fin(b.lat) ? { lat: (a.lat + b.lat) / 2, lng: (a.lng + b.lng) / 2 } : null;
       // Worked out once a place (the sort asks for each place many times; planning time, Nov 23).
       // (kept for the day's other tries too, by the two stops and the place: planning time, Nov 23)
       const om = ctx.offMemo || (ctx.offMemo = new WeakMap()); let oa = om.get(a); if (!oa) om.set(a, oa = new Map()); let offs = oa.get(b || null); if (!offs) oa.set(b || null, offs = new WeakMap());
-      const offOf = e => { let v = offs.get(e.r); if (v === undefined) { v = b && isFinite(b.lat) ? E.hav(a, e.r) + E.hav(e.r, b) - E.hav(a, b) : E.hav(a, e.r); offs.set(e.r, v); } return v; };
-      const cands = my.pick ? [my.pick] : [...new Map((quick ? [a] : [a, b, mid]).filter(q => q && isFinite(q.lat)).flatMap(q => eatsNear(q, ctx, "Lunch", 3)).map(e => [e.k, e])).values()]
+      const offOf = e => { let v = offs.get(e.r); if (v === undefined) { v = b && E.fin(b.lat) ? E.hav(a, e.r) + E.hav(e.r, b) - E.hav(a, b) : E.hav(a, e.r); offs.set(e.r, v); } return v; };
+      const cands = my.pick ? [my.pick] : [...new Map((quick ? [a] : [a, b, mid]).filter(q => q && E.fin(q.lat)).flatMap(q => eatsNear(q, ctx, "Lunch", 3)).map(e => [e.k, e])).values()]
         .sort((x, y) => offOf(x) + (x.r.fromMap ? 0.3 : 0) - offOf(y) - (y.r.fromMap ? 0.3 : 0) || x.k.localeCompare(y.k)).slice(0, quick ? 1 : 3);
       for (const e of cands) for (const len of lens) {
         grp = k + "|" + e.k;
@@ -191,7 +191,7 @@
     // within reach (a beach park, a ranch), lunch is still a timed stop, one the traveler brings, said plainly (Nov 20,
     // the lunch goal: every day out over lunchtime has a timed lunch).
     const inside = packed => plain.items.filter(x => x.t === "stop" || x.t === "meal").forEach((st, k) => {
-      const s = order[k]; if (!s || s.mealOf || st.t !== "stop" || !isFinite(s.lat)) return;
+      const s = order[k]; if (!s || s.mealOf || st.t !== "stop" || !E.fin(s.lat)) return;
       const over = Math.min(st.at + (st.min || 0), L.to) - Math.max(st.at, L.from);
       const near = my.pick ? [my.pick] : eatsNear(s, ctx, "Lunch", quick ? 1 : 3);
       const cands = !packed ? near : near.length || my.pick || (s.minutes || 0) < 120 ? [] : [{ k: "own:" + s.id, r: { name: "A lunch you bring", lat: s.lat, lng: s.lng, packed: true } }];
@@ -474,13 +474,13 @@
       const hm = (m, f) => { m = Math.max(0, f(m)); return m >= 60 ? Math.floor(m / 60) + " h" + (m % 60 ? " " + (m % 60) + " min" : "") : m + " min"; };
       const up = m => Math.ceil(m / 5) * 5, down = m => Math.floor(m / 5) * 5, exact = m => Math.round(m);
       const addMin = endWith - c.r.end, leftMin = win.endBy - c.r.end, close = up(addMin) <= down(leftMin) || up(addMin) - down(leftMin) < 5;
-      const timeWhy = isFinite(addMin) && isFinite(leftMin) && addMin > leftMin && addMin > 0 ? "needs about " + hm(addMin, close ? exact : up) + " (the visit and the rides to it and on), and " + (Math.max(0, close ? exact(leftMin) : down(leftMin)) > 0 ? "with today's other stops only " + hm(leftMin, close ? exact : down) + " is left before " : "today's other stops already fill the time until ") + E.clock(win.endBy) : null;
+      const timeWhy = E.fin(addMin) && E.fin(leftMin) && addMin > leftMin && addMin > 0 ? "needs about " + hm(addMin, close ? exact : up) + " (the visit and the rides to it and on), and " + (Math.max(0, close ? exact(leftMin) : down(leftMin)) > 0 ? "with today's other stops only " + hm(leftMin, close ? exact : down) + " is left before " : "today's other stops already fill the time until ") + E.clock(win.endBy) : null;
       // The real reason (Fable review #13: a museum "didn't fit" when it simply opens too late for the day): a sight that
       // opens too late to be seen before the day's end says so.
       const sd = ctx.siteDay ? ctx.siteDay(out.id) : null, opens = sd && sd.oh && sd.oh.spans && sd.oh.spans.length ? sd.oh.spans[0][0] : null;
       // Given up to make room for lunch: said so, with the numbers of the shortest lunch the day would plan.
       const LM = E.MEALS[0], lunchWhy = "with it, today has no room for lunch (even a quick lunch takes " + LM.quick + " min)";
-      const tooLate = opens != null && isFinite(win.endBy) && opens + Math.min(out.minutes || 60, 60) > win.endBy;
+      const tooLate = opens != null && E.fin(win.endBy) && opens + Math.min(out.minutes || 60, 60) > win.endBy;
       dropped.push({ id: out.id, name: out.name, wish: !!out.wish, wanted: wanted(out), stop: out, why: noBoat.has(String(out.id)) ? "is reached only by boat, and " + noBoat.get(String(out.id)) + ": on a day with a time to be back, the way back is planned only on a sailing a timetable confirms" : tooLate ? "opens at " + E.clock(opens) + ", too late to see before " + E.clock(win.endBy) : why === "late" ? (lateWas > 0 ? "would arrive " + hm(lateWas, up) + " after its last entry" : "would arrive after its last entry") : why === "lunch" ? lunchWhy : "didn't fit in the time", needs: timeWhy || (why === "over" && overWas > 0 ? "with it, today's plan runs " + hm(overWas, up) + " past " + E.clock(win.endBy) : null) });
     }
     if (cur.roughly) cur = arrange(keep, win, ctx);

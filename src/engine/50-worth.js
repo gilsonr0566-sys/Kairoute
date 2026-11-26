@@ -24,7 +24,7 @@
   };
   // Can this traveler visit it at all (their access needs and "skip religious sites"), and is it open today?
   E.allowed = (s, prefs, siteDay, win) => {
-    if (!s || !isFinite(s.lat) || !isFinite(s.lng)) return false;
+    if (!s || !E.fin(s.lat) || !E.fin(s.lng)) return false;
     if (prefs && prefs.religious === "skip" && has(s, "religious") && !s.religiousOk) return false;
     if (prefs && (prefs.access === "wheelchair" || prefs.access === "limited") && s.effort === "steep") return false;
     if (s.closedForGood || s.visitable === false) return false;
@@ -34,7 +34,7 @@
   // The one reason a sight can't be visited on a day, as E.allowed decides it (screen rule "one real reason", Nov 22 odd-trips
   // screen check: "is closed or can't be visited this day" was said whatever the reason was).
   E.notAllowedWhy = (s, prefs, siteDay, win) => {
-    if (!s || !isFinite(s.lat) || !isFinite(s.lng)) return "isn't on the map, so it can't be planned";
+    if (!s || !E.fin(s.lat) || !E.fin(s.lng)) return "isn't on the map, so it can't be planned";
     if (prefs && prefs.religious === "skip" && has(s, "religious") && !s.religiousOk) return "is a place of worship, and your settings skip those";
     if (prefs && (prefs.access === "wheelchair" || prefs.access === "limited") && s.effort === "steep") return "is a steep climb, and your settings ask for easy access";
     if (s.closedForGood) return "has closed for good";

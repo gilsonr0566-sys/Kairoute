@@ -26,7 +26,7 @@
   // sites: every sight of a city (main and farther), as in the trip bucket. Returns
   //   { kind: id -> "group" | "site", groupOf: id -> the innermost group holding it, members: group id -> [ids], parent }
   E.makeGroups = sites => {
-    const list = sites.filter(s => s && s.id != null && isFinite(s.lat) && isFinite(s.lng)).slice().sort(E.byId), byId = new Map(list.map(s => [String(s.id), s]));
+    const list = sites.filter(s => s && s.id != null && E.fin(s.lat) && E.fin(s.lng)).slice().sort(E.byId), byId = new Map(list.map(s => [String(s.id), s]));
     const holders = new Map(); // site id -> ids of groups it stands in
     const add = (m, g) => { if (m === g) return; const k = String(m); if (!holders.has(k)) holders.set(k, new Set()); holders.get(k).add(String(g)); };
     for (const s of list) for (const g of s.in || []) if (byId.has(String(g))) add(s.id, g);                 // rule 1: map boundaries

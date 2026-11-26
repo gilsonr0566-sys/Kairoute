@@ -8,7 +8,7 @@
   // Returns Map(sight id -> day index).
   E.splitAreas = (days, sights) => {
     const out = new Map();
-    const list = sights.filter(s => isFinite(s.lat) && isFinite(s.lng)).slice().sort((a, b) => (b.worth || 0) - (a.worth || 0) || E.byId(a, b));
+    const list = sights.filter(s => E.fin(s.lat) && E.fin(s.lng)).slice().sort((a, b) => (b.worth || 0) - (a.worth || 0) || E.byId(a, b));
     if (days.length < 2 || !list.length) return out;
     const totalFree = days.reduce((a, d) => a + Math.max(30, d.free), 0);
     const totalMin = list.reduce((a, s) => a + (s.minutes || 30) + 12, 0);

@@ -25,7 +25,7 @@ const MUTANTS = [
     was: 'E8 / first-timer walk Nov 22: a boat with no timetable to a place only the guide suggested, planned as if the traveler had chosen it (Château d\'If)' },
   // Nov 23 (rides thread review): a line with no timetable planned with half the gap between departures on the way back to
   // the ship, a train or a plane (and to the bags or the cable car on the way). Caught by the independent check's backwait.
-  { id: 'back-ride-half-gap', nott: true, file: '10-travel.js', from: '.filter(o => o && isFinite(o.min))', to: '.filter(o => o && isFinite(o.min)).map(o => o.noTimetable && +o.every > 0 && isFinite(+o.wait) ? Object.assign({}, o, { wait: Math.round(Math.min(+o.every, 60) / 2) + 3, min: o.min - (+o.wait - Math.round(Math.min(+o.every, 60) / 2) - 3) }) : o)',
+  { id: 'back-ride-half-gap', nott: true, file: '10-travel.js', from: '.filter(o => o && E.fin(o.min))', to: '.filter(o => o && E.fin(o.min)).map(o => o.noTimetable && +o.every > 0 && isFinite(+o.wait) ? Object.assign({}, o, { wait: Math.round(Math.min(+o.every, 60) / 2) + 3, min: o.min - (+o.wait - Math.round(Math.min(+o.every, 60) / 2) - 3) }) : o)',
     was: 'Nov 23 review of the no-timetable wait change: 40 ways back planned on half the gap (bags, cable car)' },
   { id: 'lunch-ignores-hours', file: '70-day.js', from: '      oh: ((ctx.eatFacts || {})[e.k] || {}).oh || null }', to: '      oh: null }',
     was: 'Lunch planned before the place opens (Sorbillo at 11:45, opening at noon; Han Gang at 12:03, opening at 1 pm): the map hours never reached lunch (real-map check, Nov 23)' },

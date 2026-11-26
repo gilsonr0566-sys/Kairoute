@@ -71,8 +71,8 @@
     // one, such as a low-cost carriers' airport, must never be dropped for want of an article.)
     let bad = [];
     if (kind === "airport") bad = (list || []).filter(c => c && E.airportUse(c) === false);
-    const sameField = (a, b) => key(E.airportBase(a.name)) === key(E.airportBase(b.name)) || (isFinite(a.lat) && isFinite(b.lat) && E.hav(a, b) <= 3);
-    for (const c of list || []) { if (!c || !c.name || !isFinite(c.lat) || !isFinite(c.lng) || E.NOT_BUILT.test(c.name + " " + (c.kind || "")) || (kind && !E.gateOk(kind, c))) continue;
+    const sameField = (a, b) => key(E.airportBase(a.name)) === key(E.airportBase(b.name)) || (E.fin(a.lat) && E.fin(b.lat) && E.hav(a, b) <= 3);
+    for (const c of list || []) { if (!c || !c.name || !E.fin(c.lat) || !E.fin(c.lng) || E.NOT_BUILT.test(c.name + " " + (c.kind || "")) || (kind && !E.gateOk(kind, c))) continue;
       if (kind === "airport" && E.airportUse(c) !== true && bad.some(b => sameField(b, c))) continue;
       if (!out.some(x => key(x.name) === key(c.name) || E.hav(x, c) <= 1)) out.push(c); }
     return out; };
@@ -107,7 +107,7 @@
     const GENERIC = /^(port|ports|cruise|terminal|terminals|pier|piers|harbou?r|marina|station|central|airport|international|ferry|new|old|the)$/;
     const named = String(d.placeName || "").toLowerCase(), words = String(P && P.name || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").split(/[^a-z]+/).filter(x => x.length >= 4 && !GENERIC.test(x));
     const servesFrom = words.some(x => named.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").includes(x));
-    if (P && !P.unknown && !servesFrom && d.type !== "land" && isFinite(P.lat) && (d.siteSpots || []).length && Math.min(...d.siteSpots.map(x => E.hav(P, x))) > E.GATE_KM[d.mode === "flight" && d.type !== "port" && d.type !== "embark" ? "flight" : "other"])
+    if (P && !P.unknown && !servesFrom && d.type !== "land" && E.fin(P.lat) && (d.siteSpots || []).length && Math.min(...d.siteSpots.map(x => E.hav(P, x))) > E.GATE_KM[d.mode === "flight" && d.type !== "port" && d.type !== "embark" ? "flight" : "other"])
       return E.fail(`${P.name} is ${Math.round(Math.min(...d.siteSpots.map(x => E.hav(P, x))))} km from every sight here, so it can't be the right place. Check where you arrive or leave; this day isn't planned on a guess.`, { unsure: true, farGate: true });
     // A city with more than one station or airport and none chosen: asked, never guessed.
     if (P && P.ask && P.ask.length > 1 && d.type !== "land" && d.type !== "port" && d.type !== "embark") { const word = (E.MODES[d.mode] || E.MODES.flight).word;
@@ -137,8 +137,8 @@
       // Arriving in the small hours (before E.NIGHT_DEP), the traveler sleeps first: the day's sights start in the morning
       // (the day's start time, else 9 am), never at 1 am (odd trips, Nov 25: a 00:15 train planned a city square at
       // 1:11 am and then waited for a cathedral to open). The night at the hotel is a step of the day, said as one.
-      { const arrive = E.toMin(d.time), st = E.toMin(d.startTime), morning = isFinite(st) && st >= 6 * 60 && st <= 12 * 60 ? st : 9 * 60, at = w.start + chain(w.head, tr);
-        if (isFinite(arrive) && arrive < E.NIGHT_DEP && morning - at > 30) { w.head.push(fixed(L, "Sleep and rest at the hotel until " + E.clock(morning), morning - at)); w.nightArrive = true; } }
+      { const arrive = E.toMin(d.time), st = E.toMin(d.startTime), morning = E.fin(st) && st >= 6 * 60 && st <= 12 * 60 ? st : 9 * 60, at = w.start + chain(w.head, tr);
+        if (E.fin(arrive) && arrive < E.NIGHT_DEP && morning - at > 30) { w.head.push(fixed(L, "Sleep and rest at the hotel until " + E.clock(morning), morning - at)); w.nightArrive = true; } }
       w.sightFrom = w.start + chain(w.head, tr); w.endBy = Math.max(w.sightFrom, Math.min(23 * 60, lunchIn(w.sightFrom, d.hours)));
     } else if (d.type === "departure" || d.type === "embark") {
       const ship = d.type === "embark", m = ship ? E.MODES.ship : E.MODES[d.mode] || E.MODES.flight;
@@ -171,7 +171,7 @@
       // A flight or train typed in the small hours could be this very morning or late tonight: the traveler is asked once,
       // and the day is planned on the answer (d.nightDep: "morning" | "night"), never on a guess (Nov 23 oracle: 00:20 and
       // 3:10 departures were taken as tonight's and the day filled with sights). Ships keep their all-aboard rule.
-      const small = isFinite(w.start) && isFinite(w.endBy) && w.endBy + (ship ? E.BOARD_BEFORE : m.need) < w.start && isFinite(depAt) && depAt < E.NIGHT_DEP;
+      const small = E.fin(w.start) && E.fin(w.endBy) && w.endBy + (ship ? E.BOARD_BEFORE : m.need) < w.start && E.fin(depAt) && depAt < E.NIGHT_DEP;
       if (small && !ship && d.nightDep !== "night" && d.nightDep !== "morning") { const lbl = (E.MODES[d.mode] || E.MODES.flight).label.toLowerCase();
         return E.fail(`Your ${lbl} leaves at ${E.clock(depAt)}. Is that early this morning, or late tonight after midnight? Choose below and the day is planned around it: nothing is planned on a guess.`, { unsure: true, askNight: true, depAt }); }
       if (small && (ship || d.nightDep === "night")) {
@@ -193,7 +193,7 @@
       w.start = d.portArrive + (d.tender ? E.TENDER_ASHORE : 30); w.buffer = E.PORT_BUFFER + (d.tender ? E.TENDER_BACK : 0); w.endBy = aboard - w.buffer;
       w.head = [Object.assign({}, P, { leaveWhenReady: true })]; w.tail = [Object.assign({}, P, { backToShip: true })];
       const lf = P.lift;
-      if (lf && lf.top && isFinite(lf.top.lat)) {
+      if (lf && lf.top && E.fin(lf.top.lat)) {
         const via = { lat: P.lat, lng: P.lng, name: lf.name || "Cable car" }, top = { lat: lf.top.lat, lng: lf.top.lng, name: lf.topName || P.name };
         w.head.push(Object.assign(fixed(top, (lf.kind === "funicular" ? "Funicular" : "Cable car") + " up (with the queue)", E.LIFT_UP), { viaLift: via }));
         w.tail.unshift(Object.assign(fixed(top, (lf.kind === "funicular" ? "Funicular" : "Cable car") + " down (the queue is longest when ships leave)", E.LIFT_DOWN), { viaLift: via }));
@@ -207,7 +207,7 @@
           w.head = [w.head[0]]; w.tail = [w.tail[w.tail.length - 1]]; delete w.lift; w.notes.push("liftNoTime"); }
       }
     } else return E.fail("Unknown day type: " + d.type);
-    if (!isFinite(w.start) || !isFinite(w.endBy)) return E.fail("Add the times for this day.");
+    if (!E.fin(w.start) || !E.fin(w.endBy)) return E.fail("Add the times for this day.");
     w.sightTo = w.endBy - chain(w.tail, tr); // when sightseeing must stop, before the fixed steps at the end
     // A ship, train or plane the day's own steps can't reach from the planned start (bags, the ride): the day starts
     // that much earlier, and says so. Never a plan that leaves after its own leave-by time.
@@ -218,7 +218,7 @@
       // gave "Off the ship 5:30 am", before the ship was in).
       if (bare > w.endBy && w.through) { const am = (E.MODES[d.thru.mode] || E.MODES.flight).label.toLowerCase(), nx = d.type === "embark" ? "the ship" : "your " + (E.MODES[d.mode] || E.MODES.flight).label.toLowerCase();
         return Object.assign(E.fail(`This won't work as planned: your ${am} arrives at ${E.clock(E.toMin(d.thru.time))}, and getting off, the ride and the time ${nx} needs take until ${E.clock(bare)}, ${bare - w.endBy} min past the time to be there (${E.clock(w.endBy)}). Check both times on the Trip page.`), { tooTight: bare - w.endBy }); }
-      if (bare > w.endBy) { const early = bare - w.endBy; w.plannedStart = w.start; w.start -= early; if (isFinite(w.sightFrom)) w.sightFrom -= early; w.leaveEarly = early; w.notes.push("leaveEarly"); }
+      if (bare > w.endBy) { const early = bare - w.endBy; w.plannedStart = w.start; w.start -= early; if (E.fin(w.sightFrom)) w.sightFrom -= early; w.leaveEarly = early; w.notes.push("leaveEarly"); }
     }
     return w;
   };
