@@ -176,8 +176,14 @@
     // near it keeps none: never a guessed height.
     for (const [key, city] of Object.entries(guides)) { const P = places && places[key], H = ((P && P.heights) || []).filter(h => Array.isArray(h) && E.fin(h[0]) && E.fin(h[1]) && E.fin(h[2]));
       if (!H.length) continue;
+      // Looked up on a grid of about 110 m (a point's cell and those round it, two each way east and west, where a degree is shorter in the north), never every reading for every point:
+      // the whole list per point made each plan 4 times slower on a phone (gate Nov 26: the ways-to-fit box took 2.7 s).
+      const cell = (la, ln) => Math.floor(la * 1000) + "," + Math.floor(ln * 1000), grid = new Map();
+      for (const h of H) { const k = cell(h[0], h[1]); if (!grid.has(k)) grid.set(k, []); grid.get(k).push(h); }
       const at = p => { if (!p || typeof p !== "object" || !E.hasPos(p) || E.fin(p.ele)) return; let best = null, bd = 0.06;
-        for (const h of H) { const d = E.hav(p, { lat: h[0], lng: h[1] }); if (d <= bd) { bd = d; best = h; } } if (best) p.ele = best[2]; };
+        const la = Math.floor(p.lat * 1000), ln = Math.floor(p.lng * 1000);
+        for (let i = -1; i <= 1; i++) for (let j = -2; j <= 2; j++) for (const h of grid.get((la + i) + "," + (ln + j)) || []) { const d = E.hav(p, { lat: h[0], lng: h[1] }); if (d <= bd) { bd = d; best = h; } }
+        if (best) p.ele = best[2]; };
       for (const k of Object.keys(city)) if (Array.isArray(city[k])) city[k].forEach(at);
       for (const d of b.days || []) if (d.city === key) { at(d.point); at(d.hotel); } }
     return E.namesIn(b);

@@ -64,7 +64,18 @@ function run(E) {
     // The heights reach the points from the places file (applyPlaces), within 60 m of a reading, never further.
     const bk = { cities: { hk: { key: 'hk', sites: [{ id: 's1', name: 'Hilltop', lat: 36.425, lng: 25.427 }, { id: 's2', name: 'Far', lat: 36.44, lng: 25.427 }] } }, days: [{ city: 'hk', type: 'land', point: { name: 'Pier', lat: 36.4195, lng: 25.427 } }] };
     const ap = E.applyPlaces(bk, { hk: { key: 'hk', heights: [[36.4251, 25.4271, 130], [36.4195, 25.427, 2]] } }), ss = ap.cities.hk.sites;
-    t(ss[0].ele === 130 && ss[1].ele == null && ap.days[0].point.ele === 2, `ground heights from the places file reach the sights and the day's point within 60 m only (got ${ss.map(x => x.ele)}, point ${ap.days[0].point.ele})`); }
+    t(ss[0].ele === 130 && ss[1].ele == null && ap.days[0].point.ele === 2, `ground heights from the places file reach the sights and the day's point within 60 m only (got ${ss.map(x => x.ele)}, point ${ap.days[0].point.ele})`); } 
+    // Far north a degree east is short: a reading 50 m east of a point at 64.1 N (Reykjavik) still reaches it.
+    { const n = E.applyPlaces({ cities: { rk: { key: 'rk', sites: [{ id: 'n1', name: 'Hill', lat: 64.1415, lng: -21.9265 }] } }, days: [] }, { rk: { key: 'rk', heights: [[64.1415, -21.9255, 70]] } });
+      t(n.cities.rk.sites[0].ele === 70, `a ground height 50 m east at 64 N reaches the point (got ${n.cities.rk.sites[0].ele})`); }
+    // Every plan reads the places file again (each "ways to fit it in" box plans the day dozens of times): a point looks
+    // only at the readings near it, never the whole list (gate Nov 26: the full list made each plan 4 times slower and
+    // the box took 2.7 s on a test phone). 300 sights and 6,000 readings over 20 km take under 60 distance sums a sight.
+    { const sites = [], H = []; for (let i = 0; i < 300; i++) sites.push({ id: 'p' + i, name: 'P' + i, lat: 38 + (i % 20) * 0.009, lng: 23 + Math.floor(i / 20) * 0.012 });
+      for (let i = 0; i < 6000; i++) H.push([38 + (i % 80) * 0.0025, 23 + Math.floor(i / 80) * 0.0028, i % 300]);
+      const hav = E.hav; let n = 0; E.hav = (a, b) => { n++; return hav(a, b); };
+      try { E.applyPlaces({ cities: { big: { key: 'big', sites } }, days: [] }, { big: { key: 'big', heights: H } }); } finally { E.hav = hav; }
+      t(n < 300 * 60, `reading ground heights for 300 sights from 6,000 readings took ${n} distance sums (over ${300 * 60}): every plan would be slow`); }
   // A walk timed from a neighbour's route (R-33 near-route) keeps that route's climb, the right way round (E48).
   const lo2 = { name: 'Low gate', lat: 36.4199, lng: 25.4272 }, hi2 = { name: 'High gate', lat: 36.4252, lng: 25.4271 };
   const kn = () => null; kn.known = () => [{ a: lo, b: hi, foot: { km: 0.9, up: 120, down: 0 }, car: null }];
@@ -85,6 +96,7 @@ const PLANTS = [
   ['the hill left out of the walk-or-ride choice', '10-travel.js', 'Math.max(d, (rFoot.km + hill * speed / 60) / 1.3)', 'Math.max(d, rFoot.km / 1.3)'],
   ['a climb guessed where none is known (every walk 100 m up)', '10-travel.js', 'const hill = climb ? E.climbMin(climb.up, climb.down, climb.km, speed) : 0;', 'const hill = E.climbMin(climb && climb.up != null ? climb.up : 100, climb ? climb.down : 0, climb ? climb.km : d * 1.3, speed);'],
   ['the ends\' heights ignored with no street route', '10-travel.js', 'd > 0.15 ? { up: Math.max(0, b.ele - a.ele)', 'd > 1e9 ? { up: Math.max(0, b.ele - a.ele)'],
+  ['every ground height read for every point', '05-places.js', 'for (let i = -1; i <= 1; i++) for (let j = -2; j <= 2; j++) for (const h of grid.get((la + i) + "," + (ln + j)) || [])', 'for (const h of H)'],
   ['the places file\'s ground heights never given to the points', '05-places.js', 'if (best) p.ele = best[2]; };', '};'],
 ];
 let blind = 0;
