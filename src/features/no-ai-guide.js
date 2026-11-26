@@ -167,7 +167,7 @@ async function findHotelNoAI(name, d) {
 // 4. Up to 6 for a city, whether or not its guide already has day trips of its own. They are offered in the list for
 //    the traveler to pick: the app never puts one on a day itself (never a day's leading pick).
 // A way that couldn't be asked (a service busy) is asked again the next time; nothing is guessed in between.
-const TRIPS_V = 2, TRIP_MAX = 6, TRIP_ASK = 16, TRIP_FAME = 20, TRIP_KM_MIN = 6, TRIP_KM = 100, TRIP_LINE_MIN = 120, TRIP_ROAD_KM = 75, TRIP_ROAD_MIN = 90, TRIP_ONE_KM = 3, TRIP_PART_KM = 15;
+const TRIPS_V = 2, TRIP_MAX = 6, TRIP_ASK = 16, TRIP_FAME = 20, TRIP_KM_MIN = 6, TRIP_KM = 100, TRIP_LINE_MIN = 120, TRIP_BOAT_KM = 40, TRIP_ROAD_KM = 75, TRIP_ROAD_MIN = 90, TRIP_ONE_KM = 3, TRIP_PART_KM = 15;
 const TRIP_NOT = /^(airport|station|university|school|hospital|hotel|office-building|business|stadium|arena|sports-venue|street|road|bridge|organization|event|occurrence|language|creative-work|term|continent)$/;
 const TRIP_NEVER = /^(airport|station|stadium|arena|sports-venue)$/;
 const TRIP_PLACE = /^(settlement|island|old-town|archaeological|ancient-city|castle|fortification|palace|park|garden|natural|mountain|beach|waterfall|monastery|museum|art-museum|amusement-park|zoo)$/;
@@ -228,6 +228,7 @@ function tripTravel(way, cityName) {
   const five = m => Math.max(5, Math.round(m / 5) * 5);
   if (way.road) return `By road (taxi or car), about ${five(way.road.min)} min one way by the road route. Kairoute doesn't know of a train, bus or boat line for this trip.`;
   const o = way.line, from = o.from && !nonLatin(o.from) ? o.from : cityName, boat = /ferry/i.test(o.mode || o.kind || "");
+  if (way.noTime) return `${o.kind} from ${from}: the map shows the route, but Kairoute doesn't know its times or how long it takes. Check both before you go.`;
   if (o.noTimetable) return `${o.kind} from ${from}: the map shows the ${boat ? "route" : "line"}, but its times are not confirmed. About ${five(o.min)} min one way is an estimate; check the times before you go.`;
   return `${o.kind} from ${from}, about ${five(o.min)} min one way by its timetable. Check the times for your day.`;
 }
@@ -267,21 +268,29 @@ async function classicTrips(city, src, quiet) {
         if (r.ok) res = ((await r.json()) || {}).results || []; else why = " (" + r.status + ")"; } catch (e) { why = " (" + String(e && e.name || e) + ")"; }
       part.forEach((x, n) => { lines[at + n] = res ? res[n] || null : undefined; if (!res) x.why = why; }); }
     const ways = [], log = tripsLog[k] = [], last = tripsTries[k] >= 3;
-    for (let i = 0; i < cands.length; i++) { const y = cands[i]; let best = null, unknown = !targets[i].length;
+    for (let i = 0; i < cands.length; i++) { const y = cands[i]; let best = null, boat = null, part = false, unknown = !targets[i].length;
       if (targets[i][0] && targets[i][0].home) { log.push({ name: y.name, at: "a pier in town", lines: [], got: "the city stands on it" }); continue; }
       const L = { name: y.name, at: !targets[i].length ? "piers not answered" : targets[i][0].noPier ? (y.noOutline ? "no outline on the map" : "no pier on the map") : targets[i][0].pier != null ? targets[i].length + " pier(s)" : "its point", lines: [] }; log.push(L);
       flat.forEach((x, n) => { if (x.i !== i) return; const r = lines[n];
         L.lines.push(r === undefined ? "not answered" + (x.why || "") : r === null ? "no answer" : (r.partial ? "partial " : "") + ((r.opts || []).map(o => o && (o.kind || o.mode) + " " + o.min + (o.noTimetable ? " map" : "")).join(", ") || "none"));
         if (r === undefined || r === null || (r.partial && !(r.opts || []).length)) { unknown = true; return; }
-        for (const o of r.opts || []) if (o && o.kind && isFinite(o.min) && o.min > 0 && o.min <= TRIP_LINE_MIN && (!o.every || o.every <= 120) && (!best || o.min < best.line.min)) best = { line: o, at: x.t }; });
+        if (r.partial) part = true;
+        for (const o of r.opts || []) if (o && o.kind && isFinite(o.min) && o.min > 0 && o.min <= TRIP_LINE_MIN && (!o.every || o.every <= 120) && (!best || o.min < best.line.min)) best = { line: o, at: x.t };
+          // A boat the map shows with no timetable, to a pier near by: its guessed time runs long (the Princes' Islands,
+          // 19 km from Istanbul, guessed at 3 hours; live check, Nov 26), so the guess neither rules the place out nor is
+          // shown: the card says a boat goes and that Kairoute doesn't know its times.
+          else if (o && o.kind && o.noTimetable && /ferry/i.test(o.mode || o.kind || "") && isFinite(o.min) && o.min > TRIP_LINE_MIN && hav(centre, x.t) <= TRIP_BOAT_KM && !boat) boat = { line: o, at: x.t, noTime: true }; });
+      if (!best && boat) best = boat;
       // No line (asked and answered: a line not asked about yet is not "no line"): the road, when a drive really goes
       // there without a boat. Never to an island.
       if (!best && (!unknown || last) && !tripIsle(y) && y.km <= TRIP_ROAD_KM) { const j = await getJ(`/roadway?a=${(+centre.lat).toFixed(4)},${(+centre.lng).toFixed(4)}&b=${(+y.lat).toFixed(4)},${(+y.lng).toFixed(4)}`);
         L.road = !j ? "not answered" : j.none ? "none" : j.min + " min" + (j.ferry ? " with a ferry" : "");
         if (!j) unknown = true; else if (isFinite(j.min) && j.min > 0 && j.min + 10 <= TRIP_ROAD_MIN && !j.ferry && !j.none) best = { road: { min: j.min + 10, km: j.km }, at: { lat: y.lat, lng: y.lng } }; }
       L.got = best ? (best.road ? "road" : "line") : unknown ? "unknown" : "no way";
-      if (best) ways.push({ y, way: best, lineOpen: unknown && !!best.road });
-      if (best && unknown) open = true;   // offered by road on the last try: the line is asked about again another time
+      // Offered by road, or by a boat with no times, while the timetable was still being read: asked again another time.
+      const more = !!best && ((unknown && !!best.road) || (!!best.noTime && part));
+      if (best) ways.push({ y, way: best, lineOpen: more });
+      if (best && (unknown || more)) open = true;   // offered by road on the last try: the line is asked about again another time
       // A way not answered yet: asked again later, and the places ranked after it wait for it, so the list never fills
       // with lesser places while a better one is still being asked about (live check, Nov 26: Enköping offered from
       // Stockholm while Sigtuna and Uppsala were unanswered). On the last try of a session what is known is offered.
