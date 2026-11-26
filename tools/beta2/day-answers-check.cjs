@@ -1,4 +1,4 @@
-// Two day rules, checked on every saved test trip with the places files, each with a planted copy that must fail:
+// Day rules (R-36, R-21, R-01, R-07), checked on every saved test trip with the places files, each with a planted copy that must fail:
 //  R-36 (small hours): arriving in the small hours (before 5 am), the traveler sleeps first. No sight or meal is planned
 //    before 5 am; the night at the hotel is a step of the day (odd trips, Nov 25: a 00:15 train planned a city square at
 //    1:11 am). Every arrival day of every saved trip is planned again with the arrival moved to 00:15.
@@ -14,7 +14,7 @@ function run(E) {
   const bad = [], t = (c, m) => { if (!c) bad.push(m); };
   const PD = path.join(ROOT, 'tools', 'places', 'data'), places = {};
   for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
-  const dir = path.join(ROOT, 'tools', 'beta2', 'corpus'); let nights = 0, ticks = 0;
+  const dir = path.join(ROOT, 'tools', 'beta2', 'corpus'); let nights = 0, ticks = 0, boards = 0;
   for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
     const trip = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
     // Small hours.
@@ -37,14 +37,27 @@ function run(E) {
       (p.dropped || []).concat(p.folded || []).forEach(x => here.add(String(x && x.id != null ? x.id : x)));
       const quiet = ids.filter(id => !here.has(id)).map(id => all.find(y => String(y.id) === id)).filter(s => s && s.name && !said.includes(String(s.name).toLowerCase()));
       t(!quiet.length, `${f} day ${i + 1}: every sight ticked (here${j >= 0 ? ' and on day ' + (j + 1) : ''}): ${quiet.slice(0, 3).map(s => s.name).join(', ')}${quiet.length > 3 ? ' and ' + (quiet.length - 3) + ' more' : ''} not planned and not said`); });
+    // A missing boarding time is never read as midnight (isFinite(null) is true in JavaScript: an embark day with no
+    // boarding time took the ship as the next night's and planned past all aboard; odd trips seed 7, Nov 25).
+    trip.days.forEach((d, i) => { if (d.type !== 'embark' || !Number.isFinite(d.allAboard) || d.allAboard < 6 * 60) return;
+      const b = JSON.parse(JSON.stringify(trip)); b.days[i].boardAt = null; const P = d.point && Number.isFinite(+d.point.lat) ? d.point : null; if (!P) return;
+      const late = d.allAboard - 30; b.days[i].thru = { mode: 'flight', time: String(Math.floor(late / 60)).padStart(2, '0') + ':' + String(late % 60).padStart(2, '0'), point: { name: 'International airport', lat: +P.lat + 0.05, lng: +P.lng } }; let p; try { p = E.planTrip(E.applyPlaces(b, places))[i]; } catch (e) { return; } // a flight landing 30 min before all aboard: the ship can't be made
+      if (!p) return; boards++;
+      t(!p.items || !(p.endBy > 24 * 60), `${f} day ${i + 1}: with no boarding time and a flight landing 30 min before all aboard (${E.clock(d.allAboard)}), the ship is taken as the next night's (the day ends ${E.clock(p.endBy)} +1 day) instead of saying it can't be made`); });
   }
+  // A cruise pier is never an air or cargo terminal (the map search for a port gave an air cargo terminal by the airport).
+  for (const n of ['Terminal de Carga Aérea', 'Air Cargo Terminal', 'Container Terminal', 'Aeroporto João Paulo II']) t(!E.cruiseOk({ name: n }), `"${n}" is taken for a cruise pier`);
+  for (const n of ['Portas do Mar', 'Prince George Wharf', 'Terminal Marítimo', 'Cruise and Container Terminal']) t(E.cruiseOk({ name: n }), `"${n}" is kept out of cruise piers`);
   t(nights >= 3, `too few arrival days planned to check the small hours (${nights})`); t(ticks >= 10, `too few days planned to check every tick (${ticks})`);
-  return { bad, nights, ticks };
+  t(boards >= 3, `too few embark days planned to check a missing boarding time (${boards})`);
+  return { bad, nights, ticks, boards };
 }
 const real = run(require('./engine.cjs'));
 for (const m of real.bad) console.log('FAIL ' + m);
 const PLANTS = [
   ['a small-hours arrival goes sightseeing at once', '30-window.js', 'if (isFinite(arrive) && arrive < E.NIGHT_DEP && morning - at > 30)', 'if (false)'],
+  ['a missing boarding time read as midnight', '30-window.js', 'const depAt = ship ? (Number.isFinite(d.boardAt) ? d.boardAt : d.allAboard)', 'const depAt = ship ? (isFinite(d.boardAt) ? d.boardAt : d.allAboard)'],
+  ['an air cargo terminal taken for a cruise pier', '30-window.js', '|cargo|carga|freight|container|air ?port|aeroporto|aeropuerto|a[eé]roport|a[eé]rea|aerial)', ')'],
   ['a tick taken by another day left unsaid', '95-plan.js', 'out.forEach((p, i) => { if (!p || !p.items || p.safe || !days[i]) return; const d = days[i], c = guides[d.city]', 'out.forEach((p, i) => { if (true) return; const d = days[i], c = guides[d.city]'],
 ];
 let blind = 0;
@@ -58,5 +71,5 @@ for (const [name, file, want, to] of PLANTS) {
   fs.rmSync(tmp, { recursive: true, force: true });
   console.log(`planted (${name}): ${planted.length} finding(s)${planted.length ? '' : ' - BLIND'}`); if (!planted.length) blind++;
 }
-console.log(`day-answers-check: ${real.nights} small-hours arrivals, ${real.ticks} days with every sight ticked; ${real.bad.length ? real.bad.length + ' failed' : 'all passed'}${blind ? ', but ' + blind + ' planted copies went unseen' : `; planted ${PLANTS.length} of ${PLANTS.length} caught`}`);
+console.log(`day-answers-check: ${real.nights} small-hours arrivals, ${real.ticks} days with every sight ticked, ${real.boards} boarding days with no boarding time; ${real.bad.length ? real.bad.length + ' failed' : 'all passed'}${blind ? ', but ' + blind + ' planted copies went unseen' : `; planted ${PLANTS.length} of ${PLANTS.length} caught`}`);
 process.exit(real.bad.length || blind ? 1 : 0);

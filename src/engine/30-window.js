@@ -33,7 +33,9 @@
   // encyclopedia article placed in the old town, and a travel-guide sentence about the ferry to another country were each
   // taken for the cruise pier). A ferry terminal, an old port, a sentence or an article about the whole port is not a pier.
   E.GATE_OUT = 25; // km: a port named apart from its city ("Port (City)") lies at least this far out of the city
-  const CRUISE_NOT = /\b(ferry|ferries|marine highway|old (port|harbou?r)|vieux[- ]port|porto (antico|vecchio)|stara luka|eski liman|puerto viejo|alter hafen)\b/i;
+  // (an air or cargo terminal is no pier either: the map search for a port gave "Terminal de Carga Aérea", an air cargo
+  // terminal by the airport, and a ship day was planned to end there; odd trips, Nov 25)
+  const CRUISE_NOT = /\b(ferry|ferries|marine highway|old (port|harbou?r)|vieux[- ]port|porto (antico|vecchio)|stara luka|eski liman|puerto viejo|alter hafen|cargo|carga|freight|container|air ?port|aeroporto|aeropuerto|a[eé]roport|a[eé]rea|aerial)\b/i;
   E.cruiseOk = c => { const n = String((c && c.name) || "").trim(); if (!n) return false;
     if (n.length > 70 || /[.!?;]\s|\d+\s*(jd|eur|usd|euros?|dollars?|hours?)\b/i.test(n) || n.split(/\s+/).length > 9) return false; // a sentence
     if (CRUISE_NOT.test(n) && !/cruise/i.test(n)) return false;
@@ -165,7 +167,7 @@
       // Only a departure in the small hours is the next morning's (E.NIGHT_DEP): a 9:00 am train on a day set to start at
       // 9:00 is this morning's, and the day starts earlier to reach it (leaveEarly below), with no sights (first-timer walk,
       // Nov 22: it was taken as the next morning's, planned sights all day and left "free time 16 h 10 min").
-      const depAt = ship ? (isFinite(d.boardAt) ? d.boardAt : d.allAboard) : E.toMin(d.time);
+      const depAt = ship ? (Number.isFinite(d.boardAt) ? d.boardAt : d.allAboard) : E.toMin(d.time);
       // A flight or train typed in the small hours could be this very morning or late tonight: the traveler is asked once,
       // and the day is planned on the answer (d.nightDep: "morning" | "night"), never on a guess (Nov 23 oracle: 00:20 and
       // 3:10 departures were taken as tonight's and the day filled with sights). Ships keep their all-aboard rule.
@@ -187,7 +189,7 @@
     } else if (d.type === "port") {
       if (!P) return E.fail("Choose where the ship docks.");
       // All aboard after midnight (earlier on the clock than docking) is the next morning's.
-      const aboard = isFinite(d.allAboard) && isFinite(d.portArrive) && d.allAboard < d.portArrive ? d.allAboard + 24 * 60 : d.allAboard;
+      const aboard = Number.isFinite(d.allAboard) && Number.isFinite(d.portArrive) && d.allAboard < d.portArrive ? d.allAboard + 24 * 60 : d.allAboard;
       w.start = d.portArrive + (d.tender ? E.TENDER_ASHORE : 30); w.buffer = E.PORT_BUFFER + (d.tender ? E.TENDER_BACK : 0); w.endBy = aboard - w.buffer;
       w.head = [Object.assign({}, P, { leaveWhenReady: true })]; w.tail = [Object.assign({}, P, { backToShip: true })];
       const lf = P.lift;
