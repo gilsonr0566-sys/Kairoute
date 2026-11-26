@@ -93,7 +93,13 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
     if (txt.split(m.from).length !== 2) { rows.push({ m, planted: false }); continue; }
     fs.writeFileSync(f, txt.replace(m.from, m.to));
     const env = { ENGINE_SRC: src, NOZIG: '1', SLOW_MS: '60000' };
-    const [old, ora] = await Promise.all([run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7'], env), run('node', (m.notMine ? ['tools/truth/oracle.cjs', '--corpus', '--not-mine'] : m.corpus ? ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'] : ['tools/truth/oracle.cjs', '--trips', trips]).concat(m.nott ? ['--no-timetable'] : []), env)]);
+    // A check that printed no counts at all did not finish (cut short on a busy machine): that is no answer, so it is
+    // run once more; still nothing is NOT TESTED with its last lines, never read as "found nothing" (Nov 26: a
+    // different planted defect was "missed" on each run of the same code).
+    const sure = async args => { let r = await run('node', args, env); if (!Object.keys(counts(r.out)).length) r = await run('node', args, env); return r; };
+    const [old, ora] = await Promise.all([sure(['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7']), sure((m.notMine ? ['tools/truth/oracle.cjs', '--corpus', '--not-mine'] : m.corpus ? ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'] : ['tools/truth/oracle.cjs', '--trips', trips]).concat(m.nott ? ['--no-timetable'] : []))]);
+    const dead = [old, ora].filter(r => !Object.keys(counts(r.out)).length);
+    if (dead.length) { rows.push({ m, planted: true, old: [], oracle: [], dead: dead.map(r => `exit ${r.code}: ` + r.out.trim().split('\n').slice(-3).join(' | ').slice(0, 400)) }); continue; }
     const o = more(counts(old.out), baseOld), n = more(counts(ora.out), m.notMine ? baseNotMine : m.corpus ? baseCorpus : m.nott ? baseOraNT : baseOra);
     rows.push({ m, planted: true, old: o, oracle: n });
   } };
@@ -102,8 +108,9 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
   let missed = 0;
   for (const r of list.map(m => rows.find(x => x.m === m))) {
     const caught = r.planted && (r.old.length || r.oracle.length); if (!caught) missed++;
-    console.log(`${!r.planted ? 'NOT TESTED' : caught ? 'caught    ' : 'MISSED    '} ${r.m.id}: ${r.m.was}`);
-    if (r.planted) console.log(`             older day checks: ${r.old.length ? r.old.join('; ') : 'nothing'}\n             independent check: ${r.oracle.length ? r.oracle.join('; ') : 'nothing'}`);
+    console.log(`${!r.planted || r.dead ? 'NOT TESTED' : caught ? 'caught    ' : 'MISSED    '} ${r.m.id}: ${r.m.was}`);
+    if (r.dead) console.log('             a check did not finish, twice: ' + r.dead.join(' ; '));
+    else if (r.planted) console.log(`             older day checks: ${r.old.length ? r.old.join('; ') : 'nothing'}\n             independent check: ${r.oracle.length ? r.oracle.join('; ') : 'nothing'}`);
     else console.log('             the engine text this mutant changes is gone: update the mutant to the current code');
   }
   const byOld = rows.filter(r => r.planted && r.old.length).length, byOracle = rows.filter(r => r.planted && r.oracle.length).length;
