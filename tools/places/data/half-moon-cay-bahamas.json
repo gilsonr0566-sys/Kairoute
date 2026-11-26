@@ -49,5 +49,12 @@
   "name": "Half Moon Cay",
   "known": false,
   "island": true
- }
+ },
+ "heights": [
+  [
+   17.20472,
+   -87.53639,
+   13
+  ]
+ ]
 }
