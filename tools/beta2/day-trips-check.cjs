@@ -57,6 +57,8 @@ function transitFor(b) {
   if (state.partialAt && near(b, state.partialAt)) return { opts: [], partial: true };
   if (near(b, PIERS.Q501[1])) return { opts: [line('ferry', 'Ferry', 'Testport Harbour', 75, { noTimetable: true, src: 'OpenStreetMap w1' })] };
   if (near(b, PIERS.Q501[0])) return { opts: [line('ferry', 'Ferry', 'Testport Harbour', 110, { noTimetable: true, src: 'OpenStreetMap w2' })] };
+  if (near(b, at(-12, 20))) return { opts: [line('ferry', 'Ferry', 'Central Bus Stop', 70, { label: 'Ferry F1 + 1 change' })] };   // Lagoonside: a bus, then the boat
+  if (near(b, at(20, 30))) return { opts: [line('train', 'Train', 'Testport Central', 150)] };   // Testslow: a known line, too slow
   if (near(b, PIERS.Q531[0])) return { opts: [line('ferry', 'Ferry', 'Stream Quay', 60)] };
   if (near(b, at(6, -5))) return { opts: [line('train', 'Train', 'Testport Central', 40)] };   // Testport Riverside, a district in town
   if (near(b, byName('Testholm'))) return { opts: [line('ferry', 'Ferry', 'Stream Quay', 50)] };
@@ -77,6 +79,7 @@ function roadFor(b) {
   if (near(b, byName('Far Testerly'))) return { min: 100, km: 95, ferry: false };
   if (near(b, at(-26, -20))) return { min: 200, km: 60, ferry: true };   // Testwater: the drive takes a car ferry
   if (near(b, at(6, -5))) return { min: 15, km: 8, ferry: false };
+  if (near(b, at(20, 30))) return { min: 50, km: 45, ferry: false };
   return { none: true };
 }
 const state = { busy: 0, asked: [], partialAt: null, slowBoat: false };
@@ -242,12 +245,25 @@ async function run(file) {
       const cands = window.__kairouteTripCands(c, a.src).map(x => x.name); await window.__kairouteClassicTrips(c, a.src); const r = c.farther.find(s => s.name === 'Testwater'); return { cands, travel: r && r.travel, landing: r && r.landing, names: c.farther.map(s => s.name) }; }, { src: SRC6 });
     ok('with no facts answered, a place the road reaches only by ferry is asked about at its pier and offered by its boat', /^Ferry from Stream Quay, about 60 min/.test(w6.travel || '') && w6.landing === 'Water Quay', w6);
     ok('with no facts answered, a district of the city in town is still not a day trip', !w6.cands.includes('Testport Riverside') && !w6.names.includes('Testport Riverside'), w6);
+    // What the card says of the way (live check, Nov 27): a ride with changes, a line known but too slow, a guide part's name.
+    const SRC7 = Object.assign({}, SOURCES, { far: FAR.concat([far('Testslow', 'Q534', ['settlement'], 80, 20, 30, { said: 5, vt: 'city' })]), next: NEXT.concat([nx('Testport/Lagoonside', 'Q533', -12, 20, 'A fishing village on the lagoon.', 60)]) });
+    const w7 = await p6.evaluate(async a => { const c = { city: 'Testport', country: 'Testland', sites: [], farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, a.src);
+      await window.__kairouteClassicTrips(c, a.src); const f = n => (c.farther.find(s => s.name === n) || {}).travel; return { lagoon: f('Lagoonside'), slow: f('Testslow'), names: c.farther.map(s => s.name) }; }, { src: SRC7 });
+    ok('a ride with changes says so and where it starts, never "Ferry from" a stop no ferry leaves (Manly from Sydney)', /^Ferry with 1 change, starting from Central Bus Stop, about 70 min one way by its timetable/.test(w7.lagoon || ''), w7);
+    ok('a part of the city\'s guide is shown by its own name, never "City/Part" (Venice/Burano)', w7.names.includes('Lagoonside') && !w7.names.some(x => /\//.test(x)), w7.names);
+    ok('a drive offered while a line is known but too slow says the lines take longer, never that no line is known (Wollongong from Sydney)', /^By road \(taxi or car\), about 60 min one way by the road route\. The train, bus or boat lines Kairoute knows of take more than 2 hours\.$/.test(w7.slow || ''), w7);
     await p6.close();
     await p3.close(); }
   await b.close();
 }
 // Planted bugs: each puts back, in a copy of the build, one way day trips have really gone wrong.
 const PLANT = [
+  { id: 'changes-hidden', from: 'const ch = +(', to: 'const ch = 0 * +(',
+    was: '"Ferry from Sydenham Station": a ride with changes named by its longest part from the first stop of another' },
+  { id: 'slow-line-said-unknown', from: 'slow: slowLine }', to: 'slow: false }',
+    was: '"Kairoute doesn\'t know of a line" on a drive while a train of over two hours was known' },
+  { id: 'guide-part-name-as-filed', from: 'if (m && names.includes(keyOf(m[1]))) y =', to: 'if (false) y =',
+    was: '"Venice/Burano" shown as the name of a day trip' },
   { id: 'slow-boat-guess-rules-out', from: 'if (!best && boat) best = boat;', to: '',
     was: 'the Princes\' Islands found with their piers and ferry, then dropped because the ferry\'s guessed time was 3 hours (live check, Nov 26)' },
   { id: 'slow-boat-guess-shown', from: 'if (way.noTime) return `', to: 'if (false) return `',

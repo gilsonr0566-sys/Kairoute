@@ -211,6 +211,8 @@ function tripCands(city, src) {
   const have = y => all.some(s => !s.lineOpen && ((y.wd && s.wd === y.wd) || sameSight(y, s) || (s.merged || []).some(m => sameSight(y, m)) || (s.alsoNames || []).some(n => keyOf(n) === keyOf(y.name))));
   const pool = [];
   const put = (y, ev) => { if (!y || !y.name || !KEngine.fin(y.lat) || !KEngine.fin(y.lng)) return;
+    // A part of the city's own guide is shown by its own name, never as the guide files it ("Venice/Burano"; live check, Nov 27).
+    const m = /^([^/]+)\/(.+)$/.exec(String(y.name)); if (m && names.includes(keyOf(m[1]))) y = Object.assign({}, y, { name: m[2].trim() });
     const was = pool.find(x => (y.wd && x.wd === y.wd) || keyOf(x.name) === keyOf(y.name) && hav(x, y) <= TRIP_ONE_KM);
     if (was) { Object.assign(was, ev); for (const k of ["sl", "kinds", "note", "voy", "vt", "said", "part"]) if (was[k] == null && y[k] != null) was[k] = y[k]; if (y.unesco) was.unesco = true; if (y.heritage) was.heritage = true; return; }
     pool.push(Object.assign({}, y, ev, { km: hav(centre, y) })); };
@@ -230,8 +232,15 @@ function tripCands(city, src) {
 // The words for how you get there, from the way found (step 3): a timetable's line, a line the map shows, or the road.
 function tripTravel(way, cityName) {
   const five = m => Math.max(5, Math.round(m / 5) * 5);
+  // A line that was found but takes too long is said as that, never as "no line known" (Wollongong from Sydney by road
+  // while a train of over two hours was known; live check, Nov 27).
+  if (way.road && way.road.slow) return `By road (taxi or car), about ${five(way.road.min)} min one way by the road route. The train, bus or boat lines Kairoute knows of take more than ${TRIP_LINE_MIN / 60} hours.`;
   if (way.road) return `By road (taxi or car), about ${five(way.road.min)} min one way by the road route. Kairoute doesn't know of a train, bus or boat line for this trip.`;
   const o = way.line, from = o.from && !nonLatin(o.from) ? o.from : cityName, boat = /ferry/i.test(o.mode || o.kind || "");
+  // A ride with changes is named by its longest part but starts at the first stop: say so, or the card reads as if the
+  // boat left from a railway station ("Ferry from Sydenham Station" for Manly; live check, Nov 27).
+  const ch = +(/\+ (\d+) change/.exec(o.label || "") || [])[1] || 0;
+  if (ch && !o.noTimetable) return `${o.kind} with ${ch} change${ch > 1 ? "s" : ""}, starting from ${from}, about ${five(o.min)} min one way by its timetable. Check the times for your day.`;
   if (way.noTime) return `${o.kind} from ${from}: the map shows the route, but Kairoute doesn't know its times or how long it takes. Check both before you go.`;
   if (o.noTimetable) return `${o.kind} from ${from}: the map shows the ${boat ? "route" : "line"}, but its times are not confirmed. About ${five(o.min)} min one way is an estimate; check the times before you go.`;
   return `${o.kind} from ${from}, about ${five(o.min)} min one way by its timetable. Check the times for your day.`;
@@ -278,7 +287,7 @@ async function classicTrips(city, src, quiet) {
         if (r.ok) res = ((await r.json()) || {}).results || []; else why = " (" + r.status + ")"; } catch (e) { why = " (" + String(e && e.name || e) + ")"; }
       part.forEach((x, n) => { lines[at + n] = res ? res[n] || null : undefined; if (!res) x.why = why; }); }
     const ways = [], log = tripsLog[k] = [], last = tripsTries[k] >= 3;
-    for (let i = 0; i < cands.length; i++) { const y = cands[i]; let best = null, boat = null, part = false, unknown = !targets[i].length;
+    for (let i = 0; i < cands.length; i++) { const y = cands[i]; let best = null, boat = null, part = false, slowLine = false, unknown = !targets[i].length;
       if (targets[i][0] && targets[i][0].home) { log.push({ name: y.name, at: "a pier in town", lines: [], got: "the city stands on it" }); continue; }
       const L = { name: y.name, at: !targets[i].length ? "piers not answered" : targets[i][0].noPier ? (y.noOutline ? "no outline on the map" : "no pier on the map") : targets[i][0].pier != null ? targets[i].length + " pier(s)" : "its point", lines: [] }; log.push(L);
       if (roads[i]) L.road = roads[i].none ? "none" : roads[i].min + " min" + (roads[i].ferry ? " with a ferry" : "");
@@ -286,6 +295,7 @@ async function classicTrips(city, src, quiet) {
         L.lines.push(r === undefined ? "not answered" + (x.why || "") : r === null ? "no answer" : (r.partial ? "partial " : "") + ((r.opts || []).map(o => o && (o.kind || o.mode) + " " + o.min + (o.noTimetable ? " map" : "")).join(", ") || "none"));
         if (r === undefined || r === null || (r.partial && !(r.opts || []).length)) { unknown = true; return; }
         if (r.partial) part = true;
+        if ((r.opts || []).some(o => o && o.kind && KEngine.fin(o.min) && o.min > TRIP_LINE_MIN)) slowLine = true;
         for (const o of r.opts || []) if (o && o.kind && KEngine.fin(o.min) && o.min > 0 && o.min <= TRIP_LINE_MIN && (!o.every || o.every <= 120) && (!best || o.min < best.line.min)) best = { line: o, at: x.t };
           // A boat the map shows with no timetable, to a pier near by: its guessed time runs long (the Princes' Islands,
           // 19 km from Istanbul, guessed at 3 hours; live check, Nov 26), so the guess neither rules the place out nor is
@@ -296,7 +306,7 @@ async function classicTrips(city, src, quiet) {
       // there without a boat. Never to an island.
       if (!best && (!unknown || last) && !tripWater(y) && y.km <= TRIP_ROAD_KM) { const j = roads[i] || await roadOf(y);
         L.road = !j ? "not answered" : j.none ? "none" : j.min + " min" + (j.ferry ? " with a ferry" : "");
-        if (!j) unknown = true; else if (KEngine.fin(j.min) && j.min > 0 && j.min + 10 <= TRIP_ROAD_MIN && !j.ferry && !j.none) best = { road: { min: j.min + 10, km: j.km }, at: { lat: y.lat, lng: y.lng } }; }
+        if (!j) unknown = true; else if (KEngine.fin(j.min) && j.min > 0 && j.min + 10 <= TRIP_ROAD_MIN && !j.ferry && !j.none) best = { road: { min: j.min + 10, km: j.km, slow: slowLine }, at: { lat: y.lat, lng: y.lng } }; }
       L.got = best ? (best.road ? "road" : "line") : unknown ? "unknown" : "no way";
       // Offered by road, or by a boat with no times, while the timetable was still being read: asked again another time.
       const more = !!best && ((unknown && !!best.road) || (!!best.noTime && part));
