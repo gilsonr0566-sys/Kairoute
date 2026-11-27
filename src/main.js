@@ -1369,7 +1369,7 @@ function dayPoint(d, city) {
   if (notAir(p) && !d.pointPicked && !(d.pointIdx > 0)) p = list.find(x => !x.unknown && !notAir(x)) || p;
   // More than one real station or airport and the traveler hasn't said which: asked, never guessed (Nov 20 tester).
   // The traveler named the airport or station when making the trip and it isn't found yet (not in the guide's list, not
-  // on the map): the day is never planned from another one in its place (R-40). It asks, with their name filled in.
+  // on the map): the day is never planned from another one in its place (R-41). It asks, with their name filled in.
   if (d.gateWant && !d.pointPicked && !(d.pointIdx > 0) && (listKey === "airport" || listKey === "station")) return { name: String(d.gateWant), lat: p ? p.lat : null, lng: p ? p.lng : null, unknown: true, gateWant: true };
   const ask = pointAsk(d, list, listKey);
   return p && ask ? Object.assign({}, p, { ask }) : flag(p);
@@ -1386,7 +1386,7 @@ function planErrCard(d, plan) {
   const err = plan ? plan.error : "Set up your day first.", ch = plan ? pointChoices(d, cityFor(d)) : [];
   // A flight or train in the small hours: this morning or tonight, one tap each (kept on the day as d.nightDep).
   if (plan && plan.askNight) return `<div class="card empty nightask"><p>${esc(err)}</p><div class="actions"><button class="btn ghost" data-act="nightdep" data-v="morning">Early this morning</button><button class="btn ghost" data-act="nightdep" data-v="night">Late tonight, after midnight</button></div></div>`;
-  // A flight, train or ferry time not given yet (R-40): typed right here, one field and one tap, never guessed.
+  // A flight, train or ferry time not given yet (R-41): typed right here, one field and one tap, never guessed.
   if (plan && (plan.askArrive || plan.askLeaveTime)) { const to = plan.askArrive && throughFrom(d) ? throughFrom(d) : d, i = trip.days.indexOf(to);
     return `<div class="card empty timeask"><p>${esc(err)}</p><div class="field"><label for="askTimeIn">Time on your booking</label><input type="time" id="askTimeIn" value=""></div><div class="actions"><button type="button" class="btn" data-act="asktime" data-i="${i}">Save the time</button></div></div>`; }
   if (!ch.length) return `<div class="card empty"><p>${esc(err)}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
@@ -6078,7 +6078,7 @@ function gettingAround(city, plan) {
 function dayMeta(x) {
   if (x.type === "port" && x.aboard) return "Staying on board";
   if (x.type === "port") return `Ashore ${x.portArrive}, all aboard ${x.allAboard}${x.tender ? " · tender" : ""}`;
-  // A time the traveler hasn't given is never shown as theirs (R-40): said as not given yet, never the typical time.
+  // A time the traveler hasn't given is never shown as theirs (R-41): said as not given yet, never the typical time.
   if (x.type === "arrival") return x.estimated || !x.time ? `${MODES[x.mode].label} arrives: time not given yet` : `${MODES[x.mode].label} arrives ${x.time}`;
   if (x.type === "departure") return x.estimated || !x.time ? `${MODES[x.mode].label} leaves: time not given yet` : `${MODES[x.mode].label} leaves ${x.time}`;
   if (x.type === "embark") return `All aboard ${x.allAboard}`;
@@ -7873,7 +7873,7 @@ document.addEventListener("click", e => {
   if (act === "tourstart") { const d = day(); if (!trip.tour || trip.tour.dayId !== d.id) trip.tour = null; else delete trip.tour.left; curTour(d); view = "tour"; save(); render(); toTop(); return; }
   if (act === "tourexit") { stopAudio(); if (trip.tour) { trip.tour.left = true; save(); } view = "plan"; render(); toTop(); return; }
   if (act === "tourpart") { tourPart(); return; }
-  // "Still needed for your plan" (R-40): one tap opens the day and puts the cursor in the field that takes the detail.
+  // "Still needed for your plan" (R-41): one tap opens the day and puts the cursor in the field that takes the detail.
   if (act === "asktime") { const x = trip.days[+t.dataset.i], v = (document.getElementById("askTimeIn") || {}).value || "";
     if (x && /^\d\d:\d\d$/.test(v)) { x.time = v; delete x.estimated; delete x.nightDep; trip.tour = null; edited(); save(); render(); } return; }
   if (act === "needgo") { readForm(); const i = +t.dataset.i; if (trip.days[i]) { trip.active = i; view = "trip"; aiError = ""; save(); render();

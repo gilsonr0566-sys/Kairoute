@@ -146,7 +146,7 @@
     } else if (d.type === "departure" || d.type === "embark") {
       const ship = d.type === "embark", m = ship ? E.MODES.ship : E.MODES[d.mode] || E.MODES.flight;
       // No leaving time given (the trip builder filled in a typical one): asked, never planned on, the same as an arrival
-      // time (R-40, Nov 27): a "leave by" worked out from a made-up time looks as real as one from the booking.
+      // time (R-41, Nov 27): a "leave by" worked out from a made-up time looks as real as one from the booking.
       if (!ship && d.leaveGuess) return E.fail(`When does your ${m.label.toLowerCase()} leave? Add the time from your booking and the day is planned around it, with the time to leave by: nothing is planned on a guess.`, { unsure: true, askLeaveTime: true });
       if (!P) return E.fail(ship ? "Choose the cruise port." : "Choose your departure point.");
       const end = Object.assign({}, P, { deadline: true }, d.noBags ? {} : { bags: true }); // reached from the bags, with them

@@ -10,7 +10,7 @@
 const TS_MOVE = [["flight", "Flight"], ["train", "Train"], ["ferry", "Ferry"], ["car", "Car or bus"]];
 // inGate: the airport or station you arrive at; fromGate: the one you leave the stop before from; homeGate: the one you
 // leave from to go home. leaveNight / homeNight: a leaving time in the small hours is "morning" (early that day) or
-// "night" (late that night, after midnight), asked as it is typed (R-01, R-40).
+// "night" (late that night, after midnight), asked as it is typed (R-01, R-41).
 const tsStay = o => Object.assign({ k: "stay", place: "", date: "", nights: 3, inBy: "flight", leaveAt: "", inAt: "", inGate: "", fromGate: "", leaveNight: "", hotel: "", homeBy: "flight", homeAt: "", homeGate: "", homeNight: "" }, o || {});
 const tsCruise = o => Object.assign({ k: "cruise", ship: "", board: "", date: "", aboard: "", inBy: "flight", leaveAt: "", inAt: "", inGate: "", fromGate: "", leaveNight: "", ports: [], end: "", endDate: "", off: "", homeBy: "flight", homeAt: "", homeGate: "", homeNight: "" }, o || {});
 const tsPort = o => Object.assign({ date: "", place: "", arrive: "", aboard: "", tender: false }, o || {});
@@ -69,7 +69,7 @@ function tsCheck(legs) {
   }
   return "";
 }
-// ---- R-40: every detail a day's plan depends on is asked here, up front (Richard, Nov 27: "all the information that has
+// ---- R-41: every detail a day's plan depends on is asked here, up front (Richard, Nov 27: "all the information that has
 // to be entered for a trip needs to be asked upfront and not leave it to be located to be filled in") ----
 // What the planner and the safety checks use for each day: the time each flight, train, ferry or car arrives and leaves,
 // which airport or station it uses (a city can have several, and the time to get there depends on which), the hotel
@@ -155,7 +155,7 @@ async function tsGates() {
   }
   render();
 }
-// ---- R-40 on every trip, however it was made (this form, a description, a photo, a day added by hand) ----
+// ---- R-41 on every trip, however it was made (this form, a description, a photo, a day added by hand) ----
 // Every detail a day's plan depends on that the traveler hasn't given: a time filled in with a typical one (estimated)
 // or left empty, an airport, station or pier the day has to ask about, a hotel not given. Listed on the Trip page, each
 // one tap from the field that takes it, with how many days are left before the trip, until all are in.
