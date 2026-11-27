@@ -154,6 +154,9 @@ async function timetableAt(a, b, when) {
     const steps = x.ride.map(l => `${nm(l)}: ${l.from && l.from.name} to ${l.to && l.to.name}, ${Math.round(l.duration / 60)} min`);
     const km = path.length > 1 ? lineLen(path) : hav(a, b) * 1.3;
     out.push({ mode: kind.toLowerCase(), kind, label: nm(m) + (x.ride.length > 1 ? ` + ${x.ride.length - 1} change${x.ride.length > 2 ? "s" : ""}` : ""), operator: "", from: (x.ride[0].from || {}).name || "", to: (x.ride[x.ride.length - 1].to || {}).name || "",
+      // The ride is named by its longest part (kind), which may not start where the first one does: that part's own stops,
+      // so a screen never says "Ferry from" a railway station (day trips live check, Nov 27: Manly).
+      mainFrom: (m.from || {}).name || "", mainTo: (m.to || {}).name || "", changes: x.ride.length - 1,
       ride: Math.round(typ - walkA - walkB), wait, every: ev, everySrc: every && gaps.length >= 2 ? "timetable" : "none", everyN: gaps.length, access: { how: "walk", min: walkA, km: +(walkA * 4.5 / 60).toFixed(2) }, egress: { how: "walk", min: walkB, km: +(walkB * 4.5 / 60).toFixed(2) },
       min: Math.round(typ + wait), km: +km.toFixed(1), stops: x.ride.reduce((n, l) => n + ((l.intermediateStops || []).length), 0), hours: "", fare: "", steps, deps: deps.slice(0, 90), checked: new Date().toISOString().slice(0, 10),
       path: thin(path.length > 1 ? path : [a, b], 160).map(p => [+p.lng.toFixed(5), +p.lat.toFixed(5)]), fromPt: [+a.lng, +a.lat], toPt: [+b.lng, +b.lat], src: "Transitous timetables (" + (m.agencyName || "operator") + ")" });
@@ -389,7 +392,7 @@ function mk(o) {
   const wait = Math.round(Math.min(ev, 60) + (o.mode === "ferry" ? 10 : 3));
   const ride = Math.round(o.ride);
   const label = [NAME[o.mode], o.ref && !(o.name || "").includes(o.ref) ? o.ref : "", o.name].filter(Boolean).join(" ").replace(/\s+/g, " ").replace(/^(\w+) \1\b/i, "$1").slice(0, 80); // "Train Train A4" (an English line name that starts with its kind) reads "Train A4"
-  return { mode: o.mode, kind: NAME[o.mode], label, operator: o.operator.slice(0, 60), from: o.from.slice(0, 60), to: o.to.slice(0, 60), ride, wait, every: ev, everySrc: every ? "map" : "usual", access: acc, egress: egr,
+  return { mode: o.mode, kind: NAME[o.mode], label, operator: o.operator.slice(0, 60), from: o.from.slice(0, 60), to: o.to.slice(0, 60), mainFrom: o.from.slice(0, 60), mainTo: o.to.slice(0, 60), changes: 0, ride, wait, every: ev, everySrc: every ? "map" : "usual", access: acc, egress: egr,
     min: acc.min + wait + ride + egr.min, km: +o.km.toFixed(1), stops: o.stops, hours: String(o.hours).slice(0, 80), months: runMonths(o.hours, o.seasonal), fare: String(o.fare).slice(0, 40),
     path: thin(o.path.length >= 2 ? o.path : [o.fromPt, o.toPt], 120).map(p => [+p.lng.toFixed(5), +p.lat.toFixed(5)]),
     fromPt: [+o.fromPt.lng.toFixed(5), +o.fromPt.lat.toFixed(5)], toPt: [+o.toPt.lng.toFixed(5), +o.toPt.lat.toFixed(5)], src: "OpenStreetMap " + o.osm, noTimetable: true };

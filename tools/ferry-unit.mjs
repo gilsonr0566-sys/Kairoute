@@ -2,6 +2,8 @@
 // pier stops, like many seasonal coastal ferries) is offered between the two piers it passes, named after the
 // nearest terminals, with its months from opening_hours or seasonal=*. Exits 1 on a problem.
 import { topRides, ferryByCourse, runMonths, ferryChain, transitOptions, slimFerries, ferryKey, keptFerries, timetableOptions, mergeRides } from "../worker/transit.js";
+// The helper keys ride answers by a hash of its own code ("tr.<hash>:"); these checks name them "tr12:" (the old fixed key).
+const K = k => String(k).replace(/tr\.[0-9a-f]{10}:/, "tr12:");
 let bad = 0; const ok = (c, m) => { console.log((c ? "ok   " : "FAIL ") + m); if (!c) bad++; };
 // Naples Molo Beverello to Amalfi along the coast (a course of a few points), as OpenStreetMap often maps it.
 const line = [[40.8366, 14.2563], [40.79, 14.27], [40.70, 14.30], [40.62, 14.36], [40.58, 14.45], [40.60, 14.55], [40.6327, 14.6029]].map(([lat, lng]) => ({ lat, lng }));
@@ -53,7 +55,7 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
 // and until then is marked partial so the page asks again instead of keeping it for good.
 { const realFetch = globalThis.fetch; globalThis.fetch = async () => { throw new Error("busy"); };
   const worker = (await import("../worker/worker.js")).default, kv = new Map();
-  const env = { USAGE: { get: async (k, t) => { const v = kv.get(k); return v == null ? null : t === "json" ? JSON.parse(v) : v; }, put: async (k, v) => { kv.set(k, v); }, delete: async k => { kv.delete(k); }, list: async ({ prefix }) => ({ keys: [...kv.keys()].filter(k => k.startsWith(prefix)).map(name => ({ name })) }) } };
+  const env = { USAGE: { get: async (k, t) => { const v = kv.get(K(k)); return v == null ? null : t === "json" ? JSON.parse(v) : v; }, put: async (k, v) => { kv.set(K(k), v); }, delete: async k => { kv.delete(K(k)); }, list: async ({ prefix }) => ({ keys: [...kv.keys()].filter(k => k.startsWith(prefix)).map(name => ({ name })) }) } };
   const ctx = { waitUntil: () => {} }, a = [40.852, 14.26], b = [40.6263, 14.3757];
   kv.set("tr12:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(","), JSON.stringify({ opts: [{ mode: "train", label: "Train 1 (Eav) + 1 change", min: 112 }], partial: false, t: Date.now() }));
   const ask = async () => (await (await worker.fetch(new Request("https://x/transit", { method: "POST", body: JSON.stringify({ pairs: [{ a, b, dow: 3 }] }) }), env, ctx)).json()).results[0];
@@ -68,12 +70,13 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
 // Nov 22 live probe: a kept partial answer (trains known only until 9:53 am) is looked up afresh after 2 minutes, not 10.
 { const realFetch = globalThis.fetch; globalThis.fetch = async () => { throw new Error("busy"); };
   const worker = (await import("../worker/worker.js")).default, kv = new Map(); let bg = 0;
-  const env = { USAGE: { get: async (k, t) => { const v = kv.get(k); return v == null ? null : t === "json" ? JSON.parse(v) : v; }, put: async (k, v) => { kv.set(k, v); }, delete: async k => { kv.delete(k); }, list: async () => ({ keys: [] }) } };
-  const ctx = { waitUntil: p => { bg++; p.catch(() => {}); } }, a = [41.9033, 12.4533], b = [42.095, 11.79], key = "tr12:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(",");
+  const env = { USAGE: { get: async (k, t) => { const v = kv.get(K(k)); return v == null ? null : t === "json" ? JSON.parse(v) : v; }, put: async (k, v) => { kv.set(K(k), v); }, delete: async k => { kv.delete(K(k)); }, list: async () => ({ keys: [] }) } };
+  // The helper remembers a kept answer in its own memory for 10 minutes, so each age is asked for its own pair.
+  const ctx = { waitUntil: p => { bg++; p.catch(() => {}); } }, a = [41.9033, 12.4533]; let b = [42.095, 11.79], key = "";
   const ask = async () => (await (await worker.fetch(new Request("https://x/transit", { method: "POST", body: JSON.stringify({ pairs: [{ a, b, dow: 3 }] }) }), env, ctx)).json()).results[0];
-  const put = age => { kv.clear(); kv.set(key, JSON.stringify({ opts: [{ mode: "train", label: "Train 1", min: 100, kindDeps: [{ t: 372 }, { t: 593 }] }], partial: true, ttMissed: 9, t: Date.now() - age })); bg = 0; };
-  put(60000); await ask(); const young = kv.has("lk:" + key);
-  put(180000); await ask(); const old = kv.has("lk:" + key);
+  const put = (age, lat) => { b = [lat, 11.79]; key = "tr12:wk:" + [...a, ...b].map(n => n.toFixed(3)).join(","); kv.clear(); kv.set(key, JSON.stringify({ opts: [{ mode: "train", label: "Train 1", min: 100, kindDeps: [{ t: 372 }, { t: 593 }] }], partial: true, ttMissed: 9, t: Date.now() - age })); bg = 0; };
+  put(60000, 42.095); await ask(); const young = kv.has("lk:" + key);
+  put(180000, 42.195); await ask(); const old = kv.has("lk:" + key);
   ok(!young && old, `a kept partial answer is looked up afresh after 2 minutes, not before (1 min: ${young}, 3 min: ${old})`);
   globalThis.fetch = realFetch; }
 { const many = [1, 2, 3, 4, 5].map(i => ({ mode: "train", label: "T" + i, min: 100 + i })).concat([{ mode: "ferry", label: "F", min: 134 }]), t = topRides(many, 5);
@@ -128,5 +131,15 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   for (const k in tries) delete tries[k]; never = 17;
   const r2 = await timetableOptions(A, B, 3, "2027-06-30");
   ok(r2.missed === 1, `an hour never answered is counted, so the answer is kept as incomplete and asked again (${r2.missed})`);
+  globalThis.fetch = realFetch; }
+// A ride with a change is named by its longest part, and says where that part starts (day trips live check, Nov 27:
+// "Ferry from Sydenham Station" for Manly, a train to the quay then the ferry).
+{ const realFetch = globalThis.fetch; const at = (h, m) => `2027-06-30T${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00Z`;
+  globalThis.fetch = async u => { const h = +new URL(u).searchParams.get("time").slice(11, 13);
+    const legs = [{ mode: "RAIL", startTime: at(h, 0), duration: 600, routeShortName: "T4", agencyName: "Sydney Trains", from: { name: "Sydenham Station", tz: "Australia/Sydney" }, to: { name: "Circular Quay Station" } },
+      { mode: "FERRY", startTime: at(h, 15), duration: 1800, routeShortName: "F1", agencyName: "Sydney Ferries", from: { name: "Circular Quay Wharf 3" }, to: { name: "Manly Wharf" } }];
+    return { ok: true, json: async () => ({ itineraries: [{ startTime: at(h, 0), endTime: at(h, 45), duration: 2700, legs }] }) }; };
+  const r = await timetableOptions({ lat: -33.915, lng: 151.165 }, { lat: -33.8, lng: 151.284 }, 3, "2027-06-30"), f = r.find(o => o.mode === "ferry");
+  ok(f && f.mainFrom === "Circular Quay Wharf 3" && f.mainTo === "Manly Wharf" && f.from === "Sydenham Station" && f.changes === 1, `a train then a ferry is a ferry from its own wharf, with one change (got ${f && [f.kind, f.from, f.mainFrom, f.mainTo, f.changes].join(" | ")})`);
   globalThis.fetch = realFetch; }
 console.log(bad ? `${bad} ferry check(s) failed` : "ferry checks passed"); process.exit(bad ? 1 : 0);
