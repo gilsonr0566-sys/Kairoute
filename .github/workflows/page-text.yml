@@ -32,4 +32,5 @@ jobs:
           TRIP: ${{ inputs.trip }}
           PICKS: ${{ inputs.picks }}
           ROUTES: "1"
+          DUMP: "1"
         run: npm i playwright@1.65.1 && npx playwright install chromium && if [ -n "$TRIP" ]; then node tools/live-trip-text.cjs; elif [ -n "$DAY" ]; then node tools/live-day-text.cjs; else node tools/page-text.cjs; fi
