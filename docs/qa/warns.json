@@ -9,22 +9,6 @@
       "why": "a ride a little slower than walking on short hops, being reworked with the ride-time accuracy change (E17)"
     },
     {
-      "rule": "JUMP",
-      "tool": "feel",
-      "where": "choose-sights",
-      "owner": "Stop the select sites page jumping",
-      "until": "2026-11-30",
-      "why": "Choose sights cards open/close and re-sort under the finger; fix written, waiting for release (client feel test, Nov 23)"
-    },
-    {
-      "rule": "SELF-SCROLL",
-      "tool": "feel",
-      "where": "choose-sights",
-      "owner": "Stop the select sites page jumping",
-      "until": "2026-11-30",
-      "why": "same root cause: the list re-sorts after a tick"
-    },
-    {
       "rule": "SHIFT",
       "tool": "feel",
       "where": "choose-sights",

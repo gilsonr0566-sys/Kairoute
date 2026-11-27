@@ -356,7 +356,7 @@ async function classicTrips(city, src, quiet) {
       city.farther.push(st); added++;
     }
     city.tripsSig = sig; if (open) city.tripsOpen = true; else delete city.tripsOpen;
-    if (added) { keepFills(city); try { console.info("Kairoute added " + added + " classic day trips for " + city.city); } catch (e) {} if (!quiet) { save(); if (["plan", "sites", "guide"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } } }
+    if (added) { keepFills(city); try { console.info("Kairoute added " + added + " classic day trips for " + city.city); } catch (e) {} if (!quiet) { save(); if (["plan", "sites", "guide"].includes(view)) { redrawStill(); } } }
   } catch (e) {} finally { tripsBusy[k] = false; }
   return added;
 }
