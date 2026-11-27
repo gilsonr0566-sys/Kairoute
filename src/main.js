@@ -7252,7 +7252,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     <div><b>${stopsN}${optN ? " + " + optN : ""}</b><span>${stopsN === 1 ? "sight" : "sights"}${optN ? (added ? " + added by Kairoute" : " + optional") : ""}${plan.along.length && !optN ? ` · ${plan.along.length} on the way` : ""}</span></div>
     ${walkTile ? `<div><b>${distTxt(plan.walkKm)}</b><span>walking</span></div>` : ""}
     ${cdHTML ? "" : `<div><b>${fmt(plan.end)}</b><span>${d.type === "port" ? "back on board" : "last stop done"}</span></div>`}
-    <div class="daytools"><div class="toolrow"><button class="btn ghost small" data-goto="sites">Choose sights</button>
+    <div class="daytools"><div class="toolrow"><button class="btn ghost small" data-goto="sites">Choose sights</button>${gtBtnHTML()}
     <details class="moremenu planmore"><summary aria-label="More options for today">More</summary><div class="menupanel" role="menu">
       <div class="menugroup">Plan this day</div>
       <button class="menuitem" role="menuitem" data-act="suggesttour">✨ Suggest my tour</button>
@@ -7382,7 +7382,7 @@ function renderGuide(d) {
   const cards = cur ? stopCard(cur.s, cur.num, city, cur.t) + `<div class="stopnav">${navBtn(prv, "prev")}${navBtn(nxt, "next")}</div>` : "";
   const jumps = stops.map(x => `<button type="button" class="chip ${x === cur ? "on" : ""}" data-jump="${esc(x.s.id)}" aria-pressed="${x === cur}"><b>${x.num || (x.s.bonus ? "+" : "•")}</b> ${x.s.bonus ? "Optional: " : ""}${esc(x.s.name)}</button>`).join("");
   // Same head as the Day plan (docs/design-rules.md): day name, the ship countdown, one main action. The stop list is the picker.
-  return `${pageHead(d, plan, [camBtnHTML()], tourBtnHTML())}
+  return `${pageHead(d, plan, [gtBtnHTML(), camBtnHTML()], tourBtnHTML())}
     <div class="guidegrid"><div class="guideside pane" data-pane="side">
     ${jumps ? `<nav class="jumps" aria-label="Jump to a stop">${jumps}</nav>` : ""}</div>
     <div class="guidemain pane" data-pane="stories">${cards ? `<div class="stoplist">${cards}</div>` : guideNoStops(d, plan)}</div></div>`;
@@ -7470,7 +7470,7 @@ function renderTour(d) {
   // train and flight days (the same one as on the Day plan), and the two small tools. Follow me sits just below.
   const head = `<div class="tourhead"><div class="tourwhere"><div class="eyebrow">Tour · ${esc(dayName(d))} · ${esc(fmtDate(d.date))}</div>
       <div class="tourbar"><i style="width:${pct}%"></i></div><div class="lede small">Step ${T.i + 1} of ${steps.length} · planned for ${fmt(st.time)}</div></div>
-    ${countdownCard(d, plan)}${headActs([camBtnHTML(), `<button class="btn ghost small" data-act="tourexit">Exit tour</button>`])}</div>${followBar()}${groupBar()}`;
+    ${countdownCard(d, plan)}${headActs([gtBtnHTML(), camBtnHTML(), `<button class="btn ghost small" data-act="tourexit">Exit tour</button>`])}</div>${followBar()}${groupBar()}`;
   let body = "";
   if (T.phase === "walk" && st.type !== "start") {
     const nm = stepName(st);

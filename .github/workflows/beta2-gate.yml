@@ -265,6 +265,9 @@ jobs:
       - name: Where you're staying is found by name or street address, or said plainly not found; 4 planted bugs caught (R-38)
         if: always()
         run: node tools/ui/stay-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Get there finds any place and every way there from the plans' own ride layer, with the time to be back on ship days; 4 planted bugs caught (R-40)
+        if: always()
+        run: node tools/ui/getthere-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
         run: node tools/ui/first-run-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
