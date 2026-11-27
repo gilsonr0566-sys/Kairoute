@@ -1,1 +1,1 @@
-{ "run": "t3", "target": "live", "trips": ["first", "example", "during", "rail", "port", "ferry", "group", "odd"], "sizes": ["phone"] }
+{"run": "t4", "target": "live", "trips": ["first", "example", "during", "rail", "port", "ferry", "group", "odd"], "sizes": ["phone"], "depth": 2}

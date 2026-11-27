@@ -1,4 +1,4 @@
-// What each kind of control should do when pressed (rule R-38, "every button pressed"). One line per kind of control,
+// What each kind of control should do when pressed (rule R-40, "every button pressed"). One line per kind of control,
 // keyed by its action name or its label; the press check (press-all.cjs) calls expect() after every press and reports
 // EXPECT when the control did something else. Filled in as presses are reviewed: a control with no line here is held
 // to the general rules only (it must do something a traveler can see, with no error, jump, cover or stuck wait).
@@ -22,7 +22,7 @@ const SCROLLS = [
   [(c, x) => x && x.view === 'trip' && /(^|,)day=\d+/.test(c.data) && !c.act, 'on the Trip page a day tapped in the list is opened in the form below it'],
   [c => c.act === 'mealopen' || c.act === 'bookopen', 'the card to change a meal, or to enter a reservation, opens above the day\'s list and the page goes to it', 'opens'],
   [c => /(^|,)jump=/.test(c.data), 'in the Guide, Next and the stop list open that stop\'s chapter from its top', 'opens'],
-  [c => c.act === 'suggest', 'Suggest my tour answers in a note and the page goes to the note'],
+  [c => c.act === 'suggesttour', 'Suggest my tour answers in a note and the page goes to the note'],
   [(c, x, r) => c.kind === 'fold' && (r.scrolls || []).some(s => /placeMenu/.test(s)), 'a menu too tall to fit above or below its button: the page moves just enough for the whole menu to show under it'],
 ];
 exports.SCROLLS = SCROLLS;

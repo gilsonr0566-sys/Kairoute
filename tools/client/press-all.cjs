@@ -1,4 +1,4 @@
-// Every button pressed (class rule R-38, Nov 27 2026). Richard: "Can we have Fable push all buttons", the day he found
+// Every button pressed (class rule R-40, Nov 27 2026). Richard: "Can we have Fable push all buttons", the day he found
 // three broken controls a tap would have caught (Choose sights jumping, a ferry choice refused, an address lookup dead).
 // The older tap sweep (tools/ui/tap-check.cjs) used one trip, never typed in a field, skipped anything it could not
 // reach from the first screen, and was never part of the release gate.

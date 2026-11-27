@@ -1,5 +1,5 @@
 name: Every button pressed
-# Rule R-38 (Richard, Nov 27 2026: "Can we have Fable push all buttons"). A real touch on every control of every screen,
+# Rule R-40 (Richard, Nov 27 2026: "Can we have Fable push all buttons"). A real touch on every control of every screen,
 # on several trips (first open, the example cruise and train trip before and during the trip, a rail trip, a port day,
 # a boat day, a group trip, odd and empty input), at phone and tablet size. See tools/client/press-all.cjs.
 #   - on the LIVE Beta 2 site (the default when run by hand or on a schedule): real answers from the helper's free
@@ -24,6 +24,7 @@ jobs:
       target: ${{ steps.q.outputs.target }}
       run: ${{ steps.q.outputs.run }}
       sizes: ${{ steps.q.outputs.sizes }}
+      depth: ${{ steps.q.outputs.depth }}
     steps:
       - uses: actions/checkout@v4
       - id: q
@@ -39,11 +40,12 @@ jobs:
           let trips=(byHand?process.env.IN_TRIPS:(q.trips||[]).join(','))||'all'; trips=trips==='all'?all:trips.split(',').filter(t=>all.includes(t));
           const sizes=(q.sizes&&!byHand?q.sizes:['phone','tablet']).filter(s=>['phone','tablet','upright'].includes(s));
           const run=String((byHand?'':q.run)||'run').replace(/[^A-Za-z0-9._-]/g,'-')+'-'+process.env.GITHUB_RUN_NUMBER;
-          fs.appendFileSync(process.env.GITHUB_OUTPUT,'trips='+JSON.stringify(trips)+'\ntarget='+(target==='build'?'build':'live')+'\nrun='+run+'\nsizes='+JSON.stringify(sizes)+'\n');"
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,'trips='+JSON.stringify(trips)+'\ntarget='+(target==='build'?'build':'live')+'\nrun='+run+'\nsizes='+JSON.stringify(sizes)+'\ndepth='+(+q.depth>0&&!byHand?+q.depth:4)+'\n');"
   press:
     needs: plan
     strategy:
       fail-fast: false
+      max-parallel: 8 # leaves runners for the release gate
       matrix:
         trip: ${{ fromJson(needs.plan.outputs.trips) }}
         size: ${{ fromJson(needs.plan.outputs.sizes) }}
@@ -65,6 +67,7 @@ jobs:
           OUT: press-out
           PART: ${{ matrix.part }}/4
           BUDGET_MIN: 140
+          MAXDEPTH: ${{ needs.plan.outputs.depth }}
         run: node tools/client/press-all.cjs ${{ needs.plan.outputs.target == 'build' && 'beta2-site/index.html' || 'https://gilsonr0566-sys.github.io/Kairoute-Beta2/' }} 2>&1 | tee press-out.log | grep -vE "^   [·↻.]" || true
       - if: always()
         run: mkdir -p press-out && cp press-out.log press-out/${{ matrix.trip }}-${{ matrix.size }}-${{ matrix.part }}.log || true

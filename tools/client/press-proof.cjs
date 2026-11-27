@@ -1,4 +1,4 @@
-// Proof that "every button pressed" (rule R-38) fires: on every run it plants each way a control has gone wrong and
+// Proof that "every button pressed" (rule R-40) fires: on every run it plants each way a control has gone wrong and
 // the press check must report every one; and it adds a button nobody presses to a copy of the build, which the
 // coverage rule must report as NOT PRESSED. A planted defect that gets through fails the release.
 //   dead     "Change lunch" swallowed: the press does nothing            -> DEAD
