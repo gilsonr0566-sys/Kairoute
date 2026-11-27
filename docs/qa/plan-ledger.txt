@@ -1793,7 +1793,7 @@ day 2 2027-05-11 land vienna austria | 09:00 to 12:47
   12:47 end: Hotel in central Vienna, Austria 0 min
   18:30 evening Dinner: Haas & Haas 75 min
   suggested: Albertina; Innere Stadt; Musikverein; Hundertwasserhaus
-  says: Natural History Museum, Vienna is closed on Tuesday, and it didn't fit on Monday, the day it's open (it needs about 25 min (the visit and the rides to it and on), and today's other stops already fill the time until 6:00 pm).
+  says: Natural History Museum, Vienna is closed on Tuesday, and it didn't fit on Monday, one of the days it's open (it needs about 25 min (the visit and the rides to it and on), and today's other stops already fill the time until 6:00 pm).
   says: Free time: about 87 min before lunch at 11:45 am. Linger where you are or look around nearby.
   says: Opening hours not confirmed for Karlskirche on this date: planned between 9:00 am and 5:00 pm. Check before you go.
 

@@ -18,6 +18,7 @@ const PLANTING = new Set(['tools/beta2/day-answers-check.cjs' /* plants a small-
   'tools/beta2/day-trips-check.cjs' /* plants 33 day-trip bugs on every run (R-37) */, 'tools/day-trips-helper-check.mjs' /* plants 6 helper bugs on every run (R-37) */,
   'tools/ui/steady-sights-check.cjs' /* plants a re-sort after a tap on every run (R-28) */,
   'tools/ui/pinned-band-check.cjs' /* plants "no band behind pinned pieces" on every run (R-32) */,
+  'tools/ui/day-moves-check.cjs' /* plants 7 swap and removal bugs in the built page on every run (R-38) */,
   'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */,
   'tools/ui/net-words-check.cjs' /* plants an unguarded "when you're online" message on every run (R-18) */,
   'tools/ui/saved-recheck.cjs' /* runs the build with the saved-content re-check switched off and must find problems (R-30) */,

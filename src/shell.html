@@ -467,6 +467,11 @@ details.more summary { cursor: pointer; font-weight: 700; color: var(--route); }
 .itin { display: grid; gap: 4px; max-height: none; }
 .itrow { display: grid; grid-template-columns: 52px 30px 1fr auto; gap: 8px; align-items: center; padding: 5px 8px; border-radius: 10px; border: 1px solid transparent; background: none; text-align: left; cursor: pointer; width: 100%; }
 .itrow:hover { background: var(--card); }
+/* Swap two days, remove a day (features/day-moves.js) */
+.dmrow { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 10px; }
+.dmbox { margin: 0 0 12px; } .dmbox.warn { border-color: var(--warn); }
+.dmlist { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; } .dmlist .dmpick { text-align: left; justify-content: flex-start; min-height: 44px; white-space: normal; }
+.dmwhy { margin: 6px 0; padding-left: 18px; color: var(--muted); font-size: .9em; } .dmnote { margin: 4px 0 8px; }
 .itrow.active { background: var(--card); border-color: var(--route); box-shadow: inset 4px 0 0 var(--route); }
 .itrow .dt { font-variant-numeric: tabular-nums; font-size: 0.82rem; color: var(--muted); font-weight: 700; line-height: 1.2; }
 .itrow .ic { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; background: var(--route-soft); color: var(--route); font-size: 1rem; }
