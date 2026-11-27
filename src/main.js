@@ -1368,6 +1368,9 @@ function dayPoint(d, city) {
   // Nothing picked yet: the first listed airport that is a real one, never a terminal or a closed field listed before it.
   if (notAir(p) && !d.pointPicked && !(d.pointIdx > 0)) p = list.find(x => !x.unknown && !notAir(x)) || p;
   // More than one real station or airport and the traveler hasn't said which: asked, never guessed (Nov 20 tester).
+  // The traveler named the airport or station when making the trip and it isn't found yet (not in the guide's list, not
+  // on the map): the day is never planned from another one in its place (R-40). It asks, with their name filled in.
+  if (d.gateWant && !d.pointPicked && !(d.pointIdx > 0) && (listKey === "airport" || listKey === "station")) return { name: String(d.gateWant), lat: p ? p.lat : null, lng: p ? p.lng : null, unknown: true, gateWant: true };
   const ask = pointAsk(d, list, listKey);
   return p && ask ? Object.assign({}, p, { ask }) : flag(p);
 }
@@ -1383,6 +1386,9 @@ function planErrCard(d, plan) {
   const err = plan ? plan.error : "Set up your day first.", ch = plan ? pointChoices(d, cityFor(d)) : [];
   // A flight or train in the small hours: this morning or tonight, one tap each (kept on the day as d.nightDep).
   if (plan && plan.askNight) return `<div class="card empty nightask"><p>${esc(err)}</p><div class="actions"><button class="btn ghost" data-act="nightdep" data-v="morning">Early this morning</button><button class="btn ghost" data-act="nightdep" data-v="night">Late tonight, after midnight</button></div></div>`;
+  // A flight, train or ferry time not given yet (R-40): typed right here, one field and one tap, never guessed.
+  if (plan && (plan.askArrive || plan.askLeaveTime)) { const to = plan.askArrive && throughFrom(d) ? throughFrom(d) : d, i = trip.days.indexOf(to);
+    return `<div class="card empty timeask"><p>${esc(err)}</p><div class="field"><label for="askTimeIn">Time on your booking</label><input type="time" id="askTimeIn" value=""></div><div class="actions"><button type="button" class="btn" data-act="asktime" data-i="${i}">Save the time</button></div></div>`; }
   if (!ch.length) return `<div class="card empty"><p>${esc(err)}</p><button class="btn" data-goto="trip">Edit this day</button></div>`;
   return `<div class="card empty pointask"><p>${esc(String(err).replace(/ Choose it in the day's settings[^:]*:/, " Choose yours:"))}</p><div class="actions">${ch.map(c => `<button class="btn ghost" data-act="pointpick" data-idx="${c.idx}">${esc(c.name)}</button>`).join("")}</div></div>`;
 }
@@ -2111,7 +2117,7 @@ async function pierSearch() {
   render();
 }
 function pierFormHTML(d) {
-  const f = pierForm && pierForm.id === d.id ? pierForm : { q: "", results: [] }, W = ASK_WORDS[askKind(d) || "cruise"];
+  const f = pierForm && pierForm.id === d.id ? pierForm : { q: d.gateWant || "", results: [] }, W = ASK_WORDS[askKind(d) || "cruise"];
   // The place the day had is no airport with passenger flights: said plainly, before asking for the real one.
   const P = askKind(d) === "airport" ? dayPoint(d, cityFor(d)) : null, why = P && P.notGate ? `<p class="banner warn" role="status">${esc(notGateMsg(P))}</p>` : "";
   return `<div class="card bookform" id="pierform"><h3>${W.h}</h3>${why}<p class="lede small">${W.lede}</p>
@@ -6072,8 +6078,9 @@ function gettingAround(city, plan) {
 function dayMeta(x) {
   if (x.type === "port" && x.aboard) return "Staying on board";
   if (x.type === "port") return `Ashore ${x.portArrive}, all aboard ${x.allAboard}${x.tender ? " · tender" : ""}`;
-  if (x.type === "arrival") return `${MODES[x.mode].label} arrives ${x.time || "?"}`;
-  if (x.type === "departure") return `${MODES[x.mode].label} leaves ${x.time || "?"}`;
+  // A time the traveler hasn't given is never shown as theirs (R-40): said as not given yet, never the typical time.
+  if (x.type === "arrival") return x.estimated || !x.time ? `${MODES[x.mode].label} arrives: time not given yet` : `${MODES[x.mode].label} arrives ${x.time}`;
+  if (x.type === "departure") return x.estimated || !x.time ? `${MODES[x.mode].label} leaves: time not given yet` : `${MODES[x.mode].label} leaves ${x.time}`;
   if (x.type === "embark") return `All aboard ${x.allAboard}`;
   if (x.type === "sea") return "No stops";
   return `${x.startTime}–${fmt(lunchIn(toMin(x.startTime), +x.hours))}`; // the same hours the Day plan shows (its window, lunch included)
@@ -6089,7 +6096,7 @@ function itinerary() {
     out += `<button class="itrow ${i === trip.active ? "active" : ""}" data-day="${i}">
       <span class="dt">${esc(fmtDate(x.date))}</span>
       <span class="ic ${x.type}" aria-hidden="true">${typeInfo(x.type).icon}</span>
-      <span class="tx"><b>${esc(placeLabel(x) || "New day")}</b><span>${esc(typeInfo(x.type).short)} · ${esc(dayMeta(x))}${x.estimated ? " · estimated" : ""}</span>${built ? "" : `<span class="ok" style="display:block;color:var(--meal);font-weight:700">Guide not built yet</span>`}</span>${heartDot(x)}
+      <span class="tx"><b>${esc(placeLabel(x) || "New day")}</b><span>${esc(typeInfo(x.type).short)} · ${esc(dayMeta(x))}${x.estimated && x.type !== "arrival" && x.type !== "departure" ? " · estimated, not from your booking" : ""}</span>${built ? "" : `<span class="ok" style="display:block;color:var(--meal);font-weight:700">Guide not built yet</span>`}</span>${heartDot(x)}
     </button>`;
   });
   return out;
@@ -6109,7 +6116,8 @@ function renderTrip(d) {
   return `
   ${trip.sample && !trip.bannerSeen ? `<div class="banner"><span>${trip.example ? "This is an example trip, to show how Kairoute works: Athens, the 11-night Sun Princess cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Its flight, hotel and train times are examples. Tap a day to change it, or plan your own trip from Home." : `This is your Sun Princess trip: Athens, the 11-night cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Ports and times come from your booking; all-aboard is set 30 minutes before sailing. Flight, hotel and train times are my guesses, so tap a day to change them.`}</span><button class="btn ghost small" data-act="gotit" style="white-space:nowrap">Got it</button></div>` : ""}
   ${stopsBanner()}
-  ${shipTimesBanner()}
+  ${tripNeedsHTML()}
+  ${aiReady() || trip.sample || !tripNeeds().length ? shipTimesBanner() : ""}
   ${changeCard()}
   <div class="tripgrid">
     <div class="leftcol pane" data-pane="days">
@@ -6153,6 +6161,7 @@ function renderTrip(d) {
           ${t === "land" || t === "departure" || t === "embark" ? `<div class="field"><label for="f-start">${t === "land" ? "Start time" : "Check out at"}</label><input type="time" id="f-start" value="${esc(d.startTime)}"></div>` : ""}
           ${""/* the day's hours are set in one place, the Day plan's hours tile (outside review, Nov 20: two controls, two answers) */}
         </div>
+        ${d.estimated && t !== "land" && t !== "sea" ? `<label class="check"><input type="checkbox" id="f-confirm"><span>${t === "port" ? "These are the times on my cruise booking" : "This is the time on my booking"}</span></label><span class="hint">Not from your booking yet, so not confirmed. Type the real ${t === "port" ? "times" : "time"}, or tick this if ${t === "port" ? "they're" : "it's"} already right.</span>` : ""}
         ${needsLodging ? `<div class="field"><label for="f-lodging">Where you're staying in ${esc(d.destination || "this city")}</label>
           <select id="f-lodging">${opts(hotels, L.idx)}<option value="custom" ${L.idx === "custom" ? "selected" : ""}>My hotel or rental…</option></select>
           ${L.idx === "custom" ? `<div class="ask"><input type="text" id="f-lname" value="${esc(L.name || "")}" placeholder="Hotel name or address"><button type="button" class="btn small" data-act="geo" ${aiReady() || freeAI ? "" : "disabled"}>Find it</button></div>
@@ -7219,7 +7228,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
     (tc => tc ? `<div class="banner warn" role="alert">This day has ${dur(tc.ride)} of travel for ${dur(tc.see)} at the sights. Consider fewer far-apart stops, more hours, or splitting it over two days.</div>` : "")(travelCheck(plan)),
     plan.endBy - plan.start < 90 ? `<div class="banner warn">There isn't much time today, so keep it close: a coffee and one nearby sight at most.</div>` : "",
     weatherBanner(d, plan),
-    d.estimated ? `<div class="banner warn">These port times are estimated. Check them against your cruise documents.</div>` : "",
+    estLine(d) ? `<div class="banner warn">${esc(estLine(d))}</div>` : "",
     (e => e ? `<div class="banner ok"><span>Leave at <b>${e.start}</b> instead of ${esc(d.startTime)} and ${e.fits.length ? `you also fit <b>${e.fits.map(esc).join(", ")}</b>` : "the day fits"}, back by ${e.end}. Earlier also means cooler weather, less traffic and fewer crowds.</span><button class="btn small" data-act="earlystart" data-v="${e.start}" data-h="${e.hours}">Leave at ${e.start}</button></div>` : "")(earlierStart(d, plan)),
     laterEndBanner(d, plan), elsewhereNote(plan),
     // A place nobody has opened before: its sights and travel guides take a minute or more to gather the first time (R-34;
@@ -7639,7 +7648,7 @@ function readForm() {
   if (g("f-time")) { if (d.time !== v("f-time")) delete d.nightDep; d.time = v("f-time"); } // a new time: asked again if it's in the small hours
   if (g("f-parr")) d.portArrive = v("f-parr");
   if (g("f-aboard") && g("f-aboard").type === "time") d.allAboard = v("f-aboard");
-  if (d.estimated && [d.time, d.portArrive, d.allAboard].join("|") !== was) delete d.estimated;
+  if (d.estimated && ([d.time, d.portArrive, d.allAboard].join("|") !== was || (g("f-confirm") && g("f-confirm").checked))) delete d.estimated;
   if (g("f-start")) d.startTime = v("f-start") || "09:00";
   if (g("f-hours")) d.hours = Math.max(1, Math.min(14, parseFloat(v("f-hours")) || 8));
   if (g("f-point")) { const nv = +v("f-point"); if (nv >= 0) { if (g("f-point").dataset.ask === "1") d.pointPicked = true; d.pointIdx = nv; } }
@@ -7778,7 +7787,7 @@ document.addEventListener("click", e => {
     setTimeout(render, 300); return;
   }
   if (act === "newtrip") { wiz = { step: 0, mode: "steps", legs: [tsStay()], text: "", name: "", style: trip.style || "mix", interests: [], pace: "moderate", walk: "medium", hotels: "", travelers: "", access: "none", party: 2, lang: "English", voice: "buttery", cruiseLine: "", ship: "" }; view = "wizard"; aiError = ""; render(); return; }
-  if (act === "wizmore") { readWiz(); if (wizSteps()) { tsFill(wiz.legs); const err = tsCheck(wiz.legs); if (err) { aiError = err; render(); toTop(); return; } } else if (!wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; } aiError = ""; wiz.step = 1; render(); toTop(); return; }
+  if (act === "wizmore") { readWiz(); if (wizSteps()) { tsFill(wiz.legs); const err = tsCheck(wiz.legs); if (err) { aiError = err; render(); toTop(); return; } if (tsAskNeeds("more")) return; } else if (!wiz.text.trim() && !(wiz.images || []).length) { aiError = "Describe your trip first, even roughly."; render(); return; } aiError = ""; wiz.step = 1; render(); toTop(); return; }
   if (act === "wizback") { readWiz(); wiz.step--; render(); return; }
   if (act === "wizcancel") { wiz = null; view = "lobby"; render(); toTop(); return; }
   if (act === "opentrip") { save(); const x = library.find(y => y.id === t.dataset.id); if (x) { trip = x.trip; if (!trip.prefs) trip.prefs = defaultPrefs(); jumpToToday(trip); view = trip.tour && trip.tour.dayId === day().id && cityFor(day()) ? "tour" : "plan"; save(); render(); toTop(); } return; }
@@ -7864,6 +7873,14 @@ document.addEventListener("click", e => {
   if (act === "tourstart") { const d = day(); if (!trip.tour || trip.tour.dayId !== d.id) trip.tour = null; else delete trip.tour.left; curTour(d); view = "tour"; save(); render(); toTop(); return; }
   if (act === "tourexit") { stopAudio(); if (trip.tour) { trip.tour.left = true; save(); } view = "plan"; render(); toTop(); return; }
   if (act === "tourpart") { tourPart(); return; }
+  // "Still needed for your plan" (R-40): one tap opens the day and puts the cursor in the field that takes the detail.
+  if (act === "asktime") { const x = trip.days[+t.dataset.i], v = (document.getElementById("askTimeIn") || {}).value || "";
+    if (x && /^\d\d:\d\d$/.test(v)) { x.time = v; delete x.estimated; delete x.nightDep; trip.tour = null; edited(); save(); render(); } return; }
+  if (act === "needgo") { readForm(); const i = +t.dataset.i; if (trip.days[i]) { trip.active = i; view = "trip"; aiError = ""; save(); render();
+    let el = document.getElementById(t.dataset.f || "");
+    // No list to choose from: the day plan asks for the name (the pier, airport or station form).
+    if (!el && t.dataset.f === "f-point") { view = "plan"; render(); el = document.getElementById("pier-name"); }
+    if (el) { el.scrollIntoView({ block: "center" }); el.focus({ preventScroll: true }); } } return; }
   if (act === "nightdep") { const d = day(), v = t.dataset.v; if (d && (v === "morning" || v === "night")) { d.nightDep = v; edited(); save(); render(); } return; }
   if (act === "pointpick") { const d = day(), k = +t.dataset.idx; if (d && k >= 0) { d.pointIdx = k; d.pointPicked = true; delete d.pier; edited(); save(); render(); } return; }
   if (act === "tournext") {

@@ -109,6 +109,24 @@ function helper(r, calls) {
       if (got.days.length !== t.want.length) diff.push(`${got.days.length} days, want ${t.want.length}`);
       if (diff.length) bad(`${t.name}:\n   ${diff.join('\n   ')}`); else ok(t.name);
     }
+    // R-40: every detail a day's plan depends on is asked when the trip is made. Planted on every run: a trip with every
+    // detail given asks nothing; each detail taken out in turn (one at a time) is asked, by its own field, and no other.
+    { const full = [
+        { k: 'stay', place: 'Lisbon', date: '2027-03-01', nights: 2, inBy: 'flight', inAt: '10:00', inGate: 'LIS', hotel: 'Hotel Avenida' },
+        { k: 'cruise', board: 'Lisbon', date: '2027-03-03', aboard: '17:00', ports: [{ date: '2027-03-04', place: 'Cadiz', arrive: '08:00', aboard: '18:00' }], end: 'Barcelona', endDate: '2027-03-06', off: '07:30' },
+        { k: 'stay', place: 'Madrid', date: '2027-03-06', nights: 2, inBy: 'train', leaveAt: '10:00', fromGate: 'Barcelona Sants', inAt: '12:45', inGate: 'Atocha', hotel: 'Hotel Urban', homeBy: 'flight', homeAt: '00:40', homeNight: 'night', homeGate: 'MAD' }];
+      const base = await p.evaluate(l => window.__kairouteTripSteps(l), full);
+      if (base.err || (base.needs || []).length) bad(`R-40: a trip with every detail given still asks: ${base.err || base.needs.join('; ')}`); else ok('R-40: a trip with every detail given asks nothing');
+      const meta = (base.meta || []).join(' ');
+      if (!/2027-03-01\|arrival\|LIS\|/.test(meta) || !/2027-03-06\|departure\|Barcelona Sants\|/.test(meta) || !/2027-03-06\|arrival\|Atocha\|/.test(meta) || !/2027-03-08\|departure\|MAD\|night/.test(meta)) bad(`R-40: the airport, station and small-hours answer don't reach the days: ${meta}`); else ok('R-40: the airports and stations named and the small-hours answer reach their days');
+      const drops = [[0, 'inAt', 'ts-0-inAt'], [0, 'inGate', 'ts-0-inGate'], [0, 'hotel', 'ts-0-hotel'], [1, 'aboard', 'ts-1-aboard'], [1, 'p0.arrive', 'ts-1-p0-arrive'], [1, 'p0.aboard', 'ts-1-p0-aboard'], [1, 'off', 'ts-1-off'],
+        [2, 'leaveAt', 'ts-2-leaveAt'], [2, 'fromGate', 'ts-2-fromGate'], [2, 'inAt', 'ts-2-inAt'], [2, 'inGate', 'ts-2-inGate'], [2, 'hotel', 'ts-2-hotel'], [2, 'homeAt', 'ts-2-homeAt'], [2, 'homeGate', 'ts-2-homeGate'], [2, 'homeNight', 'ts-2-homeNight']];
+      let miss = [];
+      for (const [i, key, f] of drops) { const l = JSON.parse(JSON.stringify(full)); if (key.startsWith('p0.')) l[i].ports[0][key.slice(3)] = ''; else l[i][key] = '';
+        const g = await p.evaluate(l => window.__kairouteTripSteps(l), l), n = (g.needs || []).map(x => x.split(' ')[0]);
+        if (key === 'homeAt') { if (!n.includes(f)) miss.push(`${key}: not asked (${n.join(',')})`); continue; } // no time also takes the small-hours question away
+        if (n.length !== 1 || n[0] !== f) miss.push(`${key}: asked ${n.join(',') || 'nothing'}`); }
+      if (miss.length) bad(`R-40 planted: a detail taken out is not asked by its own field:\n   ${miss.join('\n   ')}`); else ok(`R-40 planted: each of ${drops.length} details taken out in turn is asked, by its own field`); }
     // Round 2, S1-6: an arrival or ship time the traveler never gave is never shown as theirs on the day's cover.
     { const l = await p.evaluate(() => [window.__kairouteThroughLede({ mode: 'flight', time: '10:30', estimated: true }, { type: 'embark', allAboard: '17:00', estimated: true }),
         window.__kairouteThroughLede({ mode: 'flight', time: '09:15' }, { type: 'embark', allAboard: '16:30' })]);
@@ -239,7 +257,17 @@ function helper(r, calls) {
     if (!/10 days · 2 ports/.test(prev)) bad(`${tag}: the day list says "${prev}"`); else ok(`${tag}: day list "${prev}"`);
     if (tag === 'phone' || process.env.SHOTS) await p.screenshot({ path: path.join(process.env.SHOTS || '/tmp', 'steps-form-' + tag + '.png'), fullPage: true });
     await p.evaluate(() => [...document.querySelectorAll('#wizForm button[type=submit]')].find(x => /Build my trip/.test(x.innerText)).click());
-    await p.waitForTimeout(500);
+    await p.waitForTimeout(400);
+    // R-40 on the real screen: Build my trip first lists every detail left empty (Mykonos's times, the airports, Athens's
+    // hotel), never the ones given; each empty field is marked; a tap on a line puts the cursor in its field.
+    { const st = await p.evaluate(() => ({ view: window.__kairouteState().view, items: [...document.querySelectorAll('#tsNeed .tsneedlist button')].map(b => [b.dataset.f, b.innerText]), marked: [...document.querySelectorAll('#wizForm [aria-invalid="true"]')].map(x => x.id || x.getAttribute('aria-labelledby')) }));
+      const fs = st.items.map(x => x[0]), want = ['ts-0-inGate', 'ts-1-fromGate', 'ts-1-inGate', 'ts-1-hotel', 'ts-2-p1-arrive', 'ts-2-p1-aboard', 'ts-2-homeGate'], extra = fs.filter(f => !want.includes(f)), lack = want.filter(f => !fs.includes(f));
+      if (st.view !== 'wizard' || lack.length || extra.length) bad(`${tag}: R-40 Build my trip lists ${JSON.stringify(st.items)} (missing ${lack.join(',') || '-'}, extra ${extra.join(',') || '-'})`); else ok(`${tag}: R-40 Build my trip lists the ${fs.length} details left empty, and only those`);
+      const unmarked = want.filter(f => !st.marked.includes(f)); if (unmarked.length) bad(`${tag}: R-40 empty fields not marked: ${unmarked.join(', ')}`); else ok(`${tag}: R-40 every empty field is marked`);
+      if (tag === 'phone' || process.env.SHOTS) await p.screenshot({ path: path.join(process.env.SHOTS || '/tmp', 'steps-needs-' + tag + '.png'), fullPage: false });
+      await p.click('#tsNeed .tsneedlist button[data-f="ts-1-hotel"]'); await p.waitForTimeout(250);
+      const foc = await p.evaluate(() => document.activeElement && document.activeElement.id); if (foc !== 'ts-1-hotel') bad(`${tag}: R-40 tapping "Your hotel in Athens" put the cursor in ${foc}`); else ok(`${tag}: R-40 one tap on a line goes to its field`);
+      await p.click('#tsNeed [data-ts="needok"]'); await p.waitForTimeout(500); }
     const st0 = await p.evaluate(() => window.__kairouteState());
     if (st0.view !== 'trip') bad(`${tag}: after Build my trip the view is ${st0.view} (${st0.err})`);
     const want = ['2027-05-03 arrival Paris', '2027-05-04 land Paris', '2027-05-05 land Paris', '2027-05-06 departure Paris', '2027-05-06 arrival Athens', '2027-05-07 land Athens',
@@ -248,6 +276,13 @@ function helper(r, calls) {
     if (got.join('|') !== want.join('|')) bad(`${tag}: days\n   got  ${got.join(' | ')}\n   want ${want.join(' | ')}`); else ok(`${tag}: ${got.length} days in order`);
     const san = st0.days.find(d => d.dest === 'Santorini'); if (!san || san.arrive !== '07:00' || san.aboard !== '20:30' || san.estimated) bad(`${tag}: Santorini times ${JSON.stringify(san)}`);
     const myk = st0.days.find(d => d.dest === 'Mykonos'); if (!myk || !myk.estimated) bad(`${tag}: Mykonos had no times typed but is not marked estimated`);
+    // R-40 after "I don't know yet": the Trip page lists what's still needed, and one tap opens that day at its field.
+    { const t = await p.evaluate(() => (document.querySelector('.tripneeds') || {}).innerText || '');
+      if (!/Mykonos/.test(t) || !/hotel in Athens/i.test(t) || /Santorini/.test(t)) bad(`${tag}: R-40 the Trip page's "still needed" list: ${t.slice(0, 300)}`); else ok(`${tag}: R-40 the Trip page lists what's still needed`);
+      const b = await p.$('.tripneeds button[data-f="f-parr"]');
+      if (!b) bad(`${tag}: R-40 no line for Mykonos's times`); else { await p.click('.tripneeds button[data-f="f-parr"]'); await p.waitForTimeout(300);
+        const at = await p.evaluate(() => ({ f: document.activeElement && document.activeElement.id, dest: (document.getElementById('f-dest') || {}).value }));
+        if (at.f !== 'f-parr' || !/Mykonos/.test(at.dest || '')) bad(`${tag}: R-40 the Mykonos line opened ${JSON.stringify(at)}`); else ok(`${tag}: R-40 one tap opens the day at the field that takes it`); } }
     // The guides: Paris from its sources (no AI), Athens built in.
     await p.waitForFunction(() => { const s = window.__kairouteState(); return !s.busy && s.days.filter(d => /Paris/.test(d.dest)).every(d => d.guide); }, null, { timeout: LIVE ? 240000 : 30000 }).catch(() => {});
     await p.waitForTimeout(LIVE ? 15000 : 1500);
@@ -284,6 +319,51 @@ function helper(r, calls) {
     const aiOn = await p.evaluate(() => window.__kairouteAiReady()); if (LIVE) console.log(`note ${tag}: AI guide is ${aiOn ? 'ON' : 'off'} on the live site`);
     const aiCalls = aiOn ? [] : calls.filter(c => c === '/sample' || c === '/script' || c === '/speak');
     if (aiCalls.length) bad(`${tag}: the AI was asked ${aiCalls.length} times while off (${[...new Set(aiCalls)].join(', ')})`); else ok(`${tag}: no AI asked (${calls.length} free lookups)`);
+    if (errs.length) bad(`${tag}: page errors: ${errs.slice(0, 3).join(' | ')}`);
+    await p.close();
+  }
+  // R-40 on the day screens (built-in Athens guide, no helper): a time never given is asked on its day with a field right
+  // there, never planned on; saving it plans the day; a small-hours leaving time typed there asks morning or night, and
+  // the setup form asks the same as the time is typed.
+  if (!LIVE) for (const [tag, vp] of [['phone', { width: 412, height: 900 }], ['tablet', { width: 1280, height: 800 }]]) {
+    const p = await b.newPage({ viewport: vp }); const errs = []; p.on('pageerror', e => errs.push(e.message));
+    await p.route('**/*', r => /^file:/.test(r.request().url()) ? r.continue() : r.abort());
+    await p.goto('file://' + FILE); await p.waitForTimeout(600);
+    await p.evaluate(() => document.querySelector('[data-act="newtrip"]').click()); await p.waitForTimeout(300);
+    const fill = async (sel, v) => { await p.fill(sel, v); await p.dispatchEvent(sel, 'change'); await p.waitForTimeout(120); };
+    await fill('#ts-0-place', 'Athens'); await fill('#ts-0-date', '2027-03-01'); await fill('#ts-0-nights', '3');
+    await fill('#ts-0-homeAt', '00:40'); const q1 = await p.evaluate(() => !!document.getElementById('ts-0-homeNight'));
+    await fill('#ts-0-homeAt', ''); const q2 = await p.evaluate(() => !!document.getElementById('ts-0-homeNight'));
+    if (!q1 || q2) bad(`${tag}: R-40 a small-hours flight home typed in setup ${q1 ? '' : 'does not ask '}${q2 ? 'still asks once cleared' : ''} morning or night`); else ok(`${tag}: R-40 setup asks morning or night as a small-hours time is typed`);
+    await p.evaluate(() => [...document.querySelectorAll('#wizForm button[type=submit]')].find(x => /Build my trip/.test(x.innerText)).click()); await p.waitForTimeout(300);
+    await p.evaluate(() => document.querySelector('#tsNeed [data-ts="needok"]').click()); await p.waitForTimeout(1500);
+    const day = async (i, at) => { await p.evaluate(i => window.__kairouteAt(i, 'plan'), i); await p.waitForTimeout(500);
+      return p.evaluate(i => ({ err: (window.__kairouteTruth(i) || {}).error || '', ask: !!document.querySelector('.timeask #askTimeIn'), night: !!document.querySelector('.nightask') }), i); };
+    const save = async v => { await p.fill('#askTimeIn', v); await p.evaluate(() => document.querySelector('[data-act="asktime"]').click()); await p.waitForTimeout(500); };
+    const a0 = await day(0);
+    if (!/When does your flight arrive/.test(a0.err) || !a0.ask) bad(`${tag}: R-40 arrival with no time: ${JSON.stringify(a0)}`); else ok(`${tag}: R-40 an arrival time never given is asked on the day, with a field there`);
+    await save('10:30'); const a1 = await day(0);
+    if (a1.err) bad(`${tag}: R-40 after saving the arrival time the day still says: ${a1.err}`); else ok(`${tag}: R-40 the time saved there plans the day`);
+    const d0 = await day(3);
+    if (!/When does your flight leave/.test(d0.err) || !d0.ask) bad(`${tag}: R-40 leaving with no time: ${JSON.stringify(d0)} (a leave-by from a made-up time?)`); else ok(`${tag}: R-40 a leaving time never given is asked, never planned on`);
+    await save('00:40'); const d1 = await day(3);
+    if (!d1.night) bad(`${tag}: R-40 a 00:40 flight saved on the day is not asked morning or night: ${JSON.stringify(d1)}`);
+    else { await p.evaluate(() => document.querySelector('[data-act="nightdep"][data-v="night"]').click()); await p.waitForTimeout(500); const d2 = await day(3);
+      if (d2.err) bad(`${tag}: R-40 answered "late tonight" and the day still says: ${d2.err}`); else ok(`${tag}: R-40 small-hours time asked morning or night, then planned`); }
+    const left = await p.evaluate(() => window.__kairouteTripNeeds());
+    if (left.length !== 1 || !/hotel in Athens/.test(left[0])) bad(`${tag}: R-40 still needed after the times: ${JSON.stringify(left)}`); else ok(`${tag}: R-40 the still-needed list drops each detail once it's given`);
+    // The airport named in setup: one the guide lists is used; one nobody can place is asked about with its name filled
+    // in, never swapped for the city's other airport.
+    await p.evaluate(() => window.__kairouteAt(0, 'trips')); await p.waitForTimeout(300);
+    await p.evaluate(() => document.querySelector('[data-act="newtrip"]').click()); await p.waitForTimeout(300);
+    await fill('#ts-0-place', 'Athens'); await fill('#ts-0-date', '2027-04-01'); await fill('#ts-0-nights', '2'); await fill('#ts-0-hotel', 'Hotel Grande Bretagne');
+    await fill('#ts-0-inAt', '10:00'); await fill('#ts-0-inGate', 'Eleftherios Venizelos'); await fill('#ts-0-homeAt', '15:00'); await fill('#ts-0-homeGate', 'Nowhere Field');
+    await p.evaluate(() => [...document.querySelectorAll('#wizForm button[type=submit]')].find(x => /Build my trip/.test(x.innerText)).click()); await p.waitForTimeout(2000);
+    const g = await p.evaluate(() => { const t = JSON.parse(localStorage.getItem('wayside.trip2')); return { v: window.__kairouteState().view, d0: t.days[0].pointPicked === true, want: t.days[2].gateWant, err: (window.__kairouteTruth(2) || {}).error || '', needs: window.__kairouteTripNeeds() }; });
+    await p.evaluate(() => window.__kairouteAt(2, 'plan')); await p.waitForTimeout(500);
+    const pre = await p.evaluate(() => (document.getElementById('pier-name') || {}).value || '');
+    if (g.v !== 'trip' || !g.d0) bad(`${tag}: R-40 the airport named and listed by the guide was not used: ${JSON.stringify(g)}`); else ok(`${tag}: R-40 an airport named in setup that the guide lists is used`);
+    if (!/Nowhere Field/.test(g.err) || pre !== 'Nowhere Field' || !g.needs.some(n => /Which airport you leave from in Athens/.test(n))) bad(`${tag}: R-40 an airport nobody can place: ${JSON.stringify(g)} form "${pre}"`); else ok(`${tag}: R-40 an airport nobody can place is asked about with its name filled in, never swapped`);
     if (errs.length) bad(`${tag}: page errors: ${errs.slice(0, 3).join(' | ')}`);
     await p.close();
   }

@@ -61,7 +61,7 @@ function printDay(d, i) {
     }
     return "";
   }).join("");
-  const notes = [plan.dropped.length ? `Didn't fit this day: ${plan.dropped.map(s => esc(s.name)).join(", ")}.` : "", d.estimated ? "Port times are estimated. Check them against your cruise documents." : ""].filter(Boolean);
+  const notes = [plan.dropped.length ? `Didn't fit this day: ${plan.dropped.map(s => esc(s.name)).join(", ")}.` : "", estLine(d) ? esc(estLine(d)) : ""].filter(Boolean);
   return `<section class="pday">${head}
     <div class="pkeys">${keys.map(([a, b]) => `<div><span>${a}</span><strong>${b}</strong></div>`).join("")}</div>
     <p class="pzone">All times are ${esc(zoneLabel(d))}.${d.shipOff && d.allAboard ? ` The ship's clock is ${dur(Math.abs(d.shipOff))} ${d.shipOff > 0 ? "ahead" : "behind"}: all aboard ${esc(d.allAboard)} ship time is ${fmt(toMin(d.allAboard) - d.shipOff)} ${esc(zoneLabel(d))}.` : ""}</p>

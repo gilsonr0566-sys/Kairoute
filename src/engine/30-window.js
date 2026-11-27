@@ -130,7 +130,7 @@
       // morning, planned with a hotel check-in, a museum before it opened and a dinner).
       if (d.lastDay && d.stayGuess) return E.fail("This is your last day. Add how you leave and when (your flight or train home) on the Trip page, or your hotel if you're staying on, and the day is planned around it: nothing is planned on a guess.", { unsure: true, askLeave: true });
       // No arrival time given: asked, never planned on a time the app made up (Round 1, Nov 20: "Flight in at 10:30 am" on 12 of 15 cruises).
-      const askArrive = mode => E.fail(`When does your ${(E.MODES[mode] || E.MODES.flight).label.toLowerCase()} arrive? Add the time on the Trip page and the day is planned around it: nothing is planned on a guess.`, { unsure: true, askArrive: true });
+      const askArrive = mode => E.fail(`When does your ${(E.MODES[mode] || E.MODES.flight).label.toLowerCase()} arrive? Add the time from your booking and the day is planned around it: nothing is planned on a guess.`, { unsure: true, askArrive: true });
       if (d.timeGuess) return askArrive(d.mode);
       if (!L) return E.fail("Choose where you're staying."); if (!P) return E.fail("Choose your arrival point.");
       const m = E.MODES[d.mode] || E.MODES.flight;
@@ -145,6 +145,9 @@
       w.sightFrom = w.start + chain(w.head, tr); w.endBy = Math.max(w.sightFrom, Math.min(23 * 60, lunchIn(w.sightFrom, d.hours)));
     } else if (d.type === "departure" || d.type === "embark") {
       const ship = d.type === "embark", m = ship ? E.MODES.ship : E.MODES[d.mode] || E.MODES.flight;
+      // No leaving time given (the trip builder filled in a typical one): asked, never planned on, the same as an arrival
+      // time (R-40, Nov 27): a "leave by" worked out from a made-up time looks as real as one from the booking.
+      if (!ship && d.leaveGuess) return E.fail(`When does your ${m.label.toLowerCase()} leave? Add the time from your booking and the day is planned around it, with the time to leave by: nothing is planned on a guess.`, { unsure: true, askLeaveTime: true });
       if (!P) return E.fail(ship ? "Choose the cruise port." : "Choose your departure point.");
       const end = Object.assign({}, P, { deadline: true }, d.noBags ? {} : { bags: true }); // reached from the bags, with them
       // Boarding: at the terminal by the boarding time, and never later than an hour before all aboard.
@@ -156,7 +159,7 @@
       if (unknownBorder) w.borderUnknown = true; else if (border && border > m.need) w.borderNeed = border;
       if (ship) { w.boardAt = d.boardAt; w.latest = latest; }
       if (d.thru) { // off a ship, plane or train and leaving the same day: bags in storage near where you arrive
-        if (d.thru.guess) return E.fail(`When does your ${(E.MODES[d.thru.mode] || E.MODES.flight).label.toLowerCase()} arrive? Add the time on the Trip page and the day is planned around it, with the time to get to ${d.type === "embark" ? "the ship" : "your next ride"}: nothing is planned on a guess.`, { unsure: true, askArrive: true });
+        if (d.thru.guess) return E.fail(`When does your ${(E.MODES[d.thru.mode] || E.MODES.flight).label.toLowerCase()} arrive? Add the time from your booking and the day is planned around it, with the time to get to ${d.type === "embark" ? "the ship" : "your next ride"}: nothing is planned on a guess.`, { unsure: true, askArrive: true });
         const am = E.MODES[d.thru.mode] || E.MODES.flight, A = d.thru.point; if (!A) return E.fail("Choose where you arrive.");
         w.start = E.toMin(d.thru.time) + am.clear; w.through = true;
         w.head = d.noBags ? [A] : [A, fixed(A, "Leave your bags in luggage storage", 15)];
