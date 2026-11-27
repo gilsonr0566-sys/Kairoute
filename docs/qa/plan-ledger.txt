@@ -2545,6 +2545,83 @@ day 2 2027-05-12 land prague | 09:00 to 12:50
   suggested: Powder Tower; Wenceslas Square; National Museum in Prague; House of the Black Our Lady
   says: Free time: about 82 min before lunch at 11:45 am. Linger where you are or look around nearby.
 
+## odd558-venice-moved
+day 1 2027-03-26 arrival ponta delgada azores | 13:45 to 16:51
+  13:45 start: International airport
+  Taxi or car 53 min
+  14:38 fixed: Check in or drop bags 20 min
+  walk 25 min
+  15:23 stop: São José 30 min (hours not confirmed)
+  walk 15 min
+  16:08 stop: Parish Church of São Sebastiao 30 min (hours not confirmed)
+  walk 13 min
+  16:51 end: Hotel in central Ponta Delgada, Azores 0 min
+  18:30 evening Dinner: Cais da Sardinha 75 min
+  says: Opening hours not confirmed for São José and Parish Church of São Sebastiao on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 6 h 7 min left after the last stop, before the day ends (10:58 pm). Linger where you like.
+day 2 2027-03-27 land ponta delgada azores | 11:00 to 14:11
+  11:00 start: Hotel in central Ponta Delgada, Azores
+  walk 12 min
+  11:12 stop: Municipal Palace/Hall of Ponta Delgada 50 min (hours not confirmed)
+  walk 3 min
+  12:05 meal Lunch: Pizzaria Donatello 60 min
+  walk 5 min
+  13:10 stop: Fort Saint Blaise 50 min (hours not confirmed)
+  walk 11 min
+  14:11 end: Hotel in central Ponta Delgada, Azores 0 min
+  18:30 evening Dinner: Restaurante Nacional 75 min
+  left out: src-carlos-machado-museum
+  says: São José is planned on another day.
+  says: Parish Church of São Sebastiao is planned on another day.
+  says: Carlos Machado Museum needs about 45 min (the visit and the rides to it and on), and with today's other stops only 15 min is left before 2:30 pm.
+  says: Opening hours not confirmed for Municipal Palace/Hall of Ponta Delgada and Fort Saint Blaise on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+day 3 2027-03-28 land ponta delgada azores | 11:00 to 13:51
+  11:00 start: Hotel in central Ponta Delgada, Azores
+  walk 19 min
+  11:19 stop: Carlos Machado Museum 90 min
+  walk 2 min
+  12:51 meal Lunch: Na Boavista 60 min
+  13:51 end: Day done
+  18:30 evening Dinner: Ta Gente 75 min
+day 4 2027-03-29 departure ponta delgada azores | 09:00 to 11:21 | leave by --:--
+  09:00 start: Hotel in central Ponta Delgada, Azores
+  walk 14 min
+  09:14 stop: Church of São Jose 30 min (hours not confirmed)
+  walk 14 min
+  09:58 fixed: Collect bags 15 min
+  Taxi or car 68 min (15 kept)
+  11:21 end: International airport 0 min
+  says: Leave Church of São Jose by 1:08 pm, collect your bags at 1:22 pm, and leave for the airport by 1:37 pm.
+  says: Opening hours not confirmed for Church of São Jose on this date: planned between 9:00 am and 5:00 pm. Check before you go.
+  says: Free time: about 3 h 24 min left after the last stop, before the time to be back (2:45 pm). Linger where you like.
+day 5 2027-03-29 arrival venice italy | 17:15 to 19:21
+  17:15 start: International airport
+  Taxi or car 50 min
+  18:05 fixed: Check in or drop bags 20 min
+  walk 13 min
+  18:38 stop: Rialto Bridge 30 min
+  walk 13 min
+  19:21 end: Hotel in central Venice, Italy 0 min
+  19:51 evening Dinner: Al Cafetier 75 min
+  left out: src-q713558; src-q189883
+  suggested: Statue of Bartolomeo Colleoni
+  says: San Pietro di Castello Church is closed on Monday, and it didn't fit on Wednesday, the day it's open.
+  says: St Mark's Basilica is open 9:00 am to 5:00 pm that day, not long enough inside today's time (5:15 pm to 8:55 pm) for a visit.
+  says: Il Redentore is open 9:00 am to 5:00 pm that day, not long enough inside today's time (5:15 pm to 8:55 pm) for a visit.
+  says: Church of San Giorgio Maggiore fits in today's free time only after its last entry (84 min late), whatever the order.
+  says: Doge's Palace would arrive 1 h 50 min after its last entry.
+day 6 2027-03-31 departure venice italy | 09:00 to 10:20 | leave by --:--
+  09:00 start: Hotel in central Venice, Italy
+  walk 0 min
+  09:00 fixed: Collect bags 15 min
+  Taxi or car 65 min (15 kept)
+  10:20 end: International airport 0 min
+  left out: src-q945981
+  suggested: St Mark's Basilica; Doge's Palace; Gallerie dell'Accademia; Santa Maria della Salute
+  says: San Pietro di Castello Church is reached only by boat, and no sailing times are known for this boat: on a day with a time to be back, the way back is planned only on a sailing a timetable confirms.
+  says: Collect your bags at 1:25 pm and leave for the airport by 1:40 pm.
+  says: Free time: about 4 h 25 min left after the last stop, before the time to be back (2:45 pm). Linger where you like. Mestre needs about 4 h 30 min there and back with the visit, more than the time left. Also a trip of its own: Padua, about 4 h 58 min.
+
 ## sample-cruise
 day 1 2027-06-30 arrival athens | 11:45 to 17:00
   11:45 start: Athens Airport (Eleftherios Venizelos)

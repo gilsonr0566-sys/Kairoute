@@ -20,7 +20,7 @@ let missed = 0;
 const run = (env, args) => spawnSync(process.execPath, args, { env: Object.assign({}, process.env, env), encoding: 'utf8', maxBuffer: 1 << 26, timeout: 600000 });
 // The same presses with nothing planted must pass: otherwise a failure below proves nothing.
 const tmp0 = fs.mkdtempSync(path.join(os.tmpdir(), 'press-proof-'));
-const clean = run({ TRIPS: 'example', SIZES: 'phone', ROOTS: 'plan:land,sites:land', ONLY: PLANTS.map(p => p[2]).join('|'), MAXDEPTH: '1', OUT: tmp0, PLANT: '', POOL: '2' }, [path.join(HERE, 'press-all.cjs'), APP]);
+const clean = run({ TRIPS: 'example', SIZES: 'phone', ROOTS: 'plan:land,sites:land,trip', ONLY: PLANTS.map(p => p[2]).join('|'), MAXDEPTH: '1', OUT: tmp0, PLANT: '', POOL: '2' }, [path.join(HERE, 'press-all.cjs'), APP]);
 const cleanFails = (clean.stdout.match(/^FAIL .*$/gm) || []);
 if (clean.status !== 0 || cleanFails.length) { console.log('FAIL the proof\'s own presses do not pass with nothing planted:\n' + cleanFails.slice(0, 6).join('\n') + (clean.status === 0 ? '' : '\n' + String(clean.stdout).split('\n').slice(-4).join('\n') + String(clean.stderr).slice(-400))); missed++; }
 else console.log('ok   nothing planted: ' + ((clean.stdout.match(/(\d+) presses on/) || [])[1] || '?') + ' presses, no failure');
