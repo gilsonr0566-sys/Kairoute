@@ -375,7 +375,7 @@
         for (const [id, m] of movedTo) if (m.from === i) explain.push(m.inside ? m.name + " is inside " + m.inside + ", so it's planned with it on " + dayWord(m.to) + "." : m.name + " is closed on " + dayWord(i) + ", so it's planned on " + dayWord(m.to) + ".");
         for (const id of sel[i]) {
           // A pick this place's guide doesn't have (a guide replaced, a saved list from another guide) is never dropped in
-          // silence: it is counted, and the day says so (Nov 27, Naples: "the reasons are above" with no reason above).
+          // silence: it is counted, and the day says so (Nov 27, a ship day: "the reasons are above" with no reason above).
           const s = pool.find(x => String(x.id) === String(id)) || ranked.find(x => String(x.id) === String(id)); if (!s) { unknownPicks++; continue; }
           const on = ledger.sightDay(s.id);
           if (on != null && on !== i) { explain.push(s.name + " is planned on another day."); continue; }
