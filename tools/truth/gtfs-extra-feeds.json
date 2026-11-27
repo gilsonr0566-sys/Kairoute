@@ -1,7 +1,0 @@
-{
- "note": "Open timetable files (GTFS) the Mobility Database catalog lacks or lists at a dead address, for tools/truth/gtfs-times.mjs. bbox: [min lat, min lng, max lat, max lng]. official: true when the operator or its public authority publishes the file itself; false when it is built by volunteers from the operator's public timetable (said so in the report).",
- "feeds": [
-  { "provider": "Hellenic Train (built by volunteers from railway.gov.gr)", "official": false, "bbox": [34.8, 19.3, 41.8, 28.3], "url": "https://jbb.ghsq.de/gtfs/gr-hellenic-train.gtfs.zip" },
-  { "provider": "ATM Messina (opendata.comune.messina.it)", "official": true, "bbox": [38.0, 15.4, 38.35, 15.7], "url": "https://www.atmmessinaspa.it/GTFS/GTFS_ATM_SPA.zip" }
- ]
-}

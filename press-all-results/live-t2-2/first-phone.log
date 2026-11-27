@@ -1,0 +1,74 @@
+
+== first phone: First open, no trip yet (intro, new trip steps, example offer)
+   1 screens: lobby
+FAIL DEAD [first phone / First open / Skip > Watch the intro] "Replay": nothing a traveler can see, hear or get happened
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Hours to sightsee" (type ""): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Hours to sightsee" (type "-5"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 17 ⌂ Barcelona Land day · 9:30 am–5:30 pm": the screen moved 903 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 9 ⚓ Chania In port · Ashore 8:00 am, all aboard 5:30 pm": the screen moved 1449 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 10 〰 At sea At sea · No stops": the screen moved 1385 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Plan a new trip] "Personalize first": the screen moved 603 px down under the finger at once
+FAIL JUMP [first phone / First open / Skip > Plan a new trip] "Build my trip": the screen moved 603 px down under the finger at once
+FAIL JUMP [first phone / First open / Skip > Plan a new trip] "+ Add a city stay": the screen moved 89 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Plan a new trip] "+ Add a city stay" (tap, with the fields beside it filled in ("Lisbon", "2027-07-05", "12 Main Street", "10:30", "10:30")): the screen moved 615 px down under the finger at once
+FAIL JUMP [first phone / First open / Skip > Plan a new trip] "+ Add a cruise": the screen moved 374 px down under the finger at once
+FAIL DEAD [first phone / First open / Skip > Open the example trip] "Zoom out": nothing a traveler can see, hear or get happened
+FAIL DEAD [first phone / First open / Skip > Open the example trip] "Show where I am on the map": nothing a traveler can see, hear or get happened
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 18 ↘ Madrid Arriving · Train arrives 3:45 pm": the screen moved 741 px up under the finger at once
+NOTE UNSTEADY [first phone / First open / Skip > Open the example trip] "Entrance fee not included · more": on the first try only (not on a second, freshly opened app): JUMP, the screen moved 106 px down under the finger once the screen settled
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Hotel near Plaça de Catalunya Hotel on Passeig de Gràcia Hot" (choose "custom"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Open the example trip] "Mark booked": the screen moved 271 px down under the finger at once
+FAIL JUMP [first phone / First open / Skip > Open the example trip] "Change dinner": the screen moved 3325 px down under the finger at once
+FAIL JUMP [first phone / First open / Skip > Open the example trip] "Dinner: why here": the screen moved 122 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Light day": the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Half day": the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Full day": the screen moved 189 px up under the finger at once
+NOTE UNSTEADY [first phone / First open / Skip > Edit itinerary] "Arrival time" (set ""): on the first try only (not on a second, freshly opened app): JUMP, the screen moved 189 px up under the finger once the screen settled
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Hotel near Plaça de Catalunya Hotel on Passeig de Gràcia Hot" (choose "1"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Hotel near Plaça de Catalunya Hotel on Passeig de Gràcia Hot" (choose "2"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "More options for this day": the screen moved 347 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > More] "Rename": the screen moved 51 px down under the finger at once
+FAIL JUMP [first phone / First open / Skip > Open the example trip] "Port shuttle bus · about 49 min": the screen moved 85 px down under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 15 ↘ Barcelona Arriving · Ship arrives 7:00 am": the screen moved 1031 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 18 ↗ Barcelona Leaving · Train leaves 1:00 pm": the screen moved 839 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 19 ⌂ Madrid Land day · 9:00 am–6:00 pm": the screen moved 677 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 11 ⚓ Messina In port · Ashore 8:00 am, all aboard 5:30 p": the screen moved 1321 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Flight": the screen moved 189 px up under the finger at once
+FAIL DEAD [first phone / First open / Skip > Open the example trip] "Zoom in": nothing a traveler can see, hear or get happened
+FAIL JUMP [first phone / First open / Skip > Open the example trip] "Change lunch": the screen moved 2651 px down under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jun 30 ↘ Athens Arriving · Flight arrives 10:30 am": the screen moved 2083 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 1 ⌂ Athens Land day · 9:00 am–6:00 pm": the screen moved 2019 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 2 ⌂ Athens Land day · 9:00 am–6:00 pm": the screen moved 1955 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 4 ⚓ Athens Boarding · All aboard 6:30 pm": the screen moved 1793 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 5 ⚓ Heraklion In port · Ashore 7:00 am, all aboard 4:30 ": the screen moved 1729 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 3 ⌂ Athens Land day · 9:00 am–6:00 pm": the screen moved 1891 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 7 ⚓ Santorini In port · Ashore 7:00 am, all aboard 8:30 ": the screen moved 1589 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 6 ⚓ Kusadasi In port · Ashore 9:00 am, all aboard 6:30 p": the screen moved 1665 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Hours to sightsee" (type "99999"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 8 ⚓ Mykonos In port · Ashore 8:00 am, all aboard 8:30 pm": the screen moved 1513 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 12 ⚓ Naples In port · Ashore 7:00 am, all aboard 6:30 pm": the screen moved 1257 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 13 ⚓ Rome In port · Ashore 7:00 am, all aboard 8:30 pm": the screen moved 1193 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 14 〰 At sea At sea · No stops": the screen moved 1129 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 16 ⌂ Barcelona Land day · 9:00 am–6:00 pm": the screen moved 967 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Jul 20 ↗ Madrid Leaving · Flight leaves 4:00 pm": the screen moved 613 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "+ Add a day": the screen moved 125 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Hours to sightsee" (type "3"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Train": the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Ship": the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Ferry": the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Car or bus": the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Moll Adossat cruise terminals World Trade Center cruise term" (choose "1"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Date" (set "2027-07-05"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Date" (set ""): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Date" (set "1900-01-01"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "land"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "departure"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "embark"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "port"): the screen moved 165 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "sea"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Open the example trip > Museu Picasso] "‹ Palau de la Música Catalana": the screen moved 2559 px down under the finger at once
+FAIL JUMP [first phone / First open / Skip > Edit itinerary > Jul 11 ⚓ Messina In port · Ashore 8:00 am, all aboard 5:30 p] "Messina cruise terminal" (choose "0"): the screen moved 189 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Open the example trip > See what fits] "Suggest my tour": the screen moved 406 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Open the example trip > La Rambla & La Boqueria market] "‹ Gothic Quarter & Cathedral": the screen moved 3054 px down under the finger at once
+FAIL JUMP [first phone / First open / Skip > Open the example trip > Jul 4 · Athens] "Save": the screen moved 50 px up under the finger at once
+FAIL JUMP [first phone / First open / Skip > Open the example trip > Jul 4 · Athens] "What to have on you · 0 of 9 ready": the screen moved 50 px up under the finger once the screen settled

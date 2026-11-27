@@ -1,0 +1,132 @@
+
+== ferry phone: Boat day: Naples, Capri and Sorrento (saved test trip)
+   12 screens: lobby, trip, plan:sea, sites:sea, guide:sea, tour:sea, plan:port, sites:port, guide:port, tour:port, journal, settings
+FAIL JUMP [ferry phone / Home / Plan a new trip] "+ Add a city stay": the screen moved 89 px up under the finger at once
+FAIL JUMP [ferry phone / Home / Plan a new trip] "+ Add a city stay" (tap, with the fields beside it filled in ("Lisbon", "2027-07-05", "12 Main Street", "10:30", "10:30")): the screen moved 615 px down under the finger at once
+FAIL JUMP [ferry phone / Home / Plan a new trip] "+ Add a cruise": the screen moved 374 px down under the finger at once
+FAIL DEAD [ferry phone / Home / Watch the intro] "Replay": nothing a traveler can see, hear or get happened
+FAIL JUMP [ferry phone / Home / Plan a new trip] "Personalize first": the screen moved 603 px down under the finger at once
+FAIL JUMP [ferry phone / Home / Plan a new trip] "Build my trip": the screen moved 603 px down under the finger at once
+FAIL JUMP [ferry phone / Home / More] "Rename": the screen moved 75 px down under the finger at once
+NOTE UNSTEADY [ferry phone / Home / Plan a new trip] "Build my trip" (tap, with the fields beside it filled in ("Lisbon", "2027-07-05", "12 Main Street", "10:30", "10:30")): on the first try only (not on a second, freshly opened app): JUMP, the screen moved 677 px down under the finger at once
+   ferry phone Home: 332 presses, 8 with a failure, 373 s
+FAIL JUMP [ferry phone / Trip] "Jun 9 〰 At sea At sea · No stops": the screen moved 475 px up under the finger at once
+FAIL JUMP [ferry phone / Trip] "Jun 9 〰 At sea At sea · No stops" (tap, with the field beside it filled in ("Lisbon")): the screen moved 475 px up under the finger at once
+FAIL JUMP [ferry phone / Trip] "Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140": the screen moved 475 px up under the finger at once
+FAIL JUMP [ferry phone / Trip] "Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140" (tap, with the field beside it filled in ("Lisbon")): the screen moved 475 px up under the finger at once
+FAIL JUMP [ferry phone / Trip] "+ Add a port day": the screen moved 108 px down under the finger at once
+FAIL JUMP [ferry phone / Trip] "+ Add a day" (tap, with the field beside it filled in ("Lisbon")): the screen moved 101 px down under the finger at once
+FAIL JUMP [ferry phone / Trip] "+ Add a port day" (tap, with the field beside it filled in ("Lisbon")): the screen moved 108 px down under the finger at once
+FAIL JUMP [ferry phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "land"): the screen moved 54 px down under the finger at once
+FAIL JUMP [ferry phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "arrival"): the screen moved 54 px down under the finger at once
+FAIL JUMP [ferry phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "departure"): the screen moved 54 px down under the finger at once
+FAIL BROKEN [ferry phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "embark"): the screen shows: "Boarding · All aboard null"
+FAIL BROKEN [ferry phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "port"): the screen shows: "In port · Ashore null, all aboard null"
+FAIL JUMP [ferry phone / Trip / + Add a day] "Jun 10 ⌂ New day Land day · 9:00 am–6:00 pm Guide not built ": the screen moved 627 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day] "Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140": the screen moved 613 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day] "Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140" (tap, with the field beside it filled in ("Lisbon")): the screen moved 612 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day] "More options for this day": the screen moved 382 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day] "Build the guide": the screen moved 109 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a port day] "Jun 10 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 p": the screen moved 583 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a port day] "Jun 10 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 p" (tap, with the field beside it filled in ("Piraeus")): the screen moved 563 px up under the finger at once
+FAIL WIDE [ferry phone / Trip / + Add a port day] "Port name, e.g. Kotor" (type "<b>\"Zürich\" & 東京 مرحبا 🚢</b> xxxxxxx…"): the page became 1691 px wider than the screen
+FAIL JUMP [ferry phone / Trip / + Add a port day] "Port name, e.g. Kotor" (type "<b>\"Zürich\" & 東京 مرحبا 🚢</b> xxxxxxx…"): the screen moved 79 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day] "Jun 10 ⌂ Lisbon Land day · 9:00 am–6:00 pm Guide not built y": the screen moved 684 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = land] "Jun 9 ⌂ New day Land day · 9:00 am–6:00 pm Guide not built y": the screen moved 529 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival] "Jun 9 ↘ New day Arriving · Flight arrives 9:00 am Guide not ": the screen moved 529 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival] "Flight" (tap, with the field beside it filled in ("Lisbon")): the screen moved 58 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival] "Train" (tap, with the field beside it filled in ("Lisbon")): the screen moved 58 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival] "Ship" (tap, with the field beside it filled in ("Lisbon")): the screen moved 58 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival] "Ferry" (tap, with the field beside it filled in ("Lisbon")): the screen moved 58 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival] "Car or bus" (tap, with the field beside it filled in ("Lisbon")): the screen moved 58 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = departure] "Jun 9 ↗ New day Leaving · Flight leaves 9:00 am Guide not bu": the screen moved 529 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Remove this day] "Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140": the screen moved 411 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark] "Jun 9 ⚓ New day Boarding · All aboard null Guide not built y": the screen moved 495 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Remove this day] "Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140" (tap, with the fields beside it filled in ("10:30", "10:30")): the screen moved 435 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark] "Jun 9 ⚓ New day Boarding · All aboard null Guide not built y" (tap, with the fields beside it filled in ("Lisbon", "10:30")): the screen moved 494 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = port] "Jun 9 ⚓ New day In port · Ashore null, all aboard null Guide": the screen moved 495 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = port] "Jun 9 ⚓ New day In port · Ashore null, all aboard null Guide" (tap, with the fields beside it filled in ("Lisbon", "10:30", "10:30")): the screen moved 518 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Remove this day > Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140] "Jun 10 ⚓ Naples In port · Ashore 10:30 am, all aboard 10:30 ": the screen moved 435 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark > Jun 9 ⚓ New day Boarding · All aboard null Guide not built y] "Jun 9 ⚓ Lisbon Boarding · All aboard 10:30 am Guide not buil": the screen moved 552 px up under the finger at once
+FAIL DEAD [ferry phone / Trip / + Add a day > Jun 10 ⌂ New day Land day · 9:00 am–6:00 pm Guide not built ] "Find it": nothing a traveler can see, hear or get happened
+FAIL JUMP [ferry phone / Trip / + Add a day > Jun 10 ⌂ New day Land day · 9:00 am–6:00 pm Guide not built ] "Find it" (tap, with the field beside it filled in ("12 Main Street")): the screen moved 78 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > Hours to sightsee = 3] "Jun 10 ⌂ New day Land day · 9:00 am–12:00 pm Guide not built": the screen moved 627 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > Light day] "Jun 10 ⌂ New day Land day · 9:00 am–11:30 am Guide not built": the screen moved 627 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > More options for this day] "Finish back at the hotel": the screen moved 52 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > More options for this day] "Famous sights": the screen moved 52 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > More options for this day] "A bit of both": the screen moved 52 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > More options for this day] "Famous sights" (tap, with the field beside it filled in ("Acropolis")): the screen moved 52 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > More options for this day] "A bit of both" (tap, with the field beside it filled in ("Acropolis")): the screen moved 52 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > More options for this day] "Local favorites": the screen moved 52 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > More options for this day] "Local favorites" (tap, with the field beside it filled in ("Acropolis")): the screen moved 52 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > More options for this day] "Add quick must-sees along the way": the screen moved 52 px down under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > More options for this day] "Fill spare time with bonus stops nearby": the screen moved 159 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a port day > Jun 10 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 p] "Jun 10 ⚓ Athens In port · Ashore 8:00 am, all aboard 5:00 pm": the screen moved 563 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > Build the guide for Lisbon] "Jun 10 ⌂ Lisbon Land day · 9:00 am–6:00 pm": the screen moved 607 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > Build the guide for Lisbon] "Jun 10 ⌂ Lisbon Land day · 9:00 am–6:00 pm" (tap, with the field beside it filled in ("12 Main Street")): the screen moved 607 px up under the finger at once
+NOTE UNSTEADY [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "More": on the first try only (not on a second, freshly opened app): JUMP, the screen moved 166 px up under the finger at once
+NOTE UNSTEADY [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "About today's plan16 notes": on the first try only (not on a second, freshly opened app): JUMP, the screen moved 50 px up under the finger once the screen settled
+FAIL DEAD [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "Zoom in": nothing a traveler can see, hear or get happened
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = departure > Jun 9 ↗ New day Leaving · Flight leaves 9:00 am Guide not bu] "Jun 9 ↗ Lisbon Leaving · Flight leaves 9:00 am Guide not bui" (tap, with the field beside it filled in ("12 Main Street")): the screen moved 586 px up under the finger at once
+FAIL DEAD [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "Zoom out": nothing a traveler can see, hear or get happened
+FAIL JUMP [ferry phone / Trip / Remove this day > Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140] "Jun 10 ⚓ Naples In port · Ashore , all aboard": the screen moved 411 px up under the finger at once
+FAIL DEAD [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "Show where I am on the map": nothing a traveler can see, hear or get happened
+FAIL JUMP [ferry phone / Trip / Remove this day > Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140] "Jun 10 ⚓ Naples In port · Ashore , all aboard" (tap, with the fields beside it filled in ("10:30", "10:30")): the screen moved 435 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark > Jun 9 ⚓ New day Boarding · All aboard null Guide not built y] "Jun 9 ⚓ New day Boarding · All aboard Guide not built yet": the screen moved 495 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark > Jun 9 ⚓ New day Boarding · All aboard null Guide not built y] "Jun 9 ⚓ New day Boarding · All aboard Guide not built yet" (tap, with the fields beside it filled in ("Lisbon", "10:30", "12 Main Street")): the screen moved 494 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark > Jun 9 ⚓ New day Boarding · All aboard null Guide not built y] "Jun 9 ⚓ Lisbon Boarding · All aboard 10:30 am Guide not buil" (tap, with the field beside it filled in ("12 Main Street")): the screen moved 552 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = port > Jun 9 ⚓ New day In port · Ashore null, all aboard null Guide] "Jun 9 ⚓ New day In port · Ashore , all aboard Guide not buil": the screen moved 495 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = port > Jun 9 ⚓ New day In port · Ashore null, all aboard null Guide] "Jun 9 ⚓ New day In port · Ashore , all aboard Guide not buil" (tap, with the fields beside it filled in ("Lisbon", "10:30", "10:30")): the screen moved 518 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = port > Jun 9 ⚓ New day In port · Ashore null, all aboard null Guide] "Jun 9 ⚓ Lisbon In port · Ashore 10:30 am, all aboard 10:30 a": the screen moved 576 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Jun 9 ↘ New day Arriving · Flight arrives 9:00 am Guide not ] "Jun 9 ↘ Lisbon Arriving · Flight arrives 9:00 am Guide not b" (tap, with the field beside it filled in ("12 Main Street")): the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = land > Jun 9 ⌂ New day Land day · 9:00 am–6:00 pm Guide not built y] "Jun 9 ⌂ Lisbon Land day · 9:00 am–6:00 pm Guide not built ye": the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = land > Jun 9 ⌂ New day Land day · 9:00 am–6:00 pm Guide not built y] "Jun 9 ⌂ Lisbon Land day · 9:00 am–6:00 pm Guide not built ye" (tap, with the field beside it filled in ("12 Main Street")): the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Jun 9 ↘ New day Arriving · Flight arrives 9:00 am Guide not ] "Jun 9 ↘ Lisbon Arriving · Flight arrives 9:00 am Guide not b": the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Train] "Jun 9 ↘ New day Arriving · Train arrives 9:00 am Guide not b": the screen moved 529 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Ship] "Jun 9 ↘ New day Arriving · Ship arrives 9:00 am Guide not bu": the screen moved 529 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Train] "Jun 9 ↘ Lisbon Arriving · Train arrives 9:00 am Guide not bu": the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Train] "Jun 9 ↘ Lisbon Arriving · Train arrives 9:00 am Guide not bu" (tap, with the field beside it filled in ("12 Main Street")): the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Ferry] "Jun 9 ↘ New day Arriving · Ferry arrives 9:00 am Guide not b": the screen moved 529 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Car or bus] "Jun 9 ↘ New day Arriving · Car or bus arrives 9:00 am Guide ": the screen moved 529 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Ship] "Jun 9 ↘ Lisbon Arriving · Ship arrives 9:00 am Guide not bui": the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Ship] "Jun 9 ↘ Lisbon Arriving · Ship arrives 9:00 am Guide not bui" (tap, with the field beside it filled in ("12 Main Street")): the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Ferry] "Jun 9 ↘ Lisbon Arriving · Ferry arrives 9:00 am Guide not bu": the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Ferry] "Jun 9 ↘ Lisbon Arriving · Ferry arrives 9:00 am Guide not bu" (tap, with the field beside it filled in ("12 Main Street")): the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Car or bus] "Jun 9 ↘ Lisbon Arriving · Car or bus arrives 9:00 am Guide n": the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Car or bus] "Jun 9 ↘ Lisbon Arriving · Car or bus arrives 9:00 am Guide n" (tap, with the field beside it filled in ("12 Main Street")): the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = departure > Jun 9 ↗ New day Leaving · Flight leaves 9:00 am Guide not bu] "Jun 9 ↗ Lisbon Leaving · Flight leaves 9:00 am Guide not bui": the screen moved 586 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > ✎ Rename] "Or take metro · about 1 h 5 min": the screen moved 50 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > Lock this day] "Or take metro · about 1 h 25 min": the screen moved 50 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > Mark booked] "Or take metro · about 1 h 5 min": the screen moved 50 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > Hours to sightsee = 3 > Jun 10 ⌂ New day Land day · 9:00 am–12:00 pm Guide not built] "Jun 10 ⌂ Lisbon Land day · 9:00 am–12:00 pm Guide not built ": the screen moved 684 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a day > Light day > Jun 10 ⌂ New day Land day · 9:00 am–11:30 am Guide not built] "Jun 10 ⌂ Lisbon Land day · 9:00 am–11:30 am Guide not built ": the screen moved 684 px up under the finger at once
+NOTE UNSTEADY [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > More] "✨ Suggest my tour": on the first try only (not on a second, freshly opened app): JUMP, the screen moved 73 px down under the finger once the screen settled
+FAIL JUMP [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > More] "Rainy day: plan indoor sights": the screen moved 50 px up under the finger at once
+FAIL STUCK [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > More about today] "Golden hour and photo spots · sunset 8:48 pm": still waiting 15 s later: Looking up viewpoints on the map…
+NOTE UNSTEADY [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > More about today] "Golden hour and photo spots · sunset 8:48 pm": on the first try only (not on a second, freshly opened app): JUMP, the screen moved 50 px up under the finger once the screen settled
+NOTE UNSTEADY [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > Change lunch] "1:00 pm": on the first try only (not on a second, freshly opened app): JUMP, the screen moved 1480 px up under the finger at once
+FAIL JUMP [ferry phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > Change lunch] "1:30 pm": the screen moved 1748 px up under the finger at once
+   ferry phone Trip: 293 presses, 94 with a failure, 842 s
+   ferry phone Day plan, sea day (no place): 30 presses, 0 with a failure, 30 s
+   ferry phone Choose sights, sea day (no place): 70 presses, 0 with a failure, 61 s
+   ferry phone Guide, sea day (no place): 25 presses, 0 with a failure, 24 s
+FAIL DEAD [ferry phone / Tour, sea day (no place)] "Build the guide": nothing a traveler can see, hear or get happened
+   ferry phone Tour, sea day (no place): 12 presses, 1 with a failure, 17 s
+   ferry phone Day plan, port day (Naples): 16 presses, 0 with a failure, 20 s
+   ferry phone Choose sights, port day (Naples): 45 presses, 0 with a failure, 36 s
+   ferry phone Guide, port day (Naples): 11 presses, 0 with a failure, 17 s
+   ferry phone Tour, port day (Naples): 10 presses, 0 with a failure, 11 s
+FAIL JUMP [ferry phone / Journal / Memory video] "Make it again": the screen moved 438 px down under the finger once the screen settled
+NOTE UNSTEADY [ferry phone / Journal / Memory video] "Make it again": on the first try only (not on a second, freshly opened app): DEAD, nothing a traveler can see, hear or get happened
+   ferry phone Journal: 13 presses, 1 with a failure, 45 s
+FAIL DEAD [ferry phone / Settings / About > Watch the intro] "Replay": nothing a traveler can see, hear or get happened
+FAIL JUMP [ferry phone / Settings / How Kairoute works > Skip > Plan a new trip] "+ Add a city stay": the screen moved 89 px up under the finger at once
+FAIL JUMP [ferry phone / Settings / How Kairoute works > Skip > Plan a new trip] "+ Add a city stay" (tap, with the fields beside it filled in ("Lisbon", "2027-07-05", "12 Main Street", "10:30", "10:30")): the screen moved 615 px down under the finger at once
+FAIL JUMP [ferry phone / Settings / How Kairoute works > Skip > Plan a new trip] "+ Add a cruise": the screen moved 374 px down under the finger at once
+FAIL JUMP [ferry phone / Settings / How Kairoute works > Skip > Plan a new trip] "Personalize first": the screen moved 603 px down under the finger at once
+FAIL JUMP [ferry phone / Settings / How Kairoute works > Skip > Plan a new trip] "Build my trip": the screen moved 603 px down under the finger at once
+FAIL JUMP [ferry phone / Settings / How Kairoute works > Skip > More] "Rename": the screen moved 75 px down under the finger at once
+   ferry phone Settings: 185 presses, 7 with a failure, 203 s
+   links the app offered: 6 asked for, 0 do not exist
+
+Every button pressed: 1003 presses on 12 screens; 106 with a failure; 0 greyed out; 0 screens cut short

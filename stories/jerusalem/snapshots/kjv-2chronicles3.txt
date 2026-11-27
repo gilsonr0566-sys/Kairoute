@@ -1,6 +1,0 @@
-SOURCE: https://bible-api.com/2%20chronicles%203%3A1-2?translation=kjv
-RETRIEVED: 2026-11-22T20:56:26.791Z
-STATUS: 200
-TITLE: 
-
-{"reference":"2 Chronicles 3:1-2","verses":[{"book_id":"2CH","book_name":"2 Chronicles","chapter":3,"verse":1,"text":"Then Solomon began to build the house of the LORD at Jerusalem in mount Moriah, where\nthe LORD appeared unto David his father, in the place that David had prepared in the threshingfloor of Ornan the Jebusite."},{"book_id":"2CH","book_name":"2 Chronicles","chapter":3,"verse":2,"text":"And he began to build in the second\nday of the second month, in the fourth year of his reign."}],"text":"Then Solomon began to build the house of the LORD at Jerusalem in mount Moriah, where\nthe LORD appeared unto David his father, in the place that David had prepared in the threshingfloor of Ornan the Jebusite. And he began to build in the second\nday of the second month, in the fourth year of his reign.","translation_id":"kjv","translation_name":"King James Version","translation_note":"Public Domain"}

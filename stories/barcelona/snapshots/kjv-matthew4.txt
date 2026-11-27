@@ -1,6 +1,0 @@
-SOURCE: https://bible-api.com/matthew%204%3A8-10?translation=kjv
-RETRIEVED: 2026-11-23T06:11:24.374Z
-STATUS: 200
-TITLE: 
-
-{"reference":"Matthew 4:8-10","verses":[{"book_id":"MAT","book_name":"Matthew","chapter":4,"verse":8,"text":"Again, the devil taketh him up into an exceeding high mountain, and sheweth him all the kingdoms of the world, and the glory of them;"},{"book_id":"MAT","book_name":"Matthew","chapter":4,"verse":9,"text":"And saith unto him, All these things will I give thee, if thou wilt fall down and worship me."},{"book_id":"MAT","book_name":"Matthew","chapter":4,"verse":10,"text":"Then saith Jesus unto him,\nGet thee hence, Satan: for it is written, Thou shalt worship the Lord thy God, and him only shalt thou serve."}],"text":"Again, the devil taketh him up into an exceeding high mountain, and sheweth him all the kingdoms of the world, and the glory of them; And saith unto him, All these things will I give thee, if thou wilt fall down and worship me. Then saith Jesus unto him,\nGet thee hence, Satan: for it is written, Thou shalt worship the Lord thy God, and him only shalt thou serve.","translation_id":"kjv","translation_name":"King James Version","translation_note":"Public Domain"}

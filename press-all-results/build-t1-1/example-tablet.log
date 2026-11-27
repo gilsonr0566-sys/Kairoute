@@ -1,5 +1,0 @@
-
-== example tablet: The example trip: 21 days, cruise port days, a train day, flights (before the trip)
-   36 screens: lobby, trip, plan:arrival by flight, sites:arrival by flight, guide:arrival by flight, tour:arrival by flight, plan:land, sites:land, guide:land, tour:land, plan:embark, sites:embark, guide:embark, tour:embark, plan:port, sites:port, guide:port, tour:port, plan:sea, sites:sea, guide:sea, tour:sea, plan:arrival by ship, sites:arrival by ship, guide:arrival by ship, tour:arrival by ship, plan:departure, sites:departure, guide:departure, tour:departure, plan:arrival by train, sites:arrival by train, guide:arrival by train, tour:arrival by train, journal, settings
-FAIL UNTRUE [example tablet / Home / Plan a new trip] "Build my trip" (tap, with the fields beside it filled in ("Lisbon", "2027-07-05", "12 Main Street", "10:30", "10:30")): no lookup could be answered in this run, yet the screen says: "I couldn't find "12 Main Street" on the map, so Lisbon days start from the city centre. Tap a Lisbon day to tr"
-FAIL DEAD [example tablet / Home / Watch the intro] "Replay": nothing a traveler can see, hear or get happened

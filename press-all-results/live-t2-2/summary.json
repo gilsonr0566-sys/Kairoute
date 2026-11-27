@@ -1,0 +1,2634 @@
+{
+ "live": true,
+ "url": "https://gilsonr0566-sys.github.io/Kairoute-Beta2/",
+ "presses": 2795,
+ "screens": 48,
+ "failed": 280,
+ "classes": [
+  {
+   "rule": "BROKEN",
+   "control": "data goto tap \"Change the name\"",
+   "label": "Change the name",
+   "act": "",
+   "why": "the screen shows: \"Land day · undefined–NaN:NaN\"",
+   "n": 9,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "odd"
+   ],
+   "where": [
+    "Day plan, land day (no place)",
+    "Choose sights, land day (no place)",
+    "Guide, land day (no place)",
+    "Day plan, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on)",
+    "Choose sights, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on)",
+    "Guide, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on)"
+   ],
+   "path": [
+    "Mar 4 · A very long name that goes on and on A very long nam",
+    "Build the A very long name that goes on and on A very long n"
+   ]
+  },
+  {
+   "rule": "BROKEN",
+   "control": "select \"Sightseeing from my hotel Arriving (flig\"",
+   "label": "Sightseeing from my hotel Arriving (flight, train or ship) L",
+   "act": "",
+   "why": "the screen shows: \"Boarding · All aboard null\"",
+   "n": 4,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": []
+  },
+  {
+   "rule": "DEAD",
+   "control": "act gen",
+   "label": "Build the guide",
+   "act": "gen",
+   "why": "nothing a traveler can see, hear or get happened",
+   "n": 9,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "odd",
+    "port"
+   ],
+   "where": [
+    "Tour, sea day (no place)",
+    "Day plan, land day (no place)",
+    "Choose sights, land day (no place)",
+    "Guide, land day (no place)",
+    "Tour, land day (no place)",
+    "Day plan, leave by train day (Nowhereville-That-Does-Not-Exist)"
+   ],
+   "path": []
+  },
+  {
+   "rule": "DEAD",
+   "control": "act filmreplay",
+   "label": "Replay",
+   "act": "filmreplay",
+   "why": "nothing a traveler can see, hear or get happened",
+   "n": 6,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "odd",
+    "port"
+   ],
+   "where": [
+    "Home",
+    "Settings"
+   ],
+   "path": [
+    "Watch the intro"
+   ]
+  },
+  {
+   "rule": "DEAD",
+   "control": "act geo",
+   "label": "Find it",
+   "act": "geo",
+   "why": "nothing a traveler can see, hear or get happened",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "Jun 10 ⌂ New day Land day · 9:00 am–6:00 pm Guide not built "
+   ]
+  },
+  {
+   "rule": "DEAD",
+   "control": "tap \"Zoom in\"",
+   "label": "Zoom in",
+   "act": "",
+   "why": "nothing a traveler can see, hear or get happened",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus"
+   ]
+  },
+  {
+   "rule": "DEAD",
+   "control": "tap \"Zoom out\"",
+   "label": "Zoom out",
+   "act": "",
+   "why": "nothing a traveler can see, hear or get happened",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus"
+   ]
+  },
+  {
+   "rule": "DEAD",
+   "control": "tap \"Show where I am on the map\"",
+   "label": "Show where I am on the map",
+   "act": "",
+   "why": "nothing a traveler can see, hear or get happened",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus"
+   ]
+  },
+  {
+   "rule": "ERROR",
+   "control": "data view tap \"Trip\"",
+   "label": "Trip",
+   "act": "",
+   "why": "Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')",
+   "n": 7,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "odd"
+   ],
+   "where": [
+    "Home",
+    "Day plan, land day (no place)",
+    "Choose sights, land day (no place)",
+    "Guide, land day (no place)",
+    "Tour, sea day (At sea)",
+    "Journal"
+   ],
+   "path": [
+    "Terms"
+   ]
+  },
+  {
+   "rule": "ERROR",
+   "control": "act celoffdl",
+   "label": "Download for offline",
+   "act": "celoffdl",
+   "why": "Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')",
+   "n": 4,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "odd"
+   ],
+   "where": [
+    "Day plan, sea day (At sea)",
+    "Choose sights, sea day (At sea)",
+    "Guide, sea day (At sea)",
+    "Tour, sea day (At sea)"
+   ],
+   "path": [
+    "Lock this day"
+   ]
+  },
+  {
+   "rule": "ERROR",
+   "control": "data act2,goto tap \"Edit itinerary\"",
+   "label": "Edit itinerary",
+   "act": "",
+   "why": "Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "odd"
+   ],
+   "where": [
+    "Home",
+    "Settings"
+   ],
+   "path": []
+  },
+  {
+   "rule": "ERROR",
+   "control": " \"(state)\"",
+   "label": "(state)",
+   "act": "",
+   "why": "could not open this screen: page.evaluate: TypeError: Cannot read properties of undefined (reading 'list')",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "odd"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": []
+  },
+  {
+   "rule": "ERROR",
+   "control": "data goto tap \"Edit this day\"",
+   "label": "Edit this day",
+   "act": "",
+   "why": "Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "odd"
+   ],
+   "where": [
+    "Day plan, land day (no place)"
+   ],
+   "path": [
+    "Mar 2 · Lisbon",
+    "Build the Lisbon guide"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⚓ Kotor, Montenegro In port · Asho\"",
+   "label": "Jul 8 ⚓ Kotor, Montenegro In port · Ashore 480, all aboard 1",
+   "act": "",
+   "why": "the screen moved 499 px up under the finger at once",
+   "n": 13,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": []
+  },
+  {
+   "rule": "JUMP",
+   "control": "data ts tap \"+ Add a city stay\"",
+   "label": "+ Add a city stay",
+   "act": "",
+   "why": "the screen moved 89 px up under the finger at once",
+   "n": 12,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "odd",
+    "port"
+   ],
+   "where": [
+    "Home",
+    "Settings"
+   ],
+   "path": [
+    "Plan a new trip"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "act gen",
+   "label": "Build the Vienna guide",
+   "act": "gen",
+   "why": "the screen moved 55 px down under the finger at once",
+   "n": 12,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "odd"
+   ],
+   "where": [
+    "Day plan, land day (no place)",
+    "Choose sights, land day (no place)",
+    "Guide, land day (no place)",
+    "Day plan, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on)",
+    "Choose sights, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on)",
+    "Guide, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on)"
+   ],
+   "path": [
+    "Mar 7 · Vienna"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data ts tap \"+ Add a cruise\"",
+   "label": "+ Add a cruise",
+   "act": "",
+   "why": "the screen moved 374 px down under the finger at once",
+   "n": 6,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "odd",
+    "port"
+   ],
+   "where": [
+    "Home",
+    "Settings"
+   ],
+   "path": [
+    "Plan a new trip"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "act wizmore",
+   "label": "Personalize first",
+   "act": "wizmore",
+   "why": "the screen moved 603 px down under the finger at once",
+   "n": 6,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "odd",
+    "port"
+   ],
+   "where": [
+    "Home",
+    "Settings"
+   ],
+   "path": [
+    "Plan a new trip"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "tap \"Build my trip\"",
+   "label": "Build my trip",
+   "act": "",
+   "why": "the screen moved 603 px down under the finger at once",
+   "n": 6,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "odd",
+    "port"
+   ],
+   "where": [
+    "Home",
+    "Settings"
+   ],
+   "path": [
+    "Plan a new trip"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "act rename",
+   "label": "Rename",
+   "act": "rename",
+   "why": "the screen moved 75 px down under the finger at once",
+   "n": 6,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "odd",
+    "port"
+   ],
+   "where": [
+    "Home",
+    "Settings"
+   ],
+   "path": [
+    "More"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⚓ Naples In port · Ashore #, all a\"",
+   "label": "Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140",
+   "act": "",
+   "why": "the screen moved 475 px up under the finger at once",
+   "n": 6,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": []
+  },
+  {
+   "rule": "JUMP",
+   "control": "select \"Sightseeing from my hotel Arriving (flig\"",
+   "label": "Sightseeing from my hotel Arriving (flight, train or ship) L",
+   "act": "",
+   "why": "the screen moved 54 px down under the finger at once",
+   "n": 6,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": []
+  },
+  {
+   "rule": "JUMP",
+   "control": "act addport",
+   "label": "+ Add a port day",
+   "act": "addport",
+   "why": "the screen moved 108 px down under the finger at once",
+   "n": 4,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": []
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⌂ Lisbon Land day · #:# am–#:# pm \"",
+   "label": "Jun 10 ⌂ Lisbon Land day · 9:00 am–6:00 pm Guide not built y",
+   "act": "",
+   "why": "the screen moved 684 px up under the finger at once",
+   "n": 4,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⌂ Lisbon Land day · #:# am–#:# pm \"",
+   "label": "Jul 8 ⌂ Lisbon Land day · 9:00 am–6:00 pm Guide not built ye",
+   "act": "",
+   "why": "the screen moved 708 px up under the finger at once",
+   "n": 4,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "act addday",
+   "label": "+ Add a day",
+   "act": "addday",
+   "why": "the screen moved 101 px down under the finger at once",
+   "n": 3,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": []
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⌂ New day Land day · #:# am–#:# pm\"",
+   "label": "Jun 10 ⌂ New day Land day · 9:00 am–6:00 pm Guide not built ",
+   "act": "",
+   "why": "the screen moved 627 px up under the finger at once",
+   "n": 3,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data ridekey,23.637 tap \"Or take metro · about # h # min\"",
+   "label": "Or take metro · about 1 h 5 min",
+   "act": "",
+   "why": "the screen moved 50 px up under the finger at once",
+   "n": 3,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus",
+    "✎ Rename"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⌂ New day Land day · #:# am–#:# pm\"",
+   "label": "Jul 8 ⌂ New day Land day · 9:00 am–6:00 pm Guide not built y",
+   "act": "",
+   "why": "the screen moved 651 px up under the finger at once",
+   "n": 3,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # 〰 At sea At sea · No stops\"",
+   "label": "Jun 9 〰 At sea At sea · No stops",
+   "act": "",
+   "why": "the screen moved 475 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": []
+  },
+  {
+   "rule": "JUMP",
+   "control": "fold \"More options for this day\"",
+   "label": "More options for this day",
+   "act": "",
+   "why": "the screen moved 382 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "tap \"Build the guide\"",
+   "label": "Build the guide",
+   "act": "",
+   "why": "the screen moved 109 px down under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⚓ New day In port · Ashore #:# am,\"",
+   "label": "Jun 10 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 p",
+   "act": "",
+   "why": "the screen moved 583 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "field \"Port name, e.g. Kotor\"",
+   "label": "Port name, e.g. Kotor",
+   "act": "",
+   "why": "the screen moved 79 px down under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data mode tap \"Flight\"",
+   "label": "Flight",
+   "act": "",
+   "why": "the screen moved 58 px down under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data mode tap \"Train\"",
+   "label": "Train",
+   "act": "",
+   "why": "the screen moved 58 px down under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data mode tap \"Ship\"",
+   "label": "Ship",
+   "act": "",
+   "why": "the screen moved 58 px down under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data mode tap \"Ferry\"",
+   "label": "Ferry",
+   "act": "",
+   "why": "the screen moved 58 px down under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data mode tap \"Car or bus\"",
+   "label": "Car or bus",
+   "act": "",
+   "why": "the screen moved 58 px down under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⚓ New day Boarding · All aboard nu\"",
+   "label": "Jun 9 ⚓ New day Boarding · All aboard null Guide not built y",
+   "act": "",
+   "why": "the screen moved 495 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = embark"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⚓ New day In port · Ashore null, a\"",
+   "label": "Jun 9 ⚓ New day In port · Ashore null, all aboard null Guide",
+   "act": "",
+   "why": "the screen moved 495 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = port"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⚓ Lisbon Boarding · All aboard #:#\"",
+   "label": "Jun 9 ⚓ Lisbon Boarding · All aboard 10:30 am Guide not buil",
+   "act": "",
+   "why": "the screen moved 552 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = embark",
+    "Jun 9 ⚓ New day Boarding · All aboard null Guide not built y"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "act geo",
+   "label": "Find it",
+   "act": "geo",
+   "why": "the screen moved 78 px down under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "Jun 10 ⌂ New day Land day · 9:00 am–6:00 pm Guide not built "
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data style tap \"Famous sights\"",
+   "label": "Famous sights",
+   "act": "",
+   "why": "the screen moved 52 px down under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "More options for this day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data style tap \"A bit of both\"",
+   "label": "A bit of both",
+   "act": "",
+   "why": "the screen moved 52 px down under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "More options for this day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data style tap \"Local favorites\"",
+   "label": "Local favorites",
+   "act": "",
+   "why": "the screen moved 52 px down under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "More options for this day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⌂ Lisbon Land day · #:# am–#:# pm\"",
+   "label": "Jun 10 ⌂ Lisbon Land day · 9:00 am–6:00 pm",
+   "act": "",
+   "why": "the screen moved 607 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "Build the guide for Lisbon"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↗ Lisbon Leaving · Flight leaves #\"",
+   "label": "Jun 9 ↗ Lisbon Leaving · Flight leaves 9:00 am Guide not bui",
+   "act": "",
+   "why": "the screen moved 586 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = departure",
+    "Jun 9 ↗ New day Leaving · Flight leaves 9:00 am Guide not bu"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⚓ Naples In port · Ashore , all ab\"",
+   "label": "Jun 10 ⚓ Naples In port · Ashore , all aboard",
+   "act": "",
+   "why": "the screen moved 411 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Remove this day",
+    "Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⚓ New day Boarding · All aboard Gu\"",
+   "label": "Jun 9 ⚓ New day Boarding · All aboard Guide not built yet",
+   "act": "",
+   "why": "the screen moved 495 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = embark",
+    "Jun 9 ⚓ New day Boarding · All aboard null Guide not built y"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⚓ New day In port · Ashore , all a\"",
+   "label": "Jun 9 ⚓ New day In port · Ashore , all aboard Guide not buil",
+   "act": "",
+   "why": "the screen moved 495 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = port",
+    "Jun 9 ⚓ New day In port · Ashore null, all aboard null Guide"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↘ Lisbon Arriving · Flight arrives\"",
+   "label": "Jun 9 ↘ Lisbon Arriving · Flight arrives 9:00 am Guide not b",
+   "act": "",
+   "why": "the screen moved 586 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Jun 9 ↘ New day Arriving · Flight arrives 9:00 am Guide not "
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↘ Lisbon Arriving · Train arrives \"",
+   "label": "Jun 9 ↘ Lisbon Arriving · Train arrives 9:00 am Guide not bu",
+   "act": "",
+   "why": "the screen moved 586 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Train"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↘ Lisbon Arriving · Ship arrives #\"",
+   "label": "Jun 9 ↘ Lisbon Arriving · Ship arrives 9:00 am Guide not bui",
+   "act": "",
+   "why": "the screen moved 586 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Ship"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↘ Lisbon Arriving · Ferry arrives \"",
+   "label": "Jun 9 ↘ Lisbon Arriving · Ferry arrives 9:00 am Guide not bu",
+   "act": "",
+   "why": "the screen moved 586 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Ferry"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↘ Lisbon Arriving · Car or bus arr\"",
+   "label": "Jun 9 ↘ Lisbon Arriving · Car or bus arrives 9:00 am Guide n",
+   "act": "",
+   "why": "the screen moved 586 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Car or bus"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "check \"Rainy day: plan indoor sights\"",
+   "label": "Rainy day: plan indoor sights",
+   "act": "",
+   "why": "the screen moved 50 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus",
+    "More"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "act memmake",
+   "label": "Make it again",
+   "act": "memmake",
+   "why": "the screen moved 438 px down under the finger once the screen settled",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Journal"
+   ],
+   "path": [
+    "Memory video"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # 〰 At sea At sea · No stops\"",
+   "label": "Jul 7 〰 At sea At sea · No stops",
+   "act": "",
+   "why": "the screen moved 499 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": []
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⚓ New day In port · Ashore #:# am,\"",
+   "label": "Jul 8 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 pm",
+   "act": "",
+   "why": "the screen moved 587 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⚓ New day Boarding · All aboard nu\"",
+   "label": "Jul 7 ⚓ New day Boarding · All aboard null Guide not built y",
+   "act": "",
+   "why": "the screen moved 519 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = embark"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⚓ New day In port · Ashore null, a\"",
+   "label": "Jul 7 ⚓ New day In port · Ashore null, all aboard null Guide",
+   "act": "",
+   "why": "the screen moved 519 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = port"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⚓ New day Boarding · All aboard Gu\"",
+   "label": "Jul 7 ⚓ New day Boarding · All aboard Guide not built yet",
+   "act": "",
+   "why": "the screen moved 519 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = embark",
+    "Jul 7 ⚓ New day Boarding · All aboard null Guide not built y"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↘ Lisbon Arriving · Car or bus arr\"",
+   "label": "Jul 7 ↘ Lisbon Arriving · Car or bus arrives 9:00 am Guide n",
+   "act": "",
+   "why": "the screen moved 610 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Car or bus"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↗ Lisbon Leaving · Flight leaves #\"",
+   "label": "Jul 7 ↗ Lisbon Leaving · Flight leaves 9:00 am Guide not bui",
+   "act": "",
+   "why": "the screen moved 610 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = departure",
+    "Jul 7 ↗ New day Leaving · Flight leaves 9:00 am Guide not bu"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⚓ Lisbon Boarding · All aboard #:#\"",
+   "label": "Jul 7 ⚓ Lisbon Boarding · All aboard 10:30 am Guide not buil",
+   "act": "",
+   "why": "the screen moved 576 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = embark",
+    "Jul 7 ⚓ New day Boarding · All aboard null Guide not built y"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↘ Lisbon Arriving · Ferry arrives \"",
+   "label": "Jul 7 ↘ Lisbon Arriving · Ferry arrives 9:00 am Guide not bu",
+   "act": "",
+   "why": "the screen moved 610 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Ferry"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⚓ New day In port · Ashore , all a\"",
+   "label": "Jul 7 ⚓ New day In port · Ashore , all aboard Guide not buil",
+   "act": "",
+   "why": "the screen moved 519 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = port",
+    "Jul 7 ⚓ New day In port · Ashore null, all aboard null Guide"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↘ Lisbon Arriving · Ship arrives #\"",
+   "label": "Jul 7 ↘ Lisbon Arriving · Ship arrives 9:00 am Guide not bui",
+   "act": "",
+   "why": "the screen moved 610 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Ship"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⌂ Lisbon Land day · #:# am–#:# pm\"",
+   "label": "Jul 8 ⌂ Lisbon Land day · 9:00 am–6:00 pm",
+   "act": "",
+   "why": "the screen moved 631 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "Build the guide for Lisbon"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↘ Lisbon Arriving · Flight arrives\"",
+   "label": "Jul 7 ↘ Lisbon Arriving · Flight arrives 9:00 am Guide not b",
+   "act": "",
+   "why": "the screen moved 610 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Jul 7 ↘ New day Arriving · Flight arrives 9:00 am Guide not "
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↘ Lisbon Arriving · Train arrives \"",
+   "label": "Jul 7 ↘ Lisbon Arriving · Train arrives 9:00 am Guide not bu",
+   "act": "",
+   "why": "the screen moved 610 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Train"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⚓ Kotor, Montenegro, staying aboar\"",
+   "label": "Jul 8 ⚓ Kotor, Montenegro, staying aboard In port · Staying ",
+   "act": "",
+   "why": "the screen moved 499 px up under the finger at once",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Jul 8 ⚓ Kotor, Montenegro In port · Ashore 480, all aboard 1",
+    "More options for this day",
+    "Staying on board this day (not going ashore)"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↘ New day Arriving · Flight arrive\"",
+   "label": "Jun 9 ↘ New day Arriving · Flight arrives 9:00 am Guide not ",
+   "act": "",
+   "why": "the screen moved 529 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↗ New day Leaving · Flight leaves \"",
+   "label": "Jun 9 ↗ New day Leaving · Flight leaves 9:00 am Guide not bu",
+   "act": "",
+   "why": "the screen moved 529 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = departure"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⚓ Naples In port · Ashore #:# am, \"",
+   "label": "Jun 10 ⚓ Naples In port · Ashore 10:30 am, all aboard 10:30 ",
+   "act": "",
+   "why": "the screen moved 435 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Remove this day",
+    "Jun 10 ⚓ Naples In port · Ashore 420, all aboard 1140"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⌂ New day Land day · #:# am–#:# am\"",
+   "label": "Jun 10 ⌂ New day Land day · 9:00 am–11:30 am Guide not built",
+   "act": "",
+   "why": "the screen moved 627 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "Light day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "check \"Finish back at the hotel\"",
+   "label": "Finish back at the hotel",
+   "act": "",
+   "why": "the screen moved 52 px down under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "More options for this day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "check \"Add quick must-sees along the way\"",
+   "label": "Add quick must-sees along the way",
+   "act": "",
+   "why": "the screen moved 52 px down under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "More options for this day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "check \"Fill spare time with bonus stops nearby\"",
+   "label": "Fill spare time with bonus stops nearby",
+   "act": "",
+   "why": "the screen moved 159 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "More options for this day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⚓ Athens In port · Ashore #:# am, \"",
+   "label": "Jun 10 ⚓ Athens In port · Ashore 8:00 am, all aboard 5:00 pm",
+   "act": "",
+   "why": "the screen moved 563 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Jun 10 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 p"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⚓ Lisbon In port · Ashore #:# am, \"",
+   "label": "Jun 9 ⚓ Lisbon In port · Ashore 10:30 am, all aboard 10:30 a",
+   "act": "",
+   "why": "the screen moved 576 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = port",
+    "Jun 9 ⚓ New day In port · Ashore null, all aboard null Guide"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↘ New day Arriving · Train arrives\"",
+   "label": "Jun 9 ↘ New day Arriving · Train arrives 9:00 am Guide not b",
+   "act": "",
+   "why": "the screen moved 529 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Train"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↘ New day Arriving · Ship arrives \"",
+   "label": "Jun 9 ↘ New day Arriving · Ship arrives 9:00 am Guide not bu",
+   "act": "",
+   "why": "the screen moved 529 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Ship"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↘ New day Arriving · Ferry arrives\"",
+   "label": "Jun 9 ↘ New day Arriving · Ferry arrives 9:00 am Guide not b",
+   "act": "",
+   "why": "the screen moved 529 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Ferry"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ↘ New day Arriving · Car or bus ar\"",
+   "label": "Jun 9 ↘ New day Arriving · Car or bus arrives 9:00 am Guide ",
+   "act": "",
+   "why": "the screen moved 529 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Car or bus"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data ridekey,23.729 tap \"Or take metro · about # h # min\"",
+   "label": "Or take metro · about 1 h 25 min",
+   "act": "",
+   "why": "the screen moved 50 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus",
+    "Lock this day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jun # ⌂ Lisbon Land day · #:# am–#:# am \"",
+   "label": "Jun 10 ⌂ Lisbon Land day · 9:00 am–11:30 am Guide not built ",
+   "act": "",
+   "why": "the screen moved 684 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "Light day",
+    "Jun 10 ⌂ New day Land day · 9:00 am–11:30 am Guide not built"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "act mealtime",
+   "label": "1:30 pm",
+   "act": "mealtime",
+   "why": "the screen moved 1748 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus",
+    "Change lunch"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↗ New day Leaving · Flight leaves \"",
+   "label": "Jul 7 ↗ New day Leaving · Flight leaves 9:00 am Guide not bu",
+   "act": "",
+   "why": "the screen moved 553 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = departure"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↘ New day Arriving · Flight arrive\"",
+   "label": "Jul 7 ↘ New day Arriving · Flight arrives 9:00 am Guide not ",
+   "act": "",
+   "why": "the screen moved 553 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⚓ Athens In port · Ashore #:# am, \"",
+   "label": "Jul 8 ⚓ Athens In port · Ashore 8:00 am, all aboard 5:00 pm",
+   "act": "",
+   "why": "the screen moved 587 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Jul 8 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 pm"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↘ New day Arriving · Car or bus ar\"",
+   "label": "Jul 7 ↘ New day Arriving · Car or bus arrives 9:00 am Guide ",
+   "act": "",
+   "why": "the screen moved 553 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Car or bus"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⌂ New day Land day · #:# am–#:# am\"",
+   "label": "Jul 8 ⌂ New day Land day · 9:00 am–11:30 am Guide not built ",
+   "act": "",
+   "why": "the screen moved 651 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "Light day"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⚓ Lisbon In port · Ashore #:# am, \"",
+   "label": "Jul 7 ⚓ Lisbon In port · Ashore 10:30 am, all aboard 10:30 a",
+   "act": "",
+   "why": "the screen moved 600 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = port",
+    "Jul 7 ⚓ New day In port · Ashore null, all aboard null Guide"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↘ New day Arriving · Ship arrives \"",
+   "label": "Jul 7 ↘ New day Arriving · Ship arrives 9:00 am Guide not bu",
+   "act": "",
+   "why": "the screen moved 553 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Ship"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↘ New day Arriving · Train arrives\"",
+   "label": "Jul 7 ↘ New day Arriving · Train arrives 9:00 am Guide not b",
+   "act": "",
+   "why": "the screen moved 553 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Train"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ↘ New day Arriving · Ferry arrives\"",
+   "label": "Jul 7 ↘ New day Arriving · Ferry arrives 9:00 am Guide not b",
+   "act": "",
+   "why": "the screen moved 553 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "Sightseeing from my hotel Arriving (flight, train or ship) L = arrival",
+    "Ferry"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "fold \"More\"",
+   "label": "More",
+   "act": "",
+   "why": "the screen moved 166 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "act tixdone",
+   "label": "Mark booked",
+   "act": "tixdone",
+   "why": "the screen moved 50 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "act mealopen",
+   "label": "Change lunch",
+   "act": "mealopen",
+   "why": "the screen moved 50 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data day tap \"Jul # ⌂ Lisbon Land day · #:# am–#:# am \"",
+   "label": "Jul 8 ⌂ Lisbon Land day · 9:00 am–11:30 am Guide not built y",
+   "act": "",
+   "why": "the screen moved 708 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a day",
+    "Light day",
+    "Jul 8 ⌂ New day Land day · 9:00 am–11:30 am Guide not built "
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data ridekey,23.730 tap \"Or take metro · about # h # min\"",
+   "label": "Or take metro · about 1 h 25 min",
+   "act": "",
+   "why": "the screen moved 50 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus",
+    "✎ Rename"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "act suggesttour",
+   "label": "✨ Suggest my tour",
+   "act": "suggesttour",
+   "why": "the screen moved 50 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus",
+    "More"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data site check \"Pick Muo\"",
+   "label": "Pick Muo",
+   "act": "",
+   "why": "the screen moved 117 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Choose sights, sea day (no place)"
+   ],
+   "path": [
+    "Jul 8 · Kotor, Montenegro"
+   ]
+  },
+  {
+   "rule": "JUMP",
+   "control": "data site check \"Pick Kavač\"",
+   "label": "Pick Kavač",
+   "act": "",
+   "why": "the screen moved 223 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Choose sights, sea day (no place)"
+   ],
+   "path": [
+    "Jul 8 · Kotor, Montenegro"
+   ]
+  },
+  {
+   "rule": "STUCK",
+   "control": "act gen",
+   "label": "Build the Vienna guide",
+   "act": "gen",
+   "why": "still waiting 15 s later: Finding Vienna in travel guides and maps…",
+   "n": 7,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "odd"
+   ],
+   "where": [
+    "Day plan, land day (no place)",
+    "Choose sights, land day (no place)",
+    "Guide, land day (no place)",
+    "Day plan, arrival by flight day (Vienna)",
+    "Choose sights, arrival by flight day (Vienna)",
+    "Guide, arrival by flight day (Vienna)"
+   ],
+   "path": [
+    "Mar 7 · Vienna"
+   ]
+  },
+  {
+   "rule": "STUCK",
+   "control": "fold \"Golden hour and photo spots · sunset #:#\"",
+   "label": "Golden hour and photo spots · sunset 8:48 pm",
+   "act": "",
+   "why": "still waiting 15 s later: Looking up viewpoints on the map…",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus",
+    "More about today"
+   ]
+  },
+  {
+   "rule": "UNSTEADY",
+   "control": "act gen",
+   "label": "Build the A very long name that goes on and on A very long n",
+   "act": "gen",
+   "why": "on the first try only (not on a second, freshly opened app): JUMP, the screen moved 585 px down under the finger at once",
+   "n": 3,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "odd"
+   ],
+   "where": [
+    "Day plan, land day (no place)"
+   ],
+   "path": [
+    "Mar 4 · A very long name that goes on and on A very long nam"
+   ]
+  },
+  {
+   "rule": "UNSTEADY",
+   "control": "fold \"Golden hour and photo spots · sunset #:#\"",
+   "label": "Golden hour and photo spots · sunset 8:48 pm",
+   "act": "",
+   "why": "on the first try only (not on a second, freshly opened app): JUMP, the screen moved 50 px up under the finger once the screen settled",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus",
+    "More about today"
+   ]
+  },
+  {
+   "rule": "UNSTEADY",
+   "control": "tap \"Build my trip\"",
+   "label": "Build my trip",
+   "act": "",
+   "why": "on the first try only (not on a second, freshly opened app): JUMP, the screen moved 677 px down under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Home"
+   ],
+   "path": [
+    "Plan a new trip"
+   ]
+  },
+  {
+   "rule": "UNSTEADY",
+   "control": "fold \"More\"",
+   "label": "More",
+   "act": "",
+   "why": "on the first try only (not on a second, freshly opened app): JUMP, the screen moved 166 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus"
+   ]
+  },
+  {
+   "rule": "UNSTEADY",
+   "control": "fold \"About today's plan# notes\"",
+   "label": "About today's plan16 notes",
+   "act": "",
+   "why": "on the first try only (not on a second, freshly opened app): JUMP, the screen moved 50 px up under the finger once the screen settled",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus"
+   ]
+  },
+  {
+   "rule": "UNSTEADY",
+   "control": "act suggesttour",
+   "label": "✨ Suggest my tour",
+   "act": "suggesttour",
+   "why": "on the first try only (not on a second, freshly opened app): JUMP, the screen moved 73 px down under the finger once the screen settled",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus",
+    "More"
+   ]
+  },
+  {
+   "rule": "UNSTEADY",
+   "control": "act mealtime",
+   "label": "1:00 pm",
+   "act": "mealtime",
+   "why": "on the first try only (not on a second, freshly opened app): JUMP, the screen moved 1480 px up under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day",
+    "Port name, e.g. Kotor = Piraeus",
+    "Change lunch"
+   ]
+  },
+  {
+   "rule": "UNSTEADY",
+   "control": "act memmake",
+   "label": "Make it again",
+   "act": "memmake",
+   "why": "on the first try only (not on a second, freshly opened app): DEAD, nothing a traveler can see, hear or get happened",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry"
+   ],
+   "where": [
+    "Journal"
+   ],
+   "path": [
+    "Memory video"
+   ]
+  },
+  {
+   "rule": "UNSTEADY",
+   "control": "field \"Name this day\"",
+   "label": "Name this day",
+   "act": "",
+   "why": "on the first try only (not on a second, freshly opened app): STUCK, still waiting 15 s later: Finding At sea in travel guides and maps…",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "odd"
+   ],
+   "where": [
+    "Tour, sea day (At sea)"
+   ],
+   "path": [
+    "✎ Rename"
+   ]
+  },
+  {
+   "rule": "UNSTEADY",
+   "control": "act wizmore",
+   "label": "Personalize first",
+   "act": "wizmore",
+   "why": "on the first try only (not on a second, freshly opened app): JUMP, the screen moved 677 px down under the finger at once",
+   "n": 1,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "port"
+   ],
+   "where": [
+    "Home"
+   ],
+   "path": [
+    "Plan a new trip"
+   ]
+  },
+  {
+   "rule": "WIDE",
+   "control": "field \"Port name, e.g. Kotor\"",
+   "label": "Port name, e.g. Kotor",
+   "act": "",
+   "why": "the page became 1691 px wider than the screen",
+   "n": 2,
+   "sizes": [
+    "phone"
+   ],
+   "trips": [
+    "ferry",
+    "port"
+   ],
+   "where": [
+    "Trip"
+   ],
+   "path": [
+    "+ Add a port day"
+   ]
+  }
+ ],
+ "acts": 171,
+ "actsPressed": 70,
+ "notPressed": [
+  "addplace",
+  "alarmopen",
+  "ashore",
+  "asknoticeok",
+  "boardcal",
+  "boardcancel",
+  "boardchange",
+  "boardsave",
+  "bonusadd",
+  "bonusskip",
+  "bookcancel",
+  "bookremove",
+  "booksearch",
+  "bumpok",
+  "busyrow",
+  "camclose",
+  "campick",
+  "camplay",
+  "celebrate",
+  "changetrip",
+  "clearanchor",
+  "clearkey",
+  "closedalt",
+  "closedday",
+  "closedmove",
+  "closedswap",
+  "cutkeep",
+  "cutok",
+  "daylen",
+  "daytitleauto",
+  "earlystart",
+  "esimback",
+  "esimbuy",
+  "esimclose",
+  "esimnext",
+  "esimopen",
+  "esimphones",
+  "esimpick",
+  "esimundo",
+  "fitadd",
+  "fitask",
+  "fitcancel",
+  "fitday",
+  "fitfix",
+  "fitfixgo",
+  "fitleave",
+  "fitmove",
+  "fittime",
+  "fixstops",
+  "follow",
+  "gotit",
+  "hrsdone",
+  "hrsopen",
+  "lateend",
+  "livealerts",
+  "livegps",
+  "livereplan",
+  "liveundo",
+  "mealreset",
+  "mealunskip",
+  "moretrips",
+  "mytrips",
+  "nextday",
+  "nightdep",
+  "offback",
+  "offclear",
+  "offlater",
+  "opentrip",
+  "orderback",
+  "orderkeep",
+  "orderreset",
+  "parsetrip",
+  "picks",
+  "pointpick",
+  "prevday",
+  "raterow",
+  "readyorderno",
+  "readyorderyes",
+  "ridechangeok",
+  "rideundo",
+  "savekey",
+  "shipcheck",
+  "shiplater",
+  "shipok",
+  "shipset",
+  "shipsnap",
+  "shiptimes",
+  "shiptype",
+  "shipuseread",
+  "sortagain",
+  "suggestok",
+  "syncnow",
+  "syncoff",
+  "tourexit",
+  "tourhere",
+  "tournext",
+  "tourpart",
+  "tourtomorrow",
+  "wxkeep",
+  "wxswap",
+  "wxundo"
+ ],
+ "cannot": [],
+ "missingTrips": [
+  "first",
+  "example",
+  "during",
+  "rail",
+  "group"
+ ],
+ "cut": 0,
+ "harness": 1,
+ "ownRules": 0
+}

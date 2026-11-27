@@ -1,0 +1,148 @@
+
+== example phone: The example trip: 21 days, cruise port days, a train day, flights (before the trip)
+   36 screens: lobby, trip, plan:arrival by flight, sites:arrival by flight, guide:arrival by flight, tour:arrival by flight, plan:land, sites:land, guide:land, tour:land, plan:embark, sites:embark, guide:embark, tour:embark, plan:port, sites:port, guide:port, tour:port, plan:sea, sites:sea, guide:sea, tour:sea, plan:arrival by ship, sites:arrival by ship, guide:arrival by ship, tour:arrival by ship, plan:departure, sites:departure, guide:departure, tour:departure, plan:arrival by train, sites:arrival by train, guide:arrival by train, tour:arrival by train, journal, settings
+FAIL DEAD [example phone / Home / Watch the intro] "Replay": nothing a traveler can see, hear or get happened
+FAIL JUMP [example phone / Home / More] "Rename": the screen moved 51 px down under the finger at once
+FAIL JUMP [example phone / Home / Plan a new trip] "+ Add a city stay": the screen moved 89 px up under the finger at once
+FAIL JUMP [example phone / Home / Plan a new trip] "+ Add a city stay" (tap, with the fields beside it filled in ("Lisbon", "2027-07-05", "12 Main Street", "10:30", "10:30")): the screen moved 615 px down under the finger at once
+FAIL JUMP [example phone / Home / Plan a new trip] "+ Add a cruise": the screen moved 374 px down under the finger at once
+FAIL JUMP [example phone / Home / Plan a new trip] "Personalize first": the screen moved 603 px down under the finger at once
+FAIL JUMP [example phone / Home / Plan a new trip] "Build my trip": the screen moved 603 px down under the finger at once
+NOTE UNSTEADY [example phone / Home / Plan a new trip > + Add a cruise] "e.g. Piraeus (Athens)" (type "<b>\"Zürich\" & 東京 مرحبا 🚢</b> xxxxxxx…"): on the first try only (not on a second, freshly opened app): WIDE, the page became 1174 px wider than the screen
+   example phone Home: 334 presses, 8 with a failure, 689 s
+FAIL JUMP [example phone / Trip] "Jul 4 ⚓ Athens Boarding · All aboard 6:30 pm": the screen moved 1793 px up under the finger at once
+NOTE UNSTEADY [example phone / Trip] "e.g. Rome, Nashville, Juneau" (type "<b>\"Zürich\" & 東京 مرحبا 🚢</b> xxxxxxx…"): on the first try only (not on a second, freshly opened app): WIDE, the page became 1691 px wider than the screen
+NOTE UNSTEADY [example phone / Trip] "e.g. Rome, Nashville, Juneau" (type "<b>\"Zürich\" & 東京 مرحبا 🚢</b> xxxxxxx…"): on the first try only (not on a second, freshly opened app): JUMP, the screen moved 84 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Date" (set "2027-07-05"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "sea"): the screen moved 155 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Date" (set ""): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Date" (set "1900-01-01"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Flight": the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "port"): the screen moved 131 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Train": the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Ship": the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Ferry": the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 2 ⌂ Athens Land day · 9:00 am–6:00 pm": the screen moved 1955 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 3 ⌂ Athens Land day · 9:00 am–6:00 pm": the screen moved 1891 px up under the finger at once
+FAIL JUMP [example phone / Trip] "+ Add a day": the screen moved 125 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Hours to sightsee" (type ""): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Hours to sightsee" (type "-5"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Hours to sightsee" (type "99999"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Half day": the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Light day": the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Full day": the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Arrival time" (set ""): the screen moved 189 px up under the finger once the screen settled
+FAIL JUMP [example phone / Trip] "Hotel in Plaka Hotel near Syntagma Square Hotel in Koukaki (" (choose "1"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Hotel in Plaka Hotel near Syntagma Square Hotel in Koukaki (" (choose "3"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Hotel in Plaka Hotel near Syntagma Square Hotel in Koukaki (" (choose "2"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "More options for this day": the screen moved 347 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Hotel in Plaka Hotel near Syntagma Square Hotel in Koukaki (" (choose "custom"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jun 30 ↘ Athens Arriving · Flight arrives 10:30 am": the screen moved 2083 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 1 ⌂ Athens Land day · 9:00 am–6:00 pm": the screen moved 2019 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 5 ⚓ Heraklion In port · Ashore 7:00 am, all aboard 4:30 ": the screen moved 1729 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 6 ⚓ Kusadasi In port · Ashore 9:00 am, all aboard 6:30 p": the screen moved 1665 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Hours to sightsee" (type "3"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 7 ⚓ Santorini In port · Ashore 7:00 am, all aboard 8:30 ": the screen moved 1589 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 8 ⚓ Mykonos In port · Ashore 8:00 am, all aboard 8:30 pm": the screen moved 1513 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 9 ⚓ Chania In port · Ashore 8:00 am, all aboard 5:30 pm": the screen moved 1449 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 10 〰 At sea At sea · No stops": the screen moved 1385 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 13 ⚓ Rome In port · Ashore 7:00 am, all aboard 8:30 pm": the screen moved 1193 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 12 ⚓ Naples In port · Ashore 7:00 am, all aboard 6:30 pm": the screen moved 1257 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 11 ⚓ Messina In port · Ashore 8:00 am, all aboard 5:30 p": the screen moved 1321 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 14 〰 At sea At sea · No stops": the screen moved 1129 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 15 ↘ Barcelona Arriving · Ship arrives 7:00 am": the screen moved 1031 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 16 ⌂ Barcelona Land day · 9:00 am–6:00 pm": the screen moved 967 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 17 ⌂ Barcelona Land day · 9:30 am–5:30 pm": the screen moved 903 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 18 ↗ Barcelona Leaving · Train leaves 1:00 pm": the screen moved 839 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 18 ↘ Madrid Arriving · Train arrives 3:45 pm": the screen moved 741 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Jul 19 ⌂ Madrid Land day · 9:00 am–6:00 pm": the screen moved 677 px up under the finger at once
+NOTE UNSTEADY [example phone / Trip] "e.g. Rome, Nashville, Juneau" (type "Lisbon"): on the first try only (not on a second, freshly opened app): JUMP, the screen moved 78 px up under the finger once the screen settled
+FAIL JUMP [example phone / Trip] "Jul 20 ↗ Madrid Leaving · Flight leaves 4:00 pm": the screen moved 613 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "land"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "departure"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Car or bus": the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "embark"): the screen moved 155 px up under the finger at once
+FAIL JUMP [example phone / Trip] "Athens Airport (Eleftherios Venizelos)" (choose "0"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 4 ⚓ Athens Boarding · All aboard 6:30 pm] "Piraeus cruise terminals" (choose "0"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark] "Jun 30 ⚓ Athens Boarding · All aboard 5:00 pm": the screen moved 1939 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea] "Jun 30 〰 At sea At sea · No stops": the screen moved 1939 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 4 ⚓ Athens Boarding · All aboard 6:30 pm] "All-aboard time" (set "00:00"): the screen moved 189 px up under the finger once the screen settled
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = port] "Jun 30 ⚓ Athens In port · Ashore 8:00 am, all aboard 5:00 pm": the screen moved 1963 px up under the finger at once
+FAIL JUMP [example phone / Trip / Train] "Jun 30 ↘ Athens Arriving · Train arrives 10:30 am": the screen moved 1905 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = land] "Jun 30 ⌂ Athens Land day · 9:00 am–4:00 pm": the screen moved 1905 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = departure] "Jun 30 ↗ Athens Leaving · Flight leaves 10:30 am": the screen moved 1905 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 13 ⚓ Rome In port · Ashore 7:00 am, all aboard 8:30 pm] "Civitavecchia cruise port" (choose "0"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 5 ⚓ Heraklion In port · Ashore 7:00 am, all aboard 4:30 ] "Heraklion cruise port" (choose "0"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Ship] "Jun 30 ↘ Athens Arriving · Ship arrives 10:30 am": the screen moved 1905 px up under the finger at once
+FAIL JUMP [example phone / Trip / Ferry] "Jun 30 ↘ Athens Arriving · Ferry arrives 10:30 am": the screen moved 1905 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 3 ⌂ Athens Land day · 9:00 am–6:00 pm": the screen moved 1891 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 4 ⚓ Athens Boarding · All aboard 6:30 pm": the screen moved 1793 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 5 ⚓ Heraklion In port · Ashore 7:00 am, all aboard 4:30 ": the screen moved 1729 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 6 ⚓ Kusadasi In port · Ashore 9:00 am, all aboard 6:30 p": the screen moved 1665 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 7 ⚓ Santorini In port · Ashore 7:00 am, all aboard 8:30 ": the screen moved 1589 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 8 ⚓ Mykonos In port · Ashore 8:00 am, all aboard 8:30 pm": the screen moved 1513 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 9 ⚓ Chania In port · Ashore 8:00 am, all aboard 5:30 pm": the screen moved 1449 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 10 〰 At sea At sea · No stops": the screen moved 1385 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 17 ⌂ Barcelona Land day · 9:30 am–5:30 pm": the screen moved 903 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 12 ⚓ Naples In port · Ashore 7:00 am, all aboard 6:30 pm": the screen moved 1257 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 11 ⚓ Messina In port · Ashore 8:00 am, all aboard 5:30 p": the screen moved 1321 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 14 〰 At sea At sea · No stops": the screen moved 1129 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 13 ⚓ Rome In port · Ashore 7:00 am, all aboard 8:30 pm": the screen moved 1193 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 15 ↘ Barcelona Arriving · Ship arrives 7:00 am": the screen moved 1031 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 18 ↘ Madrid Arriving · Train arrives 3:45 pm": the screen moved 741 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 18 ↗ Barcelona Leaving · Train leaves 1:00 pm": the screen moved 839 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 19 ⌂ Madrid Land day · 9:00 am–6:00 pm": the screen moved 677 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a day] "Jul 20 ↗ Madrid Leaving · Flight leaves 4:00 pm": the screen moved 613 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 15 ↘ Barcelona Arriving · Ship arrives 7:00 am] "Hotel near Plaça de Catalunya Hotel on Passeig de Gràcia Hot" (choose "custom"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 18 ↗ Barcelona Leaving · Train leaves 1:00 pm] "Barcelona Sants station Estació de França" (choose "1"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / More options for this day] "Fill spare time with bonus stops nearby": the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / More options for this day] "Add quick must-sees along the way": the screen moved 189 px up under the finger at once
+FAIL DEAD [example phone / Trip / Hotel in Plaka Hotel near Syntagma Square Hotel in Koukaki ( = custom] "Find it": nothing a traveler can see, hear or get happened
+FAIL JUMP [example phone / Trip / Hotel in Plaka Hotel near Syntagma Square Hotel in Koukaki ( = custom] "Find it" (tap, with the field beside it filled in ("Ermou 12")): the screen moved 78 px down under the finger at once
+FAIL JUMP [example phone / Trip / Jul 8 ⚓ Mykonos In port · Ashore 8:00 am, all aboard 8:30 pm] "Mykonos new port (Tourlos)" (choose "0"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 6 ⚓ Kusadasi In port · Ashore 9:00 am, all aboard 6:30 p] "Kusadasi cruise port" (choose "0"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 7 ⚓ Santorini In port · Ashore 7:00 am, all aboard 8:30 ] "Fira old port (tender landing)" (choose "0"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 9 ⚓ Chania In port · Ashore 8:00 am, all aboard 5:30 pm] "Souda Bay cruise port" (choose "0"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 12 ⚓ Naples In port · Ashore 7:00 am, all aboard 6:30 pm] "Stazione Marittima (Naples cruise terminal)" (choose "0"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 11 ⚓ Messina In port · Ashore 8:00 am, all aboard 5:30 p] "Messina cruise terminal" (choose "0"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 15 ↘ Barcelona Arriving · Ship arrives 7:00 am] "Moll Adossat cruise terminals World Trade Center cruise term" (choose "1"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 15 ↘ Barcelona Arriving · Ship arrives 7:00 am] "Hotel near Plaça de Catalunya Hotel on Passeig de Gràcia Hot" (choose "1"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 15 ↘ Barcelona Arriving · Ship arrives 7:00 am] "Hotel near Plaça de Catalunya Hotel on Passeig de Gràcia Hot" (choose "2"): the screen moved 189 px up under the finger at once
+NOTE UNSTEADY [example phone / Trip / Jul 18 ↗ Barcelona Leaving · Train leaves 1:00 pm] "Departure time" (set "10:30"): on the first try only (not on a second, freshly opened app): JUMP, the screen moved 189 px up under the finger once the screen settled
+FAIL JUMP [example phone / Trip / Jul 18 ↘ Madrid Arriving · Train arrives 3:45 pm] "Madrid Atocha station Madrid Chamartín station" (choose "1"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 18 ↘ Madrid Arriving · Train arrives 3:45 pm] "Hotel near Puerta del Sol Hotel near Gran Vía Hotel in the B" (choose "1"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 18 ↘ Madrid Arriving · Train arrives 3:45 pm] "Hotel near Puerta del Sol Hotel near Gran Vía Hotel in the B" (choose "2"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 18 ↘ Madrid Arriving · Train arrives 3:45 pm] "Hotel near Puerta del Sol Hotel near Gran Vía Hotel in the B" (choose "3"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 18 ↘ Madrid Arriving · Train arrives 3:45 pm] "Hotel near Puerta del Sol Hotel near Gran Vía Hotel in the B" (choose "custom"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 20 ↗ Madrid Leaving · Flight leaves 4:00 pm] "Madrid-Barajas Airport, Terminal 4 Madrid-Barajas Airport, T" (choose "1"): the screen moved 189 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a port day] "Jul 1 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 pm": the screen moved 2081 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a port day] "Jul 1 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 pm" (tap, with the field beside it filled in ("Piraeus")): the screen moved 2061 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a port day] "Build the guide": the screen moved 57 px down under the finger at once
+FAIL JUMP [example phone / Trip / Car or bus] "Jun 30 ↘ Athens Arriving · Car or bus arrives 10:30 am": the screen moved 1905 px up under the finger at once
+FAIL JUMP [example phone / Trip / Jul 4 ⚓ Athens Boarding · All aboard 6:30 pm] "Check out at" (set "10:30"): the screen moved 189 px up under the finger once the screen settled
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 5 ⚓ Heraklion In port · Ashore 7:00 am, all aboard 4:30 ": the screen moved 1729 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 4 ⚓ Athens Boarding · All aboard 6:30 pm": the screen moved 1793 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 1 ⌂ Athens Land day · 9:00 am–6:00 pm": the screen moved 1841 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 6 ⚓ Kusadasi In port · Ashore 9:00 am, all aboard 6:30 p": the screen moved 1665 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 7 ⚓ Santorini In port · Ashore 7:00 am, all aboard 8:30 ": the screen moved 1589 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 8 ⚓ Mykonos In port · Ashore 8:00 am, all aboard 8:30 pm": the screen moved 1513 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 10 〰 At sea At sea · No stops": the screen moved 1385 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 9 ⚓ Chania In port · Ashore 8:00 am, all aboard 5:30 pm": the screen moved 1449 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 11 ⚓ Messina In port · Ashore 8:00 am, all aboard 5:30 p": the screen moved 1321 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 12 ⚓ Naples In port · Ashore 7:00 am, all aboard 6:30 pm": the screen moved 1257 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 13 ⚓ Rome In port · Ashore 7:00 am, all aboard 8:30 pm": the screen moved 1193 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 14 〰 At sea At sea · No stops": the screen moved 1129 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 15 ↘ Barcelona Arriving · Ship arrives 7:00 am": the screen moved 1031 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 16 ⌂ Barcelona Land day · 9:00 am–6:00 pm": the screen moved 967 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 18 ↗ Barcelona Leaving · Train leaves 1:00 pm": the screen moved 839 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a port day > Jul 1 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 pm] "Jul 1 ⚓ Athens In port · Ashore 8:00 am, all aboard 5:00 pm": the screen moved 2061 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "Taxi or car · about 39 min": the screen moved 50 px up under the finger at once
+FAIL DEAD [example phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "Roman Agora and Tower of the Winds": nothing a traveler can see, hear or get happened
+FAIL JUMP [example phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "Roman Agora and Tower of the Winds": the screen moved 50 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 18 ↘ Madrid Arriving · Train arrives 3:45 pm": the screen moved 741 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 19 ⌂ Madrid Land day · 9:00 am–6:00 pm": the screen moved 677 px up under the finger at once
+FAIL JUMP [example phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea > Remove this day] "Jul 20 ↗ Madrid Leaving · Flight leaves 4:00 pm": the screen moved 613 px up under the finger at once
+FAIL JUMP [example phone / Trip / + Add a port day > Build the guide] "More": the screen moved 120 px up under the finger at once
+FAIL DEAD [example phone / Trip / + Add a port day > Build the guide] "Zoom in": nothing a traveler can see, hear or get happened
+FAIL DEAD [example phone / Trip / + Add a port day > Build the guide] "Zoom out": nothing a traveler can see, hear or get happened
+FAIL DEAD [example phone / Trip / + Add a port day > Build the guide] "Show where I am on the map": nothing a traveler can see, hear or get happened

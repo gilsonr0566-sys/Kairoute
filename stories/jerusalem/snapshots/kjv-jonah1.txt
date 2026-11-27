@@ -1,6 +1,0 @@
-SOURCE: https://bible-api.com/jonah%201%3A1-3?translation=kjv
-RETRIEVED: 2026-11-22T21:01:04.816Z
-STATUS: 200
-TITLE: 
-
-{"reference":"Jonah 1:1-3","verses":[{"book_id":"JON","book_name":"Jonah","chapter":1,"verse":1,"text":"Now the word of the LORD came unto Jonah the son of Amittai, saying,"},{"book_id":"JON","book_name":"Jonah","chapter":1,"verse":2,"text":"Arise, go to Nineveh, that great city, and cry against it; for their wickedness is come up before me."},{"book_id":"JON","book_name":"Jonah","chapter":1,"verse":3,"text":"But Jonah rose up to flee unto Tarshish from the presence of the LORD, and went down to Joppa; and he found a ship going to Tarshish: so he paid the fare thereof, and went down into it, to go with them unto Tarshish from the presence of the LORD."}],"text":"Now the word of the LORD came unto Jonah the son of Amittai, saying, Arise, go to Nineveh, that great city, and cry against it; for their wickedness is come up before me. But Jonah rose up to flee unto Tarshish from the presence of the LORD, and went down to Joppa; and he found a ship going to Tarshish: so he paid the fare thereof, and went down into it, to go with them unto Tarshish from the presence of the LORD.","translation_id":"kjv","translation_name":"King James Version","translation_note":"Public Domain"}

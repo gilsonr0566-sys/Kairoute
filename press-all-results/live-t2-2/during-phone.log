@@ -1,0 +1,92 @@
+
+== during phone: The example trip on a port day, 10:40 am, ashore in Heraklion (countdown, live controls)
+   5 screens: lobby, trip, plan:port (today), guide:port (today), tour:port (today)
+FAIL DEAD [during phone / Home / Watch the intro] "Replay": nothing a traveler can see, hear or get happened
+FAIL JUMP [during phone / Home / Plan a new trip] "+ Add a city stay" (tap, with the fields beside it filled in ("Lisbon", "2027-07-05", "12 Main Street", "10:30", "10:30")): the screen moved 615 px down under the finger at once
+FAIL JUMP [during phone / Home / Plan a new trip] "+ Add a city stay": the screen moved 89 px up under the finger at once
+FAIL JUMP [during phone / Home / Plan a new trip] "+ Add a cruise": the screen moved 414 px down under the finger at once
+FAIL JUMP [during phone / Home / Plan a new trip] "Build my trip": the screen moved 643 px down under the finger at once
+NOTE UNSTEADY [during phone / Home / Plan a new trip] "Build my trip" (tap, with the fields beside it filled in ("Lisbon", "2027-07-05", "12 Main Street", "10:30", "10:30")): on the first try only (not on a second, freshly opened app): JUMP, the screen moved 717 px down under the finger at once
+FAIL JUMP [during phone / Home / Plan a new trip] "Personalize first": the screen moved 643 px down under the finger at once
+FAIL JUMP [during phone / Home / More] "Rename": the screen moved 51 px down under the finger at once
+FAIL JUMP [during phone / Home / Continue trip] "About today's plan1 note": the screen moved 757 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip] "I understand": the screen moved 554 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip] "More about today": a finger cannot reach it: button.btn.ghost "📷 Snap the ship's clock" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Jul 17 ⌂ Barcelona Land day · 9:30 am–5:30 pm": a finger cannot reach it: button "Open" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Jul 10 · At sea] "Open the day plan": a finger cannot reach it: h2 "Is the ship's clock showing 10:40 am?" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 2 · Athens] "★": the screen moved 1784 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 2 · Athens] "★": the screen moved 1784 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 18 · Madrid] "Plaza de Castilla": the screen moved 1224 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Jul 7 ⚓ Santorini In port · Ashore 7:00 am, all aboard 8:30 ": a finger cannot reach it: button.tab.railonly "Settings" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 2 · Athens] "Walk · 24 min": the screen moved 1910 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Date" (undefined): a finger cannot reach it: button "Open" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 2 · Athens] "★": the screen moved 2655 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (undefined): a finger cannot reach it: button "Open" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 16 · Barcelona] "Casa Batlló": the screen moved 3572 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 16 · Barcelona] "Mark booked": the screen moved 3336 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 16 · Barcelona] "Casa Milà (La Pedrera)": the screen moved 1065 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Date" (undefined): a finger cannot reach it: button "Open" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 16 · Barcelona] "Book tickets ↗": the screen moved 1771 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 16 · Barcelona] "Walk · 35 min": the screen moved 2500 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 15 · Barcelona] "Mark booked": the screen moved 1630 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 16 · Barcelona] "Sant Pau Recinte Modernista": the screen moved 1674 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 3 · Athens] "National Archaeological Museum": the screen moved 1352 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 1 · Athens] "Areopagus (Mars Hill)": the screen moved 1790 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Jul 14 · At sea] "Go deeper: the Bible and churches": a finger cannot reach it: p.lede.small "Cruise ships sometimes keep their own cl" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 18 · Barcelona] "Taxi or car · about 20 min": the screen moved 2760 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 19 · Madrid] "Mark booked": the screen moved 2208 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 19 · Madrid] "Walk · 21 min": the screen moved 2462 px down under the finger at once
+FAIL COVERED [during phone / Home / Continue trip > Trip] "🖨 Print or save as PDF": a finger cannot reach it: span.ab-txt "Back to the ship: leave by 3:34 pm · wal" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Share or rebuild the trip": a finger cannot reach it: button.tab.railonly "Settings" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 2 · Athens] "★": the screen moved 1186 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Jul 14 · At sea] "Local words · Catalan and Spanish": a finger cannot reach it: button.btn.ghost "No, enter the ship's time" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 2 · Athens] "★": the screen moved 1186 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 2 · Athens] "National Gallery of Athens": the screen moved 2451 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Trip] "e.g. Rome, Nashville, Juneau" (undefined): a finger cannot reach it: button "Open" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Trip] "e.g. Rome, Nashville, Juneau" (undefined): a finger cannot reach it: button "Open" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 15 · Barcelona] "Dinner: why here": the screen moved 122 px up under the finger at once
+NOTE UNSTEADY [during phone / Home / Continue trip > Jul 17 · Barcelona] "Metro L1, Catalunya to Espanya, then Train R5, Barcelona-Pla": on the first try only (not on a second, freshly opened app): JUMP, the screen moved 64 px up under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 2 · Athens] "Agia Ekaterini (St Catherine's Church)": the screen moved 3159 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 18 · Barcelona] "Mark booked": the screen moved 1645 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 19 · Madrid] "Royal Palace": the screen moved 1134 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 19 · Madrid] "Mark booked": the screen moved 1005 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 16 · Barcelona] "Taxi or car · about 17 min": the screen moved 2626 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Jul 3 ⌂ Athens Land day · 9:00 am–6:00 pm": a finger cannot reach it: button "Open" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 3 · Athens] "★": the screen moved 1679 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 4 · Athens] "What to have on you · 0 of 9 ready": the screen moved 1071 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Trip] "All-aboard time" (undefined): a finger cannot reach it: span "Settings" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Jul 18 ↗ Barcelona Leaving · Train leaves 1:00 pm": a finger cannot reach it: button "Open" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Jul 16 ⌂ Barcelona Land day · 9:00 am–6:00 pm": a finger cannot reach it: button "Open" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Jul 18 ↘ Madrid Arriving · Train arrives 3:45 pm": a finger cannot reach it: button "Open" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 15 · Barcelona] "Walk · 1 h 6 min": the screen moved 721 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 16 · Barcelona] "Sagrada Família": the screen moved 1734 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 16 · Barcelona] "Mark booked": the screen moved 1815 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 16 · Barcelona] "Gràcia squares": the screen moved 3101 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Download for offline": a finger cannot reach it: button.tab.railonly "Settings" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Trip] "✎ Rename": a finger cannot reach it: span.ab-txt "Back to the ship: leave by 3:34 pm · wal" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 4 · Athens] "📅 Add reminders to my calendar": the screen moved 1117 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Ship docks" (undefined): a finger cannot reach it: button "Open" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 15 · Barcelona] "Palau de la Música Catalana": the screen moved 977 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 1 · Athens] "Mark booked": the screen moved 1251 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 15 · Barcelona] "El Born Centre de Cultura": the screen moved 1765 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 3 · Athens] "★": the screen moved 1679 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 3 · Athens] "★": the screen moved 1679 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Trip] "Date" (undefined): a finger cannot reach it: button "Open" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Jul 10 · At sea] "Money, manners and safety": a finger cannot reach it: button.btn "Yes, it matches" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Trip] "e.g. Rome, Nashville, Juneau" (undefined): a finger cannot reach it: button "Open" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Jul 14 · At sea] "What to look for": a finger cannot reach it: div.shipcard "SHIP'S CLOCK · AT SEA TIME NOW 10:40 AM " lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 3 · Athens] "Walk · 51 min": the screen moved 886 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 19 · Madrid] "Almudena Cathedral": the screen moved 999 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Trip] "See the day plan": a finger cannot reach it: button#tab-guide.tab "Guide" lies over it
+FAIL JUMP [during phone / Home / Continue trip > Jul 20 · Madrid] "Airport express bus · about 1 h 5 min": the screen moved 213 px down under the finger at once
+FAIL JUMP [during phone / Home / Continue trip > Jul 15 · Barcelona] "Gothic Quarter & Cathedral": the screen moved 2080 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 3 · Athens] "Platonic Academy": the screen moved 977 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 2 · Athens] "National Garden": the screen moved 1724 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 15 · Barcelona] "Museu Picasso": the screen moved 1445 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 15 · Barcelona] "Book tickets ↗": the screen moved 1586 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 2 · Athens] "★": the screen moved 855 px down under the finger at once (the control itself moved)
+FAIL JUMP [during phone / Home / Continue trip > Jul 2 · Athens] "Walk · 38 min": the screen moved 3013 px down under the finger at once (the control itself moved)
+FAIL COVERED [during phone / Home / Continue trip > Jul 10 · At sea] "Local words · Italian": a finger cannot reach it: p.lede.small "Cruise ships sometimes keep their own cl" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Trip] "+ Add a day": a finger cannot reach it: span.ab-txt "Back to the ship: leave by 3:34 pm · wal" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Trip] "+ Add a port day": a finger cannot reach it: span.ab-txt "Back to the ship: leave by 3:34 pm · wal" lies over it
+FAIL COVERED [during phone / Home / Continue trip > Trip] "e.g. Rome, Nashville, Juneau" (undefined): a finger cannot reach it: button "Open" lies over it

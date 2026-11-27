@@ -1,6 +1,0 @@
-SOURCE: https://www.theacropolismuseum.gr/en
-RETRIEVED: 2026-11-21T14:15:42.219Z
-STATUS: 403
-TITLE: Just a moment...
-
-Just a moment...

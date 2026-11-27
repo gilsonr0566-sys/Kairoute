@@ -1,0 +1,97 @@
+
+== odd phone: Odd and empty input: no place, no date, sea day alone, very long and marked-up names, impossible times
+   24 screens: lobby, trip, plan:land, sites:land, guide:land, tour:land, plan:sea, sites:sea, guide:sea, tour:sea, plan:port, sites:port, guide:port, tour:port, plan:leave by train, sites:leave by train, guide:leave by train, tour:leave by train, plan:arrival by flight, sites:arrival by flight, guide:arrival by flight, tour:arrival by flight, journal, settings
+FAIL ERROR [odd phone / Home] "Edit itinerary": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+FAIL JUMP [odd phone / Home / Plan a new trip] "+ Add a city stay": the screen moved 89 px up under the finger at once
+FAIL JUMP [odd phone / Home / Plan a new trip] "+ Add a city stay" (tap, with the fields beside it filled in ("Lisbon", "2027-07-05", "12 Main Street", "10:30", "10:30")): the screen moved 615 px down under the finger at once
+FAIL JUMP [odd phone / Home / Plan a new trip] "+ Add a cruise": the screen moved 374 px down under the finger at once
+FAIL JUMP [odd phone / Home / Plan a new trip] "Personalize first": the screen moved 603 px down under the finger at once
+FAIL JUMP [odd phone / Home / Plan a new trip] "Build my trip": the screen moved 603 px down under the finger at once
+FAIL DEAD [odd phone / Home / Watch the intro] "Replay": nothing a traveler can see, hear or get happened
+FAIL JUMP [odd phone / Home / More] "Rename": the screen moved 84 px up under the finger at once
+FAIL ERROR [odd phone / Home / Terms] "Trip": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+   odd phone Home: 334 presses, 9 with a failure, 369 s
+   odd phone Trip: 0 presses, 1 with a failure, 0 s
+FAIL ERROR [odd phone / Day plan, land day (no place)] "Trip": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+FAIL DEAD [odd phone / Day plan, land day (no place)] "Build the guide": nothing a traveler can see, hear or get happened
+NOTE UNSTEADY [odd phone / Day plan, land day (no place) / Mar 4 · A very long name that goes on and on A very long nam] "Build the A very long name that goes on and on A very long n": on the first try only (not on a second, freshly opened app): JUMP, the screen moved 585 px down under the finger at once
+NOTE UNSTEADY [odd phone / Day plan, land day (no place) / Mar 5 · <img src=x onerror=alert > & "Zürich"] "Build the <img src=x onerror=alert(1)> & "Zürich" guide": on the first try only (not on a second, freshly opened app): JUMP, the screen moved 104 px down under the finger at once
+NOTE UNSTEADY [odd phone / Day plan, land day (no place) / Mar 6 · Nowhereville-That-Does-Not-Exist] "Build the Nowhereville-That-Does-Not-Exist guide": on the first try only (not on a second, freshly opened app): JUMP, the screen moved 104 px down under the finger at once
+FAIL STUCK [odd phone / Day plan, land day (no place) / Mar 7 · Vienna] "Build the Vienna guide": still waiting 15 s later: Finding Vienna in travel guides and maps…
+FAIL JUMP [odd phone / Day plan, land day (no place) / Mar 7 · Vienna] "Build the Vienna guide": the screen moved 55 px down under the finger at once
+FAIL BROKEN [odd phone / Day plan, land day (no place) / Mar 4 · A very long name that goes on and on A very long nam > Build the A very long name that goes on and on A very long n] "Change the name": the screen shows: "Land day · undefined–NaN:NaN"
+FAIL JUMP [odd phone / Day plan, land day (no place) / Mar 4 · A very long name that goes on and on A very long nam > Build the A very long name that goes on and on A very long n] "Try again": the screen moved 215 px down under the finger at once
+FAIL ERROR [odd phone / Day plan, land day (no place) / Mar 2 · Lisbon > Build the Lisbon guide] "Edit this day": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+   odd phone Day plan, land day (no place): 34 presses, 9 with a failure, 63 s
+FAIL ERROR [odd phone / Choose sights, land day (no place)] "Trip": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+FAIL DEAD [odd phone / Choose sights, land day (no place)] "Build the guide": nothing a traveler can see, hear or get happened
+FAIL STUCK [odd phone / Choose sights, land day (no place) / Mar 7 · Vienna] "Build the Vienna guide": still waiting 15 s later: Finding Vienna in travel guides and maps…
+FAIL JUMP [odd phone / Choose sights, land day (no place) / Mar 7 · Vienna] "Build the Vienna guide": the screen moved 55 px down under the finger at once
+FAIL JUMP [odd phone / Choose sights, land day (no place) / Mar 4 · A very long name that goes on and on A very long nam > Build the A very long name that goes on and on A very long n] "Try again": the screen moved 215 px down under the finger at once
+FAIL BROKEN [odd phone / Choose sights, land day (no place) / Mar 4 · A very long name that goes on and on A very long nam > Build the A very long name that goes on and on A very long n] "Change the name": the screen shows: "Land day · undefined–NaN:NaN"
+   odd phone Choose sights, land day (no place): 33 presses, 5 with a failure, 59 s
+FAIL ERROR [odd phone / Guide, land day (no place)] "Trip": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+FAIL DEAD [odd phone / Guide, land day (no place)] "Build the guide": nothing a traveler can see, hear or get happened
+FAIL STUCK [odd phone / Guide, land day (no place) / Mar 7 · Vienna] "Build the Vienna guide": still waiting 15 s later: Finding Vienna in travel guides and maps…
+FAIL JUMP [odd phone / Guide, land day (no place) / Mar 7 · Vienna] "Build the Vienna guide": the screen moved 55 px down under the finger at once
+FAIL JUMP [odd phone / Guide, land day (no place) / Mar 4 · A very long name that goes on and on A very long nam > Build the A very long name that goes on and on A very long n] "Try again": the screen moved 215 px down under the finger at once
+FAIL BROKEN [odd phone / Guide, land day (no place) / Mar 4 · A very long name that goes on and on A very long nam > Build the A very long name that goes on and on A very long n] "Change the name": the screen shows: "Land day · undefined–NaN:NaN"
+   odd phone Guide, land day (no place): 33 presses, 5 with a failure, 59 s
+FAIL DEAD [odd phone / Tour, land day (no place)] "Build the guide": nothing a traveler can see, hear or get happened
+   odd phone Tour, land day (no place): 12 presses, 1 with a failure, 17 s
+FAIL ERROR [odd phone / Day plan, sea day (At sea) / Lock this day] "Download for offline": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+   odd phone Day plan, sea day (At sea): 13 presses, 1 with a failure, 16 s
+FAIL ERROR [odd phone / Choose sights, sea day (At sea) / Lock this day] "Download for offline": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+   odd phone Choose sights, sea day (At sea): 13 presses, 1 with a failure, 16 s
+FAIL ERROR [odd phone / Guide, sea day (At sea) / Lock this day] "Download for offline": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+   odd phone Guide, sea day (At sea): 13 presses, 1 with a failure, 16 s
+FAIL ERROR [odd phone / Tour, sea day (At sea) / Lock this day] "Download for offline": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+NOTE UNSTEADY [odd phone / Tour, sea day (At sea) / ✎ Rename] "Name this day" (type "<b>\"Zürich\" & 東京 مرحبا 🚢</b> xxxxxxx…"): on the first try only (not on a second, freshly opened app): STUCK, still waiting 15 s later: Finding At sea in travel guides and maps…
+FAIL ERROR [odd phone / Tour, sea day (At sea) / Lock this day > Download for offline] "Trip": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+   odd phone Tour, sea day (At sea): 17 presses, 3 with a failure, 48 s
+FAIL BROKEN [odd phone / Day plan, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on) / Build the A very long name that goes on and on A very long n] "Change the name": the screen shows: "Land day · undefined–NaN:NaN"
+FAIL JUMP [odd phone / Day plan, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on) / Build the A very long name that goes on and on A very long n] "Try again": the screen moved 215 px down under the finger at once
+   odd phone Day plan, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on): 13 presses, 2 with a failure, 16 s
+FAIL JUMP [odd phone / Choose sights, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on) / Build the A very long name that goes on and on A very long n] "Try again": the screen moved 215 px down under the finger at once
+FAIL BROKEN [odd phone / Choose sights, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on) / Build the A very long name that goes on and on A very long n] "Change the name": the screen shows: "Land day · undefined–NaN:NaN"
+   odd phone Choose sights, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on): 13 presses, 2 with a failure, 17 s
+FAIL BROKEN [odd phone / Guide, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on) / Build the A very long name that goes on and on A very long n] "Change the name": the screen shows: "Land day · undefined–NaN:NaN"
+FAIL JUMP [odd phone / Guide, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on) / Build the A very long name that goes on and on A very long n] "Try again": the screen moved 215 px down under the finger at once
+   odd phone Guide, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on): 13 presses, 2 with a failure, 16 s
+   odd phone Tour, port day (A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on A very long name that goes on and on): 10 presses, 0 with a failure, 10 s
+FAIL BROKEN [odd phone / Day plan, leave by train day (Nowhereville-That-Does-Not-Exist) / Build the Nowhereville-That-Does-Not-Exist guide] "Change the name": the screen shows: "Land day · undefined–NaN:NaN"
+FAIL DEAD [odd phone / Day plan, leave by train day (Nowhereville-That-Does-Not-Exist) / Build the Nowhereville-That-Does-Not-Exist guide] "Try again": nothing a traveler can see, hear or get happened
+   odd phone Day plan, leave by train day (Nowhereville-That-Does-Not-Exist): 13 presses, 2 with a failure, 17 s
+FAIL BROKEN [odd phone / Choose sights, leave by train day (Nowhereville-That-Does-Not-Exist) / Build the Nowhereville-That-Does-Not-Exist guide] "Change the name": the screen shows: "Land day · undefined–NaN:NaN"
+FAIL DEAD [odd phone / Choose sights, leave by train day (Nowhereville-That-Does-Not-Exist) / Build the Nowhereville-That-Does-Not-Exist guide] "Try again": nothing a traveler can see, hear or get happened
+   odd phone Choose sights, leave by train day (Nowhereville-That-Does-Not-Exist): 13 presses, 2 with a failure, 17 s
+FAIL BROKEN [odd phone / Guide, leave by train day (Nowhereville-That-Does-Not-Exist) / Build the Nowhereville-That-Does-Not-Exist guide] "Change the name": the screen shows: "Land day · undefined–NaN:NaN"
+FAIL DEAD [odd phone / Guide, leave by train day (Nowhereville-That-Does-Not-Exist) / Build the Nowhereville-That-Does-Not-Exist guide] "Try again": nothing a traveler can see, hear or get happened
+   odd phone Guide, leave by train day (Nowhereville-That-Does-Not-Exist): 13 presses, 2 with a failure, 17 s
+   odd phone Tour, leave by train day (Nowhereville-That-Does-Not-Exist): 10 presses, 0 with a failure, 10 s
+FAIL STUCK [odd phone / Day plan, arrival by flight day (Vienna)] "Build the Vienna guide": still waiting 15 s later: Finding Vienna in travel guides and maps…
+FAIL JUMP [odd phone / Day plan, arrival by flight day (Vienna)] "Build the Vienna guide": the screen moved 55 px down under the finger at once
+   odd phone Day plan, arrival by flight day (Vienna): 11 presses, 1 with a failure, 44 s
+FAIL STUCK [odd phone / Choose sights, arrival by flight day (Vienna)] "Build the Vienna guide": still waiting 15 s later: Finding Vienna in travel guides and maps…
+FAIL JUMP [odd phone / Choose sights, arrival by flight day (Vienna)] "Build the Vienna guide": the screen moved 55 px down under the finger at once
+   odd phone Choose sights, arrival by flight day (Vienna): 11 presses, 1 with a failure, 45 s
+FAIL STUCK [odd phone / Guide, arrival by flight day (Vienna)] "Build the Vienna guide": still waiting 15 s later: Finding Vienna in travel guides and maps…
+FAIL JUMP [odd phone / Guide, arrival by flight day (Vienna)] "Build the Vienna guide": the screen moved 55 px down under the finger at once
+   odd phone Guide, arrival by flight day (Vienna): 11 presses, 1 with a failure, 44 s
+FAIL STUCK [odd phone / Tour, arrival by flight day (Vienna)] "Build the Vienna guide": still waiting 15 s later: Finding Vienna in travel guides and maps…
+   odd phone Tour, arrival by flight day (Vienna): 10 presses, 1 with a failure, 41 s
+FAIL ERROR [odd phone / Journal] "Trip": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+   odd phone Journal: 8 presses, 1 with a failure, 5 s
+FAIL ERROR [odd phone / Settings] "Trip": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+FAIL DEAD [odd phone / Settings / About > Watch the intro] "Replay": nothing a traveler can see, hear or get happened
+FAIL ERROR [odd phone / Settings / How Kairoute works > Skip] "Edit itinerary": Uncaught TypeError: Cannot read properties of undefined (reading 'list') | Cannot read properties of undefined (reading 'list')
+FAIL JUMP [odd phone / Settings / How Kairoute works > Skip > Plan a new trip] "+ Add a city stay": the screen moved 89 px up under the finger at once
+FAIL JUMP [odd phone / Settings / How Kairoute works > Skip > Plan a new trip] "+ Add a city stay" (tap, with the fields beside it filled in ("Lisbon", "2027-07-05", "12 Main Street", "10:30", "10:30")): the screen moved 615 px down under the finger at once
+FAIL JUMP [odd phone / Settings / How Kairoute works > Skip > Plan a new trip] "+ Add a cruise": the screen moved 374 px down under the finger at once
+FAIL JUMP [odd phone / Settings / How Kairoute works > Skip > Plan a new trip] "Personalize first": the screen moved 603 px down under the finger at once
+FAIL JUMP [odd phone / Settings / How Kairoute works > Skip > Plan a new trip] "Build my trip": the screen moved 603 px down under the finger at once
+FAIL JUMP [odd phone / Settings / How Kairoute works > Skip > More] "Rename": the screen moved 84 px up under the finger at once
+   odd phone Settings: 185 presses, 9 with a failure, 197 s
+   links the app offered: 0 asked for, 0 do not exist
+
+Every button pressed: 834 presses on 24 screens; 58 with a failure; 0 greyed out; 0 screens cut short

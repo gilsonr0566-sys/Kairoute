@@ -1,0 +1,108 @@
+
+== rail phone: Rail trip: Vienna by train (saved test trip)
+   8 screens: lobby, trip, plan:land, sites:land, guide:land, tour:land, journal, settings
+FAIL DEAD [rail phone / Home / Watch the intro] "Replay": nothing a traveler can see, hear or get happened
+FAIL JUMP [rail phone / Home / Plan a new trip] "+ Add a city stay": the screen moved 89 px up under the finger at once
+FAIL JUMP [rail phone / Home / Plan a new trip] "+ Add a city stay" (tap, with the fields beside it filled in ("Lisbon", "2027-07-05", "12 Main Street", "10:30", "10:30")): the screen moved 615 px down under the finger at once
+FAIL JUMP [rail phone / Home / Plan a new trip] "+ Add a cruise": the screen moved 374 px down under the finger at once
+FAIL JUMP [rail phone / Home / Plan a new trip] "Personalize first": the screen moved 603 px down under the finger at once
+FAIL JUMP [rail phone / Home / Plan a new trip] "Build my trip": the screen moved 603 px down under the finger at once
+FAIL JUMP [rail phone / Home / More] "Rename": the screen moved 75 px down under the finger at once
+   rail phone Home: 334 presses, 7 with a failure, 372 s
+FAIL JUMP [rail phone / Trip] "May 10 ⌂ Vienna, Austria Land day · 9:00 am–6:00 pm": the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip] "May 11 ⌂ Vienna, Austria Land day · 9:00 am–6:00 pm": the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip] "+ Add a port day": the screen moved 176 px down under the finger at once
+FAIL BROKEN [rail phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "embark"): the screen shows: "Boarding · All aboard null"
+FAIL BROKEN [rail phone / Trip] "Sightseeing from my hotel Arriving (flight, train or ship) L" (choose "port"): the screen shows: "In port · Ashore null, all aboard null"
+FAIL JUMP [rail phone / Trip] "More options for this day": the screen moved 381 px up under the finger at once
+FAIL DEAD [rail phone / Trip / Trip] "Find it": nothing a traveler can see, hear or get happened
+FAIL JUMP [rail phone / Trip / Trip] "Find it" (tap, with the field beside it filled in ("Kärntner Straße 10")): the screen moved 78 px down under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a day] "May 11 ⌂ Vienna, Austria Land day · 9:00 am–6:00 pm" (tap, with the field beside it filled in ("Kärntner Straße 10")): the screen moved 539 px up under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a day] "May 11 ⌂ Vienna, Austria Land day · 9:00 am–6:00 pm": the screen moved 539 px up under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day] "May 11 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 p": the screen moved 651 px up under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day] "May 11 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 p" (tap, with the field beside it filled in ("Piraeus")): the screen moved 631 px up under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day] "Build the guide": the screen moved 57 px down under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival] "May 10 ↘ Vienna, Austria Arriving · Flight arrives 9:00 am": the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival] "May 10 ↘ Vienna, Austria Arriving · Flight arrives 9:00 am" (tap, with the field beside it filled in ("Kärntner Straße 10")): the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = departure] "May 10 ↗ Vienna, Austria Leaving · Flight leaves 9:00 am": the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = departure] "May 10 ↗ Vienna, Austria Leaving · Flight leaves 9:00 am" (tap, with the field beside it filled in ("Kärntner Straße 10")): the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = sea] "May 10 〰 At sea At sea · No stops": the screen moved 379 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark] "May 10 ⚓ Vienna, Austria Boarding · All aboard null": the screen moved 509 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark] "May 10 ⚓ Vienna, Austria Boarding · All aboard null" (tap, with the fields beside it filled in ("10:30", "Kärntner Straße 10")): the screen moved 509 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = port] "May 10 ⚓ Vienna, Austria In port · Ashore null, all aboard n": the screen moved 509 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = port] "May 10 ⚓ Vienna, Austria In port · Ashore null, all aboard n" (tap, with the fields beside it filled in ("10:30", "10:30")): the screen moved 533 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Light day] "May 10 ⌂ Vienna, Austria Land day · 9:00 am–11:30 am": the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Light day] "May 10 ⌂ Vienna, Austria Land day · 9:00 am–11:30 am" (tap, with the field beside it filled in ("Kärntner Straße 10")): the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / More options for this day] "Finish back at the hotel": the screen moved 52 px down under the finger at once
+FAIL JUMP [rail phone / Trip / More options for this day] "Famous sights": the screen moved 52 px down under the finger at once
+FAIL JUMP [rail phone / Trip / More options for this day] "Famous sights" (tap, with the field beside it filled in ("Acropolis")): the screen moved 52 px down under the finger at once
+FAIL JUMP [rail phone / Trip / More options for this day] "A bit of both": the screen moved 52 px down under the finger at once
+FAIL JUMP [rail phone / Trip / More options for this day] "A bit of both" (tap, with the field beside it filled in ("Acropolis")): the screen moved 52 px down under the finger at once
+FAIL JUMP [rail phone / Trip / More options for this day] "Local favorites": the screen moved 52 px down under the finger at once
+FAIL JUMP [rail phone / Trip / More options for this day] "Local favorites" (tap, with the field beside it filled in ("Acropolis")): the screen moved 52 px down under the finger at once
+FAIL JUMP [rail phone / Trip / More options for this day] "Add quick must-sees along the way": the screen moved 52 px down under the finger at once
+FAIL JUMP [rail phone / Trip / More options for this day] "Fill spare time with bonus stops nearby": the screen moved 159 px up under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day > May 11 ⚓ New day In port · Ashore 8:00 am, all aboard 5:00 p] "May 11 ⚓ Athens In port · Ashore 8:00 am, all aboard 5:00 pm": the screen moved 631 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Ferry] "May 10 ↘ Vienna, Austria Arriving · Ferry arrives 9:00 am" (tap, with the field beside it filled in ("Kärntner Straße 10")): the screen moved 475 px up under the finger at once
+FAIL DEAD [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "Zoom out": nothing a traveler can see, hear or get happened
+FAIL DEAD [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "Zoom in": nothing a traveler can see, hear or get happened
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "Change lunch": the screen moved 1732 px down under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Train] "May 10 ↘ Vienna, Austria Arriving · Train arrives 9:00 am": the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus] "Or take metro · about 1 h 25 min": the screen moved 118 px down under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Train] "May 10 ↘ Vienna, Austria Arriving · Train arrives 9:00 am" (tap, with the field beside it filled in ("Kärntner Straße 10")): the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Ship] "May 10 ↘ Vienna, Austria Arriving · Ship arrives 9:00 am": the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Ship] "May 10 ↘ Vienna, Austria Arriving · Ship arrives 9:00 am" (tap, with the field beside it filled in ("Kärntner Straße 10")): the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Ferry] "May 10 ↘ Vienna, Austria Arriving · Ferry arrives 9:00 am": the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Car or bus] "May 10 ↘ Vienna, Austria Arriving · Car or bus arrives 9:00 ": the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = arrival > Car or bus] "May 10 ↘ Vienna, Austria Arriving · Car or bus arrives 9:00 " (tap, with the field beside it filled in ("Kärntner Straße 10")): the screen moved 475 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark > May 10 ⚓ Vienna, Austria Boarding · All aboard null] "May 10 ⚓ Vienna, Austria Boarding · All aboard": the screen moved 509 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark > May 10 ⚓ Vienna, Austria Boarding · All aboard null] "May 10 ⚓ Vienna, Austria Boarding · All aboard" (tap, with the fields beside it filled in ("10:30", "Kärntner Straße 10")): the screen moved 509 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = embark > May 10 ⚓ Vienna, Austria Boarding · All aboard null] "May 10 ⚓ Vienna, Austria Boarding · All aboard 10:30 am": the screen moved 509 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = port > May 10 ⚓ Vienna, Austria In port · Ashore null, all aboard n] "May 10 ⚓ Vienna, Austria In port · Ashore , all aboard": the screen moved 509 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = port > May 10 ⚓ Vienna, Austria In port · Ashore null, all aboard n] "May 10 ⚓ Vienna, Austria In port · Ashore , all aboard" (tap, with the fields beside it filled in ("10:30", "10:30")): the screen moved 533 px up under the finger at once
+FAIL JUMP [rail phone / Trip / Sightseeing from my hotel Arriving (flight, train or ship) L = port > May 10 ⚓ Vienna, Austria In port · Ashore null, all aboard n] "May 10 ⚓ Vienna, Austria In port · Ashore 10:30 am, all aboa": the screen moved 533 px up under the finger at once
+FAIL DEAD [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > More about today] "Athens Festival": nothing a traveler can see, hear or get happened
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > Change lunch] "Kuzina Modern Greek · 0.1 mi from Ancient Agora": the screen moved 144 px down under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > May 10 · Vienna, Austria] "Change dinner": the screen moved 2504 px down under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > May 11 · Vienna, Austria] "Tram 60 + 1 change · 45 min": the screen moved 114 px down under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > May 11 · Vienna, Austria] "Taxi or car · about 27 min": the screen moved 213 px up under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > Change lunch] "11:30 am": the screen moved 440 px down under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > Lock this day] "Mark booked": the screen moved 884 px down under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > More] "✨ Suggest my tour": the screen moved 50 px up under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > Change lunch] "1:00 pm": the screen moved 420 px down under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > Change lunch] "1:30 pm": the screen moved 456 px down under the finger at once
+FAIL JUMP [rail phone / Trip / + Add a port day > Port name, e.g. Kotor = Piraeus > Change lunch] "2:00 pm": the screen moved 236 px down under the finger at once
+   rail phone Trip: 262 presses, 63 with a failure, 674 s
+FAIL DEAD [rail phone / Day plan, land day (Vienna, Austria)] "Zoom in": nothing a traveler can see, hear or get happened
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria)] "Change dinner": the screen moved 3056 px down under the finger at once
+FAIL DEAD [rail phone / Day plan, land day (Vienna, Austria)] "Zoom out": nothing a traveler can see, hear or get happened
+FAIL DEAD [rail phone / Day plan, land day (Vienna, Austria)] "Show where I am on the map": nothing a traveler can see, hear or get happened
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria)] "Tram 60 + 1 change · 1 h 2 min": the screen moved 114 px down under the finger at once
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria)] "Change lunch": the screen moved 2008 px down under the finger at once
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / May 11 · Vienna, Austria] "Taxi or car · about 27 min": the screen moved 213 px up under the finger at once
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / More] "✨ Suggest my tour": the screen moved 340 px up under the finger once the screen settled
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / Change dinner] "Well Being next door to Vienna State Opera house": the screen moved 59 px down under the finger at once
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / Fit in Belvedere] "Or choose what to untick yourself": the screen moved 81 px up under the finger at once (the control itself moved)
+FAIL STUCK [rail phone / Day plan, land day (Vienna, Austria) / More about today] "Golden hour and photo spots · sunset 8:20 pm": still waiting 15 s later: Looking up viewpoints on the map…
+FAIL STUCK [rail phone / Day plan, land day (Vienna, Austria) / More about today] "Local know-how: etiquette, tipping, fair prices, scams": still waiting 15 s later: Reading the travel guides for …
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / Change lunch] "12:00 pm": the screen moved 80 px up under the finger at once
+FAIL DEAD [rail phone / Day plan, land day (Vienna, Austria) / More > ⠿ Change the order (drag the stops)] "Move Ernst-Happel-Stadion: drag, or use the up and down arro": nothing a traveler can see, hear or get happened
+FAIL DEAD [rail phone / Day plan, land day (Vienna, Austria) / More > ⠿ Change the order (drag the stops)] "Move Lunch: drag, or use the up and down arrow keys": nothing a traveler can see, hear or get happened
+FAIL DEAD [rail phone / Day plan, land day (Vienna, Austria) / More > ⠿ Change the order (drag the stops)] "Move Schönbrunn Palace: drag, or use the up and down arrow k": nothing a traveler can see, hear or get happened
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / More > ✨ Suggest my tour] "Walk · 14 min": the screen moved 812 px down under the finger at once
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / More > ✨ Suggest my tour] "Walk · 1 h 1 min": the screen moved 278 px up under the finger at once
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / More > ✨ Suggest my tour] "Walk · 12 min": the screen moved 200 px down under the finger at once
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / Change lunch > 1:30 pm] "Tram 60 + 1 change · 52 min": the screen moved 378 px up under the finger at once
+FAIL DEAD [rail phone / Day plan, land day (Vienna, Austria) / More > ⠿ Change the order (drag the stops)] "Move Vienna State Opera house: drag, or use the up and down ": nothing a traveler can see, hear or get happened
+FAIL DEAD [rail phone / Day plan, land day (Vienna, Austria) / More > ⠿ Change the order (drag the stops)] "Move Hofburg Palace: drag, or use the up and down arrow keys": nothing a traveler can see, hear or get happened
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / Change dinner > 6:00 pm > Wein & Co 0.1 mi from St. Stephen's Cathedral] "Ristorante Firenze Enoteca next door to St. Stephen's Cathed": the screen moved 80 px down under the finger at once
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / Change dinner > 6:00 pm > Wein & Co 0.1 mi from St. Stephen's Cathedral] "Kurkonditorei Oberlaa Café · 0.2 mi from St. Stephen's Cathe": the screen moved 80 px down under the finger at once
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / 9:00 am–6:00 pm 9 h ✎ > Light 2½ h > Keep my hours] "Tram 60 + 1 change · 59 min": the screen moved 74 px up under the finger at once
+FAIL DEAD [rail phone / Day plan, land day (Vienna, Austria) / More > ✨ Suggest my tour > OK] "Walk · 1 h 2 min": nothing a traveler can see, hear or get happened
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / Change dinner > 6:00 pm > Aida Café · 0.1 mi from St. Stephen's Cathedral] "Ristorante Firenze Enoteca next door to St. Stephen's Cathed": the screen moved 80 px down under the finger at once
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / Change dinner > 6:00 pm > Aida Café · 0.1 mi from St. Stephen's Cathedral] "Bus 10A + 3 changes · 58 min": the screen moved 114 px down under the finger at once
+FAIL JUMP [rail phone / Day plan, land day (Vienna, Austria) / Change dinner > 6:00 pm > Wein & Co 0.1 mi from St. Stephen's Cathedral] "Haas & Haas next door to St. Stephen's Cathedral": the screen moved 80 px down under the finger at once
+   rail phone Day plan, land day (Vienna, Austria): 330 presses, 29 with a failure, 647 s
+FAIL COVERED [rail phone / Choose sights, land day (Vienna, Austria)] "Home": a finger cannot reach it: div#dayChips.days "May 10 · Vienna, Austria May 11 · Vienna" lies over it
+FAIL COVERED [rail phone / Choose sights, land day (Vienna, Austria)] "kairoute": a finger cannot reach it: button.daychip "May 10 · Vienna, Austria" lies over it
+NOTE UNSTEADY [rail phone / Choose sights, land day (Vienna, Austria)] "Suggest my tour": on the first try only (not on a second, freshly opened app): JUMP, the screen moved 131 px up under the finger at once
