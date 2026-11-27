@@ -7477,7 +7477,7 @@ function renderTour(d) {
       ${nxt && nxt.type === "stop" && nxt.place.along ? `<div class="banner">On the way: <b>${esc(nxt.place.name)}</b>. ${esc(nxt.place.lookFor[0] || "")}</div>` : ""}
       <div class="audio"><button class="btn ghost" data-play="walk:${T.i}" data-label="▶ Hear what's next">▶ Hear what's next</button><span class="state" aria-live="polite"></span></div>
       <div class="actions tourmain">
-        ${prev && prev.place && KEngine.fin(prev.place.lat) && st.place && KEngine.fin(st.place.lat) ? `<a class="btn ghost" href="${dirLink(prev.place, st.place, st.leg)}" target="_blank" rel="noopener">Directions</a>` : ""}
+        ${prev && prev.place && KEngine.fin(prev.place.lat) && KEngine.fin(prev.place.lng) && st.place && KEngine.fin(st.place.lat) && KEngine.fin(st.place.lng) ? `<a class="btn ghost" href="${dirLink(prev.place, st.place, st.leg)}" target="_blank" rel="noopener">Directions</a>` : ""}
         <button class="btn bigbtn" data-act="tourhere">I'm here</button>
       </div></div>`;
   } else if (st.type === "start") {
