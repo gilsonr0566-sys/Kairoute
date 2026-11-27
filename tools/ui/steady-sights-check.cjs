@@ -53,10 +53,10 @@ const aboveMoved = (before, a, id) => Object.keys(before).filter(k => k[0] !== '
 const HEIGHTS = () => { const out = {}, seen = new Map();
   for (const e of document.querySelectorAll('#view .sitesmain [data-card], #view .sitesmain > *, #view .sitesmain .picksfold > *, #view .sitesmain [data-card] > .body > *')) {
     if (!e.offsetParent) continue; const b = e.getBoundingClientRect(); if (b.bottom <= 0 || b.top >= innerHeight) continue;
-    const base = e.dataset.card ? 'card ' + e.dataset.card : (e.closest('[data-card]') ? e.closest('[data-card]').dataset.card + ' .' : '') + (e.className || e.tagName).toString().split(' ')[0];
+    const base = e.dataset.card ? 'card ' + e.dataset.card + ' (' + String(e.className).replace(/\s+/g, '.') + ')' : (e.closest('[data-card]') ? e.closest('[data-card]').dataset.card + ' .' : '') + (e.className || e.tagName).toString().split(' ')[0];
     const n = (seen.get(base) || 0) + 1; seen.set(base, n); out[n > 1 ? base + '#' + n : base] = Math.round(b.height) + ' "' + (e.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40) + '"'; }
   return out; };
-const grew = (a, b) => Object.keys(a).filter(k => k in b && parseInt(a[k]) !== parseInt(b[k])).map(k => `${k} ${a[k]} -> ${b[k]}`).slice(0, 4).join('; ');
+const grew = (a, b) => Object.keys(a).filter(k => k in b && parseInt(a[k]) !== parseInt(b[k])).map(k => `${k} ${a[k]} -> ${b[k]}`).slice(0, 8).join('; ') + (Object.keys(a).filter(k => !(k in b)).length ? ' | gone: ' + Object.keys(a).filter(k => !(k in b)).slice(0, 4).join(', ') : '') + (Object.keys(b).filter(k => !(k in a)).length ? ' | new: ' + Object.keys(b).filter(k => !(k in a)).slice(0, 4).join(', ') : '');
 const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a[id] < 700).map(id => `${id} (was at ${a[id]})`); // vanished from mid-screen
 (async () => {
   const browser = await chromium.launch(); const srv = LIVE ? { url: FILE, close: () => {} } : await serve(FILE);

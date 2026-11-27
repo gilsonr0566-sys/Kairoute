@@ -127,6 +127,10 @@ main .wrap { padding-block: 20px 64px; display: grid; gap: 18px; }
 /* One fixed slot for the badge (Nov 23, steady list): "+25 min" turning into "Needs 1 h 5 min" or "On your plan · 12:47 pm"
    never changes how the sight's name wraps, so no card grows or shrinks and nothing below it moves. */
 .site .nrow > .fitbadge, .site .nrow > .fitbadge.tag { width: 10rem; flex: none; justify-content: center; text-align: center; white-space: normal; box-sizing: border-box; }
+/* ...and one fixed height: the slot always holds two lines, so "On your plan · 10:48 am" (two lines) turning into
+   "On your plan · 4:32 pm" (one) after a tick elsewhere never changes the card's height (Nov 27 live check: a card above
+   the tick shrank 14 px and every card below moved). */
+.site .nrow > .fitbadge, .site .nrow > .fitbadge.tag { line-height: 1.3; min-height: calc(2.6em + 6px); }
 button.tag.fitbadge { cursor: pointer; font: inherit; font-size: 0.74rem; font-weight: 700; }
 .site .l2 { color: var(--muted); font-size: 0.86rem; }
 .site .cdet { display: none; gap: 6px; margin-top: 4px; }
