@@ -9,7 +9,8 @@
 // pier (up to 4 a day): the sight is the traveler's only pick, the helper answers every ride to or from it with a ferry
 // that has no sailing times (as the map's ferries come), and the traveler taps the ferry on each of those rides. Then:
 //  - every such ride the plan makes is the ferry, never a taxi, and says no sailing times are confirmed;
-//  - the boat back to the ship holds an hour at the pier and says so;
+//  - the boat back to the ship holds an hour at the pier and says so, and, with a road home too, when to give up on the
+//    boat and take a taxi (from the taxi's own leave-by), so a last boat earlier than planned never costs the ship;
 //  - the plan never ends after the time to be back;
 //  - with real sailing times that miss the time needed, the chosen boat is refused with the reason (the sailing times
 //    found), never "Pick the boat yourself".
@@ -55,6 +56,10 @@ function run(E) {
               t(x.kind === 'ferry', `${f} day ${i + 1} ${s.name}: the ferry the traveler chose${back ? ' back to the ship' : ''} is planned as ${x.how || x.kind} (${note.slice(-160)})`);
               t(x.kind !== 'ferry' || /No sailing times are confirmed/.test(note), `${f} day ${i + 1} ${s.name}: the chosen ferry with no sailing times isn't said as not confirmed`);
               t(x.kind !== 'ferry' || !back || /Up to an hour at the pier/.test(note), `${f} day ${i + 1} ${s.name}: the chosen ferry back to the ship doesn't hold an hour at the pier`);
+              // With a road home too, the boat back says when to give up on it and take a taxi, from the taxi's own leave-by.
+              const tx = (x.options || []).find(o => o.kind === 'taxi'), m = note.match(/If there is no boat by (\d{1,2}:\d{2} [ap]m), take a taxi no later than (\d{1,2}:\d{2} [ap]m)/);
+              if (x.kind === 'ferry' && back && tx && E.fin(p.endBy)) { const by = E.clock(p.endBy - tx.min);
+                t(m ? m[2] === by : /A taxi back takes longer than the boat/.test(note), `${f} day ${i + 1} ${s.name}: the chosen ferry back has no taxi fallback timed from the taxi's own leave-by (${by}): ${note.slice(-200)}`); }
             } else { refused++;
               t(x.kind !== 'ferry' || !/No sailing times are confirmed/.test(note), `${f} day ${i + 1} ${s.name}: a chosen ferry with real sailing times is said as having none`); // planned on a real sailing (waiting for it), or refused
               t(!/Pick the boat yourself/.test(note), `${f} day ${i + 1} ${s.name}: the traveler chose the boat, yet the plan says "Pick the boat yourself"`);
@@ -78,6 +83,7 @@ if (require.main === module) {
   const PLANTS = [
     ['a chosen boat with no sailing times refused unless its words say "no sailing times are known" (E65)', '90-timeline.js', 'if (ownBoat && E.boatNoTimes(leg, win.date)) {', 'if (ownBoat && leg.source !== "timetable" || ownBoat && /no sailing times are known/.test(unsure)) {'],
     ['a refused chosen boat told to "pick the boat yourself"', '90-timeline.js', 'ownBoat ? "You chose the boat, but " + unsure + ", so this ride is planned by taxi to be back in time." : ', ''],
+    ['the chosen boat back with no taxi fallback', '90-timeline.js', 'const tx = backBoat ? (leg.options || []).find(o => o.kind === "taxi") : null', 'const tx = null'],
     ['a pick the guide lacks dropped in silence', '95-plan.js', 'if (!s) { unknownPicks++; continue; }', 'if (!s) continue;'],
   ];
   let blind = 0;
