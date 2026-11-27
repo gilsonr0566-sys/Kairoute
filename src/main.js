@@ -5101,7 +5101,7 @@ function coachDone() { coachStep = -1; try { localStorage.setItem("kairoute.intr
 // Re-renders of the same screen keep each panel where it was; toTop() sends them all back to the top.
 let paneMemo = { key: "", pos: {} };
 function panes() { return [document.getElementById("view"), ...document.querySelectorAll("#view .pane[data-pane]")].filter(Boolean); }
-function toTop() { window.scrollTo(0, 0); panes().forEach(el => { el.scrollTop = 0; }); }
+function toTop() { holdOff = renderNo; window.scrollTo(0, 0); panes().forEach(el => { el.scrollTop = 0; }); }
 // A redraw that only moves to another day or screen (or brings news that can't change a plan) keeps the plans
 // already made; any other redraw follows a change, so plans are made fresh (see planStore).
 // Speed: answers from the internet (rides, ratings, restaurants, weather, events, the guide's walk-throughs) often
@@ -5113,7 +5113,8 @@ if (typeof window !== "undefined") { const touched = () => { lastTouch = Date.no
   // The traveler's own hands only (a scroll the app makes itself after a redraw doesn't count).
   ["pointerdown", "touchstart", "touchmove", "wheel", "keydown", "click"].forEach(t => window.addEventListener(t, touched, { capture: true, passive: true }));
   // While a finger or the mouse button is down, a redraw would swap the button under it and the tap would be lost.
-  window.addEventListener("pointerdown", () => { pressing = true; }, { capture: true, passive: true });
+  window.addEventListener("pointerdown", e => { pressing = true; touchMark(e.target); }, { capture: true, passive: true });
+  ["change", "input"].forEach(t => window.addEventListener(t, e => touchMark(e.target), { capture: true, passive: true }));
   // A click also means the finger is up: a release the page never hears (the button under it redrawn away, a tap
   // the browser turned into a click on its own) must not leave every redraw and the offline check waiting forever.
   ["pointerup", "pointercancel", "click"].forEach(t => window.addEventListener(t, () => { pressing = false; lastTouch = Date.now(); }, { capture: true, passive: true })); }
@@ -5141,6 +5142,68 @@ function renderKeep() { const was = planKeep; planKeep = true; try { render(); }
 // position back afterwards undid that whenever something above the card had changed size, and the cards jumped
 // (Nov 27, Richard: "jumping again" once classic day trips and faster answers arrived while the page was open).
 let renderSpotted = false;
+// R-28 on every screen (Choose sights keeps its own card rule, viewSpot): the thing the traveler last touched stays
+// where it was on screen through every redraw of the same screen, the one its own tap causes and any later one. A
+// redraw swaps every piece of the page for a new one, so the thing is found again by what it is (its id, its data,
+// its name), else by the nearest piece around it that can be told apart. Where the page cannot scroll far enough to
+// make up for something above that went away or came in, the page keeps that much room until the screen is left
+// (Nov 27, every button pressed: the example trip's note went away on the first change to any day and every control
+// below it moved up 106 to 189 px from under the finger). A note at the top of a screen stays until the traveler
+// closes it or leaves the screen (tripNote): it never goes away as a side effect of a tap elsewhere.
+let touchEl = null, touchRef = null, holdOn = "", tripNote = false, holdRoom = { key: "", pane: "", top: 0, end: 0 }, holdOff = -1;
+const holdKeyOf = el => { const ds = Object.keys(el.dataset).filter(k => !/^press/.test(k)).sort().map(k => k + "=" + el.dataset[k]).join(","); return el.tagName + "|" + (el.id || "") + "|" + ds + "|" + (el.getAttribute("name") || "") + (el.id || ds ? "" : "|" + (el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 40)); };
+const holdAll = key => [...document.querySelectorAll("#view " + key.split("|")[0])].filter(o => holdKeyOf(o) === key);
+function touchMark(t) {
+  if (!t || !t.closest || !t.closest("#view")) return;
+  const el = t.closest("button, a, input, select, textarea, summary, label, [data-act], [role=button]") || t;
+  touchEl = el; touchRef = null;
+  try { const chain = []; for (let a = el; a && a.id !== "view" && chain.length < 5; a = a.parentElement) if (a === el || a.id || Object.keys(a.dataset).some(k => !/^press/.test(k))) { const key = holdKeyOf(a); chain.push([key, holdAll(key).indexOf(a)]); } touchRef = chain; } catch (e) {}
+}
+function touchSpot(pkey) {
+  if (!touchRef || !touchRef.length) return null;
+  const chain = [];
+  touchRef.forEach(([key, n], i) => { const a = i === 0 && touchEl && touchEl.isConnected ? touchEl : holdAll(key)[n]; if (a && a.offsetParent) chain.push([key, n, a.getBoundingClientRect().top, a]); });
+  if (!chain.length) return null;
+  { const r = chain[0][3].getBoundingClientRect(); if (!r.height || r.bottom < 0 || r.top > innerHeight) return null; } // scrolled out of sight: nothing to keep under the finger
+  for (let a = chain[0][3]; a && a.id !== "view"; a = a.parentElement) if (/sticky|fixed/.test(getComputedStyle(a).position)) return null; // pinned things do not scroll
+  const no = renderNo;
+  let pre = null, after = null;
+  const scroller = nx => { let p = nx.parentElement; while (p && p !== document.body && !(p.scrollHeight > p.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(p).overflowY))) p = p.parentElement; return p && p !== document.body && p !== document.documentElement ? p : null; };
+  const at = p => (p ? p.scrollTop : window.scrollY);
+  const run = again => {
+    if (holdOff === no) return 0; // the app has since scrolled on purpose (to the top, to what the tap opened)
+    for (const [key, n, top] of chain) {
+      const nx = holdAll(key)[n]; if (!nx || !nx.offsetParent) continue;
+      const p = scroller(nx);
+      // Later in the same frame: only when the page is where this left it, or where it was before the redraw (a
+      // caller that put the old position back); anywhere else, the app scrolled on purpose and that stands.
+      if (again && Math.abs(at(p) - after) > 1 && Math.abs(at(p) - pre) > 1) return 0;
+      let dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) > innerHeight * 2) return 0; // not the same thing any more
+      if (Math.abs(dy) >= 1) { if (p) p.scrollTop += dy; else window.scrollBy(0, dy); }
+      let left = nx.getBoundingClientRect().top - top;
+      if (Math.abs(left) >= 1) {
+        if (holdRoom.key !== pkey) holdRoom = { key: pkey, pane: "", top: 0, end: 0 };
+        holdRoom.pane = p ? p.dataset.pane || "view" : "";
+        if (left < 0) holdRoom.top += Math.ceil(-left); else holdRoom.end += Math.ceil(left);
+        placeHoldRoom(); if (left > 0) { if (p) p.scrollTop += left; else window.scrollBy(0, left); }
+        left = nx.getBoundingClientRect().top - top;
+      }
+      after = at(p); return left;
+    }
+    return 0;
+  };
+  return { run, before: () => { pre = at(scroller(chain[0][3])); } };
+}
+function placeHoldRoom() {
+  const host = holdRoom.pane && holdRoom.pane !== "view" ? document.querySelector(`#view .pane[data-pane="${CSS.escape(holdRoom.pane)}"]`) : document.getElementById("view"); if (!host) return;
+  for (const [at, h] of [["top", holdRoom.top], ["end", holdRoom.end]]) {
+    let sp = host.querySelector(`:scope > .holdroom[data-at="${at}"]`);
+    if (!h) { if (sp) sp.remove(); continue; }
+    if (!sp) { sp = document.createElement("div"); sp.className = "holdroom"; sp.dataset.at = at; sp.setAttribute("aria-hidden", "true"); sp.style.cssText = "flex:none;pointer-events:none"; }
+    sp.style.height = h + "px";
+    if (at === "top") { if (host.firstElementChild !== sp) host.insertBefore(sp, host.firstElementChild); } else if (host.lastElementChild !== sp) host.appendChild(sp);
+  }
+}
 function redrawStill(keep) { const y = window.scrollY; if (keep) renderKeep(); else render(); if (!renderSpotted && Math.abs(window.scrollY - y) > 1) window.scrollTo(0, y); }
 function render() {
   renderNo++; if (!planKeep) planGen++;
@@ -5170,7 +5233,13 @@ function render() {
   // ticked, else the first card in view, stays where it was on screen (R-28; Nov 24 gate, Vienna: a badge above grew
   // to two lines 1-2 s after a tick and pushed the ticked card down 12 px).
   const spot = view === "sites" && paneMemo.key === pkey ? viewSpot() : null;
+  // Every other screen: what the traveler last touched stays where it was (R-28).
+  // The Trip page is one screen whichever day is open in it.
+  const hkey = view === "trip" ? "trip" : pkey, hold = view !== "sites" && holdOn === hkey ? touchSpot(hkey) : null; if (hold) hold.before(); holdOn = hkey;
+  if (holdRoom.key !== hkey) holdRoom = { key: "", pane: "", top: 0, end: 0 };
+  if (view !== "trip") tripNote = false;
   renderView();
+  if (holdRoom.key === hkey) placeHoldRoom();
   if (sideMin) { const sd = document.querySelector("#view .sitesside"); if (sd) sd.style.minHeight = sideMin + "px"; }
   if (view === "sites") { if (listRoomKey !== pkey || !sideMin) { listRoom = 0; listRoomKey = pkey; } else if (listRoom) placeRoom(); }
   { const v = document.getElementById("view"), app = !FULL_VIEWS[view] || /^(settings|privacy|terms)$/.test(view);
@@ -5194,8 +5263,9 @@ function render() {
   centerChip(); shownFp = viewFp(); pinChip();
   // After the pinned strip has its spacer back, and once more just before the screen is drawn: pieces filled in right
   // after the redraw (answers already at hand, delivered a moment later) can still change what is above the card.
-  renderSpotted = !!spot;
+  renderSpotted = !!spot || !!hold;
   if (spot) { spot(); requestAnimationFrame(spot); }
+  if (hold) { hold.run(); requestAnimationFrame(() => hold.run(true)); }
   seedSoon();
 }
 // Speed: a new trip's days get their starting picks in the background, one day at a time while the app is idle,
@@ -6112,7 +6182,7 @@ function renderTrip(d) {
   const points = pointList(city, listKey);
   const pointWord = t === "port" || t === "embark" ? "Cruise terminal" : t === "arrival" ? "Arriving at" : "Leaving from";
   return `
-  ${trip.sample && !trip.bannerSeen ? `<div class="banner"><span>${trip.example ? "This is an example trip, to show how Kairoute works: Athens, the 11-night Sun Princess cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Its flight, hotel and train times are examples. Tap a day to change it, or plan your own trip from Home." : `This is your Sun Princess trip: Athens, the 11-night cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Ports and times come from your booking; all-aboard is set 30 minutes before sailing. Flight, hotel and train times are my guesses, so tap a day to change them.`}</span><button class="btn ghost small" data-act="gotit" style="white-space:nowrap">Got it</button></div>` : ""}
+  ${!trip.bannerSeen && (trip.sample || tripNote) && (tripNote = true) ? `<div class="banner"><span>${trip.example ? "This is an example trip, to show how Kairoute works: Athens, the 11-night Sun Princess cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Its flight, hotel and train times are examples. Tap a day to change it, or plan your own trip from Home." : `This is your Sun Princess trip: Athens, the 11-night cruise from Piraeus on July 4, 2027, then Barcelona and Madrid. Ports and times come from your booking; all-aboard is set 30 minutes before sailing. Flight, hotel and train times are my guesses, so tap a day to change them.`}</span><button class="btn ghost small" data-act="gotit" style="white-space:nowrap">Got it</button></div>` : ""}
   ${stopsBanner()}
   ${shipTimesBanner()}
   ${changeCard()}

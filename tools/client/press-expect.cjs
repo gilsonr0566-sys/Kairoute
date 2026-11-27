@@ -17,10 +17,21 @@ exports.expect = (c, r, rec, ctx) => { if (!r || !r.after || (rec.fails || []).s
 // Controls that rightly scroll the screen to what they open or to the app's answer (a new form, a new step, a message at
 // the top). Any other control that scrolls the screen by itself is a JUMP. [what matches, why].
 const SCROLLS = [
-  [c => /(^|,)ts=(addstay|addcruise)/.test(c.data), 'a new stop is added and its first field is brought to the middle of the screen'],
+  [c => /(^|,)ts=(addstay|addcruise)/.test(c.data), 'a new stop is added and its first field is brought to the middle of the screen', 'opens'],
+  [(c, x) => x && x.view === 'wizard' && (c.act === 'wizmore' || /^Build my trip$/.test(c.label)), 'the new-trip form says what is missing at its top and the page goes there', 'opens'],
   [(c, x) => x && x.view === 'trip' && /(^|,)day=\d+/.test(c.data) && !c.act, 'on the Trip page a day tapped in the list is opened in the form below it'],
+  [c => c.act === 'mealopen' || c.act === 'bookopen', 'the card to change a meal, or to enter a reservation, opens above the day\'s list and the page goes to it', 'opens'],
+  [c => /(^|,)jump=/.test(c.data), 'in the Guide, Next and the stop list open that stop\'s chapter from its top', 'opens'],
+  [c => c.act === 'suggest', 'Suggest my tour answers in a note and the page goes to the note'],
+  [(c, x, r) => c.kind === 'fold' && (r.scrolls || []).some(s => /placeMenu/.test(s)), 'a menu too tall to fit above or below its button: the page moves just enough for the whole menu to show under it'],
 ];
 exports.SCROLLS = SCROLLS;
-exports.scrollsTo = (c, x) => SCROLLS.some(s => { try { return s[0](c, x); } catch (e) { return false; } });
+// Returns '' (not listed), 'scroll' (the app may scroll to it) or 'opens' (it opens a card elsewhere on the page and goes there).
+exports.scrollsTo = (c, x, r) => { for (const s of SCROLLS) { try { if (s[0](c, x, r || {})) return s[2] || 'scroll'; } catch (e) {} } return ''; };
 // Action names that cannot be pressed in a test, each with the reason. Reported as NOT TESTED, never as a pass.
 exports.CANNOT = {};
+// Action names that may rightly show nothing at the moment they are pressed, each with the reason. Listed in the report
+// under what the control did; a control not listed here that shows nothing is DEAD.
+exports.QUIET = {
+  filmreplay: 'Replay starts the intro film again; the film is moving pictures, and no words on the screen change, which is all this check can see',
+};
