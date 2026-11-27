@@ -33,7 +33,7 @@
 //
 // Usage: node tools/client/press-all.cjs [beta2-site/index.html | https://gilsonr0566-sys.github.io/Kairoute-Beta2/]
 //   TRIPS=first,example,during,rail,port,ferry,group,odd   SIZES=phone,tablet   ROOTS=plan,sites (name parts)
-//   PART=1/4 (split the screens)   MAXDEPTH=4   OUT=press-out   POOL=3   PLANT=dead|jump|error|covered|wide
+//   PART=1/4 (split the screens)   MAXDEPTH=4   OUT=press-out   POOL=3   PLANT=dead|jump|error|covered|wide|broken|untrue   ONLY=<regex on action or label>
 // Exit 1 on any failure. Writes OUT/<trip>-<size>[-part].json (every press) and OUT/summary.md.
 const { chromium } = require('playwright'); const fs = require('fs'), path = require('path'), http = require('http');
 const ARG = process.argv[2] || 'beta2-site/index.html', LIVE = /^https?:/.test(ARG), ROOT = path.join(__dirname, '..', '..');
@@ -43,10 +43,12 @@ const SIZES = { phone: { viewport: { width: 412, height: 915 } }, tablet: { view
 const PICK = (process.env.SIZES || 'phone,tablet').split(','), TRIPS = (process.env.TRIPS || 'first,example,during,rail,port,ferry,group,odd').split(',');
 const ONLYROOT = (process.env.ROOTS || '').split(',').filter(Boolean), PART = (process.env.PART || '1/1').split('/').map(Number);
 const MAXDEPTH = +(process.env.MAXDEPTH || 4), POOL = +(process.env.POOL || 3), PLANT = process.env.PLANT || '', MAXROOT = +(process.env.MAXROOT || 700);
+const ONLY = process.env.ONLY ? new RegExp(process.env.ONLY, 'i') : null; // press only controls whose action or label matches (the proof runs)
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const CORPUS = path.join(ROOT, 'tools', 'beta2', 'corpus');
 // The helper's free paths (no AI, no paid lookups). Everything else on the helper is refused (zero spend).
-const FREE = new Set(['/sources', '/famous', '/ground', '/places', '/transit', '/route', '/departures', '/ferries', '/weather', '/facts', '/osm', '/findplace', '/nearsights', '/verify', '/bookcheck', '/voyage', '/x/near', '/climb', '/daytrips', '/geocode', '/find', '/pier', '/hours', '/names', '/en']);
+const FREE = new Set(['/sources', '/famous', '/ground', '/places', '/transit', '/route', '/roadway', '/departures', '/ferries', '/weather', '/facts', '/osm', '/findplace', '/nearsights', '/bookcheck', '/voyage', '/x/near', '/islands', '/events', '/ratings']);
+// Refused on the live helper: AI (/identify, /sample, /script, /speak, /voiceplan, /verify), anything that may cost (/grating) and anything that writes to it (/rate, /sync, /realuse).
 
 function serve(file) { const dir = path.dirname(file), name = path.basename(file);
   return new Promise(res => { const s = http.createServer((q, r) => { const u = decodeURIComponent(q.url.split('?')[0]);
@@ -189,6 +191,7 @@ const PROBE = ([seed, first, plant]) => {
     if (plant === 'jump') document.addEventListener('change', e => { if (e.target.matches && e.target.matches('input[type=checkbox][id^="s-"]')) { const v = document.getElementById('view'); const d = document.createElement('div'); d.style.height = '160px'; d.className = 'planted'; v.insertBefore(d, v.firstChild); } }, true);
     if (plant === 'covered') { const d = document.createElement('div'); d.style.cssText = 'position:fixed;left:0;right:0;bottom:0;height:42%;z-index:99999;background:rgba(0,0,0,.01)'; d.className = 'plantedcover'; const put = () => { if (!document.querySelector('.plantedcover') && /sites/.test((window.__kairouteState && window.__kairouteState().view) || '')) document.body.appendChild(d); else if (document.querySelector('.plantedcover') && !/sites/.test((window.__kairouteState && window.__kairouteState().view) || '')) d.remove(); }; setInterval(put, 200); }
     if (plant === 'wide') document.addEventListener('click', e => { if (e.target.closest && e.target.closest('summary')) { const d = document.createElement('div'); d.style.cssText = 'width:900px;height:4px'; (document.getElementById('view') || document.body).appendChild(d); } }, true);
+    if (plant === 'untrue') document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-act="mealopen"]')) setTimeout(() => { const v = document.getElementById('view'); const p = document.createElement('p'); p.textContent = "I couldn't find any place to eat near here."; v.insertBefore(p, v.firstChild); }, 60); }, true);
     if (plant === 'broken') document.addEventListener('click', e => { if (e.target.closest && e.target.closest('[data-act="hrsopen"]')) setTimeout(() => { const h = document.querySelector('#view h2, #view h1, #view .dayhead'); if (h) h.append(' undefined'); }, 50); }, true);
   });
 };
@@ -207,7 +210,7 @@ async function makeLane(browser, base, size, def, snapshotRef, helper) {
     if (/workers\.dev$/.test(u.hostname) || /^helper\.test$/.test(u.hostname)) { const p = u.pathname;
       if (req.method() === 'OPTIONS') return r.fulfill({ status: 204, headers: cors });
       if (p === '/status') return r.fulfill({ contentType: 'application/json', headers: cors, body: JSON.stringify({ ok: true, on: false, left: 0, budget: 0 }) });
-      if (p.startsWith('/x/group') || p.startsWith('/x/sync')) { const o = await helper(url, req.method(), req.postData()); return r.fulfill({ status: o.status, contentType: 'application/json', headers: cors, body: o.body }); }
+      if (p.startsWith('/x/group')) { const o = await helper(url, req.method(), req.postData()); return r.fulfill({ status: o.status, contentType: 'application/json', headers: cors, body: o.body }); }
       if (LIVE && (FREE.has(p) || (p === '/guide' && req.method() === 'GET'))) { const key = req.method() + ' ' + url + ' ' + (req.postData() || '');
         if (!helper.memo.has(key)) helper.memo.set(key, (async () => { try { const a = await ctx.request.fetch(req, { timeout: 30000 }); return { status: a.status(), headers: Object.assign({}, a.headers(), cors), body: await a.body() }; } catch (e) { return null; } })());
         const a = await helper.memo.get(key); lane.net[p] = (lane.net[p] || 0) + 1; if (!a) { helper.memo.delete(key); return r.abort(); } return r.fulfill(a); }
@@ -420,7 +423,7 @@ async function walk(browser, base, size, tripName, helper) {
       if (process.env.VERBOSE) console.log(`   . ${root.name} state [${state.steps.map(s => s.c.label).join(' > ')}]: ${list.length} controls`);
       const fresh = list.filter(c => { const k = c.sig + '#' + c.n; if (state.base && state.base.has(k)) return false; if (seen.has(k)) return false; seen.add(k); return true; });
       const jobs = [];
-      for (const c of fresh) {
+      for (const c of fresh) { if (ONLY && !ONLY.test(c.act) && !ONLY.test(c.label)) continue;
         if (c.chrome && !state.steps.length) { const k = (root.view || 'lobby') + '|' + c.sig + '#' + c.n; if (chromeSeen.has(k)) { recs.push({ trip: tripName, size, root: root.name, screen: root.label, path: [], label: c.label, act: c.act, data: c.data, kind: c.kind, same: true, did: ['same bar as on the first screen of this kind: pressed there'], fails: [] }); continue; } chromeSeen.add(k); }
         if (c.off) { recs.push({ trip: tripName, size, root: root.name, screen: root.label, path: state.steps.map(s => s.c.label), label: c.label, act: c.act, data: c.data, kind: c.kind, off: true, did: ['greyed out: cannot be pressed'], fails: [] }); continue; }
         const vals = c.kind === 'select' ? (c.opts.length <= 8 ? c.opts : [...new Set([c.opts[0], c.opts[1], c.opts[Math.floor(c.opts.length / 2)], c.opts[c.opts.length - 2], c.opts[c.opts.length - 1]])]).filter(v => v !== c.val || c.opts.length === 1)
@@ -486,6 +489,13 @@ async function walk(browser, base, size, tripName, helper) {
   for (const size of PICK) for (const t of TRIPS) { if (!TRIPDEF[t]) { console.log('NOT TESTED no such trip: ' + t); process.exitCode = 1; continue; }
     try { all = all.concat(await walk(browser, base, size, t, helper)); } catch (e) { console.log(`NOT TESTED [${t} ${size}] the walk stopped: ${String(e.message).split('\n')[0]}`); all.push({ trip: t, size, root: '-', screen: '-', path: [], label: '(walk)', did: [], fails: [['ERROR', 'the walk stopped: ' + String(e.message).split('\n')[0]]], harness: true }); } }
   await browser.close(); if (srv) srv.close();
+  // LINK (live runs): every outside page the app offered is asked for once; "page not found" or "no such site" fails.
+  if (LIVE) { const urls = new Map(); for (const r of all) for (const u of [r.href, ...(r.popups || [])]) if (/^https?:\/\//.test(u || '') && !u.startsWith(base)) { const k = u.split('#')[0]; if (!urls.has(k)) urls.set(k, r); }
+    const list = [...urls.entries()].slice(0, 400); let bad = 0;
+    await Promise.all(list.map(async ([u, r], i) => { await sleep(i * 150); let st = 0, err = '';
+      for (const method of ['HEAD', 'GET']) { try { const a = await fetch(u, { method, redirect: 'follow', signal: AbortSignal.timeout(20000), headers: { 'user-agent': 'Mozilla/5.0 (link check)', accept: 'text/html,*/*' } }); st = a.status; if (st < 400 || ![403, 405, 501].includes(st)) break; } catch (e) { err = String(e.cause && e.cause.code || e.name || e.message); st = 0; } }
+      if (st === 404 || st === 410 || /ENOTFOUND|ERR_NAME|EAI_AGAIN/.test(err)) { bad++; const rec = Object.assign({}, r, { label: r.label, did: ['link: ' + u], fails: [['LINK', 'the page it opens does not exist (' + (st || err) + '): ' + u.slice(0, 140)]], linkOnly: true }); all.push(rec); try { const f = path.join(OUT, 'links.json'); const prev = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : { trip: 'links', label: 'Links the app offers', size: PICK.join('+'), live: true, url: base, recs: [] }; prev.recs.push(rec); fs.writeFileSync(f, JSON.stringify(prev)); } catch (e) {} console.log(`FAIL LINK [${r.trip} ${r.size} / ${r.screen}] "${r.label}": the page it opens does not exist (${st || err}): ${u.slice(0, 140)}`); } }));
+    console.log(`   links the app offered: ${list.length} asked for, ${bad} do not exist`); }
   const pressed = all.filter(r => !r.same && !r.off && !r.skip && !r.notpressed), failed = all.filter(r => (r.fails || []).some(f => f[0] !== 'UNSTEADY'));
   console.log(`\nEvery button pressed: ${pressed.length} presses on ${new Set(all.map(r => r.trip + r.size + r.root)).size} screens; ${failed.length} with a failure; ${all.filter(r => r.off).length} greyed out; ${all.filter(r => r.notpressed).length} screens cut short`);
   if (failed.length || all.some(r => r.notpressed)) process.exitCode = 1;
