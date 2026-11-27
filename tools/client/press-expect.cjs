@@ -14,5 +14,12 @@ exports.RULES = RULES;
 exports.expect = (c, r, rec, ctx) => { if (!r || !r.after || (rec.fails || []).some(f => /COVERED|DEAD|ERROR/.test(f[0]))) return '';
   for (const R of RULES) { let m = false; try { m = R.match(c, ctx); } catch (e) {} if (!m) continue; let ok = false; try { ok = R.test(c, r, rec, ctx); } catch (e) { ok = false; } rec.rule = R.name; if (!ok) return 'should ' + R.should; return ''; }
   return ''; };
+// Controls that rightly scroll the screen to what they open or to the app's answer (a new form, a new step, a message at
+// the top). Any other control that scrolls the screen by itself is a JUMP. [what matches, why].
+const SCROLLS = [
+  [c => /(^|,)ts=(addstay|addcruise)/.test(c.data), 'a new stop is added and its first field is brought to the middle of the screen'],
+];
+exports.SCROLLS = SCROLLS;
+exports.scrollsTo = c => SCROLLS.some(s => { try { return s[0](c); } catch (e) { return false; } });
 // Action names that cannot be pressed in a test, each with the reason. Reported as NOT TESTED, never as a pass.
 exports.CANNOT = {};

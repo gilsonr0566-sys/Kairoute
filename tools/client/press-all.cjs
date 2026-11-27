@@ -175,7 +175,9 @@ const PROBE = ([seed, first, plant]) => {
     for (const dy of [28, 60, 100, 150, 220]) for (const xx of [x, innerWidth / 2, innerWidth * 0.25]) { const yy = y - dy; if (yy < 4) continue; let h = document.elementFromPoint(xx, yy); if (!h || h === document.body || h === document.documentElement || h.id === 'view' || e.contains(h) || h.contains(e) || pinned(h)) continue; if (h.getBoundingClientRect().height > innerHeight * 0.6) continue; h.setAttribute('data-press-anchor', '1'); const key = h.tagName + '|' + norm(h.textContent).slice(0, 80); let k = 0; for (const o of document.querySelectorAll(h.tagName)) { if (o === h) break; if (o.tagName + '|' + norm(o.textContent).slice(0, 80) === key) k++; } P.anchorKey = [key, k]; return; } P.anchorKey = null; };
   // The same thing after a redraw replaced it: found again by what it is and says.
   P.anchorNow = () => { let a = document.querySelector('[data-press-anchor]'); if (a && a.isConnected) return a; if (!P.anchorKey) return null; let k = 0; for (const o of document.querySelectorAll(P.anchorKey[0].split('|')[0])) if (o.tagName + '|' + norm(o.textContent).slice(0, 80) === P.anchorKey[0]) { if (k === P.anchorKey[1]) return o; k++; } return null; };
-  P.where = (sig, n) => { let e = document.querySelector('[data-press-me]'); if (!e || !e.isConnected) e = null; const same = !!e; if (!e) e = P.find(sig, n); if (!e) { const a = P.anchorNow(); return a && vis(a) ? { top: 0, left: 0, same: false, shown: false, anchor: a.getBoundingClientRect().top } : null; } const r = e.getBoundingClientRect(); const a = P.anchorNow(); return { top: r.top, left: r.left, same, shown: vis(e), anchor: a && vis(a) ? a.getBoundingClientRect().top : null }; };
+  P.where = (sig, n) => { let e = document.querySelector('[data-press-me]'); if (!e || !e.isConnected) e = null; const same = !!e; if (!e) e = P.find(sig, n); if (!e) { const a = P.anchorNow(); return a && vis(a) ? { top: 0, left: 0, same: false, shown: false, sy: P.sy(), anchor: a.getBoundingClientRect().top } : null; } const r = e.getBoundingClientRect(); const a = P.anchorNow(); return { top: r.top, left: r.left, same, shown: vis(e), sy: P.sy(), anchor: a && vis(a) ? a.getBoundingClientRect().top : null }; };
+  // How far the part of the screen the traveler scrolls is scrolled (the page on a phone, the list pane on a tablet).
+  P.sy = () => { const ps = [...document.querySelectorAll('.pane, main, #view, dialog[open], .sheet')].filter(x => x.scrollHeight > x.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(x).overflowY)); return Math.round(scrollY + ps.reduce((a, x) => a + x.scrollTop, 0)); };
   P.hash = () => { let h = 2166136261, n = 0; try { const keys = []; for (let i = 0; i < ls.length; i++) keys.push(ls.key(i)); keys.sort(); for (const k of keys) { const v = ls.getItem(k) || ''; n += v.length; const step = v.length > 20000 ? 97 : 1; for (let i = 0; i < v.length; i += step) h = Math.imul(h ^ v.charCodeAt(i), 16777619); h = Math.imul(h ^ k.length, 16777619); } } catch (e) {} return (h >>> 0) + ':' + n; };
   P.unmark = () => document.querySelectorAll('[data-press-me], [data-press-anchor]').forEach(e => { e.removeAttribute('data-press-me'); e.removeAttribute('data-press-anchor'); });
   P.look = () => { const st = (() => { try { const s = window.__kairouteState(); return { view: s.view, busy: s.busy, err: s.err }; } catch (e) { return {}; } })();
@@ -285,7 +287,7 @@ async function doPress(lane, c, value, quietMax, enter, fill) { const p = lane.p
   if (aim.gone) return { gone: true };
   if (aim.covered) return { covered: aim.covered };
   await sleep(120);
-  const aim2 = await p.evaluate(([s, n]) => { const w = window.__press.where(s, n); return w; }, [c.sig, c.n]); const top0 = aim2 ? aim2.top : aim.top, anchor0 = aim2 ? aim2.anchor : null;
+  const aim2 = await p.evaluate(([s, n]) => { const w = window.__press.where(s, n); return w; }, [c.sig, c.n]); const top0 = aim2 ? aim2.top : aim.top, anchor0 = aim2 ? aim2.anchor : null, sy0 = aim2 ? aim2.sy : 0;
   const y = aim.y + (top0 - aim.top);
   const before = await p.evaluate(() => { const P = window.__press; P.fx.length = 0; P.errs.length = 0; P.t0 = performance.now(); return P.look(); });
   lane.popups = []; lane.dialogs = []; lane.downloads = 0; lane.pageerrs = []; const url0 = p.url(); const t0 = Date.now();
@@ -312,7 +314,7 @@ async function doPress(lane, c, value, quietMax, enter, fill) { const p = lane.p
   if (after.spin.length) { const end = Date.now() + 15000; while (Date.now() < end) { await sleep(1000); const s = await p.evaluate(() => window.__press.look().spin).catch(() => []); if (!s.length) { after = await p.evaluate(() => window.__press.look()); after.spun = true; break; } } }
   const pos2 = await p.evaluate(([s, n]) => window.__press.where(s, n), [c.sig, c.n]).catch(() => null);
   const more = await p.evaluate(() => ({ fx: window.__press.fx.slice(), errs: window.__press.errs.slice(), shift: window.__press.shifts.filter(s => s.t >= window.__press.t0 + 500 && !s.input).reduce((a, s) => a + s.v, 0) })).catch(() => ({ fx: [], errs: [], shift: 0 }));
-  return { how, ms: Date.now() - t0, before, after, top0, anchor0, pos1, pos2, fx: more.fx, errs: [...new Set([...more.errs, ...lane.pageerrs])], shift: more.shift, popups: lane.popups.slice(), dialogs: lane.dialogs.slice(), downloads: lane.downloads, navigated };
+  return { how, ms: Date.now() - t0, before, after, top0, anchor0, sy0, pos1, pos2, fx: more.fx, errs: [...new Set([...more.errs, ...lane.pageerrs])], shift: more.shift, popups: lane.popups.slice(), dialogs: lane.dialogs.slice(), downloads: lane.downloads, navigated };
 }
 
 // What the press did, in a traveler's words, and which rules it broke.
@@ -361,7 +363,12 @@ function judge(c, r, ctx) { const out = { did: [], fails: [], notes: [] };
   const sameScreen = a.view === b.view && a.over === b.over && !r.navigated && !ctx.enter; // Enter sends the form: the app may rightly go to its answer
   for (const [pos, when] of [[r.pos1, 'at once'], [r.pos2, 'once the screen settled']]) { if (!sameScreen || !pos) continue;
     const dy = r.anchor0 != null ? (pos.anchor != null ? Math.round(pos.anchor - r.anchor0) : 0) : (pos.shown && r.top0 != null ? Math.round(pos.top - r.top0) : 0);
-    if (Math.abs(dy) > 48) { out.jump = dy; out.fails.push(['JUMP', 'the screen moved ' + Math.abs(dy) + ' px ' + (dy > 0 ? 'down' : 'up') + ' under the finger ' + when + (r.anchor0 != null ? '' : ' (the control itself moved)')]); break; } }
+    if (Math.abs(dy) <= 48) continue;
+    // Two ways a screen moves: the app scrolled it (allowed only for a control listed in press-expect.cjs as scrolling
+    // to what it opens, and then what it opened must be on screen), or things on the page moved under the finger.
+    const scrolled = Math.round((pos.sy || 0) - (r.sy0 || 0)), byLayout = dy + scrolled, self = Math.abs(byLayout) <= 48;
+    if (self && X.scrollsTo(c)) { out.notes.push('the app scrolls ' + Math.abs(dy) + ' px to show what this opened'); break; }
+    out.jump = dy; out.fails.push(['JUMP', (self ? 'the app scrolled the screen by itself, ' : 'things on the screen moved ') + Math.abs(self ? dy : byLayout) + ' px ' + ((self ? dy : byLayout) > 0 ? 'down' : 'up') + ' under the finger ' + when + (r.anchor0 != null ? '' : ' (the control itself moved)')]); break; }
   if (c.kind !== 'field' && c.kind !== 'pick' && c.kind !== 'select' && c.kind !== 'range' && (c.w < 24 || c.h < 24) && !c.inMap) out.notes.push('small target: ' + c.w + ' x ' + c.h + ' px');
   return out; }
 
