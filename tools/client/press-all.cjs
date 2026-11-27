@@ -64,7 +64,9 @@ function serve(file) { const dir = path.dirname(file), name = path.basename(file
 // A saved test trip as the app keeps it on the device.
 function appTrip(name, c) {
   const days = c.days.map(d => { const x = Object.assign({}, d); delete x.i; delete x.sites; delete x.wx; delete x.missing; delete x.order;
-    x.cityKey = d.city; x.destination = d.city && c.cities[d.city] ? c.cities[d.city].name : d.destination || ''; return x; });
+    for (const k of ['portArrive', 'allAboard', 'boardAt']) if (typeof x[k] === 'number') x[k] = String(Math.floor(x[k] / 60)).padStart(2, '0') + ':' + String(x[k] % 60).padStart(2, '0'); else if (x[k] == null) delete x[k]; // the saved test trips keep minutes; the app keeps clock times
+    for (const k of ['lodging', 'point', 'booked', 'locked', 'thru', 'order', 'only', 'mealAt', 'mealPrefs']) if (x[k] == null || typeof x[k] === 'object') delete x[k];
+    x.cityKey = d.city; x.destination = d.city && c.cities[d.city] ? c.cities[d.city].name : d.typed || d.destination || ''; return x; });
   return { trip: { id: 'press-' + name, name: c.name || name, style: c.style || 'mix', active: 0, days, lodging: {}, journal: {}, prefs: c.prefs || {}, legModes: c.legModes || {} }, cities: c.cities };
 }
 const corpus = n => appTrip(n, JSON.parse(fs.readFileSync(path.join(CORPUS, n + '.json'), 'utf8')));
@@ -89,9 +91,12 @@ const TRIPDEF = {
   first: { label: 'First open, no trip yet (intro, new trip steps, example offer)', seed: null, first: true },
   example: { label: 'The example trip: 21 days, cruise port days, a train day, flights (before the trip)', seed: null },
   during: { label: 'The example trip on a port day, 10:40 am, ashore in Heraklion (countdown, live controls)', seed: null, clock: '2027-07-05T10:40:00+03:00', only: /plan|guide|tour|trip$|lobby/ },
-  rail: { label: 'Rail trip: Vienna by train (saved test trip)', seed: () => corpus('g02-vienna'), only: /plan|sites|guide|tour|trip$/ },
-  port: { label: 'Cruise port day: Kotor (saved test trip, pier not yet chosen)', seed: () => corpus('g09-kotor'), only: /plan|sites|guide|tour|trip$/ },
-  ferry: { label: 'Boat day: Naples, Capri and Sorrento (saved test trip)', seed: () => corpus('f01-naples-capri'), only: /plan|sites|guide|tour|trip$/ },
+  rail: { label: 'Rail trip: Vienna then Prague by train' + (LIVE ? ' (entered in the app\'s own new-trip form)' : ' (saved test trip: Vienna)'), seed: () => corpus('g02-vienna'),
+    legs: [{ k: 'stay', place: 'Vienna', date: '2027-06-14', nights: 2, hotel: 'Hotel Sacher', inBy: 'train', inAt: '11:00' }, { k: 'stay', place: 'Prague', date: '2027-06-16', nights: 2, inBy: 'train', leaveAt: '09:10', inAt: '13:20', homeBy: 'train', homeAt: '15:00' }], only: /plan|sites|guide|tour|trip$/ },
+  port: { label: LIVE ? 'Cruise: Athens, Kotor (tender), Naples, ends in Barcelona (entered in the app\'s own new-trip form)' : 'Cruise port day: Kotor (saved test trip, pier not yet chosen)', seed: () => corpus('g09-kotor'),
+    legs: [{ k: 'cruise', board: 'Athens', ship: 'Sun Princess', date: '2027-07-04', aboard: '17:00', inBy: 'flight', inAt: '09:30', ports: [{ date: '2027-07-06', place: 'Kotor', arrive: '08:00', aboard: '17:00', tender: true }, { date: '2027-07-08', place: 'Naples', arrive: '07:00', aboard: '18:30' }], end: 'Barcelona', endDate: '2027-07-10', off: '07:00', homeBy: 'flight', homeAt: '14:00' }], only: /plan|sites|guide|tour|trip$/ },
+  ferry: { label: LIVE ? 'Boat days: three nights in Naples, by ferry, at a rental address (entered in the app\'s own new-trip form)' : 'Boat day: Naples, Capri and Sorrento (saved test trip)', seed: () => corpus('f01-naples-capri'),
+    legs: [{ k: 'stay', place: 'Naples', date: '2027-06-09', nights: 3, hotel: 'Via Toledo 148', inBy: 'ferry', inAt: '10:00', homeBy: 'flight', homeAt: '16:00' }], only: /plan|sites|guide|tour|trip$/ },
   group: { label: 'Group trip: the example trip shared as a group (owner)', seed: null, group: true, only: /plan|guide|settings|trip$|tour/ },
   odd: { label: 'Odd and empty input: no place, no date, sea day alone, very long and marked-up names, impossible times', seed: oddTrip }
 };
@@ -209,7 +214,7 @@ async function makeLane(browser, base, size, def, snapshotRef, helper) {
   const D = SIZES[size];
   const opts = { viewport: D.viewport, isMobile: true, hasTouch: true, deviceScaleFactor: 1, locale: 'en-US', timezoneId: def.clock ? 'Europe/Athens' : 'America/Chicago', serviceWorkers: 'block', geolocation: { latitude: 35.3387, longitude: 25.1442, accuracy: 20 }, permissions: ['geolocation'] };
   const ctx = await browser.newContext(opts);
-  const seed = def.seed ? (s => ({ trip: JSON.stringify(s.trip), cities: JSON.stringify(s.cities) }))(def.seed()) : null;
+  const seed = def.seed && !(LIVE && def.legs) ? (s => ({ trip: JSON.stringify(s.trip), cities: JSON.stringify(s.cities) }))(def.seed()) : null;
   await ctx.addInitScript(PROBE, [seed, !!def.first, PLANT]);
   const lane = { ctx, popups: [], dialogs: [], downloads: 0, net: {}, refused: {} };
   await ctx.route('**/*', async r => { const req = r.request(), url = req.url(); let u; try { u = new URL(url); } catch (e) { return r.abort(); }
@@ -380,7 +385,28 @@ async function walk(browser, base, size, tripName, helper) {
   const lanes = []; for (let i = 0; i < POOL; i++) { const l = await makeLane(browser, base, size, def, snap, helper); l.soft = 0; lanes.push(l); }
   // The start state: made once on the first lane (the app's own taps where the app has them), then copied to all.
   const L0 = lanes[0], p0 = L0.p; await L0.boot();
-  if (!def.seed && !def.first) { // the example trip, opened as a traveler opens it
+  if (LIVE && def.legs) { // the trip entered in the app's own new-trip form, field by field, then built by the app
+    const type = async (id, v) => { if (v == null || v === '') return; const el = p0.locator('#' + id); if (!(await el.count())) throw new Error('the new-trip form has no field ' + id); await el.tap().catch(() => {}); await el.fill(String(v)); await el.press('Tab').catch(() => {}); await sleep(200); };
+    const seg = async (i, key, v) => { if (!v) return; const el = p0.locator(`[data-ts="set"][data-i="${i}"][data-key="${key}"][data-v="${v}"]`).first(); if ((await el.getAttribute('aria-pressed').catch(() => null)) !== 'true') { await el.tap(); await sleep(400); } };
+    await p0.locator('[data-act="newtrip"]').first().tap(); await sleep(800);
+    for (let i = 0; i < def.legs.length; i++) { const l = def.legs[i];
+      if (i > 0 || l.k === 'cruise') { await p0.locator(`[data-ts="${l.k === 'cruise' ? 'addcruise' : 'addstay'}"]`).first().tap(); await sleep(600); }
+      if (l.k === 'stay') { await type(`ts-${i}-place`, l.place); await type(`ts-${i}-date`, l.date); await type(`ts-${i}-nights`, l.nights); await type(`ts-${i}-hotel`, l.hotel); }
+      else { await type(`ts-${i}-board`, l.board); await type(`ts-${i}-ship`, l.ship); await type(`ts-${i}-date`, l.date); await type(`ts-${i}-aboard`, l.aboard); }
+      await seg(i, 'inBy', l.inBy); await type(`ts-${i}-leaveAt`, l.leaveAt); await type(`ts-${i}-inAt`, l.inAt);
+      for (let j = 0; j < (l.ports || []).length; j++) { const q = l.ports[j]; if (j > 0) { await p0.locator(`[data-ts="addport"][data-i="${i}"]`).first().tap(); await sleep(500); }
+        await type(`ts-${i}-p${j}-date`, q.date); await type(`ts-${i}-p${j}-place`, q.place); await type(`ts-${i}-p${j}-arrive`, q.arrive); await type(`ts-${i}-p${j}-aboard`, q.aboard); if (q.tender) { await p0.locator(`[data-tsf="ts-${i}-p${j}-tender"]`).first().tap(); await sleep(300); } }
+      if (l.k === 'cruise') { await type(`ts-${i}-end`, l.end); await type(`ts-${i}-endDate`, l.endDate); await type(`ts-${i}-off`, l.off); }
+      if (i === def.legs.length - 1) { await seg(i, 'homeBy', l.homeBy); await type(`ts-${i}-homeAt`, l.homeAt); } }
+    await p0.getByRole('button', { name: /Build my trip/i }).first().tap();
+    const t0 = Date.now(); let st = {};
+    while (Date.now() - t0 < 6 * 60000) { st = await p0.evaluate(() => { const s = window.__kairouteState ? window.__kairouteState() : {}; return { view: s.view, busy: s.busy || '', err: s.err || '', days: (s.days || []).length, guides: (s.days || []).filter(d => d.guide).length }; }).catch(() => ({})); if (st.view !== 'wizard' && !st.busy && Date.now() - t0 > 8000) break; await sleep(2000); }
+    def.built = st; console.log(`   the app built the trip in ${Math.round((Date.now() - t0) / 1000)} s: ${st.days} days, ${st.guides} with a guide${st.err ? '; it says: ' + st.err : ''}`);
+    if (st.view === 'wizard' || !st.days) throw new Error('the app did not build the trip from its own form' + (st.err ? ': ' + st.err : ''));
+    for (let k = 0; k < 6; k++) { const sk = p0.locator('[data-act="coachskip"]').first(); if (await sk.isVisible().catch(() => false)) { await sk.tap().catch(() => {}); await sleep(300); } else break; }
+    await p0.evaluate(() => { try { const ls = window.__realLS; ['lobbySeen', 'intro1', 'sunprincess1', 'spread1', 'bible1', 'coach1', 'coachDone', 'tourTip'].forEach(k => ls.setItem('b2:kairoute.' + k, '1')); } catch (e) {} });
+  }
+  else if (!def.seed && !def.first) { // the example trip, opened as a traveler opens it
     for (let k = 0; k < 6; k++) { const sk = p0.locator('[data-act="coachskip"]').first(); if (await sk.isVisible().catch(() => false)) { await sk.tap().catch(() => {}); await sleep(300); } else break; }
     const b = p0.locator('[data-act="continue"], [data-act="loadsample"]').first(); if (await b.isVisible().catch(() => false)) { await b.tap(); await sleep(LIVE ? 6000 : 2500); }
     for (let k = 0; k < 6; k++) { const sk = p0.locator('[data-act="coachskip"], .coach button:has-text("Skip")').first(); if (await sk.isVisible().catch(() => false)) { await sk.tap().catch(() => {}); await sleep(300); } else break; }
