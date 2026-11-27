@@ -6343,9 +6343,12 @@ function siteCard(s, d, plan, nr) {
 // Tapping a card (anywhere but its tick box or a button) opens it and closes the one open before.
 function toggleCard(el) {
   const id = el.dataset.card, was = el.classList.contains("open"), keep = cardSpotOf(id, true); // the tapped card stays under the finger
-  document.querySelectorAll("#view .site.open").forEach(x => x.classList.remove("open"));
+  const prev = [...document.querySelectorAll("#view .site.open")]; prev.forEach(x => x.classList.remove("open"));
   if (!was) el.classList.add("open"); openCard = was ? null : id;
-  keep(); // a card above it closing would otherwise pull it up (Nov 23 feel check: 270 px)
+  // A card above it closing would otherwise pull it up (Nov 23 feel check: 270 px). Near the top of the list there is
+  // no room to scroll back up to make up for it: then the card open before stays open, and nothing moves (Nov 27, Kotor
+  // on a tablet: 37 px).
+  if (Math.abs(keep()) > 2) { prev.forEach(x => { if (x !== el) x.classList.add("open"); }); keep(); }
 }
 // Keeps what's on screen in place across a redraw: the first card in view stays where it was.
 const cardShown = x => !!(x && x.offsetParent && !x.closest("details:not([open]), .picksfold:not(.open) .anchorlist")); // closed folds still lay out in Chrome
@@ -6363,9 +6366,9 @@ function cardSpotOf(id, self) {
   const cards = [...document.querySelectorAll("#view .sitesmain [data-card]")].filter(cardShown), k = cards.indexOf(el);
   const ref = self ? el : cards[k + 1] || cards[k - 1] || el, rid = ref.dataset.card, top = ref.getBoundingClientRect().top;
   if (!self) spotRef = rid;
-  return () => {
-    const nx = [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(rid)}"]`)].find(cardShown); if (!nx) return;
-    const dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) < 1) return;
+  return () => { // returns how far the card is still off its place (0 when kept)
+    const nx = [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(rid)}"]`)].find(cardShown); if (!nx) return 0;
+    const dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) < 1) return 0;
     // The panel the card really scrolls in (on tablets the list's own pane); the page only when no panel scrolls.
     let pane = nx.parentElement; while (pane && pane !== document.body && !(pane.scrollHeight > pane.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(pane).overflowY))) pane = pane.parentElement;
     const scrollIt = d => { if (pane && pane !== document.body) pane.scrollTop += d; else window.scrollBy(0, d); };
@@ -6374,6 +6377,7 @@ function cardSpotOf(id, self) {
     // room at its end for the rest of the visit, so the card still stays under the finger (Nov 23, Nassau, 25 px).
     const left = nx.getBoundingClientRect().top - top;
     if (left > 1) { listRoom += Math.ceil(left); placeRoom(); scrollIt(nx.getBoundingClientRect().top - top); }
+    return nx.getBoundingClientRect().top - top;
   };
 }
 // Room kept at the end of Choose sights for this visit (see cardSpotOf); a new visit starts without it.
@@ -6502,7 +6506,18 @@ function nestMap(city) {
 // into its walk when both are planned (area-visit.js); in the list they stay their own cards.
 const DISTRICT = /old town|historic (centre|center|district)|quarter|district|neighbo|\bbarrio|\blanes\b|city centre|downtown|centro storico|altstadt/i;
 // The list uses the nesting as it was when the page opened (pickFrozen.nest), so it never changes under the traveler.
-const nestNow = city => (pickFrozen && pickFrozen.nest && pickFrozen.city === city ? pickFrozen.nest : nestMap(city));
+// It holds for the whole visit even when late data (a fuller guide, a town's own sights) hands the page a new copy
+// of the city: a sight already in the list keeps its place, inside or apart; only a sight new to the page takes the
+// nesting from the new data (Nov 27 live check, Athens: ticking a day trip folded Delphi's own sights into its card
+// and two cards vanished from mid-screen, because the frozen nesting was dropped for the new city copy).
+const nestNow = city => {
+  if (!pickFrozen || !pickFrozen.nest || !pickFrozen.city || keyOf(pickFrozen.city.city) !== keyOf(city.city)) return nestMap(city);
+  const F = pickFrozen.nest; if (pickFrozen.city === city) return F;
+  const L = nestMap(city); if (pickFrozen.mixOf === L) return pickFrozen.mix;
+  const ids = pickFrozen.nestIds, mix = { sig: F.sig, par: new Map(F.par), kids: new Map([...F.kids].map(([k, v]) => [k, v.slice()])) };
+  for (const [id, T] of L.par) if (!ids.has(id) && !mix.par.has(id)) { mix.par.set(id, T); if (!mix.kids.has(T.id)) mix.kids.set(T.id, []); mix.kids.get(T.id).push((L.kids.get(T.id) || []).find(k => k.id === id) || { id }); }
+  pickFrozen.mixOf = L; pickFrozen.mix = mix; return mix;
+};
 const parentOf = (x, city) => city ? nestNow(city).par.get(x.id) || null : null;
 const kidsOf = (x, city) => city ? nestNow(city).kids.get(x.id) || [] : [];
 if (typeof window !== "undefined") window.__kairoutePickerNest = i => { const c = cityFor(trip.days[i]); if (!c) return null; const m = nestMap(c); const all = allSites(c); return { withWd: all.filter(x => x.wd).length, n: all.length, partKnown: all.filter(x => x.wd && x.wd in partMem).length, nest: [...m.kids].map(([id, ks]) => ({ parent: (all.find(x => x.id === id) || {}).name, kids: ks.map(k => k.name) })) }; };
@@ -6531,7 +6546,7 @@ function renderSites(d) {
   const laterIds = new Set(cityBooked(city) ? laterList(city).map(x => x.id) : []); // shown once, in "If you come back"
   const nearbyOnly = x => x.quick || (my.size > 0 && !famousTrue(x, city) && !siteInts(x).some(k => my.has(k)));
   partScan(city);
-  if (!pickFrozen || pickFrozen.key !== frozenKey(d, city)) pickFrozen = { key: frozenKey(d, city), sec: new Map(), ord: new Map(), n: 0, city, nest: nestMap(city), fresh: true, secs: new Map(), settled: false, t0: Date.now() };
+  if (!pickFrozen || pickFrozen.key !== frozenKey(d, city)) pickFrozen = { key: frozenKey(d, city), sec: new Map(), ord: new Map(), n: 0, city, nest: nestMap(city), nestIds: new Set(allSites(city).map(x => x.id)), fresh: true, secs: new Map(), settled: false, t0: Date.now() };
   const kept = pickFrozen.fresh ? null : pickFrozen.sec; pickFrozen.fresh = false; // a sight already in the list stays in its place (one that stops fitting this visit too)
   const all = allSites(city).filter(x => (!laterIds.has(x.id) || (kept && kept.has(x.id))) && !parentOf(x, city) && (pass(x) || on(x)));
   const st = startOf(d, city), dist = x => st && KEngine.fin(x.lat) && KEngine.fin(x.lng) ? hav(st, x) : 1e9;
