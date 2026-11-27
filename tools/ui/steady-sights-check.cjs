@@ -14,7 +14,8 @@
 //   trips, no-AI trips, the sample cruise and its variants; the nightly run, DAYS=all) | a comma list of corpus names.
 // Exit 1 on any failure. Prints PASS/FAIL per check and a summary line.
 const { chromium } = require('playwright'); const path = require('path'); const http = require('http'); const fs = require('fs');
-const FILE = path.resolve(process.argv[2] || 'beta2-site/index.html');
+const LIVE = /^https?:\/\//.test(process.argv[2] || ''); // a web address: the live app with the real internet (AI and paid paths refused)
+const FILE = LIVE ? process.argv[2] : path.resolve(process.argv[2] || 'beta2-site/index.html');
 const SIZES = { phone: { width: 412, height: 915, isMobile: true, hasTouch: true }, tablet: { width: 1280, height: 800, hasTouch: true }, upright: { width: 800, height: 1280, hasTouch: true } };
 const PICK = (process.env.SIZES || 'phone,tablet,upright').split(',');
 const NDAYS = process.env.DAYS === 'all' ? 1e9 : +process.env.DAYS || 4, SLOW = +process.env.CPU_SLOW || 4;
@@ -46,11 +47,24 @@ const moves = (a, b, tol = 2) => Object.keys(a).filter(id => id in b && (Math.ab
 const orderOf = (o, other) => Object.keys(o).filter(k => k[0] !== '@' && k in other).sort((x, y) => o[x] - o[y]).join(',');
 const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a[id] < 700).map(id => `${id} (was at ${a[id]})`); // vanished from mid-screen
 (async () => {
-  const browser = await chromium.launch(); const srv = await serve(FILE);
+  const browser = await chromium.launch(); const srv = LIVE ? { url: FILE, close: () => {} } : await serve(FILE);
   for (const size of PICK) for (const tripName of TRIPS) { const vp = SIZES[size]; if (!vp) continue;
     const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, isMobile: !!vp.isMobile, hasTouch: !!vp.hasTouch, deviceScaleFactor: 1 });
     const p = await ctx.newPage(); if (process.env.DIAG) await p.addInitScript(() => { window.__steadyDiag = 1; }); const errs = []; p.on('pageerror', e => errs.push(String(e).slice(0, 200)));
-    await p.route(u => !/^http:\/\/localhost/.test(String(u)), r => r.fulfill({ status: 503, body: '' }));
+    // NET=slow: the internet as a phone has it (Nov 27, Richard: jumping again on the live app, where answers keep
+    // arriving while the page is open; every check ran with the internet off). Every outside request answers after
+    // 1-6 s; street routes come back as real-looking routes (a bend, so ride times change); the rest fail.
+    const slow = process.env.NET === 'slow';
+    // Every scroll the app makes itself, with where in the app it came from, so a failure says who moved the page.
+    await p.addInitScript(() => { window.__scr = []; const where = () => (new Error().stack || '').split('\n').slice(3, 6).map(l => l.trim().replace(/^at /, '').replace(/\(?https?:\/\/[^ )]*\/([^/ )]*)\)?/, '$1')).join(' < ');
+      for (const n of ['scrollTo', 'scrollBy']) { const f = window[n].bind(window); window[n] = function (...a) { const y = scrollY; f(...a); if (Math.abs(scrollY - y) > 1) window.__scr.push(`${n} ${Math.round(y)}->${Math.round(scrollY)} from ${where()}`); }; }
+      const E = Element.prototype.scrollIntoView; Element.prototype.scrollIntoView = function (...a) { const y = scrollY; E.apply(this, a); if (Math.abs(scrollY - y) > 1) window.__scr.push(`scrollIntoView ${Math.round(y)}->${Math.round(scrollY)} from ${where()}`); }; });
+    if (LIVE) await p.route(u => /\/sample$|anthropic\.com/.test(String(u)), r => r.abort());
+    else await p.route(u => !/^http:\/\/localhost/.test(String(u)), async r => { const u = r.request().url();
+      if (slow) await new Promise(z => setTimeout(z, 1000 + Math.random() * 5000));
+      try { if (slow && /\/route$/.test(u)) { let legs = []; try { legs = JSON.parse(r.request().postData()).legs || []; } catch (e) {}
+          return await r.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ routes: legs.map(l => { const a = l.a, b = l.b; return { c: [a, [(a[0] + b[0]) / 2 + (b[1] - a[1]) * .25, (a[1] + b[1]) / 2 - (b[0] - a[0]) * .25], b] }; }) }) }); }
+        await r.fulfill({ status: 503, body: '' }); } catch (e) {} });
     await p.goto(srv.url); await p.waitForTimeout(2500);
     if (tripName === 'sample') { const sample = p.locator('[data-act="loadsample"]').first(); if (await sample.isVisible().catch(() => false)) await sample.click(); await p.waitForTimeout(5000); }
     else { await p.evaluate(A => { localStorage.setItem('kairoute.intro1', '1'); localStorage.setItem('wayside.cities', JSON.stringify(A.cities)); localStorage.setItem('wayside.trip2', JSON.stringify(A.trip)); }, corpusTrip(tripName)); await p.reload(); await p.waitForTimeout(3000); }
@@ -80,12 +94,12 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         await p.waitForTimeout(600);
         const pt = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`), b = x.getBoundingClientRect(), at = document.elementFromPoint(b.x + b.width / 2, b.y + b.height / 2); return at && x.closest('[data-card]').contains(at) ? { x: b.x + b.width / 2, y: b.y + b.height / 2 } : null; }, id);
         if (!pt) { check(`${tag}: ${id} can be tapped`, false, 'something covers its tick box'); continue; }
-        const before = await p.evaluate(SEEN); await p.touchscreen.tap(pt.x, pt.y);
+        const before = await p.evaluate(SEEN); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y);
         await p.waitForTimeout(300);
         if (await p.evaluate(() => !!document.querySelector('.fitbox, .closedbox'))) { await p.evaluate(() => { const c = document.querySelector('.fitbox [data-act="fitcancel"], .closedbox [data-act="fitcancel"]'); if (c) c.click(); }); await p.waitForTimeout(300); continue; }
         const on = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); return !!(x && x.checked); }, id); if (!on) continue; ticked.push(id);
-        const a = await p.evaluate(SEEN); await p.waitForTimeout(2700); await settle(); const b = await p.evaluate(SEEN);
-        check(`${tag}: ticking ${id} keeps it under the finger`, id in a && Math.abs(a[id] - before[id]) <= 4, (id in a ? `moved ${before[id]}→${a[id]} px` : 'it left the screen') + (process.env.DIAG ? ' DIAG ' + moves(before, a).slice(0, 30).join(' ; ') : ''));
+        const a = await p.evaluate(SEEN), scrs = await p.evaluate(() => (window.__scr || []).slice(0, 4).join(' | ')); await p.waitForTimeout(2700); await settle(); const b = await p.evaluate(SEEN);
+        check(`${tag}: ticking ${id} keeps it under the finger`, id in a && Math.abs(a[id] - before[id]) <= 4, (id in a ? `moved ${before[id]}→${a[id]} px` : 'it left the screen') + (scrs ? ` (the app scrolled: ${scrs})` : '') + (process.env.DIAG ? ' DIAG ' + moves(before, a).slice(0, 30).join(' ; ') : ''));
         check(`${tag}: ticking ${id} keeps the cards around it in their order`, orderOf(before, a) === orderOf(a, before) && !gone(before, a).length, orderOf(before, a) !== orderOf(a, before) ? `order on screen was ${orderOf(before, a)}, now ${orderOf(a, before)}` : 'gone from the screen: ' + gone(before, a).slice(0, 3).join(', '));
         const late = moves(a, b).concat(gone(a, b).map(x => 'gone ' + x));
         check(`${tag}: after ticking ${id}, nothing jumps later`, !late.length, late.slice(0, 3).join(', '));
@@ -97,7 +111,7 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         if (two.length >= 3) { const A = two[0], B = two[Math.min(2, two.length - 1)];
           const tapBody = async id => { await p.evaluate(id => document.querySelector(`[data-card="${id}"]`).scrollIntoView({ block: 'center' }), id); await p.waitForTimeout(400);
             const pt = await p.evaluate(id => { const n = document.querySelector(`[data-card="${id}"] .l2`); if (!n) return null; const b = n.getBoundingClientRect(); return { x: b.x + Math.min(b.width - 4, 60), y: b.y + b.height / 2 }; }, id); if (!pt) return null;
-            const before = await p.evaluate(SEEN); await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(400); const after = await p.evaluate(SEEN); return [before[id], after[id]]; };
+            const before = await p.evaluate(SEEN); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(400); const after = await p.evaluate(SEEN); return [before[id], after[id]]; };
           await tapBody(A); const r = await tapBody(B);
           if (r) check(`${tag}: opening a second card keeps it under the finger`, r[1] != null && Math.abs(r[1] - r[0]) <= 4, r[1] == null ? 'it left the screen' : `moved ${r[0]}→${r[1]} px`);
           await tapBody(B); } }
@@ -113,9 +127,9 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         if (!pt) { check(`${tag}: ${id} can be unticked`, false, 'its tick box is missing or covered'); continue; }
         const SCR = () => [scrollY, ...[...document.querySelectorAll('#view .pane')].map(e => e.scrollTop + '/' + (e.scrollHeight - e.clientHeight))];
         const scr = [await p.evaluate(SCR)];
-        const before = await p.evaluate(SEEN); await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(300);
-        const a = await p.evaluate(SEEN); scr.push(await p.evaluate(SCR)); await p.waitForTimeout(2700); await settle(); const b = await p.evaluate(SEEN);
-        check(`${tag}: unticking ${id} keeps it under the finger`, id in a && Math.abs(a[id] - before[id]) <= 4, (id in a ? `moved ${before[id]}→${a[id]} px` : 'it left the screen') + (process.env.DIAG ? ' DIAG ' + moves(before, a).join(' ; ') + ' DIAGSCROLL ' + JSON.stringify(scr) : ''));
+        const before = await p.evaluate(SEEN); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(300);
+        const a = await p.evaluate(SEEN), scrs = await p.evaluate(() => (window.__scr || []).slice(0, 4).join(' | ')); scr.push(await p.evaluate(SCR)); await p.waitForTimeout(2700); await settle(); const b = await p.evaluate(SEEN);
+        check(`${tag}: unticking ${id} keeps it under the finger`, id in a && Math.abs(a[id] - before[id]) <= 4, (id in a ? `moved ${before[id]}→${a[id]} px` : 'it left the screen') + (scrs ? ` (the app scrolled: ${scrs})` : '') + (process.env.DIAG ? ' DIAG ' + moves(before, a).join(' ; ') + ' DIAGSCROLL ' + JSON.stringify(scr) : ''));
         check(`${tag}: unticking ${id} keeps the cards around it in their order`, orderOf(before, a) === orderOf(a, before) && !gone(before, a).length, orderOf(before, a) !== orderOf(a, before) ? `order on screen was ${orderOf(before, a)}, now ${orderOf(a, before)}` : 'gone from the screen: ' + gone(before, a).slice(0, 3).join(', '));
         const late = moves(a, b).concat(gone(a, b).map(x => 'gone ' + x));
         check(`${tag}: after unticking ${id}, nothing jumps later`, !late.length, late.slice(0, 3).join(', '));
@@ -138,7 +152,7 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         const before = await p.evaluate(SEEN); await p.evaluate(() => { window.__kairoutePlant = 'resort'; });
         await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(300);
         if (await p.evaluate(() => !!document.querySelector('.fitbox, .closedbox'))) { await p.evaluate(() => { window.__kairoutePlant = ''; const c = document.querySelector('.fitbox [data-act="fitcancel"], .closedbox [data-act="fitcancel"]'); if (c) c.click(); }); continue; }
-        const a = await p.evaluate(SEEN); await p.evaluate(() => { window.__kairoutePlant = ''; });
+        const a = await p.evaluate(SEEN), scrs = await p.evaluate(() => (window.__scr || []).slice(0, 4).join(' | ')); await p.evaluate(() => { window.__kairoutePlant = ''; });
         // A re-sort shows as the tapped card leaving the finger, or as the cards on screen changing order around it
         // (the app keeps the tapped card in place through any redraw, Nov 24, so the order is what gives a re-sort away).
         caught = !(id in a) || Math.abs(a[id] - before[id]) > 4 || orderOf(before, a) !== orderOf(a, before) || gone(before, a).length > 0;

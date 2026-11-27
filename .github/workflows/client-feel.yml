@@ -53,11 +53,23 @@ jobs:
         with: { node-version: 22 }
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - name: Walk the live app with a finger
+        if: github.event.inputs.url != 'sites'
         env:
           SIZES: ${{ matrix.size }}
           OUT: client-out
         run: node tools/client/feel.cjs "${{ github.event.inputs.url || 'https://gilsonr0566-sys.github.io/Kairoute-Beta2/' }}" 2>&1 | tee client-out-log.txt; exit ${PIPESTATUS[0]}
         shell: bash
+      # Choose sights on the LIVE app with the real internet (Nov 27: the page jumped again on the live app while every
+      # check, all offline, passed). Answers keep arriving while the page is open; ticks and unticks must still never move
+      # what is under the finger (R-28). Run alone with the url input "sites".
+      - name: Choose sights never moves by itself, live app, real internet
+        if: always()
+        run: |
+          set -o pipefail
+          SIZES=${{ matrix.size }} DAYS=6 NO_PROOF=1 node tools/ui/steady-sights-check.cjs https://gilsonr0566-sys.github.io/Kairoute-Beta2/ 2>&1 | tee steady-live.txt
+        shell: bash
+      - if: always()
+        run: mkdir -p client-out && cp steady-live.txt client-out/ 2>/dev/null; grep -E "^FAIL|Steady sights" steady-live.txt >> "$GITHUB_STEP_SUMMARY" 2>/dev/null; true
       - if: always()
         run: mkdir -p client-out && cp client-out-log.txt client-out/ 2>/dev/null; cat client-out/summary.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
       - if: always()
@@ -68,7 +80,7 @@ jobs:
           retention-days: 14
   collect:
     needs: walk
-    if: always() && needs.walk.result != 'skipped'
+    if: always() && needs.walk.result != 'skipped' && github.event.inputs.url != 'sites'
     runs-on: ubuntu-latest
     permissions:
       contents: write
