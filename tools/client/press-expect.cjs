@@ -18,8 +18,9 @@ exports.expect = (c, r, rec, ctx) => { if (!r || !r.after || (rec.fails || []).s
 // the top). Any other control that scrolls the screen by itself is a JUMP. [what matches, why].
 const SCROLLS = [
   [c => /(^|,)ts=(addstay|addcruise)/.test(c.data), 'a new stop is added and its first field is brought to the middle of the screen'],
+  [(c, x) => x && x.view === 'trip' && /(^|,)day=\d+/.test(c.data) && !c.act, 'on the Trip page a day tapped in the list is opened in the form below it'],
 ];
 exports.SCROLLS = SCROLLS;
-exports.scrollsTo = c => SCROLLS.some(s => { try { return s[0](c); } catch (e) { return false; } });
+exports.scrollsTo = (c, x) => SCROLLS.some(s => { try { return s[0](c, x); } catch (e) { return false; } });
 // Action names that cannot be pressed in a test, each with the reason. Reported as NOT TESTED, never as a pass.
 exports.CANNOT = {};

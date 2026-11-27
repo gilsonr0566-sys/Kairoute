@@ -44,6 +44,7 @@ const PICK = (process.env.SIZES || 'phone,tablet').split(','), TRIPS = (process.
 const ONLYROOT = (process.env.ROOTS || '').split(',').filter(Boolean), PART = (process.env.PART || '1/1').split('/').map(Number);
 const MAXDEPTH = +(process.env.MAXDEPTH || 4), POOL = +(process.env.POOL || 3), PLANT = process.env.PLANT || '', MAXROOT = +(process.env.MAXROOT || 700);
 const ONLY = process.env.ONLY ? new RegExp(process.env.ONLY, 'i') : null; // press only controls whose action or label matches (the proof runs)
+const BUDGET = +(process.env.BUDGET_MIN || 0) * 60000, START = Date.now(); // stop pressing after this long: what is left is reported NOT PRESSED
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const CORPUS = path.join(ROOT, 'tools', 'beta2', 'corpus');
 // The helper's free paths (no AI, no paid lookups). Everything else on the helper is refused (zero spend).
@@ -88,9 +89,9 @@ const TRIPDEF = {
   first: { label: 'First open, no trip yet (intro, new trip steps, example offer)', seed: null, first: true },
   example: { label: 'The example trip: 21 days, cruise port days, a train day, flights (before the trip)', seed: null },
   during: { label: 'The example trip on a port day, 10:40 am, ashore in Heraklion (countdown, live controls)', seed: null, clock: '2027-07-05T10:40:00+03:00', only: /plan|guide|tour|trip$|lobby/ },
-  rail: { label: 'Rail trip: Vienna by train (saved test trip)', seed: () => corpus('g02-vienna') },
-  port: { label: 'Cruise port day: Kotor (saved test trip, pier not yet chosen)', seed: () => corpus('g09-kotor') },
-  ferry: { label: 'Boat day: Naples, Capri and Sorrento (saved test trip)', seed: () => corpus('f01-naples-capri') },
+  rail: { label: 'Rail trip: Vienna by train (saved test trip)', seed: () => corpus('g02-vienna'), only: /plan|sites|guide|tour|trip$/ },
+  port: { label: 'Cruise port day: Kotor (saved test trip, pier not yet chosen)', seed: () => corpus('g09-kotor'), only: /plan|sites|guide|tour|trip$/ },
+  ferry: { label: 'Boat day: Naples, Capri and Sorrento (saved test trip)', seed: () => corpus('f01-naples-capri'), only: /plan|sites|guide|tour|trip$/ },
   group: { label: 'Group trip: the example trip shared as a group (owner)', seed: null, group: true, only: /plan|guide|settings|trip$|tour/ },
   odd: { label: 'Odd and empty input: no place, no date, sea day alone, very long and marked-up names, impossible times', seed: oddTrip }
 };
@@ -262,8 +263,8 @@ const VALUES = (c, ctx) => { // what a traveler would type, nothing at all, and 
   const dk = String((ctx && ctx.dest) || '').toLowerCase().normalize('NFD').replace(/[^a-z]/g, '');
   const cityOf = t => Object.keys(t).find(k => dk.includes(k));
   const t = c.type, id = (c.id + ' ' + c.label + ' ' + c.ph).toLowerCase(), odd = '<b>"Zürich" & 東京 مرحبا 🚢</b> ' + 'x'.repeat(220);
-  if (c.kind === 'pick') return t === 'date' ? ['2027-07-05', '', '1900-01-01'] : t === 'time' ? ['10:30', '', '00:00'] : t === 'month' ? ['2027-07'] : ['2027-07-05T10:30'];
-  if (t === 'number' || c.mode === 'numeric' || c.mode === 'decimal') return ['3', '', '-5', '99999'];
+  if (c.kind === 'pick') return t === 'date' ? ['2027-07-05', '', '1900-01-01'] : t === 'time' ? ['10:30', ''] : t === 'month' ? ['2027-07'] : ['2027-07-05T10:30'];
+  if (t === 'number' || c.mode === 'numeric' || c.mode === 'decimal') return ['3', '', '-5'];
   if (t === 'email') return ['traveler@example.com', '', 'not-an-email'];
   if (t === 'tel') return ['+1 312 555 0100', '', 'abc'];
   if (t === 'url') return ['https://example.com', '', 'not a link'];
@@ -367,7 +368,7 @@ function judge(c, r, ctx) { const out = { did: [], fails: [], notes: [] };
     // Two ways a screen moves: the app scrolled it (allowed only for a control listed in press-expect.cjs as scrolling
     // to what it opens, and then what it opened must be on screen), or things on the page moved under the finger.
     const scrolled = Math.round((pos.sy || 0) - (r.sy0 || 0)), byLayout = dy + scrolled, self = Math.abs(byLayout) <= 48;
-    if (self && X.scrollsTo(c)) { out.notes.push('the app scrolls ' + Math.abs(dy) + ' px to show what this opened'); break; }
+    if (self && X.scrollsTo(c, ctx)) { out.notes.push('the app scrolls ' + Math.abs(dy) + ' px to show what this opened'); break; }
     out.jump = dy; out.fails.push(['JUMP', (self ? 'the app scrolled the screen by itself, ' : 'things on the screen moved ') + Math.abs(self ? dy : byLayout) + ' px ' + ((self ? dy : byLayout) > 0 ? 'down' : 'up') + ' under the finger ' + when + (r.anchor0 != null ? '' : ' (the control itself moved)')]); break; }
   if (c.kind !== 'field' && c.kind !== 'pick' && c.kind !== 'select' && c.kind !== 'range' && (c.w < 24 || c.h < 24) && !c.inMap) out.notes.push('small target: ' + c.w + ' x ' + c.h + ' px');
   return out; }
@@ -423,7 +424,10 @@ async function walk(browser, base, size, tripName, helper) {
   // Replays the presses that lead to a state. Returns false if a step is no longer there.
   const replay = async (l, pathSteps) => { for (const st of pathSteps) { const r = await doPress(l, st.c, st.value, QUIET, st.enter, st.fill); if (r.gone || r.covered || r.failed) return false; await l.p.evaluate(() => window.__press && window.__press.unmark()).catch(() => {}); } return true; };
   const chromeSeen = new Set(); // shared bars (tabs, the day strip, the top bar): pressed on the first screen of each kind
+  const file = path.join(OUT, `${tripName}-${size}${PART[1] > 1 ? '-' + PART[0] : ''}.json`);
+  const keep = () => fs.writeFileSync(file, JSON.stringify({ trip: tripName, label: def.label, size, live: LIVE, url: base, part: PART, group: def.groupOk, secs: Math.round((Date.now() - T0) / 1000), recs }, null, 0));
   for (const root of roots) {
+    if (BUDGET && Date.now() - START > BUDGET) { recs.push({ trip: tripName, size, root: root.name, screen: root.label, path: [], label: '(whole screen)', did: [], fails: [], notpressed: 'this screen was not walked: the time allowed for the run (' + process.env.BUDGET_MIN + ' min) was used up' }); console.log(`NOT PRESSED [${tag} / ${root.label}] the time allowed for the run was used up`); continue; }
     const seen = new Set(); let n = 0, capped = 0; const rootT = Date.now();
     // Breadth first: a queue of states (the presses that lead there) whose new controls are to be pressed.
     const queue = [{ steps: [], base: null }];
@@ -445,14 +449,14 @@ async function walk(browser, base, size, tripName, helper) {
         if (c.fillN) jobs.push({ c, value: undefined, fill: { dest: root.dest || '' } });
       }
       // The presses of this state, a few pages at a time.
-      await Promise.all(jobs.map(async job => { if (n >= MAXROOT) { capped++; return; } n++;
+      await Promise.all(jobs.map(async job => { if (n >= MAXROOT || (BUDGET && Date.now() - START > BUDGET + 600000)) { capped++; return; } n++;
         const c = job.c; const mk = () => ({ filled: job.fill ? true : undefined, trip: tripName, size, root: root.name, screen: root.label, path: state.steps.map(s => s.c.label + (s.value ? ' = ' + String(s.value).slice(0, 20) : '')), label: c.label, act: c.act, data: c.data, kind: c.kind, tag: c.tag, value: job.value, w: c.w, h: c.h, href: c.href || undefined });
         // One try: the screen opened, the steps to this state repeated, the control pressed and judged.
         const once = async (l, pause) => { const rec = mk(); let r = null, soft = false;
           try { await openRoot(l, root); const okPath = await replay(l, state.steps); if (pause) await sleep(pause);
             if (!okPath) { rec.did = []; rec.fails = []; rec.skip = 'the steps to it could not be repeated'; return { rec, r, soft }; }
             const h0 = await l.p.evaluate(() => window.__press.hash());
-            r = await doPress(l, c, job.value, QUIET, job.enter, job.fill); const j = judge(c, r, { url: l.p.url(), value: job.value, sameValue: job.value === c.val, enter: job.enter });
+            r = await doPress(l, c, job.value, QUIET, job.enter, job.fill); const j = judge(c, r, { url: l.p.url(), value: job.value, sameValue: job.value === c.val, enter: job.enter, view: root.view, trip: tripName });
             Object.assign(rec, { how: r.how, ms: r.ms, did: j.did, fails: j.fails, notes: j.notes, skip: j.skip, jump: j.jump, view: r.after && r.after.view, popups: r.popups && r.popups.length ? r.popups : undefined });
             const x = X.expect(c, r, rec, { live: LIVE, trip: tripName, size, root }); if (x) rec.fails.push(['EXPECT', x]);
             const h1 = r.after ? await l.p.evaluate(() => window.__press.hash()).catch(() => '') : '';
@@ -485,12 +489,12 @@ async function walk(browser, base, size, tripName, helper) {
       }));
     };
     while (queue.length) { const batch = queue.splice(0); await Promise.all(batch.map(doState)); }
+    keep();
     if (capped) recs.push({ trip: tripName, size, root: root.name, screen: root.label, path: [], label: '(' + capped + ' more controls)', did: [], fails: [], notpressed: capped + ' controls on this screen were not pressed: the limit of ' + MAXROOT + ' presses a screen was reached' });
     console.log(`   ${tag} ${root.label}: ${n} presses, ${recs.filter(r => r.root === root.name && (r.fails || []).length).length} with a failure, ${Math.round((Date.now() - rootT) / 1000)} s`);
   }
   for (const l of lanes) { await l.ready.catch(() => {}); await l.ctx.close().catch(() => {}); }
-  const file = path.join(OUT, `${tripName}-${size}${PART[1] > 1 ? '-' + PART[0] : ''}.json`);
-  fs.writeFileSync(file, JSON.stringify({ trip: tripName, label: def.label, size, live: LIVE, url: base, part: PART, group: def.groupOk, secs: Math.round((Date.now() - T0) / 1000), recs }, null, 0));
+  keep();
   return recs;
 }
 

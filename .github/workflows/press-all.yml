@@ -44,11 +44,11 @@ jobs:
     needs: plan
     strategy:
       fail-fast: false
-      max-parallel: 8
       matrix:
         trip: ${{ fromJson(needs.plan.outputs.trips) }}
         size: ${{ fromJson(needs.plan.outputs.sizes) }}
-    name: "${{ matrix.trip }} ${{ matrix.size }}"
+        part: [1, 2, 3, 4] # each trip's screens in four shares, side by side
+    name: "${{ matrix.trip }} ${{ matrix.size }} ${{ matrix.part }}/4"
     runs-on: ubuntu-latest
     timeout-minutes: 170
     steps:
@@ -63,13 +63,15 @@ jobs:
           TRIPS: ${{ matrix.trip }}
           SIZES: ${{ matrix.size }}
           OUT: press-out
+          PART: ${{ matrix.part }}/4
+          BUDGET_MIN: 140
         run: node tools/client/press-all.cjs ${{ needs.plan.outputs.target == 'build' && 'beta2-site/index.html' || 'https://gilsonr0566-sys.github.io/Kairoute-Beta2/' }} 2>&1 | tee press-out.log | grep -vE "^   [·↻.]" || true
       - if: always()
-        run: mkdir -p press-out && cp press-out.log press-out/${{ matrix.trip }}-${{ matrix.size }}.log || true
+        run: mkdir -p press-out && cp press-out.log press-out/${{ matrix.trip }}-${{ matrix.size }}-${{ matrix.part }}.log || true
       - if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: press-${{ matrix.trip }}-${{ matrix.size }}
+          name: press-${{ matrix.trip }}-${{ matrix.size }}-${{ matrix.part }}
           path: press-out
           retention-days: 14
   report:
