@@ -12,8 +12,8 @@ const days = c.days.map(d => { const x = Object.assign({}, d); delete x.i; delet
   if ((/port|embark/.test(d.type) || /ship|ferry/.test(d.mode || '')) && d.point && !d.point.unknown && !x.pier) x.pier = { name: d.point.name, lat: d.point.lat, lng: d.point.lng }; /* the pier or ferry terminal the traveler names from their documents, as the app asks */
   for (const k of ['portArrive', 'allAboard', 'boardAt', 'startTime', 'time']) if (typeof x[k] === 'number') x[k] = String(Math.floor(x[k] / 60)).padStart(2, '0') + ':' + String(x[k] % 60).padStart(2, '0'); /* the corpus keeps engine minutes, the app keeps clock times */
   if (process.env.PICKS && /^src-|^q\d/.test(process.env.PICKS) && c.days.indexOf(d) === DAY) { x.selected = process.env.PICKS.split(','); x.ownList = true; } /* PICKS: the traveler's own list for that day (comma-separated sight ids) */
-  x.cityKey = d.city; x.destination = d.city && c.cities[d.city] ? c.cities[d.city].name : d.destination || ''; return x; });
-const seed = { trip: JSON.stringify({ id: 'live-' + TRIP, name: c.name || TRIP, style: c.style || 'mix', active: DAY, days, lodging: {}, journal: {}, prefs: c.prefs || {}, legModes: c.legModes || {} }), cities: JSON.stringify(c.cities) };
+  x.cityKey = d.city; x.destination = d.city && c.cities[d.city] ? c.cities[d.city].name : d.destination || d.typed || ''; /* a day with no saved guide is the place the traveler typed (sample-cruise Naples): never a blank place */ return x; });
+const seed = { trip: JSON.stringify({ id: 'live-' + TRIP, name: c.name || TRIP, style: c.style || 'mix', active: DAY, days, lodging: {}, journal: {}, prefs: c.prefs || {}, legModes: c.legModes || {} }), cities: JSON.stringify(Object.fromEntries(Object.entries(c.cities || {}).map(([k, g]) => [k, Object.assign({ city: g.name || k }, g)]))) }; /* the app knows a guide by its city name (the saved trips keep it as name): without it every guide of a many-city trip read as one blank place, and the plan used the first city's sights (Naples planned from Athens' list) */
 (async () => { const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 412, height: 915 }, hasTouch: true, isMobile: true });
   p.on('pageerror', e => console.log('PAGE ERROR ' + e.message)); p.on('console', m => { if (/error|warn/.test(m.type())) console.log('CONSOLE ' + m.type() + ' ' + m.text().slice(0, 300)); });
   await p.addInitScript(s => { try { const ls = localStorage; if (ls.getItem('b2:__copied')) return; ls.setItem('b2:__copied', '1'); ls.setItem('b2:__merged2', '1');
@@ -32,5 +32,20 @@ const seed = { trip: JSON.stringify({ id: 'live-' + TRIP, name: c.name || TRIP, 
   await p.evaluate(i => window.__kairouteGo('plan', i), DAY); await p.waitForTimeout(+process.env.WAIT || 45000); // helper answers (routes, islands) arrive
   await p.evaluate(() => document.querySelectorAll('#view details').forEach(d => { d.open = true; })).catch(() => {});
   console.log(`\n===== ${TRIP} day ${DAY + 1} ${days[DAY].destination} (${days[DAY].type}) =====\n` + await p.evaluate(() => (document.querySelector('main') || document.body).innerText));
+  // ASK=lat,lng>lat,lng;...: the helper's own /transit answer for each pair on this day's date, as the page asks it
+  // (what ways it knows, and whether a source was busy), three times a minute apart.
+  if (process.env.ASK) for (let n = 0; n < 3; n++) { const r = await p.evaluate(async ([ask, date]) => { const j = await (await fetch('ai.json', { cache: 'no-store' })).json(), dow = new Date(date + 'T12:00:00Z').getUTCDay();
+      const pairs = ask.split(';').map(x => x.split('>').map(y => y.split(',').map(Number))).map(([a, b]) => ({ a, b, dow, date }));
+      const res = await (await fetch(j.url.replace(/\/$/, '') + '/transit', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ pairs }) })).json();
+      return (res.results || []).map(x => ({ partial: !!x.partial, error: x.error, opts: (x.opts || []).map(o => o.mode + ' ' + Math.round(o.min) + ' ' + String(o.label).slice(0, 60)) })); }, [process.env.ASK, days[DAY].date]).catch(e => 'ERR ' + e.message);
+    console.log('ASK ' + n + ' ' + JSON.stringify(r)); if (n < 2) await p.waitForTimeout(60000); }
+  // RIDE=<words>: tap every ride choice whose label matches (e.g. "ferry|boat"), as the traveler would, and print the day
+  // again with what the app said about the switch (a choice refused is shown, never silent).
+  if (process.env.RIDE) { const re = process.env.RIDE;
+    const tapped = await p.evaluate(r => { const re = new RegExp(r, 'i'), out = []; for (const b of document.querySelectorAll('[data-ridekey]')) if (re.test(b.textContent) && !b.classList.contains('on')) { out.push(b.textContent.trim().slice(0, 80)); b.click(); break; } return out; }, re);
+    console.log('RIDE TAPPED ' + JSON.stringify(tapped)); await p.waitForTimeout(8000);
+    await p.evaluate(() => document.querySelectorAll('#view details').forEach(d => { d.open = true; })).catch(() => {});
+    console.log('\n===== after tapping ' + re + ' =====\n' + await p.evaluate(() => (document.querySelector('main') || document.body).innerText)); }
+  if (process.env.DUMP) { const b = await p.evaluate(() => JSON.stringify(window.__kairouteBucket ? window.__kairouteBucket() : null)).catch(e => 'null'); console.log('BUCKET_GZ ' + require('zlib').gzipSync(String(b)).toString('base64')); } // DUMP=1: the day's bucket as the live app planned it (its helper answers), to replan offline
   if (process.env.ROUTES) console.log('ROUTE TIMES ' + JSON.stringify(await p.evaluate(() => window.__kairouteRouteTimes ? window.__kairouteRouteTimes() : null))); // ROUTES=1: the street routes the app holds
   await b.close(); })();
