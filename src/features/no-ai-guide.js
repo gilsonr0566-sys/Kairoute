@@ -249,7 +249,10 @@ function tripTravel(way, cityName) {
   const o = way.line, from = o.from && !nonLatin(o.from) ? o.from : cityName, boat = /ferry/i.test(o.mode || o.kind || "");
   // A ride with changes is named by its longest part but starts at the first stop: say so, or the card reads as if the
   // boat left from a railway station ("Ferry from Sydenham Station" for Manly; live check, Nov 27).
-  const ch = +(/\+ (\d+) change/.exec(o.label || "") || [])[1] || 0;
+  const ch = +(/\+ (\d+) change/.exec(o.label || "") || [])[1] || (KEngine.fin(o.changes) && o.changes > 0 ? +o.changes : 0);
+  // Where the named part itself is boarded, when the helper says (mainFrom): the quay the ferry really leaves.
+  const main = o.mainFrom && !nonLatin(o.mainFrom) ? o.mainFrom : "";
+  if (ch && !o.noTimetable && main) return `${o.kind} from ${main}, with ${ch} change${ch > 1 ? "s" : ""} on the way${main !== from ? " (the ride starts at " + from + ")" : ""}, about ${five(o.min)} min one way by its timetable. Check the times for your day.`;
   if (ch && !o.noTimetable) return `${o.kind} with ${ch} change${ch > 1 ? "s" : ""}, starting from ${from}, about ${five(o.min)} min one way by its timetable. Check the times for your day.`;
   if (way.noTime) return `${o.kind} from ${from}: the map shows the route, but Kairoute doesn't know its times or how long it takes. Check both before you go.`;
   if (o.noTimetable) return `${o.kind} from ${from}: the map shows the ${boat ? "route" : "line"}, but its times are not confirmed. About ${five(o.min)} min one way is an estimate; check the times before you go.`;
