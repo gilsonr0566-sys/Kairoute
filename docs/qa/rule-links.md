@@ -15,3 +15,4 @@ One line per commit: the start of its sha (8 or more characters), the rule(s), a
 | c1634e76 | R-15, R-16 | Day trips: no objects, one outing per place, prices only from a source (rule named in the subject line only) |
 | 97c80b30 | R-32 | Nothing pinned ever covers content (its commit line says R-30, the number it had before the registry gave R-30 to saved content) |
 | 622451db | R-06 | Live day check tool only (ASK prints the helper's ride answers for chosen pairs): used to find E65; no app change |
+| 30d789da | R-39 | Swap two days and remove a day (its commit line says R-38; R-38 went to the hotel address rule in PR #251) |

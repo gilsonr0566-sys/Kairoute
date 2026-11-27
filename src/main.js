@@ -7834,7 +7834,7 @@ document.addEventListener("click", e => {
   if (act === "gen") { generateCity(day()); return; }
   if (act === "closedmove") { moveClosed(t.dataset.id, +t.dataset.to); return; }
   if (act === "closedswap") { swapClosed(t.dataset.id, t.dataset.alt); return; }
-  if (typeof dayMoveAct === "function" && dayMoveAct(act, t)) return; // swap two days, remove a day (features/day-moves.js, R-38)
+  if (typeof dayMoveAct === "function" && dayMoveAct(act, t)) return; // swap two days, remove a day (features/day-moves.js, R-39)
   if (liveAct(act, t)) return;
   if (tixAct(act, t)) return;
   if (shipClick(t)) return;

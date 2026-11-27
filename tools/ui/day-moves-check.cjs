@@ -1,4 +1,4 @@
-// R-38 screen check: swapping two days and removing a day, done with real taps on the Trip screen of the built app,
+// R-39 screen check: swapping two days and removing a day, done with real taps on the Trip screen of the built app,
 // on a phone and a tablet. Richard, Nov 27: "A way to move a planned day and swap it for a different day"; "I see a way
 // to add a day but not to remove a day". What must hold, for any trip:
 //  SWAP   only two sightseeing days in the same place swap; a travel day (arrival, leaving, boarding, port, sea) is
@@ -119,14 +119,23 @@ async function scenario(browser, url, size, shots) {
           if (mv) t(new RegExp('Moved to [^.]*' + (mv.date ? '' : '')).test(rnote), `${nm} moved to ${mv.date} but the note doesn't say it moved`);
           else t(!/Moved to/.test(rnote.split(nm)[0].split('.').pop() || ''), `${nm} is said to have moved but no day has it`); }); } }
     // 8. A leaving day: Remove asks first and names the travel; Keep it keeps it; removing then Undo brings it back whole.
-    if (dep >= 0) { const b0 = await days(), D = b0.findIndex(d => d.id === base[dep].id); await openDay(D); await tap('[data-act=dmremove]');
+    // Every other day in its place is hearted first: a hearted day is never changed by the app, so the leaving day's
+    // picks can only go back to the sights list, and each must be named there.
+    if (dep >= 0) { let b0 = await days(); const D = b0.findIndex(d => d.id === base[dep].id);
+      for (let k = 0; k < b0.length; k++) { if (k === D || b0[k].place !== b0[D].place || b0[k].ready || !['land', 'arrival', 'departure'].includes(b0[k].type)) continue;
+        await openDay(k); await nav('Day plan'); await p.waitForTimeout(1000); if (await has('[data-act=dayready]')) await tap('[data-act=dayready]', 1000); await toTrip(); }
+      b0 = await days(); const others = b0.filter((d, k) => k !== D && d.place === b0[D].place && ['land', 'arrival', 'departure'].includes(d.type));
+      t(others.length && others.every(d => d.ready), `the other days in ${b0[D].place} could not all be hearted to test a removal with nowhere to move picks`);
+      await openDay(D); await tap('[data-act=dmremove]');
       const q = await p.locator('.dmbox').first().innerText().catch(() => '');
       if (shots) { await p.locator('.dmbox').first().scrollIntoViewIfNeeded().catch(() => {}); await p.screenshot({ path: path.join(shots, `remove-ask-${size.width}.png`) }); }
       t((await days()).length === b0.length, 'tapping Remove on a leaving day removed it without asking');
       t(/leaving day/i.test(q) && /booking changed/i.test(q), `the question to remove a leaving day doesn't name the travel and the booking (box: "${q.slice(0, 160)}")`);
       if (await has('[data-act=dmclose]')) { await tap('[data-act=dmclose]'); t((await days()).length === b0.length, '"Keep it" removed the leaving day'); }
       await tap('[data-act=dmremove]'); if (await has('[data-act=dmremoveyes]')) await tap('[data-act=dmremoveyes]', 1500);
-      const b1 = await days(); t(b1.length === b0.length - 1, 'the leaving day was not removed after "Remove the day"');
+      const b1 = await days(), rn = await p.locator('.dmnote').first().innerText().catch(() => ''); t(b1.length === b0.length - 1, 'the leaving day was not removed after "Remove the day"');
+      others.forEach(o => { const a = b1.find(d => d.id === o.id); t(a && a.picks.join() === o.picks.join(), `removing the leaving day changed hearted ${o.date}'s picks`); });
+      b0[D].picks.forEach((id, j) => { const nm = b0[D].names[j] || id; t(/Back in the sights list/.test(rn) && rn.includes(nm) && !b1.some(d => d.picks.includes(id)), `${nm} from the removed leaving day is not named as back in the sights list (note: "${rn.slice(0, 160)}")`); });
       t(b1.every(d => { const o = b0.find(x => x.id === d.id); return o && travelOf(o) === travelOf(d); }), 'removing the leaving day changed another day\'s date or travel');
       if (await has('[data-act=dmundo]')) await tap('[data-act=dmundo]', 1500); const b2 = await days(), back = b2.find(d => d.id === base[dep].id);
       t(b2.length === b0.length && back && travelOf(back) === travelOf(b0[D]) && back.picks.join() === b0[D].picks.join(), 'Undo did not bring the leaving day back whole'); }
@@ -143,6 +152,7 @@ const PLANTS = [
   ['a pick lost in the swap', 'for (const d of [a, b]) { delete d.ready; delete d.askReady; }', 'for (const d of [a, b]) { delete d.ready; delete d.askReady; } if (Array.isArray(a.selected) && a.selected.length > 1) a.selected = a.selected.slice(1);'],
   ['the heart kept on a swapped day', 'for (const d of [a, b]) { delete d.ready; delete d.askReady; }', ''],
   ['removing a day moves the later dates', 'trip.days.splice(i, 1);', 'trip.days.splice(i, 1); trip.days.slice(i).forEach(x => { if (x.date) x.date = addDays(x.date, -1); });'],
+  ['a removed day\'s picks moved without saying where', 'if (o) text.push(`Moved to ${dmWhen(o)}: ${ids.map(id => names[id]).join(", ")}.`); });', '});'],
   ['a removed day\'s picks dropped unsaid', 'if (!put) back.push(id); });', '});'],
   ['a travel day removed without asking', 'if (act === "dmswap" || act === "dmremove") {', 'if (act === "dmremove") { removeDay(d); render(); return true; } if (act === "dmswap") {'],
   ['a sight closed on its new date not said in the swap note', 'return s.name + (shut ? " (closed that day)" : "");', 'return s.name;'],

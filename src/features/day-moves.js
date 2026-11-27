@@ -1,9 +1,9 @@
-// ---------- Swap two days, remove a day (R-38) ----------
+// ---------- Swap two days, remove a day (R-39) ----------
 // Richard, Nov 27: "A way to move a planned day and swap it for a different day" and "I see a way to add a day but not to
 // remove a day". Both live on the Trip screen, under the day's date, as few taps as possible: Swap (tap) then the other
 // day (tap); Remove (tap) then Remove the day (tap). Each can be undone with one tap.
 //
-// The rule (R-38), for every trip and every day:
+// The rule (R-39), for every trip and every day:
 //  - A swap moves the traveler's PLAN for the day (picks, own order, meal choices, hours, name), never the travel. The
 //    date, the place, the hotel and every ship, train and flight time stay on their date. Only two sightseeing days in
 //    the same place swap; an arrival, leaving, boarding, port or sea day is refused with its plain reason, and so is a
