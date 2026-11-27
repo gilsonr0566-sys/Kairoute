@@ -218,6 +218,16 @@ function tripCands(city, src) {
     pool.push(Object.assign({}, y, ev, { km: hav(centre, y) })); };
   for (const y of src.far || []) if (y && y.voy && (y.said > 0 || y.part || y.unesco)) put(y, {});
   for (const y of src.next || []) put(y, { next: true });
+  // A region the guide points to is no one spot: it is visited at the best-known place the region's own guide page
+  // names (the Stockholm archipelago at Vaxholm; live check, Nov 27). The place takes the region's standing in the
+  // city's guide. An island group keeps its own piers when the map has them: the place stands in only when it has none.
+  for (let i = 0; i < pool.length; i++) { const R = pool[i]; if (R.vt !== "region" || !R.voy || !(R.next || R.unesco || srcHas2(R, /^island$/))) continue;
+    const mem = (src.far || []).filter(y => y && y.voy && y.inVoy === R.voy && KEngine.fin(y.lat) && KEngine.fin(y.lng) && !(y.wd && pool.some(x => x.wd === y.wd)) && !pool.some(x => keyOf(x.name) === keyOf(y.name)))
+      .map(y => Object.assign({}, y, { km: hav(centre, y) })).filter(y => y.km > TRIP_KM_MIN && y.km <= TRIP_KM && !nonLatin(y.name) && !names.includes(keyOf(y.name)) && tripPlace(Object.assign({}, y, { next: true })) && !have(y))
+      .sort((a, b) => (b.sl || 0) - (a.sl || 0) || a.km - b.km);
+    if (!mem.length) continue;
+    const stand = Object.assign({}, mem[0], { said: R.said, next: R.next, sl: Math.max(R.sl || 0, mem[0].sl || 0), via: R.name, viaOf: mem.slice(0, 5).map(y => y.name) });
+    if (tripIsle(R)) R.stand = stand; else pool[i] = stand; }
   const score = y => tripScore(y);
   const ok = pool.filter(y => y.km > TRIP_KM_MIN && y.km <= TRIP_KM && !names.includes(keyOf(y.name)) && tripPlace(y) && ((y.sl || 0) >= TRIP_FAME || y.unesco || y.next) && !have(y))
     .sort((a, b) => score(b) - score(a) || a.km - b.km);
@@ -269,10 +279,12 @@ async function classicTrips(city, src, quiet) {
     const roadOf = y => getJ(`/roadway?a=${(+centre.lat).toFixed(4)},${(+centre.lng).toFixed(4)}&b=${(+y.lat).toFixed(4)},${(+y.lng).toFixed(4)}`);
     const roads = await inTurn(cands, 2, async y => { if (tripIsle(y) || !y.wd || (srcKnown(y) && !srcHas2(y, /^island$/))) return undefined;
       const j = await roadOf(y); if (!j) open = true; else if (j.ferry || j.none) y.water = true; return j; });
-    const targets = await inTurn(cands, 2, async y => {
+    const targets = await inTurn(cands, 2, async function at(y) {
       if (!tripWater(y) || !y.wd) return [{ lat: y.lat, lng: y.lng }];
       const j = await getJ("/landing?wd=" + encodeURIComponent(y.wd)); if (!j) { open = true; return []; }
       const ps = (j.piers || []).filter(p => KEngine.fin(p.lat) && KEngine.fin(p.lng)).sort((a, b) => hav(centre, a) - hav(centre, b)).slice(0, 2);
+      // An island group with no pier of its own on the map is visited at the place its guide page names.
+      if (!ps.length && y.stand) { const st = y.stand; for (const k of Object.keys(y)) delete y[k]; Object.assign(y, st); return at(y); }
       // An island or island group with a pier in town is the one the city stands on, not a day out ("Cyclades" from
       // Mykonos, "New Providence" from Nassau; live check, Nov 26).
       if (ps.length && hav(centre, ps[0]) <= TRIP_KM_MIN) return [{ home: true }];
@@ -289,7 +301,7 @@ async function classicTrips(city, src, quiet) {
     const ways = [], log = tripsLog[k] = [], last = tripsTries[k] >= 3;
     for (let i = 0; i < cands.length; i++) { const y = cands[i]; let best = null, boat = null, part = false, slowLine = false, unknown = !targets[i].length;
       if (targets[i][0] && targets[i][0].home) { log.push({ name: y.name, at: "a pier in town", lines: [], got: "the city stands on it" }); continue; }
-      const L = { name: y.name, at: !targets[i].length ? "piers not answered" : targets[i][0].noPier ? (y.noOutline ? "no outline on the map" : "no pier on the map") : targets[i][0].pier != null ? targets[i].length + " pier(s)" : "its point", lines: [] }; log.push(L);
+      const L = { name: y.name, at: !targets[i].length ? "piers not answered" : targets[i][0].noPier ? (y.noOutline ? "no outline on the map" : "no pier on the map") : targets[i][0].pier != null ? targets[i].length + " pier(s)" : "its point" + (y.via ? ", standing for " + y.via + " (of " + (y.viaOf || []).join(", ") + ")" : ""), lines: [] }; log.push(L);
       if (roads[i]) L.road = roads[i].none ? "none" : roads[i].min + " min" + (roads[i].ferry ? " with a ferry" : "");
       flat.forEach((x, n) => { if (x.i !== i) return; const r = lines[n];
         L.lines.push(r === undefined ? "not answered" + (x.why || "") : r === null ? "no answer" : (r.partial ? "partial " : "") + ((r.opts || []).map(o => o && (o.kind || o.mode) + " " + o.min + (o.noTimetable ? " map" : "")).join(", ") || "none"));
@@ -321,8 +333,9 @@ async function classicTrips(city, src, quiet) {
       const note = String(y.note || "").replace(new RegExp("^" + y.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\s*[-–—:,]?\\s*", "i"), "").trim();
       const cat = (() => { const c = srcKnown(y) ? srcKindOf(y)[1] : ""; return c && !/^(Sight|Landmark)$/.test(c) && !tripIsle(y) && !srcHas2(y, /^settlement$/) ? c : "Day trip"; })();
       const about = y.unesco ? "A UNESCO World Heritage Site" : tripIsle(y) ? "An island" : srcHas2(y, /^settlement$/) ? "A town" : "A place";
+      const via = y.via && !nonLatin(y.via) ? srcShowName(y.via, "") : "";
       const st = normSite({ id: (y.wd ? "trip-" + y.wd : keyOf(y.name).replace(/ /g, "-") + "-far"), name: srcShowName(y.name, ""), lat: way.at.lat, lng: way.at.lng, minutes: 180, kind: "touristy", far: true, category: cat, travel: tripTravel(way, city.city),
-        summary: note.length > 20 ? note : `${about} a day out from ${String(city.city).replace(/\s*\(.*\)/, "")} that the travel guide has a page of its own for.` }, 0);
+        summary: note.length > 20 ? note : via ? `${about} in ${via}, which the travel guide to ${String(city.city).replace(/\s*\(.*\)/, "")} sends its readers to.` : `${about} a day out from ${String(city.city).replace(/\s*\(.*\)/, "")} that the travel guide has a page of its own for.` }, 0);
       Object.assign(st, { far: true, fame: y.sl || 0, unesco: !!y.unesco, heritage: !!y.heritage, src: [y.next ? "Wikivoyage (English)" : "Wikivoyage (its own page)", "Wikidata (Wikipedia in many languages)"], wd: y.wd, famousFix: true, noAI: true, classic: true,
         travelSrc: way.road ? "road" : way.line.noTimetable ? "map" : "timetable" });
       if (way.at.pier) st.landing = way.at.pier;
