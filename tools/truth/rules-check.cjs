@@ -71,7 +71,7 @@ function checkCommits(rules, commits, links) {
   const ids = new Set(rules.map(r => r.id)), linked = [...links.matchAll(/^\| *([0-9a-f]{8,}) *\| *([^|]*R-\d+[^|]*)\|/gm)].map(m => [m[1], m[2]]), bad = [];
   for (const c of commits) {
     const named = [...c.msg.matchAll(/^Rule: *(.+)$/gm)].flatMap(m => m[1].match(/R-\d+/g) || []), l = linked.find(([s]) => c.sha.startsWith(s));
-    const all = named.concat(l ? l[1].match(/R-\d+/g) || [] : []);
+    const all = l ? l[1].match(/R-\d+/g) || [] : named; // a rule-links row corrects the commit's own Rule line
     if (!all.length) bad.push(`${c.sha.slice(0, 8)} "${c.msg.split('\n')[0].slice(0, 60)}": changes the app but names no rule (add "Rule: R-xx", or link it in docs/qa/rule-links.md)`);
     else all.filter(x => !ids.has(x)).forEach(x => bad.push(`${c.sha.slice(0, 8)}: names ${x}, which is not in docs/qa/RULES.md`));
   }
