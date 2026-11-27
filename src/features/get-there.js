@@ -16,12 +16,14 @@
 let gt = null; // { q, list, map, mapMsg, busy, pick, from, fromKey, msg }
 const GT_MAP_KM = 60; // a map answer farther than this from the day's own place is someone else's
 const gtBtnHTML = () => `<button class="btn ghost small" data-act="gtopen" aria-label="Get there: search any place and how to get there">🧭 Get there</button>`;
+// A real position: a missing or empty one is never read as 0 (+null is 0).
+const gtHas = p => !!p && p.lat != null && p.lat !== "" && p.lng != null && p.lng !== "" && KEngine.fin(Number(p.lat)) && KEngine.fin(Number(p.lng));
 const gtPlant = k => typeof window !== "undefined" && window.__kairoutePlant === k;
 const gtName = x => gtPlant("gt-local-script") ? String((x && x.name) || "") : showName(x);
 function gtDay() { const d = day(); return d && d.type !== "sea" ? d : null; }
 // The day's own places, every one the traveler might want to go back to: where the day starts and ends, the hotel.
 function gtOwnPoints(d, city) {
-  const out = [], w = dayWindowSafe(d, city), add = (p, sub, kind) => { if (p && KEngine.fin(+p.lat) && KEngine.fin(+p.lng) && !out.some(o => hav(o, p) < 0.05)) out.push({ name: gtName(p) || sub, lat: +p.lat, lng: +p.lng, sub, kind, own: true }); };
+  const out = [], w = dayWindowSafe(d, city), add = (p, sub, kind) => { if (p && gtHas(p) && !out.some(o => hav(o, p) < 0.05)) out.push({ name: gtName(p) || sub, lat: +p.lat, lng: +p.lng, sub, kind, own: true }); };
   if (w && !w.error) { const end = w.tail[w.tail.length - 1];
     if (end) add(end, end.backToShip ? "Your ship" : end.deadline ? "Where you leave from" : "Where your day ends", end.backToShip ? "ship" : end.deadline ? "leave" : "end");
     for (const p of w.head) add(p, p.fixed ? "On your way" : "Where your day starts", "start"); }
@@ -31,8 +33,8 @@ function gtOwnPoints(d, city) {
 // Everything the guide knows in this place (sights, day trips, places to eat), by id.
 function gtGuidePlaces(city) {
   const out = [];
-  for (const s of allSites(city)) if (KEngine.fin(+s.lat)) out.push({ id: s.id, name: gtName(s), lat: +s.lat, lng: +s.lng, sub: txt(s.category) || (s.far ? "Day trip" : "Sight"), kind: s.far ? "trip" : "sight", site: s });
-  for (const r of city.restaurants || []) if (r && !r.generic && KEngine.fin(+r.lat)) out.push({ name: gtName(r), lat: +r.lat, lng: +r.lng, sub: txt(r.cuisine) || "Place to eat", kind: "eat" });
+  for (const s of allSites(city)) if (gtHas(s)) out.push({ id: s.id, name: gtName(s), lat: +s.lat, lng: +s.lng, sub: txt(s.category) || (s.far ? "Day trip" : "Sight"), kind: s.far ? "trip" : "sight", site: s });
+  for (const r of city.restaurants || []) if (r && !r.generic && gtHas(r)) out.push({ name: gtName(r), lat: +r.lat, lng: +r.lng, sub: txt(r.cuisine) || "Place to eat", kind: "eat" });
   return out;
 }
 // The traveler's words against a name: every word typed (two letters or more) starts a word of the name, or the R-38
@@ -51,7 +53,7 @@ function gtLocal(d, city, q) {
 }
 function gtTodayStops(d, city) {
   try { const plan = buildPlan(d); if (!plan || plan.error) return [];
-    return plan.items.filter(i => i.type === "stop" && !i.place.along && KEngine.fin(+i.place.lat)).slice(0, 8).map(i => { const s = allSites(city).find(x => x.id === i.place.id) || i.place;
+    return plan.items.filter(i => i.type === "stop" && !i.place.along && gtHas(i.place)).slice(0, 8).map(i => { const s = allSites(city).find(x => x.id === i.place.id) || i.place;
       return { id: s.id, name: gtName(s), lat: +s.lat, lng: +s.lng, sub: "On today's plan, " + fmt(i.time), kind: "sight", site: s }; }); } catch (e) { return []; }
 }
 // The map's answers: the R-38 pick first (a named place, the door, a short street), then other named places like the words.
@@ -60,8 +62,8 @@ async function gtMapSearch(d, city, q) {
   let j = null;
   try { const r = await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(bareName(d.destination)) + "&q=" + encodeURIComponent(q)); if (!r.ok) return { msg: "The map search didn't answer just now. Try again in a minute." }; j = await r.json(); }
   catch (e) { return { msg: "The map search didn't answer just now. Try again in a minute." }; }
-  const mid = gtOwnPoints(d, city)[0] || allSites(city).find(s => KEngine.fin(+s.lat)), near = p => !mid || hav(mid, p) <= GT_MAP_KM;
-  const list = ((j && j.places) || []).filter(p => p && KEngine.fin(+p.lat) && KEngine.fin(+p.lng) && near({ lat: +p.lat, lng: +p.lng })), out = [];
+  const mid = gtOwnPoints(d, city)[0] || allSites(city).find(s => gtHas(s)), near = p => !mid || hav(mid, p) <= GT_MAP_KM;
+  const list = ((j && j.places) || []).filter(p => p && gtHas(p) && near({ lat: +p.lat, lng: +p.lng })), out = [];
   const hit = typeof stayPick === "function" ? stayPick(q, list) : null;
   if (hit) out.push({ name: gtPlant("gt-local-script") ? hit.p.name || hit.p.addr : stayLabel(hit, q), lat: +hit.p.lat, lng: +hit.p.lng, kind: "map", how: hit.how,
     sub: hit.how === "street" ? "The street, not the house number: the map doesn't have it" : hit.how === "door" ? "Address, from the map" : "From the map" + (hit.p.addr ? ", " + showName({ name: hit.p.addr }) : "") });
@@ -78,7 +80,7 @@ async function gtMapSearch(d, city, q) {
 function gtFromChoices(d) {
   const plan = buildPlan(d), out = [];
   if (geoFresh() && (isToday(d) || !d.date)) out.push({ key: "gps", name: "where you are", lat: geoPos.lat, lng: geoPos.lng, say: "From where you are (your phone's location)" });
-  if (plan && !plan.error) { const now = liveNow(d), its = plan.items.filter(i => (i.type === "start" || i.type === "stop" || (i.type === "meal" && !(i.place && i.place.onBoard))) && i.place && KEngine.fin(+i.place.lat));
+  if (plan && !plan.error) { const now = liveNow(d), its = plan.items.filter(i => (i.type === "start" || i.type === "stop" || (i.type === "meal" && !(i.place && i.place.onBoard))) && i.place && gtHas(i.place));
     const at = now != null ? its.filter(i => i.time <= now).pop() || its[0] : its[0];
     its.forEach((i, k) => out.push({ key: "p" + k, name: gtName(i.place), lat: +i.place.lat, lng: +i.place.lng, at: i.time, id: i.place.id,
       say: i === at ? (now != null ? "From " + gtName(i.place) + ", where your plan has you now" : "From " + gtName(i.place) + ", where your day starts") : "From " + gtName(i.place), dflt: i === at })); }
