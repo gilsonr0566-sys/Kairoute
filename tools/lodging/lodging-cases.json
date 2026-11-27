@@ -1,0 +1,14 @@
+[
+  { "trip": "g03-lisbon", "city": "Lisbon", "q": "Rua Augusta 100", "tablet": true },
+  { "trip": "g03-lisbon", "city": "Lisbon", "q": "Rua Agusta 100" },
+  { "trip": "g03-lisbon", "city": "Lisbon", "q": "Rua dos Remédios 70, 2º Esq" },
+  { "trip": "g03-lisbon", "city": "Lisbon", "q": "Memmo Alfama Hotel" },
+  { "trip": "g02-vienna", "city": "Vienna", "q": "Mariahilfer Straße 47/12", "tablet": true },
+  { "trip": "g02-vienna", "city": "Vienna", "q": "Apartment 4, Neubaugasse 25" },
+  { "trip": "g02-vienna", "city": "Vienna", "q": "Hotel Sacher" },
+  { "trip": "g01-istanbul", "city": "Istanbul", "q": "İstiklal Caddesi 120" },
+  { "trip": "g01-istanbul", "city": "Istanbul", "q": "Kumbaraci Yokusu 7" },
+  { "trip": "g06-kyoto", "city": "Kyoto", "q": "京都市下京区烏丸通塩小路下る東塩小路町901", "tablet": true },
+  { "trip": "g06-kyoto", "city": "Kyoto", "q": "Hotel Granvia Kyoto" },
+  { "trip": "g06-kyoto", "city": "Kyoto", "q": "Qwzxv Street 9999", "expect": "none" }
+]
