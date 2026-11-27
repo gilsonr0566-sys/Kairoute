@@ -5173,12 +5173,12 @@ function touchSpot(pkey) {
   const run = again => {
     if (holdOff === no) return 0; // the app has since scrolled on purpose (to the top, to what the tap opened)
     for (const [key, n, top] of chain) {
-      const nx = holdAll(key)[n]; if (!nx || !nx.offsetParent) continue;
+      const same = holdAll(key), nx = same[n]; if (!nx || !nx.offsetParent) continue;
       const p = scroller(nx);
       // Later in the same frame: only when the page is where this left it, or where it was before the redraw (a
       // caller that put the old position back); anywhere else, the app scrolled on purpose and that stands.
       if (again && Math.abs(at(p) - after) > 1 && Math.abs(at(p) - pre) > 1) return 0;
-      let dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) > innerHeight * 2) return 0; // not the same thing any more
+      let dy = nx.getBoundingClientRect().top - top; if (same.length > 1 && Math.abs(dy) > innerHeight * 2) return 0; // one of several alike, and far away: not the same thing any more
       if (Math.abs(dy) >= 1) { if (p) p.scrollTop += dy; else window.scrollBy(0, dy); }
       let left = nx.getBoundingClientRect().top - top;
       if (Math.abs(left) >= 1) {
