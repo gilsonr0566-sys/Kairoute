@@ -21,11 +21,11 @@ const MUTANTS = [
   // independent check's boat rule (saved trips, and the same trips with every list read as the guide's suggestions only).
   { id: 'boat-back-quarter-hour', corpus: true, file: '10-travel.js', from: 'E.PIER_BACK = 60;', to: 'E.PIER_BACK = 15;',
     was: 'E8: a boat back with no sailing times planned with 15 min at the pier, not the hour between sailings' },
-  { id: 'boat-guide-pick-as-mine', notMine: true, file: '90-timeline.js', from: 'ownBoat = !!(leg.mine || (isleStop && !isleStop.guideWish && (isleStop.wish || isleStop.insideWish)));', to: 'ownBoat = !!(leg.mine || (isleStop && (isleStop.wish || isleStop.insideWish)));',
+  { id: 'boat-guide-pick-as-mine', notMine: true, file: '90-timeline.js', from: 'ownBoat = !!(leg.mine || (isleStop && !isleStop.guideWish && !isleStop.moved && (isleStop.wish || isleStop.insideWish)));', to: 'ownBoat = !!(leg.mine || (isleStop && !isleStop.moved && (isleStop.wish || isleStop.insideWish)));',
     was: 'E8 / first-timer walk Nov 22: a boat with no timetable to a place only the guide suggested, planned as if the traveler had chosen it (Château d\'If)' },
   // Nov 27 nightly (seed 20261127, odd558): a pick the app moved to a leaving day (closed the day it was ticked) reached by
-  // a boat with no sailing times, planned as the traveler's own boat. Saved as corpus odd558-venice-moved.
-  { id: 'boat-moved-pick-as-mine', corpus: true, file: '90-timeline.js', from: '!isleStop.guideWish && !isleStop.moved && (isleStop.wish', to: '!isleStop.guideWish && (isleStop.wish',
+  // a boat with no sailing times, planned as the traveler's own boat. Kept in tools/truth/cases/safety-cases.json (the gate's part 2 runs the independent check on it).
+  { id: 'boat-moved-pick-as-mine', cases: true, file: '90-timeline.js', from: '!isleStop.guideWish && !isleStop.moved && (isleStop.wish', to: '!isleStop.guideWish && (isleStop.wish',
     was: 'Nightly Nov 27: an island church moved by the app to a leaving day, its unconfirmed boat planned as "you chose it"' },
   // Nov 23 (rides thread review): a line with no timetable planned with half the gap between departures on the way back to
   // the ship, a train or a plane (and to the bags or the cable car on the way). Caught by the independent check's backwait.
@@ -90,6 +90,9 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
   // outside the passport-free area (and one inside it, so both promises are planned), the same on every run.
   const anyBorder = MUTANTS.some(m => m.border && (!ONLY.length || ONLY.includes(m.id))), borderTrips = path.join(tmp, 'border.json');
   let baseBorder = {};
+  // Saved safety cases (trips the nightly found, kept out of the saved-trip corpus): the independent check on them.
+  const CASES = path.join(__dirname, 'cases', 'safety-cases.json'); let baseCases = {};
+  if (MUTANTS.some(m => m.cases && (!ONLY.length || ONLY.includes(m.id)))) baseCases = counts((await run('node', ['tools/truth/oracle.cjs', '--trips', CASES])).out);
   if (anyBorder) { const dir = path.join(ROOT, 'tools', 'beta2', 'corpus'), bt = [];
     for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) { const b = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
       (b.days || []).forEach((d, i) => { if (d.type !== 'departure' || d.mode !== 'train' || !d.country) return;
@@ -109,8 +112,8 @@ const more = (now, base) => Object.keys(now).filter(k => now[k] > (base[k] || 0)
     if (txt.split(m.from).length !== 2) { rows.push({ m, planted: false }); continue; }
     fs.writeFileSync(f, txt.replace(m.from, m.to));
     const env = { ENGINE_SRC: src, NOZIG: '1', SLOW_MS: '60000' };
-    const [old, ora] = await Promise.all([run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7'], env), run('node', (m.border ? ['tools/truth/oracle.cjs', '--trips', borderTrips] : m.notMine ? ['tools/truth/oracle.cjs', '--corpus', '--not-mine'] : m.corpus ? ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'] : ['tools/truth/oracle.cjs', '--trips', trips]).concat(m.nott ? ['--no-timetable'] : []), env)]);
-    const o = more(counts(old.out), baseOld), n = more(counts(ora.out), m.border ? baseBorder : m.notMine ? baseNotMine : m.corpus ? baseCorpus : m.nott ? baseOraNT : baseOra);
+    const [old, ora] = await Promise.all([run('node', ['tools/beta2/odd-trips.cjs', '--n', String(N), '--seed', '7'], env), run('node', (m.cases ? ['tools/truth/oracle.cjs', '--trips', CASES] : m.border ? ['tools/truth/oracle.cjs', '--trips', borderTrips] : m.notMine ? ['tools/truth/oracle.cjs', '--corpus', '--not-mine'] : m.corpus ? ['tools/truth/oracle.cjs', '--corpus', '--unconfirmed'] : ['tools/truth/oracle.cjs', '--trips', trips]).concat(m.nott ? ['--no-timetable'] : []), env)]);
+    const o = more(counts(old.out), baseOld), n = more(counts(ora.out), m.cases ? baseCases : m.border ? baseBorder : m.notMine ? baseNotMine : m.corpus ? baseCorpus : m.nott ? baseOraNT : baseOra);
     rows.push({ m, planted: true, old: o, oracle: n });
   } };
   await Promise.all(Array.from({ length: LANES }, lane));

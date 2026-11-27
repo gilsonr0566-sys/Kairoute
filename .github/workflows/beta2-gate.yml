@@ -67,7 +67,7 @@ jobs:
       # The independent lunch rule reads map hours with the opening_hours library, never the planner's reader.
       - run: npm i --no-save opening_hours@3.16.0
       - name: Saved test trips
-        run: (node tools/truth/oracle.cjs --corpus --unconfirmed --show 10 && node tools/truth/oracle.cjs --corpus --no-timetable --show 10 && node tools/truth/oracle.cjs --corpus --not-mine --show 10) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+        run: (node tools/truth/oracle.cjs --corpus --unconfirmed --show 10 && node tools/truth/oracle.cjs --corpus --no-timetable --show 10 && node tools/truth/oracle.cjs --corpus --not-mine --show 10 && node tools/truth/oracle.cjs --trips tools/truth/cases/safety-cases.json --show 10) 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Odd trips (hundreds of unusual cruises, multi-city trips, midnight flights and bag days, every day checked), then the independent check on the same trips
         if: always()
         run: |

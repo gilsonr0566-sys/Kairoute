@@ -6669,12 +6669,15 @@ function mapSVG(plan) {
     <g transform="translate(22 ${H - 40})"><text x="0" y="0" font-size="12" font-weight="800" fill="var(--muted)" text-anchor="middle">N</text><path d="M0 4 L5 18 L0 14 L-5 18 Z" fill="var(--muted)"/></g>
   </svg>`;
 }
+// Only places with a position go in the link: a day that ends anywhere ("Day done", no place) has an end with none, and
+// reading its position broke the whole Day plan screen (Nov 27, gate part 11: a land day not ending at the hotel). R-25.
 function gmapsLink(plan) {
-  const ll = p => p.lat.toFixed(5) + "," + p.lng.toFixed(5);
-  const pts = plan.items.filter(i => i.place && i.type !== "start" && !(i.type === "stop" && i.place.along)).map(i => i.place);
-  const dest = pts[pts.length - 1] || plan.items[0].place;
+  const has = p => !!(p && KEngine.fin(p.lat) && KEngine.fin(p.lng)), ll = p => (+p.lat).toFixed(5) + "," + (+p.lng).toFixed(5);
+  const first = plan.items.find(i => has(i.place)); if (!first) return "";
+  const pts = plan.items.filter(i => i !== first && has(i.place) && i.type !== "start" && !(i.type === "stop" && i.place.along)).map(i => i.place);
+  const dest = pts[pts.length - 1] || first.place;
   const wps = pts.slice(0, -1).slice(0, 9);
-  return `https://www.google.com/maps/dir/?api=1&origin=${ll(plan.items[0].place)}&destination=${ll(dest)}${wps.length ? "&waypoints=" + encodeURIComponent(wps.map(ll).join("|")) : ""}&travelmode=walking`;
+  return `https://www.google.com/maps/dir/?api=1&origin=${ll(first.place)}&destination=${ll(dest)}${wps.length ? "&waypoints=" + encodeURIComponent(wps.map(ll).join("|")) : ""}&travelmode=walking`;
 }
 // ---------- Real street map (MapLibre + OpenFreeMap) ----------
 // The day's route on a real street map: walking legs follow the actual streets and paths (solid teal),
@@ -7262,7 +7265,7 @@ ${partsList(s, it.time)}${stopLiveNotes(it, d)}</div></div>`;
       ${wxChip ? "" : wxt.replace('class="btn ghost small toggle"', 'class="menuitem toggle"').replace("<span>Rainy day</span>", "<span>Rainy day: plan indoor sights</span>")}
       ${preview ? `<button class="menuitem" role="menuitem" data-act="cdpreview">▶ Preview the day live</button>` : ""}
       <div class="menugroup">On the way</div>
-      <a class="menuitem" role="menuitem" href="${gmapsLink(plan)}" target="_blank" rel="noopener">🗺 Open in Google Maps</a>
+      ${gmapsLink(plan) ? `<a class="menuitem" role="menuitem" href="${gmapsLink(plan)}" target="_blank" rel="noopener">🗺 Open in Google Maps</a>` : ""}
       ${camBtnHTML().replace('class="btn ghost small"', 'class="menuitem" role="menuitem"').replace("📷 What's this?", "📷 Identify a sight by photo")}
       <div class="menugroup">Meals</div>
       <button class="menuitem" role="menuitem" data-act="bookopen" data-meal="Lunch">🍽 ${(d.booked || {}).Lunch ? "Change my lunch reservation" : "I have a lunch reservation"}</button>
@@ -7483,7 +7486,7 @@ function renderTour(d) {
       ${nxt && nxt.type === "stop" && nxt.place.along ? `<div class="banner">On the way: <b>${esc(nxt.place.name)}</b>. ${esc(nxt.place.lookFor[0] || "")}</div>` : ""}
       <div class="audio"><button class="btn ghost" data-play="walk:${T.i}" data-label="▶ Hear what's next">▶ Hear what's next</button><span class="state" aria-live="polite"></span></div>
       <div class="actions tourmain">
-        ${prev && prev.place ? `<a class="btn ghost" href="${dirLink(prev.place, st.place, st.leg)}" target="_blank" rel="noopener">Directions</a>` : ""}
+        ${prev && prev.place && KEngine.fin(prev.place.lat) && KEngine.fin(prev.place.lng) && st.place && KEngine.fin(st.place.lat) && KEngine.fin(st.place.lng) ? `<a class="btn ghost" href="${dirLink(prev.place, st.place, st.leg)}" target="_blank" rel="noopener">Directions</a>` : ""}
         <button class="btn bigbtn" data-act="tourhere">I'm here</button>
       </div></div>`;
   } else if (st.type === "start") {
