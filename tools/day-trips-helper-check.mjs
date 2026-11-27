@@ -59,7 +59,8 @@ const bad = await run(path.resolve("worker/islands.js"));
   ok("a part of the city's own guide is marked so, with how often the city's page links to it", m.part === true && m.said === 3 && h.said === 1 && !h.part, { m, h });
   { const fr = [{ name: "Vaxholm", voy: "vaxholm", vt: "rural" }, { name: "Uppsala", voy: "Uppsala", vt: "city" }, { name: "Stockholm archipelago", voy: "Stockholm archipelago", vt: "region", said: 6 }, { name: "County", voy: "Stockholm County", vt: "region", said: 2 }, { name: "Sigtuna", voy: "Sigtuna", vt: "city", said: 7 }];
     const regs = W.regionsOf(fr, [{ name: "Sodermanland", voy: "Södermanland", vt: "region" }, { name: "Sigtuna", voy: "Sigtuna", vt: "city" }]);
-    ok("the regions a city's guide sends readers to are its Go next regions first, then the ones its page links, never a town", regs.join("|") === "Södermanland|Stockholm archipelago|Stockholm County", regs);
+    ok("the regions read are the ones the city's page links most, a Go next region first among equals, never a town", regs.join("|") === "Stockholm archipelago|Stockholm County|Södermanland", regs);
+    ok("a region the city's page links six times is read even when four other Go next regions come before it (Stockholm archipelago, live helper Nov 27)", regionOrder(W.regionsOf));
     ok("a place a region's own guide page names is marked as lying in it; one it does not name, and the region itself, are not", within(W.farWithin), fr.map(x => x.inVoy)); }
   const vk = c => W.voyKind(c.map(x => "Category:" + x));
   ok("the travel guide's own page kind is read from its status category: a city, a district, a park, a rural area", vk(["Has custom banner", "Usable cities"]) === "city" && vk(["Guide districts"]) === "district" && vk(["Outline parks"]) === "park" && vk(["Usable rural areas"]) === "rural" && vk(["Huge city articles"]) === "city", [vk(["Usable cities"]), vk(["Guide districts"])]);
@@ -77,6 +78,8 @@ bad.push(...await facts(W.factsReady));
 bad.forEach(b => console.log("FAIL " + b));
 // Planted copies of islands.js (each must be caught).
 const txt = fs.readFileSync("worker/islands.js", "utf8"), dir = fs.mkdtempSync(path.join(os.tmpdir(), "dth-"));
+function regionOrder(ro) { const fr = [{ name: "Stockholm archipelago", voy: "Stockholm archipelago", vt: "region", said: 6 }];
+  const got = ro(fr, ["A", "B", "C", "D", "Stockholm archipelago"].map(v => ({ name: v, voy: v, vt: "region" }))); return got[0] === "Stockholm archipelago" && got.length === 4; }
 // A region's places (rule R-37): what marks them, given as a function so a planted copy can stand in for it.
 function within(fw) { const fr = [{ name: "Vaxholm", voy: "vaxholm", vt: "rural" }, { name: "Uppsala", voy: "Uppsala", vt: "city" }, { name: "Stockholm archipelago", voy: "Stockholm archipelago", vt: "region", said: 6 }];
   fw(fr, [{ title: "Stockholm archipelago", links: { Vaxholm: 3, "Stockholm archipelago": 1 } }]); return fr[0].inVoy === "Stockholm archipelago" && !fr[1].inVoy && !fr[2].inVoy; }
@@ -91,5 +94,7 @@ for (const [name, from, to] of PLANT) { if (txt.split(from).length !== 2) { cons
   console.log(lost ? "planted copies caught: facts read from half an answer" : "FAIL planted copy not caught: facts read from half an answer"); if (!lost) missed++; }
 { const lost = !within(f => f) && !within((far, regs) => far.forEach(f => { f.inVoy = regs[0].title; }));
   console.log(lost ? "planted copies caught: a region's places never marked, or every place marked" : "FAIL planted copy not caught: a region's places"); if (!lost) missed++; }
-console.log(`day-trips-helper-check: ${bad.length || missed ? "failed" : "passed, " + (PLANT.length + 2) + " planted copies caught"}`);
+{ const old = (far, next) => { const seen = new Set(); return (next || []).map(x => Object.assign({ said: 9 }, x)).concat((far || []).filter(x => x && x.said > 0)).filter(x => x && x.voy && x.vt === "region" && !seen.has(x.voy) && seen.add(x.voy)).sort((a, b) => (b.said || 0) - (a.said || 0)).slice(0, 3).map(x => x.voy); };
+  const lost = !regionOrder(old); console.log(lost ? "planted copy caught: every Go next region counted alike, the first three read" : "FAIL planted copy not caught: region order"); if (!lost) missed++; }
+console.log(`day-trips-helper-check: ${bad.length || missed ? "failed" : "passed, " + (PLANT.length + 3) + " planted copies caught"}`);
 process.exit(bad.length || missed ? 1 : 0);
