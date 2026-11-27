@@ -24,7 +24,8 @@ const kindOf = r => r.act ? 'act ' + r.act : (r.data ? 'data ' + r.data.replace(
 const acts = new Map(); for (const r of pressed) if (r.act) acts.set(r.act, (acts.get(r.act) || 0) + 1);
 const offActs = new Set(recs.filter(r => r.off && r.act).map(r => r.act));
 const fails = recs.filter(r => (r.fails || []).length);
-const byClass = new Map(); for (const r of fails) for (const f of r.fails) { const k = f[0] + ' | ' + kindOf(r); const g = byClass.get(k) || { rule: f[0], control: kindOf(r), label: r.label, why: f[1], n: 0, where: new Set(), sizes: new Set(), trips: new Set(), ex: r }; g.n++; g.where.add(r.screen); g.sizes.add(r.size); g.trips.add(r.trip); byClass.set(k, g); }
+const byClass = new Map(); // A screen jump with a known cause is one class per cause (one thing going away moves every control below it).
+for (const r of fails) for (const f of r.fails) { const byCause = f[0] === 'JUMP' && r.cause; const k = f[0] + ' | ' + (byCause ? 'cause ' + r.cause.replace(/\d+/g, '#') : kindOf(r)); const g = byClass.get(k) || { rule: f[0], control: byCause ? 'any control below "' + r.cause + '"' : kindOf(r), label: r.label, why: f[1], n: 0, where: new Set(), sizes: new Set(), trips: new Set(), labels: new Set(), ex: r, byCause }; g.n++; g.labels.add(r.label); g.where.add(r.screen); g.sizes.add(r.size); g.trips.add(r.trip); byClass.set(k, g); }
 const classes = [...byClass.values()].sort((a, b) => a.rule.localeCompare(b.rule) || b.n - a.n);
 const need = (process.env.NEED || '').split(',').filter(Boolean), haveTrips = new Set(runs.map(r => r.trip)), missingTrips = need.filter(t => !haveTrips.has(t));
 const notPressed = inv ? [...inv].filter(a => !acts.has(a) && !X.CANNOT[a]).sort() : null, cannot = inv ? [...inv].filter(a => !acts.has(a) && X.CANNOT[a]).sort() : [];
@@ -48,7 +49,7 @@ for (const g of tk.values()) say(`| ${g.label} | ${g.size} | ${g.n} | ${g.f} | $
 say('');
 say('## Failures, one line per class'); say('');
 if (!classes.length) say('None.'); else { say('| Rule | Control | What happened | Seen | Where |'); say('|---|---|---|---|---|');
-  for (const g of classes) say(`| ${g.rule} | ${g.label ? '"' + String(g.label).slice(0, 40).replace(/\|/g, '/') + '"' : ''}${g.ex.act ? ' (' + g.ex.act + ')' : ''} | ${String(g.why).replace(/\|/g, '/').slice(0, 160)} | ${g.n}x, ${[...g.sizes].join('+')} | ${[...g.trips].join(', ')}: ${[...g.where].slice(0, 3).join('; ')}${g.where.size > 3 ? ' (+' + (g.where.size - 3) + ')' : ''}${g.ex.path && g.ex.path.length ? ' after ' + g.ex.path.join(' > ').slice(0, 60) : ''} |`); }
+  for (const g of classes) say(`| ${g.rule} | ${g.byCause ? g.labels.size + ' controls, e.g. ' : ''}${g.label ? '"' + String(g.label).slice(0, 40).replace(/\|/g, '/') + '"' : ''}${g.ex.act ? ' (' + g.ex.act + ')' : ''} | ${String(g.why).replace(/\|/g, '/').slice(0, 160)} | ${g.n}x, ${[...g.sizes].join('+')} | ${[...g.trips].join(', ')}: ${[...g.where].slice(0, 3).join('; ')}${g.where.size > 3 ? ' (+' + (g.where.size - 3) + ')' : ''}${g.ex.path && g.ex.path.length ? ' after ' + g.ex.path.join(' > ').slice(0, 60) : ''} |`); }
 say('');
 say('## Not pressed, not tested'); say('');
 if (missingTrips.length) say('- NOT TESTED: these trips were not in this run: ' + missingTrips.join(', ') + '.');

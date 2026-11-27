@@ -185,6 +185,10 @@ const PROBE = ([seed, first, plant]) => {
   // How far the part of the screen the traveler scrolls is scrolled (the page on a phone, the list pane on a tablet).
   P.sy = () => { const ps = [...document.querySelectorAll('.pane, main, #view, dialog[open], .sheet')].filter(x => x.scrollHeight > x.clientHeight + 4 && /(auto|scroll)/.test(getComputedStyle(x).overflowY)); return Math.round(scrollY + ps.reduce((a, x) => a + x.scrollTop, 0)); };
   P.hash = () => { let h = 2166136261, n = 0; try { const keys = []; for (let i = 0; i < ls.length; i++) keys.push(ls.key(i)); keys.sort(); for (const k of keys) { const v = ls.getItem(k) || ''; n += v.length; const step = v.length > 20000 ? 97 : 1; for (let i = 0; i < v.length; i += step) h = Math.imul(h ^ v.charCodeAt(i), 16777619); h = Math.imul(h ^ k.length, 16777619); } } catch (e) {} return (h >>> 0) + ':' + n; };
+  // What sat above the finger before the press, so a jump can name its cause: the thing that went away or came in.
+  P.blocks = () => { const a = P.anchorNow(), m = new Map(); if (!a) return m; for (const o of document.querySelectorAll('#view *, body > *')) { if (o === a) break; if (o.contains(a)) continue; const h = o.offsetHeight; if (h < 16 || h > innerHeight * 0.7 || !o.offsetParent && getComputedStyle(o).position !== 'fixed') continue; const t = norm(o.textContent).slice(0, 70); if (t.length < 3) continue; const k = o.tagName + '|' + t; if (!m.has(k)) m.set(k, h); } return m; };
+  P.keep = () => { P.above = P.blocks(); };
+  P.cause = () => { const b = P.above || new Map(), n = P.blocks(), gone = [], came = []; for (const [k, h] of b) if (!n.has(k)) gone.push([k.split('|').slice(1).join('|'), h]); for (const [k, h] of n) if (!b.has(k)) came.push([k.split('|').slice(1).join('|'), h]); return { gone: gone.slice(0, 40), came: came.slice(0, 40) }; };
   P.unmark = () => document.querySelectorAll('[data-press-me], [data-press-anchor]').forEach(e => { e.removeAttribute('data-press-me'); e.removeAttribute('data-press-anchor'); });
   P.look = () => { const st = (() => { try { const s = window.__kairouteState(); return { view: s.view, busy: s.busy, err: s.err }; } catch (e) { return {}; } })();
     const v = document.getElementById('view') || document.body;
@@ -295,7 +299,7 @@ async function doPress(lane, c, value, quietMax, enter, fill) { const p = lane.p
   await sleep(120);
   const aim2 = await p.evaluate(([s, n]) => { const w = window.__press.where(s, n); return w; }, [c.sig, c.n]); const top0 = aim2 ? aim2.top : aim.top, anchor0 = aim2 ? aim2.anchor : null, sy0 = aim2 ? aim2.sy : 0;
   const y = aim.y + (top0 - aim.top);
-  const before = await p.evaluate(() => { const P = window.__press; P.fx.length = 0; P.errs.length = 0; P.t0 = performance.now(); return P.look(); });
+  const before = await p.evaluate(() => { const P = window.__press; P.keep(); P.fx.length = 0; P.errs.length = 0; P.t0 = performance.now(); return P.look(); });
   lane.popups = []; lane.dialogs = []; lane.downloads = 0; lane.pageerrs = []; const url0 = p.url(); const t0 = Date.now();
   let how = filled && filled.length ? 'tap, with the field' + (filled.length > 1 ? 's' : '') + ' beside it filled in (' + filled.map(v => JSON.stringify(v)).join(', ') + ')' : 'tap';
   try {
@@ -319,8 +323,8 @@ async function doPress(lane, c, value, quietMax, enter, fill) { const p = lane.p
   if (!after) return { how, left: p.url(), ms: Date.now() - t0, before, after: null, fx: [], errs: lane.pageerrs.slice(), popups: lane.popups.slice(), dialogs: lane.dialogs.slice(), downloads: lane.downloads, navigated: true };
   if (after.spin.length) { const end = Date.now() + 15000; while (Date.now() < end) { await sleep(1000); const s = await p.evaluate(() => window.__press.look().spin).catch(() => []); if (!s.length) { after = await p.evaluate(() => window.__press.look()); after.spun = true; break; } } }
   const pos2 = await p.evaluate(([s, n]) => window.__press.where(s, n), [c.sig, c.n]).catch(() => null);
-  const more = await p.evaluate(() => ({ fx: window.__press.fx.slice(), errs: window.__press.errs.slice(), shift: window.__press.shifts.filter(s => s.t >= window.__press.t0 + 500 && !s.input).reduce((a, s) => a + s.v, 0) })).catch(() => ({ fx: [], errs: [], shift: 0 }));
-  return { how, ms: Date.now() - t0, before, after, top0, anchor0, sy0, pos1, pos2, fx: more.fx, errs: [...new Set([...more.errs, ...lane.pageerrs])], shift: more.shift, popups: lane.popups.slice(), dialogs: lane.dialogs.slice(), downloads: lane.downloads, navigated };
+  const more = await p.evaluate(() => ({ cause: window.__press.cause(), fx: window.__press.fx.slice(), errs: window.__press.errs.slice(), shift: window.__press.shifts.filter(s => s.t >= window.__press.t0 + 500 && !s.input).reduce((a, s) => a + s.v, 0) })).catch(() => ({ fx: [], errs: [], shift: 0 }));
+  return { how, cause: more.cause, ms: Date.now() - t0, before, after, top0, anchor0, sy0, pos1, pos2, fx: more.fx, errs: [...new Set([...more.errs, ...lane.pageerrs])], shift: more.shift, popups: lane.popups.slice(), dialogs: lane.dialogs.slice(), downloads: lane.downloads, navigated };
 }
 
 // What the press did, in a traveler's words, and which rules it broke.
@@ -365,6 +369,9 @@ function judge(c, r, ctx) { const out = { did: [], fails: [], notes: [] };
   // With every lookup refused (this build, no internet) the app cannot know a place is not there: it must say the
   // lookup did not get through, never that nothing was found.
   if (!LIVE) { const lie = d.add.find(l => /couldn['’]t find|could not find|didn['’]t find|\bno (results|matches|places|restaurants|sights|trains|ferries|boats|flights)\b[^.]*\bfound|\bnot found\b|nothing (was )?found|doesn['’]t exist|no such (place|address)/i.test(l)); if (lie) out.fails.push(['UNTRUE', 'no lookup could be answered in this run, yet the screen says: "' + lie.slice(0, 110) + '"']); }
+  // The cause of a move: the thing above the finger that went away (page moved up) or came in (page moved down), the
+  // one whose height is nearest to the move.
+  const why = d => { const cz = r.cause || { gone: [], came: [] }, list = d < 0 ? cz.gone : cz.came; let best = null; for (const [t, h] of list) { const off = Math.abs(h - Math.abs(d)); if (off <= Math.max(24, Math.abs(d) * 0.35) && (!best || off < best[2])) best = [t, h, off]; } if (!best) return ''; out.cause = best[0].slice(0, 50); return ': "' + best[0].slice(0, 50) + '" (' + best[1] + ' px) ' + (d < 0 ? 'went away' : 'came in') + ' above it'; };
   // JUMP: same screen, the tapped control still there, and it moved from under the finger.
   const sameScreen = a.view === b.view && a.over === b.over && !r.navigated && !ctx.enter; // Enter sends the form: the app may rightly go to its answer
   for (const [pos, when] of [[r.pos1, 'at once'], [r.pos2, 'once the screen settled']]) { if (!sameScreen || !pos) continue;
@@ -374,7 +381,7 @@ function judge(c, r, ctx) { const out = { did: [], fails: [], notes: [] };
     // to what it opens, and then what it opened must be on screen), or things on the page moved under the finger.
     const scrolled = Math.round((pos.sy || 0) - (r.sy0 || 0)), byLayout = dy + scrolled, self = Math.abs(byLayout) <= 48;
     if (self && X.scrollsTo(c, ctx)) { out.notes.push('the app scrolls ' + Math.abs(dy) + ' px to show what this opened'); break; }
-    out.jump = dy; out.fails.push(['JUMP', (self ? 'the app scrolled the screen by itself, ' : 'things on the screen moved ') + Math.abs(self ? dy : byLayout) + ' px ' + ((self ? dy : byLayout) > 0 ? 'down' : 'up') + ' under the finger ' + when + (r.anchor0 != null ? '' : ' (the control itself moved)')]); break; }
+    out.jump = dy; out.fails.push(['JUMP', (self ? 'the app scrolled the screen by itself, ' : 'things on the screen moved ') + Math.abs(self ? dy : byLayout) + ' px ' + ((self ? dy : byLayout) > 0 ? 'down' : 'up') + ' under the finger ' + when + (r.anchor0 != null ? '' : ' (the control itself moved)') + (self ? '' : why(byLayout))]); break; }
   if (c.kind !== 'field' && c.kind !== 'pick' && c.kind !== 'select' && c.kind !== 'range' && (c.w < 24 || c.h < 24) && !c.inMap) out.notes.push('small target: ' + c.w + ' x ' + c.h + ' px');
   return out; }
 
@@ -483,7 +490,7 @@ async function walk(browser, base, size, tripName, helper) {
             if (!okPath) { rec.did = []; rec.fails = []; rec.skip = 'the steps to it could not be repeated'; return { rec, r, soft }; }
             const h0 = await l.p.evaluate(() => window.__press.hash());
             r = await doPress(l, c, job.value, QUIET, job.enter, job.fill); const j = judge(c, r, { url: l.p.url(), value: job.value, sameValue: job.value === c.val, enter: job.enter, view: root.view, trip: tripName });
-            Object.assign(rec, { how: r.how, ms: r.ms, did: j.did, fails: j.fails, notes: j.notes, skip: j.skip, jump: j.jump, view: r.after && r.after.view, popups: r.popups && r.popups.length ? r.popups : undefined });
+            Object.assign(rec, { how: r.how, ms: r.ms, did: j.did, fails: j.fails, notes: j.notes, skip: j.skip, jump: j.jump, cause: j.cause, view: r.after && r.after.view, popups: r.popups && r.popups.length ? r.popups : undefined });
             const x = X.expect(c, r, rec, { live: LIVE, trip: tripName, size, root }); if (x) rec.fails.push(['EXPECT', x]);
             const h1 = r.after ? await l.p.evaluate(() => window.__press.hash()).catch(() => '') : '';
             soft = !!r.after && !r.navigated && h1 === h0 && !rec.fails.length && !(r.popups || []).length;
