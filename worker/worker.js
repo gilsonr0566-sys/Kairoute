@@ -916,11 +916,13 @@ export function farWithin(far, regions) {
   for (const f of far || []) { if (!f || !f.voy || f.vt === "region") continue; const t = f.voy.charAt(0).toUpperCase() + f.voy.slice(1);
     const r = (regions || []).find(r => r && r.links && r.title !== t && r.links[t]); if (r) f.inVoy = r.title; }
   return far; }
+// A rural area's page is read like a region's: the guide files an island group or a stretch of countryside either way
+// (live helper, Nov 27: "Stockholm archipelago" is a rural area, so its page, the one naming Vaxholm, was never read).
 // The regions read are the ones the city's page links most, "Go next" ones first among equals; four at most (live
 // helper, Nov 27: with every "Go next" region counted alike, Stockholm's first three left out the archipelago, the
 // one its page links six times).
 export function regionsOf(far, next) { const seen = new Set(), saidOf = x => Math.max(x.said || 0, ...(far || []).filter(f => f && f.voy === x.voy).map(f => f.said || 0));
-  return (next || []).map(x => Object.assign({}, x, { go: 1 })).concat((far || []).filter(x => x && x.said > 0)).filter(x => x && x.voy && x.vt === "region" && !seen.has(x.voy) && seen.add(x.voy))
+  return (next || []).map(x => Object.assign({}, x, { go: 1 })).concat((far || []).filter(x => x && x.said > 0)).filter(x => x && x.voy && (x.vt === "region" || x.vt === "rural") && !seen.has(x.voy) && seen.add(x.voy))
     .map(x => ({ voy: x.voy, said: saidOf(x), go: x.go || 0 })).sort((a, b) => b.said - a.said || b.go - a.go).slice(0, 4).map(x => x.voy); }
 async function voyRegions(titles, UA) { let missed = false;
   const out = await Promise.all(titles.map(async t => { try { const r = await fetch("https://en.wikivoyage.org/w/api.php?action=parse&prop=wikitext&format=json&formatversion=2&redirects=1&page=" + encodeURIComponent(t), { headers: UA, signal: AbortSignal.timeout(9000) });

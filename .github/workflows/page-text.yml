@@ -13,6 +13,12 @@ on:
       picks:
         description: "With trip: the sight ids picked that day (comma-separated)"
         default: ""
+      ask:
+        description: "With trip: lat,lng>lat,lng;... print the helper's own ride answer for each pair on that day's date"
+        default: ""
+      ride:
+        description: "With trip: tap the ride choice whose label matches these words (e.g. ferry|boat) and print the day again"
+        default: ""
 permissions:
   contents: read
 jobs:
@@ -31,5 +37,8 @@ jobs:
           DAY: ${{ inputs.day }}
           TRIP: ${{ inputs.trip }}
           PICKS: ${{ inputs.picks }}
+          RIDE: ${{ inputs.ride }}
+          ASK: ${{ inputs.ask }}
           ROUTES: "1"
+          DUMP: "1"
         run: npm i playwright@1.65.1 && npx playwright install chromium && if [ -n "$TRIP" ]; then node tools/live-trip-text.cjs; elif [ -n "$DAY" ]; then node tools/live-day-text.cjs; else node tools/page-text.cjs; fi

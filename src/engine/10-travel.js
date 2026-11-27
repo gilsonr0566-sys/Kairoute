@@ -451,6 +451,11 @@
   // and the final check let it through). Confirmed: a timetable answer with real departures, running in the trip's month
   // (a summer line in November is no line), with one near the time it is needed (E.runsAt's rule for the way back).
   // Returns null when it is confirmed, else why not, in words for the traveler.
+  // A boat whose answer has no sailing times at all (no timetable, or one that gives none for the day): nothing says it
+  // doesn't sail, nothing says when it does (R-06, E65). A month it doesn't run, or real times with none near, are facts.
+  E.boatNoTimes = (leg, date) => { const a = leg && leg.ans; if (!a) return true;
+    const m = Array.isArray(a.months) && a.months.length && date ? new Date(Date.parse(String(date) + "T12:00:00Z")).getUTCMonth() + 1 : 0;
+    return !(m && !a.months.includes(m)) && (leg.source !== "timetable" || !leaveTimesOf(leg).length); };
   E.boatUnsure = (leg, at, date) => { const a = leg && leg.ans;
     if (!a || leg.source !== "timetable") return "no sailing times are known for this boat";
     const m = Array.isArray(a.months) && a.months.length && date ? new Date(Date.parse(String(date) + "T12:00:00Z")).getUTCMonth() + 1 : 0;

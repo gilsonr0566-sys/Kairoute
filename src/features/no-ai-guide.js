@@ -218,14 +218,19 @@ function tripCands(city, src) {
     pool.push(Object.assign({}, y, ev, { km: hav(centre, y) })); };
   for (const y of src.far || []) if (y && y.voy && (y.said > 0 || y.part || y.unesco)) put(y, {});
   for (const y of src.next || []) put(y, { next: true });
+  // The travel guide files an island group as a region or as a rural area ("Stockholm archipelago" is a rural area; live
+  // check, Nov 27): either way it is an area with places in it.
+  const tripArea = R => R.vt === "region" || (R.vt === "rural" && tripIsle(R));
   // A region the guide points to is no one spot: it is visited at the best-known place the region's own guide page
   // names (the Stockholm archipelago at Vaxholm; live check, Nov 27). The place takes the region's standing in the
   // city's guide. An island group keeps its own piers when the map has them: the place stands in only when it has none.
-  for (let i = 0; i < pool.length; i++) { const R = pool[i]; if (R.vt !== "region" || !R.voy || !(R.next || R.unesco || srcHas2(R, /^island$/))) continue;
+  for (let i = 0; i < pool.length; i++) { const R = pool[i]; if (!tripArea(R) || !R.voy || !(R.next || R.unesco || srcHas2(R, /^island$/))) continue;
     const mem = (src.far || []).filter(y => y && y.voy && y.inVoy === R.voy && KEngine.fin(y.lat) && KEngine.fin(y.lng) && !(y.wd && pool.some(x => x.wd === y.wd)) && !pool.some(x => keyOf(x.name) === keyOf(y.name)))
-      .map(y => Object.assign({}, y, { km: hav(centre, y) })).filter(y => y.km > TRIP_KM_MIN && y.km <= TRIP_KM && !nonLatin(y.name) && !names.includes(keyOf(y.name)) && tripPlace(Object.assign({}, y, { next: true })) && !have(y))
+      .map(y => Object.assign({}, y, { km: hav(centre, y) })).filter(y => y.km > TRIP_KM_MIN && y.km <= TRIP_KM && !nonLatin(y.name) && !names.includes(keyOf(y.name)) && tripPlace(Object.assign({}, y, { next: true })))
       .sort((a, b) => (b.sl || 0) - (a.sl || 0) || a.km - b.km);
     if (!mem.length) continue;
+    // Its best-known place is on the list already: the region is served, and no lesser place is put forward in its name.
+    if (have(mem[0])) { if (!tripIsle(R)) pool.splice(i--, 1); continue; }
     const stand = Object.assign({}, mem[0], { said: R.said, next: R.next, sl: Math.max(R.sl || 0, mem[0].sl || 0), via: R.name, viaOf: mem.slice(0, 5).map(y => y.name) });
     if (tripIsle(R)) R.stand = stand; else pool[i] = stand; }
   const score = y => tripScore(y);
