@@ -916,8 +916,12 @@ export function farWithin(far, regions) {
   for (const f of far || []) { if (!f || !f.voy || f.vt === "region") continue; const t = f.voy.charAt(0).toUpperCase() + f.voy.slice(1);
     const r = (regions || []).find(r => r && r.links && r.title !== t && r.links[t]); if (r) f.inVoy = r.title; }
   return far; }
-export function regionsOf(far, next) { const seen = new Set();
-  return (next || []).map(x => Object.assign({ said: 9 }, x)).concat((far || []).filter(x => x && x.said > 0)).filter(x => x && x.voy && x.vt === "region" && !seen.has(x.voy) && seen.add(x.voy)).sort((a, b) => (b.said || 0) - (a.said || 0)).slice(0, 3).map(x => x.voy); }
+// The regions read are the ones the city's page links most, "Go next" ones first among equals; four at most (live
+// helper, Nov 27: with every "Go next" region counted alike, Stockholm's first three left out the archipelago, the
+// one its page links six times).
+export function regionsOf(far, next) { const seen = new Set(), saidOf = x => Math.max(x.said || 0, ...(far || []).filter(f => f && f.voy === x.voy).map(f => f.said || 0));
+  return (next || []).map(x => Object.assign({}, x, { go: 1 })).concat((far || []).filter(x => x && x.said > 0)).filter(x => x && x.voy && x.vt === "region" && !seen.has(x.voy) && seen.add(x.voy))
+    .map(x => ({ voy: x.voy, said: saidOf(x), go: x.go || 0 })).sort((a, b) => b.said - a.said || b.go - a.go).slice(0, 4).map(x => x.voy); }
 async function voyRegions(titles, UA) { let missed = false;
   const out = await Promise.all(titles.map(async t => { try { const r = await fetch("https://en.wikivoyage.org/w/api.php?action=parse&prop=wikitext&format=json&formatversion=2&redirects=1&page=" + encodeURIComponent(t), { headers: UA, signal: AbortSignal.timeout(9000) });
     if (r.ok) { const j = await r.json(); if (j.parse && j.parse.wikitext) return { title: t, links: voyageLinks(j.parse.wikitext) }; if (j.error) return null; } } catch (e) {} missed = true; return null; }));
@@ -1366,7 +1370,7 @@ async function sourcesData(label, env, ctx) {
   // And which places lie in a region the guide sends its readers to (read from that region's own guide page).
   const reg = await voyRegions(regionsOf(fam.far, next), UA); farWithin(fam.far, reg.regions);
   lap("next");
-  const res = Object.assign({ area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T }, factsMissed ? { factsMissed: true, factsWhy } : {});
+  const res = Object.assign({ area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, regions: reg.regions.map(r => r.title), ms: T }, factsMissed ? { factsMissed: true, factsWhy } : {}, reg.missed ? { regionsMissed: true } : {});
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
   // One whose places a day out could not be read (rule R-37) is asked again after 3 hours: a day without the city's
   // day trips is a long time (live check, Nov 26: Istanbul's guide links were missed on one run in two).
