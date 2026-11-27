@@ -250,14 +250,15 @@ async function run(file) {
     // What the card says of the way (live check, Nov 27): a ride with changes, a line known but too slow, a guide part's name.
     // A region the guide sends readers to is visited at a place its own page names (live check, Nov 27: Vaxholm for
     // the Stockholm archipelago): an island group with no pier on the map, and a range of hills.
-    const REG = [Object.assign(nx('Testa Skerries', 'Q540', 30, 60, '', 70), { voy: 'Testa Skerries', vt: 'region', kinds: ['feature', 'island', 'region'] }), Object.assign(nx('Testa Hills', 'Q542', -45, 35, '', 70), { voy: 'Testa Hills', vt: 'region', kinds: ['feature', 'natural', 'region'] })];
+    const REG = [Object.assign(nx('Testa Skerries', 'Q540', 30, 60, '', 70), { voy: 'Testa Skerries', vt: 'rural', kinds: ['feature', 'island', 'region'] }), Object.assign(nx('Testa Hills', 'Q542', -45, 35, '', 70), { voy: 'Testa Hills', vt: 'region', kinds: ['feature', 'natural', 'region'] })];
     const IN = [far('Skerry Town', 'Q541', ['settlement'], 30, 12, 44, { vt: 'city', inVoy: 'Testa Skerries' }), far('Hillton', 'Q543', ['settlement'], 50, -38, 30, { vt: 'city', inVoy: 'Testa Hills' }), far('Hillby', 'Q544', ['settlement'], 20, -36, 28, { vt: 'city', inVoy: 'Testa Hills' })];
     const SRC7 = Object.assign({}, SOURCES, { far: FAR.concat([far('Testslow', 'Q534', ['settlement'], 80, 20, 30, { said: 5, vt: 'city' })]).concat(IN), next: [nx('Testport/Lagoonside', 'Q533', -12, 20, 'A fishing village on the lagoon.', 90)].concat(REG).concat(NEXT) });
     const w7 = await p6.evaluate(async a => { const c = { city: 'Testport', country: 'Testland', sites: [], farther: [], starts: {}, restaurants: [] }; window.__kairouteSourceSights(c, a.src);
-      await window.__kairouteClassicTrips(c, a.src); const f = n => (c.farther.find(s => s.name === n) || {}).travel; return { lagoon: f('Lagoonside'), slow: f('Testslow'), hill: f('Hillton'), names: c.farther.map(s => s.name), skerry: (c.farther.find(s => s.name === 'Skerry Town') || {}).summary }; }, { src: SRC7 });
+      await window.__kairouteClassicTrips(c, a.src); const f = n => (c.farther.find(s => s.name === n) || {}).travel; return { lagoon: f('Lagoonside'), slow: f('Testslow'), hill: f('Hillton'), names: c.farther.map(s => s.name), skerry: (c.farther.find(s => s.name === 'Skerry Town') || {}).summary, again: window.__kairouteTripCands(c, a.src).map(x => x.name) }; }, { src: SRC7 });
     ok('an island group the guide sends readers to, with no pier of its own on the map, is offered at the place its own page names (Vaxholm for the Stockholm archipelago)', w7.names.includes('Skerry Town') && !w7.names.includes('Testa Skerries'), w7.names);
     ok('its card says which region it stands for', /^A town in Testa Skerries, which the travel guide to Testport sends its readers to\.$/.test(w7.skerry || ''), w7.skerry);
     ok('a region the guide sends readers to is offered at its best-known place, once (never the region\'s middle, never two of its towns)', w7.names.includes('Hillton') && !w7.names.includes('Hillby') && !w7.names.includes('Testa Hills'), w7.names);
+    ok('once a region is offered at its best-known place, a later look puts no lesser place forward in its name (Oxelösund after Eskilstuna, live check Nov 27)', w7.names.includes('Hillton') && !w7.again.includes('Hillby') && !w7.again.includes('Testa Hills'), w7.again);
     ok('a ride with changes says so and where it starts, never "Ferry from" a stop no ferry leaves (Manly from Sydney)', /^Ferry from Lagoon Quay, with 1 change on the way \(the ride starts at Central Bus Stop\), about 70 min one way by its timetable/.test(w7.lagoon || ''), w7);
     ok('when the helper does not say where the named part is boarded, the card says the ride has changes and where it starts', /^Train with 2 changes, starting from Testport Tram Stop, about 55 min one way by its timetable/.test(w7.hill || ''), w7.hill);
     ok('a part of the city\'s guide is shown by its own name, never "City/Part" (Venice/Burano)', w7.names.includes('Lagoonside') && !w7.names.some(x => /\//.test(x)), w7.names);
@@ -272,6 +273,10 @@ const PLANT = [
     was: 'the card names the first stop of the ride, not the quay the ferry leaves, though the helper says which' },
   { id: 'island-group-at-its-middle', from: 'if (!ps.length && y.stand) {', to: 'if (false) {',
     was: 'Vaxholm missing from Stockholm: the archipelago was asked about at a point in the sea' },
+  { id: 'island-group-filed-as-rural-area', from: 'const tripArea = R => R.vt === "region" || (R.vt === "rural" && tripIsle(R));', to: 'const tripArea = R => R.vt === "region";',
+    was: 'Vaxholm still missing: the travel guide files the Stockholm archipelago as a rural area, and only regions were looked into' },
+  { id: 'region-served-twice', from: 'if (have(mem[0])) { if (!tripIsle(R)) pool.splice(i--, 1); continue; }', to: 'while (mem.length && have(mem[0])) mem.shift(); if (!mem.length) continue;',
+    was: 'Oxelösund asked about for Södermanland after Eskilstuna was already offered for it' },
   { id: 'region-at-its-middle', from: 'if (tripIsle(R)) R.stand = stand; else pool[i] = stand; }', to: 'if (tripIsle(R)) R.stand = stand; }',
     was: 'a region offered at its middle point, where no line goes' },
   { id: 'changes-hidden', from: 'const ch = +(/', to: 'const ch = 0 * +(/',
