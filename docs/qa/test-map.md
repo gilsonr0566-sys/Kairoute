@@ -45,6 +45,7 @@ a person checks it. **NOT TESTED** = nothing checks it yet.
 | PORT-015 "will I make the ship?" never a guarantee | dayplan-check (words) | Gate |
 | AI-001..020 guide content | AI is off at runtime; stories are checked at build time | AI-runtime cases **NOT TESTED** (AI off by Richard's rule) |
 | UI-001..020 screens | first-run, dayplan, gate-ask, no-signal, tap-check, 5 screen sizes | Gate; screen-reader and keyboard: **NOT TESTED** |
+| UI: every control pressed (R-40) | press-all (real touch on every control and field of every screen, and on what each press reveals), press-proof (9 planted broken buttons) | Gate part 12 (first open and the example trip, phone, two presses deep); every trip, tablet, four deep and the live app with real lookups: nightly. The map itself (pan, pinch, pins), drag to reorder, the phone's Back key and system pickers (date wheel, share sheet, camera, print): **NOT TESTED** by this check |
 | DATA-001..004 saved trips | screen gate D (last two published builds); trip-copy-check | Gate |
 | DATA-002 interrupted save | none | **NOT TESTED** |
 | SEC-002 secrets in code | static-check | Gate |

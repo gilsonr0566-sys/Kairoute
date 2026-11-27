@@ -14,6 +14,8 @@ on:
   push:
     branches: ["claude/project-thread-4klenb"]
     paths: ["tools/client/press-run.json"]
+  schedule:
+    - cron: "40 8 * * *" # 2:40 am Central, every night: the full run on the live app (needs this file on the main branch)
 permissions:
   contents: read
 jobs:
@@ -27,6 +29,7 @@ jobs:
       depth: ${{ steps.q.outputs.depth }}
     steps:
       - uses: actions/checkout@v4
+        with: { ref: "${{ github.ref_name == 'main' && 'claude/project-thread-xrdp7v' || github.ref }}" }
       - id: q
         env:
           IN_TARGET: ${{ github.event.inputs.target }}
@@ -35,7 +38,7 @@ jobs:
           node -e "
           const fs=require('fs'); let q={}; try{q=JSON.parse(fs.readFileSync('tools/client/press-run.json','utf8'));}catch(e){}
           const all=['first','example','during','rail','port','ferry','group','odd'];
-          const byHand=!!process.env.IN_TARGET;
+          const byHand=!!process.env.IN_TARGET||process.env.GITHUB_EVENT_NAME==='schedule';
           const target=(byHand?process.env.IN_TARGET:q.target)||'live';
           let trips=(byHand?process.env.IN_TRIPS:(q.trips||[]).join(','))||'all'; trips=trips==='all'?all:trips.split(',').filter(t=>all.includes(t));
           const sizes=(q.sizes&&!byHand?q.sizes:['phone','tablet']).filter(s=>['phone','tablet','upright'].includes(s));
@@ -55,6 +58,7 @@ jobs:
     timeout-minutes: 170
     steps:
       - uses: actions/checkout@v4
+        with: { ref: "${{ github.ref_name == 'main' && 'claude/project-thread-xrdp7v' || github.ref }}" }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
@@ -85,6 +89,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with: { ref: "${{ github.ref_name == 'main' && 'claude/project-thread-xrdp7v' || github.ref }}" }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - uses: actions/download-artifact@v4

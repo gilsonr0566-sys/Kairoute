@@ -4,6 +4,7 @@
 //   dead     "Change lunch" swallowed: the press does nothing            -> DEAD
 //   error    renaming the day throws                                     -> ERROR
 //   jump     ticking a sight pushes the whole screen down 160 px         -> JUMP   (the Choose sights jumping class)
+//   jump     the same on the Trip page, when the day's pace is set       -> JUMP   (R-28 on every screen)
 //   covered  an unseen layer lies over the lower part of Choose sights   -> COVERED
 //   wide     opening a fold makes the page wider than the screen         -> WIDE
 //   broken   the hours button prints "undefined" on the screen           -> BROKEN
@@ -13,7 +14,7 @@
 const { spawnSync } = require('child_process'); const fs = require('fs'), path = require('path'), os = require('os');
 const APP = path.resolve(process.argv[2] || 'beta2-site/index.html'), HERE = __dirname;
 const PLANTS = [ // [plant, screens, only these controls, the rule that must fire]
-  ['dead', 'plan:land', '^mealopen$', 'DEAD'], ['error', 'plan:land', '^daytitle$', 'ERROR'], ['jump', 'sites:land', '^Pick (Plaka|Lycabettus|National Garden)', 'JUMP'],
+  ['dead', 'plan:land', '^mealopen$', 'DEAD'], ['error', 'plan:land', '^daytitle$', 'ERROR'], ['jump', 'sites:land', '^Pick (Plaka|Lycabettus|National Garden)', 'JUMP'], ['jump', 'trip', '^(Light day|Half day)$', 'JUMP'],
   ['covered', 'sites:land', '^Pick ', 'COVERED'], ['wide', 'plan:land', "^(More about today|About today)", 'WIDE'], ['broken', 'plan:land', '^hrsopen$', 'BROKEN'], ['untrue', 'plan:land', '^mealopen$', 'UNTRUE']];
 let missed = 0;
 const run = (env, args) => spawnSync(process.execPath, args, { env: Object.assign({}, process.env, env), encoding: 'utf8', maxBuffer: 1 << 26, timeout: 600000 });

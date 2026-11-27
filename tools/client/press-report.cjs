@@ -8,6 +8,10 @@
 //   - what every control did (one line per kind of control), so a person can read it against what it should do.
 // Usage: node tools/client/press-report.cjs [OUT=press-out] [beta2-site/index.html]   Exit 1 on a failure or a gap.
 //   NEED=first,example,... : the trips that must be in the run for the coverage rule to be judged (else NOT TESTED).
+//   COVERAGE=off : a share of the trips (the release gate): the action-name rule is not judged here and the report says so.
+// A failure class that is known, has an owner and an end date at most 7 days ahead (docs/qa/warns.json, tool "press",
+// rule + optional "where" pattern on the control, its action name and what happened) is listed as WARN and does not
+// fail the run; ERROR, BROKEN, LOST and anything not tested or not pressed never can be.
 const fs = require('fs'), path = require('path');
 const OUT = path.resolve(process.argv[2] || process.env.OUT || 'press-out'), ROOT = path.join(__dirname, '..', '..');
 const APP = path.resolve(process.argv[3] || path.join(ROOT, 'beta2-site', 'index.html')); const X = require('./press-expect.cjs');
@@ -26,9 +30,15 @@ const offActs = new Set(recs.filter(r => r.off && r.act).map(r => r.act));
 const fails = recs.filter(r => (r.fails || []).length);
 const byClass = new Map(); // A screen jump with a known cause is one class per cause (one thing going away moves every control below it).
 for (const r of fails) for (const f of r.fails) { const byCause = f[0] === 'JUMP' && r.cause; const k = f[0] + ' | ' + (byCause ? 'cause ' + r.cause.replace(/\d+/g, '#') : kindOf(r)); const g = byClass.get(k) || { rule: f[0], control: byCause ? 'any control below "' + r.cause + '"' : kindOf(r), label: r.label, why: f[1], n: 0, where: new Set(), sizes: new Set(), trips: new Set(), labels: new Set(), ex: r, byCause }; g.n++; g.labels.add(r.label); g.where.add(r.screen); g.sizes.add(r.size); g.trips.add(r.trip); byClass.set(k, g); }
-const classes = [...byClass.values()].sort((a, b) => a.rule.localeCompare(b.rule) || b.n - a.n);
+const all = [...byClass.values()].sort((a, b) => a.rule.localeCompare(b.rule) || b.n - a.n);
+const NEVER = new Set(['ERROR', 'BROKEN', 'LOST']), today = new Date().toISOString().slice(0, 10), week = new Date(Date.now() + 7 * 864e5).toISOString().slice(0, 10);
+let W = []; try { W = (JSON.parse(fs.readFileSync(path.join(ROOT, 'docs', 'qa', 'warns.json'), 'utf8')).warns || []).filter(w => w.tool === 'press'); } catch (e) {}
+const badWarns = W.filter(w => NEVER.has(w.rule) || !w.owner || !w.until || w.until < today || w.until > week);
+const warnOf = g => W.find(w => !badWarns.includes(w) && w.rule === g.rule && (!w.where || new RegExp(w.where, 'i').test([g.control, g.label, g.ex.act || '', g.why].join(' | '))));
+const classes = all.filter(g => !warnOf(g)), known = all.filter(g => warnOf(g));
+const COVER = process.env.COVERAGE !== 'off';
 const need = (process.env.NEED || '').split(',').filter(Boolean), haveTrips = new Set(runs.map(r => r.trip)), missingTrips = need.filter(t => !haveTrips.has(t));
-const notPressed = inv ? [...inv].filter(a => !acts.has(a) && !X.CANNOT[a]).sort() : null, cannot = inv ? [...inv].filter(a => !acts.has(a) && X.CANNOT[a]).sort() : [];
+const notPressed = inv && COVER ? [...inv].filter(a => !acts.has(a) && !X.CANNOT[a]).sort() : null, cannot = inv ? [...inv].filter(a => !acts.has(a) && X.CANNOT[a]).sort() : [];
 const stale = Object.keys(X.CANNOT).filter(a => acts.has(a));
 const cut = recs.filter(r => r.notpressed), skipped = recs.filter(r => r.skip && r.skip !== 'gone'), harness = recs.filter(r => r.harness);
 const L = []; const say = s => L.push(s);
@@ -38,10 +48,10 @@ say('| | |'); say('|---|---|');
 say('| Presses made (real touch, one at a time, app put back before each) | ' + pressed.length + ' |');
 say('| Different controls pressed | ' + new Set(pressed.map(r => r.trip + '|' + r.size + '|' + r.root + '|' + (r.path || []).join('>') + '|' + r.label + '|' + (r.data || ''))).size + ' |');
 say('| Screens walked (trip x size x screen) | ' + new Set(recs.map(r => r.trip + r.size + r.root)).size + ' |');
-say('| Presses that broke a rule | ' + fails.filter(r => !r.harness).length + ' in ' + classes.length + ' classes |');
+say('| Presses that broke a rule | ' + fails.filter(r => !r.harness).length + ' in ' + all.length + ' classes' + (known.length ? ' (' + known.length + ' known, with an owner and an end date)' : '') + ' |');
 say('| Greyed-out controls seen (cannot be pressed) | ' + recs.filter(r => r.off).length + ' |');
 say('| Action names in the app | ' + (inv ? inv.size : 'not counted (no build given)') + ' |');
-if (inv) { say('| ... pressed at least once | ' + [...inv].filter(a => acts.has(a)).length + ' |'); say('| ... NOT PRESSED | ' + notPressed.length + ' |'); say('| ... cannot be pressed in a test (reason given below) | ' + cannot.length + ' |'); }
+if (inv && COVER) { say('| ... pressed at least once | ' + [...inv].filter(a => acts.has(a)).length + ' |'); say('| ... NOT PRESSED | ' + notPressed.length + ' |'); say('| ... cannot be pressed in a test (reason given below) | ' + cannot.length + ' |'); }
 say('');
 say('## Trips and sizes'); say(''); say('| Trip | Size | Presses | With a failure | Minutes |'); say('|---|---|---|---|---|');
 const tk = new Map(); for (const r of runs) { const k = r.trip + '|' + r.size; const g = tk.get(k) || { label: r.label, trip: r.trip, size: r.size, n: 0, f: 0, s: 0 }; g.n += r.recs.filter(x => !x.same && !x.off && !x.skip && !x.notpressed).length; g.f += r.recs.filter(x => (x.fails || []).length).length; g.s += r.secs || 0; tk.set(k, g); }
@@ -51,7 +61,11 @@ say('## Failures, one line per class'); say('');
 if (!classes.length) say('None.'); else { say('| Rule | Control | What happened | Seen | Where |'); say('|---|---|---|---|---|');
   for (const g of classes) say(`| ${g.rule} | ${g.byCause ? g.labels.size + ' controls, e.g. ' : ''}${g.label ? '"' + String(g.label).slice(0, 40).replace(/\|/g, '/') + '"' : ''}${g.ex.act ? ' (' + g.ex.act + ')' : ''} | ${String(g.why).replace(/\|/g, '/').slice(0, 160)} | ${g.n}x, ${[...g.sizes].join('+')} | ${[...g.trips].join(', ')}: ${[...g.where].slice(0, 3).join('; ')}${g.where.size > 3 ? ' (+' + (g.where.size - 3) + ')' : ''}${g.ex.path && g.ex.path.length ? ' after ' + g.ex.path.join(' > ').slice(0, 60) : ''} |`); }
 say('');
+if (known.length) { say('## Known failures (each has an owner and an end date; after it, it fails the release)'); say(''); say('| Rule | Control | What happened | Owner | Until |'); say('|---|---|---|---|---|');
+  for (const g of known) { const w = warnOf(g); say(`| ${g.rule} | ${g.label ? '"' + String(g.label).slice(0, 40).replace(/\|/g, '/') + '"' : ''}${g.ex.act ? ' (' + g.ex.act + ')' : ''} | ${String(g.why).replace(/\|/g, '/').slice(0, 160)} | ${w.owner} | ${w.until} |`); } say(''); }
 say('## Not pressed, not tested'); say('');
+for (const w of badWarns) say('- docs/qa/warns.json: the press ' + w.rule + ' warning is not allowed (a rule that can never be a warning, or no owner, or an end date not between ' + today + ' and ' + week + ').');
+if (!COVER) say('- Not judged in this run: whether every action name in the app was pressed. This run is a share of the trips; the full run (every trip, phone and tablet, on the live app, each night and after each publish) judges it.');
 if (missingTrips.length) say('- NOT TESTED: these trips were not in this run: ' + missingTrips.join(', ') + '.');
 if (notPressed && notPressed.length) say('- NOT PRESSED (' + notPressed.length + ' action names no press reached): ' + notPressed.map(a => a + (offActs.has(a) ? ' (seen greyed out only)' : '')).join(', ') + '.');
 for (const a of cannot) say('- Cannot be pressed in a test: ' + a + ': ' + X.CANNOT[a]);
@@ -69,10 +83,12 @@ for (const g of [...kinds.values()].sort((a, b) => (a.act || 'zz' + a.label).loc
 fs.writeFileSync(path.join(OUT, 'summary.md'), L.join('\n') + '\n');
 const sum = { live, url, presses: pressed.length, screens: new Set(recs.map(r => r.trip + r.size + r.root)).size, failed: fails.filter(r => !r.harness).length, classes: classes.map(g => ({ rule: g.rule, control: g.control, label: g.label, act: g.ex.act || '', why: g.why, n: g.n, sizes: [...g.sizes], trips: [...g.trips], where: [...g.where].slice(0, 6), path: g.ex.path || [] })), acts: inv ? inv.size : null, actsPressed: inv ? [...inv].filter(a => acts.has(a)).length : null, notPressed, cannot, missingTrips, cut: cut.length, harness: harness.length, ownRules: X.RULES.length };
 fs.writeFileSync(path.join(OUT, 'summary.json'), JSON.stringify(sum, null, 1));
+for (const w of badWarns) console.log('FAIL warns.json: the press ' + w.rule + ' warning is not allowed');
+for (const g of known) console.log(`WARN ${g.rule} "${g.label}"${g.ex.act ? ' (' + g.ex.act + ')' : ''} (known: ${warnOf(g).owner} until ${warnOf(g).until}): ${g.why} [${g.n}x]`);
 for (const g of classes) console.log(`FAIL ${g.rule} "${g.label}"${g.ex.act ? ' (' + g.ex.act + ')' : ''}: ${g.why} [${g.n}x; ${[...g.trips].join(', ')}; ${[...g.sizes].join('+')}; ${[...g.where][0]}]`);
 if (notPressed) for (const a of notPressed) console.log('NOT PRESSED action "' + a + '"' + (offActs.has(a) ? ' (seen greyed out only)' : ''));
 for (const t of missingTrips) console.log('NOT TESTED trip ' + t + ' was not in this run');
 for (const r of cut) console.log(`NOT PRESSED [${r.trip} ${r.size} / ${r.screen}] ${r.notpressed}`);
 if (harness.length) console.log('NOT TESTED ' + harness.length + ' presses the check could not finish');
-console.log(`\nEvery button pressed: ${pressed.length} presses, ${sum.screens} screens, ${sum.failed} failures in ${classes.length} classes` + (inv ? `, ${sum.actsPressed} of ${inv.size} action names pressed, ${notPressed.length} NOT PRESSED, ${cannot.length} cannot be pressed` : ''));
-process.exitCode = classes.length || (notPressed && notPressed.length) || missingTrips.length || cut.length || harness.length ? 1 : 0;
+console.log(`\nEvery button pressed: ${pressed.length} presses, ${sum.screens} screens, ${sum.failed} failures in ${all.length} classes` + (known.length ? ` (${known.length} known)` : '') + (inv && COVER ? `, ${sum.actsPressed} of ${inv.size} action names pressed, ${notPressed.length} NOT PRESSED, ${cannot.length} cannot be pressed` : ''));
+process.exitCode = classes.length || badWarns.length || (notPressed && notPressed.length) || missingTrips.length || cut.length || harness.length ? 1 : 0;
