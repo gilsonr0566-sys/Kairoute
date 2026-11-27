@@ -57,7 +57,7 @@
           // The boat back with a road home too: a fallback said on the ride, timed from the taxi's own leave-by, so a last
           // boat that leaves earlier than planned never costs the ship (review of E65, Nov 27).
           const tx = backBoat ? (leg.options || []).find(o => o.kind === "taxi") : null, txBy = tx && E.fin(win.endBy) ? win.endBy - tx.min : null;
-          const fb = txBy == null ? "" : txBy >= clock ? " If there is no boat by " + E.clock(txBy) + ", take a taxi instead: leave by " + E.clock(txBy) + " at the latest (about " + tx.min + " min to be back in time)."
+          const fb = txBy == null ? "" : txBy >= clock ? " If there is no boat by " + E.clock(txBy) + ", take a taxi no later than " + E.clock(txBy) + " (about " + tx.min + " min, back in time)."
             : " A taxi back takes longer than the boat (about " + tx.min + " min), so if there is no boat you would be late: ask for the last boat back before you set out, and take the taxi early if it is uncertain.";
           leg = Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why + fb, ownBoat: unsure }, txBy != null ? { taxiBy: txBy } : {}); unsure = null;
         } else { const t = (leg.options || []).find(o => o.kind === "taxi");

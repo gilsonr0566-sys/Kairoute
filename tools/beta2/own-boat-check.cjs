@@ -57,7 +57,7 @@ function run(E) {
               t(x.kind !== 'ferry' || /No sailing times are confirmed/.test(note), `${f} day ${i + 1} ${s.name}: the chosen ferry with no sailing times isn't said as not confirmed`);
               t(x.kind !== 'ferry' || !back || /Up to an hour at the pier/.test(note), `${f} day ${i + 1} ${s.name}: the chosen ferry back to the ship doesn't hold an hour at the pier`);
               // With a road home too, the boat back says when to give up on it and take a taxi, from the taxi's own leave-by.
-              const tx = (x.options || []).find(o => o.kind === 'taxi'), m = note.match(/If there is no boat by (\d{1,2}:\d{2} [ap]m), take a taxi instead: leave by (\d{1,2}:\d{2} [ap]m)/);
+              const tx = (x.options || []).find(o => o.kind === 'taxi'), m = note.match(/If there is no boat by (\d{1,2}:\d{2} [ap]m), take a taxi no later than (\d{1,2}:\d{2} [ap]m)/);
               if (x.kind === 'ferry' && back && tx && E.fin(p.endBy)) { const by = E.clock(p.endBy - tx.min);
                 t(m ? m[2] === by : /A taxi back takes longer than the boat/.test(note), `${f} day ${i + 1} ${s.name}: the chosen ferry back has no taxi fallback timed from the taxi's own leave-by (${by}): ${note.slice(-200)}`); }
             } else { refused++;
