@@ -146,7 +146,9 @@ function checkDay(d, p, ctx) {
   if (ctx && ctx.wet) { let away = false, run = [];
     const BOAT = /ferry|boat|water ?taxi|sea ?bus|hydrofoil|catamaran/i; // a tender (ship to shore) and a cable car land on the town's side
     for (const x of its) { if (x.t === 'ride') { run.push(x); continue; }
-      if (run.some(q => BOAT.test(kindOf(q) + ' ' + (q.how || '') + ' ' + (q.name || '')))) away = !away;
+      // A boat from one place across the water to another (an island to the next, Venice: San Pietro di Castello to San
+      // Giorgio Maggiore) keeps the traveler across the water; any other boat crosses to the other side.
+      if (run.some(q => BOAT.test(kindOf(q) + ' ' + (q.how || '') + ' ' + (q.name || '')))) away = away && x.t === 'stop' && x.id && ctx.wet(x) ? true : !away;
       if (x.t === 'stop' && x.id) { const w = ctx.wet(x); if (w !== away) add('water', 'S1', `${x.name} is ${w ? 'across the water' : 'on the town\'s side'}, but the plan reaches it by ${run.length ? run.map(q => kindOf(q) + ' ' + (q.min || 0) + ' min').join(' + ') : 'no ride'}${w ? ' with no boat' : ' without crossing back'}`); away = w; }
       run = []; } }
   // ---- physics + drift + absurd rides: a run of ride items between two places is one journey (walk to the pier, the
