@@ -142,4 +142,11 @@ ok(!(await ferryChain(ship, { lat: 38.12, lng: 13.36 }, ways)).length, "no chang
   const r = await timetableOptions({ lat: -33.915, lng: 151.165 }, { lat: -33.8, lng: 151.284 }, 3, "2027-06-30"), f = r.find(o => o.mode === "ferry");
   ok(f && f.mainFrom === "Circular Quay Wharf 3" && f.mainTo === "Manly Wharf" && f.from === "Sydenham Station" && f.changes === 1, `a train then a ferry is a ferry from its own wharf, with one change (got ${f && [f.kind, f.from, f.mainFrom, f.mainTo, f.changes].join(" | ")})`);
   globalThis.fetch = realFetch; }
+// A train's own number in the timetable is not its line: "Train 8144221" says nothing (Kyoto to Otsu, Nov 27).
+{ const realFetch = globalThis.fetch; const at = (h, m) => `2027-06-30T${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:00Z`;
+  globalThis.fetch = async u => { const h = +new URL(u).searchParams.get("time").slice(11, 13);
+    return { ok: true, json: async () => ({ itineraries: [{ startTime: at(h, 0), endTime: at(h, 20), duration: 1200, legs: [{ mode: "RAIL", startTime: at(h, 0), duration: 1200, routeShortName: "8144221", agencyName: "Keihan", from: { name: "Sanjo", tz: "Asia/Tokyo" }, to: { name: "Otsu" } }] }] }) }; };
+  const r = await timetableOptions({ lat: 35.0116, lng: 135.7681 }, { lat: 35.0045, lng: 135.8686 }, 3, "2027-06-30"), t = r.find(o => o.mode === "train");
+  ok(t && !/\d{5}/.test(t.label) && !/\d{5}/.test((t.steps || []).join(" ")), `a train's own number is never shown as its line (got ${t && t.label})`);
+  globalThis.fetch = realFetch; }
 console.log(bad ? `${bad} ferry check(s) failed` : "ferry checks passed"); process.exit(bad ? 1 : 0);
