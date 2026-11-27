@@ -32,6 +32,13 @@ const seed = { trip: JSON.stringify({ id: 'live-' + TRIP, name: c.name || TRIP, 
   await p.evaluate(i => window.__kairouteGo('plan', i), DAY); await p.waitForTimeout(+process.env.WAIT || 45000); // helper answers (routes, islands) arrive
   await p.evaluate(() => document.querySelectorAll('#view details').forEach(d => { d.open = true; })).catch(() => {});
   console.log(`\n===== ${TRIP} day ${DAY + 1} ${days[DAY].destination} (${days[DAY].type}) =====\n` + await p.evaluate(() => (document.querySelector('main') || document.body).innerText));
+  // ASK=lat,lng>lat,lng;...: the helper's own /transit answer for each pair on this day's date, as the page asks it
+  // (what ways it knows, and whether a source was busy), three times a minute apart.
+  if (process.env.ASK) for (let n = 0; n < 3; n++) { const r = await p.evaluate(async ([ask, date]) => { const j = await (await fetch('ai.json', { cache: 'no-store' })).json(), dow = new Date(date + 'T12:00:00Z').getUTCDay();
+      const pairs = ask.split(';').map(x => x.split('>').map(y => y.split(',').map(Number))).map(([a, b]) => ({ a, b, dow, date }));
+      const res = await (await fetch(j.url.replace(/\/$/, '') + '/transit', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ pairs }) })).json();
+      return (res.results || []).map(x => ({ partial: !!x.partial, error: x.error, opts: (x.opts || []).map(o => o.mode + ' ' + Math.round(o.min) + ' ' + String(o.label).slice(0, 60)) })); }, [process.env.ASK, days[DAY].date]).catch(e => 'ERR ' + e.message);
+    console.log('ASK ' + n + ' ' + JSON.stringify(r)); if (n < 2) await p.waitForTimeout(60000); }
   // RIDE=<words>: tap every ride choice whose label matches (e.g. "ferry|boat"), as the traveler would, and print the day
   // again with what the app said about the switch (a choice refused is shown, never silent).
   if (process.env.RIDE) { const re = process.env.RIDE;

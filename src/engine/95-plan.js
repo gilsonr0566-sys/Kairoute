@@ -357,7 +357,7 @@
           if (inTown.length && s.townWalk < (s.minutes || 60)) return Object.assign({}, s, { minutes: s.townWalk, walkOf: inTown.map(m => m.name), fullMinutes: s.minutes || 60 });
           const o = own(s); if (!o.length) return s; const left = Math.max(30, Math.round(((s.minutes || 60) - o.reduce((a, m) => a + (m.minutes || 30), 0)) / 5) * 5);
           return left < (s.minutes || 60) ? Object.assign({}, s, { minutes: left, walkOf: o.map(m => m.name), fullMinutes: s.minutes || 60 }) : s; });
-      const explain = [], wishes = [];
+      const explain = [], wishes = []; let unknownPicks = 0;
       let picks = null, autoIds;
       if (again) {
         picks = again.kept.slice(); autoIds = new Set(again.autoIds); explain.push(...again.explain);
@@ -374,7 +374,9 @@
         else if (win.leaveEarly) explain.push("The day starts at " + E.clock(win.start) + ", " + win.leaveEarly + " min before your planned start of " + E.clock(win.plannedStart) + ", to be " + (d.type === "embark" ? "at the cruise terminal" : "there") + " by " + E.clock(win.endBy) + ".");
         for (const [id, m] of movedTo) if (m.from === i) explain.push(m.inside ? m.name + " is inside " + m.inside + ", so it's planned with it on " + dayWord(m.to) + "." : m.name + " is closed on " + dayWord(i) + ", so it's planned on " + dayWord(m.to) + ".");
         for (const id of sel[i]) {
-          const s = pool.find(x => String(x.id) === String(id)) || ranked.find(x => String(x.id) === String(id)); if (!s) continue;
+          // A pick this place's guide doesn't have (a guide replaced, a saved list from another guide) is never dropped in
+          // silence: it is counted, and the day says so (Nov 27, Naples: "the reasons are above" with no reason above).
+          const s = pool.find(x => String(x.id) === String(id)) || ranked.find(x => String(x.id) === String(id)); if (!s) { unknownPicks++; continue; }
           const on = ledger.sightDay(s.id);
           if (on != null && on !== i) { explain.push(s.name + " is planned on another day."); continue; }
           if (!E.allowed(s, prefs, siteDay(s.id), win)) { explain.push(s.name + " " + (E.notAllowedWhy(s, prefs, siteDay(s.id), win) || "can't be visited this day") + "."); continue; }
@@ -388,6 +390,7 @@
         // optional stop (marked optional, never in the way of a pick), unless they cleared the day.
         // Picks that all can't be visited (shut in an evening port call, Nov 23 recheck) are not "nothing picked": the notes
         // above say why for each, and this says what to do.
+        if (unknownPicks) explain.push(unknownPicks === 1 ? "One of your picks isn't in this place's sights list any more, so it isn't planned: pick it again from the list." : unknownPicks + " of your picks aren't in this place's sights list any more, so they aren't planned: pick them again from the list.");
         if (d.own) { picks = wishes; if (!wishes.length) explain.push(d.cleared ? "You cleared this day: nothing is planned. Pick any sight to plan it." : (sel[i] || []).length ? "None of your picks can be visited in today's time (the reasons are above), so nothing is planned. Pick another sight to plan it." : "Pick the sights you want and they're planned here."); }
         const tripIds = !d.own && !wishes.length && dayTrip.get(i);
         if (tripIds) {
