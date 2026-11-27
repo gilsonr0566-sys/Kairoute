@@ -29,9 +29,9 @@
         const hole = !part && !short ? E.depGap(leg, clock) : null;
         if (hole) { const why = "The times found for " + (leg.how || "this line") + " jump from " + E.clock(hole.from) + " to " + E.clock(hole.to) + ", though it otherwise runs about every " + hole.every + " min, so the times in between are likely missing from the timetable, not trains that don't run. To be back in time it would need to leave about " + E.clock(clock) + (t ? ", so this ride is planned by taxi until those times are confirmed." : ": check the times at the station before you go.");
           leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); }
-        else if (part && !short) { const why = "The train and bus times found so far for " + (leg.how || "this line") + " show none near " + E.clock(clock) + ", but some hours of the day couldn't be read yet" + (t ? ", so this ride is planned by taxi until they are." : ": check another way before you go.");
+        else if (part && !short) { const why = "The times found so far for " + (leg.how || "this line") + " show none near " + E.clock(clock) + ", but some hours of the day couldn't be read yet" + (t ? ", so this ride is planned by taxi until they are." : ": check another way before you go.");
           leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); } else {
-        const why = short ? "The train and bus times found so far for " + (leg.how || "this line") + " only reach " + E.clock(last) + "; the times near " + E.clock(clock) + " aren't known yet" + (t ? ", so this ride is planned by taxi until they are." : ": check another way before you go.")
+        const why = short ? "The times found so far for " + (leg.how || "this line") + " only reach " + E.clock(last) + "; the times near " + E.clock(clock) + " aren't known yet" + (t ? ", so this ride is planned by taxi until they are." : ": check another way before you go.")
           : "The timetable found for " + (leg.how || "this line") + " shows no departure near " + E.clock(clock) + ", the time it would need to leave to be back in time" + (nx != null ? " (the next known is about " + E.clock(nx) + ")" : "") + (t ? ", so this ride is planned by taxi." : ": check another way before you go.");
         leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); } }
       // On a day with a time to be back, a boat is planned only on a sailing a timetable confirms (E.boatUnsure): else a
@@ -43,12 +43,21 @@
       // warning"); the app never takes such a boat on its own. Lunch inside that visit is part of it: the boat back from
       // the island's lunch place is the same boat (Nov 21 live check: Capri alone "could never fit" a 9 h 45 min day).
       const isleStop = leg.isle === "back" ? prev : p, ownBoat = !!(leg.mine || (isleStop && !isleStop.guideWish && (isleStop.wish || isleStop.insideWish)));
+      // R-06 (E65, Nov 27, Richard: his own ferry to a town along the coast refused again): a boat the traveler chose is refused only
+      // when real sailing times say it can't work (it doesn't run that month, or no sailing near the time needed). A boat
+      // whose answer has no sailing times at all (a ferry known from the map, its answer carrying no departures) is the
+      // accepted rule's case (Richard, Nov 26): planned, said as not confirmed, with up to an hour at the pier for the boat
+      // back to the ship. Before, only the words "no sailing times are known" counted, and a map ferry from the helper read
+      // "the timetable found gives no sailing times", so the traveler's own boat went back to a taxi.
       if (win.hard && leg.kind === "ferry" && (unsure = E.boatUnsure(leg, clock, win.date))) {
-        if (ownBoat && leg.source !== "timetable" || ownBoat && /no sailing times are known/.test(unsure)) {
-          const why = "No sailing times are confirmed for this boat (" + unsure + "): it is planned because you chose it. " + (leg.isle === "back" ? "Up to an hour at the pier is allowed for the boat back; ask at the pier for the last boat back when you land, and leave for the ship by the time shown." : "Check the sailings at the pier, and the last boat back, before you go.");
+        if (ownBoat && E.boatNoTimes(leg, win.date)) {
+          const backBoat = leg.isle === "back" || deadlineRide, wait0 = +((leg.ans || {}).wait) || 0, add = backBoat && leg.isle !== "back" ? Math.max(0, E.PIER_BACK - wait0) : 0;
+          if (add) leg = Object.assign({}, leg, { min: leg.min + add, pierBack: add });
+          const why = "No sailing times are confirmed for this boat (" + unsure + "): it is planned because you chose it. " + (backBoat ? "Up to an hour at the pier is allowed for the boat back; ask at the pier for the last boat back when you land, and leave for the ship by the time shown." : "Check the sailings at the pier, and the last boat back, before you go.");
           leg = Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, ownBoat: unsure }); unsure = null;
         } else { const t = (leg.options || []).find(o => o.kind === "taxi");
-          leg = t ? E.legAs(leg, t, "The boat isn't planned on its own on a day with a time to be back: " + unsure + ", so this ride is planned by taxi. Pick the boat yourself to take it anyway.") : Object.assign({}, leg, { unsure, noRun: true }); if (t) unsure = null; } }
+          // Refused, said truly: a boat the traveler chose is never told "pick the boat yourself" (they did).
+          leg = t ? E.legAs(leg, t, ownBoat ? "You chose the boat, but " + unsure + ", so this ride is planned by taxi to be back in time." : "The boat isn't planned on its own on a day with a time to be back: " + unsure + ", so this ride is planned by taxi. Pick the boat yourself to take it anyway.") : Object.assign({}, leg, { unsure, noRun: true }); if (t) unsure = null; } }
       // A stop whose spot isn't sure (the travel guide and the encyclopedia put it in different places and nothing told
       // which is right, tools/places/where.cjs): the ride's time is said as not sure, never shown as a fact (Nov 22 outside
       // test: a ride of 17 minutes by taxi between two places a 2-minute walk apart).
