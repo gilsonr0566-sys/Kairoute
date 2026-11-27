@@ -176,7 +176,7 @@ const stayNums = q => (stayStreetPart(q).match(/\d+[a-z]?/gi) || []).map(x => x.
 const stayHouse = h => String(h || "").toLowerCase().split(/[;,]/).map(x => x.trim().replace(/\s+/g, "")).filter(Boolean);
 // Which answer the map gave is the traveler's place, and how sure: { p, how: "place" | "door" | "street" } or null.
 function stayPick(q, list) {
-  const ok = (list || []).filter(p => p && KEngine.fin(+p.lat) && KEngine.fin(+p.lng)), street = stayStreetPart(q), nums = stayNums(q), other = nonLatin(q);
+  const ok = (list || []).filter(p => p && KEngine.fin(p.lat) && KEngine.fin(p.lng)), street = stayStreetPart(q), nums = stayNums(q), other = nonLatin(q);
   if (window.__kairoutePlant === "stay-any-hotel") { const h = ok.find(p => /hotel|guest|hostel|apartment/.test((p.kind || "") + " " + (p.cat || ""))); if (h) return { p: h, how: "place" }; }
   // A street, a boundary or a district is never "the place" by its name: with a house number typed it is at most the
   // street (Nov 27 live: "Mariahilfer Straße 47/12" answered by the district boundaries named after the street).
