@@ -66,7 +66,7 @@ jobs:
         if: always()
         run: |
           set -o pipefail
-          SIZES=${{ matrix.size }} DAYS=6 NO_PROOF=1 node tools/ui/steady-sights-check.cjs https://gilsonr0566-sys.github.io/Kairoute-Beta2/ 2>&1 | tee steady-live.txt
+          TRIPS=sample,g02-vienna,g09-kotor SIZES=${{ matrix.size }} DAYS=5 NO_PROOF=1 node tools/ui/steady-sights-check.cjs https://gilsonr0566-sys.github.io/Kairoute-Beta2/ 2>&1 | tee steady-live.txt
         shell: bash
       - if: always()
         run: mkdir -p client-out && cp steady-live.txt client-out/ 2>/dev/null; grep -E "^FAIL|Steady sights" steady-live.txt >> "$GITHUB_STEP_SUMMARY" 2>/dev/null; true
