@@ -924,9 +924,16 @@ export function farWithin(far, regions) {
 export function regionsOf(far, next) { const seen = new Set(), saidOf = x => Math.max(x.said || 0, ...(far || []).filter(f => f && f.voy === x.voy).map(f => f.said || 0));
   return (next || []).map(x => Object.assign({}, x, { go: 1 })).concat((far || []).filter(x => x && x.said > 0)).filter(x => x && x.voy && (x.vt === "region" || x.vt === "rural") && !seen.has(x.voy) && seen.add(x.voy))
     .map(x => ({ voy: x.voy, said: saidOf(x), go: x.go || 0 })).sort((a, b) => b.said - a.said || b.go - a.go).slice(0, 4).map(x => x.voy); }
+// The places a region's page names: the pages it links, and the towns it lists with a map marker and no link
+// ("{{marker|type=city|name=Vaxholm|lat=..}}": live helper, Nov 27, the Stockholm archipelago page names Vaxholm only so).
+export function regionNames(wt) { const n = {};
+  for (const m of String(wt || "").matchAll(/\{\{\s*marker\s*\|([^{}]*)\}\}/gi)) { if (!/\|?\s*type\s*=\s*(city|vicinity)\s*(\||$)/i.test("|" + m[1])) continue;
+    const nm = /(?:^|\|)\s*name\s*=\s*([^|]*)/i.exec(m[1]); if (!nm) continue; let t = nm[1].replace(/\[\[\s*:?([^|\]#]+)[^\]]*\]\]/, "$1").replace(/'{2,}/g, "").replace(/_/g, " ").replace(/\s+/g, " ").trim();
+    if (!t || /[\[\]{}<>]/.test(t)) continue; t = t.charAt(0).toUpperCase() + t.slice(1); n[t] = (n[t] || 0) + 1; }
+  return Object.assign(n, voyageLinks(wt)); }
 async function voyRegions(titles, UA) { let missed = false;
   const out = await Promise.all(titles.map(async t => { try { const r = await fetch("https://en.wikivoyage.org/w/api.php?action=parse&prop=wikitext&format=json&formatversion=2&redirects=1&page=" + encodeURIComponent(t), { headers: UA, signal: AbortSignal.timeout(9000) });
-    if (r.ok) { const j = await r.json(); if (j.parse && j.parse.wikitext) return { title: t, links: voyageLinks(j.parse.wikitext) }; if (j.error) return null; } } catch (e) {} missed = true; return null; }));
+    if (r.ok) { const j = await r.json(); if (j.parse && j.parse.wikitext) return { title: t, links: regionNames(j.parse.wikitext) }; if (j.error) return null; } } catch (e) {} missed = true; return null; }));
   return { regions: out.filter(Boolean), missed }; }
 // What kind of page the travel guide itself files a place under (rule R-37): every Wikivoyage article sits in a status
 // category of its kind ("Usable cities", "Guide districts", "Outline regions", "Usable parks", "Outline countries",
@@ -1198,7 +1205,7 @@ function placeOf(listing, wd, map, wholes) {
   return out("listing", listing, true);
 }
 async function sourcesData(label, env, ctx) {
-  const key = (await codeKey("sr", [sourcesData, placeOf, SIGHT_KINDS, mapSights, MAP_SIGHT, parseListings, voyagePages, voyageNext, voyageNextPlaces, voyageLinks, farSaid, farWithin, regionsOf, voyRegions, voyKind, voyTypes, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = (await codeKey("sr", [sourcesData, placeOf, SIGHT_KINDS, mapSights, MAP_SIGHT, parseListings, voyagePages, voyageNext, voyageNextPlaces, voyageLinks, farSaid, farWithin, regionsOf, regionNames, voyRegions, voyKind, voyTypes, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   // Every outside read here (Wikidata, its query service, the map server) is kept on its own as soon as it comes back
   // (R-34): a city nobody has opened takes 55 to 220 s to gather, longer than the app waits for one ask (60 s), and an
