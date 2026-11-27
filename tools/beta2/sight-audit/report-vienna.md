@@ -1,0 +1,25 @@
+## Vienna, Austria (Vienna, Austria, guide from sources)
+- POS Vienna Central Cemetery: app is 0.36 km from Wikidata's point (not on the map by id)
+- POS Krems [day trip]: app is 0.80 km from Wikidata's point (not on the map by id)
+- POS Baden [day trip]: app is 0.53 km from Wikidata's point (not on the map by id)
+- POS Eisenstadt [day trip]: app is 0.69 km from Wikidata's point (not on the map by id)
+- NOID Karikatur Museum Krems [day trip]: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- LEN Steiner Tor [day trip] {Q2340516 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- LEN Kunsthalle Krems [day trip] {Q1792410 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- LEN Burgruine Rehberg [day trip] {Q19960786 by name}: 30 min, but a castle or fortress usually takes 45-180 min
+- FAME #1 best known nearby, "Battle of Vienna" (65 Wikipedia languages, Q200855), is not offered
+- FAME #2 best known nearby, "Vienna Convention on Diplomatic Relations" (53 Wikipedia languages, Q659717), is not offered
+- FAME #3 best known nearby, "Vienna Convention on the Law of Treaties" (50 Wikipedia languages, Q239768), is not offered
+- FAME #4 best known nearby, "First Turkish Siege of Vienna" (48 Wikipedia languages, Q207576), is not offered
+- FAME #5 best known nearby, "Vienna metro" (48 Wikipedia languages, Q209400), is not offered
+- FAME #6 best known nearby, "Austrian State Treaty" (42 Wikipedia languages, Q306535), is not offered
+- FAME #7 best known nearby, "Vienna New Year's Concert" (42 Wikipedia languages, Q339152), is not offered
+- FAME #8 best known nearby, "Strategic Arms Limitation Talks" (37 Wikipedia languages, Q623994), is not offered
+- FAME #9 best known nearby, "Vienna City Hall" (37 Wikipedia languages, Q686468), is not offered
+- FAME #10 best known nearby, "2020 Vienna attacks" (37 Wikipedia languages, Q101095813), is not offered
+- FAME #11 best known nearby, "Vienna Basin" (32 Wikipedia languages, Q688715), is not offered
+- FAME #12 best known nearby, "Vienna Convention on Consular Relations" (31 Wikipedia languages, Q700855), is not offered
+- FAME #14 best known nearby, "meridian circle" (29 Wikipedia languages, Q364882), is not offered
+- INFO 47 sights, 11 day trips/towns; must-see: Schönbrunn Palace, Belvedere, St. Stephen's Cathedral, Kunsthistorisches Museum, Vienna State Opera house, Albertina, Hofburg Palace, Ernst-Happel-Stadion; top by fame: Schönbrunn Palace 65, Belvedere 62, St. Stephen's Cathedral 60, Vienna State Opera house 55, Hofburg Palace 55, Kunsthistorisches Museum 52, Ernst-Happel-Stadion 52, Albertina 47
+- INFO day trips: Krems, Baden, Eisenstadt, Steiner Tor, Kunsthalle Krems, Karikatur Museum Krems, Museumkrems, Gozzoburg, Piaristenkirche, Burgruine Rehberg
+

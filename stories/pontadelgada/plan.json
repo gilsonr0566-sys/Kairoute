@@ -1,0 +1,85 @@
+{
+ "sights": [
+  {
+   "id": "old-centre",
+   "title": "The City Gates, Town Hall and Church of São Sebastião",
+   "appIds": [
+    "src-q28226113"
+   ],
+   "wikidata": [
+    "Q28226113"
+   ],
+   "editions": 2,
+   "folds": [
+    "Portas da Cidade",
+    "Town Hall",
+    "Church of São Sebastião"
+   ],
+   "sources": [
+    "wp-ponta-delgada",
+    "wp-church-sao-sebastiao",
+    "wp-calcada-portuguesa",
+    "wv-ponta-delgada"
+   ]
+  },
+  {
+   "id": "fort-sao-bras",
+   "title": "Fort of São Brás",
+   "appIds": [
+    "src-q10283959"
+   ],
+   "wikidata": [
+    "Q10283959"
+   ],
+   "editions": 2,
+   "folds": [],
+   "sources": [
+    "wp-fort-sao-bras",
+    "wp-ponta-delgada"
+   ]
+  },
+  {
+   "id": "carlos-machado",
+   "title": "Carlos Machado Museum",
+   "appIds": [
+    "src-carlos-machado-museum"
+   ],
+   "wikidata": [
+    "Q10333422"
+   ],
+   "editions": 2,
+   "folds": [],
+   "sources": [
+    "wp-carlos-machado-museum",
+    "wp-sao-miguel-island"
+   ]
+  },
+  {
+   "id": "sete-cidades",
+   "title": "Sete Cidades",
+   "appIds": [],
+   "wikidata": [],
+   "editions": null,
+   "folds": [],
+   "sources": [
+    "wp-sete-cidades",
+    "wp-lagoa-das-sete-cidades",
+    "wp-sao-miguel-island"
+   ]
+  },
+  {
+   "id": "furnas",
+   "title": "Furnas",
+   "appIds": [],
+   "wikidata": [],
+   "editions": null,
+   "folds": [],
+   "sources": [
+    "wp-furnas",
+    "wp-cozido",
+    "wp-sao-miguel-island",
+    "wv-furnas"
+   ]
+  }
+ ]
+}

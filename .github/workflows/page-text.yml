@@ -1,0 +1,40 @@
+name: Read a live page
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        default: "https://gilsonr0566-sys.github.io/Kairoute/usage.html"
+      day:
+        description: "Example-trip day (destination words) to print the Day plan of; empty = print the page"
+        default: ""
+      trip:
+        description: "Saved test trip (tools/beta2/corpus file name) to print a day of; day = its day number"
+        default: ""
+      picks:
+        description: "With trip: the sight ids picked that day (comma-separated)"
+        default: ""
+      ride:
+        description: "With trip: tap the ride choice whose label matches these words (e.g. ferry|boat) and print the day again"
+        default: ""
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the app (the repository's index.html is only a placeholder)
+        run: sh build.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          URL: ${{ inputs.url }}
+          DAY: ${{ inputs.day }}
+          TRIP: ${{ inputs.trip }}
+          PICKS: ${{ inputs.picks }}
+          RIDE: ${{ inputs.ride }}
+          ROUTES: "1"
+          DUMP: "1"
+        run: npm i playwright@1.65.1 && npx playwright install chromium && if [ -n "$TRIP" ]; then node tools/live-trip-text.cjs; elif [ -n "$DAY" ]; then node tools/live-day-text.cjs; else node tools/page-text.cjs; fi

@@ -1,0 +1,107 @@
+name: Nightly truth check
+# Nov 23 2026 (thread "Rebuild the testing and review process", QA standard KAI-QA-002 trigger matrix "scheduled
+# nightly"). The release gate uses fixed trips so its answer is repeatable; this run goes looking for what the gate
+# has not seen yet, every night, and keeps every input so any finding can be replayed:
+#   1. New unusual trips each night (a new seed from the date, 1,000 trips), every day through the older day checks
+#      and the independent safety check; the planted-defect test on more trips than the gate uses.
+#   3. Choose sights never moves by itself on every day of every saved test trip, at phone, tablet and upright tablet.
+#   2. Every ride the test trips' plans hold (to and from airports, stations and piers first), the helper's time for it
+#      against the published timetables (Transitous, the operators' own GTFS).
+# Reports only (never publishes, never blocks a release by itself): a finding goes to the escaped-bug ledger
+# (docs/qa/escapes.md) and becomes a gate check. No AI, no secrets, free public sources only.
+on:
+  workflow_dispatch:
+    inputs:
+      seed: { description: "Seed for the trips (empty: today's date)", required: false }
+  schedule:
+    - cron: "30 7 * * *" # 1:30 am Central
+permissions:
+  contents: read
+defaults:
+  run:
+    shell: bash
+jobs:
+  random:
+    name: New unusual trips, independent check, planted defects
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: claude/project-thread-xrdp7v }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save opening_hours@3.16.0
+      - name: Trips
+        run: |
+          SEED="${{ github.event.inputs.seed }}"; [ -n "$SEED" ] || SEED=$(date -u +%Y%m%d)
+          echo "Seed $SEED (replay: node tools/beta2/odd-trips.cjs --n 1000 --seed $SEED --out trips.json)" | tee seed.txt
+          mkdir -p out
+          ALL=out/older-checks.json NOZIG=1 SLOW_MS=8000 node tools/beta2/odd-trips.cjs --n 1000 --seed $SEED --out out/trips.json --show 8 | tee out/older-checks.txt || true
+          ALL=out/independent.json node tools/truth/oracle.cjs --trips out/trips.json --show 8 | tee out/independent.txt || true
+          node tools/truth/mutants.cjs --n 300 | tee out/mutants.txt || true
+          cp seed.txt out/
+          # A safety finding holds the next release (spec v2, T2): this job turns red, and the release report reads it.
+          # Cleared by a later nightly with none, or by a line in docs/qa/nightly-cleared.txt naming this run as a proven false alarm.
+          grep -hE "^FAIL (gone|reach|leaveby|before|night|unverified|boat|backwait|error|back|start|order|nan) " out/older-checks.txt out/independent.txt > out/hold.txt || true
+          grep -hE "^(MISSED|NOT TESTED)" out/mutants.txt >> out/hold.txt || true
+          { echo "## Nightly truth check: new trips (seed $SEED)"; echo '```'; cat out/older-checks.txt out/independent.txt out/mutants.txt | grep -E "^(FAIL|WARN|MISSED|NOT TESTED|caught|Caught|Odd|Independent|Planted)|^       S" | head -120; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: truth-random, path: out }
+      - name: Safety findings hold the next release
+        run: |
+          if [ -s out/hold.txt ]; then echo "HOLD - safety findings tonight"; cat out/hold.txt; exit 1; fi
+          echo "No safety finding tonight"
+
+
+  steady:
+    # Nov 23 (Richard: "The select site page is unusable. It's jumping around"; class rule "A screen never moves by
+    # itself"): Choose sights on EVERY day of EVERY saved test trip (the 20-city list, live trips, no-AI trips, the sample
+    # cruise and its variants), real touch taps at phone-speed CPU. The gate runs the sample trip and two corpus trips.
+    name: Choose sights never moves by itself, every test trip (${{ matrix.size }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 170
+    strategy:
+      fail-fast: false
+      matrix:
+        size: [phone, tablet, upright]
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: claude/project-thread-xrdp7v }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - name: Every day of every test trip
+        run: |
+          TRIPS=corpus DAYS=all SIZES=${{ matrix.size }} node tools/ui/steady-sights-check.cjs beta2-site/index.html 2>&1 | tee steady.txt
+          { echo "## Steady sights, every test trip (${{ matrix.size }})"; echo '```'; grep -E "^(FAIL|NOTE)|Steady sights" steady.txt | head -80; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Nothing pinned covers content, every day of every test trip (R-30)
+        if: always()
+        run: |
+          TRIPS=corpus DAYS=all SIZES=${{ matrix.size }} NO_PROOF=1 node tools/ui/pinned-band-check.cjs beta2-site/index.html 2>&1 | tee -a steady.txt | grep -E "^FAIL|Pinned band" | head -80 > band.txt || true
+          { echo "## Pinned band, every test trip (${{ matrix.size }})"; echo '```'; cat band.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: "steady-${{ matrix.size }}", path: steady.txt }
+
+  rides:
+    name: Every planned ride against the published timetables
+    runs-on: ubuntu-latest
+    timeout-minutes: 170
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: claude/project-thread-xrdp7v }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: The live helper's ride code (main), the saved test trips
+        run: |
+          git fetch -q origin main && mkdir -p /tmp/live && git show origin/main:worker/transit.js > /tmp/live/transit.js
+          mkdir -p tools/beta2/snapshots && cp tools/beta2/corpus/*.json tools/beta2/snapshots/
+      - name: Measure (results are written after every ride, so a run cut short keeps its numbers)
+        run: |
+          node tools/ride-accuracy.mjs --legs --transit /tmp/live/transit.js --minutes 150 --out ride-legs.json | tee ride-legs.txt
+          { echo "## Nightly truth check: planned rides vs timetables"; echo '```'; tail -60 ride-legs.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: truth-rides, path: "ride-legs*" }

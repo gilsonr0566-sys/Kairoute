@@ -1,0 +1,157 @@
+{
+ "id": "kapnikarea",
+ "v": 1,
+ "city": "athens",
+ "title": "Panagia Kapnikarea",
+ "match": {
+  "ids": [
+   "kapnikarea"
+  ],
+  "names": [
+   "kapnikarea",
+   "kapnikarea church"
+  ],
+  "wikidata": [
+   "Q1728667"
+  ]
+ },
+ "checked": "2026-11-23",
+ "claims": {
+  "ka-what": {
+   "label": "supported",
+   "says": "Panagia Kapnikarea is a Greek Orthodox church and one of the oldest churches in Athens still in continuous use.",
+   "src": [
+    "wp-kapnikarea"
+   ],
+   "quote": [
+    "is a Greek Orthodox church and one of the oldest continuously in use churches in Athens"
+   ]
+  },
+  "ka-where": {
+   "label": "supported",
+   "says": "It stands right in the middle of the busy shopping street of Ermou, at the edge of Plaka.",
+   "src": [
+    "wp-kapnikarea"
+   ],
+   "quote": [
+    "right in the middle of the high-traffic shopping area of Ermou street, at the edge of the Plaka district"
+   ]
+  },
+  "ka-date": {
+   "label": "estimate",
+   "says": "It is estimated to have been built in the 11th century, perhaps around 1050.",
+   "src": [
+    "wp-kapnikarea"
+   ],
+   "quote": [
+    "It is estimated that the church was built some time in the 11th century, perhaps around 1050."
+   ]
+  },
+  "ka-temple": {
+   "label": "disputed",
+   "says": "It was built over an ancient Greek temple to a goddess, possibly Athena or Demeter.",
+   "src": [
+    "wp-kapnikarea"
+   ],
+   "quote": [
+    "this was built over an ancient Greek temple dedicated to the worship of a goddess, possibly Athena or Demeter"
+   ]
+  },
+  "ka-saved": {
+   "label": "supported",
+   "says": "When Leo von Klenze drew the new city plan for King Otto, the church was considered for demolition; King Ludwig I of Bavaria objected and saved it.",
+   "src": [
+    "wp-kapnikarea"
+   ],
+   "quote": [
+    "When King Otto I, King of the Kingdom of Greece, brought the Bavarian architect Leo von Klenze to draw the new city plan of Athens, the church was considered for demolition and it was the King of Bavaria, Ludwig I who objected the decision and saved the church."
+   ]
+  },
+  "ka-parts": {
+   "label": "supported",
+   "says": "It is three units built one after another: the larger south church of the Presentation of Mary to the Temple, the chapel of St Barbara on the north, and the outer porch with its gateway to the west.",
+   "src": [
+    "wp-kapnikarea"
+   ],
+   "quote": [
+    "the building is formed by a complex of three different units attached together; these units were built in succession: a) the largest south church dedicated to the Presentation of Mary to the Temple, b) the chapel of St Barbara on the northern side; and c) the exonarthex with the propylon to the west."
+   ]
+  },
+  "ka-dome": {
+   "label": "supported",
+   "says": "The south church is domed, built on a cross-in-square plan.",
+   "src": [
+    "wp-kapnikarea"
+   ],
+   "quote": [
+    "The larger of the two churches, the south one, is a domed complex, cross-in-square"
+   ]
+  },
+  "ka-monastery": {
+   "label": "disputed",
+   "says": "It may originally have been the main church of a monastery.",
+   "src": [
+    "wp-kapnikarea"
+   ],
+   "quote": [
+    "It appears that the Kapnikarea church may have originally been the katholikon of a monastery."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The church in the street",
+   "stand": "On Ermou Street, a few steps back from the little church that sits in the middle of it, so you can see the whole building.",
+   "paras": [
+    {
+     "t": "Here's a surprise in the middle of the shopping street. This is the Panagia Kapnikarea, a Greek Orthodox church, and one of the oldest churches in Athens that's still in use. It's thought to date from the 11th century, perhaps around 1050. The street was planned around it much later. The church was here first.",
+     "c": [
+      "ka-what",
+      "ka-where",
+      "ka-date",
+      "ka-saved"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It nearly didn't survive. When the new city plan of Athens was drawn up for King Otto, this church was considered for demolition. It was the King of Bavaria, Ludwig the First, who objected and saved it.",
+     "c": [
+      "ka-saved"
+     ],
+     "level": 1
+    }
+   ]
+  },
+  {
+   "name": "Reading the building",
+   "stand": "Walk slowly around the outside of the church.",
+   "paras": [
+    {
+     "t": "It's really three pieces joined together, built one after another. The bigger church, on the south side, with the dome, is dedicated to the Presentation of Mary in the Temple. On the north side is a chapel of Saint Barbara. And on the west end there's an outer porch with a gateway.",
+     "c": [
+      "ka-parts",
+      "ka-dome"
+     ],
+     "level": 2
+    },
+    {
+     "t": "What was here before? Probably an ancient temple to a goddess, perhaps Athena, perhaps Demeter; nobody knows which. And the church may once have been the main church of a monastery.",
+     "c": [
+      "ka-temple",
+      "ka-monastery"
+     ],
+     "level": 2
+    },
+    {
+     "t": "If the door is open and a service isn't on, step inside quietly for a moment. Outside, the street rushes past. In here, people have been praying for close to a thousand years.",
+     "c": [
+      "ka-date",
+      "ka-what"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

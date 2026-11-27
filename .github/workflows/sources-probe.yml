@@ -1,0 +1,35 @@
+name: Sources probe
+# Saves the helper's /sources answer (free sources, no AI) for the places in tools/beta2/fame-expect.json, so the app's
+# sight lists can be checked offline. Never publishes anything; saves tools/beta2/sources only, marked [skip ci].
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Only places whose label matches (blank: all)"
+        default: ""
+  push:
+    branches: ["claude/project-thread-xrdp7v"]
+    paths: [".github/workflows/sources-probe.yml", "tools/beta2/sources-probe.cjs", "tools/beta2/transit-probe.cjs", "tools/beta2/water-probe.cjs", "tools/beta2/pier-live.cjs", "tools/beta2/tt-check.cjs"]
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          ONLY: ${{ inputs.only || '' }}
+          TT: "1"
+        run: if [ -n "$TT" ]; then node tools/beta2/tt-check.cjs; exit 0; fi; if [ -n "$PIER" ]; then npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium && node tools/beta2/pier-live.cjs; exit 0; fi; if [ -n "$WATER" ]; then node tools/beta2/water-probe.cjs; elif [ -n "$TRANSIT" ]; then node tools/beta2/transit-probe.cjs; else node tools/beta2/sources-probe.cjs; fi
+      - name: Save the answers to the branch
+        run: |
+          git config user.name "Kairoute places"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/beta2/sources
+          git diff --cached --quiet && exit 0
+          git commit -m "Sources probe: saved /sources answers [skip ci]"
+          for n in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0; sleep 5; done; exit 1

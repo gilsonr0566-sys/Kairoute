@@ -1,0 +1,175 @@
+{
+ "note": "Sights nearly every visitor to the place expects to be offered (checked by hand against travel guides, Nov 20 2026). Test expectations only: the app never uses this list to choose sights. A name may list other names after |. A sight the sources don't return at all is a data gap (the helper's search), reported apart from the app's own leaks. Left out on purpose: streets walked rather than visited (Royal Mile, Stradun) and a palace mostly closed to visitors (Tokyo Imperial Palace).",
+ "places": [
+  {
+   "label": "Tokyo, Japan",
+   "expect": [
+    "Senso-ji",
+    "Meiji Jingū|Meiji Shrine",
+    "Tokyo Skytree",
+    "Tokyo National Museum"
+   ]
+  },
+  {
+   "label": "London, United Kingdom",
+   "expect": [
+    "Big Ben",
+    "Tower Bridge",
+    "Tower of London",
+    "British Museum",
+    "Westminster Abbey",
+    "Buckingham Palace"
+   ]
+  },
+  {
+   "label": "Amsterdam, Netherlands",
+   "expect": [
+    "Anne Frank House",
+    "Rijksmuseum",
+    "Van Gogh Museum",
+    "Royal Palace of Amsterdam"
+   ]
+  },
+  {
+   "label": "Paris, France",
+   "expect": [
+    "Eiffel Tower",
+    "Louvre",
+    "Notre-Dame",
+    "Arc de Triomphe",
+    "Sacré-Cœur"
+   ]
+  },
+  {
+   "label": "Rome, Italy",
+   "expect": [
+    "Colosseum",
+    "Pantheon",
+    "Trevi Fountain",
+    "St. Peter's Basilica",
+    "Roman Forum"
+   ]
+  },
+  {
+   "label": "Athens, Greece",
+   "expect": [
+    "Acropolis",
+    "Parthenon",
+    "Acropolis Museum",
+    "Ancient Agora",
+    "Temple of Olympian Zeus"
+   ]
+  },
+  {
+   "label": "Istanbul, Turkey",
+   "expect": [
+    "Hagia Sophia",
+    "Sultan Ahmed Mosque|Blue Mosque",
+    "Topkapı Palace",
+    "Grand Bazaar",
+    "Basilica Cistern"
+   ]
+  },
+  {
+   "label": "Vienna, Austria",
+   "expect": [
+    "Schönbrunn Palace",
+    "St. Stephen's Cathedral",
+    "Hofburg",
+    "Belvedere"
+   ]
+  },
+  {
+   "label": "Lisbon, Portugal",
+   "expect": [
+    "Belém Tower",
+    "Jerónimos Monastery",
+    "Castle of Saint George|São Jorge Castle"
+   ]
+  },
+  {
+   "label": "Barcelona, Spain",
+   "expect": [
+    "Sagrada Familia|Holy Family",
+    "Park Güell",
+    "Casa Batlló",
+    "La Rambla"
+   ]
+  },
+  {
+   "label": "Edinburgh, United Kingdom",
+   "expect": [
+    "Edinburgh Castle",
+    "Holyrood Palace"
+   ]
+  },
+  {
+   "label": "Kyoto, Japan",
+   "expect": [
+    "Fushimi Inari",
+    "Kinkaku-ji",
+    "Kiyomizu-dera"
+   ]
+  },
+  {
+   "label": "Venice, Italy",
+   "expect": [
+    "St Mark's Basilica",
+    "Doge's Palace",
+    "Rialto Bridge"
+   ]
+  },
+  {
+   "label": "Dubrovnik, Croatia",
+   "expect": [
+    "Walls of Dubrovnik",
+    "Rector's Palace"
+   ]
+  },
+  {
+   "label": "Kotor, Montenegro",
+   "expect": [
+    "Fortifications of Kotor",
+    "Kotor Cathedral|Cathedral of Saint Tryphon"
+   ]
+  },
+  {
+   "label": "Reykjavik, Iceland",
+   "expect": [
+    "Hallgrímskirkja",
+    "Harpa"
+   ]
+  },
+  {
+   "label": "Jerusalem, Israel",
+   "expect": [
+    "Western Wall",
+    "Church of the Holy Sepulchre",
+    "Dome of the Rock"
+   ]
+  },
+  {
+   "label": "Dubai, United Arab Emirates",
+   "expect": [
+    "Burj Khalifa",
+    "Dubai Creek"
+   ]
+  },
+  {
+   "label": "Prague, Czech Republic",
+   "expect": [
+    "Prague Castle",
+    "Charles Bridge",
+    "Old Town Square",
+    "Prague astronomical clock"
+   ]
+  },
+  {
+   "label": "Nassau, Bahamas",
+   "expect": [
+    "Fort Fincastle",
+    "Queen's Staircase"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,339 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-acropolis",
+   "wiki": "Acropolis of Athens"
+  },
+  {
+   "key": "wp-parthenon",
+   "wiki": "Parthenon"
+  },
+  {
+   "key": "wp-erechtheion",
+   "wiki": "Erechtheion"
+  },
+  {
+   "key": "wp-propylaea",
+   "wiki": "Propylaea (Acropolis of Athens)"
+  },
+  {
+   "key": "wp-nike",
+   "wiki": "Temple of Athena Nike"
+  },
+  {
+   "key": "wp-areopagus",
+   "wiki": "Areopagus"
+  },
+  {
+   "key": "wp-areopagus-sermon",
+   "wiki": "Areopagus sermon"
+  },
+  {
+   "key": "wp-acromuseum",
+   "wiki": "Acropolis Museum"
+  },
+  {
+   "key": "wp-agora",
+   "wiki": "Ancient Agora of Athens"
+  },
+  {
+   "key": "wp-hephaestus",
+   "wiki": "Temple of Hephaestus"
+  },
+  {
+   "key": "wp-attalos",
+   "wiki": "Stoa of Attalos"
+  },
+  {
+   "key": "wp-plaka",
+   "wiki": "Plaka"
+  },
+  {
+   "key": "wp-anafiotika",
+   "wiki": "Anafiotika"
+  },
+  {
+   "key": "wp-syntagma",
+   "wiki": "Syntagma Square"
+  },
+  {
+   "key": "wp-evzones",
+   "wiki": "Presidential Guard (Greece)"
+  },
+  {
+   "key": "wp-unknown-soldier",
+   "wiki": "Tomb of the Unknown Soldier Athens"
+  },
+  {
+   "key": "wp-parliament",
+   "wiki": "Old Royal Palace Athens Hellenic Parliament"
+  },
+  {
+   "key": "wp-metropolis",
+   "wiki": "Metropolitan Cathedral of Athens"
+  },
+  {
+   "key": "wp-little-metropolis",
+   "wiki": "Little Metropolis Athens Panagia Gorgoepikoos"
+  },
+  {
+   "key": "wp-monastiraki",
+   "wiki": "Monastiraki"
+  },
+  {
+   "key": "wp-pantanassa",
+   "wiki": "Pantanassa Monastiraki church"
+  },
+  {
+   "key": "wp-hadrians-library",
+   "wiki": "Hadrian's Library"
+  },
+  {
+   "key": "wp-tzistarakis",
+   "wiki": "Tzistarakis Mosque"
+  },
+  {
+   "key": "wp-olympieion",
+   "wiki": "Temple of Olympian Zeus, Athens"
+  },
+  {
+   "key": "wp-hadrians-arch",
+   "wiki": "Arch of Hadrian (Athens)"
+  },
+  {
+   "key": "wp-lycabettus",
+   "wiki": "Mount Lycabettus"
+  },
+  {
+   "key": "wp-roman-agora",
+   "wiki": "Roman Agora Athens"
+  },
+  {
+   "key": "wp-tower-winds",
+   "wiki": "Tower of the Winds"
+  },
+  {
+   "key": "odysseus-acropolis",
+   "url": "http://odysseus.culture.gr/h/3/eh351.jsp?obj_id=2384",
+   "publisher": "Hellenic Ministry of Culture"
+  },
+  {
+   "key": "odysseus-agora",
+   "url": "http://odysseus.culture.gr/h/3/eh351.jsp?obj_id=2485",
+   "publisher": "Hellenic Ministry of Culture"
+  },
+  {
+   "key": "odysseus-parthenon",
+   "url": "http://odysseus.culture.gr/h/2/eh251.jsp?obj_id=912",
+   "publisher": "Hellenic Ministry of Culture"
+  },
+  {
+   "key": "ysma-monuments",
+   "url": "https://www.ysma.gr/en/monuments/",
+   "publisher": "Acropolis Restoration Service"
+  },
+  {
+   "key": "unesco-acropolis",
+   "url": "https://whc.unesco.org/en/list/404/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "kjv-acts17",
+   "url": "https://bible-api.com/acts%2017:16-34?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "wv-athens",
+   "wiki": "Athens",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "ascsa-agora-ex",
+   "url": "https://www.ascsa.edu.gr/excavations/athenian-agora",
+   "publisher": "American School of Classical Studies at Athens"
+  },
+  {
+   "key": "wp-hellenic-parliament",
+   "wiki": "Hellenic Parliament"
+  },
+  {
+   "key": "wp-athens",
+   "wiki": "Athens"
+  },
+  {
+   "key": "wp-history-athens",
+   "wiki": "History of Athens"
+  },
+  {
+   "key": "wp-elgin",
+   "wiki": "Elgin Marbles"
+  },
+  {
+   "key": "wp-st-george-lycabettus",
+   "wiki": "Lycabettus Saint George chapel"
+  },
+  {
+   "key": "wp-monastiraki-square",
+   "wiki": "Monastiraki Square"
+  },
+  {
+   "key": "wp-theatre-dionysus",
+   "wiki": "Theatre of Dionysus"
+  },
+  {
+   "key": "wp-odeon-herodes",
+   "wiki": "Odeon of Herodes Atticus"
+  },
+  {
+   "key": "wp-dionysiou",
+   "wiki": "Dionysiou Areopagitou Street"
+  },
+  {
+   "key": "wp-unification",
+   "wiki": "Unification of Archaeological Sites of Athens"
+  },
+  {
+   "key": "wp-agia-ekaterini",
+   "wiki": "Agia Aikaterini, Athens"
+  },
+  {
+   "key": "wp-lysicrates",
+   "wiki": "Choragic Monument of Lysicrates"
+  },
+  {
+   "key": "wp-kapnikarea",
+   "wiki": "Church of the Panagia Kapnikarea"
+  },
+  {
+   "key": "wp-nam",
+   "wiki": "National Archaeological Museum, Athens"
+  },
+  {
+   "key": "wp-antikythera",
+   "wiki": "Antikythera mechanism"
+  },
+  {
+   "key": "wp-mask-agamemnon",
+   "wiki": "Mask of Agamemnon"
+  },
+  {
+   "key": "wp-artemision-bronze",
+   "wiki": "Artemision Bronze"
+  },
+  {
+   "key": "wp-byzantine-museum",
+   "wiki": "Byzantine and Christian Museum"
+  },
+  {
+   "key": "wp-national-garden",
+   "wiki": "National Garden, Athens"
+  },
+  {
+   "key": "wp-zappeion",
+   "wiki": "Zappeion"
+  },
+  {
+   "key": "wp-philopappos",
+   "wiki": "Philopappos Hill"
+  },
+  {
+   "key": "wp-philopappos-monument",
+   "wiki": "Philopappos Monument"
+  },
+  {
+   "key": "wp-pnyx",
+   "wiki": "Pnyx"
+  },
+  {
+   "key": "wp-socrates-prison",
+   "wiki": "Prison of Socrates"
+  },
+  {
+   "key": "wp-corinth",
+   "wiki": "Ancient Corinth"
+  },
+  {
+   "key": "wp-acrocorinth",
+   "wiki": "Acrocorinth"
+  },
+  {
+   "key": "wp-corinth-canal",
+   "wiki": "Corinth Canal"
+  },
+  {
+   "key": "wp-bema-corinth",
+   "wiki": "Bema of Corinth"
+  },
+  {
+   "key": "wp-temple-apollo-corinth",
+   "wiki": "Temple of Apollo (Corinth)"
+  },
+  {
+   "key": "wp-gallio",
+   "wiki": "Gallio"
+  },
+  {
+   "key": "wp-diolkos",
+   "wiki": "Diolkos"
+  },
+  {
+   "key": "wp-sounion",
+   "wiki": "Sounion"
+  },
+  {
+   "key": "wp-temple-poseidon",
+   "wiki": "Temple of Poseidon, Sounion"
+  },
+  {
+   "key": "wp-delphi",
+   "wiki": "Delphi"
+  },
+  {
+   "key": "wp-pythia",
+   "wiki": "Pythia"
+  },
+  {
+   "key": "wp-delphi-museum",
+   "wiki": "Delphi Archaeological Museum"
+  },
+  {
+   "key": "wp-charioteer",
+   "wiki": "Charioteer of Delphi"
+  },
+  {
+   "key": "wv-corinth",
+   "wiki": "Corinth",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wv-delphi",
+   "wiki": "Delphi",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "unesco-delphi",
+   "url": "https://whc.unesco.org/en/list/393/",
+   "publisher": "UNESCO World Heritage Centre"
+  },
+  {
+   "key": "kjv-acts18",
+   "url": "https://bible-api.com/acts%2018%3A1-18?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "kjv-1cor13",
+   "url": "https://bible-api.com/1%20corinthians%2013%3A1-13?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "kjv-1cor9",
+   "url": "https://bible-api.com/1%20corinthians%209%3A24-27?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  },
+  {
+   "key": "kjv-1cor10",
+   "url": "https://bible-api.com/1%20corinthians%2010%3A25?translation=kjv",
+   "publisher": "King James Version (public domain), via bible-api.com"
+  }
+ ]
+}

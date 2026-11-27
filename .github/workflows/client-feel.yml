@@ -1,0 +1,87 @@
+name: Client feel test (live Beta 2, real finger taps)
+# Nov 23 2026 (thread "Use the live app like a real client"). Every day, a clean phone and tablet use the LIVE Beta 2
+# site with real touch taps and swipes and measure what a traveler feels: things jumping from under the finger, the
+# page scrolling by itself, layout shift, slow and dead taps, pages that won't scroll, Back leaving the app, no signal.
+# Videos and pictures of every screen are kept 14 days (run artifacts); the summary and pictures are committed to the
+# branch client-feel-results. A red run means a problem a traveler would feel on the live app today.
+# The same test runs on every release candidate in the Beta 2 release gate (part 9), so a release cannot add one.
+# AI off, paid helper paths refused: zero spend. Publishes nothing.
+on:
+  workflow_dispatch:
+    inputs:
+      url: { description: "App address (empty: live Beta 2)", required: false }
+  push:
+    branches: ["claude/project-thread-pe7pi0"]
+    paths: ["tools/client/**", ".github/workflows/client-feel.yml"]
+  schedule:
+    # GitHub starts scheduled runs late or not at all when it is busy (Nov 24: the 5:15 am run never came; other
+    # schedules here ran 1-5 hours late). So: a first try at 2:20 am Central and a second at 4:50 am; the second does
+    # nothing if today's results are already in (see "today").
+    - cron: "20 8 * * *"
+    - cron: "50 10 * * *"
+permissions:
+  contents: read
+concurrency:
+  group: client-feel
+  cancel-in-progress: false
+jobs:
+  today:
+    runs-on: ubuntu-latest
+    outputs:
+      done: ${{ steps.c.outputs.done }}
+    steps:
+      - id: c
+        run: |
+          D=$(date -u +%Y-%m-%d)
+          L=$(curl -fsSL "https://raw.githubusercontent.com/${{ github.repository }}/client-feel-results/LATEST.txt" 2>/dev/null || true)
+          if [ "${{ github.event_name }}" = "schedule" ] && echo "$L" | grep -q "^$D"; then echo "done=1" >> "$GITHUB_OUTPUT"; echo "Today's run is already in ($L)"; else echo "done=0" >> "$GITHUB_OUTPUT"; fi
+  walk:
+    needs: today
+    if: needs.today.outputs.done != '1'
+    strategy:
+      fail-fast: false
+      matrix:
+        size: [phone, tablet, upright]
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        # The tools live on the release branch, not on main: a scheduled run, or one started by hand on main, uses them
+        # from there (Nov 24: started by hand on main, it failed in a minute with no tools/client/feel.cjs).
+        with: { ref: "${{ (github.event_name == 'schedule' || github.ref_name == 'main') && 'claude/project-thread-xrdp7v' || github.ref }}" }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - name: Walk the live app with a finger
+        env:
+          SIZES: ${{ matrix.size }}
+          OUT: client-out
+        run: node tools/client/feel.cjs "${{ github.event.inputs.url || 'https://gilsonr0566-sys.github.io/Kairoute-Beta2/' }}" 2>&1 | tee client-out-log.txt; exit ${PIPESTATUS[0]}
+        shell: bash
+      - if: always()
+        run: mkdir -p client-out && cp client-out-log.txt client-out/ 2>/dev/null; cat client-out/summary.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: feel-${{ matrix.size }}
+          path: client-out
+          retention-days: 14
+  collect:
+    needs: walk
+    if: always() && needs.walk.result != 'skipped'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { path: _in, pattern: feel-*, merge-multiple: false }
+      - run: |
+          RUN=$(date -u +%Y-%m-%d-%H%M)-${{ needs.walk.result }}
+          if git fetch -q origin client-feel-results; then git checkout -q -B client-feel-results origin/client-feel-results; else git checkout -q --orphan client-feel-results; git rm -rqf . >/dev/null 2>&1 || true; fi
+          mkdir -p "$RUN"
+          for d in _in/feel-*; do s=${d#_in/feel-}; mkdir -p "$RUN/$s"; cp "$d/$s"/*.jpg "$d/$s"/result.json "$RUN/$s/" 2>/dev/null || true; cp "$d/summary.md" "$RUN/summary-$s.md" 2>/dev/null || true; done
+          rm -rf _in
+          echo "$RUN" > LATEST.txt
+          git config user.name "client-feel" && git config user.email "client-feel@users.noreply.github.com"
+          git add -A && git commit -q -m "Client feel test: $RUN" && git push -q origin HEAD:client-feel-results || echo "nothing to keep"

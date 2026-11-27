@@ -1,0 +1,140 @@
+{
+ "key": "grand turk turks and caicos",
+ "name": "Grand Turk, Turks and Caicos",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q1473924": {
+   "wikidata": "Q1473924",
+   "editions": 26,
+   "types": [
+    "Q23442",
+    "Q2487479"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q1623251"
+   ],
+   "osm": "relation/7162587"
+  },
+  "src-turks-and-caicos-national-museum": {
+   "wikidata": "Q13525325",
+   "editions": 5,
+   "types": [
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/410322609"
+  }
+ },
+ "towns": {},
+ "ports": [],
+ "dayTrips": [],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 21.4663425,
+  "lng": -71.14564250000001
+ },
+ "wikivoyage": "Grand Turk",
+ "portQuery": {
+  "name": "Grand Turk Cruise Center Access Road",
+  "lat": 21.4296163,
+  "lng": -71.1435885,
+  "known": true,
+  "island": false
+ },
+ "cityEats": [
+  {
+   "name": "The Inn Restaurant",
+   "lat": 21.4656453,
+   "lng": -71.1463982,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4090974932"
+  },
+  {
+   "name": "Barbies Restaurant",
+   "lat": 21.472395,
+   "lng": -71.1476921,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4121548387"
+  },
+  {
+   "name": "Homeboy Pizezeria & Souse House",
+   "lat": 21.4724731,
+   "lng": -71.1466342,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4121885184"
+  },
+  {
+   "name": "Mookie Pookie Pizza Palace",
+   "lat": 21.4729201,
+   "lng": -71.1465584,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "",
+   "osm": "way/410381410"
+  }
+ ],
+ "heights": [
+  [
+   21.46565,
+   -71.1464,
+   7
+  ],
+  [
+   21.47239,
+   -71.14769,
+   3
+  ],
+  [
+   21.47247,
+   -71.14663,
+   4
+  ],
+  [
+   21.47292,
+   -71.14656,
+   4
+  ],
+  [
+   21.47222,
+   -71.13889,
+   3
+  ],
+  [
+   21.45335,
+   -71.15024,
+   3
+  ],
+  [
+   21.46847,
+   -71.14604,
+   5
+  ],
+  [
+   21.47133,
+   -71.1474,
+   6
+  ],
+  [
+   21.46634,
+   -71.14564,
+   4
+  ]
+ ]
+}

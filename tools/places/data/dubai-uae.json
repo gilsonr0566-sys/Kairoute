@@ -1,0 +1,1285 @@
+{
+ "key": "dubai uae",
+ "name": "Dubai, UAE",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q2125281": {
+   "wikidata": "Q2125281",
+   "editions": 26,
+   "types": [
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q20386392": {
+   "wikidata": "Q20386392",
+   "editions": 22,
+   "types": [
+    "Q838948",
+    "Q811979"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 10:00-19:00",
+   "fee": "yes",
+   "osm": "way/386649647"
+  },
+  "src-q22948398": {
+   "wikidata": "Q22948398",
+   "editions": 22,
+   "types": [
+    "Q33506",
+    "Q811979"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1054289435",
+   "hours": "Mo-Su 10:00-21:30"
+  },
+  "src-q1332229": {
+   "wikidata": "Q1332229",
+   "editions": 21,
+   "types": [
+    "Q1497364"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q2298717": {
+   "wikidata": "Q2298717",
+   "editions": 16,
+   "types": [
+    "Q32815"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q5594813": {
+   "wikidata": "Q5594813",
+   "editions": 16,
+   "types": [
+    "Q32815"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/7214752"
+  },
+  "src-q2094764": {
+   "wikidata": "Q2094764",
+   "editions": 12,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/542042595"
+  }
+ },
+ "towns": {},
+ "ports": [],
+ "dayTrips": [
+  "United Arab Emirates",
+  "Abu Dhabi",
+  "Al Ain",
+  "Sharjah",
+  "Umm al Quwain",
+  "Oman",
+  "Hatta",
+  "Iran",
+  "Kish Island",
+  "Musandam Peninsula",
+  "Ajman",
+  "Jebel Ali"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 25.242512857142856,
+  "lng": 55.28926714285715
+ },
+ "wikivoyage": "Dubai",
+ "guideSights": [
+  {
+   "name": "Al Ahmadiya School and Heritage House",
+   "lat": 25.2684326,
+   "lng": 55.2949194,
+   "wikidata": "",
+   "note": "Built in 1912, Al Ahmadiya School was Dubai's first school and has now been nicely restored. It would be a stretch to call the exhibits of old reed pens and diplomas fascinating, but they've tried pretty hard, and if nothing else, the air-c"
+  },
+  {
+   "name": "Deira Clocktower",
+   "lat": 25.258659,
+   "lng": 55.326443,
+   "wikidata": "Q4346630",
+   "note": "A landmark of Deira and important as a monument built before the independence of UAE.",
+   "editions": 9,
+   "unesco": false
+  },
+  {
+   "name": "Dhow Wharfage",
+   "lat": 25.2566,
+   "lng": 55.3182,
+   "wikidata": "",
+   "note": "The dhows ply the Arabian Sea and the Indian Ocean, transporting goods between south and south-west Asia and east Africa."
+  },
+  {
+   "name": "Mamzar Park",
+   "lat": 25.32,
+   "lng": 55.35,
+   "wikidata": "",
+   "note": "You can swim at Al Mamzar Beach or stroll in the park. Though less popular than other Dubai parks, it has its share of Dubai's greenery. Monday & Wednesday for women only."
+  },
+  {
+   "name": "Dubai Municipality Museum",
+   "lat": 25.2679,
+   "lng": 55.2978,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Women's Museum",
+   "lat": 25.2718,
+   "lng": 55.2987,
+   "wikidata": "",
+   "note": "Highlight the contribution of women to UAE's economy, culture and politic for the independence in the 1960s and since. Life of great women and daily life of Emirati people. An exhibit is also dedicated to the famous Emirati female poet Oush"
+  },
+  {
+   "name": "Gold Price Checking - Dubai Souq",
+   "lat": 25.2673,
+   "lng": 55.3043,
+   "wikidata": "",
+   "note": "Before purchasing gold in Dubai’s famous Gold Souk, it's always best to check the current live gold prices. Gold prices fluctuate daily due to global market trends. Visit [GoldRateUAE](https://goldrateuae.ae/) to get the latest price update"
+  },
+  {
+   "name": "Al Fahidi Historical Neighbourhood",
+   "lat": 25.264,
+   "lng": 55.3,
+   "wikidata": "Q2094764",
+   "note": "One of the last remaining pockets of Old Dubai, home to many reconstructed buildings in the traditional style. While information on the structures is slim here (see the museum in preference), the atmosphere is very evocative and there are p",
+   "editions": 12,
+   "unesco": false,
+   "en": "Al Bastakiya"
+  },
+  {
+   "name": "Creek Park",
+   "lat": 25.2408,
+   "lng": 55.3259,
+   "wikidata": "Q21639483",
+   "note": "A great place to hang out in the evening when the park is visited by people of different nationalities, all looking for calm place to enjoy the time. It has all the facilities of a modern park and is one of the best parks in Dubai. The cabl",
+   "editions": 1,
+   "unesco": false,
+   "noEn": true
+  },
+  {
+   "name": "Dubai Dolphinarium",
+   "lat": 25.234654,
+   "lng": 55.326764,
+   "wikidata": "Q2116901",
+   "note": "The only indoor dolphinarium in the Middle East offers live shows of dolphins and seals. Swim with Dolphins is possible.",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.dubaidolphinarium.ae"
+  },
+  {
+   "name": "Grand Mosque",
+   "lat": 25.26439,
+   "lng": 55.29694,
+   "wikidata": "Q5594813",
+   "note": "Its large minaret is the imposing feature of this large mosque. It is popular for being quite close to a Hindu temple and one can see followers of both Islam and Hinduism gathering at the same place for prayers.",
+   "editions": 16,
+   "unesco": false
+  },
+  {
+   "name": "Heritage Village",
+   "lat": 25.268,
+   "lng": 55.29,
+   "wikidata": "",
+   "note": "Home to the open museums of the Heritage and Diving Villages, and the houses of the late Sheikhs Saeed Al-Maktoum and Juma Al-Maktoum."
+  },
+  {
+   "name": "Iranian mosque",
+   "lat": 25.264,
+   "lng": 55.2946,
+   "wikidata": "Q20987838",
+   "note": "A very colourful and attractive tiled mosque; quite a contrast to the other much more plainly decorated mosques. Can be viewed from a carparking area off the north (creek) side of the street.",
+   "editions": 9,
+   "unesco": false,
+   "en": "Iranian Mosque, Bur Dubai"
+  },
+  {
+   "name": "Sheikh Obaid bin Thani House",
+   "lat": 25.2686,
+   "lng": 55.29076,
+   "wikidata": "",
+   "note": "a historic building home to royal family members built in 1916 and now converted into a museum. It provides good glimpse to old infrastructure of Dubai."
+  },
+  {
+   "name": "Saeed Al Maktoum House",
+   "lat": 25.26818,
+   "lng": 55.29036,
+   "wikidata": "",
+   "note": "Another very historic building built in 1894 now converted into a museum and contains artefacts and images of the old town of Dubai. It was the residence of the Saeed bin Maktoum bin Hasher Al Maktoum, the former ruler of Dubai."
+  },
+  {
+   "name": "Crossroad of Civilization Museum",
+   "lat": 25.2675,
+   "lng": 55.2889,
+   "wikidata": "",
+   "note": "Museum includes a lot of artefacts and old books, including a Gutenberg Bible and a curtain of the door of Kaaba from 1543 AD."
+  },
+  {
+   "name": "Old Weapons Museum",
+   "lat": 25.2672,
+   "lng": 55.2893,
+   "wikidata": "",
+   "note": "Large collection of swords, daggers, riffles, from several centuries."
+  },
+  {
+   "name": "Zabeel Park",
+   "lat": 25.2355,
+   "lng": 55.2977,
+   "wikidata": "Q23583803",
+   "note": "The best and most popular park of town, it gives a remarkable glimpse of the desert and hot Dubai.",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "Dubai Frame",
+   "lat": 25.23553,
+   "lng": 55.30032,
+   "wikidata": "Q20386392",
+   "note": "Two towers of 150 m height connected by a 100-m² bridge, the Dubai Frame has a museum and gallery where you can see the growth of Dubai from a simple fishing village to the ultra-modern city it is today with the use of photos and advanced t",
+   "editions": 22,
+   "unesco": false,
+   "web": "https://www.thedubaiframe.com/"
+  },
+  {
+   "name": "Dinausaur Park & Glow Garden Park",
+   "lat": 25.2286,
+   "lng": 55.297,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Burj Khalifa",
+   "lat": 25.197222,
+   "lng": 55.274167,
+   "wikidata": "Q12495",
+   "note": "At 828 m and 160 floors this is the world's tallest structure by a long shot, over 300 m taller than the previous contender in Taipei. The observation deck at the 124th floor is the second highest in the world after the Shanghai World Finan",
+   "editions": 140,
+   "unesco": false,
+   "web": "http://www.burjkhalifa.ae"
+  },
+  {
+   "name": "Dubai Fountain",
+   "lat": 25.195186,
+   "lng": 55.275061,
+   "wikidata": "Q2384491",
+   "note": "At 270m (900 ft) in length and sporting a jet that shoots water up to 150m (500 ft), it is the world's largest dancing fountain and one with a very enticing display - a definite must-see. It's most easily accessed via the Dubai Mall. There ",
+   "editions": 26,
+   "unesco": false,
+   "posDoubt": true,
+   "en": "The Dubai Fountain"
+  },
+  {
+   "name": "Jumeirah Beach",
+   "lat": 25.1647,
+   "lng": 55.2072,
+   "wikidata": "Q6310943",
+   "note": "Dubai is known for its great beaches and this one is the best. It's the most popular and busiest beach of the country. Expect to see swimmers in bikinis and ladies in abaya cloaks; this beach truly encapsulates the Westernisation of Dubai c",
+   "editions": 13,
+   "unesco": false
+  },
+  {
+   "name": "Jumeirah Mosque",
+   "lat": 25.233972,
+   "lng": 55.265503,
+   "wikidata": "Q2298717",
+   "note": "The largest mosque in the city, and a wonderful example of Islamic architecture. It was built in the medieval Fatimid tradition with the interior decorated with elaborate Arabic calligraphy. It is one of few mosques in the city open for vis",
+   "editions": 16,
+   "unesco": false,
+   "web": "https://www.jumeirahmosque.ae/"
+  },
+  {
+   "name": "Majlis Ghorfat Umm Al Sheif",
+   "lat": 25.18668,
+   "lng": 55.23077,
+   "wikidata": "Q16979318",
+   "note": "A restored traditional Emirati-style two story building used as a summer residence by Sheikh Rashid bin Saeed Al Maktoum, one of the founders of UAE, and father of the present ruler of Dubai.",
+   "editions": 3,
+   "unesco": false
+  },
+  {
+   "name": "Al Safa Park",
+   "lat": 25.1839,
+   "lng": 55.2453,
+   "wikidata": "Q2522355",
+   "note": "A beautiful planned park and one of the oldest parks in Dubai. It is a favourite for sports enthusiasts, and many visitors enjoy playing tennis, volleyball, and soccer. Children love playing games in the video arcade, or riding the Ferris w",
+   "editions": 8,
+   "unesco": false,
+   "en": "Safa Park"
+  },
+  {
+   "name": "Etihad Museum",
+   "lat": 25.241433,
+   "lng": 55.269331,
+   "wikidata": "Q28736367",
+   "note": "Museum about the construction of the Union of the Emirates, after the withdrawal of British forces. Open in 2017, it features exhibits about the seven fathers, and the constitution. The Union House, where the treaty was signed, can be visit",
+   "editions": 5,
+   "unesco": false,
+   "web": "https://etihadmuseum.dubaiculture.gov.ae/en/pages/default.aspx"
+  },
+  {
+   "name": "Dubai Aquarium and Underwater Zoo",
+   "lat": 25.1977,
+   "lng": 55.2788,
+   "wikidata": "",
+   "note": "Giant aquarium, {{m"
+  },
+  {
+   "name": "Museum of the Future",
+   "lat": 25.21912,
+   "lng": 55.2821,
+   "wikidata": "Q22948398",
+   "note": "Branded as a \"technology museum\" many visitors consider it more of an expensive art exhibition. The building is outstanding though and looks particularly impressive in the dark.",
+   "editions": 22,
+   "unesco": false,
+   "web": "https://museumofthefuture.ae/"
+  },
+  {
+   "name": "Jumeirah Archaeological Site",
+   "lat": 25.19679,
+   "lng": 55.2418,
+   "wikidata": "Q16892960",
+   "note": "",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Jumeirah Fishing Harbor",
+   "lat": 25.211,
+   "lng": 55.244,
+   "wikidata": "",
+   "note": "A quiet place with some nice restaurants."
+  },
+  {
+   "name": "Emirates Towers",
+   "lat": 25.217575,
+   "lng": 55.283057,
+   "wikidata": "Q1332229",
+   "note": "The Emirates Towers complex contains the Emirates Office Tower and Jumeirah Emirates Towers Hotel. The two towers, which rise to 355 m (1,165 ft) and 309 m (1,014 ft), respectively, stand as the 23rd and 47th tallest buildings in the world.",
+   "editions": 21,
+   "unesco": false
+  },
+  {
+   "name": "Sky Views Dubai",
+   "lat": 25.20148,
+   "lng": 55.27065,
+   "wikidata": "",
+   "note": "This hotel building offers beautiful views toward Burj Khalifa from its 53rd floor observation deck. There is a 25-m glass floor walk and a ride on a glass slide included. For another dirham a walk along the edge of this building floor can "
+  },
+  {
+   "name": "Imagine",
+   "lat": 25.221,
+   "lng": 55.35,
+   "wikidata": "",
+   "note": "Plays two different big water, fire and light shows: ''Stardancer'' and ''A Child's Dream''. Have several world records."
+  }
+ ],
+ "piers": [
+  {
+   "name": "Godolphin MTS",
+   "lat": 25.18463,
+   "lng": 55.25619,
+   "osm": "node/13944619948"
+  },
+  {
+   "name": "Marine Transport Station",
+   "lat": 25.18578,
+   "lng": 55.24929,
+   "osm": "node/13944619949"
+  },
+  {
+   "name": "Abra station south - Bur Dubai",
+   "lat": 25.26469,
+   "lng": 55.29304,
+   "osm": "node/2941645658"
+  },
+  {
+   "name": "Deira Old Souk",
+   "lat": 25.26714,
+   "lng": 55.29799,
+   "osm": "node/2941645659"
+  },
+  {
+   "name": "Dubai Old Souk - Abra dock",
+   "lat": 25.26499,
+   "lng": 55.29525,
+   "osm": "node/315524193"
+  },
+  {
+   "name": "Al Sabkha Abra terminal (North)",
+   "lat": 25.26726,
+   "lng": 55.30316,
+   "osm": "node/315524198"
+  },
+  {
+   "name": "Jumeirah One Fishing Harbour",
+   "lat": 25.21112,
+   "lng": 55.24394,
+   "osm": "node/3339528085"
+  },
+  {
+   "name": "Al Ghubaiba",
+   "lat": 25.26543,
+   "lng": 55.29122,
+   "osm": "node/3556699356"
+  },
+  {
+   "name": "Dubai Old Souk - water bus terminal",
+   "lat": 25.26479,
+   "lng": 55.29334,
+   "osm": "node/3556699360"
+  },
+  {
+   "name": "Baniyas - water bus terminal",
+   "lat": 25.26259,
+   "lng": 55.31141,
+   "osm": "node/3556699367"
+  },
+  {
+   "name": "Al Sabkha",
+   "lat": 25.26708,
+   "lng": 55.30354,
+   "osm": "node/3556724538"
+  },
+  {
+   "name": "Dubai Festival City",
+   "lat": 25.22207,
+   "lng": 55.349,
+   "osm": "node/4815572076"
+  },
+  {
+   "name": "Marasi MTS",
+   "lat": 25.18253,
+   "lng": 55.27066,
+   "osm": "node/4827656119"
+  },
+  {
+   "name": "Al Wajeha Al Maeyah MTS",
+   "lat": 25.188,
+   "lng": 55.28471,
+   "osm": "node/4827657123"
+  },
+  {
+   "name": "Dubai Design District MTS",
+   "lat": 25.19144,
+   "lng": 55.29839,
+   "osm": "node/4827657124"
+  },
+  {
+   "name": "Al Jadaf",
+   "lat": 25.21595,
+   "lng": 55.34123,
+   "osm": "node/4827657126"
+  },
+  {
+   "name": "Sheikh Zayed Road MTS",
+   "lat": 25.18648,
+   "lng": 55.25218,
+   "osm": "node/4827657172"
+  },
+  {
+   "name": "Jumeirah Marine Transport Station",
+   "lat": 25.19355,
+   "lng": 55.24118,
+   "osm": "node/4827657187"
+  },
+  {
+   "name": "Dubai Canal",
+   "lat": 25.19795,
+   "lng": 55.23327,
+   "osm": "node/4827657190"
+  },
+  {
+   "name": "Al Seef Marine Transport Station",
+   "lat": 25.26002,
+   "lng": 55.31021,
+   "osm": "node/6289699655"
+  },
+  {
+   "name": "Business Bay MTS",
+   "lat": 25.18344,
+   "lng": 55.26018,
+   "osm": "node/7084131588"
+  },
+  {
+   "name": "Al Wasl Marine Transport Station",
+   "lat": 25.1898,
+   "lng": 55.24406,
+   "osm": "node/8560061423"
+  },
+  {
+   "name": "Al Fahidi Marine Transport Station",
+   "lat": 25.26558,
+   "lng": 55.30077,
+   "osm": "node/8574337378"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 25.27219,
+   "lng": 55.28018,
+   "osm": "way/317658022"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 25.27267,
+   "lng": 55.28082,
+   "osm": "way/317658023"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 25.2717,
+   "lng": 55.2795,
+   "osm": "way/317658024"
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Al Sabkha - Al Fahidi Marine Transport Station",
+   "a": {
+    "lat": 25.26558,
+    "lng": 55.30077
+   },
+   "b": {
+    "lat": 25.26726,
+    "lng": 55.30316
+   },
+   "osm": "way/1042556503"
+  },
+  {
+   "name": "Dubai Old Souk - Al Sabkha (Abra)",
+   "a": {
+    "lat": 25.26499,
+    "lng": 55.29525
+   },
+   "b": {
+    "lat": 25.26726,
+    "lng": 55.30316
+   },
+   "osm": "way/28702639"
+  },
+  {
+   "name": "Bur Dubai - Deira Old Souk (Abra)",
+   "a": {
+    "lat": 25.26469,
+    "lng": 55.29304
+   },
+   "b": {
+    "lat": 25.26714,
+    "lng": 55.29799
+   },
+   "osm": "way/28702640"
+  },
+  {
+   "name": "Dubai Old Souk - Baniyas (Water Bus)",
+   "a": {
+    "lat": 25.26479,
+    "lng": 55.29334
+   },
+   "b": {
+    "lat": 25.26259,
+    "lng": 55.31141
+   },
+   "osm": "way/349885413"
+  },
+  {
+   "name": "Al Ghubaiba - Dubai Old Souk (Water Bus)",
+   "a": {
+    "lat": 25.26543,
+    "lng": 55.29122
+   },
+   "b": {
+    "lat": 25.26479,
+    "lng": 55.29334
+   },
+   "osm": "way/349885416"
+  },
+  {
+   "name": "Al Sabkha - Baniyas (Water Bus)",
+   "a": {
+    "lat": 25.26708,
+    "lng": 55.30354
+   },
+   "b": {
+    "lat": 25.26259,
+    "lng": 55.31141
+   },
+   "osm": "way/349886012"
+  },
+  {
+   "name": "Baniyas - Al Seef (Water Bus)",
+   "a": {
+    "lat": 25.26259,
+    "lng": 55.31141
+   },
+   "b": {
+    "lat": 25.26002,
+    "lng": 55.31021
+   },
+   "osm": "way/349888127"
+  },
+  {
+   "name": "Dubai Marina - Dubai Canal - Al Ghubaiba",
+   "a": {
+    "lat": 25.07569,
+    "lng": 55.13788
+   },
+   "b": {
+    "lat": 25.19795,
+    "lng": 55.23327
+   },
+   "osm": "way/459630529"
+  },
+  {
+   "name": "Al Jadaf - Dubai Festival City",
+   "a": {
+    "lat": 25.21595,
+    "lng": 55.34123
+   },
+   "b": {
+    "lat": 25.22207,
+    "lng": 55.349
+   },
+   "osm": "way/486292501"
+  },
+  {
+   "name": "Dubai Canal - Al Jadaf",
+   "a": {
+    "lat": 25.21595,
+    "lng": 55.34123
+   },
+   "b": {
+    "lat": 25.19144,
+    "lng": 55.29839
+   },
+   "osm": "way/490578462"
+  },
+  {
+   "name": "The Island Beach Club Shuttle",
+   "a": {
+    "lat": 25.21112,
+    "lng": 55.24394
+   },
+   "b": {
+    "lat": 25.22507,
+    "lng": 55.16926
+   },
+   "osm": "way/660889814"
+  },
+  {
+   "name": "Dubai Marina - Dubai Canal - Al Ghubaiba",
+   "a": {
+    "lat": 25.19795,
+    "lng": 55.23327
+   },
+   "b": {
+    "lat": 25.26543,
+    "lng": 55.29122
+   },
+   "osm": "way/819227215"
+  },
+  {
+   "name": "Dubai Canal - Al Jadaf",
+   "a": {
+    "lat": 25.18648,
+    "lng": 55.25218
+   },
+   "b": {
+    "lat": 25.19795,
+    "lng": 55.23327
+   },
+   "osm": "way/819229950"
+  },
+  {
+   "name": "Al Jadaf - Dubai Canal",
+   "a": {
+    "lat": 25.18253,
+    "lng": 55.27066
+   },
+   "b": {
+    "lat": 25.18648,
+    "lng": 55.25218
+   },
+   "osm": "way/819231092"
+  },
+  {
+   "name": "Al Jadaf - Dubai Canal",
+   "a": {
+    "lat": 25.188,
+    "lng": 55.28471
+   },
+   "b": {
+    "lat": 25.18253,
+    "lng": 55.27066
+   },
+   "osm": "way/819233631"
+  },
+  {
+   "name": "Dubai Canal - Al Jadaf",
+   "a": {
+    "lat": 25.19144,
+    "lng": 55.29839
+   },
+   "b": {
+    "lat": 25.188,
+    "lng": 55.28471
+   },
+   "osm": "way/819234386"
+  },
+  {
+   "name": "Deira Old Souk - Al Fahidi Marine Transport Station",
+   "a": {
+    "lat": 25.26558,
+    "lng": 55.30077
+   },
+   "b": {
+    "lat": 25.26714,
+    "lng": 55.29799
+   },
+   "osm": "way/990683133"
+  }
+ ],
+ "eatHours": [
+  [
+   "Bhavna",
+   25.26169,
+   55.29489,
+   "Mo-Su 07:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Puranmal",
+   25.26204,
+   55.29722,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Lassi King",
+   25.26243,
+   55.29705,
+   "Sa-Th 08:00-02:00; Fr 16:00-02:00",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   25.22119,
+   55.28096,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "The Lime Tree Cafe",
+   25.23214,
+   55.26414,
+   "Mo-Su 7:30-18:00",
+   "cafe"
+  ],
+  [
+   "Alfie's",
+   25.21749,
+   55.28323,
+   "09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Al Fresco Italian",
+   25.22034,
+   55.28026,
+   "12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Tresind",
+   25.22334,
+   55.28242,
+   "12:00-15:30; 19:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Saladicious",
+   25.23254,
+   55.26634,
+   "Mo-Su 08:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Costa coffee",
+   25.23113,
+   55.26308,
+   "Mo-Su 07:00-00:00",
+   "cafe"
+  ],
+  [
+   "Starbucks",
+   25.21519,
+   55.27903,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Mumbai Masti Juice Centre",
+   25.26225,
+   55.29703,
+   "Sa-Th 08:00-02:00; Fr 16:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Kamat Restaurant",
+   25.25982,
+   55.29473,
+   "Mo-Th, Sa, Su 06:30-00:00; Fr 06:30-11:30, 13:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Gifts Depot",
+   25.25898,
+   55.29655,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "DED Cafe",
+   25.23438,
+   55.26489,
+   "Mo-Su 07:00-12:00",
+   "cafe"
+  ],
+  [
+   "Sallet Al Sayad Restaurant",
+   25.23599,
+   55.30353,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Pak Darbar",
+   25.26126,
+   55.29935,
+   "Mo-Su 04:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Osh",
+   25.2336,
+   55.26061,
+   "Mo-Su 13:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Burnout",
+   25.23651,
+   55.30251,
+   "Mo-Su 10:00-01:00",
+   "cafe"
+  ],
+  [
+   "Seva table",
+   25.23067,
+   55.26339,
+   "Mo, We-Su 10:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Veg World Restaurant",
+   25.26078,
+   55.29529,
+   "Mo-Th, Sa, Su 09:00-00:00; Fr 09:00-11:30, 13:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Veganesha",
+   25.26198,
+   55.29724,
+   "Mo-Th, Su 11:00-00:00; Fr, Sa 09:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Rajwadi Vegetarian Restaurant",
+   25.26177,
+   55.29304,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Ghantoot Star",
+   25.26408,
+   55.29366,
+   "Mo-Su 10:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Wokyo Noodle Bar",
+   25.26522,
+   55.30131,
+   "Mo-Su 11:00-21:45",
+   "restaurant"
+  ],
+  [
+   "Foodie Express",
+   25.26185,
+   55.2939,
+   "Mo-Su 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Jones the Grocer Express - DIFC",
+   25.21464,
+   55.28035,
+   "Mo-Fr 08:00-22:00; Sa-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Al Khayma Heritage Restaurant",
+   25.2637,
+   55.30067,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ]
+ ],
+ "heights": [
+  [
+   25.26843,
+   55.29492,
+   8
+  ],
+  [
+   25.25866,
+   55.32644,
+   3
+  ],
+  [
+   25.2566,
+   55.3182,
+   -6
+  ],
+  [
+   25.32,
+   55.35,
+   6
+  ],
+  [
+   25.2679,
+   55.2978,
+   8
+  ],
+  [
+   25.2718,
+   55.2987,
+   9
+  ],
+  [
+   25.2673,
+   55.3043,
+   11
+  ],
+  [
+   25.264,
+   55.3,
+   10
+  ],
+  [
+   25.2408,
+   55.3259,
+   6
+  ],
+  [
+   25.23465,
+   55.32676,
+   4
+  ],
+  [
+   25.26439,
+   55.29694,
+   10
+  ],
+  [
+   25.268,
+   55.29,
+   1
+  ],
+  [
+   25.264,
+   55.2946,
+   10
+  ],
+  [
+   25.2686,
+   55.29076,
+   3
+  ],
+  [
+   25.26818,
+   55.29036,
+   3
+  ],
+  [
+   25.2675,
+   55.2889,
+   5
+  ],
+  [
+   25.2672,
+   55.2893,
+   13
+  ],
+  [
+   25.2355,
+   55.2977,
+   1
+  ],
+  [
+   25.23553,
+   55.30032,
+   -6
+  ],
+  [
+   25.2286,
+   55.297,
+   0
+  ],
+  [
+   25.19722,
+   55.27417,
+   4
+  ],
+  [
+   25.19519,
+   55.27506,
+   0
+  ],
+  [
+   25.1647,
+   55.2072,
+   1
+  ],
+  [
+   25.23397,
+   55.2655,
+   4
+  ],
+  [
+   25.18668,
+   55.23077,
+   3
+  ],
+  [
+   25.1839,
+   55.2453,
+   -1
+  ],
+  [
+   25.24143,
+   55.26933,
+   4
+  ],
+  [
+   25.1977,
+   55.2788,
+   -7
+  ],
+  [
+   25.21912,
+   55.2821,
+   7
+  ],
+  [
+   25.19679,
+   55.2418,
+   -5
+  ],
+  [
+   25.211,
+   55.244,
+   1
+  ],
+  [
+   25.21758,
+   55.28306,
+   15
+  ],
+  [
+   25.20148,
+   55.27065,
+   2
+  ],
+  [
+   25.221,
+   55.35,
+   0
+  ],
+  [
+   25.18463,
+   55.25619,
+   3
+  ],
+  [
+   25.18578,
+   55.24929,
+   1
+  ],
+  [
+   25.26469,
+   55.29304,
+   5
+  ],
+  [
+   25.26714,
+   55.29799,
+   6
+  ],
+  [
+   25.26499,
+   55.29525,
+   6
+  ],
+  [
+   25.26726,
+   55.30316,
+   8
+  ],
+  [
+   25.21112,
+   55.24394,
+   1
+  ],
+  [
+   25.26543,
+   55.29122,
+   2
+  ],
+  [
+   25.26479,
+   55.29334,
+   6
+  ],
+  [
+   25.26259,
+   55.31141,
+   2
+  ],
+  [
+   25.26708,
+   55.30354,
+   9
+  ],
+  [
+   25.22207,
+   55.349,
+   2
+  ],
+  [
+   25.18253,
+   55.27066,
+   7
+  ],
+  [
+   25.188,
+   55.28471,
+   -1
+  ],
+  [
+   25.19144,
+   55.29839,
+   0
+  ],
+  [
+   25.21595,
+   55.34123,
+   2
+  ],
+  [
+   25.18648,
+   55.25218,
+   15
+  ],
+  [
+   25.19355,
+   55.24118,
+   2
+  ],
+  [
+   25.19795,
+   55.23327,
+   5
+  ],
+  [
+   25.26002,
+   55.31021,
+   2
+  ],
+  [
+   25.18344,
+   55.26018,
+   0
+  ],
+  [
+   25.1898,
+   55.24406,
+   6
+  ],
+  [
+   25.26558,
+   55.30077,
+   4
+  ],
+  [
+   25.27219,
+   55.28018,
+   4
+  ],
+  [
+   25.27267,
+   55.28082,
+   6
+  ],
+  [
+   25.2717,
+   55.2795,
+   9
+  ],
+  [
+   25.26306,
+   55.29722,
+   3
+  ],
+  [
+   25.26444,
+   55.29667,
+   10
+  ],
+  [
+   25.26389,
+   55.3,
+   12
+  ],
+  [
+   25.24251,
+   55.28927,
+   -2
+  ]
+ ]
+}

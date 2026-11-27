@@ -1,0 +1,33 @@
+## Rome (Rome (from Civitavecchia), built-in guide)
+- NOID Olympic Stadium: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID The Vatican Museum: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID The Celio: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Vittorio Emanuele Monument: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID Chiesa del Gesù: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NOID The Spanish Steps: built-in sight with no Wikidata id and nothing of the name on the map nearby
+- NAME Palazzo del Quirinale {Q223079 by name}: local name; Wikidata's English name is "Quirinal Palace"
+- LEN Pantheon {Q99309 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- LEN Palatine Hill {Q200642 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- LEN Circus Maximus {Q207808 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- LEN Terme di Caracalla {Q502098 by name}: 30 min, but a art museum or gallery usually takes 45-240 min
+- LEN Arch of Titus {Q723887 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- LEN Mausoleo di Augusto {Q770847 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- LEN Column of Marcus Aurelius {Q265384 by name}: 30 min, but a archaeological site or ancient city usually takes 40-240 min
+- FAME #1 best known nearby, "European Convention on Human Rights" (76 Wikipedia languages, Q183191), is not offered
+- FAME #3 best known nearby, "Year of the Four Emperors" (62 Wikipedia languages, Q470596), is not offered
+- FAME #4 best known nearby, "The Creation of Adam" (61 Wikipedia languages, Q500242), is not offered
+- FAME #5 best known nearby, "Rome Statute of the International Criminal Court" (60 Wikipedia languages, Q838958), is not offered
+- FAME #6 best known nearby, "Great Fire of Rome" (58 Wikipedia languages, Q215231), is not offered
+- FAME #7 best known nearby, "Pietà" (57 Wikipedia languages, Q235242), is not offered
+- FAME #8 best known nearby, "Rome Metro" (54 Wikipedia languages, Q237480), is not offered
+- FAME #9 best known nearby, "The Last Judgment" (51 Wikipedia languages, Q567861), is not offered
+- FAME #10 best known nearby, "Arch of Constantine" (49 Wikipedia languages, Q5786), is not offered
+- FAME #11 best known nearby, "Laocoön and His Sons" (47 Wikipedia languages, Q465762), is not offered
+- FAME #12 best known nearby, "Battle of the Milvian Bridge" (46 Wikipedia languages, Q339321), is not offered
+- FAME #13 best known nearby, "Campus Martius" (44 Wikipedia languages, Q242839), is not offered
+- FAME #14 best known nearby, "Capitoline Wolf" (43 Wikipedia languages, Q408623), is not offered
+- FAME must-see "Trevi Fountain" is offered (Trevi Fountain) but not marked must-see
+- FAME must-see "Vatican Museums|Sistine Chapel" is not offered
+- INFO 30 sights, 1 day trips/towns; must-see: St Peter's Basilica, Colosseum and Roman Forum, Pantheon; top by fame: St Peter's Basilica 0, Colosseum and Roman Forum 0, Pantheon 0, Trevi Fountain 0, Piazza Navona 0, San Giovanni in Laterano 0, Palazzo della Cancelleria 0, Olympic Stadium 0
+- INFO day trips: Basilica of Saint Paul Outside the Walls
+

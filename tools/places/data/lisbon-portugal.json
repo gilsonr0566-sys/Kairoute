@@ -1,0 +1,6999 @@
+{
+ "key": "lisbon portugal",
+ "name": "Lisbon, Portugal",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q272781": {
+   "wikidata": "Q272781",
+   "editions": 53,
+   "types": [
+    "Q44613",
+    "Q210272"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q15229898"
+   ],
+   "osm": "relation/11318514",
+   "hours": "Oct-Apr 10:00-17:30; May-Sep 10:00-18:30; Mo off; Jan 1 off; May 1 off; Dec 25 off",
+   "fee": "yes"
+  },
+  "src-q215003": {
+   "wikidata": "Q215003",
+   "editions": 57,
+   "types": [
+    "Q1785071",
+    "Q81917",
+    "Q210272",
+    "Q811165",
+    "Q570116"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q15229898"
+   ],
+   "hours": "Oct-Apr: Tu-Su 10:00-17:30; May-Sep: Tu-Su 10:00-18:30",
+   "fee": "yes",
+   "osm": "way/24341353"
+  },
+  "src-q721152": {
+   "wikidata": "Q721152",
+   "editions": 34,
+   "types": [
+    "Q6636777",
+    "Q110848334",
+    "Q210272",
+    "Q12570",
+    "Q1243306"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/18334918"
+  },
+  "src-q432290": {
+   "wikidata": "Q432290",
+   "editions": 32,
+   "types": [
+    "Q56242215",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Sa 09:30-19:00",
+   "osm": "relation/19372558"
+  },
+  "src-q999002": {
+   "wikidata": "Q999002",
+   "editions": 32,
+   "types": [
+    "Q174782",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/677181958"
+  },
+  "src-q636780": {
+   "wikidata": "Q636780",
+   "editions": 31,
+   "types": [
+    "Q23413",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q54953743"
+   ],
+   "hours": "Mo-Su 09:00-21:00",
+   "fee": "yes",
+   "osm": "way/1382432568"
+  },
+  "src-q168001": {
+   "wikidata": "Q168001",
+   "editions": 26,
+   "types": [
+    "Q132911",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1387008000",
+   "fee": "yes"
+  },
+  "src-q212459": {
+   "wikidata": "Q212459",
+   "editions": 26,
+   "types": [
+    "Q207694",
+    "Q17431399",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-18:00",
+   "osm": "way/98656587"
+  },
+  "src-q1133712": {
+   "wikidata": "Q1133712",
+   "editions": 32,
+   "types": [
+    "Q4989906",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "way/152327819"
+  },
+  "src-q1601019": {
+   "wikidata": "Q1601019",
+   "editions": 23,
+   "types": [
+    "Q16970",
+    "Q162875",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-18:00",
+   "osm": "way/9253917"
+  },
+  "src-q1464499": {
+   "wikidata": "Q1464499",
+   "editions": 21,
+   "types": [
+    "Q16560",
+    "Q44613",
+    "Q1220959",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/6456903"
+  },
+  "src-q623228": {
+   "wikidata": "Q623228",
+   "editions": 19,
+   "types": [
+    "Q474",
+    "Q210272",
+    "Q1569871"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-18:00; PH off",
+   "fee": "yes",
+   "osm": "relation/6314267"
+  },
+  "src-q1776168": {
+   "wikidata": "Q1776168",
+   "editions": 19,
+   "types": [
+    "Q44613",
+    "Q16970",
+    "Q33506",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/3310877"
+  },
+  "src-q2657972": {
+   "wikidata": "Q2657972",
+   "editions": 18,
+   "types": [
+    "Q1088552",
+    "Q210272",
+    "Q120560",
+    "Q317557"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-11:30, 15:00-16:00",
+   "osm": "way/96359439"
+  },
+  "src-q1470414": {
+   "wikidata": "Q1470414",
+   "editions": 18,
+   "types": [
+    "Q9134984",
+    "Q210272",
+    "Q15823107",
+    "Q1701174"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/7524055"
+  },
+  "src-q211262": {
+   "wikidata": "Q211262",
+   "editions": 26,
+   "types": [
+    "Q24699794",
+    "Q33506",
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q3052794"
+   ],
+   "hours": "We-Mo 10:00-18:00",
+   "osm": "relation/17036063"
+  },
+  "src-q652806": {
+   "wikidata": "Q652806",
+   "editions": 17,
+   "types": [
+    "Q2281788",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "relation/3084517",
+   "hours": "Mo-Su 10:00-18:00"
+  },
+  "src-q1549270": {
+   "wikidata": "Q1549270",
+   "editions": 18,
+   "types": [
+    "Q174782"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1317749306"
+  },
+  "src-q220063": {
+   "wikidata": "Q220063",
+   "editions": 13,
+   "types": [
+    "Q43501",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q104063278"
+   ],
+   "hours": "10:00-20:00",
+   "osm": "way/30104081"
+  },
+  "src-q2313815": {
+   "wikidata": "Q2313815",
+   "editions": 17,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "closed",
+   "fee": "yes",
+   "osm": "way/1451054092"
+  },
+  "src-q1659559": {
+   "wikidata": "Q1659559",
+   "editions": 12,
+   "types": [
+    "Q207694",
+    "Q2516357",
+    "Q41176"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-18:00; Jan 01,May 01,Dec 25; easter off",
+   "fee": "yes",
+   "osm": "relation/5363219"
+  },
+  "src-q976850": {
+   "wikidata": "Q976850",
+   "editions": 10,
+   "types": [
+    "Q39614",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Oct-Apr 09:00-17:00; May-Sep 09:00-18:00",
+   "osm": "relation/9345270"
+  },
+  "src-q943407": {
+   "wikidata": "Q943407",
+   "editions": 9,
+   "types": [
+    "Q167346",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "09:00-20:00; Oct 01-Mar 31: 09:00-17:00",
+   "fee": "yes",
+   "osm": "way/40705510"
+  },
+  "src-q5116936": {
+   "wikidata": "Q5116936",
+   "editions": 7,
+   "types": [
+    "Q16970",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Fr 09:15-17:00; Su 10:00-13:00",
+   "osm": "way/96319788"
+  },
+  "src-q10306236": {
+   "wikidata": "Q10306236",
+   "editions": 7,
+   "types": [
+    "Q22746",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 07:00-24:00",
+   "osm": "way/23697561"
+  },
+  "src-q1954392": {
+   "wikidata": "Q1954392",
+   "editions": 4,
+   "types": [
+    "Q33506",
+    "Q41176"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-18:00; Dec 24, Dec 31 10:00-14:00; Jan 01,May 01,Dec 25 off",
+   "osm": "relation/1396217"
+  },
+  "src-q10343917": {
+   "wikidata": "Q10343917",
+   "editions": 3,
+   "types": [
+    "Q16560",
+    "Q210272"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/96299647"
+  },
+  "src-q10346955": {
+   "wikidata": "Q10346955",
+   "editions": 3,
+   "types": [
+    "Q41176",
+    "Q210272",
+    "Q33506",
+    "Q3499307"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Fr 10:00-18:00; PH,Sa,Su 11:00-19:00",
+   "osm": "relation/3232954"
+  },
+  "src-q959567": {
+   "wikidata": "Q959567",
+   "editions": 15,
+   "types": [
+    "Q174782"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1340657685"
+  },
+  "src-q2034183": {
+   "wikidata": "Q2034183",
+   "editions": 15,
+   "types": [
+    "Q22698"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q113303779"
+   ],
+   "osm": "relation/13137361"
+  }
+ },
+ "towns": {
+  "mafra-far": {
+   "name": "Mafra",
+   "wikidata": "Q986419",
+   "editions": 50,
+   "unesco": true,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Convento de Mafra",
+     "lat": 38.93667,
+     "lng": -9.32639,
+     "hours": "",
+     "price": "8€",
+     "wikidata": "Q599223",
+     "content": "The National Palace of Mafra is probably the most striking Baroque monuments to be found in Portugal, its construction symbolizes the Absolutist rule of D. João V. The palace has some 1,200 rooms of which the most impressive is the Library,",
+     "editions": 31,
+     "unesco": true,
+     "en": "Palace of Mafra"
+    },
+    {
+     "kind": "see",
+     "name": "Basilica of Our Lady and St. Anthony",
+     "lat": 38.9372,
+     "lng": -9.328,
+     "hours": "09:30-13:00, 14:00-17:30",
+     "price": "Free",
+     "wikidata": "Q16268486",
+     "content": "Built according to a plan by Johann Friedrich Ludwig . This basilica has a set of 6 identical organs, unique in the world ( 11,444 pipes ) and a carillon of 92 bells spread over two towers, the north chime being the work of the Liège founde",
+     "editions": 4,
+     "en": "Basilica of Our Lady and Saint Anthony of Mafra"
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Churrasqueira Povoense",
+     "lat": 38.9316,
+     "lng": -9.2057,
+     "hours": "Daily 12:00–22:00",
+     "price": "Budget",
+     "wikidata": "",
+     "content": "Grilled pork, beef, lamb, and cod."
+    }
+   ],
+   "unescoSites": [
+    "Palace of Mafra",
+    "Royal Building of Mafra"
+   ]
+  },
+  "ericeira-far": {
+   "name": "Ericeira",
+   "wikidata": "Q1351868",
+   "editions": 26,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Parque de Santa Marta",
+     "lat": 38.9616,
+     "lng": -9.4189,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Park with gardens and space for active and passive recreation."
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Tasca da Boa Viagem",
+     "lat": 38.962,
+     "lng": -9.4189,
+     "hours": "Mon–Wed Fri 18:30–22:30, Sat Sun 12:30–15:00 & 18:30–22:30",
+     "price": "{{EUR",
+     "wikidata": "",
+     "content": ""
+    }
+   ]
+  },
+  "sintra-far": {
+   "name": "Sintra",
+   "wikidata": "Q190187",
+   "editions": 74,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Pena National Palace",
+     "lat": 38.7878,
+     "lng": -9.39055,
+     "hours": "",
+     "price": "Adult €20, youth or senior €18, child (<6) free, family (2 adults, 2 youth) €65",
+     "wikidata": "Q69513",
+     "content": "Beautiful example of pseudo-Moorish Romantic architecture. You can walk there from Sintra in about an hour (uphill!) or catch a bus. You can see a good collection of furniture and the royal apartments. Tickets are sold on a timed basis. Arr",
+     "editions": 41,
+     "unesco": true,
+     "en": "Pena Palace"
+    },
+    {
+     "kind": "see",
+     "name": "Moorish Castle",
+     "lat": 38.79258,
+     "lng": -9.38934,
+     "hours": "",
+     "price": "Adult €12, youth or senior €10, child (<6) free, family (2 adults, 2 youth) €33",
+     "wikidata": "Q1049008",
+     "content": "One of the highlights of Sintra not to be missed. Ruins of a castle built by the Moors from the 10th century onwards. Apparently, when Cascais was under the rule of Sintra, a huge fire would be lit here annually to remind the people of Casc",
+     "editions": 22,
+     "unesco": true,
+     "en": "Castle of the Moors"
+    },
+    {
+     "kind": "see",
+     "name": "Sintra National Palace",
+     "lat": 38.797667,
+     "lng": -9.390667,
+     "hours": "",
+     "price": "Adult €13, youth or senior €10, child (<6) free, family (2 adults, 2 youth) €35",
+     "wikidata": "Q532399",
+     "content": "The summer estate of the Portuguese royal family from the middle ages until the 1910 republican revolution. Built in several steps, the oldest standing parts is a chapel built by King Dinis I during the 14th century. Around 1400 King John I",
+     "editions": 26,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Quintinha de Monserrate",
+     "lat": 38.794206,
+     "lng": -9.420628,
+     "hours": "",
+     "price": "Adult €12, youth or senior €10, child (<6) free, family (2 adults, 2 youth) €33",
+     "wikidata": "Q3175595",
+     "content": "An old estate with a farmyard, giving you an opportunity to learn about traditional local farming. The estate was transformed into its current form by 19th-century British industrialist Francis Cook and his architect James Knowles Jr, and s",
+     "editions": 16,
+     "unesco": true,
+     "en": "Monserrate Palace"
+    },
+    {
+     "kind": "see",
+     "name": "Convento dos Capuchos",
+     "lat": 38.784373,
+     "lng": -9.438192,
+     "hours": "",
+     "price": "Adult €11, youth or senior €9, child (<6) free, family (2 adults, 2 youth) €29",
+     "wikidata": "Q1129421",
+     "content": "A secluded abbey where monks used to live in close contact with nature. Immersed in a wood, its crude and harsh style points out the importance of spirituality according to these friars and their strict Christian values. It has no electric ",
+     "editions": 11,
+     "unesco": true,
+     "en": "Convent of the Capuchos"
+    },
+    {
+     "kind": "see",
+     "name": "Quinta da Regaleira",
+     "lat": 38.7964,
+     "lng": -9.396,
+     "hours": "Daily 10:00-18:30 (last admission at 18:00)",
+     "price": "Adult €12, youth or senior €7, child (<6) free, family (2 adults, 2 youth) €32",
+     "wikidata": "Q2630165",
+     "content": "Regaleira Palace is part of the built heritage included in UNESCO's world heritage list as 'Sintra cultural landscape'. Its origins date back to 1697, when the property was bought by José Leite, but it was only by the late 19th century that",
+     "editions": 22,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Cabo da Roca",
+     "lat": 38.7833,
+     "lng": -9.5,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q169175",
+     "content": "A cape at the western coast which is the westernmost point of the European continent. If you feel like spending you can get a certificate of your presence at the westernmost point of continental Europe.",
+     "editions": 55
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Cyntia",
+     "lat": 38.7995,
+     "lng": -9.3857,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Next to the bus and rail stations on the downside of Sintra, there is this small but fine restaurant where you can taste a marvelous codfish (''Bacalhau à brás'' or ''Bacalhau à grelha''). They are very kind and friendly and don't hesitate "
+    },
+    {
+     "kind": "eat",
+     "name": "Dom Pipas",
+     "lat": 38.7996,
+     "lng": -9.3841,
+     "hours": "Tue–Sun 12:00–15:00 & 19:00–22:00, closed Mon",
+     "price": "",
+     "wikidata": "",
+     "content": "Delicious local dishes at decent prices. Features daily specials, fish, meat, and other Portuguese traditional fare."
+    },
+    {
+     "kind": "eat",
+     "name": "Lab by Sergi Arola",
+     "lat": 38.7619,
+     "lng": -9.3977,
+     "hours": "Wed–Sat 19:30–22:30, closed Sun–Tue",
+     "price": "{{EUR",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "eat",
+     "name": "Midori",
+     "lat": 38.7614,
+     "lng": -9.3968,
+     "hours": "Tue–Sat 19:00–22:30, closed Sun Mon",
+     "price": "{{EUR",
+     "wikidata": "",
+     "content": ""
+    },
+    {
+     "kind": "drink",
+     "name": "Adega Regional de Colares",
+     "lat": 38.8058,
+     "lng": -9.4498,
+     "hours": "Mon–Fri 09:00–13:00 & 14:00–18:00, Sat 09:00–13:00, Sun closed",
+     "price": "",
+     "wikidata": "",
+     "content": "A tasting of these fine wines can be organised in advance for a minimum of 10 people."
+    }
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Fátima",
+  "Nazaré",
+  "Tomar",
+  "Óbidos",
+  "Mafra",
+  "Ericeira",
+  "Sintra",
+  "UNESCO World Heritage site",
+  "Praia das Maçãs",
+  "Paço de Arcos",
+  "Cascais",
+  "Almada",
+  "Cacilhas",
+  "Pragal",
+  "Costa da Caparica",
+  "Setúbal",
+  "Palmela",
+  "Sesimbra",
+  "Azeitão",
+  "Vila Nogueira de Azeitão",
+  "Tróia",
+  "Porto",
+  "Coimbra",
+  "Faro"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 38.716243,
+  "lng": -9.151091999999998
+ },
+ "wikivoyage": "Lisbon",
+ "cityEats": [
+  {
+   "name": "BELEM KEBAB & PIZZARIA",
+   "lat": 38.6992775,
+   "lng": -9.2054078,
+   "amenity": "restaurant",
+   "cuisine": "pizza;kebab",
+   "hours": "Mo-Su 07:00-00:00",
+   "osm": "node/11901260959"
+  },
+  {
+   "name": "La Fóllia de Bélem",
+   "lat": 38.6994618,
+   "lng": -9.2054979,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Su 12:30-15:00 19:00-22:00",
+   "osm": "node/11885081471"
+  },
+  {
+   "name": "Flor dos Jerónimos",
+   "lat": 38.6975449,
+   "lng": -9.2039218,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9765016176"
+  },
+  {
+   "name": "Pão Pão Queijo Queijo",
+   "lat": 38.6975445,
+   "lng": -9.2038683,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 10:00-23:30; Su 10:00-22:30",
+   "osm": "node/1514445079"
+  },
+  {
+   "name": "Xi-Hu",
+   "lat": 38.6972562,
+   "lng": -9.2031331,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/12320363231"
+  },
+  {
+   "name": "Xi-Hu",
+   "lat": 38.6972603,
+   "lng": -9.2031142,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/11876777513"
+  },
+  {
+   "name": "Vela Latina",
+   "lat": 38.692859,
+   "lng": -9.2133215,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/155332133"
+  },
+  {
+   "name": "A Tasca da Sé",
+   "lat": 38.7100764,
+   "lng": -9.1331854,
+   "amenity": "restaurant",
+   "cuisine": "regional;portuguese;local",
+   "hours": "Mo-Sa 12:00-12:00, 22:00-22:00",
+   "osm": "node/4406108589"
+  },
+  {
+   "name": "Restaurante da Sé",
+   "lat": 38.7094899,
+   "lng": -9.1330093,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4425409092"
+  },
+  {
+   "name": "Pizzaiollo",
+   "lat": 38.7095493,
+   "lng": -9.1326234,
+   "amenity": "restaurant",
+   "cuisine": "italian_pizza",
+   "hours": "Mo-Su 12:00-00:00",
+   "osm": "node/12230308901"
+  },
+  {
+   "name": "Tu e Eu restaurante",
+   "lat": 38.7094268,
+   "lng": -9.1330696,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/9214173818"
+  },
+  {
+   "name": "Taberna do Vilarinho",
+   "lat": 38.7094042,
+   "lng": -9.1332224,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/5094014922"
+  },
+  {
+   "name": "Associação do Fado Casto",
+   "lat": 38.7105787,
+   "lng": -9.1328892,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5642571822"
+  },
+  {
+   "name": "Nosolo Italia",
+   "lat": 38.7079633,
+   "lng": -9.1354229,
+   "amenity": "restaurant",
+   "cuisine": "ice_cream;italian",
+   "hours": "",
+   "osm": "node/2003731545"
+  },
+  {
+   "name": "Can the Can Lisboa",
+   "lat": 38.7076525,
+   "lng": -9.135254,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "PH,Mo-Su 09:00-02:00",
+   "osm": "node/2503417884"
+  },
+  {
+   "name": "Terra Nova by Populi",
+   "lat": 38.7075357,
+   "lng": -9.1352072,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "09:30-02:00",
+   "osm": "node/2003731538"
+  },
+  {
+   "name": "Ministerium Cantina",
+   "lat": 38.7081204,
+   "lng": -9.1354935,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2003731541"
+  },
+  {
+   "name": "Baía do Peixe",
+   "lat": 38.7070687,
+   "lng": -9.1375529,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "08:00-24:00",
+   "osm": "node/10158209816"
+  },
+  {
+   "name": "Squisito",
+   "lat": 38.707536,
+   "lng": -9.1377089,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/2003731539"
+  },
+  {
+   "name": "Lovely Castello",
+   "lat": 38.7134995,
+   "lng": -9.1340171,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1801653100"
+  },
+  {
+   "name": "NATA Lisboa",
+   "lat": 38.7127075,
+   "lng": -9.1329643,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "",
+   "osm": "node/6142236686"
+  },
+  {
+   "name": "Solar de São Cristóvão",
+   "lat": 38.7139365,
+   "lng": -9.1350907,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/4436691189"
+  },
+  {
+   "name": "Costa do Castello",
+   "lat": 38.714569,
+   "lng": -9.131609,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5016500721"
+  },
+  {
+   "name": "Caminho da Ronda",
+   "lat": 38.7125419,
+   "lng": -9.1323241,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/6024594986"
+  },
+  {
+   "name": "Restaurante Santo André",
+   "lat": 38.7146297,
+   "lng": -9.1314274,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "way/327874288"
+  },
+  {
+   "name": "Uma",
+   "lat": 38.7120284,
+   "lng": -9.138718,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4357093289"
+  },
+  {
+   "name": "O Elevador",
+   "lat": 38.7122757,
+   "lng": -9.1389839,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2933990259"
+  },
+  {
+   "name": "Natraj",
+   "lat": 38.711912,
+   "lng": -9.1386733,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "",
+   "osm": "node/6704284723"
+  },
+  {
+   "name": "O Arco",
+   "lat": 38.7118189,
+   "lng": -9.1386441,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-15:00,19:00-23:00; We off",
+   "osm": "node/4803797021"
+  },
+  {
+   "name": "Casa Portuguesa do Pastel de Bacalhau",
+   "lat": 38.7119999,
+   "lng": -9.1397576,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2372779129"
+  },
+  {
+   "name": "Leitaria A Camponeza",
+   "lat": 38.7117403,
+   "lng": -9.1385979,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 19:00-23:00",
+   "osm": "node/2620368934"
+  },
+  {
+   "name": "Picanha Janelas Verdes",
+   "lat": 38.705386,
+   "lng": -9.1607007,
+   "amenity": "restaurant",
+   "cuisine": "brazilian",
+   "hours": "Mo-Su 12:30-15:30, 22:00-22:00",
+   "osm": "node/4294390093"
+  },
+  {
+   "name": "Restaurante do Museu Nacional de Arte Antiga",
+   "lat": 38.7049148,
+   "lng": -9.1610875,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 10:00-17:30; Jan 01,May 01,Dec 24-25 off; easter off",
+   "osm": "node/1302891313"
+  },
+  {
+   "name": "Geographia",
+   "lat": 38.7055368,
+   "lng": -9.1617404,
+   "amenity": "restaurant",
+   "cuisine": "african;brazilian;international;portuguese",
+   "hours": "Mo-Sa 12:30-15:00, 19:30-23:30",
+   "osm": "node/9425000717"
+  },
+  {
+   "name": "Derviche - Restaurante Turco",
+   "lat": 38.7049619,
+   "lng": -9.1595518,
+   "amenity": "restaurant",
+   "cuisine": "turkish",
+   "hours": "",
+   "osm": "node/2586819833"
+  },
+  {
+   "name": "Beira Rio",
+   "lat": 38.7049769,
+   "lng": -9.159527,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/5221733821"
+  },
+  {
+   "name": "Italian Place",
+   "lat": 38.7064014,
+   "lng": -9.1621067,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/11893446122"
+  },
+  {
+   "name": "Nosolo Italia Belém",
+   "lat": 38.6943523,
+   "lng": -9.206488,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2483762168"
+  },
+  {
+   "name": "Cervejaria Portugália",
+   "lat": 38.6938942,
+   "lng": -9.2069296,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/241540590"
+  },
+  {
+   "name": "ZeroZero Belém",
+   "lat": 38.69385,
+   "lng": -9.2072776,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "Mo-Su 12:00-24:00",
+   "osm": "way/241540591"
+  },
+  {
+   "name": "Este-Oeste",
+   "lat": 38.6951273,
+   "lng": -9.2074335,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 10:00-23:00",
+   "osm": "node/954068009"
+  },
+  {
+   "name": "Topo Belém",
+   "lat": 38.6952353,
+   "lng": -9.2077213,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/5371177857"
+  },
+  {
+   "name": "A Vela",
+   "lat": 38.6942863,
+   "lng": -9.2025963,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "relation/15467072"
+  },
+  {
+   "name": "Santa Clara dos Cogumelos",
+   "lat": 38.7157204,
+   "lng": -9.1254493,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Fr 19:30-23:00; Sa 13:00-15:30, 19:30-23:00; Su 19:30-23:00",
+   "osm": "node/6086515017"
+  },
+  {
+   "name": "A Cantina",
+   "lat": 38.7155097,
+   "lng": -9.1259491,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/5733828121"
+  },
+  {
+   "name": "Almadrava",
+   "lat": 38.7159293,
+   "lng": -9.1252404,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9976878999"
+  },
+  {
+   "name": "Focaccia in Giro",
+   "lat": 38.7159414,
+   "lng": -9.1252094,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/6030196385"
+  },
+  {
+   "name": "Açores na Feira",
+   "lat": 38.7159648,
+   "lng": -9.1251584,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Tu-Su 10:00-00:00",
+   "osm": "node/6170616085"
+  },
+  {
+   "name": "Ceia",
+   "lat": 38.7156464,
+   "lng": -9.1259483,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining;local;portuguese;regional",
+   "hours": "",
+   "osm": "node/10098185421"
+  },
+  {
+   "name": "O Jardim",
+   "lat": 38.712909,
+   "lng": -9.1529095,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "Mo-Su 12:00-24:00",
+   "osm": "node/11240036980"
+  },
+  {
+   "name": "A Sala",
+   "lat": 38.7118294,
+   "lng": -9.1531567,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10314910011"
+  },
+  {
+   "name": "Il Matriciano",
+   "lat": 38.7119494,
+   "lng": -9.1529371,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/4692271455"
+  },
+  {
+   "name": "Taberna Sal Grasso São Bento",
+   "lat": 38.7117083,
+   "lng": -9.1533243,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13191058101"
+  },
+  {
+   "name": "Café de São Bento",
+   "lat": 38.7132275,
+   "lng": -9.1530828,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-15:00,19:00-01:00",
+   "osm": "node/4692271866"
+  },
+  {
+   "name": "Sora Lella",
+   "lat": 38.7118841,
+   "lng": -9.1527727,
+   "amenity": "restaurant",
+   "cuisine": "italian_pizza",
+   "hours": "Tu-Sa 12:30-15:00,20:00-23:30",
+   "osm": "node/4703935152"
+  },
+  {
+   "name": "Empanadas MBQ",
+   "lat": 38.7257548,
+   "lng": -9.1649896,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 10:00-20:00",
+   "osm": "node/11882458904"
+  },
+  {
+   "name": "O Petisca",
+   "lat": 38.7261096,
+   "lng": -9.1646083,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 09:00-23:00",
+   "osm": "node/2414810217"
+  },
+  {
+   "name": "Oásis",
+   "lat": 38.7274296,
+   "lng": -9.1636084,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Sa 12:00-19:00",
+   "osm": "node/9712222865"
+  },
+  {
+   "name": "Taverna Taça Virada",
+   "lat": 38.7293455,
+   "lng": -9.1657966,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9729293298"
+  },
+  {
+   "name": "Os Bernardos",
+   "lat": 38.7274897,
+   "lng": -9.1631191,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 09:00-00:00",
+   "osm": "node/2415140772"
+  },
+  {
+   "name": "Fulai",
+   "lat": 38.7272772,
+   "lng": -9.1630189,
+   "amenity": "restaurant",
+   "cuisine": "pasta",
+   "hours": "",
+   "osm": "node/9718611068"
+  },
+  {
+   "name": "O Carvoeiro",
+   "lat": 38.7139746,
+   "lng": -9.1281147,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "PH,Mo-Su 12:30-15:30,19:00-23:00",
+   "osm": "node/6023083299"
+  },
+  {
+   "name": "O Vicentinho",
+   "lat": 38.7148812,
+   "lng": -9.1288537,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5026385421"
+  },
+  {
+   "name": "Chave D'Ouro",
+   "lat": 38.7138593,
+   "lng": -9.1280696,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4816775622"
+  },
+  {
+   "name": "Ti Natércia",
+   "lat": 38.7138964,
+   "lng": -9.1283404,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "",
+   "osm": "node/6140906685"
+  },
+  {
+   "name": "Estacao Alfama",
+   "lat": 38.7138022,
+   "lng": -9.1280259,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10239205409"
+  },
+  {
+   "name": "Bistro Gato Pardo",
+   "lat": 38.7147099,
+   "lng": -9.1291777,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4355939830"
+  },
+  {
+   "name": "Estrela by Olivier",
+   "lat": 38.7141344,
+   "lng": -9.1597865,
+   "amenity": "restaurant",
+   "cuisine": "brunch;salad;sandwich;pizza",
+   "hours": "Mo-Su 09:00-22:00",
+   "osm": "way/1293269967"
+  },
+  {
+   "name": "O Lavrador",
+   "lat": 38.7130307,
+   "lng": -9.1586248,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 09:00-22:30",
+   "osm": "node/12329523704"
+  },
+  {
+   "name": "O Lavrador",
+   "lat": 38.7129954,
+   "lng": -9.1585451,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 09:00-22:30",
+   "osm": "node/12329523705"
+  },
+  {
+   "name": "Chave D'ouro",
+   "lat": 38.7126962,
+   "lng": -9.1586107,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4699426193"
+  },
+  {
+   "name": "O Lavrador",
+   "lat": 38.7129624,
+   "lng": -9.1584773,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 09:00-22:30",
+   "osm": "node/4699423667"
+  },
+  {
+   "name": "Imperial da Estrela",
+   "lat": 38.7127708,
+   "lng": -9.15834,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4699423682"
+  },
+  {
+   "name": "O Sacramento",
+   "lat": 38.7116274,
+   "lng": -9.1403926,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1683095127"
+  },
+  {
+   "name": "Casa Chineza",
+   "lat": 38.7125333,
+   "lng": -9.1391349,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/1185406284"
+  },
+  {
+   "name": "Rooftop The Art Inn Lisbon",
+   "lat": 38.7130115,
+   "lng": -9.1401701,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "18:00-23:00",
+   "osm": "node/12023188388"
+  },
+  {
+   "name": "Grelha do Carmo",
+   "lat": 38.7123554,
+   "lng": -9.1410343,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-23:00",
+   "osm": "node/5174915822"
+  },
+  {
+   "name": "A Mesa do CAM",
+   "lat": 38.7358198,
+   "lng": -9.1539237,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2069600067"
+  },
+  {
+   "name": "Cafetaria do Museu Calouste Gulbenkian",
+   "lat": 38.7373485,
+   "lng": -9.1534579,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2069603646"
+  },
+  {
+   "name": "Restaurante Piccolo Napoli",
+   "lat": 38.7355775,
+   "lng": -9.1547276,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/2066988760"
+  },
+  {
+   "name": "Ground Burger",
+   "lat": 38.7354596,
+   "lng": -9.1543422,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "Tu-Sa 12:00-00:00",
+   "osm": "node/4802190723"
+  },
+  {
+   "name": "Restaurante O Ni",
+   "lat": 38.7370329,
+   "lng": -9.1522543,
+   "amenity": "restaurant",
+   "cuisine": "regional; cabo_verdean",
+   "hours": "Mo-Fr 09:30-19:30",
+   "osm": "node/3148825692"
+  },
+  {
+   "name": "Oasis",
+   "lat": 38.736697,
+   "lng": -9.1521923,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 12:00-16:00, 19:00-23:00",
+   "osm": "node/4416151018"
+  },
+  {
+   "name": "#SeaTheFuture",
+   "lat": 38.7624922,
+   "lng": -9.093414,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11879391585"
+  },
+  {
+   "name": "Chimarrão",
+   "lat": 38.7632862,
+   "lng": -9.0952366,
+   "amenity": "restaurant",
+   "cuisine": "brasilian",
+   "hours": "",
+   "osm": "node/3293525521"
+  },
+  {
+   "name": "Arigato",
+   "lat": 38.7637769,
+   "lng": -9.0956848,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/9972724917"
+  },
+  {
+   "name": "Nova Peixaria",
+   "lat": 38.7639429,
+   "lng": -9.0956764,
+   "amenity": "restaurant",
+   "cuisine": "fish",
+   "hours": "",
+   "osm": "node/9972641316"
+  },
+  {
+   "name": "Honorato",
+   "lat": 38.7640832,
+   "lng": -9.0956734,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "",
+   "osm": "node/9970733203"
+  },
+  {
+   "name": "Arigato",
+   "lat": 38.7635101,
+   "lng": -9.0958039,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/3293525520"
+  },
+  {
+   "name": "Peixaria do Rossio",
+   "lat": 38.713588,
+   "lng": -9.1400012,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 12:00-24:00",
+   "osm": "node/5185699924"
+  },
+  {
+   "name": "Painel da Baixa",
+   "lat": 38.7136791,
+   "lng": -9.1400768,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 07:00-21:00",
+   "osm": "node/13953447074"
+  },
+  {
+   "name": "Fiorella",
+   "lat": 38.7132588,
+   "lng": -9.1397497,
+   "amenity": "restaurant",
+   "cuisine": "italian;italian_pizza;portuguese",
+   "hours": "",
+   "osm": "node/5016929026"
+  },
+  {
+   "name": "Buffet Leão",
+   "lat": 38.7139219,
+   "lng": -9.1404288,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5018721322"
+  },
+  {
+   "name": "Capítulo Restaurant & Bar",
+   "lat": 38.7144344,
+   "lng": -9.1385757,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13021802058"
+  },
+  {
+   "name": "Los Chanetes",
+   "lat": 38.713036,
+   "lng": -9.1396636,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12978848292"
+  },
+  {
+   "name": "Sushidō",
+   "lat": 38.7441038,
+   "lng": -9.1681575,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "Mo-Su 11:00-15:00,18:30-22:30",
+   "osm": "node/11917671186"
+  },
+  {
+   "name": "Ogaya",
+   "lat": 38.7423701,
+   "lng": -9.1723153,
+   "amenity": "restaurant",
+   "cuisine": "chinese;japanese",
+   "hours": "",
+   "osm": "node/8660711923"
+  },
+  {
+   "name": "A Tasca do Benfica",
+   "lat": 38.7424868,
+   "lng": -9.1726135,
+   "amenity": "restaurant",
+   "cuisine": "pizza;burger;pasta",
+   "hours": "",
+   "osm": "node/12312543791"
+  },
+  {
+   "name": "Restaurante Coral",
+   "lat": 38.7421129,
+   "lng": -9.1722881,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8665598670"
+  },
+  {
+   "name": "O Churrasco",
+   "lat": 38.7461241,
+   "lng": -9.1695217,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8689078959"
+  },
+  {
+   "name": "Botequim O Encontro",
+   "lat": 38.744035,
+   "lng": -9.1737084,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "",
+   "osm": "node/8660198414"
+  },
+  {
+   "name": "Church LX",
+   "lat": 38.7258035,
+   "lng": -9.1137773,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13257902483"
+  },
+  {
+   "name": "Sabor da Panela",
+   "lat": 38.7252529,
+   "lng": -9.1156559,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4997267337"
+  },
+  {
+   "name": "O caçador",
+   "lat": 38.7257391,
+   "lng": -9.1125358,
+   "amenity": "restaurant",
+   "cuisine": "portuguese;cervejaria",
+   "hours": "Mo-Su 07:00-22:00, Sa closed",
+   "osm": "node/10716614383"
+  },
+  {
+   "name": "earth tribe",
+   "lat": 38.7257884,
+   "lng": -9.1124859,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 12:00-16:00, Sa-Su closed",
+   "osm": "node/9840118517"
+  },
+  {
+   "name": "O germano",
+   "lat": 38.7259029,
+   "lng": -9.1123697,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "Mo-Sa 12:00-15:00, Su closed",
+   "osm": "node/10716614384"
+  },
+  {
+   "name": "Eusébio's",
+   "lat": 38.7227532,
+   "lng": -9.1153685,
+   "amenity": "restaurant",
+   "cuisine": "chicken",
+   "hours": "",
+   "osm": "node/2549453712"
+  },
+  {
+   "name": "O Frade",
+   "lat": 38.6978772,
+   "lng": -9.199268,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1513403812"
+  },
+  {
+   "name": "Restaurante Chinês-Grande Mundo",
+   "lat": 38.6980873,
+   "lng": -9.1992923,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12320531543"
+  },
+  {
+   "name": "Solar do Embaixador",
+   "lat": 38.6978821,
+   "lng": -9.1991346,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1513471725"
+  },
+  {
+   "name": "Belém Palácio",
+   "lat": 38.6974925,
+   "lng": -9.1989413,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11112159393"
+  },
+  {
+   "name": "Rui Dos Pregos",
+   "lat": 38.6974947,
+   "lng": -9.1988708,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11112159394"
+  },
+  {
+   "name": "Restaurante Japones Samurai",
+   "lat": 38.6974977,
+   "lng": -9.1988209,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/8433019118"
+  },
+  {
+   "name": "Granos Espaço Vegetariano",
+   "lat": 38.7145463,
+   "lng": -9.1685208,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 07:30-18:00; Sa 09:00-18:00",
+   "osm": "node/11379622469"
+  },
+  {
+   "name": "Pita Gourmet",
+   "lat": 38.7125756,
+   "lng": -9.1675281,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/7683226766"
+  },
+  {
+   "name": "Ela Canela",
+   "lat": 38.7161766,
+   "lng": -9.1681327,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8478848957"
+  },
+  {
+   "name": "Origin's 4",
+   "lat": 38.7158898,
+   "lng": -9.167039,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11379664469"
+  },
+  {
+   "name": "Zero Zero",
+   "lat": 38.7173455,
+   "lng": -9.1496898,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5888817385"
+  },
+  {
+   "name": "Damas",
+   "lat": 38.7172442,
+   "lng": -9.149531,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:30-22:00",
+   "osm": "node/8237919417"
+  },
+  {
+   "name": "Sumaya",
+   "lat": 38.7173899,
+   "lng": -9.1499381,
+   "amenity": "restaurant",
+   "cuisine": "lebanese",
+   "hours": "Mo 12:00-16:00, 19:00-00:00; Su, Tu-Th 12:00-00:00; Fr-Sa 12:00-00:30",
+   "osm": "node/12307145702"
+  },
+  {
+   "name": "Pica-Pau",
+   "lat": 38.717195,
+   "lng": -9.1497469,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10143222648"
+  },
+  {
+   "name": "Honest Greens",
+   "lat": 38.7170125,
+   "lng": -9.1480865,
+   "amenity": "restaurant",
+   "cuisine": "organic",
+   "hours": "Su-Th 08:30-23:00; Fr,Sa 08:30-24:00",
+   "osm": "node/11985343569"
+  },
+  {
+   "name": "Atalho Real",
+   "lat": 38.716953,
+   "lng": -9.1482094,
+   "amenity": "restaurant",
+   "cuisine": "steak_house",
+   "hours": "",
+   "osm": "node/4332704289"
+  },
+  {
+   "name": "Café do Rio",
+   "lat": 38.7088014,
+   "lng": -9.1343501,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4355929807"
+  },
+  {
+   "name": "Alfandega",
+   "lat": 38.7087992,
+   "lng": -9.1338894,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4726231996"
+  },
+  {
+   "name": "Restaurante Central",
+   "lat": 38.7087957,
+   "lng": -9.1345505,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4622793195"
+  },
+  {
+   "name": "The Folks",
+   "lat": 38.7091182,
+   "lng": -9.1340997,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6632030604"
+  },
+  {
+   "name": "SÁLA de João Sá",
+   "lat": 38.7091046,
+   "lng": -9.1338995,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9586124404"
+  },
+  {
+   "name": "Bacalhoeiro",
+   "lat": 38.7092258,
+   "lng": -9.1341701,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/10009627759"
+  },
+  {
+   "name": "Senhor Uva",
+   "lat": 38.7144868,
+   "lng": -9.1568417,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9740320517"
+  },
+  {
+   "name": "Kefi greek bistro",
+   "lat": 38.7128672,
+   "lng": -9.1582562,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 12:00-24:00",
+   "osm": "node/10314947110"
+  },
+  {
+   "name": "Da Prata 52",
+   "lat": 38.7095505,
+   "lng": -9.1362822,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Tu 10:00-23:30;We 17:00-23:30;Th-Sa 10:00-23:30",
+   "osm": "node/3187833711"
+  },
+  {
+   "name": "Yuki Ramen",
+   "lat": 38.7095354,
+   "lng": -9.13607,
+   "amenity": "restaurant",
+   "cuisine": "noodle;chinese",
+   "hours": "Mo-Su 12:00-23:00",
+   "osm": "node/13304368346"
+  },
+  {
+   "name": "Bella Ciao",
+   "lat": 38.7095718,
+   "lng": -9.1360591,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/6008664716"
+  },
+  {
+   "name": "Juicy",
+   "lat": 38.7095542,
+   "lng": -9.1359968,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6855340785"
+  },
+  {
+   "name": "Kiku",
+   "lat": 38.709452,
+   "lng": -9.1374952,
+   "amenity": "restaurant",
+   "cuisine": "chinese;japanese;sushi",
+   "hours": "11:30-23:00",
+   "osm": "node/4224367192"
+  },
+  {
+   "name": "Cervejaria Paço Real",
+   "lat": 38.7097664,
+   "lng": -9.1362855,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/7139204871"
+  },
+  {
+   "name": "Taberna",
+   "lat": 38.7157733,
+   "lng": -9.1398655,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/9043426999"
+  },
+  {
+   "name": "Casa do Alentejo",
+   "lat": 38.7160436,
+   "lng": -9.1398529,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Sa 12:00-16:00,19:00-23:00",
+   "osm": "node/8151114430"
+  },
+  {
+   "name": "Milano",
+   "lat": 38.7156678,
+   "lng": -9.1398731,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7090383895"
+  },
+  {
+   "name": "Locanda Italiana",
+   "lat": 38.7154374,
+   "lng": -9.1398633,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/2829349366"
+  },
+  {
+   "name": "A Provinciana",
+   "lat": 38.7154966,
+   "lng": -9.1401543,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "Mo-Sa 12:00-15:30, 19:00-22:00",
+   "osm": "node/6141130387"
+  },
+  {
+   "name": "il Mulino",
+   "lat": 38.7156998,
+   "lng": -9.1404113,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza;pasta",
+   "hours": "12:00-24:00",
+   "osm": "node/11884789653"
+  },
+  {
+   "name": "The Green Affair",
+   "lat": 38.7632858,
+   "lng": -9.0964428,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "12:00-23:00",
+   "osm": "node/11882320731"
+  },
+  {
+   "name": "La Expo Dulce Vita",
+   "lat": 38.7633403,
+   "lng": -9.0966585,
+   "amenity": "restaurant",
+   "cuisine": "italian;pizza",
+   "hours": "",
+   "osm": "node/11882320730"
+  },
+  {
+   "name": "Brasserie de l’ Entrecôte",
+   "lat": 38.7634438,
+   "lng": -9.0964502,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "12:00-23:00",
+   "osm": "node/5305382421"
+  },
+  {
+   "name": "Restaurante Bistek",
+   "lat": 38.7630628,
+   "lng": -9.0971184,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 07:30-19:30",
+   "osm": "node/8497131515"
+  },
+  {
+   "name": "Hard Rock Cafe",
+   "lat": 38.7166133,
+   "lng": -9.141757,
+   "amenity": "restaurant",
+   "cuisine": "american",
+   "hours": "Mo-Su 11:30-02:00",
+   "osm": "node/376811896"
+  },
+  {
+   "name": "Restaurante Cervejaria Pinoquio",
+   "lat": 38.7154585,
+   "lng": -9.1407397,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5111005221"
+  },
+  {
+   "name": "Bonjardim",
+   "lat": 38.7158975,
+   "lng": -9.140564,
+   "amenity": "restaurant",
+   "cuisine": "portuguese",
+   "hours": "Mo-Su 12:00-23:30",
+   "osm": "node/4215000033"
+  },
+  {
+   "name": "100 Montaditos",
+   "lat": 38.7164345,
+   "lng": -9.1408031,
+   "amenity": "restaurant",
+   "cuisine": "sandwich",
+   "hours": "",
+   "osm": "node/11679140853"
+  },
+  {
+   "name": "Solar do Bacalahau",
+   "lat": 38.7155517,
+   "lng": -9.1405492,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5951393386"
+  },
+  {
+   "name": "Churrasco",
+   "lat": 38.7161925,
+   "lng": -9.1405216,
+   "amenity": "restaurant",
+   "cuisine": "regional;chicken;portuguese",
+   "hours": "",
+   "osm": "node/6933998488"
+  },
+  {
+   "name": "Praia no Parque",
+   "lat": 38.7301287,
+   "lng": -9.1531294,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/148612125"
+  },
+  {
+   "name": "4 Ases",
+   "lat": 38.7291005,
+   "lng": -9.1497182,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6180812586"
+  },
+  {
+   "name": "Estrela do Parque",
+   "lat": 38.7278308,
+   "lng": -9.1562037,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4535338293"
+  },
+  {
+   "name": "Terceiro Sentido - Bistrô",
+   "lat": 38.7278199,
+   "lng": -9.1491996,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12355103579"
+  },
+  {
+   "name": "Restaurante G",
+   "lat": 38.7284147,
+   "lng": -9.1491513,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12355103584"
+  },
+  {
+   "name": "SushiCome",
+   "lat": 38.729078,
+   "lng": -9.149241,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/4630327404"
+  }
+ ],
+ "piers": [
+  {
+   "name": "Cais do Sodré",
+   "lat": 38.70423,
+   "lng": -9.14667,
+   "osm": "node/11012708885"
+  },
+  {
+   "name": "Cacilhas",
+   "lat": 38.6884,
+   "lng": -9.14734,
+   "osm": "node/11012708886"
+  },
+  {
+   "name": "Pedrouços/Algés",
+   "lat": 38.69444,
+   "lng": -9.22509,
+   "osm": "node/14004341397"
+  },
+  {
+   "name": "Belém",
+   "lat": 38.69449,
+   "lng": -9.1984,
+   "osm": "node/257950731"
+  },
+  {
+   "name": "Porto Brandão",
+   "lat": 38.67815,
+   "lng": -9.20693,
+   "osm": "node/257950738"
+  },
+  {
+   "name": "Cacilhas",
+   "lat": 38.68827,
+   "lng": -9.14835,
+   "osm": "node/414922741"
+  },
+  {
+   "name": "Cais do Sodré",
+   "lat": 38.70437,
+   "lng": -9.14584,
+   "osm": "node/414979642"
+  },
+  {
+   "name": "Cais do Sodré",
+   "lat": 38.70449,
+   "lng": -9.14517,
+   "osm": "node/489341876"
+  },
+  {
+   "name": "Cais do Sodré",
+   "lat": 38.70461,
+   "lng": -9.1445,
+   "osm": "node/5088877287"
+  },
+  {
+   "name": "Terreiro do Paço",
+   "lat": 38.70629,
+   "lng": -9.13343,
+   "osm": "node/6354971911"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70649,
+   "lng": -9.13278,
+   "osm": "node/6555312687"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70609,
+   "lng": -9.1341,
+   "osm": "node/6631313550"
+  },
+  {
+   "name": "Cais da Ribeira das Naus",
+   "lat": 38.70489,
+   "lng": -9.1423,
+   "osm": "node/6631361624"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70593,
+   "lng": -9.13463,
+   "osm": "node/8541561095"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70623,
+   "lng": -9.13522,
+   "osm": "node/8751425452"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70666,
+   "lng": -9.13219,
+   "osm": "node/8791680089"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70626,
+   "lng": -9.13506,
+   "osm": "way/1046885199"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70618,
+   "lng": -9.13409,
+   "osm": "way/1046885200"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70454,
+   "lng": -9.14669,
+   "osm": "way/1101594087"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.68814,
+   "lng": -9.14866,
+   "osm": "way/146419419"
+  },
+  {
+   "name": "Estação Fluvial de Belém",
+   "lat": 38.69497,
+   "lng": -9.19853,
+   "osm": "way/155477750"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.6946,
+   "lng": -9.19841,
+   "osm": "way/155477766"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70458,
+   "lng": -9.14585,
+   "osm": "way/155614426"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70469,
+   "lng": -9.14517,
+   "osm": "way/155614427"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.7064,
+   "lng": -9.13344,
+   "osm": "way/155685218"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70659,
+   "lng": -9.13279,
+   "osm": "way/155685222"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.67809,
+   "lng": -9.20693,
+   "osm": "way/156254760"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.71332,
+   "lng": -9.12215,
+   "osm": "way/247292099"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.71349,
+   "lng": -9.12197,
+   "osm": "way/247292101"
+  },
+  {
+   "name": "Terminal Fluvial de Cacilhas",
+   "lat": 38.68812,
+   "lng": -9.14785,
+   "osm": "way/39627722"
+  },
+  {
+   "name": "Terminal Fluvial do Cais do Sodré",
+   "lat": 38.705,
+   "lng": -9.14569,
+   "osm": "way/39658869"
+  },
+  {
+   "name": "Estação Fluvial de Porto Brandão",
+   "lat": 38.67787,
+   "lng": -9.20664,
+   "osm": "way/454582934"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.7048,
+   "lng": -9.14451,
+   "osm": "way/678973023"
+  },
+  {
+   "name": "Estação Fluvial Sul e Sueste",
+   "lat": 38.70672,
+   "lng": -9.13401,
+   "osm": "way/940031675"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70605,
+   "lng": -9.13473,
+   "osm": "way/945300212"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.70675,
+   "lng": -9.13217,
+   "osm": "way/949695961"
+  },
+  {
+   "name": "Terminal Fluvial do Terreiro do Paço",
+   "lat": 38.70686,
+   "lng": -9.13339,
+   "osm": "way/96320882"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 38.71315,
+   "lng": -9.12234,
+   "osm": "way/96497149"
+  }
+ ],
+ "roads": [
+  {
+   "a": {
+    "lat": 38.716243,
+    "lng": -9.151091999999998
+   },
+   "b": {
+    "lat": 38.93333,
+    "lng": -9.33333
+   },
+   "min": 36,
+   "km": 39.6
+  },
+  {
+   "a": {
+    "lat": 38.716243,
+    "lng": -9.151091999999998
+   },
+   "b": {
+    "lat": 38.9667,
+    "lng": -9.4167
+   },
+   "min": 42,
+   "km": 50
+  },
+  {
+   "a": {
+    "lat": 38.716243,
+    "lng": -9.151091999999998
+   },
+   "b": {
+    "lat": 38.79736,
+    "lng": -9.39042
+   },
+   "min": 33,
+   "km": 32.1
+  },
+  {
+   "a": {
+    "lat": 38.93333,
+    "lng": -9.33333
+   },
+   "b": {
+    "lat": 38.716243,
+    "lng": -9.151091999999998
+   },
+   "min": 36,
+   "km": 40.9
+  },
+  {
+   "a": {
+    "lat": 38.93333,
+    "lng": -9.33333
+   },
+   "b": {
+    "lat": 38.79736,
+    "lng": -9.39042
+   },
+   "min": 30,
+   "km": 25.9
+  },
+  {
+   "a": {
+    "lat": 38.9667,
+    "lng": -9.4167
+   },
+   "b": {
+    "lat": 38.716243,
+    "lng": -9.151091999999998
+   },
+   "min": 44,
+   "km": 51
+  },
+  {
+   "a": {
+    "lat": 38.9667,
+    "lng": -9.4167
+   },
+   "b": {
+    "lat": 38.79736,
+    "lng": -9.39042
+   },
+   "min": 35,
+   "km": 27.2
+  },
+  {
+   "a": {
+    "lat": 38.79736,
+    "lng": -9.39042
+   },
+   "b": {
+    "lat": 38.716243,
+    "lng": -9.151091999999998
+   },
+   "min": 27,
+   "km": 27.5
+  },
+  {
+   "a": {
+    "lat": 38.79736,
+    "lng": -9.39042
+   },
+   "b": {
+    "lat": 38.93333,
+    "lng": -9.33333
+   },
+   "min": 25,
+   "km": 24.4
+  },
+  {
+   "a": {
+    "lat": 38.79736,
+    "lng": -9.39042
+   },
+   "b": {
+    "lat": 38.9667,
+    "lng": -9.4167
+   },
+   "min": 32,
+   "km": 25.7
+  }
+ ],
+ "guideSights": [
+  {
+   "name": "Palácio Foz",
+   "lat": 38.71578,
+   "lng": -9.14249,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Praça do Comércio",
+   "lat": 38.7075,
+   "lng": -9.136389,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Rossio Station",
+   "lat": 38.714722,
+   "lng": -9.142222,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Igreja do Carmo",
+   "lat": 38.712,
+   "lng": -9.14057,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Jardim de São Pedro de Alcântara",
+   "lat": 38.71497,
+   "lng": -9.14406,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu Nacional de Arte Antiga",
+   "lat": 38.704167,
+   "lng": -9.161667,
+   "wikidata": "Q212459",
+   "note": "Portugal's impressive national art collection, including 14-19th century European painting, artefacts of Portuguese contact with the East and Africa and a collection of ecclesiastical treasures. Highlights include Dürer's St Jerome, Hierony",
+   "editions": 26,
+   "unesco": false,
+   "web": "http://www.mnarteantiga-ipmuseus.pt/",
+   "en": "National Museum of Ancient Art"
+  },
+  {
+   "name": "Museu da Marioneta",
+   "lat": 38.7079,
+   "lng": -9.1561,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Cemitério dos Prazeres",
+   "lat": 38.714016,
+   "lng": -9.169985,
+   "wikidata": "Q976850",
+   "note": "This large cemetery is packed with majestic gravestones and mausoleums, separated by wide, pedestrian, tree-lined \"streets\". Many graves are marked with icons telling something about the person's role in historical Lisbon. A beautiful respi",
+   "editions": 10,
+   "unesco": false,
+   "en": "Prazeres Cemetery"
+  },
+  {
+   "name": "Fundação Arpad Szenes / Vieira da Silva",
+   "lat": 38.72223,
+   "lng": -9.15576,
+   "wikidata": "Q10333400",
+   "note": "This museum is installed in the restored 18th-century former Royal Silk Factory. Its permanent collection covers a wide time period of the works of 20th-century painters Arpad Szenes and Maria Helena Vieira da Silva, and regularly hosts exh",
+   "editions": 2,
+   "unesco": false,
+   "web": "http://fasvs.pt",
+   "en": "Museu Arpad Szenes - Vieira da Silva"
+  },
+  {
+   "name": "Aqueduto das Aguas Livres",
+   "lat": 38.7223,
+   "lng": -9.1591,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Espaço Novo Banco",
+   "lat": 38.72449,
+   "lng": -9.15076,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Lisbon Botanical Gardens",
+   "lat": 38.7181,
+   "lng": -9.14895,
+   "wikidata": "Q943407",
+   "note": "A hidden gem. It was created several hundred years ago, by a King of Portugal at the time of the Discoveries. The story goes that this King wanted one of every type of plant in the world, and although that's unlikely, there is a huge collec",
+   "editions": 9,
+   "unesco": false,
+   "en": "Jardim Botânico de Lisboa"
+  },
+  {
+   "name": "Miradouro da Senhora do Monte",
+   "lat": 38.7189,
+   "lng": -9.1328,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Lisbon Cathedral",
+   "lat": 38.70985,
+   "lng": -9.132983,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu de Sociedade de Geografia",
+   "lat": 38.7167,
+   "lng": -9.1408,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu do Teatro Romano",
+   "lat": 38.710469,
+   "lng": -9.132408,
+   "wikidata": "Q11780",
+   "note": "Along the way from downtown to Saint George's Castle.",
+   "editions": 5,
+   "unesco": false,
+   "posDoubt": true,
+   "en": "Ancient Roman theatre"
+  },
+  {
+   "name": "Panteão Nacional",
+   "lat": 38.715,
+   "lng": -9.125,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Ajuda Botanical Gardens",
+   "lat": 38.706208,
+   "lng": -9.200807,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Monument to the Discoveries",
+   "lat": 38.693611,
+   "lng": -9.205556,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Mosteiro dos Jerónimos",
+   "lat": 38.69832,
+   "lng": -9.20665,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museu Colecção Berardo",
+   "lat": 38.695521,
+   "lng": -9.208378,
+   "wikidata": "Q2191491",
+   "note": "The permanent collection of the museum consists of the Berardo Collection, which is made up of modern and contemporary art, with major art movements like abstract expressionism, Abstraction-Création, action painting, body Art, constructivis",
+   "editions": 11,
+   "unesco": false,
+   "web": "http://www.museuberardo.com/",
+   "en": "Berardo Collection Museum"
+  },
+  {
+   "name": "Museu Nacional dos Coches",
+   "lat": 38.697778,
+   "lng": -9.199722,
+   "wikidata": "Q1659559",
+   "note": "Housed in the former riding school of the palace, don't miss the world's largest collection of horse-drawn coaches and other royal vehicles. One of Lisbon's many unusual museums. In the \"Museum street\", Belem.",
+   "editions": 12,
+   "unesco": false,
+   "web": "http://museudoscoches.pt/",
+   "posDoubt": true,
+   "en": "National Coach Museum"
+  },
+  {
+   "name": "Ponte 25 de Abril",
+   "lat": 38.68975,
+   "lng": -9.177194,
+   "wikidata": "Q721152",
+   "note": "This sister bridge of the San Francisco – Oakland Bay Bridge was designed by the same architect in 1966 to connect Lisbon with the Setubal peninsula across the Tagus (Tejo) River. Formerly known as the Salazar Bridge, it was renamed after t",
+   "editions": 34,
+   "unesco": false,
+   "en": "25 de Abril Bridge"
+  },
+  {
+   "name": "Statue to Afonso de Albuquerque",
+   "lat": 38.69667,
+   "lng": -9.20027,
+   "wikidata": "",
+   "note": "In front of the former Royal Palace of Belém, now the Presidential Palace, there is a massive statue looking out to sea, representing Afonso de Albuquerque, second ruler of Portuguese India in the early 16th century."
+  },
+  {
+   "name": "Museu da Carris",
+   "lat": 38.702317,
+   "lng": -9.180492,
+   "wikidata": "",
+   "note": "Transport museum with various old trams and buses on display."
+  },
+  {
+   "name": "Jardim Zoológico",
+   "lat": 38.7437,
+   "lng": -9.1703,
+   "wikidata": "Q220063",
+   "note": "A zoo that is fairly pricey, but has a variety of exotic animals featuring sea-lions and dolphins.",
+   "editions": 13,
+   "unesco": false,
+   "web": "http://www.zoo.pt",
+   "en": "Lisbon Zoo"
+  },
+  {
+   "name": "Praça Marquês de Pombal",
+   "lat": 38.725278,
+   "lng": -9.15,
+   "wikidata": "",
+   "note": ""
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Cais do Sodré – Barreiro",
+   "a": {
+    "lat": 38.65127,
+    "lng": -9.07821
+   },
+   "b": {
+    "lat": 38.70461,
+    "lng": -9.1445
+   },
+   "osm": "way/1533192967"
+  },
+  {
+   "name": "Trafaria – Pedrouços/Algés",
+   "a": {
+    "lat": 38.69409,
+    "lng": -9.22658
+   },
+   "b": {
+    "lat": 38.67487,
+    "lng": -9.23088
+   },
+   "osm": "way/1537436003"
+  },
+  {
+   "name": "Belém – Pedrouços/Algés",
+   "a": {
+    "lat": 38.69449,
+    "lng": -9.1984
+   },
+   "b": {
+    "lat": 38.69409,
+    "lng": -9.22658
+   },
+   "osm": "way/1540818434"
+  },
+  {
+   "name": "Porto Brandão – Pedrouços/Algés",
+   "a": {
+    "lat": 38.67815,
+    "lng": -9.20693
+   },
+   "b": {
+    "lat": 38.69409,
+    "lng": -9.22658
+   },
+   "osm": "way/1546418923"
+  },
+  {
+   "name": "Trafaria – Belém",
+   "a": {
+    "lat": 38.69449,
+    "lng": -9.1984
+   },
+   "b": {
+    "lat": 38.67487,
+    "lng": -9.23088
+   },
+   "osm": "way/1546418924"
+  },
+  {
+   "name": "Cacilhas – Cais do Sodré",
+   "a": {
+    "lat": 38.70437,
+    "lng": -9.14584
+   },
+   "b": {
+    "lat": 38.68827,
+    "lng": -9.14835
+   },
+   "osm": "way/23805341"
+  },
+  {
+   "name": "Seixal – Cais do Sodré",
+   "a": {
+    "lat": 38.64789,
+    "lng": -9.09555
+   },
+   "b": {
+    "lat": 38.70461,
+    "lng": -9.1445
+   },
+   "osm": "way/23805373"
+  },
+  {
+   "name": "Trafaria – Porto Brandão",
+   "a": {
+    "lat": 38.67815,
+    "lng": -9.20693
+   },
+   "b": {
+    "lat": 38.67487,
+    "lng": -9.23088
+   },
+   "osm": "way/23805422"
+  },
+  {
+   "name": "Barreiro – Terreiro do Paço",
+   "a": {
+    "lat": 38.65145,
+    "lng": -9.079
+   },
+   "b": {
+    "lat": 38.70629,
+    "lng": -9.13343
+   },
+   "osm": "way/23805555"
+  },
+  {
+   "name": "Montijo – Cais do Sodré",
+   "a": {
+    "lat": 38.70423,
+    "lng": -9.14667
+   },
+   "b": {
+    "lat": 38.69953,
+    "lng": -9.00637
+   },
+   "osm": "way/261654292"
+  },
+  {
+   "name": "Porto Brandão – Belém",
+   "a": {
+    "lat": 38.69449,
+    "lng": -9.1984
+   },
+   "b": {
+    "lat": 38.67815,
+    "lng": -9.20693
+   },
+   "osm": "way/522074281"
+  }
+ ],
+ "eatHours": [
+  [
+   "Starbucks",
+   38.69752,
+   -9.20368,
+   "Mo-Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Pastelaria Bénard",
+   38.71072,
+   -9.14181,
+   "Mo-Sa 08:00-23:00",
+   "cafe"
+  ],
+  [
+   "A Brasileira",
+   38.71068,
+   -9.14201,
+   "Mo-Su 08:00-02:00",
+   "cafe"
+  ],
+  [
+   "Aqui há Peixe",
+   38.71195,
+   -9.1417,
+   "Tu-Sa 12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Este-Oeste",
+   38.69513,
+   -9.20743,
+   "Mo-Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante do Museu Nacional de Arte Antiga",
+   38.70491,
+   -9.16109,
+   "Tu-Su 10:00-17:30; Jan 01,May 01,Dec 24-25 off; easter off",
+   "restaurant"
+  ],
+  [
+   "Floresta de Belém",
+   38.69695,
+   -9.20183,
+   "11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Manteigaria \"Fábrica de Pastéis de Nata\"",
+   38.69717,
+   -9.20219,
+   "Mo-Su 08:00-21:00",
+   "cafe"
+  ],
+  [
+   "BemBelem",
+   38.69698,
+   -9.20306,
+   "Mo 10:00-15:30; We-Su 10:00-22:30",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   38.69699,
+   -9.20328,
+   "Su-Th 08:00-23:00;Fr-Sa,PH 09:00-00:00",
+   "fast_food"
+  ],
+  [
+   "Pão Pão Queijo Queijo",
+   38.69754,
+   -9.20387,
+   "Mo-Sa 10:00-23:30; Su 10:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Clube de Fado",
+   38.70964,
+   -9.1312,
+   "Mo-Su 20:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Casual Lounge Caffe",
+   38.69516,
+   -9.21373,
+   "Tu-Fr 12:00-02:00;Sa 15:00-02:00;Su 15:00-00:00",
+   "cafe"
+  ],
+  [
+   "Quiosque de Refresco",
+   38.71511,
+   -9.1513,
+   "Mo-Su 08:30-02:00",
+   "cafe"
+  ],
+  [
+   "Quiosque Portas do Sol",
+   38.71218,
+   -9.13021,
+   "Mo-Su 09:00-24:00",
+   "cafe"
+  ],
+  [
+   "A Tasca Do Chico",
+   38.71163,
+   -9.14413,
+   "Su-Th 19:00-02:00; Fr-Sa 19:00-04:00",
+   "pub"
+  ],
+  [
+   "Pão de Canela",
+   38.71497,
+   -9.15196,
+   "Mo-Su 08:30-24:00",
+   "cafe"
+  ],
+  [
+   "Starbucks",
+   38.71456,
+   -9.14089,
+   "Mo-Su 07:00-00:00",
+   "cafe"
+  ],
+  [
+   "Chapitô à Mesa",
+   38.71148,
+   -9.13387,
+   "Mo-Fr 12:00-00:00; Sa-Su 19:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Black Sheep Main Bar",
+   38.71516,
+   -9.15103,
+   "Mo-Th 15:30-01:00; Fr-Sa 15:30-02:00; Su 15:30-01:00; Mo-Su 15:30-01:00",
+   "bar"
+  ],
+  [
+   "K Urban Beach",
+   38.70394,
+   -9.15549,
+   "We-Sa 20:00-06:00; Jun 08:00-14:00",
+   "bar"
+  ],
+  [
+   "Terra Nova by Populi",
+   38.70754,
+   -9.13521,
+   "09:30-02:00",
+   "restaurant"
+  ],
+  [
+   "Último Porto",
+   38.70125,
+   -9.1626,
+   "Mo-Sa 12:00-15:30",
+   "restaurant"
+  ],
+  [
+   "Encanto",
+   38.70994,
+   -9.14147,
+   "Tu-Sa 19:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Martinho da Arcada",
+   38.70869,
+   -9.13585,
+   "Mo-Sa 07:00-23:00",
+   "cafe"
+  ],
+  [
+   "Stasha",
+   38.71107,
+   -9.14341,
+   "Mo-Th 12:00-15:00,18:00-23:00; Fr 12:00-15:00,18:00-23:30; Sa 18:00-23:30; Su off",
+   "restaurant"
+  ],
+  [
+   "Tasca do Chico",
+   38.71248,
+   -9.12656,
+   "Th-Su 18:00-04:00",
+   "restaurant"
+  ],
+  [
+   "Ti Camila (Casa de Fado)",
+   38.71135,
+   -9.12787,
+   "Mo-Sa 09:00-22:30",
+   "restaurant"
+  ],
+  [
+   "O Petisca",
+   38.72611,
+   -9.16461,
+   "Tu-Su 09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Pastelaria Batalha",
+   38.72642,
+   -9.16523,
+   "Mo-Sa 07:00-19:00",
+   "cafe"
+  ],
+  [
+   "Os Bernardos",
+   38.72749,
+   -9.16312,
+   "Mo-Sa 09:00-00:00",
+   "restaurant"
+  ],
+  [
+   "O Chiado",
+   38.71106,
+   -9.13907,
+   "Mo-Sa 18:30-22:30",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   38.71435,
+   -9.13895,
+   "Mo-Su,PH 08:30-03:45",
+   "fast_food"
+  ],
+  [
+   "A Muralha Tasca Tipica",
+   38.7116,
+   -9.12728,
+   "Mo-Sa 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Foxtrot",
+   38.71392,
+   -9.15188,
+   "Mo-Sa 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Museu da Cerveja",
+   38.70838,
+   -9.13561,
+   "Mo-Su 10:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Can the Can Lisboa",
+   38.70765,
+   -9.13525,
+   "PH,Mo-Su 09:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Kaffeehaus",
+   38.70981,
+   -9.14105,
+   "Mo 12:00-16:00; Tu-Fr 12:00-24:00; Sa 11:00-24:00; Su,PH 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Clara Clara",
+   38.7159,
+   -9.1238,
+   "Mo-Su,PH 10:00-21:00",
+   "cafe"
+  ],
+  [
+   "Sol Brasil",
+   38.71374,
+   -9.1238,
+   "Tu-Su 11:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Botequim",
+   38.71599,
+   -9.1305,
+   "PH,Th-Tu 11:00-02:00",
+   "bar"
+  ],
+  [
+   "Solar do Kadete",
+   38.70676,
+   -9.14207,
+   "Mo-Sa 07:00-0:00",
+   "restaurant"
+  ],
+  [
+   "Leitaria A Camponeza",
+   38.71174,
+   -9.1386,
+   "Mo-Su 19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Adega das Mercês",
+   38.71134,
+   -9.14503,
+   "Mo-Sa 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante Rio Coura",
+   38.71029,
+   -9.13205,
+   "Mo-Su 12:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Pizzeria Casanova",
+   38.71371,
+   -9.12174,
+   "Mo-Su 12:30-01:30",
+   "restaurant"
+  ],
+  [
+   "Carmo",
+   38.7117,
+   -9.14097,
+   "Su-Th 11:00-00:00; Fr-Sa 11:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Merendinha do Arco",
+   38.71283,
+   -9.1389,
+   "Mo-Fr 12:00-19:30",
+   "restaurant"
+  ],
+  [
+   "Fábrica da Nata",
+   38.71267,
+   -9.13856,
+   "08:00-23:00",
+   "cafe"
+  ],
+  [
+   "Maria Caxuxa",
+   38.71116,
+   -9.14444,
+   "Mo-Fr 18:00-02:00, Su 21:00-02:00, Sa 18:00-03:00, PH 18:00-03:00",
+   "bar"
+  ],
+  [
+   "The Food Temple",
+   38.71586,
+   -9.13427,
+   "We-Su 19:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Jardim das Cerejas",
+   38.71139,
+   -9.14024,
+   "Mo-Sa 12:00-15:30,19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Osteria",
+   38.70875,
+   -9.15485,
+   "We-Mo 12:30-15:00,19:30-02:00",
+   "restaurant"
+  ],
+  [
+   "O Tachadas",
+   38.70767,
+   -9.1562,
+   "Tu-Su,PH 09:00-15:00,18:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Enoteca De Belém",
+   38.69763,
+   -9.20248,
+   "Tu-Su 13:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Clube de Jornalistas",
+   38.71008,
+   -9.1593,
+   "Mo-Sa 12:30-14:30,19:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Baga Baga",
+   38.71774,
+   -9.13007,
+   "PH,Mo-Su 06:00-02:00",
+   "cafe"
+  ],
+  [
+   "Da Prata 52",
+   38.70955,
+   -9.13628,
+   "Mo-Tu 10:00-23:30;We 17:00-23:30;Th-Sa 10:00-23:30",
+   "restaurant"
+  ],
+  [
+   "O Satélite",
+   38.71741,
+   -9.12962,
+   "PH,Tu-Su 09:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante Casa Cabaças",
+   38.711,
+   -9.14328,
+   "Tu-Fr 12:00-15:00,19:00-0:00; Sa-Su 19:00-0:00",
+   "restaurant"
+  ],
+  [
+   "Cantina das Freiras",
+   38.70779,
+   -9.14111,
+   "Mo-Fr 12:00-15:00",
+   "restaurant"
+  ],
+  [
+   "O Trigueirinho",
+   38.71381,
+   -9.13572,
+   "Mo-Fr 12:00-15:00, 20:00-22:30; Sa 12:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Sukhothai",
+   38.71246,
+   -9.14504,
+   "Mo-Su 12:00-15:00,19:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Casa das Bifanas",
+   38.7142,
+   -9.13789,
+   "Mo-Sa 06:30-00:00",
+   "cafe"
+  ],
+  [
+   "Restaurant Cerqueira",
+   38.71584,
+   -9.13854,
+   "Mo-Sa 12:00-16:00,19:00-0:00",
+   "restaurant"
+  ],
+  [
+   "Clube da Esquina",
+   38.71148,
+   -9.14443,
+   "Mo-Th 19:00-02:00; Fr-Sa 19:00-03:00; Su 21:00-02:00",
+   "bar"
+  ],
+  [
+   "Mascote da Madragoa",
+   38.70866,
+   -9.15623,
+   "08:30-02:00",
+   "cafe"
+  ],
+  [
+   "Nune’s Real Marisqueira",
+   38.69511,
+   -9.21454,
+   "Tu-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Roda Viva",
+   38.71149,
+   -9.12826,
+   "We-Su 18:00-23:00, Fr-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Guitaras de Lisboa Fado",
+   38.7119,
+   -9.12687,
+   "Mo-Sa 20:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Malagueta Bar and Food",
+   38.71215,
+   -9.13448,
+   "12:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Chinês Clandestino",
+   38.71604,
+   -9.13402,
+   "Mo-Su 11:30-15:30,19:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Mi Dai",
+   38.71679,
+   -9.13479,
+   "10:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Da Wan Mian",
+   38.71681,
+   -9.13467,
+   "Mo-Su 10:00-14:00, 18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Raffi's",
+   38.71666,
+   -9.16155,
+   "Mo-Fr 09:00-17:00; Sa 09:00-16:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Cervejaria O Zapata",
+   38.71045,
+   -9.15035,
+   "PH,We-Mo 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "La Brasserie de L'Entrecote",
+   38.71023,
+   -9.14317,
+   "Mo-Th 12:30-15:00,19:30-23:30; Fr-Su 12:30-16:00,19:30-0:00",
+   "restaurant"
+  ],
+  [
+   "Fábrica da Nata",
+   38.71577,
+   -9.14105,
+   "Mo-Su 08:00-23:00",
+   "cafe"
+  ],
+  [
+   "Casa da Tia Helena",
+   38.7123,
+   -9.12949,
+   "Mo 12:00-21:00; We-Su 12:00-21:30",
+   "restaurant"
+  ],
+  [
+   "O‘Prego",
+   38.71435,
+   -9.13106,
+   "Mo-Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Farta Brutos",
+   38.71157,
+   -9.14346,
+   "Mo-Sa 17:00-22:30; Su off",
+   "restaurant"
+  ],
+  [
+   "Taberna da Rua das Flores",
+   38.71014,
+   -9.14359,
+   "Mo-Fr 12:00-23:30; Sa 18:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Bonjardim",
+   38.7159,
+   -9.14056,
+   "Mo-Su 12:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Kiku",
+   38.70945,
+   -9.1375,
+   "11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Burger King",
+   38.71272,
+   -9.13972,
+   "Su-Th 11:30-23:00; Fr 11:30-23:30; Sa 11:30-23:30",
+   "fast_food"
+  ],
+  [
+   "Fabrica Lisboa",
+   38.71112,
+   -9.13564,
+   "Tu-Fr 08:00-20:00; Sa-Su 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "O João",
+   38.71863,
+   -9.13058,
+   "Mo-Sa 10:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Banana café",
+   38.70815,
+   -9.13946,
+   "Mo-Th 09:00-20:00; Fr 09:00-0:00; Sa-Su 10:00-0:00",
+   "cafe"
+  ],
+  [
+   "O Recanto",
+   38.69477,
+   -9.21303,
+   "Mo-Sa 12:00-17:00, Su 12:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante yak and yeti",
+   38.71496,
+   -9.13158,
+   "Tu-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante Rosa & Cocktail Bar",
+   38.71214,
+   -9.14528,
+   "Mo-Su 10:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Duque Brewpub",
+   38.71314,
+   -9.1425,
+   "Mo-We 16:00-00:00; Th 16:00-01:00; Fr-Sa 16:00-02:00; Su 16:00-:00",
+   "pub"
+  ],
+  [
+   "Ao 26",
+   38.71024,
+   -9.14397,
+   "12:30-18:00, 19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "BAHR & Terrace",
+   38.71023,
+   -9.14331,
+   "Mo-Su 07:30-11:30, 12:30-16:00, 19:00-23:55",
+   "bar"
+  ],
+  [
+   "O Trevo",
+   38.7109,
+   -9.14301,
+   "Mo-Sa 07:00-22:30",
+   "restaurant"
+  ],
+  [
+   "The George",
+   38.71025,
+   -9.13879,
+   "Mo-Fr 17:00-02:00; Sa 11:00-02:00; Su 11:00-01:00",
+   "bar"
+  ],
+  [
+   "Picanha Janelas Verdes",
+   38.70539,
+   -9.1607,
+   "Mo-Su 12:30-15:30, 22:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Só Picanha",
+   38.71212,
+   -9.14308,
+   "Tu-Th 12:00-15:30, 19:00-23:00; Fr-Sa 12:00-15:30, 19:00-0:00; Su 12:00-15:30",
+   "restaurant"
+  ],
+  [
+   "Quesa Café",
+   38.71367,
+   -9.13035,
+   "Tu-Su 10:00-20:00",
+   "restaurant"
+  ],
+  [
+   "The Beer Station",
+   38.71404,
+   -9.14093,
+   "Mo-Su 12:00-00:00",
+   "bar"
+  ],
+  [
+   "A Minhota da Prata",
+   38.70996,
+   -9.13666,
+   "Mo-Fr 08:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Palácio Chiado",
+   38.7096,
+   -9.14305,
+   "Mo-Su 12:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Augusto Lisboa",
+   38.71437,
+   -9.1303,
+   "08:30-16:00",
+   "restaurant"
+  ],
+  [
+   "Solar 31 da Calcada",
+   38.71539,
+   -9.13798,
+   "Mo 11:00-23:00; Tu-Sa 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Madeira pura",
+   38.71046,
+   -9.12887,
+   "Mo-Su 18:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Boulangerie Marie Blachère Camões",
+   38.7108,
+   -9.14366,
+   "Mo-Su 08:00-23:00",
+   "cafe"
+  ],
+  [
+   "Nova Tertúlia",
+   38.71209,
+   -9.14409,
+   "24/7",
+   "bar"
+  ],
+  [
+   "Fidalgo",
+   38.71138,
+   -9.14452,
+   "Mo-Sa",
+   "restaurant"
+  ],
+  [
+   "Honorato",
+   38.69752,
+   -9.20376,
+   "Su-Th 12:00-23:00; Fr,Sa 12:00-24:00",
+   "fast_food"
+  ],
+  [
+   "A Cultura do Hamburguer",
+   38.71099,
+   -9.14467,
+   "Mo-Fr 12:00-0:00;Sa-Su 12:30-0:00",
+   "restaurant"
+  ],
+  [
+   "YAO Pressed Juicery",
+   38.71107,
+   -9.14964,
+   "Mo-Fr 09:00-20:00; Sa, Su 10:00-20:00",
+   "bar"
+  ],
+  [
+   "A Tasca da Sé",
+   38.71008,
+   -9.13319,
+   "Mo-Sa 12:00-12:00, 22:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Este",
+   38.7131,
+   -9.1257,
+   "We-Su 20:00-02:00",
+   "bar"
+  ],
+  [
+   "Faz Gustos",
+   38.71255,
+   -9.1425,
+   "Mo-Fr 10:00-15:00, 19:00-23:30; Sa-Su 19:00-00:00",
+   "restaurant"
+  ],
+  [
+   "São Vicente Brunch&More",
+   38.71335,
+   -9.12883,
+   "09:00-20:00",
+   "cafe"
+  ],
+  [
+   "Confeitaria Nacional",
+   38.71314,
+   -9.13808,
+   "Mo-Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Churrasco da Graça",
+   38.71737,
+   -9.12959,
+   "Mo-Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Pho Pu",
+   38.71761,
+   -9.13494,
+   "Mo-Sa 11:00-16:00, 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Gandhi Palace",
+   38.71301,
+   -9.13735,
+   "Mo-Su 11:30-16:00, 18:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Arcaz Velho",
+   38.71361,
+   -9.12476,
+   "Tu-Sa 12:00-24:00; Su 17:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Landeau Chocolate",
+   38.70915,
+   -9.14347,
+   "Mo-Su 12:00-19:00",
+   "cafe"
+  ],
+  [
+   "Hello, Kristof",
+   38.70991,
+   -9.15132,
+   "Mo-Su 08:45-03:45",
+   "cafe"
+  ],
+  [
+   "Favela Lx",
+   38.71558,
+   -9.12179,
+   "14:00-22:30",
+   "cafe"
+  ],
+  [
+   "Sr. Fado",
+   38.71306,
+   -9.12573,
+   "Tu-Sa 20:00-02:00",
+   "restaurant"
+  ],
+  [
+   "The Bifanas of Afonso",
+   38.71153,
+   -9.13564,
+   "Mo-Fr 08:00-18:30; Sa 09:00-13:30",
+   "fast_food"
+  ],
+  [
+   "Mercearia Poço dos Negros",
+   38.70996,
+   -9.1512,
+   "Mo-Fr 10:00-20:00; Sa 10:00-17:00",
+   "cafe"
+  ],
+  [
+   "Café de São Bento",
+   38.71323,
+   -9.15308,
+   "Mo-Su 12:00-15:00,19:00-01:00",
+   "restaurant"
+  ],
+  [
+   "O Arêgos",
+   38.70752,
+   -9.15635,
+   "Mo-Sa 12:00-15:00,19:00-23:00;Su,PH off",
+   "restaurant"
+  ],
+  [
+   "Cafeh Tehran",
+   38.71517,
+   -9.15193,
+   "Mo-Tu,Th-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "O Lavrador",
+   38.71296,
+   -9.15848,
+   "Tu-Su 09:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Sora Lella",
+   38.71188,
+   -9.15277,
+   "Tu-Sa 12:30-15:00,20:00-23:30",
+   "restaurant"
+  ],
+  [
+   "In Bocca Al Lupo",
+   38.71494,
+   -9.15234,
+   "Mo,We-Su 19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante Costa Vicentina",
+   38.71017,
+   -9.13712,
+   "Mo-Su 11:45-23:45",
+   "restaurant"
+  ],
+  [
+   "Bella Ciao",
+   38.70962,
+   -9.13867,
+   "Mo-Su 16:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Downunder by Justin Jennings",
+   38.71043,
+   -9.154,
+   "Mo-Fr 19:00-22:00; Sa 12:00-15:00,19:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Oliveira's Restaurante Moçambicano",
+   38.71045,
+   -9.15389,
+   "Tu-Sa 12:00-15:00, 19:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Zé da Mouraria",
+   38.7161,
+   -9.13494,
+   "Mo-Sa 12:00-16:00",
+   "restaurant"
+  ],
+  [
+   "Bar Terraço De Santa Luzia",
+   38.71182,
+   -9.13014,
+   "Mo-Su 10:00-20:00",
+   "cafe"
+  ],
+  [
+   "Casa Portuguesa do Pastel de Bacalhau",
+   38.71025,
+   -9.13741,
+   "Mo-Su 10:00-20:00",
+   "fast_food"
+  ],
+  [
+   "the mill",
+   38.71078,
+   -9.14978,
+   "Mo-Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "Versiculo d'O Faia",
+   38.7118,
+   -9.14448,
+   "Mo-Sa 19:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Rua do Vigário",
+   38.71278,
+   -9.12652,
+   "Mo-Tu, Th-Fr 12:00-16:00, 19:00-21:30; We, Sa 12:00-16:00",
+   "restaurant"
+  ],
+  [
+   "D. Afonso o Gordo",
+   38.71031,
+   -9.13479,
+   "Mo-Su 09:00-00:00",
+   "bar"
+  ],
+  [
+   "O Arco",
+   38.71182,
+   -9.13864,
+   "Mo-Su 12:00-15:00,19:00-23:00; We off",
+   "restaurant"
+  ],
+  [
+   "Ginginha do Carmo",
+   38.7134,
+   -9.14066,
+   "Su-We 13:30-00:00; Th-Sa 13:30-02:00",
+   "cafe"
+  ],
+  [
+   "Restaurante Zé Dos Cornos",
+   38.71414,
+   -9.13617,
+   "Mo-We 11:45-16:00; Th, Fr 11:45-16:00, 19:00-22:00; Sa 11:45-16:30",
+   "restaurant"
+  ],
+  [
+   "A Baiuca",
+   38.7109,
+   -9.12919,
+   "Mo-Su 20:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Fora de moda (casa de fado)",
+   38.71237,
+   -9.12798,
+   "Mo-Su 20:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Ginjinha Rubi",
+   38.71493,
+   -9.13828,
+   "Mo-Su 07:00-23:00",
+   "bar"
+  ],
+  [
+   "Glaciar Ártico",
+   38.70743,
+   -9.14083,
+   "Mo-Su 07:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Pop Cereal Café",
+   38.71186,
+   -9.14369,
+   "Mo-Su 09:00-00:00",
+   "cafe"
+  ],
+  [
+   "Grapes & bites wine house",
+   38.7122,
+   -9.14378,
+   "Mo-Su 14:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Vamos ao Algarve Bar & Gourmet Shop",
+   38.71037,
+   -9.12897,
+   "Mo-Su 18:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Oficina do Duque",
+   38.71327,
+   -9.14227,
+   "Mo-Th, Su 17:30-22:30; Fr, Sa 17:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Tapa Bucho",
+   38.71434,
+   -9.14504,
+   "Mo-Sa 19:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Tasco do Mitra",
+   38.71326,
+   -9.13566,
+   "We-Su 12:00-15:00, 19:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Duetos da Sé",
+   38.7093,
+   -9.13218,
+   "Su-Tu 16:00-24:00; Th-Sa 16:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Bartô",
+   38.71142,
+   -9.13383,
+   "22:00-02:00",
+   "bar"
+  ],
+  [
+   "Hamburgeria no Talho",
+   38.7185,
+   -9.12953,
+   "Mo-Sa 12:00-15:00,19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Pateo 13",
+   38.71171,
+   -9.12774,
+   "Tu-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante Elevador",
+   38.71264,
+   -9.13807,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Grelha do Carmo",
+   38.71236,
+   -9.14103,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Peixaria do Rossio",
+   38.71359,
+   -9.14,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "TR35 Lisboa",
+   38.71433,
+   -9.14942,
+   "Mo-Su 18:00-03:00",
+   "bar"
+  ],
+  [
+   "A Colmeia",
+   38.71041,
+   -9.14444,
+   "Mo-Fr 12:00-15:30",
+   "restaurant"
+  ],
+  [
+   "Atlantic Kebab",
+   38.7112,
+   -9.14419,
+   "Mo-Th, Su 08:00-02:00; Fr, Sa 08:00-03:00",
+   "fast_food"
+  ],
+  [
+   "McDonald's",
+   38.71108,
+   -9.1395,
+   "Mo-Su,PH 10:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Saga",
+   38.71853,
+   -9.13002,
+   "PH,Mo-Sa 07:00-19:00",
+   "cafe"
+  ],
+  [
+   "Ofício",
+   38.71243,
+   -9.14263,
+   "Tu-Sa 17:00-24:00",
+   "restaurant"
+  ],
+  [
+   "The sweetest point in town",
+   38.71667,
+   -9.1615,
+   "Mo-Sa 12:00-19:00",
+   "cafe"
+  ],
+  [
+   "Lisboa Tu e Eu",
+   38.71096,
+   -9.13003,
+   "Mo-Su 09:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Wasp",
+   38.71329,
+   -9.14428,
+   "Tu-Su 19:00-02:00",
+   "bar"
+  ],
+  [
+   "Quorum",
+   38.70879,
+   -9.14308,
+   "Mo-Sa 18:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Nicolau Cafe",
+   38.71056,
+   -9.13622,
+   "08:30-22:30",
+   "cafe"
+  ],
+  [
+   "Copenhagen Coffee Lab",
+   38.7135,
+   -9.12864,
+   "07:30-18:00",
+   "cafe"
+  ],
+  [
+   "Caruma, vinho & petisco",
+   38.71855,
+   -9.12918,
+   "Tu-Sa 13:00-15:00, Tu-Sa 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Maria Do Carmo",
+   38.71211,
+   -9.14127,
+   "12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Nova Pombalina",
+   38.70942,
+   -9.13498,
+   "Mo-Sa 07:00-19:30",
+   "restaurant"
+  ],
+  [
+   "McDonald's",
+   38.71039,
+   -9.14191,
+   "Mo-Su 08:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Artis Wine Bar",
+   38.71255,
+   -9.14419,
+   "Tu-Th 17:30-02:00, Fr-Sa 17:30-03:00, Su 17:30-02:00",
+   "bar"
+  ],
+  [
+   "FAUNA & FLORA",
+   38.70855,
+   -9.15379,
+   "Tu-Sa 09:00-19:00;Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Nectar winebar",
+   38.71034,
+   -9.13618,
+   "Mo-Sa 13:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Esplanada Igreja da Graca",
+   38.71624,
+   -9.13151,
+   "Mo-Su,PH 10:30-24:00",
+   "cafe"
+  ],
+  [
+   "Pizzaria Lisboa",
+   38.70824,
+   -9.14209,
+   "Mo-Fr 12:30-15:00,19:00-24:00; Sa 12:30-24:00; Su 12:30-23:00; PH 12:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Bohemia Lx",
+   38.71031,
+   -9.13442,
+   "Th-Tu 16:00-00:00",
+   "restaurant"
+  ],
+  [
+   "El-Rei dom Frango",
+   38.71331,
+   -9.14097,
+   "Mo-Sa 12:00-23:30; Su 19:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Graça 77",
+   38.71602,
+   -9.13039,
+   "12:00-15:00,18:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Mar Ao Carmo",
+   38.71203,
+   -9.14117,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "O Fernandinho",
+   38.71283,
+   -9.14102,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Leve Leve Tapas Bar",
+   38.71386,
+   -9.14489,
+   "Su, Tu-Th 18:00-23:15; Fr-Sa 18:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Chiado Caffe",
+   38.71072,
+   -9.14476,
+   "Mo-Sa 07:00-20:00",
+   "cafe"
+  ],
+  [
+   "Ginjinha Das Gaveas",
+   38.71115,
+   -9.14339,
+   "Su-Th 17:00-02:00, Fr,Sa 17:00-03:00",
+   "bar"
+  ],
+  [
+   "Too Natural Healthy Food",
+   38.71536,
+   -9.15469,
+   "Mo-Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "ALFAIA",
+   38.71301,
+   -9.14416,
+   "Mo-Su 13:00-01:30",
+   "restaurant"
+  ],
+  [
+   "A Viela do Fado",
+   38.71268,
+   -9.12635,
+   "Mo-Su 19:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Grilled and Company",
+   38.71089,
+   -9.13762,
+   "07:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Paul",
+   38.71079,
+   -9.13758,
+   "09:00-22:00",
+   "cafe"
+  ],
+  [
+   "Copenhagen Coffee Lab",
+   38.71279,
+   -9.13709,
+   "Mo-Su 07:30-19:00",
+   "cafe"
+  ],
+  [
+   "Santa",
+   38.70946,
+   -9.13196,
+   "Mo-Su 09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "O Carvoeiro",
+   38.71397,
+   -9.12811,
+   "PH,Mo-Su 12:30-15:30,19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Grenache",
+   38.71244,
+   -9.1316,
+   "Th-Mo 19:00-21:30",
+   "restaurant"
+  ],
+  [
+   "A Nossa Casa",
+   38.71183,
+   -9.14496,
+   "Su, Tu-Fr 19:00-00:00; Sa 16:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Sucolento",
+   38.70874,
+   -9.15054,
+   "Mo-Sa 12:30-15:30,19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Dear Breakfast",
+   38.70899,
+   -9.13945,
+   "09:00-17:00",
+   "cafe"
+  ],
+  [
+   "TascaMastai",
+   38.7114,
+   -9.14541,
+   "Tu-Su 13:00-24:00",
+   "pub"
+  ],
+  [
+   "Restaurante Rocco",
+   38.70958,
+   -9.1402,
+   "Su-Sa 08:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Epur",
+   38.70873,
+   -9.13979,
+   "Tu-Sa 12:30-15:00,19:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Trobadores",
+   38.70883,
+   -9.13942,
+   "Mo-Su 15:00-02:00",
+   "pub"
+  ],
+  [
+   "Santa Clara dos Cogumelos",
+   38.71572,
+   -9.12545,
+   "Tu-Fr 19:30-23:00; Sa 13:00-15:30, 19:30-23:00; Su 19:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Organi Chiado",
+   38.71032,
+   -9.13969,
+   "Su-We 12:00-16:00, Mo-We 19:00-23:00, Th-Sa 12:00-16:00,19:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante Sucolento",
+   38.70883,
+   -9.1506,
+   "Mo-Sa 12:30-15:30,19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "A Provinciana",
+   38.7155,
+   -9.14015,
+   "Mo-Sa 12:00-15:30, 19:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Copenhagen Coffee Lab & Bakery",
+   38.71591,
+   -9.12528,
+   "08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Le Bar a Crepes",
+   38.71793,
+   -9.12974,
+   "Mo-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante Mili",
+   38.71582,
+   -9.13847,
+   "Th-Tu 13:45-16:00, 18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Açores na Feira",
+   38.71596,
+   -9.12516,
+   "Tu-Su 10:00-00:00",
+   "restaurant"
+  ],
+  [
+   "velho mecado",
+   38.71088,
+   -9.13555,
+   "Tu-Su 19:00-23:00; Mo 00:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Delirium Café Lisboa",
+   38.71034,
+   -9.1396,
+   "Mo-Th 12:00-01:00; Fr-Sa 12:00-02:00; Su 16:00-01:00",
+   "pub"
+  ],
+  [
+   "Cafetaria Navy Museum",
+   38.697,
+   -9.20888,
+   "Mo-Su 10:00-17:00",
+   "cafe"
+  ],
+  [
+   "Taste of Pakistan",
+   38.71457,
+   -9.13598,
+   "Mo-Su 11:00-16:00, 18:30-00:00",
+   "restaurant"
+  ],
+  [
+   "O Chefe e o Mar",
+   38.71551,
+   -9.13836,
+   "Mo-Su 13:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Legumi Sushi Vegan",
+   38.70862,
+   -9.15562,
+   "Mo-Sa 13:00-15:00,18:00-22:00; Su 13:00-17:00",
+   "restaurant"
+  ],
+  [
+   "DesNorte",
+   38.71104,
+   -9.1438,
+   "Mo-Su 19:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Brew",
+   38.70927,
+   -9.13885,
+   "Su-Th 11:00-00:00; Fr-Sa 11:00-02:00",
+   "bar"
+  ],
+  [
+   "Beco do Forno",
+   38.71666,
+   -9.1346,
+   "Mo-Fr 11:00-21:00; Sa 11:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Adega Machado",
+   38.71225,
+   -9.14376,
+   "Mo-Su 19:30-02:00",
+   "restaurant"
+  ],
+  [
+   "h3",
+   38.71064,
+   -9.1449,
+   "Mo-Th 12:00-23:00; Fr-Sa 12:00-00:00",
+   "fast_food"
+  ],
+  [
+   "Early Birds Lisbon",
+   38.71407,
+   -9.15307,
+   "Tu-Fr 09:00-16:00; Sa-Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Dr. Bernard Boavida",
+   38.70979,
+   -9.15167,
+   "Mo-Fr 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Boutique Taberna",
+   38.71275,
+   -9.13584,
+   "Mo-Su 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Alfama Cellar",
+   38.71318,
+   -9.12574,
+   "Mo-Su 16:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Seagull Method cafe",
+   38.71467,
+   -9.14995,
+   "Tu-Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Melbourne",
+   38.71219,
+   -9.1657,
+   "Mo-Sa 08:00-18:00; Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Okah Restaurante",
+   38.70321,
+   -9.16217,
+   "Mo-Th 12:00-15:00,19:00-23:00; Fr,Sa 12:00-15:00,19:00-00:00; Su 12:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Okah Bar Rooftop",
+   38.70301,
+   -9.16179,
+   "16:00-02:00",
+   "bar"
+  ],
+  [
+   "Grogs Bar",
+   38.71184,
+   -9.14548,
+   "Su-Th 18:00-02:00; Fr-Sa 18:00-03:00",
+   "bar"
+  ],
+  [
+   "Vino Vero",
+   38.71869,
+   -9.1305,
+   "PH,Mo-Su 18:00-01:00",
+   "bar"
+  ],
+  [
+   "Frutaria",
+   38.713,
+   -9.137,
+   "Mo-Su 09:00-20:00",
+   "restaurant"
+  ],
+  [
+   "manjerica",
+   38.71423,
+   -9.13712,
+   "Mo-Th 09:00-19:00; Fr,Su 09:00-16:00",
+   "restaurant"
+  ],
+  [
+   "Taberna do Calhau",
+   38.71715,
+   -9.13347,
+   "Mo-Su 12:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Solar do Duque",
+   38.71344,
+   -9.14171,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Neighbourhood",
+   38.70857,
+   -9.15162,
+   "Mo-Su 08:30-11:00",
+   "cafe"
+  ],
+  [
+   "Mensagem Restaurante & Bar - Lisboa Hotel Pessoa",
+   38.71257,
+   -9.14149,
+   "Mo-Su 07:30-10:30 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "BANDIDA DA PRAÇA",
+   38.71565,
+   -9.13558,
+   "Mo-Su 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Panda Cantina",
+   38.71277,
+   -9.13755,
+   "Mo-Su 12:00-15:30, 18:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Panda Cantina",
+   38.71481,
+   -9.15092,
+   "Mo-Su 12:00-15:30, 18:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Casa do Alentejo",
+   38.71604,
+   -9.13985,
+   "Mo-Sa 12:00-16:00,19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "O Velho Eurico",
+   38.71272,
+   -9.13542,
+   "Mo-Fr 12:30-15:00,19:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Black Sheep",
+   38.71517,
+   -9.15108,
+   "Tu-Th, Sa-Su 19:00-00:00; Fr 18:00-01:00",
+   "bar"
+  ],
+  [
+   "Starbucks",
+   38.71077,
+   -9.13935,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Potato Project",
+   38.7101,
+   -9.1354,
+   "Su-Th 11:30-22:00; Fr,Sa 11:30-23:00",
+   "fast_food"
+  ],
+  [
+   "Escondidinho das Amoreiras",
+   38.72573,
+   -9.163,
+   "08:00 - 16:00",
+   "restaurant"
+  ],
+  [
+   "Doce Belo - Snack Bar / Restaurante",
+   38.72665,
+   -9.16242,
+   "Mo-Fr 07:00-19:00; Sa 07:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Maritaca",
+   38.71371,
+   -9.16471,
+   "Tu-Su 12:00-15:00, 19:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Sr. Vinho",
+   38.71001,
+   -9.1578,
+   "Tu-Sa 20:00-02:00",
+   "restaurant"
+  ],
+  [
+   "P.Tisco",
+   38.71348,
+   -9.12776,
+   "Mo-Su 12:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Flores da Pampa",
+   38.71476,
+   -9.15163,
+   "Mo-Fr 08:00-01:00Sa-Su 09:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Geographia",
+   38.70554,
+   -9.16174,
+   "Mo-Sa 12:30-15:00, 19:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Trempe",
+   38.71646,
+   -9.16223,
+   "Mo-Sa 12:00-15:00, 19:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Wakame Sushi Ten",
+   38.71384,
+   -9.12499,
+   "Tu-Su 00:00-15:00, 18:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Mila",
+   38.70722,
+   -9.15702,
+   "Mo-Fr 08:00-17:00; Sa-Su 08:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Cantinho da sé",
+   38.71002,
+   -9.13443,
+   "07:00-22:00",
+   "cafe"
+  ],
+  [
+   "Ourives Petisqueira",
+   38.71483,
+   -9.13148,
+   "Mo-Sa 18:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Cotidiano",
+   38.70894,
+   -9.1363,
+   "Mo-Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Tofa Snack-Bar",
+   38.72645,
+   -9.16469,
+   "Mo-Fr 07:00-20:00; Sa 07:00-15:00",
+   "cafe"
+  ],
+  [
+   "Oásis",
+   38.72743,
+   -9.16361,
+   "Mo-Sa 12:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Doce Lindo",
+   38.72737,
+   -9.16261,
+   "Segunda 08:00-20:00 Terça 08:00-20:00 Quarta 08:00-20:00 Quinta 08:00-20:00 Sexta 08:00-20:00 Sábado 08:00-20:00 Domingo Fechado",
+   "restaurant"
+  ],
+  [
+   "A Ginginha",
+   38.72813,
+   -9.16263,
+   "Mo-Sa 10:00-20:51",
+   "cafe"
+  ],
+  [
+   "Sta. Lolla Pizzeria",
+   38.72806,
+   -9.16568,
+   "Mo-Su 12:00-00:30",
+   "fast_food"
+  ],
+  [
+   "Burger King",
+   38.69742,
+   -9.20201,
+   "11:00-23:00; Fr,Sa 11:00-00:00",
+   "fast_food"
+  ],
+  [
+   "Miolo \"Local COOFFE & Brunch",
+   38.69739,
+   -9.20241,
+   "Tu-Su 09:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Subway",
+   38.70679,
+   -9.15808,
+   "Su-We 10:00-23:00; Th-Sa 10:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Desgraça - Bar & Acepipes",
+   38.71673,
+   -9.13018,
+   "Su-Th 12:00-23:00; PH,Fr,Sa 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Sr. Fado",
+   38.71307,
+   -9.12575,
+   "Tu-We, Fr-Sa 19:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Selina",
+   38.70946,
+   -9.15086,
+   "08:00-23:00",
+   "cafe"
+  ],
+  [
+   "Zappi",
+   38.70737,
+   -9.15666,
+   "Tu-Su 10:00-24:00",
+   "cafe"
+  ],
+  [
+   "Marquise",
+   38.71446,
+   -9.15219,
+   "Mo-Su 09:30-18:30",
+   "cafe"
+  ],
+  [
+   "Haweli Tandoori",
+   38.71867,
+   -9.13029,
+   "PH,We-Mo 12:00-15:00,18:30-22:30",
+   "restaurant"
+  ],
+  [
+   "Tasca da Susana",
+   38.71859,
+   -9.13031,
+   "PH,Tu-Su 10:00-02:00",
+   "cafe"
+  ],
+  [
+   "Baía do Peixe",
+   38.70707,
+   -9.13755,
+   "08:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Faz Figura",
+   38.71407,
+   -9.12397,
+   "Mo-Sa 12:30-15:30, 19:00-22:30; Su 12:30-15:30",
+   "restaurant"
+  ],
+  [
+   "Tanuki Sushi Augusta",
+   38.71027,
+   -9.13786,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Oven",
+   38.71211,
+   -9.13641,
+   "Mo-Su 12:00-15:00,19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "A Flor da Selva",
+   38.70909,
+   -9.15414,
+   "Mo-Fr 09:00-13:00,14:00-18:00",
+   "cafe"
+  ],
+  [
+   "Ippolito & Maciste",
+   38.70842,
+   -9.15439,
+   "Tu-Sa 18:00-00:00",
+   "bar"
+  ],
+  [
+   "Toca da Raposa",
+   38.71309,
+   -9.14188,
+   "Th-Tu 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Insaciável",
+   38.70786,
+   -9.15602,
+   "Tu-Sa 17:00-00:00",
+   "bar"
+  ],
+  [
+   "Mil Sabores",
+   38.7113,
+   -9.13698,
+   "Mo-Su 07:30-19:30",
+   "restaurant"
+  ],
+  [
+   "Popular do Capelo",
+   38.70979,
+   -9.14058,
+   "Mo-Su 07:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Papo Cheio",
+   38.71361,
+   -9.14379,
+   "Mo-Su 09:00-15:00, 19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Tasquinha dos Arcos",
+   38.71458,
+   -9.151,
+   "Mo-Su 11:00-15:30",
+   "restaurant"
+  ],
+  [
+   "Kefi greek bistro",
+   38.71287,
+   -9.15826,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Loja das Conservas",
+   38.7074,
+   -9.14101,
+   "Mo-Su 10:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Da Noi",
+   38.7088,
+   -9.15614,
+   "Mo-Sa 18:00-01:00",
+   "restaurant"
+  ],
+  [
+   "O Adriano",
+   38.71337,
+   -9.14074,
+   "Mo-Sa 08:00-00:00",
+   "restaurant"
+  ],
+  [
+   "COPA Lisboa",
+   38.70889,
+   -9.1519,
+   "Su,Th-Sa,We 18:00-00:00",
+   "bar"
+  ],
+  [
+   "Coppola",
+   38.71519,
+   -9.15117,
+   "Mo-Su 18:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Crossroad 10",
+   38.70948,
+   -9.13846,
+   "Mo-Fr 12:00-21:30; Sa 12:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Citron",
+   38.70968,
+   -9.13443,
+   "Tu-Sa 12:00-22:30; Su 12:00-16:30",
+   "restaurant"
+  ],
+  [
+   "Sherpa Momo",
+   38.71554,
+   -9.13811,
+   "12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Mãe's Kitchen",
+   38.71555,
+   -9.13846,
+   "Mo,We-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "O Caniço",
+   38.69694,
+   -9.20238,
+   "Tu-Su 12:00-16:00",
+   "restaurant"
+  ],
+  [
+   "Casa dos Pecados",
+   38.71292,
+   -9.14244,
+   "Th-Tu 18:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Plant Base",
+   38.7124,
+   -9.14148,
+   "Mo-Su 12:30-23:30",
+   "restaurant"
+  ],
+  [
+   "O Jardim",
+   38.71291,
+   -9.15291,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Bacaro",
+   38.71859,
+   -9.13021,
+   "18:00-24:00",
+   "bar"
+  ],
+  [
+   "Casa Mocambo",
+   38.71906,
+   -9.12348,
+   "Mo-Fr 18:00-24:00; Sa-Su 12:00-16:00, 18:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Lama Lo",
+   38.71339,
+   -9.13559,
+   "Mo-Su 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Paco Bigotes",
+   38.71275,
+   -9.14335,
+   "Mo-Su 12:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Tanoa Café",
+   38.71164,
+   -9.1455,
+   "We-Sa 08:00-16:00; Su 08:00-14:00",
+   "cafe"
+  ],
+  [
+   "Veramente",
+   38.7111,
+   -9.15341,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Beco a Sério",
+   38.71354,
+   -9.12784,
+   "Mo-Su 19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Boa Bon",
+   38.70992,
+   -9.13621,
+   "Mo-Th 12:00-22:00; Fr-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Guelra",
+   38.69718,
+   -9.20237,
+   "tu-Sa 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "O Castiço",
+   38.71056,
+   -9.13817,
+   "Mo-Su 11:30-22:30",
+   "restaurant"
+  ],
+  [
+   "The Coffee",
+   38.71166,
+   -9.1286,
+   "Mo-Su 08:00-19:00",
+   "cafe"
+  ],
+  [
+   "Union",
+   38.71319,
+   -9.13576,
+   "Mo-Su 10:00-23:00",
+   "cafe"
+  ],
+  [
+   "Nood Chiado",
+   38.71203,
+   -9.1415,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Empanadas MBQ",
+   38.72575,
+   -9.16499,
+   "Mo-Fr 10:00-20:00",
+   "restaurant"
+  ],
+  [
+   "il Mulino",
+   38.7157,
+   -9.14041,
+   "12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Double Trouble Café",
+   38.71739,
+   -9.16007,
+   "Mo, Th-Fr 08:30-16:30; Sa-Su 10:00-15:00",
+   "cafe"
+  ],
+  [
+   "La Fóllia de Bélem",
+   38.69946,
+   -9.2055,
+   "Mo-Su 12:30-15:00 19:00-22:00",
+   "restaurant"
+  ],
+  [
+   "A lontra",
+   38.71477,
+   -9.15399,
+   "Tu-Sa 23:00-06:00",
+   "restaurant"
+  ],
+  [
+   "BELEM KEBAB & PIZZARIA",
+   38.69928,
+   -9.20541,
+   "Mo-Su 07:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Caffé di Marzano Vermuteira",
+   38.71146,
+   -9.1415,
+   "Mo-Th,Su 09:00-22:30; Fr-Sa 09:00-23:00",
+   "cafe"
+  ],
+  [
+   "Rooftop The Art Inn Lisbon",
+   38.71301,
+   -9.14017,
+   "18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Casa Pereira da Conceição",
+   38.71017,
+   -9.13738,
+   "Mo-Su 10:00-21:00",
+   "cafe"
+  ],
+  [
+   "Catedrais",
+   38.71308,
+   -9.13575,
+   "Mo-Su 12:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Antù Alfama",
+   38.71087,
+   -9.12947,
+   "09:00-23:30",
+   "cafe"
+  ],
+  [
+   "Hygge House (Baixa)",
+   38.70968,
+   -9.13564,
+   "Mo-Su 07:30-17:00",
+   "cafe"
+  ],
+  [
+   "Pizzaiollo",
+   38.70955,
+   -9.13262,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Taberna Londrina",
+   38.71642,
+   -9.16414,
+   "12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Maria Limão",
+   38.71862,
+   -9.12983,
+   "Mo-Fr 09:00-18:00",
+   "restaurant"
+  ],
+  [
+   "São",
+   38.7115,
+   -9.15259,
+   "Mo-Fr  8:30. - 16:00",
+   "cafe"
+  ],
+  [
+   "O Lavrador",
+   38.71303,
+   -9.15862,
+   "Tu-Su 09:00-22:30",
+   "restaurant"
+  ],
+  [
+   "O Lavrador",
+   38.713,
+   -9.15855,
+   "Tu-Su 09:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Kossie's Cafe",
+   38.71632,
+   -9.13338,
+   "Mo-Su 08:30-16:00",
+   "cafe"
+  ],
+  [
+   "Natelier",
+   38.7122,
+   -9.1388,
+   "Mo-Su 09:00-22:00",
+   "cafe"
+  ],
+  [
+   "The Folks",
+   38.71111,
+   -9.13836,
+   "Mo-Th 08:00-17:00; Fr-Su 08:00-19:00",
+   "cafe"
+  ],
+  [
+   "Antisocial",
+   38.70451,
+   -9.16629,
+   "We-Th 20:00-02:00; Fr-Sa 20:00-03:00",
+   "bar"
+  ],
+  [
+   "Hello,  Kristof (São Bento)",
+   38.7105,
+   -9.15266,
+   "Mo-Su 08:45-15:45",
+   "cafe"
+  ],
+  [
+   "O fatica na brasa",
+   38.70901,
+   -9.15204,
+   "Tu 09:00-18:00; We-Fr 12:00-15:30, 17:00-23:00; Sa 14:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Fable",
+   38.71467,
+   -9.15258,
+   "Mo-Fr 09:30-18:00; Sa-Su 09:30-20:00",
+   "cafe"
+  ],
+  [
+   "Pita.gr",
+   38.69495,
+   -9.21585,
+   "Tu-Su 12:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Restaurante Baixa Chiado",
+   38.71075,
+   -9.13902,
+   "Mo-Fr 07:00-20:00; Sa 07:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Ramen Chef Rossio",
+   38.71501,
+   -9.14014,
+   "Mo-Su 12:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Lusa Cocktail & Wine Bar",
+   38.70402,
+   -9.16211,
+   "We-Su 17:00+; Mo,Tu off",
+   "bar"
+  ],
+  [
+   "Noca's café",
+   38.70904,
+   -9.13129,
+   "Mo-Fr 07:00-20:00; Sa 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "O Portas",
+   38.71063,
+   -9.13717,
+   "Mo-Sa 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Fora Artisan Bakery",
+   38.71454,
+   -9.12862,
+   "08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Breakfast Lovers Alfama",
+   38.70946,
+   -9.13263,
+   "Mo-Su 08:00-16:00",
+   "cafe"
+  ],
+  [
+   "Garum Fish & Wine Bar",
+   38.71575,
+   -9.13094,
+   "Tu-Sa 19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Volta Coffee",
+   38.71167,
+   -9.12746,
+   "Th-Tu 09:00-17:00; We 09:00-15:00",
+   "cafe"
+  ],
+  [
+   "Hikidashi Taberna Japonesa",
+   38.71665,
+   -9.16278,
+   "Tu-Su 12:30-15:00; 19:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Pasa Table BBQ",
+   38.71524,
+   -9.13585,
+   "Mo-Su 13:00-24:30",
+   "restaurant"
+  ],
+  [
+   "Friends Bairro Alto",
+   38.71364,
+   -9.14425,
+   "Su-Fr 18:00-02:00; Sa 18:00-03:00",
+   "bar"
+  ],
+  [
+   "Focacceria BM - Bread Maniacs",
+   38.69663,
+   -9.21061,
+   "Tu-Su 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "TO.B",
+   38.71007,
+   -9.13917,
+   "Mo-Su 12:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Han Table Barbecue - Rossio",
+   38.71497,
+   -9.1401,
+   "Mo-Su 12:00-15:00, 19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Yuki Ramen",
+   38.70954,
+   -9.13607,
+   "Mo-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "SEM",
+   38.71318,
+   -9.12981,
+   "We-Su 18:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Antonia Petiscos Portuguese",
+   38.71142,
+   -9.14378,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Das Flores",
+   38.70927,
+   -9.1435,
+   "Mo-Fr 08:00-15:30; Sa 12:00-15:30",
+   "restaurant"
+  ],
+  [
+   "Green Beans, Mercado Vegan",
+   38.71071,
+   -9.1499,
+   "Tu-Sa 10:00-18:30",
+   "restaurant"
+  ],
+  [
+   "Shifu",
+   38.70981,
+   -9.13549,
+   "12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Tasca Lisboeta",
+   38.71097,
+   -9.1434,
+   "Th-Mo 12:00-15:00,18:00-22:00; Tu,We off",
+   "restaurant"
+  ],
+  [
+   "Painel da Baixa",
+   38.71368,
+   -9.14008,
+   "Mo-Su 07:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Station 8 - Rossio Food Court",
+   38.71509,
+   -9.14025,
+   "Mo-Su 12:00-23:00",
+   "food_court"
+  ],
+  [
+   "Starbucks",
+   38.7122,
+   -9.13859,
+   "Mo-Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Café do Forte",
+   38.69203,
+   -9.21689,
+   "Mo-Fr 10:00-19:00; Sa,Su 10:00-19:30",
+   "cafe"
+  ],
+  [
+   "Pitéu da Graça",
+   38.71741,
+   -9.13033,
+   "Mo-Fr 12:00-15:00,19:00-22:00; Sa 12:00-15:00",
+   "restaurant"
+  ],
+  [
+   "ZeroZero Belém",
+   38.69385,
+   -9.20728,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Zuru Japanese Street Food",
+   38.71116,
+   -9.14942,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "A Valenciana",
+   38.72751,
+   -9.1618,
+   "Su 12:00-23:00; Mo 12:00-23:00; Tu 12:00-23:00; We 12:00-23:00; Th 12:00-23:00; Fr 12:00-23:00; Sa 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Quiosque Ribeira das Naus",
+   38.70564,
+   -9.14151,
+   "Tu-Th 00:00-01:00; Fr-Su,Mo 00:00-02:00; Mo-Su 10:00-24:00",
+   "cafe"
+  ],
+  [
+   "Baiwho Lisboa",
+   38.71433,
+   -9.16219,
+   "Mo-Fr 12:00-20:00",
+   "cafe"
+  ],
+  [
+   "Estrela by Olivier",
+   38.71413,
+   -9.15979,
+   "Mo-Su 09:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Café da praça da rua do patrocinio (campo de ourique)",
+   38.71473,
+   -9.16447,
+   "Mo-Fr 08:00-17:00",
+   "cafe"
+  ],
+  [
+   "Clube Naval de Lisboa",
+   38.69431,
+   -9.20227,
+   "We-Mo 12:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Sapa",
+   38.79825,
+   -9.38837,
+   "Tu-Su 09:30-18:30",
+   "cafe"
+  ],
+  [
+   "Alcobaça",
+   38.79663,
+   -9.39047,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante Regional de Sintra",
+   38.79916,
+   -9.38796,
+   "We closed; Th-Tu 12:00-16:00, 19:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Cajó",
+   38.79886,
+   -9.38814,
+   "Mo-Sa 07:30-20:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante Apeadeiro",
+   38.79876,
+   -9.38729,
+   "Fr-We 11:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Saudade",
+   38.79863,
+   -9.38708,
+   "Mo-Su 08:30-20:00",
+   "cafe"
+  ],
+  [
+   "Casa Piriquita",
+   38.79671,
+   -9.39053,
+   "Th-Tu 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Starbucks",
+   38.79618,
+   -9.3914,
+   "Mo-Su 09:00-18:30",
+   "cafe"
+  ],
+  [
+   "Vila Velha",
+   38.79648,
+   -9.39052,
+   "Mo-We,Fr-Su 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "Incomum by Luis Santos",
+   38.79888,
+   -9.3872,
+   "Th-Tu 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Mar das Latas",
+   38.96342,
+   -9.41848,
+   "Mo-Su 16:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Sintra Terrace",
+   38.7963,
+   -9.38998,
+   "Mo-Su 10:00-19:00; summer Mo-Su 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Bacalhau Na Vila",
+   38.79643,
+   -9.39037,
+   "Mo,Fr-Sa 12:00-17:00,19:00-22:00; Tu off; We-Th,Su 12:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Cantinho Gourmet",
+   38.79651,
+   -9.3904,
+   "Mo-Su 09:30-20:00",
+   "cafe"
+  ],
+  [
+   "Villa 6",
+   38.79602,
+   -9.38981,
+   "Mo-Su 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Tubo Ericeira Bar",
+   38.96388,
+   -9.4174,
+   "Mo-Sa 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Cantinho da Cattuxa",
+   38.96811,
+   -9.4123,
+   "Mo-Sa 07:30-20:00",
+   "cafe"
+  ],
+  [
+   "Brunch Me",
+   38.96474,
+   -9.41737,
+   "Mo-Su,PH 08:30-16:00",
+   "restaurant"
+  ],
+  [
+   "Oakberry Açai Ericeira",
+   38.9629,
+   -9.4172,
+   "Mo-Su 10:00-21:00",
+   "restaurant"
+  ],
+  [
+   "A Praço",
+   38.79809,
+   -9.38996,
+   "Tu-Sa 10:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Villa Craft",
+   38.79802,
+   -9.38991,
+   "Mo-Su 10:30-20:00",
+   "bar"
+  ],
+  [
+   "Raíz Sintra",
+   38.79855,
+   -9.38836,
+   "Su-Tu 13:00-23:00; Th 13:00-23:00; Fr,Sa 13:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Brisa",
+   38.96258,
+   -9.41854,
+   "We-Su 10:00-24:00; Mo 10:00-16:00",
+   "restaurant"
+  ],
+  [
+   "Piadina's, Wine & Co.",
+   38.79628,
+   -9.39047,
+   "Mo-Su 12:00-16:30",
+   "restaurant"
+  ],
+  [
+   "Be U Organic Market",
+   38.96871,
+   -9.41695,
+   "Mo-Sa 09:00-20:00; Su 09:00-19:00",
+   "food_court"
+  ],
+  [
+   "El Chilito",
+   38.96499,
+   -9.41468,
+   "Mo-Th, Su 08:30-23:30; Fr, Sa 08:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Hamburgueria da Ferraria",
+   38.79624,
+   -9.38988,
+   "Mo, We-Fr 12:00-22:00; Sa 12:00-22:30; Su 11:00-15:30",
+   "restaurant"
+  ],
+  [
+   "Burger & Go",
+   38.79941,
+   -9.38581,
+   "Apr-Sep: Mo-Su 10:00-22:00; Oct-Mar: Mo-Su 10:00-19:00",
+   "fast_food"
+  ],
+  [
+   "Hayaci",
+   38.96933,
+   -9.41928,
+   "12:00-15:00, 19:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Dreams Burger",
+   38.96754,
+   -9.41763,
+   "Mo 12:00-15:00,18:00-23:00; We-Fr 12:00-15:00,18:00-23:00; Sa,Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Padaria Saloia",
+   38.79941,
+   -9.38601,
+   "Su-Mo,We-Sa 08:00-19:00",
+   "cafe"
+  ],
+  [
+   "Volta e Meia Restaurante Bar",
+   38.79837,
+   -9.38842,
+   "Mo, We-Fr 15:00-23:00; Sa-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Larmanjat",
+   38.79879,
+   -9.38657,
+   "Mo-Su 08:00-21:00",
+   "restaurant"
+  ],
+  [
+   "A Praca",
+   38.7987,
+   -9.39005,
+   "Tu-We,Fr-Sa,Th 12:00-16:00",
+   "restaurant"
+  ],
+  [
+   "COMO Restaurante",
+   38.79873,
+   -9.38854,
+   "Mo-Sa 18:00 - 23:00",
+   "restaurant"
+  ],
+  [
+   "Tiger & Chick - Coffee and Delights",
+   38.96371,
+   -9.41686,
+   "Mo-Su 09:30-16:00",
+   "cafe"
+  ],
+  [
+   "The Chestnut",
+   38.79639,
+   -9.38848,
+   "Apr-Sep Mo-Su 10:00-19:00; Oct-Mar Mo-Su 10:00-18:00; Jun-Sep Sa,Su,PH 10:00-20:00",
+   "cafe"
+  ],
+  [
+   "Tasca Saloia",
+   38.79712,
+   -9.39008,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Restaurante A Raposa",
+   38.7992,
+   -9.38756,
+   "Tu-Sa 12:30-16:00, 18:30-22:00; Su 12:30-16:00; Mo off",
+   "restaurant"
+  ],
+  [
+   "Piriquita II",
+   38.7963,
+   -9.39075,
+   "Mo-Su 08:30-20:00",
+   "cafe"
+  ],
+  [
+   "Casa do Caseiro",
+   38.7946,
+   -9.39126,
+   "closed",
+   "cafe"
+  ],
+  [
+   "Burger King",
+   38.93293,
+   -9.32975,
+   "PH,Mo-Su 11:30-22:30",
+   "fast_food"
+  ]
+ ],
+ "heights": [
+  [
+   38.71578,
+   -9.14249,
+   30
+  ],
+  [
+   38.7075,
+   -9.13639,
+   12
+  ],
+  [
+   38.71472,
+   -9.14222,
+   35
+  ],
+  [
+   38.712,
+   -9.14057,
+   50
+  ],
+  [
+   38.71497,
+   -9.14406,
+   65
+  ],
+  [
+   38.70417,
+   -9.16167,
+   24
+  ],
+  [
+   38.7079,
+   -9.1561,
+   43
+  ],
+  [
+   38.71402,
+   -9.16999,
+   82
+  ],
+  [
+   38.72223,
+   -9.15576,
+   90
+  ],
+  [
+   38.7223,
+   -9.1591,
+   107
+  ],
+  [
+   38.72449,
+   -9.15076,
+   68
+  ],
+  [
+   38.7181,
+   -9.14895,
+   79
+  ],
+  [
+   38.7189,
+   -9.1328,
+   88
+  ],
+  [
+   38.70985,
+   -9.13298,
+   35
+  ],
+  [
+   38.7167,
+   -9.1408,
+   29
+  ],
+  [
+   38.71047,
+   -9.13241,
+   58
+  ],
+  [
+   38.715,
+   -9.125,
+   52
+  ],
+  [
+   38.70621,
+   -9.20081,
+   73
+  ],
+  [
+   38.69361,
+   -9.20556,
+   12
+  ],
+  [
+   38.69832,
+   -9.20665,
+   11
+  ],
+  [
+   38.69552,
+   -9.20838,
+   15
+  ],
+  [
+   38.69778,
+   -9.19972,
+   11
+  ],
+  [
+   38.68975,
+   -9.17719,
+   11
+  ],
+  [
+   38.69667,
+   -9.20027,
+   8
+  ],
+  [
+   38.70232,
+   -9.18049,
+   16
+  ],
+  [
+   38.7437,
+   -9.1703,
+   68
+  ],
+  [
+   38.72528,
+   -9.15,
+   59
+  ],
+  [
+   38.70423,
+   -9.14667,
+   3
+  ],
+  [
+   38.6884,
+   -9.14734,
+   1
+  ],
+  [
+   38.69444,
+   -9.22509,
+   5
+  ],
+  [
+   38.69449,
+   -9.1984,
+   6
+  ],
+  [
+   38.67815,
+   -9.20693,
+   3
+  ],
+  [
+   38.68827,
+   -9.14835,
+   3
+  ],
+  [
+   38.70437,
+   -9.14584,
+   4
+  ],
+  [
+   38.70449,
+   -9.14517,
+   4
+  ],
+  [
+   38.70461,
+   -9.1445,
+   4
+  ],
+  [
+   38.70629,
+   -9.13343,
+   4
+  ],
+  [
+   38.70649,
+   -9.13278,
+   0
+  ],
+  [
+   38.70609,
+   -9.1341,
+   10
+  ],
+  [
+   38.70489,
+   -9.1423,
+   2
+  ],
+  [
+   38.70593,
+   -9.13463,
+   11
+  ],
+  [
+   38.70623,
+   -9.13522,
+   6
+  ],
+  [
+   38.70666,
+   -9.13219,
+   1
+  ],
+  [
+   38.70626,
+   -9.13506,
+   5
+  ],
+  [
+   38.70618,
+   -9.13409,
+   8
+  ],
+  [
+   38.70454,
+   -9.14669,
+   3
+  ],
+  [
+   38.68814,
+   -9.14866,
+   2
+  ],
+  [
+   38.69497,
+   -9.19853,
+   6
+  ],
+  [
+   38.6946,
+   -9.19841,
+   5
+  ],
+  [
+   38.70458,
+   -9.14585,
+   4
+  ],
+  [
+   38.70469,
+   -9.14517,
+   4
+  ],
+  [
+   38.7064,
+   -9.13344,
+   2
+  ],
+  [
+   38.70659,
+   -9.13279,
+   0
+  ],
+  [
+   38.67809,
+   -9.20693,
+   2
+  ],
+  [
+   38.71332,
+   -9.12215,
+   4
+  ],
+  [
+   38.71349,
+   -9.12197,
+   5
+  ],
+  [
+   38.68812,
+   -9.14785,
+   1
+  ],
+  [
+   38.705,
+   -9.14569,
+   4
+  ],
+  [
+   38.67787,
+   -9.20664,
+   5
+  ],
+  [
+   38.7048,
+   -9.14451,
+   4
+  ],
+  [
+   38.70672,
+   -9.13401,
+   4
+  ],
+  [
+   38.70605,
+   -9.13473,
+   11
+  ],
+  [
+   38.70686,
+   -9.13339,
+   3
+  ],
+  [
+   38.71315,
+   -9.12234,
+   4
+  ],
+  [
+   38.69928,
+   -9.20541,
+   19
+  ],
+  [
+   38.69946,
+   -9.2055,
+   20
+  ],
+  [
+   38.69754,
+   -9.20392,
+   8
+  ],
+  [
+   38.69726,
+   -9.20313,
+   9
+  ],
+  [
+   38.69286,
+   -9.21332,
+   5
+  ],
+  [
+   38.71008,
+   -9.13319,
+   39
+  ],
+  [
+   38.70949,
+   -9.13301,
+   24
+  ],
+  [
+   38.70955,
+   -9.13262,
+   29
+  ],
+  [
+   38.70943,
+   -9.13307,
+   23
+  ],
+  [
+   38.7094,
+   -9.13322,
+   22
+  ],
+  [
+   38.71058,
+   -9.13289,
+   58
+  ],
+  [
+   38.70796,
+   -9.13542,
+   21
+  ],
+  [
+   38.70765,
+   -9.13525,
+   20
+  ],
+  [
+   38.70754,
+   -9.13521,
+   20
+  ],
+  [
+   38.70812,
+   -9.13549,
+   21
+  ],
+  [
+   38.70707,
+   -9.13755,
+   12
+  ],
+  [
+   38.70754,
+   -9.13771,
+   13
+  ],
+  [
+   38.7135,
+   -9.13402,
+   91
+  ],
+  [
+   38.71271,
+   -9.13296,
+   91
+  ],
+  [
+   38.71394,
+   -9.13509,
+   55
+  ],
+  [
+   38.71457,
+   -9.13161,
+   71
+  ],
+  [
+   38.71254,
+   -9.13232,
+   87
+  ],
+  [
+   38.71463,
+   -9.13143,
+   69
+  ],
+  [
+   38.71203,
+   -9.13872,
+   28
+  ],
+  [
+   38.71228,
+   -9.13898,
+   28
+  ],
+  [
+   38.71191,
+   -9.13867,
+   28
+  ],
+  [
+   38.71182,
+   -9.13864,
+   27
+  ],
+  [
+   38.712,
+   -9.13976,
+   37
+  ],
+  [
+   38.71174,
+   -9.1386,
+   26
+  ],
+  [
+   38.70539,
+   -9.1607,
+   31
+  ],
+  [
+   38.70491,
+   -9.16109,
+   35
+  ],
+  [
+   38.70554,
+   -9.16174,
+   38
+  ],
+  [
+   38.70496,
+   -9.15955,
+   12
+  ],
+  [
+   38.7064,
+   -9.16211,
+   49
+  ],
+  [
+   38.69435,
+   -9.20649,
+   6
+  ],
+  [
+   38.69389,
+   -9.20693,
+   5
+  ],
+  [
+   38.69385,
+   -9.20728,
+   7
+  ],
+  [
+   38.69513,
+   -9.20743,
+   12
+  ],
+  [
+   38.69524,
+   -9.20772,
+   14
+  ],
+  [
+   38.69429,
+   -9.2026,
+   6
+  ],
+  [
+   38.71572,
+   -9.12545,
+   62
+  ],
+  [
+   38.71551,
+   -9.12595,
+   63
+  ],
+  [
+   38.71593,
+   -9.12524,
+   62
+  ],
+  [
+   38.71596,
+   -9.12516,
+   62
+  ],
+  [
+   38.71565,
+   -9.12595,
+   65
+  ],
+  [
+   38.71291,
+   -9.15291,
+   38
+  ],
+  [
+   38.71183,
+   -9.15316,
+   35
+  ],
+  [
+   38.71195,
+   -9.15294,
+   32
+  ],
+  [
+   38.71171,
+   -9.15332,
+   35
+  ],
+  [
+   38.71323,
+   -9.15308,
+   36
+  ],
+  [
+   38.71188,
+   -9.15277,
+   32
+  ],
+  [
+   38.72575,
+   -9.16499,
+   120
+  ],
+  [
+   38.72611,
+   -9.16461,
+   118
+  ],
+  [
+   38.72743,
+   -9.16361,
+   117
+  ],
+  [
+   38.72935,
+   -9.1658,
+   89
+  ],
+  [
+   38.72749,
+   -9.16312,
+   119
+  ],
+  [
+   38.72728,
+   -9.16302,
+   119
+  ],
+  [
+   38.71397,
+   -9.12811,
+   60
+  ],
+  [
+   38.71488,
+   -9.12885,
+   72
+  ],
+  [
+   38.71386,
+   -9.12807,
+   59
+  ],
+  [
+   38.7139,
+   -9.12834,
+   59
+  ],
+  [
+   38.7138,
+   -9.12803,
+   58
+  ],
+  [
+   38.71471,
+   -9.12918,
+   72
+  ],
+  [
+   38.71413,
+   -9.15979,
+   81
+  ],
+  [
+   38.71303,
+   -9.15862,
+   82
+  ],
+  [
+   38.713,
+   -9.15855,
+   82
+  ],
+  [
+   38.7127,
+   -9.15861,
+   81
+  ],
+  [
+   38.71277,
+   -9.15834,
+   79
+  ],
+  [
+   38.71163,
+   -9.14039,
+   46
+  ],
+  [
+   38.71253,
+   -9.13913,
+   27
+  ],
+  [
+   38.71301,
+   -9.14017,
+   34
+  ],
+  [
+   38.71236,
+   -9.14103,
+   55
+  ],
+  [
+   38.73582,
+   -9.15392,
+   77
+  ],
+  [
+   38.73735,
+   -9.15346,
+   74
+  ],
+  [
+   38.73558,
+   -9.15473,
+   86
+  ],
+  [
+   38.73546,
+   -9.15434,
+   83
+  ],
+  [
+   38.73703,
+   -9.15225,
+   82
+  ],
+  [
+   38.7367,
+   -9.15219,
+   83
+  ],
+  [
+   38.76249,
+   -9.09341,
+   8
+  ],
+  [
+   38.76329,
+   -9.09524,
+   7
+  ],
+  [
+   38.76378,
+   -9.09568,
+   8
+  ],
+  [
+   38.76394,
+   -9.09568,
+   8
+  ],
+  [
+   38.76408,
+   -9.09567,
+   8
+  ],
+  [
+   38.76351,
+   -9.0958,
+   8
+  ],
+  [
+   38.71359,
+   -9.14,
+   27
+  ],
+  [
+   38.71368,
+   -9.14008,
+   28
+  ],
+  [
+   38.71326,
+   -9.13975,
+   27
+  ],
+  [
+   38.71392,
+   -9.14043,
+   29
+  ],
+  [
+   38.71443,
+   -9.13858,
+   27
+  ],
+  [
+   38.71304,
+   -9.13966,
+   28
+  ],
+  [
+   38.7441,
+   -9.16816,
+   74
+  ],
+  [
+   38.74237,
+   -9.17232,
+   69
+  ],
+  [
+   38.74249,
+   -9.17261,
+   70
+  ],
+  [
+   38.74211,
+   -9.17229,
+   71
+  ],
+  [
+   38.74612,
+   -9.16952,
+   74
+  ],
+  [
+   38.74403,
+   -9.17371,
+   76
+  ],
+  [
+   38.7258,
+   -9.11378,
+   9
+  ],
+  [
+   38.72525,
+   -9.11566,
+   37
+  ],
+  [
+   38.72574,
+   -9.11254,
+   5
+  ],
+  [
+   38.72579,
+   -9.11249,
+   6
+  ],
+  [
+   38.7259,
+   -9.11237,
+   7
+  ],
+  [
+   38.72275,
+   -9.11537,
+   13
+  ],
+  [
+   38.69788,
+   -9.19927,
+   13
+  ],
+  [
+   38.69809,
+   -9.19929,
+   14
+  ],
+  [
+   38.69788,
+   -9.19913,
+   14
+  ],
+  [
+   38.69749,
+   -9.19894,
+   12
+  ],
+  [
+   38.6975,
+   -9.19882,
+   12
+  ],
+  [
+   38.71455,
+   -9.16852,
+   102
+  ],
+  [
+   38.71258,
+   -9.16753,
+   76
+  ],
+  [
+   38.71618,
+   -9.16813,
+   112
+  ],
+  [
+   38.71589,
+   -9.16704,
+   97
+  ],
+  [
+   38.71735,
+   -9.14969,
+   78
+  ],
+  [
+   38.71724,
+   -9.14953,
+   79
+  ],
+  [
+   38.71739,
+   -9.14994,
+   78
+  ],
+  [
+   38.71719,
+   -9.14975,
+   78
+  ],
+  [
+   38.71701,
+   -9.14809,
+   81
+  ],
+  [
+   38.71695,
+   -9.14821,
+   84
+  ],
+  [
+   38.7088,
+   -9.13435,
+   18
+  ],
+  [
+   38.7088,
+   -9.13389,
+   18
+  ],
+  [
+   38.7088,
+   -9.13455,
+   18
+  ],
+  [
+   38.70912,
+   -9.1341,
+   20
+  ],
+  [
+   38.7091,
+   -9.1339,
+   20
+  ],
+  [
+   38.70923,
+   -9.13417,
+   22
+  ],
+  [
+   38.71449,
+   -9.15684,
+   72
+  ],
+  [
+   38.71287,
+   -9.15826,
+   80
+  ],
+  [
+   38.70955,
+   -9.13628,
+   21
+  ],
+  [
+   38.70954,
+   -9.13607,
+   19
+  ],
+  [
+   38.70957,
+   -9.13606,
+   20
+  ],
+  [
+   38.70955,
+   -9.136,
+   19
+  ],
+  [
+   38.70945,
+   -9.1375,
+   23
+  ],
+  [
+   38.70977,
+   -9.13629,
+   22
+  ],
+  [
+   38.71577,
+   -9.13987,
+   23
+  ],
+  [
+   38.71604,
+   -9.13985,
+   27
+  ],
+  [
+   38.71567,
+   -9.13987,
+   23
+  ],
+  [
+   38.71544,
+   -9.13986,
+   23
+  ],
+  [
+   38.7155,
+   -9.14015,
+   21
+  ],
+  [
+   38.7157,
+   -9.14041,
+   21
+  ],
+  [
+   38.76329,
+   -9.09644,
+   3
+  ],
+  [
+   38.76334,
+   -9.09666,
+   1
+  ],
+  [
+   38.76344,
+   -9.09645,
+   3
+  ],
+  [
+   38.76306,
+   -9.09712,
+   5
+  ],
+  [
+   38.71661,
+   -9.14176,
+   25
+  ],
+  [
+   38.71546,
+   -9.14074,
+   23
+  ],
+  [
+   38.7159,
+   -9.14056,
+   21
+  ],
+  [
+   38.71643,
+   -9.1408,
+   26
+  ],
+  [
+   38.71555,
+   -9.14055,
+   22
+  ],
+  [
+   38.71619,
+   -9.14052,
+   25
+  ],
+  [
+   38.73013,
+   -9.15313,
+   98
+  ],
+  [
+   38.7291,
+   -9.14972,
+   85
+  ],
+  [
+   38.72783,
+   -9.1562,
+   109
+  ],
+  [
+   38.72782,
+   -9.1492,
+   72
+  ],
+  [
+   38.72841,
+   -9.14915,
+   81
+  ],
+  [
+   38.72908,
+   -9.14924,
+   81
+  ],
+  [
+   38.69139,
+   -9.21583,
+   5
+  ],
+  [
+   38.69418,
+   -9.17815,
+   8
+  ],
+  [
+   38.71389,
+   -9.13333,
+   93
+  ],
+  [
+   38.71194,
+   -9.13917,
+   32
+  ],
+  [
+   38.7053,
+   -9.16072,
+   31
+  ],
+  [
+   38.7125,
+   -9.15361,
+   47
+  ],
+  [
+   38.72667,
+   -9.16667,
+   102
+  ],
+  [
+   38.71472,
+   -9.12778,
+   71
+  ],
+  [
+   38.71333,
+   -9.16056,
+   89
+  ],
+  [
+   38.71222,
+   -9.14,
+   39
+  ],
+  [
+   38.73667,
+   -9.15417,
+   71
+  ],
+  [
+   38.76353,
+   -9.09375,
+   8
+  ],
+  [
+   38.71389,
+   -9.13944,
+   19
+  ],
+  [
+   38.7244,
+   -9.11389,
+   10
+  ],
+  [
+   38.70885,
+   -9.13421,
+   18
+  ],
+  [
+   38.7146,
+   -9.15927,
+   83
+  ],
+  [
+   38.70914,
+   -9.1367,
+   20
+  ],
+  [
+   38.71588,
+   -9.13986,
+   24
+  ],
+  [
+   38.76223,
+   -9.09561,
+   19
+  ],
+  [
+   38.71583,
+   -9.14167,
+   24
+  ],
+  [
+   38.72825,
+   -9.15283,
+   77
+  ],
+  [
+   38.93333,
+   -9.33333,
+   213
+  ],
+  [
+   38.9667,
+   -9.4167,
+   43
+  ],
+  [
+   38.79736,
+   -9.39042,
+   217
+  ],
+  [
+   38.71624,
+   -9.15109,
+   64
+  ]
+ ]
+}

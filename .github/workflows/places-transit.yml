@@ -1,0 +1,40 @@
+name: Places public transport lines
+# Refreshes only the public transport lines (metro, light rail, tram, train) in the saved places files, from
+# OpenStreetMap. Free source, no AI, never publishes anything. The refreshed places files are saved back to this
+# branch (tools/places/data only, marked [skip ci]), merged with what was there so no fact found before is lost.
+on:
+  workflow_dispatch:
+    inputs:
+      refresh:
+        description: "Parts to refresh: transit, ports, see, lifts, hours, eats, piers, roads, islands"
+        default: "transit,ports"   # "full" builds each place in full (sights, towns, places to eat, ports, lines)
+      only:
+        description: "Only places whose key matches (blank: all)"
+        default: ""
+  push:
+    branches: ["claude/project-thread-xrdp7v"]
+    paths: [".github/workflows/places-transit.yml", "tools/places/targets.json"]
+permissions:
+  contents: write
+jobs:
+  lines:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          REFRESH: ${{ inputs.refresh || 'transit,ports' }}
+          PLACES_EXTRA: "1"
+          ONLY: ${{ inputs.only || '' }}
+        run: node tools/places/build.cjs
+      - name: Save the places files to the branch
+        run: |
+          git config user.name "Kairoute places"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/places/data
+          git diff --cached --quiet && exit 0
+          git commit -m "Places: refreshed ${{ inputs.refresh || 'transit,ports' }}${{ inputs.only && format(' for {0}', inputs.only) || '' }} [skip ci]"
+          for n in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0; sleep 5; done; exit 1

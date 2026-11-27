@@ -1,0 +1,5048 @@
+{
+ "key": "athens",
+ "name": "Athens",
+ "centre": {
+  "lat": 37.9739,
+  "lng": 23.72992105263158
+ },
+ "sites": {},
+ "towns": {
+  "corinth-far": {
+   "name": "Ancient Corinth",
+   "wikidata": "Q1363688",
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "Tavernakigamprou",
+     "lat": 37.9067817,
+     "lng": 22.8802202,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/9769352617"
+    },
+    {
+     "name": "Orestis Cafe",
+     "lat": 37.9068324,
+     "lng": 22.879947,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/2330585210"
+    },
+    {
+     "name": "Taverna tou Gambrou",
+     "lat": 37.9067949,
+     "lng": 22.88042,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "node/2330585929"
+    },
+    {
+     "name": "Aigli",
+     "lat": 37.9068972,
+     "lng": 22.8802711,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/9769352621"
+    },
+    {
+     "name": "Marinos",
+     "lat": 37.9071462,
+     "lng": 22.8805991,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "node/2330575174"
+    },
+    {
+     "name": "Tassos Hotel and Taverna",
+     "lat": 37.9075547,
+     "lng": 22.8820282,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "node/2330591094"
+    }
+   ]
+  },
+  "sounion-far": {
+   "name": "Temple of Poseidon at Sounion",
+   "wikidata": "Q21705206",
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "Naos Cafe Restaurant",
+     "lat": 37.6505374,
+     "lng": 24.026695,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "way/142781373"
+    },
+    {
+     "name": "Ακρογιάλι",
+     "lat": 37.654933,
+     "lng": 24.0243518,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "fish;greek;mediterranean",
+     "osm": "node/3763599604"
+    },
+    {
+     "name": "Ilias",
+     "lat": 37.6551916,
+     "lng": 24.0240322,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "fish;greek;mediterranean",
+     "osm": "way/521593662"
+    }
+   ]
+  },
+  "delphi-far": {
+   "name": "Delphi",
+   "wikidata": "Q75459",
+   "unesco": true,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Museum",
+     "lat": 38.48024,
+     "lng": 22.49969,
+     "hours": "08:00 - 15:00 (summer 20:00)",
+     "price": "Adult €6, child €3",
+     "wikidata": "Q636928",
+     "content": "Delphi is all about the hellenic culture and the remaining ruins. The downside are the opening hours of the Sanctuaries. Only during the summer heat, the place is open until 20:00. Better arrive early or stay the night before in a place nea",
+     "editions": 15,
+     "unesco": false,
+     "en": "Delphi Archaeological Museum"
+    },
+    {
+     "kind": "see",
+     "name": "Ancient Theater",
+     "lat": 38.48255,
+     "lng": 22.50046,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q10378966",
+     "content": "",
+     "editions": 9,
+     "unesco": false,
+     "en": "Delphi Theater"
+    },
+    {
+     "kind": "see",
+     "name": "Temple of Apollo",
+     "lat": 38.48229,
+     "lng": 22.50118,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q10751359",
+     "content": "",
+     "editions": 25,
+     "unesco": false,
+     "en": "Temple of Apollo in Delphi"
+    },
+    {
+     "kind": "see",
+     "name": "Delphi Stadium",
+     "lat": 38.48246,
+     "lng": 22.49766,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q21705214",
+     "content": "",
+     "editions": 8,
+     "unesco": false,
+     "en": "stadium of Delphi"
+    },
+    {
+     "kind": "see",
+     "name": "Sanctuary of Athena with the Tholos",
+     "lat": 38.48015,
+     "lng": 22.50791,
+     "hours": "",
+     "price": "Free",
+     "wikidata": "Q19753400",
+     "content": "",
+     "editions": 9,
+     "unesco": false,
+     "noEn": true
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "drink",
+     "name": "Astra Cafe & Restaurant",
+     "lat": 38.47962,
+     "lng": 22.4911,
+     "hours": "07:00-00:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Coffees, fine wine, beers and  cocktails, along with Mediterranean & Greek cuisine, in a beautiful place with a nice view."
+    }
+   ],
+   "unescoSites": [
+    "archaeological Site of Delphi"
+   ],
+   "mapEats": [
+    {
+     "name": "Coffee Tourism",
+     "lat": 38.4804379,
+     "lng": 22.5000311,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/5111421413"
+    },
+    {
+     "name": "Ydria",
+     "lat": 38.4780604,
+     "lng": 22.4973074,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "pizza",
+     "osm": "way/1044250473"
+    },
+    {
+     "name": "Εν δελφοις",
+     "lat": 38.47819,
+     "lng": 22.496808,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "node/9604149469"
+    },
+    {
+     "name": "Διονύσης",
+     "lat": 38.4787033,
+     "lng": 22.4956106,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "Souvlaki;Gyros;Pita",
+     "osm": "way/1044250468"
+    },
+    {
+     "name": "Δίον",
+     "lat": 38.4787475,
+     "lng": 22.4955093,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "way/1044250467"
+    },
+    {
+     "name": "Δελφικόν",
+     "lat": 38.4781453,
+     "lng": 22.4959635,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "",
+     "osm": "way/1044250408"
+    },
+    {
+     "name": "Μελοπωλείο",
+     "lat": 38.4783284,
+     "lng": 22.4955957,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/9604180352"
+    },
+    {
+     "name": "Phileo",
+     "lat": 38.4782222,
+     "lng": 22.4955448,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/13871508320"
+    }
+   ]
+  },
+  "corinth-canal-far": {
+   "name": "Corinth Canal",
+   "wikidata": "Q182873",
+   "sights": [],
+   "foodDrink": []
+  },
+  "acrocorinth-far": {
+   "name": "Acrocorinth",
+   "wikidata": "Q420810",
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "Castro",
+     "lat": 37.8895334,
+     "lng": 22.8681029,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "greek",
+     "osm": "node/2334442832"
+    }
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Piraeus",
+  "Rafina",
+  "Italy",
+  "Egypt",
+  "Turkey",
+  "Israel",
+  "Cyprus",
+  "Hydra",
+  "Aegina",
+  "Poros",
+  "Spetses",
+  "Kea",
+  "Evvia",
+  "Chalcis",
+  "Kymi",
+  "Skyros",
+  "Paros",
+  "Naxos",
+  "Ios",
+  "Santorini",
+  "Sounio",
+  "Corinth",
+  "Epidaurus",
+  "Olympia (Greece)",
+  "Delphi",
+  "Mycenae",
+  "Peloponnese",
+  "Nafplion"
+ ],
+ "missing": [],
+ "guideSights": [
+  {
+   "name": "Acropolis of Athens",
+   "lat": 37.97145,
+   "lng": 23.72377,
+   "wikidata": "Q131013",
+   "note": "It was the ancient fortified town of Athens, dating back to the Late Bronze Age. It is now a UNESCO World Heritage Site for its historic role and the many iconic buildings of the Greek Classical age, among them the Parthenon, the Erectheion",
+   "editions": 97,
+   "unesco": true
+  },
+  {
+   "name": "Theatre of Dionysus",
+   "lat": 37.97067,
+   "lng": 23.72764,
+   "wikidata": "Q1227044",
+   "note": "Classical Athens' main theatre, the first theatre ever built. Many of the great Greek plays were performed here for the first time. According to Plato's ''Symposium'', it could hold an audience of 19,000 spectators. Aristophanes' ''The Clou",
+   "editions": 34,
+   "unesco": false
+  },
+  {
+   "name": "Odeon of Herodes Atticus",
+   "lat": 37.9709,
+   "lng": 23.72457,
+   "wikidata": "Q1328165",
+   "note": "This theatre, built in 161 CE, is still used for concerts and plays. The stone backdrop is still preserved to a remarkable height of 3 stories, because it was incorporated into a later fortification on the site.",
+   "editions": 34,
+   "unesco": false
+  },
+  {
+   "name": "Pnyx",
+   "lat": 37.971667,
+   "lng": 23.719444,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Ancient Agora",
+   "lat": 37.9751,
+   "lng": 23.7224,
+   "wikidata": "Q395367",
+   "note": "The site of the ancient city centre is a green space with a beautiful view of the Acropolis.  It was built as a multipurpose area, then evolved into a religious area over time.  The Ancient Agora was eventually abandoned and then large part",
+   "editions": 34,
+   "unesco": false,
+   "en": "Ancient Agora of Athens"
+  },
+  {
+   "name": "Temple of Hephaestus",
+   "lat": 37.9757,
+   "lng": 23.7215,
+   "wikidata": "Q756824",
+   "note": "The best preserved ancient Greek temple, 5th century BCE.",
+   "editions": 38,
+   "unesco": false
+  },
+  {
+   "name": "Stoa of Attalus",
+   "lat": 37.9752,
+   "lng": 23.7242,
+   "wikidata": "Q1263335",
+   "note": "This building was reconstructed in the 1950s from its original foundations, incorporating as much of the original structure and materials as possible, with limestone quarried from Piraeus and roof tiles made of clay from Attica. It is used ",
+   "editions": 27,
+   "unesco": false,
+   "en": "Stoa of Attalos"
+  },
+  {
+   "name": "Church of the Holy Apostles",
+   "lat": 37.974,
+   "lng": 23.7239,
+   "wikidata": "Q2615369",
+   "note": "From the 11th century, one of the oldest churches in Athens.",
+   "editions": 19,
+   "unesco": false,
+   "closedForGood": true
+  },
+  {
+   "name": "Roman Agora",
+   "lat": 37.9743,
+   "lng": 23.7265,
+   "wikidata": "Q1435551",
+   "note": "This area became the main marketplace of the city after the Ancient Agora to the west became primarily a religious facility under Roman rule.  It houses the Tower of the Winds, an eight-sided tower with a different wind deity on each side, ",
+   "editions": 19,
+   "unesco": false,
+   "en": "Roman Agora of Athens"
+  },
+  {
+   "name": "Kerameikos",
+   "lat": 37.97859,
+   "lng": 23.71811,
+   "wikidata": "Q630974",
+   "note": "The site of the ancient cemetery of Athens. It also houses the Dipylon Gate, where the Panathenaic procession would begin. Its museum showcasing many of the grave stele and other archaeological items found on the grounds. The site has more ",
+   "editions": 29,
+   "unesco": false
+  },
+  {
+   "name": "Temple of Olympian Zeus",
+   "lat": 37.9695,
+   "lng": 23.7331,
+   "wikidata": "Q1123019",
+   "note": "Only the ruins remain today. The column that has fallen and can still be seen in pieces was brought down during a thunderstorm about a century ago.",
+   "editions": 38,
+   "unesco": false,
+   "posDoubt": true
+  },
+  {
+   "name": "The Lyceum",
+   "lat": 37.974075,
+   "lng": 23.743503,
+   "wikidata": "Q1160664",
+   "note": "An ancient temple here hosted lectures by Socrates, Plato, and Aristotle, and early meetings of the Athenian Assembly. Aristotle made the temple the home of his school, the Lyceum. It hosted the world's first zoo and botanical garden, as we",
+   "editions": 43,
+   "unesco": false,
+   "closedForGood": true,
+   "posDoubt": true,
+   "en": "Lyceum"
+  },
+  {
+   "name": "Plato's Academy",
+   "lat": 37.992359,
+   "lng": 23.708059,
+   "wikidata": "Q193093",
+   "note": "This house of study was founded by the famous philosopher Plato. His equally famous follower Aristotle studied here for 20 years before leaving to found a school of his own. The site is an outdoor free park where you can see the excavated r",
+   "editions": 69,
+   "unesco": false,
+   "closedForGood": true,
+   "posDoubt": true,
+   "en": "Platonic Academy"
+  },
+  {
+   "name": "Hadrian's Reservoir",
+   "lat": 37.979044111132616,
+   "lng": 23.741593526570966,
+   "wikidata": "",
+   "note": "Now the base of a summertime outdoor cinema, you can view the remains of the reservoir that was the terminus of an aqueduct that transported water for Roman-era Athenians from Parnitha to the base of Mount Lycabettus. You can only peer thro"
+  },
+  {
+   "name": "Panathinaiko Stadium",
+   "lat": 37.96835,
+   "lng": 23.74111,
+   "wikidata": "Q208811",
+   "note": "The stadium that housed the first modern day Olympic Games of 1896. Earlier versions of the stadium date as far back as 330 BCE. It's an enormous, white, marble stadium, with a horseshoe configuration.",
+   "editions": 47,
+   "unesco": false,
+   "web": "http://www.panathenaicstadium.gr/",
+   "posDoubt": true,
+   "en": "Panathenaic Stadium"
+  },
+  {
+   "name": "Lycabettus Hill",
+   "lat": 37.982,
+   "lng": 23.7434,
+   "wikidata": "Q1357713",
+   "note": "A 200m hill bordering the Kolonaki district. You can reach the top by walking (the path starts 15 minutes from Evangelismos metro stop, and will take 30 minutes to walk up the winding, but paved and not steep, path) or by a funicular railwa",
+   "editions": 38,
+   "unesco": false,
+   "web": "http://www.lycabettushill.com",
+   "posDoubt": true,
+   "en": "Mount Lycabettus"
+  },
+  {
+   "name": "Olympic Stadium",
+   "lat": 38.036129,
+   "lng": 23.785403,
+   "wikidata": "Q189663",
+   "note": "",
+   "editions": 52,
+   "unesco": false,
+   "web": "http://www.oaka.com.gr",
+   "en": "Olympic Stadium in Athens"
+  },
+  {
+   "name": "National Theatre",
+   "lat": 37.98479,
+   "lng": 23.72532,
+   "wikidata": "Q583039",
+   "note": "A low but imposing building erected between 1882 and 1890 by architect Ernst Ziller in the eclectic style of that age, commissioned by King George I.",
+   "editions": 11,
+   "unesco": false,
+   "en": "National Theatre of Greece - Ziller Building"
+  },
+  {
+   "name": "Syntagma Square",
+   "lat": 37.97555,
+   "lng": 23.73484,
+   "wikidata": "Q1137997",
+   "note": "Check out the Parliament building and the newly restored Grande Bretagne Hotel.",
+   "editions": 34,
+   "unesco": false
+  },
+  {
+   "name": "Hellenic Parliament Building",
+   "lat": 37.97529,
+   "lng": 23.73707,
+   "wikidata": "",
+   "note": "This building is on the eastern side of the square. It was the former royal palace before Greece became a republic.  At its base, facing the square, is the Tomb of the Unknown Soldier."
+  },
+  {
+   "name": "Tomb of the Unknown Soldier",
+   "lat": 37.97553,
+   "lng": 23.73641,
+   "wikidata": "Q3531128",
+   "note": "Catch the changing of the guards in front of the Tomb of the Unknown Soldier in front of Parliament every hour on the hour.  The guards are a fascinating sight; they wear distinctive uniforms with pleated kilts and leather clogs with pom-po",
+   "editions": 8,
+   "unesco": false,
+   "en": "Tomb of the Unknown Soldier, Athens"
+  },
+  {
+   "name": "Daphni Monastery",
+   "lat": 38.01298,
+   "lng": 23.63593,
+   "wikidata": "Q500444",
+   "note": "An 11th-century Byzantine monastery and UNESCO World Heritage site. Damaged by an earthquake in 1999, but has now been fully restored.",
+   "editions": 45,
+   "unesco": true,
+   "web": "http://odysseus.culture.gr/h/2/eh255.jsp?obj_id=1514"
+  },
+  {
+   "name": "Kaisariani Monastery and Gardens",
+   "lat": 37.960833,
+   "lng": 23.798333,
+   "wikidata": "Q1168003",
+   "note": "A nice escape from the city in the foothills of Mount Hymettus. Walking trails. There's a functional monastery one can walk in, and several ruined chapels or basilicas up on the walks.",
+   "editions": 11,
+   "unesco": false,
+   "en": "Kaisariani monastery"
+  },
+  {
+   "name": "National Archaeological Museum of Athens",
+   "lat": 37.9891,
+   "lng": 23.73276,
+   "wikidata": "Q637187",
+   "note": "This is the largest and most popular of Athens' many museums, and is usually very crowded. Its vast collection includes treasures unearthed from Mycenae by Heinrich Schliemann; a staggering array of sculpture including the earliest known Gr",
+   "editions": 41,
+   "unesco": false,
+   "web": "https://www.namuseum.gr/",
+   "posDoubt": true
+  },
+  {
+   "name": "Kanellopoulos Museum",
+   "lat": 37.973,
+   "lng": 23.72596,
+   "wikidata": "Q4306141",
+   "note": "A small but excellent museum displays artifacts from Mycenean Greece on, and includes some wonderful Persian artifacts.",
+   "editions": 9,
+   "unesco": false,
+   "web": "https://pacf.gr/en/",
+   "en": "Paul and Alexandra Canellopoulos Museum"
+  },
+  {
+   "name": "Benaki Museum of Greek Culture",
+   "lat": 37.97602,
+   "lng": 23.74038,
+   "wikidata": "Q816669",
+   "note": "Visit the beautiful Neoclassical main building which houses collections of Greek art, from ancient times through the Byzantine period and the modern state. Open late and for free on Thursday evenings. The museum shop is a good place to buy ",
+   "editions": 27,
+   "unesco": false,
+   "web": "https://www.benaki.org/index.php?lang=en",
+   "en": "Benaki Museum"
+  },
+  {
+   "name": "Museum of Cycladic Art",
+   "lat": 37.9757,
+   "lng": 23.74227,
+   "wikidata": "Q1230253",
+   "note": "Holds the second largest collection of Cypriot antiquities in the world outside Cyprus, after the Metropolitan Museum in New York. Some of the most popular exhibits include the Cycladic figurines, the idols from Early Bronze Age Cyclades, w",
+   "editions": 21,
+   "unesco": false,
+   "web": "http://www.cycladic.gr/en"
+  },
+  {
+   "name": "National Gallery",
+   "lat": 37.97563,
+   "lng": 23.74938,
+   "wikidata": "Q1167467",
+   "note": "It's one of Greece's main art institutions and features paintings and works of art from some of Greece's and Europe's best from the 19th and 20th centuries. Emphasis is given to popular Greek contemporary artists including Giannis Tsarouchi",
+   "editions": 19,
+   "unesco": false,
+   "web": "http://www.nationalgallery.gr",
+   "posDoubt": true,
+   "en": "National Gallery of Athens"
+  },
+  {
+   "name": "Benaki Museum of Islamic Art",
+   "lat": 37.97924,
+   "lng": 23.72023,
+   "wikidata": "",
+   "note": "An excellent collection which anyone interested in Islamic art will want to see. The museum was opened in 2004 as a branch of the Benaki, but is in a different part of town in two connected buildings."
+  },
+  {
+   "name": "Museum of Greek Folk Art",
+   "lat": 37.972533,
+   "lng": 23.732308,
+   "wikidata": "Q4306259",
+   "note": "An excellent museum of its type. Too often neglected by visitors to Athens, even though it is in the heavily touristed Plaka neighbourhood. Displays include artefacts, tools, primitive painting, folk pottery and interior decor. It is partic",
+   "editions": 9,
+   "unesco": false,
+   "web": "http://www.mnep.gr/"
+  },
+  {
+   "name": "Athens Municipal Art Gallery",
+   "lat": 37.98088,
+   "lng": 23.72144,
+   "wikidata": "Q1576793",
+   "note": "Paintings of Greek painters of the first half of the 20th century are displayed.",
+   "editions": 6,
+   "unesco": false,
+   "en": "Municipal Gallery of Athens"
+  },
+  {
+   "name": "Vorres Museum",
+   "lat": 37.95264,
+   "lng": 23.8476,
+   "wikidata": "Q7941879",
+   "note": "A museum of folk and contemporary art. Its grounds cover 320,000 m<sup>2</sup> (80 acres) including several buildings, gardens and courtyards. Its collection includes over 6,000 pieces covering 4,000 years of Greek history and art. The muse",
+   "editions": 4,
+   "unesco": false,
+   "web": "http://www.vorresmuseum.gr/"
+  },
+  {
+   "name": "National Historical Museum",
+   "lat": 37.9775,
+   "lng": 23.732778,
+   "wikidata": "Q822101",
+   "note": "In the old parliament building, this museum contains a large collection of historic documents such as the first constitution of Greece, furniture, equipment from the revolution. If you are lucky you may see the old session room.",
+   "editions": 20,
+   "unesco": false,
+   "web": "http://www.nhmuseum.gr/"
+  },
+  {
+   "name": "Numismatic Museum",
+   "lat": 37.9778,
+   "lng": 23.7354,
+   "wikidata": "Q658339",
+   "note": "The building of the museum is one of the most beautiful in Athens, and was built by Ernst Ziller and was used as the residence in Athens of Schliemann. The collection contains thousands of ancient coins and ancient Greek, Roman, Byzantine, ",
+   "editions": 20,
+   "unesco": false,
+   "web": "http://www.nummus.gr/",
+   "en": "Numismatic Museum of Athens"
+  },
+  {
+   "name": "Museum of Greek Popular Musical Instruments",
+   "lat": 37.97447,
+   "lng": 23.72751,
+   "wikidata": "Q4306254",
+   "note": "Includes exhibits of traditional Greek musical instruments, with recordings of most of them.",
+   "editions": 7,
+   "unesco": false,
+   "en": "Museum of Greek Folk Musical Instruments"
+  },
+  {
+   "name": "National War Museum",
+   "lat": 37.97539,
+   "lng": 23.74534,
+   "wikidata": "Q1788831",
+   "note": "The National War Museum is the only significant surviving public project of the military dictatorship which ruled Greece 1967 - 1974. The museum's displays are old fashioned and biased towards the more successful periods of Greek military h",
+   "editions": 19,
+   "unesco": false,
+   "web": "http://www.warmuseum.gr/",
+   "en": "Athens War Museum"
+  },
+  {
+   "name": "Park of Maritime Tradition",
+   "lat": 37.93369,
+   "lng": 23.6849,
+   "wikidata": "",
+   "note": "Including the historical warships Georgios Averof, Velos and a replica of an ancient trireme."
+  },
+  {
+   "name": "City of Athens Technopolis",
+   "lat": 37.978139,
+   "lng": 23.714111,
+   "wikidata": "Q174552",
+   "note": "An industrial museum of incomparable architecture. The centre has assisted in the upgrading of a historic Athens district.",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.athens-technopolis.gr/",
+   "en": "Technopolis City of Athens"
+  },
+  {
+   "name": "Spathario Museum",
+   "lat": 38.053176,
+   "lng": 23.812165,
+   "wikidata": "Q7574011",
+   "note": "The first and unique museum of shadow theatre in the world, dedicated to the famous Greek shadow theatre character \"Karagiozis\".",
+   "editions": 3,
+   "unesco": false,
+   "web": "http://www.karagiozismuseum.gr"
+  },
+  {
+   "name": "Cultural Centre Hellenic Cosmos",
+   "lat": 37.9626148,
+   "lng": 23.6887172,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Hellenic Motor Museum",
+   "lat": 37.991435,
+   "lng": 23.72991,
+   "wikidata": "Q1163632",
+   "note": "",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.hellenicmotormuseum.gr/"
+  },
+  {
+   "name": "Michael Cacoyannis Foundation cultural center",
+   "lat": 37.967475,
+   "lng": 23.696648,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Planetary Evgenidio Foundation",
+   "lat": 37.9398247,
+   "lng": 23.6963433,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Onassis Cultural centre",
+   "lat": 37.9579477,
+   "lng": 23.7193069,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Epigraphical Museum",
+   "lat": 37.988303,
+   "lng": 23.731321,
+   "wikidata": "Q2732854",
+   "note": "",
+   "editions": 10,
+   "unesco": false,
+   "web": "https://epigraphicmuseum.gr/"
+  },
+  {
+   "name": "National Museum of Contemporary Art",
+   "lat": 37.9630089,
+   "lng": 23.7253329,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Digital Museum Plato",
+   "lat": 37.9944535,
+   "lng": 23.7073032,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Museum of Mineralogy and Petrology",
+   "lat": 37.9666472,
+   "lng": 23.7843246,
+   "wikidata": "",
+   "note": ""
+  },
+  {
+   "name": "Gounaropoulos Museum",
+   "lat": 37.975,
+   "lng": 23.761528,
+   "wikidata": "Q5588347",
+   "note": "",
+   "editions": 3,
+   "unesco": false,
+   "posDoubt": true
+  }
+ ],
+ "transit": [
+  {
+   "mode": "subway",
+   "ref": "Μ1",
+   "name": "Metro Μ1: Piraeus → Kifissia",
+   "stops": [
+    {
+     "name": "Piraeus",
+     "lat": 37.94802,
+     "lng": 23.64325
+    },
+    {
+     "name": "Faliro",
+     "lat": 37.94503,
+     "lng": 23.66529
+    },
+    {
+     "name": "Moschato",
+     "lat": 37.95527,
+     "lng": 23.68049
+    },
+    {
+     "name": "Kallithea",
+     "lat": 37.96054,
+     "lng": 23.69741
+    },
+    {
+     "name": "Tavros-Eleftherios Venizelos",
+     "lat": 37.96251,
+     "lng": 23.70371
+    },
+    {
+     "name": "Petralona",
+     "lat": 37.96896,
+     "lng": 23.70941
+    },
+    {
+     "name": "Thiseio",
+     "lat": 37.97669,
+     "lng": 23.72054
+    },
+    {
+     "name": "Monastiraki",
+     "lat": 37.97634,
+     "lng": 23.72583
+    },
+    {
+     "name": "Omonia",
+     "lat": 37.9845,
+     "lng": 23.72818
+    },
+    {
+     "name": "Victoria",
+     "lat": 37.99349,
+     "lng": 23.7304
+    },
+    {
+     "name": "Attiki",
+     "lat": 37.99953,
+     "lng": 23.72285
+    },
+    {
+     "name": "Agios Nikolaos",
+     "lat": 38.00699,
+     "lng": 23.72773
+    },
+    {
+     "name": "Kato Patisia",
+     "lat": 38.01192,
+     "lng": 23.72866
+    },
+    {
+     "name": "Agios Eleftherios",
+     "lat": 38.02034,
+     "lng": 23.73194
+    },
+    {
+     "name": "Ano Patisia",
+     "lat": 38.02414,
+     "lng": 23.73652
+    },
+    {
+     "name": "Perissos",
+     "lat": 38.0332,
+     "lng": 23.74507
+    },
+    {
+     "name": "Pefkakia",
+     "lat": 38.03741,
+     "lng": 23.75051
+    },
+    {
+     "name": "Nea Ionia",
+     "lat": 38.04162,
+     "lng": 23.75541
+    },
+    {
+     "name": "Irakleio",
+     "lat": 38.04601,
+     "lng": 23.76656
+    },
+    {
+     "name": "Eirini",
+     "lat": 38.04299,
+     "lng": 23.78379
+    },
+    {
+     "name": "Nerantziotissa",
+     "lat": 38.04553,
+     "lng": 23.79342
+    },
+    {
+     "name": "Marousi",
+     "lat": 38.05653,
+     "lng": 23.80551
+    },
+    {
+     "name": "KAT",
+     "lat": 38.06636,
+     "lng": 23.80424
+    },
+    {
+     "name": "Kifissia",
+     "lat": 38.0734,
+     "lng": 23.80822
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "Μ3",
+   "name": "Metro Μ3: Dimotiko Theatro → Airport",
+   "stops": [
+    {
+     "name": "Dimotiko Theatro",
+     "lat": 37.94292,
+     "lng": 23.64759
+    },
+    {
+     "name": "Piraeus",
+     "lat": 37.94862,
+     "lng": 23.64233
+    },
+    {
+     "name": "Maniatika",
+     "lat": 37.96006,
+     "lng": 23.63979
+    },
+    {
+     "name": "Nikaia",
+     "lat": 37.96608,
+     "lng": 23.64784
+    },
+    {
+     "name": "Korydallos",
+     "lat": 37.97704,
+     "lng": 23.65042
+    },
+    {
+     "name": "Agia Varvara",
+     "lat": 37.98996,
+     "lng": 23.65935
+    },
+    {
+     "name": "Agia Marina",
+     "lat": 37.99681,
+     "lng": 23.66777
+    },
+    {
+     "name": "Egaleo",
+     "lat": 37.99138,
+     "lng": 23.6818
+    },
+    {
+     "name": "Eleonas",
+     "lat": 37.98775,
+     "lng": 23.69336
+    },
+    {
+     "name": "Kerameikos",
+     "lat": 37.97852,
+     "lng": 23.71153
+    },
+    {
+     "name": "Monastiraki",
+     "lat": 37.97666,
+     "lng": 23.72632
+    },
+    {
+     "name": "Syntagma",
+     "lat": 37.97485,
+     "lng": 23.73571
+    },
+    {
+     "name": "Evangelismos",
+     "lat": 37.97611,
+     "lng": 23.74711
+    },
+    {
+     "name": "Megaro Mousikis",
+     "lat": 37.97902,
+     "lng": 23.75302
+    },
+    {
+     "name": "Ambelokipi",
+     "lat": 37.98719,
+     "lng": 23.7577
+    },
+    {
+     "name": "Panormou",
+     "lat": 37.9932,
+     "lng": 23.76358
+    },
+    {
+     "name": "Katechaki",
+     "lat": 37.99374,
+     "lng": 23.77676
+    },
+    {
+     "name": "Ethniki Amyna",
+     "lat": 37.99917,
+     "lng": 23.78449
+    },
+    {
+     "name": "Cholargos",
+     "lat": 38.0049,
+     "lng": 23.79472
+    },
+    {
+     "name": "Nomismatokopio",
+     "lat": 38.00909,
+     "lng": 23.80579
+    },
+    {
+     "name": "Agia Paraskevi",
+     "lat": 38.01712,
+     "lng": 23.8125
+    },
+    {
+     "name": "Chalandri",
+     "lat": 38.0217,
+     "lng": 23.82076
+    },
+    {
+     "name": "Doukissis Plakentias",
+     "lat": 38.02398,
+     "lng": 23.83256
+    },
+    {
+     "name": "Pallini",
+     "lat": 38.00458,
+     "lng": 23.86995
+    },
+    {
+     "name": "Peania-Kantza",
+     "lat": 37.98494,
+     "lng": 23.87007
+    },
+    {
+     "name": "Koropi",
+     "lat": 37.91254,
+     "lng": 23.89608
+    },
+    {
+     "name": "Athens Airport (AIA)",
+     "lat": 37.93688,
+     "lng": 23.94473
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "Μ2",
+   "name": "Metro Μ2: Elliniko → Anthoupoli",
+   "stops": [
+    {
+     "name": "Elliniko",
+     "lat": 37.8926,
+     "lng": 23.74715
+    },
+    {
+     "name": "Argyroupoli",
+     "lat": 37.90317,
+     "lng": 23.7455
+    },
+    {
+     "name": "Alimos",
+     "lat": 37.9189,
+     "lng": 23.74412
+    },
+    {
+     "name": "Ilioupoli",
+     "lat": 37.92985,
+     "lng": 23.7448
+    },
+    {
+     "name": "Agios Dimitrios",
+     "lat": 37.9407,
+     "lng": 23.74054
+    },
+    {
+     "name": "Dafni",
+     "lat": 37.94956,
+     "lng": 23.73725
+    },
+    {
+     "name": "Agios Ioannis",
+     "lat": 37.95644,
+     "lng": 23.73469
+    },
+    {
+     "name": "Neos Kosmos",
+     "lat": 37.95769,
+     "lng": 23.72838
+    },
+    {
+     "name": "Syngrou-Fix",
+     "lat": 37.96461,
+     "lng": 23.72683
+    },
+    {
+     "name": "Akropoli",
+     "lat": 37.96885,
+     "lng": 23.72959
+    },
+    {
+     "name": "Syntagma",
+     "lat": 37.9755,
+     "lng": 23.73569
+    },
+    {
+     "name": "Panepistimio",
+     "lat": 37.98036,
+     "lng": 23.73304
+    },
+    {
+     "name": "Omonia",
+     "lat": 37.98408,
+     "lng": 23.72799
+    },
+    {
+     "name": "Metaxourgeio",
+     "lat": 37.98586,
+     "lng": 23.7214
+    },
+    {
+     "name": "Stathmos Larisis",
+     "lat": 37.99228,
+     "lng": 23.72074
+    },
+    {
+     "name": "Attiki",
+     "lat": 37.99953,
+     "lng": 23.72273
+    },
+    {
+     "name": "Sepolia",
+     "lat": 38.00263,
+     "lng": 23.71404
+    },
+    {
+     "name": "Agios Antonios",
+     "lat": 38.00611,
+     "lng": 23.69974
+    },
+    {
+     "name": "Peristeri",
+     "lat": 38.0129,
+     "lng": 23.69579
+    },
+    {
+     "name": "Anthoupoli",
+     "lat": 38.01715,
+     "lng": 23.69092
+    }
+   ]
+  },
+  {
+   "mode": "subway",
+   "ref": "Μ3",
+   "name": "Metro Μ3: Dimotiko Theatro → Doukissis Plakentias",
+   "stops": [
+    {
+     "name": "Dimotiko Theatro",
+     "lat": 37.94292,
+     "lng": 23.64759
+    },
+    {
+     "name": "Piraeus",
+     "lat": 37.94862,
+     "lng": 23.64233
+    },
+    {
+     "name": "Maniatika",
+     "lat": 37.96006,
+     "lng": 23.63979
+    },
+    {
+     "name": "Nikaia",
+     "lat": 37.96608,
+     "lng": 23.64784
+    },
+    {
+     "name": "Korydallos",
+     "lat": 37.97704,
+     "lng": 23.65042
+    },
+    {
+     "name": "Agia Varvara",
+     "lat": 37.98996,
+     "lng": 23.65935
+    },
+    {
+     "name": "Agia Marina",
+     "lat": 37.99681,
+     "lng": 23.66777
+    },
+    {
+     "name": "Egaleo",
+     "lat": 37.99138,
+     "lng": 23.6818
+    },
+    {
+     "name": "Eleonas",
+     "lat": 37.98775,
+     "lng": 23.69336
+    },
+    {
+     "name": "Kerameikos",
+     "lat": 37.97852,
+     "lng": 23.71153
+    },
+    {
+     "name": "Monastiraki",
+     "lat": 37.97666,
+     "lng": 23.72632
+    },
+    {
+     "name": "Syntagma",
+     "lat": 37.97485,
+     "lng": 23.73571
+    },
+    {
+     "name": "Evangelismos",
+     "lat": 37.97611,
+     "lng": 23.74711
+    },
+    {
+     "name": "Megaro Mousikis",
+     "lat": 37.97902,
+     "lng": 23.75302
+    },
+    {
+     "name": "Ambelokipi",
+     "lat": 37.98719,
+     "lng": 23.7577
+    },
+    {
+     "name": "Panormou",
+     "lat": 37.9932,
+     "lng": 23.76358
+    },
+    {
+     "name": "Katechaki",
+     "lat": 37.99374,
+     "lng": 23.77676
+    },
+    {
+     "name": "Ethniki Amyna",
+     "lat": 37.99917,
+     "lng": 23.78449
+    },
+    {
+     "name": "Cholargos",
+     "lat": 38.0049,
+     "lng": 23.79472
+    },
+    {
+     "name": "Nomismatokopio",
+     "lat": 38.00909,
+     "lng": 23.80579
+    },
+    {
+     "name": "Agia Paraskevi",
+     "lat": 38.01712,
+     "lng": 23.8125
+    },
+    {
+     "name": "Chalandri",
+     "lat": 38.0217,
+     "lng": 23.82076
+    },
+    {
+     "name": "Doukissis Plakentias",
+     "lat": 38.02398,
+     "lng": 23.83256
+    }
+   ]
+  },
+  {
+   "mode": "tram",
+   "ref": "Τ6",
+   "name": "Tram Τ6: Pikrodafni → Syntagma",
+   "stops": [
+    {
+     "name": "Pikrodafni",
+     "lat": 37.91593,
+     "lng": 23.70547
+    },
+    {
+     "name": "Edem",
+     "lat": 37.91874,
+     "lng": 23.70072
+    },
+    {
+     "name": "Mousson",
+     "lat": 37.92197,
+     "lng": 23.69981
+    },
+    {
+     "name": "Panaghitsa",
+     "lat": 37.92524,
+     "lng": 23.70194
+    },
+    {
+     "name": "Amfitheas",
+     "lat": 37.92833,
+     "lng": 23.70603
+    },
+    {
+     "name": "Achilleos",
+     "lat": 37.93009,
+     "lng": 23.70995
+    },
+    {
+     "name": "Evangeliki Scholi",
+     "lat": 37.93329,
+     "lng": 23.71093
+    },
+    {
+     "name": "Medeas - Mykalis",
+     "lat": 37.93713,
+     "lng": 23.71213
+    },
+    {
+     "name": "Aghia Paraskevi",
+     "lat": 37.9402,
+     "lng": 23.7131
+    },
+    {
+     "name": "Alexander the Great",
+     "lat": 37.94269,
+     "lng": 23.71387
+    },
+    {
+     "name": "Aghias Fotinis-Platia",
+     "lat": 37.94672,
+     "lng": 23.71512
+    },
+    {
+     "name": "Aegeou",
+     "lat": 37.9501,
+     "lng": 23.71896
+    },
+    {
+     "name": "Baknana",
+     "lat": 37.95463,
+     "lng": 23.72394
+    },
+    {
+     "name": "Neos Kosmos",
+     "lat": 37.9579,
+     "lng": 23.72738
+    },
+    {
+     "name": "Kasomouli",
+     "lat": 37.96043,
+     "lng": 23.72353
+    },
+    {
+     "name": "Fix",
+     "lat": 37.96479,
+     "lng": 23.72764
+    },
+    {
+     "name": "Vouliagmenis",
+     "lat": 37.96668,
+     "lng": 23.73179
+    },
+    {
+     "name": "Zappeion",
+     "lat": 37.96934,
+     "lng": 23.73643
+    },
+    {
+     "name": "Syntagma",
+     "lat": 37.97442,
+     "lng": 23.73541
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "IC",
+   "name": "Train IC: Athens → Thessaloniki",
+   "stops": [
+    {
+     "name": "Athina",
+     "lat": 37.99314,
+     "lng": 23.72024
+    },
+    {
+     "name": "Oinoi",
+     "lat": 38.32171,
+     "lng": 23.6098
+    },
+    {
+     "name": "Thiva",
+     "lat": 38.32968,
+     "lng": 23.3183
+    },
+    {
+     "name": "Livadia",
+     "lat": 38.47119,
+     "lng": 22.92691
+    },
+    {
+     "name": "Tithorea",
+     "lat": 38.60824,
+     "lng": 22.7179
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "A3",
+   "name": "Train A3: Chalkida → Athens",
+   "stops": [
+    {
+     "name": "Chalkida",
+     "lat": 38.46262,
+     "lng": 23.58618
+    },
+    {
+     "name": "Avlida",
+     "lat": 38.40446,
+     "lng": 23.60334
+    },
+    {
+     "name": "Kalochori-Pantichi",
+     "lat": 38.38931,
+     "lng": 23.59316
+    },
+    {
+     "name": "Agios Georgios",
+     "lat": 38.35489,
+     "lng": 23.60741
+    },
+    {
+     "name": "Dilesi",
+     "lat": 38.33764,
+     "lng": 23.60945
+    },
+    {
+     "name": "Oinoi",
+     "lat": 38.32158,
+     "lng": 23.60981
+    },
+    {
+     "name": "Oinofyta",
+     "lat": 38.30695,
+     "lng": 23.63383
+    },
+    {
+     "name": "Agios Thomas",
+     "lat": 38.28166,
+     "lng": 23.66718
+    },
+    {
+     "name": "Avlonas",
+     "lat": 38.25046,
+     "lng": 23.69555
+    },
+    {
+     "name": "Sfendali",
+     "lat": 38.23537,
+     "lng": 23.78442
+    },
+    {
+     "name": "Afidnes",
+     "lat": 38.18642,
+     "lng": 23.84474
+    },
+    {
+     "name": "Agios Stefanos",
+     "lat": 38.14039,
+     "lng": 23.85914
+    },
+    {
+     "name": "Dekelia",
+     "lat": 38.09979,
+     "lng": 23.78008
+    },
+    {
+     "name": "Acharnes",
+     "lat": 38.08026,
+     "lng": 23.74289
+    },
+    {
+     "name": "Acharnai Railway Center",
+     "lat": 38.0675,
+     "lng": 23.73768
+    },
+    {
+     "name": "Agioi Anargyroi",
+     "lat": 38.02114,
+     "lng": 23.71838
+    },
+    {
+     "name": "Athina",
+     "lat": 37.99317,
+     "lng": 23.72004
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "A1",
+   "name": "Train A1: Piraeus → Airport",
+   "stops": [
+    {
+     "name": "Piraeus",
+     "lat": 37.94907,
+     "lng": 23.64342
+    },
+    {
+     "name": "Lefka",
+     "lat": 37.95558,
+     "lng": 23.65412
+    },
+    {
+     "name": "Rentis",
+     "lat": 37.96226,
+     "lng": 23.66831
+    },
+    {
+     "name": "Tavros",
+     "lat": 37.96894,
+     "lng": 23.69422
+    },
+    {
+     "name": "Rouf",
+     "lat": 37.9736,
+     "lng": 23.70401
+    },
+    {
+     "name": "Athina",
+     "lat": 37.99313,
+     "lng": 23.72028
+    },
+    {
+     "name": "Agioi Anargyroi",
+     "lat": 38.02246,
+     "lng": 23.71865
+    },
+    {
+     "name": "Pyrgos Vasilissis",
+     "lat": 38.04004,
+     "lng": 23.72768
+    },
+    {
+     "name": "Kato Acharnai",
+     "lat": 38.05473,
+     "lng": 23.73281
+    },
+    {
+     "name": "Metamorfosi",
+     "lat": 38.06007,
+     "lng": 23.75621
+    },
+    {
+     "name": "Iraklio",
+     "lat": 38.05678,
+     "lng": 23.77209
+    },
+    {
+     "name": "Neratziotissa",
+     "lat": 38.04477,
+     "lng": 23.79411
+    },
+    {
+     "name": "Kifisias",
+     "lat": 38.04192,
+     "lng": 23.80407
+    },
+    {
+     "name": "Pentelis",
+     "lat": 38.03288,
+     "lng": 23.82258
+    },
+    {
+     "name": "Doukissis Plakentias",
+     "lat": 38.0247,
+     "lng": 23.83387
+    },
+    {
+     "name": "Pallini",
+     "lat": 38.00549,
+     "lng": 23.86964
+    },
+    {
+     "name": "Peania-Kantza",
+     "lat": 37.98398,
+     "lng": 23.86983
+    },
+    {
+     "name": "Koropi",
+     "lat": 37.91331,
+     "lng": 23.8955
+    },
+    {
+     "name": "Airport",
+     "lat": 37.93682,
+     "lng": 23.94485
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "A4",
+   "name": "Train A4: Kiato → Piraeus",
+   "stops": [
+    {
+     "name": "Kiato",
+     "lat": 38.01392,
+     "lng": 22.73468
+    },
+    {
+     "name": "Zevgolatio",
+     "lat": 37.92554,
+     "lng": 22.80666
+    },
+    {
+     "name": "Corinth",
+     "lat": 37.92093,
+     "lng": 22.9324
+    },
+    {
+     "name": "Agioi Theodoroi",
+     "lat": 37.93314,
+     "lng": 23.13708
+    },
+    {
+     "name": "Kineta",
+     "lat": 37.96541,
+     "lng": 23.20106
+    },
+    {
+     "name": "Megara",
+     "lat": 37.9909,
+     "lng": 23.36112
+    },
+    {
+     "name": "Nea Peramos",
+     "lat": 38.01389,
+     "lng": 23.41575
+    },
+    {
+     "name": "Magoula",
+     "lat": 38.07406,
+     "lng": 23.52988
+    },
+    {
+     "name": "Aspropyrgos",
+     "lat": 38.08107,
+     "lng": 23.60429
+    },
+    {
+     "name": "Ano Liosia",
+     "lat": 38.07069,
+     "lng": 23.70999
+    },
+    {
+     "name": "Zefyri",
+     "lat": 38.06966,
+     "lng": 23.71756
+    },
+    {
+     "name": "Kato Acharnai",
+     "lat": 38.05352,
+     "lng": 23.73244
+    },
+    {
+     "name": "Pyrgos Vasilissis",
+     "lat": 38.0391,
+     "lng": 23.72714
+    },
+    {
+     "name": "Agioi Anargyroi",
+     "lat": 38.02114,
+     "lng": 23.71838
+    },
+    {
+     "name": "Athina",
+     "lat": 37.99317,
+     "lng": 23.72004
+    },
+    {
+     "name": "Rouf",
+     "lat": 37.97366,
+     "lng": 23.70392
+    },
+    {
+     "name": "Tavros",
+     "lat": 37.96864,
+     "lng": 23.69267
+    },
+    {
+     "name": "Rentis",
+     "lat": 37.96238,
+     "lng": 23.66828
+    },
+    {
+     "name": "Lefka",
+     "lat": 37.95514,
+     "lng": 23.65368
+    },
+    {
+     "name": "Piraeus",
+     "lat": 37.94909,
+     "lng": 23.64342
+    }
+   ]
+  },
+  {
+   "mode": "train",
+   "ref": "IC",
+   "name": "Train IC: Athens → Kalambaka",
+   "stops": [
+    {
+     "name": "Athina",
+     "lat": 37.99314,
+     "lng": 23.72024
+    },
+    {
+     "name": "Oinoi",
+     "lat": 38.32171,
+     "lng": 23.6098
+    },
+    {
+     "name": "Thiva",
+     "lat": 38.32968,
+     "lng": 23.3183
+    },
+    {
+     "name": "Aliartos",
+     "lat": 38.37949,
+     "lng": 23.11096
+    },
+    {
+     "name": "Livadia",
+     "lat": 38.47119,
+     "lng": 22.92691
+    },
+    {
+     "name": "Tithorea",
+     "lat": 38.60824,
+     "lng": 22.7179
+    },
+    {
+     "name": "Molos",
+     "lat": 38.81281,
+     "lng": 22.65592
+    }
+   ]
+  }
+ ],
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "portQuery": null,
+ "wikivoyage": "Athens",
+ "cityEats": [
+  {
+   "name": "Xenious Zeus",
+   "lat": 37.9728901,
+   "lng": 23.7278059,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11283392861"
+  },
+  {
+   "name": "Yiasemi",
+   "lat": 37.9732059,
+   "lng": 23.7278582,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14148774301"
+  },
+  {
+   "name": "Anafiotika Café",
+   "lat": 37.9734102,
+   "lng": 23.7277788,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6450021685"
+  },
+  {
+   "name": "Karyatides",
+   "lat": 37.9693344,
+   "lng": 23.7240316,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2793051287"
+  },
+  {
+   "name": "Strofi",
+   "lat": 37.9691125,
+   "lng": 23.7245233,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Tu-Su 12:00-01:00",
+   "osm": "node/2793051304"
+  },
+  {
+   "name": "dionyssos",
+   "lat": 37.9688577,
+   "lng": 23.725634,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2782612426"
+  },
+  {
+   "name": "Dionisos Zonar's",
+   "lat": 37.9694323,
+   "lng": 23.7223655,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "way/303308728"
+  },
+  {
+   "name": "GH Attikos",
+   "lat": 37.9691836,
+   "lng": 23.7236893,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2792781427"
+  },
+  {
+   "name": "Greek House Attikos",
+   "lat": 37.9690901,
+   "lng": 23.7237302,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2792733237"
+  },
+  {
+   "name": "To Κati Αllo",
+   "lat": 37.9677007,
+   "lng": 23.7286843,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/2691038189"
+  },
+  {
+   "name": "Arkadia",
+   "lat": 37.9682624,
+   "lng": 23.7295673,
+   "amenity": "restaurant",
+   "cuisine": "greek;mediterranean",
+   "hours": "",
+   "osm": "node/4311005946"
+  },
+  {
+   "name": "Liondi",
+   "lat": 37.9682964,
+   "lng": 23.7295787,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4195188096"
+  },
+  {
+   "name": "Greek Stories",
+   "lat": 37.9683289,
+   "lng": 23.7295956,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9621329917"
+  },
+  {
+   "name": "Elaea",
+   "lat": 37.9683608,
+   "lng": 23.7296049,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5015812172"
+  },
+  {
+   "name": "Gods' Restaurant",
+   "lat": 37.9681028,
+   "lng": 23.7295152,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:30-23:00",
+   "osm": "node/4311006324"
+  },
+  {
+   "name": "Muses",
+   "lat": 37.9763577,
+   "lng": 23.7222842,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3372861187"
+  },
+  {
+   "name": "Sisinely All day Bar Restaurant",
+   "lat": 37.9760188,
+   "lng": 23.723638,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3372868250"
+  },
+  {
+   "name": "Attalos",
+   "lat": 37.9763934,
+   "lng": 23.722151,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3463617412"
+  },
+  {
+   "name": "Kuzina",
+   "lat": 37.9764368,
+   "lng": 23.7220622,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/2836966900"
+  },
+  {
+   "name": "Antica",
+   "lat": 37.9760021,
+   "lng": 23.7238926,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3372906214"
+  },
+  {
+   "name": "Mystilli",
+   "lat": 37.9765222,
+   "lng": 23.7218957,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 08:00-00:00",
+   "osm": "node/3463598857"
+  },
+  {
+   "name": "To Kafeneio",
+   "lat": 37.9726667,
+   "lng": 23.729649,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean",
+   "hours": "Mo-Su 10:00-01:00",
+   "osm": "node/9130868617"
+  },
+  {
+   "name": "Scholarchion",
+   "lat": 37.9724849,
+   "lng": 23.72936,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "way/850432880"
+  },
+  {
+   "name": "Tavern Kalokerinos",
+   "lat": 37.9730246,
+   "lng": 23.730903,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 08:00-23:00",
+   "osm": "node/13649041897"
+  },
+  {
+   "name": "Eat at Milton's",
+   "lat": 37.9736635,
+   "lng": 23.7300275,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3803531172"
+  },
+  {
+   "name": "Ο γλυκυζ",
+   "lat": 37.9724321,
+   "lng": 23.73101,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/9938654405"
+  },
+  {
+   "name": "Stamatopoulos tavern",
+   "lat": 37.9732149,
+   "lng": 23.7290123,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10093154176"
+  },
+  {
+   "name": "Grande Bretagne Roof Garden",
+   "lat": 37.9762127,
+   "lng": 23.7354138,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean",
+   "hours": "",
+   "osm": "node/4560289850"
+  },
+  {
+   "name": "Chunxi",
+   "lat": 37.9747991,
+   "lng": 23.7350729,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/6892865335"
+  },
+  {
+   "name": "Tudor Hall",
+   "lat": 37.9763252,
+   "lng": 23.7349368,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10582845552"
+  },
+  {
+   "name": "Ελιά",
+   "lat": 37.9771147,
+   "lng": 23.7370867,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/4040706203"
+  },
+  {
+   "name": "Τηλέμαχος",
+   "lat": 37.977625,
+   "lng": 23.73573,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7178679182"
+  },
+  {
+   "name": "Ο Κώστας",
+   "lat": 37.9743251,
+   "lng": 23.7341119,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/13506165372"
+  },
+  {
+   "name": "Μπαρμπουνακι",
+   "lat": 37.9749379,
+   "lng": 23.7294455,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7955886415"
+  },
+  {
+   "name": "Piazza Duomo",
+   "lat": 37.9756294,
+   "lng": 23.729748,
+   "amenity": "restaurant",
+   "cuisine": "italian;regional",
+   "hours": "",
+   "osm": "node/9121224836"
+  },
+  {
+   "name": "Old Ithaki",
+   "lat": 37.9747982,
+   "lng": 23.7300681,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3453030789"
+  },
+  {
+   "name": "Centrale",
+   "lat": 37.9756761,
+   "lng": 23.7299875,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2836994806"
+  },
+  {
+   "name": "Cherchez la femme",
+   "lat": 37.9754949,
+   "lng": 23.7306249,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13027149801"
+  },
+  {
+   "name": "Eteroclite bistro",
+   "lat": 37.9756422,
+   "lng": 23.730548,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3175028406"
+  },
+  {
+   "name": "Εύχαρις",
+   "lat": 37.9757053,
+   "lng": 23.7254971,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "11:00-24:00",
+   "osm": "node/3793368904"
+  },
+  {
+   "name": "Μαίανδρος",
+   "lat": 37.9757139,
+   "lng": 23.7254325,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4056070361"
+  },
+  {
+   "name": "Lagom",
+   "lat": 37.9761688,
+   "lng": 23.7261578,
+   "amenity": "restaurant",
+   "cuisine": "pasta",
+   "hours": "",
+   "osm": "node/12097765570"
+  },
+  {
+   "name": "Kotili",
+   "lat": 37.9757702,
+   "lng": 23.7252146,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2836994808"
+  },
+  {
+   "name": "The greco's project",
+   "lat": 37.9761978,
+   "lng": 23.7261976,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/4261861956"
+  },
+  {
+   "name": "Hard Rock Cafe",
+   "lat": 37.9756255,
+   "lng": 23.7252767,
+   "amenity": "restaurant",
+   "cuisine": "american",
+   "hours": "09:30-24:00",
+   "osm": "way/223578260"
+  },
+  {
+   "name": "The Athens Gate Restaurant",
+   "lat": 37.9688438,
+   "lng": 23.7313733,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9365782084"
+  },
+  {
+   "name": "Duende",
+   "lat": 37.9693263,
+   "lng": 23.7311603,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2698902777"
+  },
+  {
+   "name": "Indian Haveli",
+   "lat": 37.9684472,
+   "lng": 23.731397,
+   "amenity": "restaurant",
+   "cuisine": "indian",
+   "hours": "",
+   "osm": "node/5155588721"
+  },
+  {
+   "name": "Veganaki",
+   "lat": 37.9676093,
+   "lng": 23.7328679,
+   "amenity": "restaurant",
+   "cuisine": "organic",
+   "hours": "08:00-23:00",
+   "osm": "node/4880071621"
+  },
+  {
+   "name": "Το περιβόλι τ' ουρανού",
+   "lat": 37.9705035,
+   "lng": 23.7315286,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/195162364"
+  },
+  {
+   "name": "Πλακιώτισσα",
+   "lat": 37.9694163,
+   "lng": 23.7304992,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "09:00+",
+   "osm": "node/2693043424"
+  },
+  {
+   "name": "Orizondes Lycabettus",
+   "lat": 37.9817643,
+   "lng": 23.7434085,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/391814848"
+  },
+  {
+   "name": "K.Grill",
+   "lat": 37.9820399,
+   "lng": 23.7435564,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/778643581"
+  },
+  {
+   "name": "Ροδιά",
+   "lat": 37.9804549,
+   "lng": 23.7451764,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/1752684310"
+  },
+  {
+   "name": "Φ",
+   "lat": 37.9790793,
+   "lng": 23.7445244,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5228463689"
+  },
+  {
+   "name": "Filippou",
+   "lat": 37.9790645,
+   "lng": 23.7445797,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5483159221"
+  },
+  {
+   "name": "Dexamenis",
+   "lat": 37.9788888,
+   "lng": 23.7418935,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5894603888"
+  },
+  {
+   "name": "Cave of Acropolis",
+   "lat": 37.970821,
+   "lng": 23.7291096,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "way/264114634"
+  },
+  {
+   "name": "Thespis",
+   "lat": 37.9713112,
+   "lng": 23.7293733,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/7969770246"
+  },
+  {
+   "name": "Diogenes",
+   "lat": 37.9711256,
+   "lng": 23.729738,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 10:00-24:00",
+   "osm": "node/9091151017"
+  },
+  {
+   "name": "Roof Top Garden",
+   "lat": 37.9701371,
+   "lng": 23.7302282,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/13936895701"
+  },
+  {
+   "name": "Daphne's Restaurant",
+   "lat": 37.9708829,
+   "lng": 23.7303174,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2691421855"
+  },
+  {
+   "name": "Γευστικές αποπλανήσεις",
+   "lat": 37.9690802,
+   "lng": 23.7299549,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "09:00+",
+   "osm": "node/2693043417"
+  },
+  {
+   "name": "Acropolis",
+   "lat": 37.9688211,
+   "lng": 23.7252641,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "way/263984450"
+  },
+  {
+   "name": "Καπνικαρέα",
+   "lat": 37.9762614,
+   "lng": 23.7282027,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11544304193"
+  },
+  {
+   "name": "Vintage",
+   "lat": 37.9758435,
+   "lng": 23.728604,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11187436892"
+  },
+  {
+   "name": "Gaya Athens",
+   "lat": 37.9765745,
+   "lng": 23.7288436,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12202312404"
+  },
+  {
+   "name": "Suvla",
+   "lat": 37.9757028,
+   "lng": 23.7287619,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5483686478"
+  },
+  {
+   "name": "Dragon express",
+   "lat": 37.9759612,
+   "lng": 23.7278509,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/6056687229"
+  },
+  {
+   "name": "Taratsa",
+   "lat": 37.9758179,
+   "lng": 23.7291402,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/12596451301"
+  },
+  {
+   "name": "L'Amiral",
+   "lat": 37.9747098,
+   "lng": 23.7262897,
+   "amenity": "restaurant",
+   "cuisine": "local;greek",
+   "hours": "Mo-Su 10:00-24:00",
+   "osm": "node/12207659352"
+  },
+  {
+   "name": "Πλάτανος",
+   "lat": 37.9742823,
+   "lng": 23.7278834,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1308000564"
+  },
+  {
+   "name": "Karyatis",
+   "lat": 37.9748846,
+   "lng": 23.7278127,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/2836966899"
+  },
+  {
+   "name": "Plaki",
+   "lat": 37.9752824,
+   "lng": 23.7276789,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11244264845"
+  },
+  {
+   "name": "Κιτρο",
+   "lat": 37.9750863,
+   "lng": 23.7278805,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su 08:00-24:00",
+   "osm": "node/2836994804"
+  },
+  {
+   "name": "To Navagio ton Aggelon",
+   "lat": 37.9873054,
+   "lng": 23.7312149,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Sa 18:00-02:00",
+   "osm": "node/3868390594"
+  },
+  {
+   "name": "Microulee",
+   "lat": 37.9870405,
+   "lng": 23.7342816,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "Mo-Sa 13:00-23:00",
+   "osm": "node/6652254848"
+  },
+  {
+   "name": "Soltee",
+   "lat": 37.9913478,
+   "lng": 23.7323399,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/13413879949"
+  },
+  {
+   "name": "Μπούκα",
+   "lat": 37.9866592,
+   "lng": 23.7321633,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5881364750"
+  },
+  {
+   "name": "Τεμπεσίρι",
+   "lat": 37.9867378,
+   "lng": 23.7315096,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11544243969"
+  },
+  {
+   "name": "Σύλλογος Αιγυπτιωτών",
+   "lat": 37.9895542,
+   "lng": 23.7296518,
+   "amenity": "restaurant",
+   "cuisine": "egyptian",
+   "hours": "",
+   "osm": "node/10156824926"
+  },
+  {
+   "name": "Ilissia bistrot & cafe",
+   "lat": 37.9748626,
+   "lng": 23.7443533,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3005038017"
+  },
+  {
+   "name": "Fellows",
+   "lat": 37.975008,
+   "lng": 23.7456542,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/1151639737"
+  },
+  {
+   "name": "Oikeio",
+   "lat": 37.9777686,
+   "lng": 23.7450411,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2831388147"
+  },
+  {
+   "name": "Ορφέας",
+   "lat": 37.9770851,
+   "lng": 23.7466545,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6546325162"
+  },
+  {
+   "name": "Brunello",
+   "lat": 37.9777959,
+   "lng": 23.7434426,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 13:00-00:30",
+   "osm": "node/13682096509"
+  },
+  {
+   "name": "Το σουτζουκάκι",
+   "lat": 37.9775255,
+   "lng": 23.7463563,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6582980401"
+  },
+  {
+   "name": "Aegli",
+   "lat": 37.9709978,
+   "lng": 23.7374929,
+   "amenity": "restaurant",
+   "cuisine": "coffee_shop",
+   "hours": "",
+   "osm": "way/815922041"
+  },
+  {
+   "name": "Fuyunlong",
+   "lat": 37.9725714,
+   "lng": 23.7337343,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/4384287903"
+  },
+  {
+   "name": "Ikura",
+   "lat": 37.974291,
+   "lng": 23.7341056,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "node/5237694522"
+  },
+  {
+   "name": "Ιλιάδα",
+   "lat": 37.9727433,
+   "lng": 23.733465,
+   "amenity": "restaurant",
+   "cuisine": "sandwich",
+   "hours": "",
+   "osm": "node/2673130614"
+  }
+ ],
+ "piers": [
+  {
+   "name": "Ferry pier",
+   "lat": 37.93524,
+   "lng": 23.68858,
+   "osm": "node/6546267225"
+  }
+ ],
+ "roads": [
+  {
+   "a": {
+    "lat": 37.9739,
+    "lng": 23.72992105263158
+   },
+   "b": {
+    "lat": 37.9057,
+    "lng": 22.88
+   },
+   "min": 74,
+   "km": 88.1
+  },
+  {
+   "a": {
+    "lat": 37.9739,
+    "lng": 23.72992105263158
+   },
+   "b": {
+    "lat": 37.6503,
+    "lng": 24.0246
+   },
+   "min": 76,
+   "km": 67.8
+  },
+  {
+   "a": {
+    "lat": 37.9739,
+    "lng": 23.72992105263158
+   },
+   "b": {
+    "lat": 38.4824,
+    "lng": 22.501
+   },
+   "min": 171,
+   "km": 178.1
+  },
+  {
+   "a": {
+    "lat": 37.9739,
+    "lng": 23.72992105263158
+   },
+   "b": {
+    "lat": 37.9353,
+    "lng": 22.9878
+   },
+   "min": 67,
+   "km": 77.2
+  },
+  {
+   "a": {
+    "lat": 37.9739,
+    "lng": 23.72992105263158
+   },
+   "b": {
+    "lat": 37.8899,
+    "lng": 22.8696
+   },
+   "min": 83,
+   "km": 91.9
+  },
+  {
+   "a": {
+    "lat": 37.9057,
+    "lng": 22.88
+   },
+   "b": {
+    "lat": 37.9739,
+    "lng": 23.72992105263158
+   },
+   "min": 74,
+   "km": 88.2
+  },
+  {
+   "a": {
+    "lat": 37.9057,
+    "lng": 22.88
+   },
+   "b": {
+    "lat": 37.6503,
+    "lng": 24.0246
+   },
+   "min": 127,
+   "km": 150.7
+  },
+  {
+   "a": {
+    "lat": 37.9057,
+    "lng": 22.88
+   },
+   "b": {
+    "lat": 38.4824,
+    "lng": 22.501
+   },
+   "min": 207,
+   "km": 199.5
+  },
+  {
+   "a": {
+    "lat": 37.9057,
+    "lng": 22.88
+   },
+   "b": {
+    "lat": 37.9353,
+    "lng": 22.9878
+   },
+   "min": 12,
+   "km": 13.4
+  },
+  {
+   "a": {
+    "lat": 37.6503,
+    "lng": 24.0246
+   },
+   "b": {
+    "lat": 37.9739,
+    "lng": 23.72992105263158
+   },
+   "min": 80,
+   "km": 67.4
+  },
+  {
+   "a": {
+    "lat": 37.6503,
+    "lng": 24.0246
+   },
+   "b": {
+    "lat": 37.9057,
+    "lng": 22.88
+   },
+   "min": 129,
+   "km": 151.4
+  },
+  {
+   "a": {
+    "lat": 37.6503,
+    "lng": 24.0246
+   },
+   "b": {
+    "lat": 38.4824,
+    "lng": 22.501
+   },
+   "min": 224,
+   "km": 230.4
+  },
+  {
+   "a": {
+    "lat": 37.6503,
+    "lng": 24.0246
+   },
+   "b": {
+    "lat": 37.9353,
+    "lng": 22.9878
+   },
+   "min": 122,
+   "km": 140.6
+  },
+  {
+   "a": {
+    "lat": 37.6503,
+    "lng": 24.0246
+   },
+   "b": {
+    "lat": 37.8899,
+    "lng": 22.8696
+   },
+   "min": 138,
+   "km": 155.2
+  },
+  {
+   "a": {
+    "lat": 38.4824,
+    "lng": 22.501
+   },
+   "b": {
+    "lat": 37.9739,
+    "lng": 23.72992105263158
+   },
+   "min": 166,
+   "km": 181.2
+  },
+  {
+   "a": {
+    "lat": 38.4824,
+    "lng": 22.501
+   },
+   "b": {
+    "lat": 37.9057,
+    "lng": 22.88
+   },
+   "min": 206,
+   "km": 199.6
+  },
+  {
+   "a": {
+    "lat": 38.4824,
+    "lng": 22.501
+   },
+   "b": {
+    "lat": 37.6503,
+    "lng": 24.0246
+   },
+   "min": 219,
+   "km": 234.2
+  },
+  {
+   "a": {
+    "lat": 38.4824,
+    "lng": 22.501
+   },
+   "b": {
+    "lat": 37.9353,
+    "lng": 22.9878
+   },
+   "min": 199,
+   "km": 188.8
+  },
+  {
+   "a": {
+    "lat": 38.4824,
+    "lng": 22.501
+   },
+   "b": {
+    "lat": 37.8899,
+    "lng": 22.8696
+   },
+   "min": 215,
+   "km": 203.4
+  },
+  {
+   "a": {
+    "lat": 37.9353,
+    "lng": 22.9878
+   },
+   "b": {
+    "lat": 37.9739,
+    "lng": 23.72992105263158
+   },
+   "min": 71,
+   "km": 80.1
+  },
+  {
+   "a": {
+    "lat": 37.9353,
+    "lng": 22.9878
+   },
+   "b": {
+    "lat": 37.9057,
+    "lng": 22.88
+   },
+   "min": 15,
+   "km": 16
+  },
+  {
+   "a": {
+    "lat": 37.9353,
+    "lng": 22.9878
+   },
+   "b": {
+    "lat": 37.6503,
+    "lng": 24.0246
+   },
+   "min": 124,
+   "km": 142.6
+  },
+  {
+   "a": {
+    "lat": 37.9353,
+    "lng": 22.9878
+   },
+   "b": {
+    "lat": 38.4824,
+    "lng": 22.501
+   },
+   "min": 204,
+   "km": 191.5
+  },
+  {
+   "a": {
+    "lat": 37.9353,
+    "lng": 22.9878
+   },
+   "b": {
+    "lat": 37.8899,
+    "lng": 22.8696
+   },
+   "min": 24,
+   "km": 19.8
+  },
+  {
+   "a": {
+    "lat": 37.8899,
+    "lng": 22.8696
+   },
+   "b": {
+    "lat": 37.9739,
+    "lng": 23.72992105263158
+   },
+   "min": 83,
+   "km": 92.1
+  },
+  {
+   "a": {
+    "lat": 37.8899,
+    "lng": 22.8696
+   },
+   "b": {
+    "lat": 37.6503,
+    "lng": 24.0246
+   },
+   "min": 135,
+   "km": 154.5
+  },
+  {
+   "a": {
+    "lat": 37.8899,
+    "lng": 22.8696
+   },
+   "b": {
+    "lat": 38.4824,
+    "lng": 22.501
+   },
+   "min": 216,
+   "km": 203.4
+  },
+  {
+   "a": {
+    "lat": 37.8899,
+    "lng": 22.8696
+   },
+   "b": {
+    "lat": 37.9353,
+    "lng": 22.9878
+   },
+   "min": 21,
+   "km": 17.3
+  }
+ ],
+ "eatHours": [
+  [
+   "McDonald's",
+   37.97591,
+   23.73373,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Thanasis",
+   37.97626,
+   23.72636,
+   "Mo-Su 10:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Κλεψύδρα",
+   37.97355,
+   23.72666,
+   "Mo-Su 09:00-01:00",
+   "cafe"
+  ],
+  [
+   "Crescendo",
+   37.96889,
+   23.72984,
+   "09:00+",
+   "cafe"
+  ],
+  [
+   "McDonalds",
+   37.96945,
+   23.73077,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Aioli coffee snack bar",
+   37.97371,
+   23.73279,
+   "Mo-Fr 07:00-22:00; Sa-Su 07:30-19:00",
+   "cafe"
+  ],
+  [
+   "Γευστικές αποπλανήσεις",
+   37.96908,
+   23.72995,
+   "09:00+",
+   "restaurant"
+  ],
+  [
+   "Πλακιώτισσα",
+   37.96942,
+   23.7305,
+   "09:00+",
+   "restaurant"
+  ],
+  [
+   "Strofi",
+   37.96911,
+   23.72452,
+   "Tu-Su 12:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Coffee Island",
+   37.98067,
+   23.72847,
+   "Mo-Fr 07:00-15:00",
+   "cafe"
+  ],
+  [
+   "Κιτρο",
+   37.97509,
+   23.72788,
+   "Mo-Su 08:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Everest",
+   37.97828,
+   23.74048,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Tzitzikas Kai Mermigas",
+   37.97533,
+   23.73268,
+   "Th-Su 12:30-01:00; Mo-We 12:30-01:00",
+   "restaurant"
+  ],
+  [
+   "Souvlaki Bar",
+   37.9766,
+   23.72199,
+   "Mo-Sa 16:00-00:00;Su 17:00-00:00",
+   "fast_food"
+  ],
+  [
+   "ManiMani",
+   37.96673,
+   23.7285,
+   "Mo-Su 14:00-23:00",
+   "restaurant"
+  ],
+  [
+   "TGI Fridays",
+   37.97589,
+   23.74133,
+   "Mo-Su 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Gyristroula",
+   37.97707,
+   23.72128,
+   "Open until 3:00 AM",
+   "fast_food"
+  ],
+  [
+   "Mystilli",
+   37.97652,
+   23.7219,
+   "Mo-Su 08:00-00:00",
+   "restaurant"
+  ],
+  [
+   "The Underdog",
+   37.97494,
+   23.71915,
+   "Mo-Fr 08:00-19:00; Sa 08:00-20:00; Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Apollonia Lyra - Plaka",
+   37.97353,
+   23.7281,
+   "We-Su 09:00-00:30; Mo 09:00-00:00; Tu 08:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Karamanlidika",
+   37.98014,
+   23.72569,
+   "Mo-Sa 12:00-23:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Sfika",
+   37.96607,
+   23.72624,
+   "Mo-Su 11:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Εύχαρις",
+   37.97571,
+   23.7255,
+   "11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Beer Time",
+   37.97828,
+   23.72499,
+   "17:00-24:00",
+   "pub"
+  ],
+  [
+   "Café Merlin",
+   37.97617,
+   23.73839,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Stick Bar",
+   37.97821,
+   23.74532,
+   "12:30 - 01:00",
+   "restaurant"
+  ],
+  [
+   "Malconi's",
+   37.97825,
+   23.74477,
+   "Mo-Sa 13:00-00:30; Su 16:00-00:30",
+   "restaurant"
+  ],
+  [
+   "Koi Sushi Bar",
+   37.97464,
+   23.73322,
+   "12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Public cafe",
+   37.9762,
+   23.73376,
+   "Mo-Sa 09:00-24:00",
+   "cafe"
+  ],
+  [
+   "Bock beer restaurant",
+   37.96627,
+   23.72967,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "42",
+   37.97702,
+   23.73334,
+   "Mo 18:00-02:00",
+   "bar"
+  ],
+  [
+   "Barley cargo",
+   37.97757,
+   23.73179,
+   "Mo-Su 11:00-03:00",
+   "bar"
+  ],
+  [
+   "Everest",
+   37.97602,
+   23.73376,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Coffee Island",
+   37.97711,
+   23.73388,
+   "Mo-Fr 07:00-20:30",
+   "cafe"
+  ],
+  [
+   "begg for egg",
+   37.97674,
+   23.73134,
+   "Aug 09-23 off",
+   "restaurant"
+  ],
+  [
+   "New Era Greek Cuisine",
+   37.97675,
+   23.73122,
+   "Mo-Fr 11:00-19:00; Sa 11:00-18:00; Jan 06 off",
+   "restaurant"
+  ],
+  [
+   "Street Souvlaki",
+   37.9777,
+   23.73037,
+   "Mo-Th 11:30-02:00; Fr-Sa 11:30-03:00; Su 11:00-02:00",
+   "fast_food"
+  ],
+  [
+   "East Pearl",
+   37.97476,
+   23.73301,
+   "Mo-Sa 12:00-00:00; Su 14:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Little Kook",
+   37.97774,
+   23.72437,
+   "Mo-Su 11:00-24:00",
+   "cafe"
+  ],
+  [
+   "Mirch",
+   37.97701,
+   23.72325,
+   "11:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Sin Athina",
+   37.97477,
+   23.71955,
+   "Mo-Su 09:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Coffee Island",
+   37.97686,
+   23.72562,
+   "Mo-Su 06:00-22:00",
+   "cafe"
+  ],
+  [
+   "Gods' Restaurant",
+   37.9681,
+   23.72952,
+   "Mo-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Bella Vespa",
+   37.97863,
+   23.74395,
+   "Mo-Sa 13:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Domino's",
+   37.9797,
+   23.74308,
+   "Mo,Tu,Fr,Sa 12:30-00:30, We,Th 17:00-00:30, Su 12:30-24:00",
+   "fast_food"
+  ],
+  [
+   "Abibayio",
+   37.97506,
+   23.71858,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Το 24ωρο",
+   37.96642,
+   23.72881,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Boiler",
+   37.97899,
+   23.72709,
+   "Mo-Su 20:00-04:00",
+   "bar"
+  ],
+  [
+   "Barrett",
+   37.97808,
+   23.72561,
+   "Mo 11:00-02:30; Tu-Th 11:00-03:00; Fr-Sa 11:00-04:30; Su 11:00-02:30",
+   "bar"
+  ],
+  [
+   "Peas",
+   37.96529,
+   23.72649,
+   "Tu-Su 12:00-23:00",
+   "fast_food"
+  ],
+  [
+   "KFC",
+   37.97503,
+   23.7336,
+   "10:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Attic Moon",
+   37.9744,
+   23.73348,
+   "11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "GUAPA",
+   37.97449,
+   23.73319,
+   "Su-Th 12:00-00:00; Fr,Sa 12:00-01:00",
+   "restaurant"
+  ],
+  [
+   "ΕΝ ΑΘΗΝΑΙΣ ΑΛΕΞΑΝΔΡΑ",
+   37.97467,
+   23.73286,
+   "10:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Gregory's",
+   37.97436,
+   23.73516,
+   "Mo-Fr 05:15-19:00; Sa 06:00-18:00; Su 06:00-18:00",
+   "fast_food"
+  ],
+  [
+   "Goody's Burger House",
+   37.97491,
+   23.73425,
+   "Mo-Th,Su 11:00-01:00; Fr-Sa 11:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Avocado",
+   37.97383,
+   23.73284,
+   "Mo-Sa 11:00-23:00; Su 12:00-17:00; Dec 24 12:00-18:00; Dec 25 off; Dec 31 12:00-18:00; Jan 01 off",
+   "restaurant"
+  ],
+  [
+   "Minibar",
+   37.9777,
+   23.72263,
+   "10:00-01:00",
+   "bar"
+  ],
+  [
+   "Θέσις 7",
+   37.97668,
+   23.72344,
+   "Mo 00:00-24:00; Tu-Sa 09:00-02:30; Su 09:00-24:00",
+   "bar"
+  ],
+  [
+   "Veganaki",
+   37.96761,
+   23.73287,
+   "08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Feyrouz",
+   37.97815,
+   23.72774,
+   "Mo-Sa 12:00-22:00; easter -41 days off",
+   "fast_food"
+  ],
+  [
+   "W",
+   37.97788,
+   23.73168,
+   "Dec 30 - Jan 02 off",
+   "restaurant"
+  ],
+  [
+   "Nice n Easy",
+   37.98059,
+   23.73814,
+   "Mo-Su 08:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Dive Athens",
+   37.96793,
+   23.72619,
+   "Mo-Su 06:00-20:00",
+   "cafe"
+  ],
+  [
+   "Guarantee",
+   37.96613,
+   23.72619,
+   "Mo-Sa 09:00-17:00",
+   "fast_food"
+  ],
+  [
+   "Coffee Island",
+   37.97456,
+   23.73521,
+   "Mo-Fr 06:00-21:00; Sa,Su 07:00-21:00",
+   "cafe"
+  ],
+  [
+   "Hermion",
+   37.97505,
+   23.72835,
+   "Mo-Su 11:00-00:15",
+   "restaurant"
+  ],
+  [
+   "Mingle",
+   37.9779,
+   23.73748,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "To Tsai",
+   37.97895,
+   23.73715,
+   "Mo,We,Sa 10:00-16:00; Tu,Th,Fr 10:00-20:00",
+   "cafe"
+  ],
+  [
+   "Ella",
+   37.97555,
+   23.73205,
+   "Mo-Su 09:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Happy Blender",
+   37.97634,
+   23.72333,
+   "May-Oct 09:00-21:00; Nov-Apr 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "Papadakis",
+   37.97975,
+   23.74028,
+   "Mo-Sa 13:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Athens Vegan Burgers",
+   37.97594,
+   23.7272,
+   "12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Tuk Tuk Thai Street Food",
+   37.96605,
+   23.72563,
+   "PH,Mo-Su 17:00-23:50",
+   "restaurant"
+  ],
+  [
+   "Wok & walk",
+   37.9769,
+   23.72541,
+   "Fr, Sa 13:00-02:00; Mo-Th, Su 13:00-01:00",
+   "fast_food"
+  ],
+  [
+   "OM Namaste",
+   37.96772,
+   23.73006,
+   "14:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Tapfield",
+   37.97814,
+   23.72323,
+   "Tu-Th 16:30-01:30; Fr-Sa 16:30-03:00; Sa 16:30-01:30",
+   "pub"
+  ],
+  [
+   "Po`Boys BBQ",
+   37.9784,
+   23.72325,
+   "13:00-00:15",
+   "restaurant"
+  ],
+  [
+   "Dos gardenias",
+   37.97762,
+   23.72274,
+   "Mo off; Tu-Th,Su 10:00-02:00; Fr-Sa 10:00-02:30",
+   "restaurant"
+  ],
+  [
+   "Bandiera",
+   37.97831,
+   23.72382,
+   "Tu-Su 13:00-23:00",
+   "restaurant"
+  ],
+  [
+   "The Frogs",
+   37.9788,
+   23.72492,
+   "08:00-23:30",
+   "bar"
+  ],
+  [
+   "The Brunchers",
+   37.97723,
+   23.72494,
+   "Mo-Fr 08:00-16:00; Sa-Su 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Third Place",
+   37.97462,
+   23.73092,
+   "Mo-Sa 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Lacandona",
+   37.97434,
+   23.73163,
+   "Mo-Th 10:00-21:00; Fr 10:00-02:00; Sa 11:00-17:00",
+   "bar"
+  ],
+  [
+   "Nanou Donuts House",
+   37.96576,
+   23.72506,
+   "Su-Fr 17:00-22:30",
+   "fast_food"
+  ],
+  [
+   "kalimeres",
+   37.97847,
+   23.7239,
+   "09:00-02:00",
+   "cafe"
+  ],
+  [
+   "Falafellas",
+   37.97851,
+   23.72801,
+   "Mo-Th 11:00-23:00; Fr-Sa 11:00-24:00; Aug 12-26 off",
+   "fast_food"
+  ],
+  [
+   "The James Joyce",
+   37.97686,
+   23.72268,
+   "12:00-02:00",
+   "pub"
+  ],
+  [
+   "Ellyz Cafe",
+   37.97655,
+   23.72335,
+   "Mo-Su 09:00-23:59",
+   "cafe"
+  ],
+  [
+   "Bad Tooth",
+   37.97769,
+   23.72593,
+   "Su, Tu 12:00-02:00; Mo, We-Th 12:00-03:00; Fr-Sa 12:00-04:00",
+   "bar"
+  ],
+  [
+   "Vryssaki",
+   37.97475,
+   23.72455,
+   "Mo-Su 09:00-01:00",
+   "cafe"
+  ],
+  [
+   "Peinirli Handmade",
+   37.97986,
+   23.72684,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Brew str.",
+   37.97287,
+   23.73302,
+   "Mo-Su 14:00-22:00",
+   "pub"
+  ],
+  [
+   "Diogenes",
+   37.97113,
+   23.72974,
+   "Mo-Su 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Tylixto",
+   37.97682,
+   23.72756,
+   "Mo-Su 12:00-00:00",
+   "fast_food"
+  ],
+  [
+   "Pax",
+   37.97686,
+   23.72772,
+   "Mo-Th,Su 12:00-24:30; Fr-Sa 12:00-01:00",
+   "fast_food"
+  ],
+  [
+   "To Kafeneio",
+   37.97267,
+   23.72965,
+   "Mo-Su 10:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Volvi Souvlaki",
+   37.97982,
+   23.72791,
+   "Mo-Sa 08:00-18:00",
+   "fast_food"
+  ],
+  [
+   "Archaeon Gastronomia -  Αρχαίων Γαστρονομία",
+   37.97751,
+   23.72774,
+   "private dining only with reservations",
+   "restaurant"
+  ],
+  [
+   "Ta Giouvetsakia Taverna Ta Yuvetsakia",
+   37.97163,
+   23.73028,
+   "Mo-Su 10:00-03:00",
+   "pub"
+  ],
+  [
+   "Vegan Beat Athens",
+   37.97681,
+   23.72981,
+   "Mo-Su 12:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Winners Vegan",
+   37.97376,
+   23.73302,
+   "We-Fr 17:00-00:00; Sa 14:00-00:00; Su 12:00-18:00; Dec 20-23 16:00-23:30; Dec 24 12:00-19:00; Dec 25-Jan 10 off",
+   "restaurant"
+  ],
+  [
+   "Kuko’s The Bar",
+   37.97666,
+   23.72886,
+   "Mo-Su 08:00-05:00",
+   "bar"
+  ],
+  [
+   "LUV N ROLL® HOUSE",
+   37.97741,
+   23.72416,
+   "Mo-We, Su 10:00-02:00; Th 10:00-02:30; Fr, Sa 10:00-04:00",
+   "restaurant"
+  ],
+  [
+   "Granello",
+   37.97668,
+   23.73177,
+   "Mo-Su 13:00-23:45",
+   "restaurant"
+  ],
+  [
+   "Makrigianni",
+   37.96925,
+   23.73002,
+   "Mo-Su 00:00-00:00",
+   "cafe"
+  ],
+  [
+   "Nudie Foodie",
+   37.97967,
+   23.72519,
+   "Tu-Su 09:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Moment roof bar",
+   37.97809,
+   23.72869,
+   "Mo, We-Su 17:00-00:00",
+   "pub"
+  ],
+  [
+   "Το διάβα",
+   37.96656,
+   23.72686,
+   "Mo-Su 07:30-20:00",
+   "cafe"
+  ],
+  [
+   "Fontana",
+   37.97672,
+   23.72752,
+   "Mo-Sa 08:00-23:00; Su 09:00-23:00",
+   "cafe"
+  ],
+  [
+   "Mama Tierra Acropolis",
+   37.96754,
+   23.72983,
+   "13:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Holy Llama",
+   37.97398,
+   23.73313,
+   "Mo-Fr 08:00-19:00; Sa-Su 09:00-18:00",
+   "restaurant"
+  ],
+  [
+   "180º West Rooftop Lounge Restaurant",
+   37.96571,
+   23.72733,
+   "Mo-Su 11:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Gargaretta",
+   37.96821,
+   23.72704,
+   "Tu-Su 09:00-12:30",
+   "restaurant"
+  ],
+  [
+   "Starbucks",
+   37.97617,
+   23.72739,
+   "Mo-Fr 08:00-23:00; Sa-Su 08:30-23:30",
+   "cafe"
+  ],
+  [
+   "Okio",
+   37.9735,
+   23.73302,
+   "Mo-Sa 18:00-01:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Coffee Lab",
+   37.97443,
+   23.73518,
+   "Mo-Su 06:00-20:00",
+   "cafe"
+  ],
+  [
+   "Κουλουράδες",
+   37.9745,
+   23.73519,
+   "Mo-Su 06:30-15:00",
+   "fast_food"
+  ],
+  [
+   "Πάμε Τσίπουρο Πάμε Καφενείο",
+   37.97745,
+   23.72773,
+   "Mo-Su 07:00-02:00",
+   "restaurant"
+  ],
+  [
+   "i avli tis idylis",
+   37.97514,
+   23.71869,
+   "12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Athina Taverna",
+   37.96898,
+   23.72989,
+   "Mo-Su 07:00-01:00",
+   "restaurant"
+  ],
+  [
+   "L'Amiral",
+   37.97471,
+   23.72629,
+   "Mo-Su 10:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Plan(e)t Ice Cream",
+   37.9769,
+   23.72544,
+   "Mo-Su 11:00-01:00",
+   "fast_food"
+  ],
+  [
+   "Annie - Fine Cooking",
+   37.96492,
+   23.73076,
+   "Mo-Sa 18:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Wanna flirt",
+   37.978,
+   23.7239,
+   "Su-Fr 09:00-01:30; Sa 09:00-02:00",
+   "bar"
+  ],
+  [
+   "Ekiben Kitchen",
+   37.97383,
+   23.73271,
+   "Mo-Su 13:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Seawolf Athens",
+   37.96591,
+   23.72687,
+   "Mo-Sa 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Rich",
+   37.97808,
+   23.72526,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Stork",
+   37.96708,
+   23.73035,
+   "Mo-Su 18:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Usu Rum",
+   37.9783,
+   23.72232,
+   "Mo-Fr 07:30-18:00; Sa-Su 07:30-19:00",
+   "bar"
+  ],
+  [
+   "Kitsune Athens",
+   37.98589,
+   23.74173,
+   "Tu-Sa 08:00-18:00; Su 10:00-18:00",
+   "fast_food"
+  ],
+  [
+   "o Gyros Pou Gyrevis",
+   37.9687,
+   23.7299,
+   "Mo-Su 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Tavern Kalokerinos",
+   37.97302,
+   23.7309,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "F* Smashing District",
+   37.97863,
+   23.72932,
+   "Su-Th 13:00-23:30, Fr-Sa 13:00-00:30",
+   "restaurant"
+  ],
+  [
+   "Brunello",
+   37.9778,
+   23.74344,
+   "Mo-Su 13:00-00:30",
+   "restaurant"
+  ],
+  [
+   "Aerides",
+   37.97441,
+   23.72815,
+   "Mo-Su 09:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Stepa",
+   37.98376,
+   23.73847,
+   "Mo-Su 08:00-02:30",
+   "bar"
+  ],
+  [
+   "Philosopheat Wine Restaurant",
+   37.97552,
+   23.72882,
+   "Su, Tu-We 12:00-23:30; Th-Sa 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "BackdooR",
+   37.97844,
+   23.72194,
+   "Su, We-Th 19:30-03:00; Fr-Sa 19:30-04:00",
+   "bar"
+  ],
+  [
+   "Norman Athens (Coffee & Cocktails)",
+   37.97651,
+   23.72432,
+   "Mo-Su 10:00-24:00",
+   "bar"
+  ],
+  [
+   "September 18",
+   37.9787,
+   23.72701,
+   "Mo-Su 09:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Kuchisabishii Sakaba",
+   37.9655,
+   23.72669,
+   "17:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Exotica",
+   37.97202,
+   23.73423,
+   "Mo-Su 08:00-00:30",
+   "bar"
+  ],
+  [
+   "Amaranthos Greek Restaurant Athens",
+   37.97626,
+   23.73179,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Hard Rock Cafe",
+   37.97563,
+   23.72528,
+   "09:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Olyn",
+   37.96793,
+   23.73008,
+   "Su-Th 08:00-21:00; Fr,Sa 08:00-22:00; PH off",
+   "restaurant"
+  ],
+  [
+   "Misafir",
+   37.97674,
+   23.72489,
+   "11:00-04:00",
+   "restaurant"
+  ],
+  [
+   "Fatsio",
+   37.97315,
+   23.74731,
+   "Mo-Su 00:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Διπλό",
+   37.98614,
+   23.73461,
+   "PH,Mo-Su 07:00-02:00",
+   "cafe"
+  ],
+  [
+   "Memo´s House",
+   37.98698,
+   23.73474,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Alegria Cafe",
+   37.97235,
+   23.74438,
+   "Mo-Su 00:00-02:00,08:00-24:00",
+   "cafe"
+  ],
+  [
+   "Chez Michel cafe-bistrot",
+   37.97676,
+   23.74243,
+   "08:00-02:00",
+   "bar"
+  ],
+  [
+   "To Navagio ton Aggelon",
+   37.98731,
+   23.73121,
+   "Mo-Sa 18:00-02:00",
+   "restaurant"
+  ],
+  [
+   "5 δρόμοι",
+   37.98575,
+   23.73324,
+   "11:00-04:00",
+   "bar"
+  ],
+  [
+   "me kolonaki",
+   37.97656,
+   23.74241,
+   "Mo-Su 08:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Spirito",
+   37.98499,
+   23.73453,
+   "Fr,Sa 13:00-05:00, Su 15:00-03:00, Mo-Th 12:00-03:00",
+   "bar"
+  ],
+  [
+   "Coffee Island",
+   37.98764,
+   23.72901,
+   "Mo-Fr 06:15-21:00; Sa 06:15-19:00; Su 08:00-17:00",
+   "cafe"
+  ],
+  [
+   "Ατίταμος",
+   37.98614,
+   23.73241,
+   "Mo-Su 12:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Mavro Provato",
+   37.97148,
+   23.74498,
+   "Su 13:00-19:00; Mo-Sa 13:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Ohh Boy",
+   37.97249,
+   23.74552,
+   "08:30-23:00",
+   "cafe"
+  ],
+  [
+   "Φιλομήλα",
+   37.98539,
+   23.73502,
+   "Mo-Sa 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Domino's",
+   37.97046,
+   23.74174,
+   "Mo-Su 12:30-24:00",
+   "fast_food"
+  ],
+  [
+   "Coffee Island",
+   37.99286,
+   23.73032,
+   "Mo-Su 05:00-21:00",
+   "cafe"
+  ],
+  [
+   "Frater & Soror",
+   37.97194,
+   23.74443,
+   "Mo-Su 10:00-03:00",
+   "restaurant"
+  ],
+  [
+   "Everest",
+   37.97763,
+   23.74645,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Talking Breads",
+   37.987,
+   23.73459,
+   "Mo-Th 13:00-01:30; Fr-Sa 13:00-02:30",
+   "fast_food"
+  ],
+  [
+   "The Οthers",
+   37.98519,
+   23.73232,
+   "Mo-Th 14:00-00:00; Fr, Sa 14:00+",
+   "cafe"
+  ],
+  [
+   "Coffee Orange",
+   37.99257,
+   23.72998,
+   "Mo-Su 05:00-23:00",
+   "cafe"
+  ],
+  [
+   "Microulee",
+   37.98704,
+   23.73428,
+   "Mo-Sa 13:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Cafe - Bar 67",
+   37.98585,
+   23.73519,
+   "Mo-Th 08:00-03:00; Fr 08:00-04:00; Sa 09:00-05:00; Su 09:00-03:00; Aug 14-17 off",
+   "restaurant"
+  ],
+  [
+   "Irene's House of Pizza",
+   37.9865,
+   23.73446,
+   "Mo-Su 13:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Cookoomèla Grill",
+   37.9858,
+   23.73355,
+   "Mo-Th 13:00-23:00, Fr,Sa 13:00-24:00, Su 14:00-22:00",
+   "fast_food"
+  ],
+  [
+   "The Vegan Vandal",
+   37.97195,
+   23.74553,
+   "15:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Blame The Sun Taproom",
+   37.96482,
+   23.72358,
+   "Fr-Sa 17:00-01:00; Su-Th 17:00-00:00",
+   "pub"
+  ],
+  [
+   "Neratzia Café Bistro",
+   37.96386,
+   23.72186,
+   "Fr, Sa 08:00-02:00; Mo-Th, Su 08:00-01:00",
+   "cafe"
+  ],
+  [
+   "Πάπια",
+   37.97038,
+   23.7414,
+   "Mo-Su 09:00-01:00",
+   "cafe"
+  ],
+  [
+   "Pharaoh",
+   37.98704,
+   23.73069,
+   "Mo-Th 18:00-02:00, Fr,Sa 13:30-02:00",
+   "restaurant"
+  ],
+  [
+   "Bite Box",
+   37.96369,
+   23.72166,
+   "09:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Millybird",
+   37.9714,
+   23.74478,
+   "Mo 09:00-15:00; Tu-Fr 09:00-17:00; Sa 09:30-16:30; Su 10:00-16:30",
+   "cafe"
+  ],
+  [
+   "Καρδουχος Grill",
+   37.98514,
+   23.73214,
+   "Tu-Su 13:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Μαύρος Γάτος",
+   37.9715,
+   23.74471,
+   "Mo-Sa 13:00-00:00; Su 13:00-18:00",
+   "restaurant"
+  ],
+  [
+   "La Zone",
+   37.98671,
+   23.73351,
+   "Tu-Sa 11:00-20:00; Su 15:00-12:00",
+   "cafe"
+  ],
+  [
+   "Exberg Burger",
+   37.98574,
+   23.73372,
+   "Mo-Th 18:00-01:15; Fr-Sa 13:00-03:30; Su 13:00-01:15",
+   "restaurant"
+  ],
+  [
+   "Vegan stories by Konstantinos",
+   37.98634,
+   23.73117,
+   "Mo-Fr 12:30-21:00; Sa 12:30-19:00",
+   "fast_food"
+  ],
+  [
+   "Locomotiva Cooperativa",
+   37.98655,
+   23.7325,
+   "Mo-Su 07:30-02:00",
+   "bar"
+  ]
+ ],
+ "heights": [
+  [
+   37.97145,
+   23.72377,
+   120
+  ],
+  [
+   37.97067,
+   23.72764,
+   108
+  ],
+  [
+   37.9709,
+   23.72457,
+   110
+  ],
+  [
+   37.97167,
+   23.71944,
+   95
+  ],
+  [
+   37.9751,
+   23.7224,
+   62
+  ],
+  [
+   37.9757,
+   23.7215,
+   68
+  ],
+  [
+   37.9752,
+   23.7242,
+   59
+  ],
+  [
+   37.974,
+   23.7239,
+   77
+  ],
+  [
+   37.9743,
+   23.7265,
+   81
+  ],
+  [
+   37.97859,
+   23.71811,
+   52
+  ],
+  [
+   37.9695,
+   23.7331,
+   85
+  ],
+  [
+   37.97407,
+   23.7435,
+   107
+  ],
+  [
+   37.99236,
+   23.70806,
+   47
+  ],
+  [
+   37.97904,
+   23.74159,
+   146
+  ],
+  [
+   37.96835,
+   23.74111,
+   96
+  ],
+  [
+   37.982,
+   23.7434,
+   256
+  ],
+  [
+   38.03613,
+   23.7854,
+   172
+  ],
+  [
+   37.98479,
+   23.72532,
+   79
+  ],
+  [
+   37.97555,
+   23.73484,
+   101
+  ],
+  [
+   37.97529,
+   23.73707,
+   118
+  ],
+  [
+   37.97553,
+   23.73641,
+   109
+  ],
+  [
+   38.01298,
+   23.63593,
+   110
+  ],
+  [
+   37.96083,
+   23.79833,
+   365
+  ],
+  [
+   37.9891,
+   23.73276,
+   85
+  ],
+  [
+   37.973,
+   23.72596,
+   94
+  ],
+  [
+   37.97602,
+   23.74038,
+   123
+  ],
+  [
+   37.9757,
+   23.74227,
+   120
+  ],
+  [
+   37.97563,
+   23.74938,
+   105
+  ],
+  [
+   37.97924,
+   23.72023,
+   59
+  ],
+  [
+   37.97253,
+   23.73231,
+   97
+  ],
+  [
+   37.98088,
+   23.72144,
+   58
+  ],
+  [
+   37.95264,
+   23.8476,
+   201
+  ],
+  [
+   37.9775,
+   23.73278,
+   100
+  ],
+  [
+   37.9778,
+   23.7354,
+   112
+  ],
+  [
+   37.97447,
+   23.72751,
+   86
+  ],
+  [
+   37.97539,
+   23.74534,
+   116
+  ],
+  [
+   37.93369,
+   23.6849,
+   1
+  ],
+  [
+   37.97814,
+   23.71411,
+   44
+  ],
+  [
+   38.05318,
+   23.81217,
+   232
+  ],
+  [
+   37.96261,
+   23.68872,
+   16
+  ],
+  [
+   37.99144,
+   23.72991,
+   90
+  ],
+  [
+   37.96748,
+   23.69665,
+   28
+  ],
+  [
+   37.93982,
+   23.69634,
+   10
+  ],
+  [
+   37.95795,
+   23.71931,
+   56
+  ],
+  [
+   37.9883,
+   23.73132,
+   74
+  ],
+  [
+   37.96301,
+   23.72533,
+   59
+  ],
+  [
+   37.99445,
+   23.7073,
+   45
+  ],
+  [
+   37.96665,
+   23.78432,
+   261
+  ],
+  [
+   37.975,
+   23.76153,
+   144
+  ],
+  [
+   37.93524,
+   23.68858,
+   0
+  ],
+  [
+   37.97289,
+   23.72781,
+   103
+  ],
+  [
+   37.97321,
+   23.72786,
+   101
+  ],
+  [
+   37.97341,
+   23.72778,
+   101
+  ],
+  [
+   37.96933,
+   23.72403,
+   97
+  ],
+  [
+   37.96911,
+   23.72452,
+   91
+  ],
+  [
+   37.96886,
+   23.72563,
+   91
+  ],
+  [
+   37.96943,
+   23.72237,
+   106
+  ],
+  [
+   37.96918,
+   23.72369,
+   94
+  ],
+  [
+   37.96909,
+   23.72373,
+   95
+  ],
+  [
+   37.9677,
+   23.72868,
+   80
+  ],
+  [
+   37.96826,
+   23.72957,
+   82
+  ],
+  [
+   37.96836,
+   23.7296,
+   82
+  ],
+  [
+   37.9681,
+   23.72952,
+   82
+  ],
+  [
+   37.97636,
+   23.72228,
+   57
+  ],
+  [
+   37.97602,
+   23.72364,
+   71
+  ],
+  [
+   37.97639,
+   23.72215,
+   56
+  ],
+  [
+   37.976,
+   23.72389,
+   70
+  ],
+  [
+   37.97652,
+   23.7219,
+   59
+  ],
+  [
+   37.97267,
+   23.72965,
+   91
+  ],
+  [
+   37.97248,
+   23.72936,
+   96
+  ],
+  [
+   37.97302,
+   23.7309,
+   89
+  ],
+  [
+   37.97366,
+   23.73003,
+   87
+  ],
+  [
+   37.97243,
+   23.73101,
+   96
+  ],
+  [
+   37.97321,
+   23.72901,
+   90
+  ],
+  [
+   37.97621,
+   23.73541,
+   108
+  ],
+  [
+   37.9748,
+   23.73507,
+   108
+  ],
+  [
+   37.97633,
+   23.73494,
+   110
+  ],
+  [
+   37.97711,
+   23.73709,
+   119
+  ],
+  [
+   37.97763,
+   23.73573,
+   118
+  ],
+  [
+   37.97433,
+   23.73411,
+   106
+  ],
+  [
+   37.97494,
+   23.72945,
+   87
+  ],
+  [
+   37.97563,
+   23.72975,
+   92
+  ],
+  [
+   37.9748,
+   23.73007,
+   87
+  ],
+  [
+   37.97568,
+   23.72999,
+   90
+  ],
+  [
+   37.97549,
+   23.73062,
+   85
+  ],
+  [
+   37.97564,
+   23.73055,
+   85
+  ],
+  [
+   37.97571,
+   23.7255,
+   67
+  ],
+  [
+   37.97571,
+   23.72543,
+   67
+  ],
+  [
+   37.97617,
+   23.72616,
+   72
+  ],
+  [
+   37.97577,
+   23.72521,
+   66
+  ],
+  [
+   37.97563,
+   23.72528,
+   67
+  ],
+  [
+   37.96884,
+   23.73137,
+   86
+  ],
+  [
+   37.96933,
+   23.73116,
+   86
+  ],
+  [
+   37.96845,
+   23.7314,
+   83
+  ],
+  [
+   37.96761,
+   23.73287,
+   79
+  ],
+  [
+   37.9705,
+   23.73153,
+   83
+  ],
+  [
+   37.96942,
+   23.7305,
+   89
+  ],
+  [
+   37.98176,
+   23.74341,
+   253
+  ],
+  [
+   37.98204,
+   23.74356,
+   257
+  ],
+  [
+   37.98045,
+   23.74518,
+   174
+  ],
+  [
+   37.97908,
+   23.74452,
+   162
+  ],
+  [
+   37.97906,
+   23.74458,
+   161
+  ],
+  [
+   37.97889,
+   23.74189,
+   151
+  ],
+  [
+   37.97082,
+   23.72911,
+   99
+  ],
+  [
+   37.97131,
+   23.72937,
+   100
+  ],
+  [
+   37.97113,
+   23.72974,
+   93
+  ],
+  [
+   37.97014,
+   23.73023,
+   90
+  ],
+  [
+   37.97088,
+   23.73032,
+   86
+  ],
+  [
+   37.96908,
+   23.72995,
+   84
+  ],
+  [
+   37.96882,
+   23.72526,
+   89
+  ],
+  [
+   37.97626,
+   23.7282,
+   77
+  ],
+  [
+   37.97584,
+   23.7286,
+   81
+  ],
+  [
+   37.97657,
+   23.72884,
+   78
+  ],
+  [
+   37.9757,
+   23.72876,
+   83
+  ],
+  [
+   37.97596,
+   23.72785,
+   73
+  ],
+  [
+   37.97582,
+   23.72914,
+   88
+  ],
+  [
+   37.97471,
+   23.72629,
+   82
+  ],
+  [
+   37.97428,
+   23.72788,
+   87
+  ],
+  [
+   37.97488,
+   23.72781,
+   82
+  ],
+  [
+   37.97528,
+   23.72768,
+   74
+  ],
+  [
+   37.97509,
+   23.72788,
+   80
+  ],
+  [
+   37.98731,
+   23.73121,
+   93
+  ],
+  [
+   37.98704,
+   23.73428,
+   100
+  ],
+  [
+   37.99135,
+   23.73234,
+   89
+  ],
+  [
+   37.98666,
+   23.73216,
+   96
+  ],
+  [
+   37.98674,
+   23.73151,
+   96
+  ],
+  [
+   37.98955,
+   23.72965,
+   95
+  ],
+  [
+   37.97486,
+   23.74435,
+   106
+  ],
+  [
+   37.97501,
+   23.74565,
+   112
+  ],
+  [
+   37.97777,
+   23.74504,
+   140
+  ],
+  [
+   37.97709,
+   23.74665,
+   134
+  ],
+  [
+   37.9778,
+   23.74344,
+   145
+  ],
+  [
+   37.97753,
+   23.74636,
+   133
+  ],
+  [
+   37.971,
+   23.73749,
+   95
+  ],
+  [
+   37.97257,
+   23.73373,
+   99
+  ],
+  [
+   37.97274,
+   23.73346,
+   102
+  ],
+  [
+   37.9715,
+   23.7257,
+   137
+  ],
+  [
+   37.9722,
+   23.7232,
+   111
+  ],
+  [
+   37.9685,
+   23.7285,
+   80
+  ],
+  [
+   37.9747,
+   23.7223,
+   59
+  ],
+  [
+   37.9728,
+   23.73,
+   90
+  ],
+  [
+   37.9755,
+   23.7367,
+   117
+  ],
+  [
+   37.9752,
+   23.7298,
+   88
+  ],
+  [
+   37.9761,
+   23.7256,
+   67
+  ],
+  [
+   37.9693,
+   23.7331,
+   82
+  ],
+  [
+   37.9817,
+   23.7432,
+   252
+  ],
+  [
+   37.9703,
+   23.7278,
+   97
+  ],
+  [
+   37.97,
+   23.7235,
+   102
+  ],
+  [
+   37.9706,
+   23.7304,
+   90
+  ],
+  [
+   37.9762,
+   23.7285,
+   78
+  ],
+  [
+   37.9744,
+   23.7263,
+   82
+  ],
+  [
+   37.989,
+   23.7327,
+   84
+  ],
+  [
+   37.9755,
+   23.7445,
+   111
+  ],
+  [
+   37.9729,
+   23.7371,
+   107
+  ],
+  [
+   37.9677,
+   23.7196,
+   125
+  ],
+  [
+   37.9057,
+   22.88,
+   77
+  ],
+  [
+   37.6503,
+   24.0246,
+   68
+  ],
+  [
+   38.4824,
+   22.501,
+   585
+  ],
+  [
+   37.9353,
+   22.9878,
+   60
+  ],
+  [
+   37.8899,
+   22.8696,
+   442
+  ],
+  [
+   37.9739,
+   23.72992,
+   86
+  ]
+ ]
+}

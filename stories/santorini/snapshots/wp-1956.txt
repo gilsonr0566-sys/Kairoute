@@ -1,0 +1,39 @@
+SOURCE: https://en.wikipedia.org/wiki/1956_Amorgos_earthquake
+RETRIEVED: 2026-11-22T20:33:20.079Z
+STATUS: 200
+TITLE: 1956 Amorgos earthquake
+
+The 1956 Amorgos earthquake occurred at 03:11 UTC on July 9. It had a magnitude of 7.7 on the moment magnitude scale and a maximum perceived intensity of IX on the Mercalli intensity scale. The epicentre was to the south of the island of Amorgos, the easternmost island of the Cyclades in the Aegean Sea. There was significant damage on Amorgos and the neighbouring island of Santorini. It was the largest earthquake in Greece in the 20th century. It was followed 13 minutes later by a magnitude 7.2 earthquake near Santorini. It triggered a major tsunami with a maximum run-up of 30 m. The combined effects of the earthquake shaking and the tsunami caused the deaths of 53 people with a further 100 injured.
+
+
+== Tectonic setting ==
+The Cyclades island group lies within a zone of extensional tectonics in the Aegean Sea plate, between the South Aegean Volcanic Arc to the south and the continuation of the North Anatolian Fault to the north. The extension is a result of the bulging out of the Hellenic arc due to flat-slab subduction of the African plate.
+
+
+== Earthquake ==
+The earthquake's focal mechanism is consistent with normal faulting, trending SW-NE. From the distribution of aftershocks, it is possible to discriminate between the two nodal planes implied by the focal mechanism, indicating that the fault plane dips to the southeast at about 25°. The rupture area is estimated to be about 110 km along strike and 26 km in depth, extending into the upper mantle.
+
+
+== Tsunami ==
+The tsunami affected a large part of the Aegean Sea. The variable distribution of the observed run-ups, combined with inconsistent timing of the wave arrivals at different locations, suggest that earthquake-triggered underwater landslides were the main cause of the observed tsunami.
+
+
+== Damage ==
+Damage was severe, particularly on Santorini. The earthquake demolished 529 houses and left many others damaged. Fifty-three people were killed as a result of the earthquake, with another three killed by the associated tsunami.
+
+
+== See also ==
+List of earthquakes in 1956
+List of earthquakes in Greece
+2025 Santorini earthquakes
+
+
+== References ==
+
+
+== Further reading ==
+Leclerc, Frédérique; Palagonia, Sylvain; Feuillet, Nathalie; Nomikou, Paraskevi; Lampridou, Danai; Barrière, Paul; Dano, Alexandre; Ochoa, Eduardo; Gracias, Nuno; Escartin, Javier (2024). "Large seafloor rupture caused by the 1956 Amorgos tsunamigenic earthquake, Greece". Communications Earth & Environment. 5 (1). doi:10.1038/s43247-024-01839-0. ISSN 2662-4435.
+
+
+== External links ==
+The International Seismological Centre has a bibliography and/or authoritative data for this event.

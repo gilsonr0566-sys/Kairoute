@@ -1,0 +1,20 @@
+name: Probe sources
+on:
+  workflow_dispatch:
+    inputs:
+      cities:
+        default: ""
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          CITIES: ${{ inputs.cities }}
+        run: node tools/probe.mjs

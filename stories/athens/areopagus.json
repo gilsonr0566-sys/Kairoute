@@ -1,0 +1,302 @@
+{
+ "id": "areopagus",
+ "v": 1,
+ "city": "athens",
+ "title": "Areopagus (Mars Hill)",
+ "match": {
+  "ids": [
+   "areopagus"
+  ],
+  "names": [
+   "areopagus",
+   "mars hill",
+   "areios pagos"
+  ],
+  "wikidata": [
+   "Q213353"
+  ]
+ },
+ "checked": "2026-11-21",
+ "claims": {
+  "name": {
+   "label": "supported",
+   "says": "The name means Hill of Ares, from the Greek Areios Pagos.",
+   "src": [
+    "wp-areopagus"
+   ],
+   "quote": [
+    "translated 'Hill of Ares'"
+   ]
+  },
+  "where": {
+   "label": "supported",
+   "says": "The hill is a rocky outcrop northwest of the Acropolis.",
+   "src": [
+    "wp-areopagus"
+   ],
+   "quote": [
+    "a rocky outcrop called the Hill of Ares, northwest of the Acropolis"
+   ]
+  },
+  "council": {
+   "label": "supported",
+   "says": "The Areopagus was a principal council of ancient Athens, later mainly a court for homicide and certain religious offences.",
+   "src": [
+    "wp-areopagus"
+   ],
+   "quote": [
+    "was a principal council of ancient Athens, later serving mainly as a judicial body responsible for cases of homicide, wounding, and certain religious offenses"
+   ]
+  },
+  "early": {
+   "label": "disputed",
+   "says": "Homicide trials may have been held here as early as the 7th century BC; there is no consensus.",
+   "src": [
+    "wp-areopagus"
+   ],
+   "quote": [
+    "While there is no consensus, homicide trials seem to have been held by Athenians on the Areopagus hill as early as the 7th century BC"
+   ]
+  },
+  "ares-myth": {
+   "label": "legend",
+   "says": "Myth said the god Ares was tried here by the other gods for killing Poseidon's son.",
+   "src": [
+    "wp-areopagus"
+   ],
+   "quote": [
+    "The war god Ares was supposed to have been tried by the other gods on the Areopagus for the murder of Poseidon's son Halirrhothius, a typical example of an aetiological myth."
+   ]
+  },
+  "orestes": {
+   "label": "supported",
+   "says": "In Aeschylus's play The Eumenides (458 BC), Orestes is tried here.",
+   "src": [
+    "wp-areopagus"
+   ],
+   "quote": [
+    "In The Eumenides of Aeschylus (458 BC), the Areopagus is the site of the trial of Orestes"
+   ]
+  },
+  "paul-idols": {
+   "label": "scripture",
+   "says": "Acts 17:16: Paul, waiting in Athens, was stirred seeing the city given to idolatry.",
+   "src": [
+    "kjv-acts17"
+   ],
+   "quote": [
+    "\"chapter\":17,\"verse\":16,\"text\":\"Now while Paul waited for them at Athens, his spirit was stirred in him, when he saw the city wholly given to idolatry."
+   ]
+  },
+  "paul-market": {
+   "label": "scripture",
+   "says": "Acts 17:17: he disputed daily in the synagogue and the market.",
+   "src": [
+    "kjv-acts17"
+   ],
+   "quote": [
+    "\"chapter\":17,\"verse\":17,\"text\":\"Therefore disputed he in the synagogue with the Jews, and with the devout persons, and in the market daily with them that met with him."
+   ]
+  },
+  "paul-brought": {
+   "label": "scripture",
+   "says": "Acts 17:19: philosophers brought him to Areopagus to hear his new doctrine.",
+   "src": [
+    "kjv-acts17"
+   ],
+   "quote": [
+    "\"chapter\":17,\"verse\":19,\"text\":\"And they took him, and brought him unto Areopagus, saying, May we know what this new doctrine, whereof thou speakest"
+   ]
+  },
+  "paul-22": {
+   "label": "scripture",
+   "says": "Acts 17:22-23: \"Ye men of Athens...\" and the altar TO THE UNKNOWN GOD.",
+   "src": [
+    "kjv-acts17"
+   ],
+   "quote": [
+    "\"chapter\":17,\"verse\":22,\"text\":\"Then Paul stood in the midst of Mars’ hill",
+    "men of Athens, I perceive that in all things ye are too superstitious.",
+    "\"chapter\":17,\"verse\":23,\"text\":\"For as I passed by, and beheld your devotions, I found an altar with this inscription, to the unknown god. Whom therefore ye ignorantly worship, him declare I unto you."
+   ]
+  },
+  "paul-24": {
+   "label": "scripture",
+   "says": "Acts 17:24: God that made the world dwelleth not in temples made with hands.",
+   "src": [
+    "kjv-acts17"
+   ],
+   "quote": [
+    "\"chapter\":17,\"verse\":24,\"text\":\"God that made the world and all things therein, seeing that he is Lord of heaven and earth, dwelleth not in temples made with hands;"
+   ]
+  },
+  "paul-32": {
+   "label": "scripture",
+   "says": "Acts 17:32: some mocked, others wanted to hear him again.",
+   "src": [
+    "kjv-acts17"
+   ],
+   "quote": [
+    "\"chapter\":17,\"verse\":32,\"text\":\"And when they heard of the resurrection of the dead, some mocked: and others said, We will hear thee again of this"
+   ]
+  },
+  "paul-34": {
+   "label": "scripture",
+   "says": "Acts 17:34: Dionysius the Areopagite and a woman named Damaris believed.",
+   "src": [
+    "kjv-acts17"
+   ],
+   "quote": [
+    "\"chapter\":17,\"verse\":34,\"text\":\"Howbeit certain men clave unto him, and believed: among the which"
+   ]
+  },
+  "paul-34b": {
+   "label": "scripture",
+   "says": "Also names Dionysius the Areopagite and Damaris.",
+   "src": [
+    "kjv-acts17"
+   ],
+   "quote": [
+    "was Dionysius the Areopagite, and a woman named Damaris, and others with them."
+   ]
+  },
+  "paul-where": {
+   "label": "disputed",
+   "says": "It is unclear whether Paul spoke on the hill itself or before the council, which probably met elsewhere by then.",
+   "src": [
+    "wp-areopagus"
+   ],
+   "quote": [
+    "it is unclear whether Paul gave his speech before the Areopagus Council",
+    "The Areopagus Council likely would not have met on the actual Areopagus hill by the time of Paul's visit, but rather in the agora or in the Stoa Basileios."
+   ]
+  },
+  "poets": {
+   "label": "supported",
+   "says": "In the sermon Paul quotes Greek poets, including lines that echo Aratus.",
+   "src": [
+    "wp-areopagus-sermon"
+   ],
+   "quote": [
+    "In his sermon, Paul quotes from certain Greek philosophers and poets, namely in verse 17:28."
+   ]
+  },
+  "trial": {
+   "label": "disputed",
+   "says": "One scholar suggests the hearing may have been part lecture, part trial.",
+   "src": [
+    "wp-areopagus-sermon"
+   ],
+   "quote": [
+    "It is conjectured by Robert Paul Seesengood that it may have been illegal to preach a foreign deity in Athens, which would have thereby made Paul's sermon a combination of a \"guest lecture\" and a trial."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "On a flat spot near the top of the rock, well back from the edges, facing the Acropolis gateway.",
+   "paras": [
+    {
+     "t": "This bare, rocky hill is the Areopagus. The name means the Hill of Ares, the god of war. In the King James Bible it's Mars' hill.",
+     "c": [
+      "name",
+      "paul-22"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Watch your footing up here. The rock is uneven, and there are no railings at the edges.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    },
+    {
+     "t": "Long before Paul, this rock was famous for justice. The council that met here became the court of Athens for murder and certain religious crimes. Exactly how early that began, historians aren't sure, but it may go back to the 7th century BC.",
+     "c": [
+      "council",
+      "early"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The Athenians liked a good origin story. Myth said the war god Ares himself was put on trial here by the other gods. And in the play The Eumenides, from 458 BC, the playwright Aeschylus set the trial of Orestes on this hill.",
+     "c": [
+      "ares-myth",
+      "orestes"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Paul in Athens",
+   "stand": "Stay facing the Acropolis.",
+   "paras": [
+    {
+     "t": "Now to the apostle Paul. The book of Acts, chapter seventeen, tells how the apostle Paul waited in Athens, and his spirit was stirred in him, when he saw the city wholly given to idolatry. He argued daily in the synagogue, and in the market below us.",
+     "c": [
+      "paul-idols",
+      "paul-market"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Some of the philosophers brought him unto Areopagus, Acts says, to explain his new teaching. Here historians aren't sure what that means: this hill itself, or the council named after it, which by Paul's time probably met down in the marketplace instead. One scholar has even suggested the hearing may have been part lecture, part trial.",
+     "c": [
+      "paul-brought",
+      "paul-where",
+      "trial"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Here are his opening words, in the King James Version: \"Ye men of Athens, I perceive that in all things ye are too superstitious. For as I passed by, and beheld your devotions, I found an altar with this inscription, to the unknown god. Whom therefore ye ignorantly worship, him declare I unto you.\"",
+     "c": [
+      "paul-22"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Picture saying this in a city Acts describes as wholly given to idolatry: that God that made the world dwelleth not in temples made with hands.",
+     "c": [
+      "paul-idols",
+      "paul-24"
+     ],
+     "level": 2
+    },
+    {
+     "t": "He even quoted their own Greek poets back to them. It was a sermon built for this audience.",
+     "c": [
+      "poets"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "How it ended",
+   "stand": "Turn to look down over the Agora.",
+   "paras": [
+    {
+     "t": "Acts is honest about the result. When they heard of the resurrection of the dead, some mocked, and others said they would hear him again. But a few believed, among them Dionysius the Areopagite, and a woman named Damaris.",
+     "c": [
+      "paul-32",
+      "paul-34",
+      "paul-34b"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Paul did not win the crowd that day. But a few people listened, and the words Acts records have been read all over the world ever since.",
+     "c": [
+      "paul-32",
+      "paul-34"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

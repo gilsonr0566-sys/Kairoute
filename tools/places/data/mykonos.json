@@ -1,0 +1,957 @@
+{
+ "key": "mykonos",
+ "name": "Mykonos",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "chora": {
+   "wikidata": "Q190210",
+   "editions": 71,
+   "types": [
+    "Q23442"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q171132"
+   ],
+   "osm": "relation/5222783"
+  },
+  "paraportiani": {
+   "wikidata": "Q3669454",
+   "editions": 8,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/623949364"
+  },
+  "src-q1472325": {
+   "wikidata": "Q1472325",
+   "editions": 8,
+   "types": [
+    "Q40080"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  },
+  "src-q4785417": {
+   "wikidata": "Q4785417",
+   "editions": 7,
+   "types": [
+    "Q3329412"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/1988490509"
+  },
+  "src-q15178241": {
+   "wikidata": "Q15178241",
+   "editions": 6,
+   "types": [
+    "Q1863818"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/736557080"
+  },
+  "src-q108650605": {
+   "wikidata": "Q108650605",
+   "editions": 1,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": []
+  }
+ },
+ "towns": {
+  "delos-far": {
+   "name": "Delos island",
+   "wikidata": "Q173148",
+   "editions": 80,
+   "unesco": true,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": [],
+   "unescoSites": [
+    "Delos",
+    "Delos"
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Athens",
+  "Paros",
+  "Naxos",
+  "Ios",
+  "Santorini",
+  "Syros",
+  "Greek Islands",
+  "Delos",
+  "Tinos"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 37.4478625,
+  "lng": 25.33325625
+ },
+ "wikivoyage": "Mykonos",
+ "portQuery": {
+  "name": "Mykonos new port (Tourlos)",
+  "lat": 37.46,
+  "lng": 25.326,
+  "known": true,
+  "island": false
+ },
+ "cityEats": [
+  {
+   "name": "Kostas",
+   "lat": 37.4456311,
+   "lng": 25.3270135,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "way/736601359"
+  },
+  {
+   "name": "Casa di Giorgio",
+   "lat": 37.4455555,
+   "lng": 25.3267308,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/736885938"
+  },
+  {
+   "name": "Nice n Easy",
+   "lat": 37.4455255,
+   "lng": 25.3262402,
+   "amenity": "restaurant",
+   "cuisine": "bistro",
+   "hours": "Mo-Su 09:00-24:00",
+   "osm": "node/5553140909"
+  },
+  {
+   "name": "Fato a Mano",
+   "lat": 37.4460033,
+   "lng": 25.327437,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "way/736555288"
+  },
+  {
+   "name": "Meatropolitan",
+   "lat": 37.4449512,
+   "lng": 25.3275131,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5882085085"
+  },
+  {
+   "name": "Cafe Manto Restaurant",
+   "lat": 37.445803,
+   "lng": 25.328053,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/736585221"
+  },
+  {
+   "name": "D' Angelo Restaurante",
+   "lat": 37.4437133,
+   "lng": 25.3272378,
+   "amenity": "restaurant",
+   "cuisine": "italian;regional",
+   "hours": "",
+   "osm": "way/734585143"
+  },
+  {
+   "name": "Sea Satin by Gryparis",
+   "lat": 37.445172,
+   "lng": 25.3257267,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/2317750634"
+  },
+  {
+   "name": "Lakka Garden",
+   "lat": 37.4440767,
+   "lng": 25.3280786,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/735200836"
+  },
+  {
+   "name": "Kastro's",
+   "lat": 37.4469986,
+   "lng": 25.3256736,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/6656188897"
+  },
+  {
+   "name": "Pasta Fresca Barkia",
+   "lat": 37.4467387,
+   "lng": 25.3268143,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5550401631"
+  },
+  {
+   "name": "Niko's Taverna",
+   "lat": 37.4471021,
+   "lng": 25.3269069,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/736253691"
+  },
+  {
+   "name": "Remezzo",
+   "lat": 37.4497936,
+   "lng": 25.3297789,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6656178579"
+  },
+  {
+   "name": "Salparo",
+   "lat": 37.449635,
+   "lng": 25.3296387,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6656178578"
+  },
+  {
+   "name": "Roca Restaurant Mykonos",
+   "lat": 37.4503208,
+   "lng": 25.3293613,
+   "amenity": "restaurant",
+   "cuisine": "greek;italian;mediterranean",
+   "hours": "Mo-Su 07:00-01:00",
+   "osm": "node/6656178144"
+  },
+  {
+   "name": "Kavos",
+   "lat": 37.4494476,
+   "lng": 25.3297823,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/5891781756"
+  },
+  {
+   "name": "Maria's Traditional Restaurant",
+   "lat": 37.448089,
+   "lng": 25.3302893,
+   "amenity": "restaurant",
+   "cuisine": "pizza;italian;mediterranean;greek",
+   "hours": "",
+   "osm": "node/5891781748"
+  },
+  {
+   "name": "Catari",
+   "lat": 37.4478661,
+   "lng": 25.3297445,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/7591022682"
+  },
+  {
+   "name": "Interni",
+   "lat": 37.4454915,
+   "lng": 25.328708,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/736555310"
+  },
+  {
+   "name": "Rhino",
+   "lat": 37.4453695,
+   "lng": 25.3287835,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12490240445"
+  },
+  {
+   "name": "Ling Ling Hakkasan",
+   "lat": 37.4456414,
+   "lng": 25.3287022,
+   "amenity": "restaurant",
+   "cuisine": "japanese;asian;chinese",
+   "hours": "",
+   "osm": "way/734600157"
+  },
+  {
+   "name": "Healthylicious",
+   "lat": 37.4454753,
+   "lng": 25.3288992,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9621447017"
+  },
+  {
+   "name": "Avra Garden  Restaurant",
+   "lat": 37.4457713,
+   "lng": 25.3282172,
+   "amenity": "restaurant",
+   "cuisine": "greek;regional;international",
+   "hours": "",
+   "osm": "node/3611660157"
+  },
+  {
+   "name": "Avra Garden Restaurant",
+   "lat": 37.4458146,
+   "lng": 25.3283028,
+   "amenity": "restaurant",
+   "cuisine": "greek;regional",
+   "hours": "",
+   "osm": "way/734601326"
+  },
+  {
+   "name": "Coya Mykonos",
+   "lat": 37.4457964,
+   "lng": 25.3287216,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "",
+   "osm": "node/7844486785"
+  }
+ ],
+ "piers": [
+  {
+   "name": "Rineia",
+   "lat": 37.41572,
+   "lng": 25.23786,
+   "osm": "node/11435526103"
+  },
+  {
+   "name": "Mykonos-Dilos",
+   "lat": 37.44876,
+   "lng": 25.32652,
+   "osm": "node/1162553956"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.45105,
+   "lng": 25.32757,
+   "osm": "node/1988496876"
+  },
+  {
+   "name": "New port - Tourlos, marina station",
+   "lat": 37.46494,
+   "lng": 25.32634,
+   "osm": "node/3701704798"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46381,
+   "lng": 25.32525,
+   "osm": "node/3703165533"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.4642,
+   "lng": 25.32423,
+   "osm": "node/3703165536"
+  },
+  {
+   "name": "Delos",
+   "lat": 37.39847,
+   "lng": 25.26469,
+   "osm": "node/3880270023"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46511,
+   "lng": 25.32214,
+   "osm": "node/4993003244"
+  },
+  {
+   "name": "Mykonos New Port",
+   "lat": 37.46401,
+   "lng": 25.32474,
+   "osm": "node/660644797"
+  },
+  {
+   "name": "Old port, archaelogical museum - bus and taxi station",
+   "lat": 37.45115,
+   "lng": 25.32804,
+   "osm": "node/6792574368"
+  },
+  {
+   "name": "Old Port",
+   "lat": 37.44824,
+   "lng": 25.32659,
+   "osm": "node/6792574371"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46355,
+   "lng": 25.32622,
+   "osm": "node/7858930507"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46335,
+   "lng": 25.32571,
+   "osm": "node/7858930508"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46359,
+   "lng": 25.32536,
+   "osm": "node/7858930509"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 37.46443,
+   "lng": 25.32366,
+   "osm": "node/7858930510"
+  },
+  {
+   "name": "Seabus Terminal",
+   "lat": 37.46498,
+   "lng": 25.32396,
+   "osm": "node/8049465984"
+  },
+  {
+   "name": "Seabus terminal",
+   "lat": 37.45107,
+   "lng": 25.32821,
+   "osm": "node/8049468493"
+  }
+ ],
+ "guideSights": [
+  {
+   "name": "Panagia Paraportiani",
+   "lat": 37.4471,
+   "lng": 25.3257,
+   "wikidata": "Q3669454",
+   "note": "Of all the churches on Mykonos, the most impressive is Panagia Paraportianí, a true Byzantine jewel. This whitewashed church, which building dates back to 1425 and was not completed until the 17th century, is the most popular and most photo",
+   "editions": 8,
+   "unesco": false,
+   "en": "Paraportiani"
+  },
+  {
+   "name": "Archaeological Museum of Mykonos",
+   "lat": 37.45,
+   "lng": 25.329722,
+   "wikidata": "Q4785417",
+   "note": "The exhibition of the museum includes a large number of vases, ranging from the prehistoric to the late Hellenistic period (25th-1st century BC), grave statues, stelae and funerary urns from the nearby island of Rheneia (Delos' necropolis).",
+   "editions": 7,
+   "unesco": false,
+   "web": "http://odysseus.culture.gr/h/1/eh151.jsp?obj_id=3301"
+  },
+  {
+   "name": "Folklore Museum",
+   "lat": 37.4475,
+   "lng": 25.3258,
+   "wikidata": "Q16895581",
+   "note": "The Folklore Museum, housed in an 18th-century sea captain's house, brings together a number of collections of furniture, icons, pieces of sculpture, folk musical instruments, costumes and textiles.",
+   "editions": 2,
+   "unesco": false,
+   "en": "Mykonos Folklore Museum"
+  },
+  {
+   "name": "Lena's House Museum",
+   "lat": 37.445304,
+   "lng": 25.328514,
+   "wikidata": "Q108650605",
+   "note": "Lena's House Museum, a branch of the Folklore Museum, is an authentic 19th-century middle class Mykonian house, completely restored with furnishings.",
+   "editions": 1,
+   "unesco": false,
+   "en": "House of Lena"
+  },
+  {
+   "name": "Aegean Maritime Museum",
+   "lat": 37.4453,
+   "lng": 25.3284,
+   "wikidata": "Q15178241",
+   "note": "Housed in a traditional Cycladic 19th century building, it has been in continuous operation since 1985. The mission of the Museum is the research and promotion of the maritime history of the Greeks and their engagement with the sea, from an",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://aegean-maritime-museum.gr/en/"
+  },
+  {
+   "name": "Agricultural Museum",
+   "lat": 37.446613,
+   "lng": 25.33079,
+   "wikidata": "Q108611526",
+   "note": "A collection of traditional agricultural tools.",
+   "editions": 0,
+   "unesco": false
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Δίαυλος Δήλου",
+   "a": {
+    "lat": 37.36731,
+    "lng": 25.26031
+   },
+   "b": {
+    "lat": 37.41581,
+    "lng": 25.26487
+   },
+   "osm": "way/1008933513"
+  },
+  {
+   "name": "Mykonos - Rineia",
+   "a": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "b": {
+    "lat": 37.41572,
+    "lng": 25.23786
+   },
+   "osm": "way/1232741537"
+  },
+  {
+   "name": "Mykonos - Naxos",
+   "a": {
+    "lat": 37.10619,
+    "lng": 25.37144
+   },
+   "b": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "osm": "way/184793322"
+  },
+  {
+   "name": "Mykonos - Delos",
+   "a": {
+    "lat": 37.44876,
+    "lng": 25.32652
+   },
+   "b": {
+    "lat": 37.39847,
+    "lng": 25.26469
+   },
+   "osm": "way/225977458"
+  },
+  {
+   "name": "Syros - Mykonos",
+   "a": {
+    "lat": 37.4409,
+    "lng": 24.9414
+   },
+   "b": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "osm": "way/51768304"
+  },
+  {
+   "name": "Tinos - Mykonos",
+   "a": {
+    "lat": 37.53864,
+    "lng": 25.1565
+   },
+   "b": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "osm": "way/52577757"
+  },
+  {
+   "name": "Mykonos - Paros",
+   "a": {
+    "lat": 37.08721,
+    "lng": 25.14935
+   },
+   "b": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "osm": "way/625388587"
+  },
+  {
+   "name": "Old Port - New Port",
+   "a": {
+    "lat": 37.46549,
+    "lng": 25.32286
+   },
+   "b": {
+    "lat": 37.44824,
+    "lng": 25.32659
+   },
+   "osm": "way/724286239"
+  },
+  {
+   "name": "Ikaria (Evdilos) - Mykonos",
+   "a": {
+    "lat": 37.63294,
+    "lng": 26.18108
+   },
+   "b": {
+    "lat": 37.46401,
+    "lng": 25.32474
+   },
+   "osm": "way/971793408"
+  }
+ ],
+ "eatHours": [
+  [
+   "Popolo",
+   37.44681,
+   25.3276,
+   "Mo-Su 11:00-23:00",
+   "cafe"
+  ],
+  [
+   "Nautilus",
+   37.44392,
+   25.32888,
+   "Mo-Sa 19:00-02:00; Su 19:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Nice n Easy",
+   37.44553,
+   25.32624,
+   "Mo-Su 09:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Roca Restaurant Mykonos",
+   37.45032,
+   25.32936,
+   "Mo-Su 07:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Kalita",
+   37.44587,
+   25.32818,
+   "19:00-02:00",
+   "restaurant"
+  ],
+  [
+   "SiaMo Café",
+   37.44549,
+   25.32915,
+   "Mo-Su 08:00-02:00",
+   "cafe"
+  ],
+  [
+   "Appaloosa",
+   37.44651,
+   25.32963,
+   "We-Su 19:00+; Jan 05-18 off",
+   "restaurant"
+  ],
+  [
+   "La Familia",
+   37.44649,
+   25.32947,
+   "Mo-Su 12:00-01:00",
+   "restaurant"
+  ]
+ ],
+ "heights": [
+  [
+   37.4471,
+   25.3257,
+   5
+  ],
+  [
+   37.45,
+   25.32972,
+   9
+  ],
+  [
+   37.4475,
+   25.3258,
+   6
+  ],
+  [
+   37.4453,
+   25.32851,
+   9
+  ],
+  [
+   37.4453,
+   25.3284,
+   8
+  ],
+  [
+   37.44661,
+   25.33079,
+   37
+  ],
+  [
+   37.41572,
+   25.23786,
+   4
+  ],
+  [
+   37.44876,
+   25.32652,
+   3
+  ],
+  [
+   37.45105,
+   25.32757,
+   2
+  ],
+  [
+   37.46494,
+   25.32634,
+   6
+  ],
+  [
+   37.46381,
+   25.32525,
+   3
+  ],
+  [
+   37.4642,
+   25.32423,
+   2
+  ],
+  [
+   37.39847,
+   25.26469,
+   3
+  ],
+  [
+   37.46511,
+   25.32214,
+   2
+  ],
+  [
+   37.46401,
+   25.32474,
+   3
+  ],
+  [
+   37.45115,
+   25.32804,
+   1
+  ],
+  [
+   37.44824,
+   25.32659,
+   5
+  ],
+  [
+   37.46355,
+   25.32622,
+   5
+  ],
+  [
+   37.46335,
+   25.32571,
+   57
+  ],
+  [
+   37.46359,
+   25.32536,
+   8
+  ],
+  [
+   37.46443,
+   25.32366,
+   2
+  ],
+  [
+   37.46498,
+   25.32396,
+   2
+  ],
+  [
+   37.45107,
+   25.32821,
+   2
+  ],
+  [
+   37.44563,
+   25.32701,
+   8
+  ],
+  [
+   37.44556,
+   25.32673,
+   9
+  ],
+  [
+   37.44553,
+   25.32624,
+   7
+  ],
+  [
+   37.446,
+   25.32744,
+   7
+  ],
+  [
+   37.44495,
+   25.32751,
+   11
+  ],
+  [
+   37.4458,
+   25.32805,
+   7
+  ],
+  [
+   37.44371,
+   25.32724,
+   14
+  ],
+  [
+   37.44517,
+   25.32573,
+   7
+  ],
+  [
+   37.44408,
+   25.32808,
+   12
+  ],
+  [
+   37.447,
+   25.32567,
+   5
+  ],
+  [
+   37.44674,
+   25.32681,
+   8
+  ],
+  [
+   37.4471,
+   25.32691,
+   7
+  ],
+  [
+   37.44979,
+   25.32978,
+   8
+  ],
+  [
+   37.44964,
+   25.32964,
+   7
+  ],
+  [
+   37.45032,
+   25.32936,
+   10
+  ],
+  [
+   37.44945,
+   25.32978,
+   7
+  ],
+  [
+   37.44809,
+   25.33029,
+   11
+  ],
+  [
+   37.44787,
+   25.32974,
+   7
+  ],
+  [
+   37.44549,
+   25.32871,
+   9
+  ],
+  [
+   37.44537,
+   25.32878,
+   10
+  ],
+  [
+   37.44564,
+   25.3287,
+   8
+  ],
+  [
+   37.44548,
+   25.3289,
+   10
+  ],
+  [
+   37.44577,
+   25.32822,
+   7
+  ],
+  [
+   37.44581,
+   25.3283,
+   7
+  ],
+  [
+   37.4458,
+   25.32872,
+   8
+  ],
+  [
+   37.4455,
+   25.327,
+   9
+  ],
+  [
+   37.444,
+   25.326,
+   11
+  ],
+  [
+   37.4455,
+   25.3255,
+   6
+  ],
+  [
+   37.4463,
+   25.3255,
+   5
+  ],
+  [
+   37.461,
+   25.37542,
+   4
+  ],
+  [
+   37.396,
+   25.268,
+   30
+  ],
+  [
+   37.44786,
+   25.33326,
+   59
+  ]
+ ]
+}

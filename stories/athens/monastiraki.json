@@ -1,0 +1,260 @@
+{
+ "id": "monastiraki",
+ "v": 1,
+ "city": "athens",
+ "title": "Monastiraki and the flea market",
+ "match": {
+  "ids": [
+   "monastiraki"
+  ],
+  "names": [
+   "monastiraki",
+   "flea market"
+  ],
+  "wikidata": [
+   "Q1949372"
+  ]
+ },
+ "checked": "2026-11-21",
+ "claims": {
+  "name": {
+   "label": "supported",
+   "says": "Monastiraki means little monastery; the area is named after the square, named for the Church of the Pantanassa.",
+   "src": [
+    "wp-monastiraki"
+   ],
+   "quote": [
+    "lit. 'little monastery'",
+    "The area is named after Monastiraki Square, which in turn is named for the Church of the Pantanassa that is located within the square."
+   ]
+  },
+  "market": {
+   "label": "supported",
+   "says": "It is a flea market neighbourhood and one of the main shopping districts in Athens.",
+   "src": [
+    "wp-monastiraki"
+   ],
+   "quote": [
+    "is a flea market neighborhood in the old town of Athens, Greece, and is one of the main  shopping districts in Athens"
+   ]
+  },
+  "pantanassa": {
+   "label": "supported",
+   "says": "The Pantanassa is the 10th-century church of a vanished monastery, once called the Great Monastery, later monastiraki.",
+   "src": [
+    "wp-pantanassa"
+   ],
+   "quote": [
+    "is the 10th-century katholikon of a now-vanished monastery",
+    "The church was known as the Great Monastery, and then later as monastiraki (\"little monastery\"), which eventually became the name of the whole area."
+   ]
+  },
+  "mosque-built": {
+   "label": "supported",
+   "says": "The Tzistarakis Mosque was built in 1759 by the Ottoman governor Mustapha Agha Tzistarakis.",
+   "src": [
+    "wp-tzistarakis"
+   ],
+   "quote": [
+    "The mosque was built in 1759, by the Ottoman governor (voevoda) of Athens, Mustapha Agha Tzistarakis"
+   ]
+  },
+  "mosque-legend": {
+   "label": "tradition",
+   "says": "Tradition says he burned a column of the Temple of Olympian Zeus for lime; more likely it was from Hadrian's Library.",
+   "src": [
+    "wp-tzistarakis"
+   ],
+   "quote": [
+    "According to tradition, Tzistarakis used one of the pillars of the Temple of Olympian Zeus to make lime for the building, although it is more likely that he used one of the columns of the nearby Hadrian's Library."
+   ]
+  },
+  "column": {
+   "label": "disputed",
+   "says": "An inscription at the Olympieion records a column pulled down on 27 April 1759, and a chronicler blames Tzistarakis; another account says it was more likely a column of Hadrian's Library.",
+   "src": [
+    "wp-olympieion",
+    "wp-tzistarakis"
+   ],
+   "quote": [
+    "which states that \"on 27 April 1759 he pulled down the column\"",
+    "This refers to the Turkish governor of Athens, Mustapha Agha Tzistarakis",
+    "although it is more likely that he used one of the columns of the nearby Hadrian's Library"
+   ]
+  },
+  "mosque-plague": {
+   "label": "tradition",
+   "says": "He was dismissed for sacrilege, and some Athenians linked a plague later that year to it.",
+   "src": [
+    "wp-tzistarakis"
+   ],
+   "quote": [
+    "This act led to his dismissal",
+    "a superstition that some Athenians believed to have been confirmed when there was an outbreak of the plague later in the year"
+   ]
+  },
+  "mosque-now": {
+   "label": "supported",
+   "says": "It is now an annex of the Museum of Greek Folk Art, with a pottery collection.",
+   "src": [
+    "wp-tzistarakis"
+   ],
+   "quote": [
+    "the building has since been repurposed as a traditional art museum – as an annex of the Museum of Greek Folk Art",
+    "The V. Kyriazopoulos pottery collection of ceramics remains in the mosque to this day."
+   ]
+  },
+  "otto-ball": {
+   "label": "supported",
+   "says": "A ball for King Otto was held there in March 1834.",
+   "src": [
+    "wp-tzistarakis"
+   ],
+   "quote": [
+    "it was the site of a ball in honour of King Otto of Greece in March 1834"
+   ]
+  },
+  "library": {
+   "label": "supported",
+   "says": "Hadrian's Library was built by the emperor Hadrian in AD 132.",
+   "src": [
+    "wp-hadrians-library"
+   ],
+   "quote": [
+    "Hadrian's Library is the ruin of a monumental building created by Roman Emperor Hadrian in AD 132"
+   ]
+  },
+  "library-rooms": {
+   "label": "supported",
+   "says": "Papyrus rolls were kept on the east side; there were reading rooms and lecture halls, gilded ceilings and marble walls.",
+   "src": [
+    "wp-hadrians-library"
+   ],
+   "quote": [
+    "The library was on the eastern side where cupboards and shelves containing rolls of papyrus \"books\" were kept.",
+    "Adjoining halls were used as reading rooms, and the corners served as lecture halls.",
+    "The ceilings were gilded wood and the walls covered in marble and paintings."
+   ]
+  },
+  "library-damage": {
+   "label": "supported",
+   "says": "It was badly damaged by the Heruli in 267 and later had three churches built inside.",
+   "src": [
+    "wp-hadrians-library"
+   ],
+   "quote": [
+    "The library was seriously damaged by the Herulian invasion of 267",
+    "During Byzantine times, three churches were built at the site"
+   ]
+  },
+  "metro": {
+   "label": "supported",
+   "says": "The metro station on the square serves Lines 1 and 3.",
+   "src": [
+    "wp-monastiraki"
+   ],
+   "quote": [
+    "The Monastiraki Metro Station, located on the square, serves both Line 1 and Line 3 of the Athens Metro."
+   ]
+  },
+  "bohemian": {
+   "label": "supported",
+   "says": "Wikivoyage describes it as bohemian, with shops selling antiques, souvenirs, crafts and much more.",
+   "src": [
+    "wv-athens"
+   ],
+   "quote": [
+    "Monastiraki, a very bohemian district increasingly popular with tourists, with stores selling a variety of items including antiques, cookware, souvenirs, arts and crafts"
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The square",
+   "stand": "In the middle of Monastiraki Square, by the metro entrance, with the small church in front of you and the Acropolis rising behind the rooftops.",
+   "paras": [
+    {
+     "t": "Welcome to Monastiraki, the little monastery. The name comes from that small church in the square, the Pantanassa. It was the main church of a monastery that has since vanished. The encyclopedia dates it to the 900s AD; we haven't found a second source to confirm that.",
+     "c": [
+      "name",
+      "pantanassa"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Its monastery was once called the Great Monastery. Later it became the little monastery, and that name spread to the whole neighbourhood.",
+     "c": [
+      "pantanassa"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Today it's a flea market district and one of the main places to shop in Athens: antiques, souvenirs, crafts and plenty of oddities. Keep your bag zipped in the crowds.",
+     "c": [
+      "market",
+      "bohemian"
+     ],
+     "level": 1
+    }
+   ]
+  },
+  {
+   "name": "The mosque",
+   "stand": "Turn to face the building with the dome and the arched porch on the square.",
+   "paras": [
+    {
+     "t": "That domed building is the Tzistarakis Mosque, built in 1759 by the Ottoman governor of Athens. Our source lists it as part of the Museum of Greek Folk Art, with a pottery collection inside, but that may be out of date. Check whether it's open before you plan to go in.",
+     "c": [
+      "mosque-built",
+      "mosque-now"
+     ],
+     "level": 2
+    },
+    {
+     "t": "It comes with a dark story. An inscription at the Temple of Olympian Zeus records a column pulled down there in 1759, and a chronicler blamed this governor, who wanted marble to make lime for his mosque. Another account says the column came from Hadrian's Library next door instead. Either way, tradition says he was dismissed for sacrilege, and when plague broke out later that year, some Athenians said it was the price.",
+     "c": [
+      "column",
+      "mosque-plague"
+     ],
+     "level": 2
+    },
+    {
+     "t": "After independence it changed roles many times. In March 1834 it even hosted a ball for the new king, Otto.",
+     "c": [
+      "otto-ball"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Hadrian's Library",
+   "stand": "Walk a few steps behind the mosque to the railings along the line of tall columns.",
+   "paras": [
+    {
+     "t": "Behind the mosque, those columns are the front of Hadrian's Library, built by the emperor Hadrian in AD 132.",
+     "c": [
+      "library"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Picture the inside: shelves of papyrus rolls, reading rooms, lecture halls in the corners, gilded wooden ceilings and marble walls. Invaders wrecked it in 267, and later three churches were built inside the ruins.",
+     "c": [
+      "library-rooms",
+      "library-damage"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Monastiraki is easy to reach and easy to leave. The metro station right on the square serves Lines 1 and 3.",
+     "c": [
+      "metro"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

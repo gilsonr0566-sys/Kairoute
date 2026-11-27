@@ -1,0 +1,579 @@
+{
+ "id": "oia",
+ "v": 1,
+ "city": "santorini",
+ "title": "Oia",
+ "match": {
+  "ids": [
+   "oia"
+  ],
+  "names": [
+   "oia"
+  ],
+  "wikidata": [
+   "Q1655349"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "village": {
+   "label": "supported",
+   "says": "Oia is a small village on the northwestern tip of Santorini.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "is a small village and former community in the South Aegean",
+    "the northwesternmost part of Santorini"
+   ]
+  },
+  "main-street": {
+   "label": "supported",
+   "says": "The main street, Nikolaou Nomikou, is a cobbled path winding round the caldera.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "called the \"Nikolaou Nomikou\",  which goes up the hill winding round the caldera.",
+    "is the main trekking path, which is cobbled"
+   ]
+  },
+  "crowds": {
+   "label": "supported",
+   "says": "Oia's paths are very narrow and get congested in the tourist season.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "Its paths are very narrow and hence get congested during the tourist season."
+   ]
+  },
+  "eagle": {
+   "label": "supported",
+   "says": "Oia is called the Eagle's Nest; from it you see Palia and Nea Kameni and the island of Therasia.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "is known as the \"Eagle's Nest\" from which Palia and Nea Kameni volcanoes are seen, as well as the island of Therasia."
+   ]
+  },
+  "apano": {
+   "label": "supported",
+   "says": "Oia was previously known as Apano Meria, upper side; the name changed to Oia in the second half of the 19th century.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "Oia was previously known as Apano Meria",
+    "\"upper side\"",
+    "The name was changed to Oia in the second half of the 19th century."
+   ]
+  },
+  "ancient-oia": {
+   "label": "supported",
+   "says": "Ancient Oia was a harbor of ancient Thera in the southeast of the island, where Kamari is now.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "The Ancient Greek Oia was one of the two harbours of ancient Thera and was located in the southeast of the island, where Kamari is now."
+   ]
+  },
+  "prosperity": {
+   "label": "supported",
+   "says": "Oia peaked in the late 19th century and early 20th century on its merchant fleet, trading especially from Alexandria to Russia.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "Oia reached the peak of prosperity in the late 19th and early 20th centuries. Its economic prosperity was based on its merchant fleet, which plied trade in the Eastern Mediterranean, especially from Alexandria to Russia."
+   ]
+  },
+  "1890": {
+   "label": "estimate",
+   "says": "In 1890 Oia had about 2,500 residents and about 130 sailing ships.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "In 1890, Oia had approximately 2,500 residents and approximately 130 sailing ships."
+   ]
+  },
+  "wine": {
+   "label": "supported",
+   "says": "Excellent wine from the hinterland was exported to France and elsewhere.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "Excellent wine was produced in quantity in the hinterland and exported to France, amongst other places."
+   ]
+  },
+  "captains": {
+   "label": "supported",
+   "says": "The two-story captains' houses on the highest part of the village recall its former wealth; captains of the late 19th century built neo-classical mansions.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "The two-story captains' houses built on the highest part of the village are a reminder of the village's former affluence.",
+    "The wealthy ship captains of the late 19th century built neo-classical mansions."
+   ]
+  },
+  "museum": {
+   "label": "supported",
+   "says": "A restored 19th-century mansion a block from the cliff-top is now the maritime museum, with figureheads, sea chests and ship models.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "Another 19th-century mansion in Oia, a block away from the cliff-top, has been restored and converted into the municipal museum of the maritime history of Thira.",
+    "It displays rare figureheads",
+    "seamen's chests",
+    "models of old and new Thiran ships"
+   ]
+  },
+  "decline": {
+   "label": "supported",
+   "says": "Steamships and the concentration of shipping at Piraeus collapsed Oia's sea trade.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "However, the arrival of steam and the concentration of shipping at Piraeus caused the town's seagoing trade to collapse"
+   ]
+  },
+  "quake": {
+   "label": "supported",
+   "says": "The 1956 earthquake destroyed part of the town.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "The 1956 earthquake destroyed part of the town."
+   ]
+  },
+  "quake-oia": {
+   "label": "supported",
+   "says": "The worst damage on Santorini was along the caldera edge, especially at Oia, with ground collapsing into the sea.",
+   "src": [
+    "wp-santorini"
+   ],
+   "quote": [
+    "The greatest damage was experienced on the Western side along the edge of the caldera, especially at Oia, with parts of the ground collapsing into the sea."
+   ]
+  },
+  "1977": {
+   "label": "supported",
+   "says": "After the earthquake people left again, and by 1977 Oia had only 306 inhabitants.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "The earthquake was followed by renewed emigration, and in 1977 Oia had only 306 inhabitants."
+   ]
+  },
+  "1976": {
+   "label": "supported",
+   "says": "In 1976 Oia joined the Greek National Tourism Organisation's program to preserve traditional settlements, under Aris Konstantinidis; seamen's cave houses became guest houses, hotels and restaurants.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "In 1976, the town was included in the programme for preservation and development of traditional settlements of the Greek National Tourism Organisation under Aris Konstantinidis.",
+    "simple seamen's houses on the edge of the caldera, became guest houses, hotels, and restaurants."
+   ]
+  },
+  "prize": {
+   "label": "supported",
+   "says": "The work won the Europa Nostra Prize in 1979.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "For their work in Oia, the Greek National Tourism Organisation received the Europa Nostra Prize in 1979"
+   ]
+  },
+  "cave": {
+   "label": "supported",
+   "says": "Cliff houses are built in niches carved into the caldera slopes; the air-filled pumice keeps them warm in winter and cool in summer.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "Impressive houses in the town are those \"cliff houses\" built in the niches carved into the caldera slopes with the provision of air-filled pumice, which provides insulation benefits to the building, keeping it warm in winter and cool in summer."
+   ]
+  },
+  "cave-crews": {
+   "label": "supported",
+   "says": "Many cave houses were used by ships' crews.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "in many cases built directly into niches which are cave houses used by the crew of the ships"
+   ]
+  },
+  "white": {
+   "label": "disputed",
+   "says": "Several explanations are given for the white paint: lime wash so rainwater runs off to be collected, looks, and a story that under Ottoman rule Greeks could not fly their flag and painted the town white in defiance.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "The houses are painted with white lime water so that the rainwater that falls over them runs down and can be collected.",
+    "The other reason for painting the houses white is for aesthetic purposes.",
+    "The other explanation given is that during the Ottoman rule of Greece",
+    "Greeks were not allowed to fly their white flag. In defiance, in Oia, they painted their entire housing complex in white"
+   ]
+  },
+  "churches": {
+   "label": "supported",
+   "says": "Oia has many restored churches, including the Panagia church; some were built in memory of sailors.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "The town also has numerous restored churches, including Panagia church; some were built in memory of sailors."
+   ]
+  },
+  "castle": {
+   "label": "supported",
+   "says": "Oia's ruined castle serves as a lookout with a complete 360-degree view; it is also called Fort Londsa.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "serves as a lookout point with a complete 360-degree view. It is also called Fort Londsa."
+   ]
+  },
+  "castle-system": {
+   "label": "supported",
+   "says": "It was part of the same Venetian defense system as Pyrgos and once one of the island's strongest fortresses.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "This castle was part of the same Venetian defense system as Pyrgos and was once one of the island's strongest fortresses."
+   ]
+  },
+  "windmill": {
+   "label": "supported",
+   "says": "An old windmill is one of Oia's most recognizable buildings, often on postcards.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "One of the most recognisable buildings in the town is an old windmill, which often appears on postcards."
+   ]
+  },
+  "ammoudi": {
+   "label": "supported",
+   "says": "The harbor of Ammoudi, on the western side, is reached by steep stairs north of Fort Londsa; there are about 300 steps down to the port.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "The harbour of Ammoudi on the western side of the town is reached by steep stairs north of Fort Londsa; there are a few tavernas and a pebble beach.",
+    "There are 300 steps down to the port from Oia."
+   ]
+  },
+  "sunset": {
+   "label": "supported",
+   "says": "Sunset viewing is one of the most popular attractions; the town fills with people as the white houses and caldera catch the colors of the setting sun for a few seconds.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "One of the most popular attractions in the town is sunset viewing.",
+    "At this time, the town is crowded with people to watch the spectacle, as the white houses and the caldera catch all the colours of the setting sun for a few seconds."
+   ]
+  },
+  "sanudo": {
+   "label": "supported",
+   "says": "Venetian rule began when Marco Sanudo founded the Duchy of Naxos in 1207; Oia's Agios Nikolaos was one of five local citadels.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "when Marco Sanudo founded the Duchy of Naxos in 1207 and feudal rule was instituted on Santorini",
+    "Agios Nikolaos Kastell",
+    "was one of five local citadels"
+   ]
+  },
+  "decline2": {
+   "label": "supported",
+   "says": "Wars, economic depression and overfishing hurt the economy in the early 20th century, and emigration grew, especially to Piraeus.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "agriculture also diminished as increasing emigration took place, especially to Piraeus and Laurium.",
+    "The economy of the town declined in the early 20th century on account of wars, economic depression, and overexploitation of fish resources."
+   ]
+  },
+  "film": {
+   "label": "supported",
+   "says": "Oia was the center of the story in the 1982 film Summer Lovers.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "Oia was the centre of the story in the 1982 film Summer Lovers."
+   ]
+  },
+  "picture": {
+   "label": "supported",
+   "says": "After the earthquake Oia became a picture-perfect tourist town that is crowded in summer.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "After the earthquake, the village redeveloped into an attractive tourist town of the Cyclades, and is known as a \"picture-perfect\" town, which gets crowded with people during the summer season."
+   ]
+  },
+  "ammoudi-beach": {
+   "label": "supported",
+   "says": "At Ammoudi there are a few tavernas and a pebble beach.",
+   "src": [
+    "wp-oia"
+   ],
+   "quote": [
+    "there are a few tavernas and a pebble beach."
+   ]
+  },
+  "sun": {
+   "label": "supported",
+   "says": "The sun burns even when the breeze feels cool; dehydration and sunburn are the most common health problems.",
+   "src": [
+    "wv-santorini"
+   ],
+   "quote": [
+    "the sun burns regardless",
+    "Dehydration is, together with sunburns, the most common health issue encountered on Santorini."
+   ]
+  },
+  "cliffs": {
+   "label": "supported",
+   "says": "Cliffs and low walls over big drops are a danger to children.",
+   "src": [
+    "wv-santorini"
+   ],
+   "quote": [
+    "The cliffs and low walls guarding large drops pose a danger to children."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "On the main cobbled lane, Nikolaou Nomikou, at a spot where you can step aside and see over the caldera.",
+   "paras": [
+    {
+     "t": "Welcome to Oia, at the northwestern tip of Santorini. This cobbled lane is its main street, Nikolaou Nomikou.",
+     "c": [
+      "village",
+      "main-street"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The lanes are narrow and crowded, and the walls above the drops are low. Step aside when you stop, and keep children close.",
+     "c": [
+      "crowds",
+      "cliffs"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The lane winds along the rim of the caldera. Oia has a nickname, the Eagle's Nest. Out over the water you can see the two volcanic islands, Palia and Nea Kameni, and the island of Therasia.",
+     "c": [
+      "main-street",
+      "eagle"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The name itself has wandered. For centuries this place was called Apano Meria, the upper side. It only became Oia in the later 1800s. The ancient Oia was somewhere else entirely, a harbor in the southeast of the island, where Kamari is now.",
+     "c": [
+      "apano",
+      "ancient-oia"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The captains' village",
+   "stand": "Keep walking along the lane toward the higher part of the village, and stop where the larger, grander houses begin.",
+   "paras": [
+    {
+     "t": "Oia was a sailors' town. In the late 1800s its merchant ships traded across the eastern Mediterranean, from Alexandria to Russia.",
+     "c": [
+      "prosperity"
+     ],
+     "level": 1
+    },
+    {
+     "t": "In 1890 it had about 2,500 people and about 130 sailing ships. The wealthy captains built themselves neo-classical mansions, and their two-story houses up on the highest part of the village are still a reminder of that money.",
+     "c": [
+      "1890",
+      "captains"
+     ],
+     "level": 2
+    },
+    {
+     "t": "One of those mansions, a block back from the cliff-top, is now the maritime museum. Inside are ship figureheads, sailors' sea chests and models of island ships. And it wasn't only ships: fine wine from the farmland behind the village went out to France and beyond.",
+     "c": [
+      "museum",
+      "wine"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Then the world changed. Steamships came, shipping gathered at Piraeus near Athens, and Oia's sea trade collapsed.",
+     "c": [
+      "decline"
+     ],
+     "level": 2
+    },
+    {
+     "t": "In the early 1900s wars, economic depression and overfishing hit the town too. And people moved away, many of them to Piraeus.",
+     "c": [
+      "decline2"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Earthquake and rebirth",
+   "stand": "Find a place along the lane where you can look down at the houses dug into the cliff below.",
+   "paras": [
+    {
+     "t": "In 1956 an earthquake destroyed part of the town. At Oia, parts of the ground fell into the sea.",
+     "c": [
+      "quake",
+      "quake-oia"
+     ],
+     "level": 1
+    },
+    {
+     "t": "People left. By 1977 Oia had only 306 inhabitants. Imagine these lanes nearly empty.",
+     "c": [
+      "1977"
+     ],
+     "level": 2
+    },
+    {
+     "t": "But help was already on its way. In 1976, Oia was taken into a program of the Greek National Tourism Organisation to preserve traditional villages, under Aris Konstantinidis. The simple seamen's houses on the cliff edge became guest houses, hotels and restaurants. The work won the Europa Nostra Prize in 1979.",
+     "c": [
+      "1976",
+      "prize"
+     ],
+     "level": 2
+    },
+    {
+     "t": "And the visitors came. Oia became known as a picture-perfect town, crowded every summer. Filmmakers noticed as well: Oia was the center of the story in the 1982 film Summer Lovers.",
+     "c": [
+      "picture",
+      "film"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Cave houses and white walls",
+   "stand": "Stay looking down at the cliff houses.",
+   "paras": [
+    {
+     "t": "Look at the houses below you, carved into the cliff. The pumice around them is full of air, so they stay warm in winter and cool in summer.",
+     "c": [
+      "cave",
+      "cave-crews"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Many of these cave houses were homes for the ships' crews. And why so white? Explanations differ. One is practical: lime wash helps rainwater run off the roofs to be collected. Another is simply that it looks beautiful. And there's a story that under Ottoman rule Greeks couldn't fly their flag, so in Oia they painted the whole town white in defiance.",
+     "c": [
+      "white"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Notice the churches too. Oia has many restored churches, including the Panagia church. Some were built in memory of sailors.",
+     "c": [
+      "churches"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The castle and the sunset",
+   "stand": "Walk to the end of the village, near the ruined castle, and find a spot facing west over the water.",
+   "paras": [
+    {
+     "t": "This is Oia's ruined castle, Fort Londsa, a lookout with a view all the way around.",
+     "c": [
+      "castle"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It was part of the same Venetian defense system as the castle at Pyrgos, and once one of the strongest fortresses on the island. The Venetian age here began in 1207, when Marco Sanudo founded the Duchy of Naxos, and Oia was home to one of the island's five local citadels.",
+     "c": [
+      "castle-system",
+      "sanudo"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Look for the old windmill too. It's one of the most recognizable buildings in Oia, and it turns up on a lot of postcards.",
+     "c": [
+      "windmill"
+     ],
+     "level": 2
+    },
+    {
+     "t": "North of the castle, steep stairs lead down to the little harbor of Ammoudi, about 300 steps. It's a long way back up, so save your legs if the day is hot, and carry water. The sun here is strong, and dehydration and sunburn are the island's most common health problems.",
+     "c": [
+      "ammoudi",
+      "sun"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Down at Ammoudi there are a few tavernas and a pebble beach, right on the water.",
+     "c": [
+      "ammoudi-beach"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And at sunset, all of Oia fills with people. For a few seconds, the white houses and the whole caldera catch the colors of the setting sun.",
+     "c": [
+      "sunset"
+     ],
+     "level": 1
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Stay where you are, facing the water.",
+   "paras": [
+    {
+     "t": "Look around at all these strangers from everywhere, standing together by the old walls and going quiet for the same few seconds. That shared quiet may be the best thing Oia gives anyone.",
+     "c": [],
+     "level": 1,
+     "cue": true
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

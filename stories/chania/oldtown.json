@@ -1,0 +1,525 @@
+{
+ "id": "oldtown",
+ "v": 1,
+ "city": "chania",
+ "title": "Chania Old Town and Topanas",
+ "match": {
+  "ids": [
+   "oldtown"
+  ],
+  "names": [
+   "topanas",
+   "chania old town",
+   "old town of chania",
+   "etz hayyim"
+  ],
+  "wikidata": [
+   "Q1231296"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "square": {
+   "label": "supported",
+   "says": "The main square of the Old Town is Eleftherios Venizelos Square, also called Syntrivani, from the Turkish for fountain; it is the heart of tourist activity.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "The main square of the Old Town (next to the west end of Kasteli) is Eleftherios Venizelos Square, also known as Syntrivani",
+    "(from Turkish şadırvan 'fountain')",
+    "It is the heart of the tourist activities in the area."
+   ]
+  },
+  "walls": {
+   "label": "supported",
+   "says": "The old town was surrounded by Venetian fortifications; only the eastern and western parts survive.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "It used to be surrounded by the old Venetian fortifications",
+    "Of them, only the eastern and western parts have survived."
+   ]
+  },
+  "cradle": {
+   "label": "supported",
+   "says": "The old town, bounded by the partly destroyed Venetian wall, has been the cradle of all the civilizations of the area.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "The borders of the Old Town are the partly destroyed old Venetian wall (and bulwarks) and this has been the cradle of all the civilizations which were developed in the area."
+   ]
+  },
+  "blend": {
+   "label": "supported",
+   "says": "Venetian-era Canea blended Byzantine, Venetian and Classical Greek culture; many important buildings date from then.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "The city of Canea during the period that followed was a blend of Byzantine, Venetian, and Classical Greek cultural elements. Many of the important buildings of the town were built during this era"
+   ]
+  },
+  "no-cars": {
+   "label": "supported",
+   "says": "No cars are permitted in much of the old town.",
+   "src": [
+    "wv-chania"
+   ],
+   "quote": [
+    "There are no cars permitted at all in much of the old town."
+   ]
+  },
+  "topanas": {
+   "label": "supported",
+   "says": "Topanas, west of the square, was the Christian quarter under the Ottomans; the name comes from a Venetian ammunition warehouse (tophane).",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "Next to this (on the west side) lies the Topanas district, which was the Christian quarter during the Ottoman period. Its name comes from the Venetian ammunition warehouse (Turkish tophane), which was located there."
+   ]
+  },
+  "topanas-now": {
+   "label": "supported",
+   "says": "Topanas has narrow alleys and old buildings, many restored as hotels, restaurants, shops and bars; busy April to October and at night in winter.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "The Topanas area has many narrow alleys and old buildings, some of which have been restored as hotels, restaurants, shops and bars. This makes it a popular place especially during the warm period (April–October). In the winter, it still remains a centre of activities (especially for nightlife)."
+   ]
+  },
+  "maze": {
+   "label": "supported",
+   "says": "Wikivoyage: the old town centres on the harbor, a maze of alleys and houses rebuilt, ruined and rebuilt again with details from different epochs.",
+   "src": [
+    "wv-chania"
+   ],
+   "quote": [
+    "The old town is centred around the harbour, a maze of alleys and houses that stood for hundreds of years, were rebuilt, ruined and rebuilt again with details from different epochs."
+   ]
+  },
+  "jewish-q": {
+   "label": "supported",
+   "says": "The Jewish quarter (Evraiki or Ovraiki) was at the northwest of the Old Town, behind the harbor, within Topanas.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "The Jewish quarter (Evraiki or Ovraiki) was located at the north-west of the Old Town, behind the harbour and within the borders of Topanas."
+   ]
+  },
+  "eh-way": {
+   "label": "supported",
+   "says": "Etz Hayyim is reached by walking up Kondylaki Street from the harbor and taking the second right; the stone wall and courtyard entrance face you.",
+   "src": [
+    "wv-chania"
+   ],
+   "quote": [
+    "The synagogue can be reached by walking up Kondylaki Street from the harbour and taking the second turn to the right",
+    "the stone wall and entrance to the courtyard of the synagogue are directly in front of you."
+   ]
+  },
+  "eh-church": {
+   "label": "supported",
+   "says": "Etz Hayyim was built as a church and became a synagogue in the 17th century; it is the only surviving remnant of Crete's Romaniote Jewish community.",
+   "src": [
+    "wp-etz-hayyim"
+   ],
+   "quote": [
+    "Constructed as a church, the building was converted into a synagogue in the 17th century. It is the only surviving remnant of the island's Romaniote Jewish community."
+   ]
+  },
+  "eh-1944": {
+   "label": "supported",
+   "says": "The synagogue fell into ruin after the deportation and drowning of Chania's Jewish community in July 1944.",
+   "src": [
+    "wp-etz-hayyim"
+   ],
+   "quote": [
+    "The synagogue fell into disuse and ruin after the deportation and drowning of the Jewish community of Chania in July 1944."
+   ]
+  },
+  "tanais": {
+   "label": "supported",
+   "says": "Most of Chania's Jews were transported off the island by the Nazis in 1944; a British torpedo sank the ship Tanais, which carried most of the prisoners.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "Most of them were transported off the island by the Nazi occupiers in 1944. A British torpedo sank the ship Tanais, which was carrying most of the Jewish prisoners."
+   ]
+  },
+  "eh-2300": {
+   "label": "supported",
+   "says": "Wikivoyage: it stood as a monument to the Nazis' obliteration of 2,300 years of Jewish life on Crete.",
+   "src": [
+    "wv-chania"
+   ],
+   "quote": [
+    "Essentially it stood as a monument to the success of the Nazis in obliterating 2,300 years of Jewish life on Crete."
+   ]
+  },
+  "eh-restore": {
+   "label": "supported",
+   "says": "It was restored between 1996 and its rededication in 1999.",
+   "src": [
+    "wv-chania",
+    "wp-etz-hayyim"
+   ],
+   "quote": [
+    "Between 1996 and the year of its rededication in 1999, the structure was painstakingly restored.",
+    "After being restored during the late 1990s"
+   ]
+  },
+  "eh-motto": {
+   "label": "supported",
+   "says": "The restoration's philosophy is summed up in the Hebrew Am Israel Hayy, 'The people of Israel live'.",
+   "src": [
+    "wv-chania"
+   ],
+   "quote": [
+    "The philosophy that directed this work is summed up in the Hebrew Am Israel Hayy: 'The people of Israel live'."
+   ]
+  },
+  "eh-coexist": {
+   "label": "supported",
+   "says": "The synagogue is seen locally as a symbol of coexistence; almost all congregants are non-Jews; Christians and Muslims are welcome.",
+   "src": [
+    "wp-etz-hayyim"
+   ],
+   "quote": [
+    "The synagogue is seen locally as a symbol of coexistence. Uniquely, almost all of its congregants are non-Jews",
+    "Christians and Muslims are welcome to visit."
+   ]
+  },
+  "eh-arson": {
+   "label": "supported",
+   "says": "Arson attacks in January 2010; the second fire destroyed 2,500 rare books and manuscripts.",
+   "src": [
+    "wp-etz-hayyim"
+   ],
+   "quote": [
+    "The synagogue was the target of multiple arson attacks in January 2010",
+    "The first fire was quickly contained, but the second destroyed 2,500 rare books and manuscripts."
+   ]
+  },
+  "kasteli": {
+   "label": "supported",
+   "says": "Kasteli, the central part of the old town, inhabited since Neolithic times (ancient Kydonia), is a small hill by the seafront, secure, next to the harbor and near a fertile valley to the south; it is quieter today.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "The central part of the old town is named Kasteli and has been inhabited since Neolithic times (ancient Kydonia). It is located on a small hill right next to the seafront and has always been the ideal place for a settlement due to its secure position, its location next to the harbour and its proximity to the fertile valley in the south. Nowadays it is a bit more quiet than the neighbouring areas of the west part of the district."
+   ]
+  },
+  "quince": {
+   "label": "supported",
+   "says": "The Greeks linked Kydonia with the quince; the word 'quince' comes from the Greek for 'Kydonian apple'.",
+   "src": [
+    "wp-kydonia"
+   ],
+   "quote": [
+    "The Greeks associated Kydonia with the quince fruit, and the word \"quince\" ultimately originates in the Greek for \"Kydonian apple\"."
+   ]
+  },
+  "hell-wall": {
+   "label": "supported",
+   "says": "The base of the Hellenistic wall can be seen below the Byzantine wall of Kastelli Hill; ancient building material was reused in the Byzantine wall.",
+   "src": [
+    "wp-kydonia"
+   ],
+   "quote": [
+    "The remaining base from the Hellenistic wall can be seen below the Byzantine wall of Kastelli Hill.",
+    "Material from the urban architecture of the ancient city was used for the construction of Kastelli Hill's Byzantine wall."
+   ]
+  },
+  "sifaka": {
+   "label": "supported",
+   "says": "Parts of the Byzantine wall survive in Sifaka Street.",
+   "src": [
+    "wp-firkas"
+   ],
+   "quote": [
+    "Some parts of the Byzantine wall still exist in Sifaka Street."
+   ]
+  },
+  "lineara": {
+   "label": "supported",
+   "says": "A large archive of 97 Linear A tablets, the second largest known, was found; they are mostly economic records.",
+   "src": [
+    "wp-kydonia"
+   ],
+   "quote": [
+    "A large archive of Linear A tablets (97) have been found, the second largest archive known. The tablets were largely economic records of agricultural produce, people and animals."
+   ]
+  },
+  "cydon": {
+   "label": "legend",
+   "says": "Some legends say Kydonia was founded by King Cydon, son of Hermes or Apollo and of Akakallis, daughter of Minos.",
+   "src": [
+    "wp-kydonia"
+   ],
+   "quote": [
+    "Some legends claim that Kydonia was founded by a king named Cydon",
+    "a son of Hermes or Apollo and of Akakallis, the daughter of King Minos."
+   ]
+  },
+  "name": {
+   "label": "disputed",
+   "says": "Scholars suggest the Arabs named the city al-Khan ('the Caravanserai' or 'Inn'), possibly from a neighborhood once devoted to the Minoan god Welchanos.",
+   "src": [
+    "wp-kydonia",
+    "wp-chania"
+   ],
+   "quote": [
+    "The scholars suggest that the name was changed by the Arabs, who named the city al-Ḵān",
+    "literally \"the Caravanserai\" or \"Inn\" but possibly transcribing the name of a neighborhood previously devoted to the worship of the Minoan god Welchanos"
+   ]
+  },
+  "ott-quarters": {
+   "label": "supported",
+   "says": "Under the Ottomans, Muslims lived mainly in the eastern quarters, Kastelli and Splantzia.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "Muslims resided mainly in the eastern quarters, Kastelli and Splantzia"
+   ]
+  },
+  "splantzia": {
+   "label": "supported",
+   "says": "The Splantzia quarter, next to the east part of Kasteli, is largely untouched.",
+   "src": [
+    "wp-chania"
+   ],
+   "quote": [
+    "The Splantzia quarter (next to the east part of Kasteli) is also largely untouched."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "The fountain square",
+   "stand": "In Eleftherios Venizelos Square, the main square of the old town.",
+   "paras": [
+    {
+     "t": "This is the main square of the old town, Eleftherios Venizelos Square. It's also known as Syntrivani, from the Turkish word for a fountain. It's the heart of the town's tourist life.",
+     "c": [
+      "square"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The old town's edge is the old Venetian wall, partly destroyed now. Only its eastern and western stretches survive. Inside that line, one account says, is the cradle of every civilization that grew up in this area.",
+     "c": [
+      "walls",
+      "cradle"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Under Venice, the town became a blend of Byzantine, Venetian and Classical Greek culture, and many of its important buildings went up then. Later, under the Ottomans, Christians and Muslims lived mostly in different quarters. You're about to walk through both.",
+     "c": [
+      "blend",
+      "topanas",
+      "ott-quarters"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Good news for walkers: in much of the old town, no cars are allowed at all.",
+     "c": [
+      "no-cars"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The lanes are narrow, so watch your step on the paving.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    }
+   ]
+  },
+  {
+   "name": "Topanas",
+   "stand": "Walk west from the square into the lanes of Topanas.",
+   "paras": [
+    {
+     "t": "You're in Topanas. Under the Ottomans, this was the Christian quarter. The name comes from a Venetian ammunition store that stood here, a tophane in Turkish.",
+     "c": [
+      "topanas"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Look around at the narrow alleys and old buildings. Some have been given new lives as hotels, restaurants, shops and bars. That's why it's so busy from April to October, and still lively at night in winter.",
+     "c": [
+      "topanas-now"
+     ],
+     "level": 2
+    },
+    {
+     "t": "A travel guide calls these lanes a maze of houses that stood for hundreds of years, were rebuilt, ruined, and rebuilt again, with details from different epochs. So if one house seems to mix the styles of different ages, that's the point.",
+     "c": [
+      "maze"
+     ],
+     "level": 3
+    },
+    {
+     "t": "In the northwest corner of the old town, behind the harbor and inside Topanas, was the Jewish quarter, called Evraiki or Ovraiki. Our next stop is a synagogue. To get there, walk up Kondylaki Street from the harbor and take the second turn on the right.",
+     "c": [
+      "jewish-q",
+      "eh-way"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Etz Hayyim Synagogue",
+   "stand": "At the end of the short lane off Kondylaki Street, facing the synagogue's stone wall and courtyard entrance.",
+   "paras": [
+    {
+     "t": "Straight ahead is the Etz Hayyim Synagogue, the last remnant of Crete's Romaniote Jewish community. In 1944, under the Nazi occupation, the Jewish community was deported, and most were drowned when their ship was sunk. The synagogue fell into ruin.",
+     "c": [
+      "eh-way",
+      "eh-church",
+      "eh-1944",
+      "tanais"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The building began as a church, and became a synagogue in the 1600s. The ship was the Tanais, and it was a British torpedo that sank her.",
+     "c": [
+      "eh-church",
+      "tanais"
+     ],
+     "level": 2
+    },
+    {
+     "t": "If it's open, step in quietly and respectfully.",
+     "c": [],
+     "level": 2,
+     "cue": true
+    },
+    {
+     "t": "One travel guide says that, until its restoration, it stood as a monument to the Nazis' success in wiping out 2,300 years of Jewish life on Crete.",
+     "c": [
+      "eh-2300"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Then, between 1996 and 1999, it was painstakingly restored and rededicated. The idea behind that work is summed up in a Hebrew phrase, Am Israel Hayy: the people of Israel live.",
+     "c": [
+      "eh-restore",
+      "eh-motto"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Today it's seen locally as a symbol of coexistence. Almost none of its congregants are Jewish, and Christians and Muslims are welcome to visit.",
+     "c": [
+      "eh-coexist"
+     ],
+     "level": 3
+    },
+    {
+     "t": "It hasn't been easy. In January 2010, arsonists struck twice. The first fire was quickly put out. The second destroyed 2,500 rare books and manuscripts.",
+     "c": [
+      "eh-arson"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Kastelli hill",
+   "stand": "Go back past the main square and up onto the low hill just east of it.",
+   "paras": [
+    {
+     "t": "This small hill is Kastelli, the heart of the old town, and the site of ancient Kydonia. People have lived up here since Neolithic times.",
+     "c": [
+      "kasteli"
+     ],
+     "level": 1
+    },
+    {
+     "t": "It's easy to see why: a safe height, right by the harbor, with a fertile valley to the south. Today it's a little quieter than the lanes to the west.",
+     "c": [
+      "kasteli"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Kydonia even gave English a word. The Greeks linked the city with the quince fruit, and the word quince comes, in the end, from the Greek for Kydonian apple.",
+     "c": [
+      "quince"
+     ],
+     "level": 2
+    },
+    {
+     "t": "If you come across old walls, look closely. The base of a Hellenistic wall can be seen below the Byzantine wall of Kastelli hill, and the Byzantines built theirs partly with stones from the ancient city. More of the Byzantine wall survives in Sifaka Street.",
+     "c": [
+      "hell-wall",
+      "sifaka"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Digs in ancient Kydonia found a large archive of Linear A tablets, 97 of them, the second largest archive known. They're mostly economic records: crops, people and animals.",
+     "c": [
+      "lineara"
+     ],
+     "level": 3
+    },
+    {
+     "t": "One legend gives the city a founder: a king named Cydon, son of Hermes or Apollo, and of Akakallis, the daughter of King Minos.",
+     "c": [
+      "cydon"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And the name Chania? Scholars suggest it came from the Arabs, who called the city al-Khan, the caravanserai, or inn. It may also echo an old neighborhood where the Minoan god Welchanos was worshipped. Nobody knows for sure.",
+     "c": [
+      "name"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Under the Ottomans, Muslims lived mainly here on Kastelli and in Splantzia, next door to the east. Splantzia is still largely untouched.",
+     "c": [
+      "ott-quarters",
+      "splantzia"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Before you go",
+   "stand": "Find a quiet corner of a lane.",
+   "paras": [
+    {
+     "t": "A Christian quarter, a Jewish quarter, Muslim quarters, all inside one set of walls. These lanes have seen neighbors live side by side, and seen them torn apart. Walk them slowly.",
+     "c": [
+      "topanas",
+      "jewish-q",
+      "ott-quarters",
+      "eh-1944"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

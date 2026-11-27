@@ -1,0 +1,215 @@
+{
+ "name": "ketchikan",
+ "label": "Ketchikan, Alaska",
+ "centre": {
+  "lat": 55.34251,
+  "lng": -131.634
+ },
+ "findings": [
+  {
+   "k": "NOID",
+   "t": "Tongass Historical Museum: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English))",
+   "x": {
+    "id": "src-tongass-historical-museum"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Tribal Fish Hatchery: no Wikidata id and nothing of the name on the map nearby (from Wikivoyage (English))",
+   "x": {
+    "id": "src-tribal-fish-hatchery"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Alaska Rainforest Sanctuary: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "wv~alaska-rainforest-sanctuary"
+   }
+  },
+  {
+   "k": "FAME",
+   "t": "must-see \"Creek Street\" is not offered",
+   "x": {
+    "want": "Creek Street"
+   }
+  },
+  {
+   "k": "INFO",
+   "t": "6 sights, 0 day trips/towns; must-see: Saxman Totem Park, Totem Heritage Center; top by fame: Saxman Totem Park 4, Totem Heritage Center 3, Southeast Alaska Discovery Center 1, Tongass Historical Museum 0, Tribal Fish Hatchery 0, Alaska Rainforest Sanctuary 0",
+   "x": {}
+  }
+ ],
+ "sights": [
+  {
+   "id": "src-q18331580",
+   "name": "Saxman Totem Park",
+   "local": "",
+   "lat": 55.3197,
+   "lng": -131.595,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 4,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q18331580",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic sight in Ketchikan, Alaska, named by 2 independent sources."
+  },
+  {
+   "id": "src-q3532720",
+   "name": "Totem Heritage Center",
+   "local": "",
+   "lat": 55.3426,
+   "lng": -131.634,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 3,
+   "unesco": false,
+   "heritage": true,
+   "wd": "Q3532720",
+   "src": [
+    "Wikivoyage (English)",
+    "national heritage register"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A listed historic museum in Ketchikan, Alaska, named by 2 independent sources."
+  },
+  {
+   "id": "src-q16946986",
+   "name": "Southeast Alaska Discovery Center",
+   "local": "",
+   "lat": 55.3406,
+   "lng": -131.644,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 1,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q16946986",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "See the rainforest interpretive exhibits."
+  },
+  {
+   "id": "src-tongass-historical-museum",
+   "name": "Tongass Historical Museum",
+   "local": "",
+   "lat": 55.34251,
+   "lng": -131.64357,
+   "minutes": 90,
+   "category": "Museum",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "Visit the historical exhibits."
+  },
+  {
+   "id": "src-tribal-fish-hatchery",
+   "name": "Tribal Fish Hatchery",
+   "local": "",
+   "lat": 55.34331,
+   "lng": -131.63513,
+   "minutes": 40,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": true,
+   "builtin": false,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A sight in Ketchikan, Alaska, named by 1 independent sources."
+  },
+  {
+   "id": "wv~alaska-rainforest-sanctuary",
+   "name": "Alaska Rainforest Sanctuary",
+   "local": "",
+   "lat": 55.32591,
+   "lng": -131.52664,
+   "minutes": 30,
+   "category": "Sight",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [
+    "Wikivoyage (English)"
+   ],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "While Alaska is probably one of the last places people would associate with the term \"rainforest\", the large amount of rainfall over this {{acre"
+  }
+ ]
+}

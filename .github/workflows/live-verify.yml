@@ -1,0 +1,27 @@
+name: Live check of the sights fixes (Beta 2)
+on:
+  push:
+    branches: ["claude/project-thread-65fiyt"]
+    paths: ["tools/beta2/live-verify/**", ".github/workflows/live-verify.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i playwright@1.65.1 && npx playwright install --with-deps chromium
+      - name: Can the live helper be reached
+        if: always()
+        run: sh tools/beta2/live-verify/helper-probe.sh
+      - name: Sight names and day trips on the live site
+        if: always()
+        run: node tools/beta2/live-verify/sights-live.cjs
+      - name: Saved AI-era content on the live site (R-30)
+        if: always()
+        run: LIVE_URL=https://gilsonr0566-sys.github.io/Kairoute-Beta2/ node tools/ui/saved-recheck.cjs

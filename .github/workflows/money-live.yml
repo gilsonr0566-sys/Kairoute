@@ -1,0 +1,19 @@
+name: Money live check
+# Home currency, what was spent, the Journal's trip spending and report, on the published site (phone and tablet).
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-ul5f9m]
+    paths: [tools/money-live.cjs, .github/workflows/money-live.yml]
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium && node tools/money-live.cjs

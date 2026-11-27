@@ -1,0 +1,25 @@
+name: City sources probe
+on:
+  workflow_dispatch:
+    inputs:
+      city:
+        default: Prague
+      find:
+        default: "clock|orloj|town hall|radnice"
+  push:
+    branches: ["claude/**"]
+    paths: ["tools/city-probe.mjs"]
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          CITY: ${{ inputs.city || 'Prague' }}
+          FIND: ${{ inputs.find || 'clock|orloj|town hall|radnice' }}
+        run: node tools/city-probe.mjs

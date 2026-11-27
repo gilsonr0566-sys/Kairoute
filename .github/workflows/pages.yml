@@ -1,0 +1,191 @@
+name: Publish website
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+  pages: write
+  id-token: write
+concurrency:
+  group: publish-site
+  cancel-in-progress: false # finish each publish; a newer one waits its turn (cancelling could leave GitHub's placeholder live)
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TICKETMASTER_KEY: ${{ secrets.TICKETMASTER_KEY }}
+      GOOGLE_PLACES_KEY: ${{ secrets.GOOGLE_PLACES_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Check the code (stops a broken build from going live)
+        run: sh tools/check.sh
+      - name: Safety net (every screen agrees on every day of 6 sample trips; a failure stops the update going live)
+        run: |
+          sh build.sh
+          npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+          node tools/plan-test.cjs
+          node tools/ferry-unit.mjs
+          node tools/train-reach-unit.mjs
+          node tools/safety-net.cjs
+          node tools/swap-check.cjs
+          node tools/nav-check.cjs
+          node tools/pill-check.cjs
+          node tools/menu-check.cjs
+          node tools/layout-check.cjs
+          node tools/ship-check.cjs
+          node tools/voyage-check.cjs
+          node tools/time-check.cjs
+          node tools/ride-check.cjs
+          node tools/ready-check.cjs
+          node tools/reorder-check.cjs
+          node tools/hours-check.cjs
+          node tools/anchor-e2e.cjs
+          node tools/addplace-e2e.cjs
+          node tools/text-check.cjs
+          node tools/picker-check.cjs
+          node tools/extras-check.cjs index.html checks/extras
+          node tools/offline-e2e.cjs
+          node tools/offline-sights.cjs
+          node tools/later-check.cjs
+          node tools/area-check.cjs
+          node tools/offlog-check.cjs
+          node tools/money-check.cjs
+          node tools/book-check.cjs
+          node tools/tix-check.cjs
+          node tools/meal-check.cjs
+          node tools/steps-e2e.cjs
+          node tools/port-noai-check.cjs
+      - name: Demo flow gate (Richard's Greece trip on this build, real internet; a failure stops the update going live)
+        run: |
+          python3 -m http.server 8765 >/dev/null 2>&1 &
+          sleep 1
+          URL=http://localhost:8765/ PARTS=A GATE=1 node tools/demo-flow.cjs
+          URL=http://localhost:8765/ node tools/steady-check.cjs
+          cat checks/demo/report.md >> "$GITHUB_STEP_SUMMARY" || true
+      - name: Street map check (no network needed)
+        run: MOCK=1 node tools/map-e2e.cjs
+      - name: Speed check (phone and tablet, slowed like a mid-range phone; a slow app doesn't go live)
+        run: node tools/perf-check.cjs . --json checks/speed.json
+      - name: Freeze check with real internet answers (a recorded visit to the live app replayed on this build, slow phone)
+        run: node tools/freeze-probe.cjs . --cpu 4 --device phone --replay tools/fixtures/net-live.json.gz --gate --max-freeze 3000 | grep -E "Replaying|Freeze probe|Freezes over|Left alone|gate|FAIL"; exit ${PIPESTATUS[0]}
+        shell: bash
+      - name: Keep the safety-net report even when it fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: safety-net-report
+          path: checks
+      - name: Put the live helper's address back (the tests used a local stand-in; see tools/test-helper.sh)
+        if: always()
+        run: |
+          git checkout -- ai.json && grep -q '"url":"https://' ai.json && cat ai.json
+          grep "Test helper stand-in:" helper-proxy.log | tail -1 || true; pkill -f helper-proxy.mjs || true
+      - name: Deploy the AI helper to Cloudflare (free Workers AI)
+        continue-on-error: true
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then echo "No CLOUDFLARE_API_TOKEN repository secret found; skipping the AI helper."; exit 0; fi
+          echo "Cloudflare token found (${#CLOUDFLARE_API_TOKEN} characters)."
+          cd worker && npx -y wrangler@4 deploy 2>&1 | tee deploy.log
+          # Local events: the Ticketmaster key lives only in GitHub secrets and the Worker's secret store.
+          if [ -n "$TICKETMASTER_KEY" ]; then printf '%s' "$TICKETMASTER_KEY" | npx -y wrangler@4 secret put TM_KEY >/dev/null && echo "Events key set."; else echo "No TICKETMASTER_KEY secret yet; events use Wikivoyage only."; fi
+          # Restaurant ratings: the Google Places key lives only in GitHub secrets and the Worker's secret store.
+          if [ -n "$GOOGLE_PLACES_KEY" ]; then printf '%s' "$GOOGLE_PLACES_KEY" | npx -y wrangler@4 secret put GPLACES_KEY >/dev/null && echo "Ratings key set."; else echo "No GOOGLE_PLACES_KEY secret yet; restaurants show as not yet rated."; fi
+          # Recorder key for the "Record stop scripts" workflow: derived from the Cloudflare token, so it lives nowhere else.
+          printf '%s' "$CLOUDFLARE_API_TOKEN" | sha256sum | cut -c1-40 | tr -d '\n' | npx -y wrangler@4 secret put REC_KEY >/dev/null && echo "Recorder key set."
+          url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy.log | head -1)
+          if [ -n "$url" ]; then printf '{"url":"%s"}\n' "$url" > ../ai.json; cat ../ai.json; fi
+      - name: Build the Android app
+        # A website update never waits on the Android build: when Gradle can't download its libraries (Nov 17: guava,
+        # kotlin-stdlib and jsr305 from Maven Central), the site still publishes, with the app file from the live site.
+        id: android
+        continue-on-error: true
+        run: |
+          sh build.sh
+          cd app && npm ci && npm run sync
+          cd android && chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+      - name: Collect site files
+        run: |
+          mkdir _site && cp -r index.html usage.html version.txt .nojekyll manifest.webmanifest sw.js icons lib checks _site/
+          if [ -d audio ]; then cp -r audio _site/; fi # recorded stop scripts (src/features/stop-scripts.js)
+          if [ -f app/android/app/build/outputs/apk/debug/app-debug.apk ]; then cp app/android/app/build/outputs/apk/debug/app-debug.apk _site/Kairoute.apk
+          else echo "Android build failed: keeping the app file from the live site"; curl -sfL -o _site/Kairoute.apk "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/Kairoute.apk" || rm -f _site/Kairoute.apk; fi
+          if [ -f ai.json ]; then grep -q '"url":"https://' ai.json || git checkout -- ai.json; cp ai.json _site/; fi
+          # Today's exchange rates, published with the site: the app's third source for home-currency figures
+          # (src/features/money.js). A failed fetch never stops a publish.
+          (curl -sfL -m 20 https://open.er-api.com/v6/latest/USD -o rates.json && jq -e '.rates.EUR' rates.json >/dev/null && cp rates.json _site/) || echo "No exchange rates today; the app uses its own sources."
+      - name: Wait for GitHub's own branch copy to finish first
+        # GitHub also publishes the repository as-is on every push (index.html there is only a placeholder).
+        # That copy must never land after the real app, so wait until it is done before publishing.
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 60); do
+            left=$(curl -s -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/${{ github.repository }}/actions/runs?head_sha=${{ github.sha }}&per_page=50" \
+              | jq '[.workflow_runs[]? | select(.name == "pages build and deployment" and .status != "completed")] | length')
+            [ "$left" = "0" ] && { echo "branch copy finished (or none)"; break; }
+            echo "waiting for the branch copy ($left running)"; sleep 10
+          done
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+          retention-days: 7 # kept so a failed publish can put this version back (job "restore")
+      - id: deployment
+        uses: actions/deploy-pages@v4
+  restore:
+    # A failed check keeps an update off the site, but GitHub's own branch copy has already published the
+    # "Kairoute is updating" placeholder, which then stayed live until a later publish passed (Nov 14: 45 min).
+    # Put the last good version back, so travelers always land on a working app.
+    needs: deploy
+    if: failure()
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - name: Find the last good publish
+        id: last
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          id=$(curl -s -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/${{ github.repository }}/actions/workflows/pages.yml/runs?status=success&per_page=1" | jq -r '.workflow_runs[0].id // empty')
+          [ -n "$id" ] || { echo "no earlier good publish found"; exit 1; }
+          echo "id=$id" >> "$GITHUB_OUTPUT"; echo "Putting back the site from publish run $id"
+      - uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          run-id: ${{ steps.last.outputs.id }}
+          github-token: ${{ github.token }}
+          path: last
+      - name: Wait for GitHub's own branch copy to finish first
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 60); do
+            left=$(curl -s -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/${{ github.repository }}/actions/runs?head_sha=${{ github.sha }}&per_page=50" \
+              | jq '[.workflow_runs[]? | select(.name == "pages build and deployment" and .status != "completed")] | length')
+            [ "$left" = "0" ] && break
+            echo "waiting for the branch copy ($left running)"; sleep 10
+          done
+      # Its own name: when the failed deploy had already uploaded "github-pages", a second one by that name made the
+      # restore fail too (Nov 16, "Multiple artifacts named github-pages").
+      - uses: actions/upload-artifact@v4
+        with:
+          name: github-pages-restore-${{ github.run_attempt }}
+          path: last/artifact.tar
+          retention-days: 7
+      - uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-restore-${{ github.run_attempt }}

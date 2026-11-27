@@ -1,0 +1,313 @@
+{
+ "id": "agora",
+ "v": 1,
+ "city": "athens",
+ "title": "Ancient Agora",
+ "match": {
+  "ids": [
+   "agora"
+  ],
+  "names": [
+   "ancient agora",
+   "agora of athens",
+   "classical agora"
+  ],
+  "wikidata": [
+   "Q1062843"
+  ]
+ },
+ "checked": "2026-11-21",
+ "claims": {
+  "where": {
+   "label": "supported",
+   "says": "The Agora lies northwest of the Acropolis, bounded by the Areopagus and Market Hill.",
+   "src": [
+    "wp-agora"
+   ],
+   "quote": [
+    "It is located to the northwest of the Acropolis, and bounded on the south by the hill of the Areopagus and on the west by the hill known as the Agoraios Kolonos, also called Market Hill."
+   ]
+  },
+  "use": {
+   "label": "supported",
+   "says": "The Agora was a commercial and assembly place.",
+   "src": [
+    "wp-agora"
+   ],
+   "quote": [
+    "The Agora's initial use was for a commercial, assembly, or residential gathering place."
+   ]
+  },
+  "center": {
+   "label": "verified",
+   "says": "The Agora was the business, political and legal centre of Athens.",
+   "src": [
+    "ascsa-agora-ex"
+   ],
+   "quote": [
+    "business, political, and legal center of Athens, bringing together citizens and foreigners, litigants and jurors, and merchants and philosophers"
+   ]
+  },
+  "women": {
+   "label": "supported",
+   "says": "In the 5th and 4th centuries BC women worked here as innkeepers and merchants.",
+   "src": [
+    "wp-agora"
+   ],
+   "quote": [
+    "In the 5th and 4th centuries BC, there was significant evidence of women being innkeepers and merchants selling their products in the market of the Athenian agora."
+   ]
+  },
+  "heroes": {
+   "label": "supported",
+   "says": "The Monument of the Eponymous Heroes was used as a notice board for new laws and call-ups.",
+   "src": [
+    "wp-agora"
+   ],
+   "quote": [
+    "Monument of the Eponymous Heroes, a monument for the ten heroes of the tribes of Athens which was also used as a notice board for new legislation, public events and military conscription."
+   ]
+  },
+  "paul-market": {
+   "label": "scripture",
+   "says": "Acts 17:17: Paul disputed daily in the market.",
+   "src": [
+    "kjv-acts17"
+   ],
+   "quote": [
+    "\"chapter\":17,\"verse\":17,\"text\":\"Therefore disputed he in the synagogue with the Jews, and with the devout persons, and in the market daily with them that met with him."
+   ]
+  },
+  "heph-intact": {
+   "label": "supported",
+   "says": "The Temple of Hephaestus is a well-preserved temple that still stands largely intact.",
+   "src": [
+    "wp-hephaestus"
+   ],
+   "quote": [
+    "is a well-preserved Greek temple dedicated to Hephaestus; it remains standing largely intact today"
+   ]
+  },
+  "heph-god": {
+   "label": "supported",
+   "says": "Hephaestus was god of metalworking; potters' and metalworkers' shops stood nearby.",
+   "src": [
+    "wp-hephaestus"
+   ],
+   "quote": [
+    "Hephaestus was believed to be the patron god of metal working, craftsmanship, and fire.",
+    "There were numerous potters' workshops and metal-working shops in the vicinity of the temple"
+   ]
+  },
+  "heph-built": {
+   "label": "supported",
+   "says": "Construction began in 449 BC.",
+   "src": [
+    "wp-hephaestus"
+   ],
+   "quote": [
+    "Construction started in 449 BC"
+   ]
+  },
+  "heph-theseus": {
+   "label": "supported",
+   "says": "It was long wrongly called the Theseion; inscriptions tie it to Hephaestus.",
+   "src": [
+    "wp-hephaestus"
+   ],
+   "quote": [
+    "The name Theseion or Temple of Theseus was attributed to the monument in modern times under the mistaken assumption",
+    "refuted after inscriptions from within the temple associated it firmly with Hephaestus"
+   ]
+  },
+  "heph-church": {
+   "label": "disputed",
+   "says": "It became a church of Saint George around AD 700, though exactly when is unknown, and served until 1834.",
+   "src": [
+    "wp-hephaestus"
+   ],
+   "quote": [
+    "Around AD 700, the temple was turned into a Christian church, dedicated to Saint George.",
+    "Exactly when the temple was converted to a Christian church remains unknown.",
+    "until 1834"
+   ]
+  },
+  "heph-why": {
+   "label": "supported",
+   "says": "Its varied later uses helped preserve it.",
+   "src": [
+    "wp-hephaestus"
+   ],
+   "quote": [
+    "The building's condition has been maintained due to its history of varied use."
+   ]
+  },
+  "attalos-king": {
+   "label": "supported",
+   "says": "The Stoa of Attalos was built by King Attalos II of Pergamon as a gift for his education in Athens.",
+   "src": [
+    "wp-attalos"
+   ],
+   "quote": [
+    "It was built by and named after King Attalos II of Pergamon",
+    "The stoa was a gift to the city of Athens for the education that Attalos received there under the philosopher Carneades."
+   ]
+  },
+  "attalos-shops": {
+   "label": "supported",
+   "says": "It had closed rooms at the rear that served as shops.",
+   "src": [
+    "wp-attalos"
+   ],
+   "quote": [
+    "closed rooms at the rear on the ground floor which served as shops"
+   ]
+  },
+  "heruli": {
+   "label": "supported",
+   "says": "Its woodwork was burned by the Heruli in AD 267.",
+   "src": [
+    "wp-attalos"
+   ],
+   "quote": [
+    "The stoa was in frequent use until its woodwork was burned by the Heruli in AD 267."
+   ]
+  },
+  "rebuilt": {
+   "label": "supported",
+   "says": "It was rebuilt from 1952 to 1956 by the American School and is now the Agora museum.",
+   "src": [
+    "wp-attalos"
+   ],
+   "quote": [
+    "The building was reconstructed from 1952 to 1956 by the American School of Classical Studies at Athens and currently houses the Museum of the Ancient Agora."
+   ]
+  },
+  "dig": {
+   "label": "verified",
+   "says": "The American School has excavated the Agora since 1931.",
+   "src": [
+    "ascsa-agora-ex",
+    "wp-attalos"
+   ],
+   "quote": [
+    "The School has been excavating at the Agora since 1931",
+    "commenced in May 1931"
+   ]
+  },
+  "democracy": {
+   "label": "supported",
+   "says": "The museum's exhibits are mostly about Athenian democracy.",
+   "src": [
+    "wp-attalos"
+   ],
+   "quote": [
+    "The museum's exhibits are mostly connected with the Athenian democracy."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "Just inside the entrance, where you can see the long two-storey colonnade to your left and the temple on the hill to your right.",
+   "paras": [
+    {
+     "t": "Welcome to the Agora, the heart of ancient Athens. It was the business, political and legal centre of the city, where citizens and foreigners, litigants and jurors, merchants and philosophers all met, in one open space below the Acropolis.",
+     "c": [
+      "where",
+      "center"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Picture it crowded. In the 400s and 300s BC there were women running inns and selling goods here, alongside everyone else.",
+     "c": [
+      "women"
+     ],
+     "level": 2
+    },
+    {
+     "t": "On the west side stood the Monument of the Eponymous Heroes. It worked as the city's notice board, where new laws, public events and military call-ups were posted.",
+     "c": [
+      "heroes"
+     ],
+     "level": 3
+    },
+    {
+     "t": "This is also the market where, according to Acts chapter seventeen, the apostle Paul argued daily with anyone who would listen.",
+     "c": [
+      "paul-market"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The Temple of Hephaestus",
+   "stand": "Walk up Market Hill and stop at the corner of the temple.",
+   "paras": [
+    {
+     "t": "This is one of the best-preserved Greek temples anywhere, still standing largely intact. It honours Hephaestus, god of fire and metalwork, and fittingly, potters and metalworkers had their shops all around it. Work began in 449 BC.",
+     "c": [
+      "heph-intact",
+      "heph-god",
+      "heph-built"
+     ],
+     "level": 1
+    },
+    {
+     "t": "For a long time people called it the Theseion, thinking the hero Theseus was buried here. That was a mistake. Inscriptions found inside tie it firmly to Hephaestus.",
+     "c": [
+      "heph-theseus"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Why did it survive when so much else fell? It kept being used. It became a church of Saint George, probably around AD 700, although nobody knows exactly when, and it stayed a church until 1834.",
+     "c": [
+      "heph-church",
+      "heph-why"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The Stoa of Attalos",
+   "stand": "At the foot of the long two-storey building on the east side.",
+   "paras": [
+    {
+     "t": "This long building is a gift. King Attalos the Second of Pergamon had studied in Athens and paid for it as a thank-you. Behind the colonnade were rows of rooms used as shops.",
+     "c": [
+      "attalos-king",
+      "attalos-shops"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Invaders called the Heruli burned its woodwork in AD 267. What you see now was rebuilt from 1952 to 1956 by the American School of Classical Studies, which has been digging here since 1931.",
+     "c": [
+      "heruli",
+      "rebuilt",
+      "dig"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Inside is the Agora museum, and most of it is about the birth of democracy. A good place to end: in the square where Athenians argued, voted and traded, a few steps from where the first citizens tried to govern themselves.",
+     "c": [
+      "democracy"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": [
+  {
+   "t": "Opening hours and tickets change by season. Check the official ticket site before you go.",
+   "src": [],
+   "checked": "2026-11-21"
+  }
+ ]
+}

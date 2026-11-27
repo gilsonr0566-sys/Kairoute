@@ -1,0 +1,251 @@
+SOURCE: https://en.wikipedia.org/wiki/Hellenic_Parliament
+RETRIEVED: 2026-11-21T14:26:34.117Z
+STATUS: 200
+TITLE: Hellenic Parliament
+
+The Parliament of the Hellenes (Greek: Βουλή των Ελλήνων, romanized: Voulí ton Ellínon), commonly known as the Hellenic Parliament (Greek: Ελληνικό Κοινοβούλιο, romanized: Ellinikó Koinovoúlio), is the unicameral legislature of Greece, located in the Old Royal Palace, overlooking Syntagma Square in Athens. The parliament is the supreme democratic institution that represents the citizens through an elected body of Members of Parliament (MPs).
+It is a unicameral legislature of 300 members, elected for a four-year term. From 1844–1863 and from 1927–1935, the parliament was bicameral with an upper house (the Senate; Greek: Γερουσία, romanized: Gerousía) and a lower house (the Chamber of Deputies; Βουλή των Αντιπροσώπων, Voulí ton Antiprosópon). Several important Greek statesmen have served as the speaker of the Hellenic Parliament.
+
+
+== History ==
+
+
+=== Semi-constitutional monarchy, 1843–1862 ===
+The first national parliament of the independent Greek state was established in 1843, after the 3 September Revolution, which forced King Otto to grant a constitution. The constitution of 1844 established a semi-constitutional monarchy under the decisive power of the monarch, who exercised legislative power jointly with the elected house of representatives and the appointed senate. It also established the ministers' accountability vis-à-vis the acts of the monarch who was appointing and suspending them.
+
+
+=== Constitutional monarchy, 1864–1909 ===
+
+In October 1862, a rising wave of discontent led the people and the military to rebel again against King Otto and oust him along with the Wittelsbach dynasty. The revolt marked the beginning of a new dynasty, with George Christian Wilhelm of the Schleswig-Holstein-Sønderburg-Glücksburg dynasty as monarch. The constitution of 1864 created a single-chamber (unicameral) parliament, elected for a four-year term, and abolished the senate. Moreover, the king preserved the right to convoke ordinary and extraordinary parliamentary sessions, and dissolve parliament at his discretion, as long as the cabinet signed and endorsed the dissolution decree. With the revisions of 1911 and 1952, it lasted more than a century; one of its most important elements was the restoration of the principle of popular sovereignty.
+
+
+=== Constitution of 1927 ===
+The constitution of 1927 made provisions for a head of state that the parliament and the Senate would elect to serve a five-year term. This "President of the Republic" would be held unaccountable from a political point of view; he would not possess any legislative powers and could only dissolve the parliament with the senate's approval. It also recognized the status of political parties as organic elements of the polity and established their proportional representation in the composition of parliamentary committees.
+This reform of the constitution is also a part of the Second Hellenic Republic, in reference to the Greek state using a republican democracy as a form of governance. This constitutional change was initiated in January 1924 and ratified on 13 April 1924 by the fourth national assembly.
+
+
+=== 1952–1967 ===
+Following World War II, the development of parliamentary institutions resumed in 1948 and in the beginning of the 1950s. The constitution of 1952 consisted of 114 articles and to a large extent was strongly attached to the constitutions of 1864 and 1911. Its central innovations were the explicit institutionalization of parliamentarianism and the consolidation for the first time of the voting rights of women, as well as of their right to stand as candidates for parliamentary office. In February 1963 the government of Konstantinos Karamanlis submitted a proposal for an extensive revision of the constitution, yet the proposal was never put into practice because only a few months after its submission, the government resigned and parliament dissolved.
+
+
+=== Constitutional revisions of 1986, 2001 and 2008 ===
+Greece's current constitution has been revised three times, with the first one taking place in 1986, when the responsibilities of the president were significantly curtailed. In 2001, a very extensive revision took place as a total of 79 articles were amended. The new, revised constitution introduced new individual rights, such as the protection of genetic data and identity or the protection of personal data from electronic processing, and new rules of transparency in politics (on political party financing, electoral expenditures, the relations of media owners with the state, etc.). It modernized parliamentary functions, propped up decentralization, elevated the status of fundamental independent authorities into constitutional institutions, and adopted its provisions on MPs' disqualifications and incompatibilities to current reality after taking into consideration the Special Highest Court's case law. The most recent revision took place in 2008 and introduced several reforms and amendments; it abrogated professional incompatibility and as for growth and development measures extending on insular and mountainous areas, the central administration now assumed special responsibility thereof. It also bestowed the parliament with the power to proceed with proposals should certain preconditions apply, to amend the budget as well as an ad hoc procedure for the Parliament to oversee the budget's implementation.
+
+
+== Composition, election and tenure ==
+
+
+=== Composition ===
+The Greek parliament currently has 297 members, following a decision by the Special Highest Court to strip three far-right Spartan MPs deputies of their parliamentary seats. Although the constitution does not determine the total number of parliamentarians, it does stipulate that there shall be no less than two hundred (200) or no more than three hundred (300), and since 1952 their number has been set to 300. MPs are elected for a four-year term through a system of so called 'reinforced' proportional representation (a conditional plurality bonus system) in 56 constituencies, 48 of which are multi-seat and 8 single-seat.
+
+
+=== Election ===
+Of the 300 seats, 250 are always elected proportionally, with voters selecting the candidate (or candidates depending on the size of the constituency) of their choice by marking their name on the party ballot. If the party with the most votes receives 25% or more of the vote, a bonus is distributed: The party list coming first with at least 25% of the votes would receive 20 extra seats, with one more seat for every half percentage point above 25%, to a maximum of 50 extra seats at 40% (or more) of the votes. Once this bonus has been attributed, the proportional distribution begins for the remaining seats, which can range from 250 if one party gathered at least 40%, to 300 if no party reached 25%. This 2020 law has been in effect since the June 2023 Greek parliamentary election.
+All Greek citizens aged 25 or over on the date of the election are eligible to sit in parliament, provided they are eligible to vote and do not fall under any of the disqualification criteria provided by the constitution. With the exception of university professors, public servants (including members of the Armed Forces) are barred from running for parliament, unless they permanently resign their office before promulgation.
+
+
+=== Parliamentary groups ===
+Οnce MPs assume office, they form parliamentary groups. A parliamentary group in the Hellenic Parliament should consist of at least ten MPs who are members of the same party. Five MPs should also suffice provided the party they belong to had ballots in at least two thirds (2/3) of the constituencies and got at least three percent (3%) of the total number of valid ballots in the country. Provided they are an elected MP, a party leader presides over the respective parliamentary group. They may appoint up to two substitutes, though the president of the largest parliamentary group, the one which is actually in government, as well as the president of the major opposition party, may appoint up to three substitutes each. There are parliament premises meant for the exclusive use of parliamentary groups and independent MPs and parliamentary groups have their own administrative secretariats composed of revocable personnel. Surface area, number of offices, and the number of revocable staff working for parliamentary groups depend on their respective size and electoral strength. The president of the parliamentary group with the second highest proportion of MPs, i.e. head of the political party that is not in government, is referred to as the leader of the major opposition, and enjoys special prerogatives, such as extra time to speak before the assembly.
+
+
+=== Tenure ===
+Members of parliament are immune from criminal prosecution, arrest or detention while in office, with the exception of crimes committed in flagrante delicto. They are also immune from having to provide any information to any authority regarding their legislative functions and deliberations. However, both the constitution and the standing orders allow for the Public Prosecutor's Office to request the parliament to lift an MP's immunity for a particular crime, with MPs deciding through open balloting. Alleged crimes committed by members of the cabinet (including non-MPs) or the president of the republic are first investigated by an ad hoc parliamentary committee, with MPs then voting on the committee's recommendations. Should parliament determine that there is sufficient evidence for prosecution, an ad hoc special court is set up.
+
+
+== Plenum ==
+
+The plenum is composed of all 300 MPs elected in the general elections, which are normally held every four years unless the parliament is dissolved at an earlier date. The plenum must convene within 30 days from the date of the general election. The period for regular plenary session starts on the first Monday in October of each year and cannot last less than five months. The interval between two elections is called a parliamentary term. Consecutive parliamentary terms have been listed on a continuous number sequence since 1975 with the present being the 20th parliamentary term. Parliament holds regular Sessions during a parliamentary term, and there may also be extraordinary and special sessions.
+The president of the republic may call an extraordinary session "whenever he may deem it reasonable" and also decide upon its duration and purpose. On occasion, should specific conditions apply, the parliament has to call a special session and perform its special duties by virtue of the constitution: 1) elect the president of the republic, 2) decide whether to elect a new president in the event of a prolonged incapacity hindering the president of the republic from the discharge of his duties, 3) adopt a presidential decree imposing a state of siege (state of emergency) or prolonging the state of siege, and 4) resolve on a motion of confidence which is mandatory whenever a new government is being formed. During its special sessions, the parliament deals exclusively with the matter for which it was convoked.
+When the parliament is in recess, usually in the summer, legislative work and parliamentary control is exercised by the recess section. Each recess section is composed of one third of all MPs (100). There are three recess sections, one for each month in July, August and September, where all MPs participate at least once.
+
+
+== Organisation ==
+
+
+=== Speaker, Deputy Speakers and Deans ===
+
+The speaker of the parliament presides over parliamentary sittings and represents parliament in international parliamentary organizations and bilateral inter-parliamentary sittings. By virtue of the Greek constitution, the speaker shall temporarily exercise the office of president of the republic should the latter be absent abroad for more than ten days, passes away, resigns, is deposed or hindered from performing his duties for any reason whatsoever.
+Electing a speaker requires an absolute parliamentary majority (151 votes). Should a majority not be attained, there is a new round of voting to elect the candidate who achieves most of the votes cast by relative majority.
+Deputy speakers fill in for the speaker in managing and discharging parliamentary duties. Moreover, deputy speakers often fill in for the speaker and stand for parliament in Greece and abroad. Finally, the deans assist the speaker in managing organizational and executive affairs or perform duties the speaker assigns to them. Secretaries assist the speaker during parliamentary sessions and carry out duties the speaker assigns to them.
+
+
+=== Presidium ===
+The presidium (Προεδρείο της Βουλής, Proedrio tis Voulis) consists of the speaker, seven deputy speakers, three deans and six secretaries. It is responsible for the proper application of the standing orders (which include all necessary provisions for the organization and day-to-day business of the parliament), with the constitution guaranteeing the parliament's independence by giving the presidium complete and absolute authority over all matters related to it, such as its budget, services and staff. A member of the presidium, who must be a member of parliament, cannot be a member of the cabinet or an under-secretary. While the speaker and the deputy speakers are elected at the beginning of each parliamentary term and for the entire duration of that term, the tenure of the deans and of the secretaries lasts for the duration of one regular session of the parliament for which they were elected.
+The presidium's fundamental feature is its multi-partisan composition. Among the members of the presidium, three deputy speakers, two deans and four secretaries come from the largest parliamentary group. The fourth deputy speaker, a secretary and a dean come from the second largest parliamentary group and the fifth deputy speaker and one secretary from the third largest. Finally, the sixth and seventh deputy speakers come from the fourth and fifth largest parliamentary groups, respectively. All positions to be filled require a simple majority vote (50% plus one), provided that at least one quarter of all MPs are present.
+
+
+=== Conference of Presidents ===
+The Conference of Presidents (Διάσκεψη των Προέδρων, Diaskepsi ton Proedron), introduced by the parliament's standing orders in 1987 and sanctioned by the 2001 constitutional revision, decides the weekly agenda, determines the procedure and duration for the discussion of bills (both in committee and in plenary), and may decide to conduct an organized discussion on a specific topic or topics. The speaker and all former speakers (who have been elected MPs), all seven deputy speakers, the presidents of the six standing committees, the President of the special committee on institutions and transparency, the presidents of the parliamentary groups and one independent MP (to represent any independents, provided there are at least five), make up the composition of the conference.
+Following the constitutional revision of 2001, the conference has been entrusted with the power to select, either unanimously or with the concurrence of 4/5 of its members, the board members of all independent regulatory authorities provided for by the constitution, the president, the vice-president and two members of the Statistics Authority, and the presidents and vice-presidents of the Council of State, the Court of Cassation and the Court of Audit, including the general prosecutor of the Court of Cassation.
+
+
+=== Scientific Council and Scientific Service of the Parliament ===
+The Scientific Council has ten members, nine of whom are university professors, whilst the tenth is a high-ranking public officer. The president of the Scientific Council is mainly responsible for approving and distributing draft laws and law proposals to the appropriate directorate for scientific elaboration, coordinating the cooperation and supervision of the work and studies undertaken by the scientific service, evaluating the work by the research fellows of the scientific service and carrying out seminars for the dissemination of scientific information to MPs.
+
+
+== Legislative process ==
+
+
+=== Bills, amendments and additions ===
+Both the government and MPs may submit bills, amendments and additions to parliament. Government bills are called draft laws (Σχέδιο Νόμου, Skhedio Nomou) and must always be accompanied by the General Accounting Office's report estimating its effect on the state budget. Bills originating from an MP are called law proposals (Πρόταση Νόμου, Protasi Nomou) and must not include provisions benefiting a particular person or persons, such as increases in salaries or pensions, that would lead to a decrease in government revenue. It is also mandatory that an explanatory report is attached to all bills, elaborating on the purpose of the proposed legislation and indicating the exact wording of current legislation to be amended or repealed. Draft laws (but not law proposals) must also be accompanied by an impact assessment report and by a report on the results of the public consultation that took place prior to the submission of the bill. Finally, all bills are examined by the parliament's own scientific agency, which submits a review on the proposed provisions.
+
+
+=== Regular legislative procedure ===
+
+In most cases, the bill is first examined and amended by the appropriate committee in two stages taking place at least seven days apart. At the first stage a debate in principle and on the articles is conducted and at the second stage a second reading takes place followed by debate and vote by article. During the legislative elaboration of every bill from the competent standing committee and until the second reading of the relevant articles, every special permanent committee can express its opinion on any specific issue that falls within its competence. If the bill passes the committee stage, it is sent to the plenary for debate. During the plenary session, MPs vote for the draft law or law proposal to become law (Νόμος, Nomos) in three stages: first in principle, where the bill's main theme is discussed (usually a bill also includes other, miscellaneous, provisions or even provisions from other government ministries that have no relation to the bill's main theme), then per article (when amendments may be proposed and either approved or rejected) and finally as a whole.
+
+
+=== Condensed (urgent) legislative procedure ===
+The government may designate a draft bill or law proposal as "very urgent" and request from parliament for the voting to take place after limited debate in one sitting. Bills designated as "very urgent" are immediately sent to the competent standing committee which must first decide whether to accept or reject the government's request. If it accepts the request, it examines the bill in one sitting and must submit its report within the time constraints set by the speaker (usually within 6–8 hours). After the committee stage, the bill is immediately sent for discussion in the plenum (usually the next day) where discussion takes place in one sitting which cannot last longer than ten hours. During debate only the rapporteurs (one from each parliamentary group), the prime minister, the minister(s) responsible, the leaders of the parliamentary groups and/or their representatives, one MP from each parliamentary group and one independent MP (provided that there are at least ten) are allowed to participate. Former prime ministers or speakers of the parliament who have been elected MPs, may also participate in the discussion if they so wish. Once the list of speakers is exhausted or the ten-hour constraint has elapsed, voting takes place on the bill's principle and articles and as a whole.
+Until recently, the use of this procedure was very rare. During 1993–2009, it was used for less than 0.5% of the draft laws discussed and voted in parliament, however, following the 2009 election, this percentage increased to 3.73% and since 2012 to 4.91%. Given that around 40% of the laws passed concern the enactment of international and bilateral treaties which are generally adopted by unanimity or broad consensus, the actual percentage of laws passed using the urgent legislature procedure is 6.1% since 2009 and 9.4% since 2012. In other words, since 2012 one in every 10 laws passed by parliament was debated and enacted within 2 days.
+
+
+=== Parliament decides ===
+In most cases an absolute majority (50% plus one) is sufficient for a vote to pass provided there are at least 75 MPs present in the plenum, with the exception of certain bills for which the constitution requires for a higher threshold. These include treaties that transfer sovereignty to international bodies (at least 180 MPs) or changes to the electoral law so that it cannot be abused by the party in government (at least 200 MPs).
+Custom, namely the Dedilomeni Principle, dictates that there are always 75 MPs present in the plenum and that the government has the majority of MPs inside the plenum at all times, even if on occasion there are in reality more opposition MPs and less than a quarter of all 300 MPs present in the plenum. However, at any time the opposition may challenge the government by calling for a roll call vote provided that at least 15 MPs (one-twentieth) submit to the speaker a formal request. Voting takes place after the debate has finished with each MP expressing his preference by stating "yes", "no", or "present". In such cases, for the bill to pass, an absolute majority (50% plus one) is required provided that at least 120 MPs (two-fifths) vote in favour.
+
+
+=== Publication ===
+Once the bill is passed, it is sent to the president of the republic to promulgate and publish in the Government Gazette. The countersignature of the appropriate government minister(s) is required along with that of the minister responsible for justice. Since 2010, all legislation is available freely through the National Typography Office website.
+
+
+== Parliamentary control ==
+The plenum exercises parliamentary control at least twice a week, which includes petitions, written and oral questions, applications to submit documents and interpellations. Documents by means of which parliamentary control is exercised are submitted to parliament and ought to mention which minister they are addressed to. Should ministers to whom the document is addressed deem it is not within their competence to reply, they should transmit the aforementioned document, within the deadlines set in the standing orders, to the competent minister. Parliamentary control means must be processed within the regular session they were presented, but in the event that this is not possible, they may be submitted anew.
+
+
+=== Means of parliamentary control ===
+Parliamentary control means, other than a censure motion include) petitions, written questions, oral questions, applications to submit documents, interpellations, and investigation committees.
+
+Petitions
+Individuals or groups of citizens may address parliament in writing to make complaints or requests. Parliamentarians may endorse such petitions. A minister should reply within 25 days to a petition endorsed by an MP.
+Written questions
+Parliamentarians have the right to submit written questions to ministers regarding any matter of public importance. Such questions aim at keeping the parliament updated on specific issues. Ministers must reply in writing within twenty five days. In any case, at the start of the week in session such questions are on the agenda and questions as well as petitions are discussed.
+Oral questions
+Every parliamentarian has the right to raise an issue of current significance and address a question to the prime minister or the ministers which for their part should give an oral response to. Once a week, at least, the prime minister selects 2 questions to be answered. Current questions are debated in the plenum, thrice weekly, as well as in the recess section.
+Oral questions to the prime minister (prime minister's hour)
+The prime minister answers to at least two current questions addressed to him once a week. At the plenary session discussion, the prime minister and the MP submitting the question take the floor. The majority of current questions are submitted by the presidents of parliamentary groups; however, MPs also have the opportunity to address a question to the prime minister. If the topic of the current question addressed to the prime minister falls under the exclusive responsibility of a minister, then the minister responsible provides the answer.
+Applications to submit documents
+Parliamentarians have the right to request from ministers in writing, to supply documents related to issues of public importance. The minister has one month at their disposal to submit the documents requested. Still, no documents relating to diplomatic, military or pertinent to national security issues may be submitted.
+Interpellations
+Interpellations aim at the control of government for actions or omissions. MPs that have submitted questions or applied for the supply of specific documents, may turn them into interpellations should they deem that the minister's response did not suffice. Interpellations are debated in plenary sessions. Should there be more than one interpellation about the same subject the parliament may decide on their simultaneous debate or even proceed into a general discussion.
+Current interpellations
+Parliamentarians have the right to current interpellations on current affairs. Such interpellations may be debated on Mondays in plenary sessions as well as in specified sittings of the recess dection. As a general rule, the same debate process for interpellations, as specified by the etanding orders, also applies in the case of discussing current interpellations.
+
+
+=== Special parliamentary procedures ===
+Parliamentary control on independent authorities
+Any independent authority which is established by virtue of the constitution or statutory law, should by March 31 have submitted to the speaker an annual report on previous year's activities and proceedings. The report is forwarded either to the Special Permanent Committee on Institutions and Transparency or to the competent standing committee, or to any other appropriate committee which is established on specific occasions, by the Conference of the Presidents.
+Motions of censure and confidence
+Within 15 days of taking the oath, and following the debate on the government's declaration on general policy the prime minister and the government have to appear before parliament and ask for its vote of confidence. The government may also ask for the expressed confidence of the parliament at any point in time, by a written or oral request of the prime minister to parliament. The government always enjoys the confidence of parliament when the absolute majority of members are present, yet no less than 2/5 of their overall number, declare their confidence. Moreover, parliament may withdraw its trust in government or a member thereof by means of a censure motion. The motion must be supported and signed by at least 50 MPs and include explicitly the issues to be debated. The motion is submitted to the Speaker at a public parliamentary sitting.
+Information and updates
+The prime minister may inform parliament with respect to affairs of national importance or issues of general interest. An immediate debate follows the prime minister's initiative. Moreover, to ensure provision of timely and reliable information to parliament, the government, through the prime minister and in addition to having a debate beyond the order of the day may proceed with statements or announcements before the assembly on major issues of public importance.
+Investigation committees
+The plenum may establish investigation committees consisting of MPs. The committees are called to investigate issues of public interest. Decisions on the establishment of the committees are taken by the absolute majority of members present. The majority cannot nonetheless be less than 2/5 of the total number of MPs. Upon completion of the investigation, the committee assesses the collected evidence and drafts a reasoned report on its findings, while also elaborating on any minority views expressed. With the proposal of 1/5 of the total number of MPs the findings of the committee are registered to the order of the day.
+Motion for a preliminary examination and debate on the findings of an ad hoc parliamentary committee
+For the prosecution of a person who is or was a member of the government, or an undersecretary, an indictment proposal and a judgement of the parliament are necessary. The proposal is submitted by at least thirty (30) MPs and outlines the punishable actions or omissions, in accordance with the relevant act on minister responsibility. The plenary debate on the subject is limited to the taking of a decision, by an absolute majority of the total number of MPs (151 votes), on whether or not to institute an ad hoc parliamentary committee for the conduct of a preliminary examination. The debate on the committee's report starts within 15 days, at the latest, since the notification of an ad hoc daily agenda. It is a general debate on approving or disapproving the proposal for pressing charges against the said person.
+Censure motions
+Parliament may, should at least fifty (50) MPs make such a request in writing, move a motion against the speaker or any other member of the presidium. Should the motion not be rejected, whomever the motion was against loses office.
+
+
+== Parliamentary committees ==
+
+The parliament assumes legislative work and enforces parliamentary control. It is for this purpose that committees of MPs are established, depending on the power of parliamentary groups and independent MPs. Committees engage in legislative work or parliamentary control or special matters. Pursuant to the constitution and the standing orders the following categories of committees are currently at work.
+
+
+=== Standing committees ===
+Standing committees are instituted and composed at the onset of every regular session by a decision of the speaker of the parliament, in order to elaborate and examine draft laws or law proposals. Following the constitutional revision of 2001 and the respective amendments made to the parliament's standing orders, standing committees may also exercise both legislative work and parliamentary control. To the extent provided by law and the standing orders, they may also discuss issues that fall within their competence and give opinions on forthcoming appointments to certain public posts. Moreover, the standing committees are informed by the competent minister or the representative of the agency along with the competent minister before the conclusion of public contracts of considerable value (over 20 million Euros).
+There are currently six standing committees: cultural and educational affairs, national defence and foreign affairs, economic affairs, social affairs, public administration, public order and justice, and production and trade.
+
+
+=== Special standing committees ===
+Moreover, there is provision for four special standing committees, which are regulated in the same way as the standing committees. These are the committees on the financial statement and the general balance sheet and the implementation of the state budget, European affairs, monitoring of the social security system, and armament programs and contracts.
+
+
+=== Special committees ===
+Special committees are established by the speaker upon government request in order to elaborate and examine specific bills or law proposals. They are functioning until they reach a final decision on the bills and law proposals for which they were established.
+
+
+=== Special permanent committees ===
+Special permanent committees are established at the onset of each regular session, except for the Special Permanent Committee on Institutions and Transparency, which is established at the onset of the parliamentary term and operates at the entire duration of the term. There are eight special permanent committees on institutions and transparency; Greeks abroad; environmental protection; research and technology; equality, youth and human rights; regions; road safety; and parliamentary ethics. In addition, there are the following subcommittees to the special permanent committees: the Special Permanent Committee on Environmental Protection has a subcommittee on water resources, the Special Permanent Committee on Equality, Youth and Human Rights has a subcommittee for people with disabilities, and the Special Permanent Committee of the Regions also has a subcommittee on insular and mountainous areas.
+
+
+=== Committees on parliament's internal affairs ===
+Committees on parliament's internal affairs are as follows: Committee on the Standing Orders, Committee on Parliament Finances and Committee on the Parliament's Library. The Committee on the Standing Orders is established at the onset of each parliamentary term, while the Committee on Parliament Finances and the Committee on the Parliament's Library are established at the onset of each regular session. All three deal with standing internal issues of the workings of Parliament.
+
+
+=== Committee on public organisations, banks, public utility enterprises and social security agencies ===
+At the onset of each parliamentary term the speaker institutes the committee which operates for the entire duration of the parliamentary term, including the period between sessions. The committee gives its opinion on the suitability of nominations or renewal of terms in office for chairmen and managing directors serving at public enterprises, banking institutions, public utilities enterprises and social security agencies. The committee may invite anyone of the aforementioned individuals for a hearing six months after they have been appointed or a semester after they last appeared before it.
+
+
+=== Committees on matters of national significance or general interest ===
+Such committees are instituted by means of decisions Parliament makes upon the government's suggestion or following a proposal by the speaker of the parliament or the presidents of the parliamentary groups. The committees' task is to elaborate on issues of general importance or national significance. Upon deciding to establish such a committee, the parliament also determines its subject and the deadline for submitting a report on its findings.
+
+
+=== Investigation committees ===
+Investigation committees are established for the assessment of issues of general interest, following the proposal of one fifth of the total number of MPs (60 MPs) and the vote of the plenary session, which is determined by the absolute majority of the present MPs and cannot be smaller than two fifths of the total number of MPs (120 votes). If the issue relates to foreign affairs or national defense, the absolute majority of all MPs (151 votes) is required. Parliament decides on the deadline for the submission of the committees' report. Investigation committees are vested with all the powers of the investigating authorities and the public prosecutor.
+
+
+=== Ad hoc committees ===
+Should parliament decide to opt for a preliminary investigation, a 12-member committee of MPs shall be appointed and a date shall be set to determine the deadline by which the committee should produce a written report on its findings. In the report all relevant evidence must be attached. Ad hoc preliminary committees are vested with all the powers of the public prosecutor when conducting a preliminary investigation. The committee's report on its findings must be reasoned and should contain a succinct proposal to open criminal proceedings.
+
+
+=== Committee for MP and political party auditing ===
+The committee is responsible for auditing the finances of parties, political party alliances and of candidates for parliamentary office, as well as ensuring compliance to the obligations arising from law 3023/2002 on political party financing.
+It is also responsible for auditing asset declarations made by the prime minister, the leaders of political parties represented in the Hellenic or the European Parliament, members of the cabinet (including deputy ministers and undersecretaries), MPs and MEPs, political party financial managers, as well as those of their spouses and under-age offspring of the aforementioned in order to corroborate verity and ensure that new assets acquired or a possible rise in current asset value is attributable to incoming revenue of all types taking into account living expenses of persons who have to submit the statement according to Law 3213/2003
+The committee consists of one member of parliament from each party or alliance of parties currently represented in parliament, one member from the Supreme Administrative Court, one member from the Supreme Civil Court and one member from the Court of Audit, who are all appointed by drawing lots in their respective plenaries as are their alternates. The presidium of the parliament appoints one of its deputy speakers as the committee's chairperson, who appoints a parliament staff member as a secretary. Should a party or alliance of parties which received regular or electoral campaign funds not be represented in parliament, in the committee participates a member of that party or party alliance regarding its auditing.
+
+
+=== Constitutional Revision Committee ===
+The committee is established by the speaker following proposals for reviewing the constitution made by at least 50 MPs. The proposals are examined by the committee. By the parliament's decision, following the speaker's proposal, a deadline for the submission of the committee's report is determined. This deadline can nonetheless be extended by subsequent parliament decisions.
+
+
+== Special procedures ==
+
+
+=== Revising the constitution ===
+Parliament has the right to revise or amend the constitution, except for those articles dealing with the "form of the state as a parliamentary republic" and those safeguarding certain fundamental rights and freedoms (specifically protection of the value of the human, equality before the law, individual liberty, rule of law and freedom of religion). For those articles to be amended, article 110 of the constitution (which regulates revision of the constitution and lists the unalterable articles) would have to be amended first.
+The need for a revision of the constitution must first be established by a resolution of parliament, adopted, on the proposal of not less than fifty members of parliament, by a three-fifths majority of the total number of its members, in two ballots, held at least one month apart. The resolution must define specifically the provisions to be revised. Upon a resolution by parliament on the revision of the constitution, the next parliament must, in the course of its opening session, decide on the provisions (among those specifically defined in the original resolution) that will be revised by an absolute majority of the total number of its members (50% plus one majority). In the event that a proposal for revision of the constitution (in the previous parliament) receives the majority of the votes of the total number of members but not the three fifths majority specified, the next parliament may, in its opening session, decide on the provisions to be revised by a three-fifths majority of the total number of its members. A parliament endowed by its predecessor with the power to revise the constitution is called a "revisional parliament" (Αναθεωρητική Βουλή).
+Following the collapse of the military junta in 1974, the parliament that was elected was called the "5th revisional" as it operated under, and amended, the 1952 constitution. The resulting constitution of 1975 was essentially an entirely new constitution, especially since it incorporated the outcome of the 1974 plebiscite that established a parliamentary republic in place of a constitutional monarchy. Nevertheless, because it was officially deemed a revision of the 1952 constitution it was not called a "constituent parliament". Since the adoption of the new constitution in 1975, this has been revised on four occasions: in 1986, in 2001, in 2008 and in 2019. A minimum of five years must elapse after the successful conclusion of the revision process, before another may be initiated.
+
+
+=== Electing the president ===
+The president of Greece is elected by the parliament on an open voting by roll-call for a term of five years. In conformity with the constitution, the president is elected on a two-thirds majority (200 votes) out of the total number of MPs and in case of no majority, the ballot is repeated after five days. Should the second ballot fail, the process is repeated after five days and president is elected the person receiving a majority of 3/5 (180 votes). Should the third ballot fail to produce the said qualified majority of three-fifths, the parliament must dissolve within ten days of the ballot and elections for a new parliament must be called. The new parliament, once constituted itself as a body, elects the president on a three-fifths majority of the total number of MPs. Should the said majority not be attained, the ballot is repeated within five days; the president is elected the person receiving the absolute majority of the total number of MPs (151 votes). Should this majority also not be attained, the ballot shall once more be repeated and the person receiving a relative majority shall be deemed elected president.
+
+
+== Parallel activities ==
+Parliament operates its own free-to-air television station, Vouli TV, which broadcasts all plenary and committee sessions. When no parliamentary business is conducted, the station broadcasts a selection of films, plays, classical music concerts, opera and ballet performances and historical documentaries.
+During summer recess, parliament operates "junior parliament" (Βουλή των Εφήβων, Vouli ton Efivon), a series of sessions during which a rotating quota of MPs attends speeches and debates held by high school students from Greece, Cyprus, and the Greek diaspora. The program carries the twin aims of alerting parliamentarians to the needs and perspectives of younger generations, and to educate teenagers in the practice of proper debating and participation in public life. Parliament also hosts official visits and tours for schools throughout the academic year.
+Parliament regularly organizes exhibitions and retrospectives on various aspects of public life, mainly dealing with aspects of political and parliamentary history.
+Parliament administers the Parliament Foundation, a research and publishing institute established to produce printed and electronic media, mainly on archival material, historical and scientific matters pertaining to parliamentary functions and the past political and cultural life of Greece.
+
+
+== Seat ==
+
+The original meeting place of the Hellenic Parliament was the house of Athenian magnate and politician Alexandros Kontostavlos , in central Athens, which was used for the first time after King Otto was forced to grant a constitution in 1843. A devastating fire burned down the original building, and plans were made for the construction of what became the seat of the parliament between 1875 and 1932. The new building, now called the Old Parliament House, was completed to designs by French architect François Boulanger. Pending the completion of the Parliament House between 1853 and 1871, the sessions of the parliament took place in a hastily erected building near the Old Parliament House which became known as "the shack".
+The current parliament, a neoclassical three-floor structure designed by Friedrich von Gärtner and completed in 1843, originally served as a palace for the Greek monarchs, hence sometimes still referred to as the "Old Palace" (Παλαιά Ανάκτορα). After suffering fire damage in 1909, it entered a long period of renovation. The king and royal family moved to what was from 1897 until then the Crown Prince's Palace, from then on known as the "New Palace", one block to the east on Herodou Attikou Street, while some royals continued to reside in the "Old Palace" until 1924, when a referendum abolished the monarchy. The building was then used for many different purposes — functioning as a makeshift hospital, a museum, etc. — until November 1929, when government decided that the building would permanently house Parliament. After more extensive renovations, the Senate convened in the "Old Palace" (Παλαιά Ανάκτορα) on 2 August 1934, followed by the Fifth National Assembly on 1 July 1935. Although the monarchy was restored that same year, the building has housed Parliament ever since.
+
+The Tomb of the Unknown Soldier (Μνημείο του Αγνώστου Στρατιώτη), guarded round the clock by the Evzones of the Presidential Guard, is located in the formal forecourt of the building. Construction of the monument began in 1929, and it was inaugurated on March 25, 1932.
+The main chamber of parliament, on the ground floor, is amphitheatrical in layout, and is panelled in purple and purple-veined white marble, with inlaid gold ornaments. Seating for the MPs is arranged in five circular sectors. The speaker's chair, the lectern, the ministerial and state functionary benches, and the shorthand's vault are made of carved wood and are laid out facing the MP seats. A colonnaded balcony surrounds the upper tier of the chamber and is used as the visitors' gallery. Part of it served as the royal box in the past. A vitrail roof provides natural light during daytime.
+An almost identical (but smaller-scaled) chamber was built in the second floor for use of the senate. Since there has not been a senate for several decades, this chamber has no official function any more, and is used for party caucuses and other parliamentary or party functions on an ad hoc basis.
+The building has two main entrances: the west-facing formal entrance (facing the Tomb of the Unknown Soldier and Syntagma Square) and the east-facing business entrance (facing the National Gardens). Improvements are ongoing – some of them significant (such as the addition of an 800-vehicle underground parking structure) – to ensure that the building can continue to function effectively. Despite renovations, parliamentary functions have outpaced the capacity of the listed building, and some ancillary services have moved to nearby offices around Syntagma Square.
+
+
+== Historical composition ==
+
+
+=== Third Hellenic Republic (since 1974) ===
+
+
+== See also ==
+
+
+== Notes ==
+
+
+== References ==
+
+
+== External links ==
+Official website  (in Greek, English, and French)
+Hellenic Parliament Foundation (in Greek and English)
+Hellenic Parliament Library (in Greek)

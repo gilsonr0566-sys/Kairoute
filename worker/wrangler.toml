@@ -1,0 +1,36 @@
+# Kairoute's AI helper: a small Cloudflare Worker in front of Workers AI (free daily allowance).
+name = "kairoute-ai"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[ai]
+binding = "AI"
+
+[[kv_namespaces]]
+binding = "USAGE"
+id = "5062677df32b4a3b9e877e2b355057de"
+
+# Every 15 minutes: ferries for places the map servers were too busy to answer (fillFerries in worker.js).
+[triggers]
+crons = ["*/15 * * * *"]
+
+[vars]
+# MASTER AI SWITCH. Richard, Nov 17 2026: "Turn it totally off and do not use any without my consent."
+# "0" = no Workers AI at all (text, voice, tests, recorder, drip); cached guides and saved recordings still work.
+# Set to "1" ONLY after Richard's own go-ahead. Even then the Worker stays inside the free 10,000 a day (KAI_DAILY).
+AI_ON = "0"
+# When AI_ON is "1": "minimal" (default) = only the trip and guide jobs, 3,000 a day, answers kept; "full" = everything.
+# Stays "minimal" until Richard says the app is ready for the fancy features.
+AI_MODE = "minimal"
+VOICE_LIVE = "0"          # live voice for travelers; "1" only with Richard's go-ahead
+MONTH_EXTRA_NEURONS = "0" # paid AI past the free daily allowance: none
+
+# Group tours: one small Durable Object per group code (see extras.js).
+[[durable_objects.bindings]]
+name = "GROUPS"
+class_name = "Group"
+
+[[migrations]]
+tag = "v1-groups"
+new_sqlite_classes = ["Group"]

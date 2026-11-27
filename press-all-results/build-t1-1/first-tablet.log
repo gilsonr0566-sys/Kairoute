@@ -1,0 +1,15 @@
+
+== first tablet: First open, no trip yet (intro, new trip steps, example offer)
+   1 screens: lobby
+FAIL COVERED [first tablet / First open] "Plan a new trip": a finger cannot reach it: div.sheet "🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr" lies over it
+FAIL COVERED [first tablet / First open] "Watch the intro": a finger cannot reach it: div.sheet "🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr" lies over it
+FAIL COVERED [first tablet / First open] "Settings": a finger cannot reach it: div.coach "🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr" lies over it
+FAIL COVERED [first tablet / First open] "Sync with another device": a finger cannot reach it: div.row "Skip Next" lies over it
+FAIL COVERED [first tablet / First open] "Open the example trip": a finger cannot reach it: div.coach "🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr" lies over it
+FAIL COVERED [first tablet / First open] "Edit itinerary": a finger cannot reach it: div.coach "🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr" lies over it
+FAIL COVERED [first tablet / First open] "More": a finger cannot reach it: div.coach "🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr" lies over it
+FAIL COVERED [first tablet / First open] "Privacy": a finger cannot reach it: div.coach "🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr" lies over it
+FAIL COVERED [first tablet / First open] "Terms": a finger cannot reach it: div.coach "🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr" lies over it
+   first tablet First open: 11 presses, 9 with a failure, 38 s
+
+Every button pressed: 11 presses on 1 screens; 9 with a failure; 0 greyed out; 0 screens cut short

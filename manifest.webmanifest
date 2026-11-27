@@ -1,0 +1,16 @@
+{
+  "name": "Kairoute",
+  "short_name": "Kairoute",
+  "description": "Be your own guide. Plan your trip, then hear the story at every stop.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F3F5F1",
+  "theme_color": "#123C3A",
+  "icons": [
+    { "src": "icons/web-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/web-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

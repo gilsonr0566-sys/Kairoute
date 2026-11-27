@@ -1,0 +1,108 @@
+SOURCE: https://en.wikipedia.org/wiki/Tower_of_the_Winds
+RETRIEVED: 2026-11-21T14:20:26.448Z
+STATUS: 200
+TITLE: Tower of the Winds
+
+The Tower of the Winds, known as the Ωρολόγιο του Κυρρήστου in Greek, and by other names, is an octagonal Pentelic marble tower in the Roman Agora in Athens, named after the eight large reliefs of wind gods (in the form of young winged men and old men) around its top. Its date is uncertain, but was completed by about 50 BC, at the latest, as it was mentioned by Varro in his De re Rustica of about 37 BC. It is "one of the very small number of buildings from classical antiquity that still stands virtually intact", as it has been continuously occupied for a series of different functions.
+Formerly topped by a wind vane, it is the only surviving horologium or clock tower from classical antiquity. It also housed a large water clock and incorporated sundials placed prominently on its exterior faces; "citizens were thus able by using this building to orient themselves in space and time. Architecture, sculpture and the new science were perfectly integrated".  It was considered a marvel of technology.
+According to A. W. Lawrence, "the originality of this building is exceptional, and of a character out of keeping with Hellenistic architecture as we know it ... the design is obviously Greek, both in the severity of decorative treatment and in the antiquated method of roofing. The contrast with work of the Roman Empire is extraordinary, considering the date", which is long after the Roman conquest of Greece.
+
+
+== Names ==
+
+The English name Tower of the Winds—personified on the building as the Anemoi—is ultimately a calque of the ancient Greek name Pýrgos tōn Anémōn (Πύργος των Ανέμων).
+It has also been known as Andronikos' Clock, the Horologium in Latin, the term used by Varro, or Horologion (Ancient Greek: Ὡρολόγιον, Hōrológion), from hṓra (ὥρα, "time period, hour") lógos (λόγος, "writing, recording") + -ion (-ιον), together usually meaning a sundial, clepsydra, or other timekeeping device but here used to describe the location housing them.
+It is now known in Greek as the "Blowing Winds" (Greek: Αέρηδες, Aérides) and as the "Clock of Cyrrestes" (Greek: Ωρολόγιο του Κυρρήστου, Orológio tou Kyrrístou).
+
+
+== Design ==
+
+Raised on three steps, the Tower of the Winds is 12 metres (39 ft) tall and has a diameter of about 8 metres (26 ft). In antiquity, Vitruvius tells us it was topped by a bronze statue of a Triton, holding a rod that acted as a weather vane indicating the wind direction; this has completely disappeared. The frieze has reliefs, rather over life-size, of the eight wind deities—Boreas (N), Kaikias (NE), Apeliotes (E), Eurus (SE), Notus (S), Livas (SW), Zephyrus (W), and Skiron (NW)—there are eight sundials. A cornice above is decorated with lions' heads in relief, functioning as water spouts. 
+Inside, there is a single large room. From ancient mentions by Varro and Vitruvius, it seems that time was measured by a water clock, driven by water coming down from the Acropolis. There are holes and channels in the floor relating to this, but the mechanism, presumably of metal and wood, has gone. Research has shown that the considerable height of the tower was motivated by the intention to place the sundials and the wind-vane at a height visible from the Agora, effectively making it an early example of a clocktower.
+
+It had two porches with pediments, supported by two Corinthian columns at the front, now disassembled, though the lower parts of three columns remain in place. At least as they are now, they have no bases, unusual in the Corinthian. There also seem to be the earliest use of small versions of formal columns for porches, later a very common feature. The roofs of the porches probably used wood, the only parts of the building to do so, and eventually collapsed. Parts of the stone pediment of one may be seen set up beside the tower.
+These columns had capitals of a design now sometimes known as "Tower of the Winds Corinthian", a "late variant form" lacking the volutes ordinarily found in Corinthian capitals. The capital on the roof, which supported the Triton weather-vane, used the same form; the broken lower part of this remains in place. None of these have survived complete, but there are enough fragments to make a confident reconstruction. There is a single row of acanthus leaves at the bottom of the capital, with a row of "tall, narrow leaves" behind. These cling tightly to the swelling shaft, and are sometimes described as "lotus" leaves, as well as the vague "water-leaves" and palm leaves; their similarity to leaf forms on many ancient Egyptian capitals has been remarked on. The form is found in smaller columns, both ancient and modern. The porch of the Royal College of Physicians of Edinburgh, Queen Street, Edinburgh, has four examples, but conventional Corinthian capitals are used elsewhere in the building.
+To the rear a "turret" held the water for the clock; only part of this has survived. The main roof is essentially original (exceptionally rare in an ancient building), with 24 trapezoidal stone slabs, kept in place by a circular keystone, and carved on the outside to look like tiles; here rows of modern standard rounded roof tiles now cover the joins. Inside eight very small columns, less than four feet high but with richly carved shafts, stand at each corner of the octagon, on a circular cornice, running up to a circular architrave.
+
+
+== Functionality ==
+
+Andronicus of Cyrrhus, the designer, seems to have written a book on the winds. A passage in Vitruvius's chapter on town planning in his On Architecture (De architectura) seems to be based on this missing book. The emphasis is on planning street orientations to maximize the benefits, and minimize the harms, from the various winds.
+The London Vitruvius, the oldest surviving manuscript of Vitruvius' De architectura, includes only one of the original illustrations, a rather crudely drawn octagonal wind rose in the margin. This was written in Germany in about 800 to 825, probably at the abbey of Saint Pantaleon, Cologne.
+Although often described as a clocktower, it is not clear if, or how, the readings on the water clock inside could be communicated to people outside the building; it may have been necessary to go inside. The sundials on each face are individually customised to allow for the very differing times of the day that they were in direct sunlight. There was a further sundial on the turret at the back; the further parts of the lines can still be seen.
+The bronze gnomons (shadow-creating rods) had disappeared, but the holes for them remained, and modern replacements have been fitted. The straight lines engraved in the stone, from which the hours were taken, were originally painted and would have stood out more clearly. The ancient Greeks divided the day, when it was light, into twelve equal "hours" regardless of the time of year. The east and west faces only have four lines each, for the hours that face was in sunlight, whereas the south facing one has eight.
+
+The turret at the back was a water tank, fed from the Clepsydra spring on the Athens acropolis above. A valve mechanism allowed water to flow into the clock mechanism via a channel cut in the floor; it may also have branched into two other channels to the side. The central mechanism was surrounded by circular railings, fitted into depressions in the floor that remain. It was apparently possible to walk around the clock and see it from all angles. There have been various attempts to reconstruct on paper how the clock worked, but this remains uncertain.
+It may have been an astronomical clock, showing a calendar, and the movements of the major star groups. The Antikythera mechanism, the only ancient Greek clock mechanism to partially survive, found in a shipwreck, is of this type. The roof has traces of blue paint, and may have depicted the sky in some way, even been some form of planetarium; there were no windows in the original building, it is carved differently from the outside, to give a smooth shallow dome.
+Later, the water supply was converted from underground pipes to a small aqueduct, the last section of which partially remains next to the tower. The large, slightly curving, channel in the floor leading from the turret tank to the central hole may also have been added at this point.
+
+
+== The eight reliefs of the winds ==
+The Greeks had long had various theories on the number of classical compass winds, but eight was by this period the usual number. The anemoi were named and regarded as minor deities. The large reliefs characterize each wind in terms of the things they carry, and often spill out from containers, the warmth of their clothing, and to some extent their physiques and expressions. All have large wings and are male, but of differing ages. These representations of the winds are the largest known from antiquity.
+They were originally painted, and had various extra elements in other materials, probably bronze. Their names are carved above them; these are now hard to read from the ground, with the modern metal restraining cable passing through them.
+In the table the prints are illustrations from the first volume of The Antiquities of Athens (London, 1762), and the start of the descriptions of the winds are given. The tower was one of only five ancient Greek buildings given a full treatment in this work. It had been surveyed and drawn by James "Athenian" Stuart and Nicholas Revett on an expedition in 1751–54, and the engravings were by James Basire (later the master of William Blake) back in London. These clearly tidy up the worn reliefs, but were also recorded when they had over 250 years less exposure to weather than today.
+
+
+== History ==
+
+According to Vitruvius and Varro, the astronomer Andronicus of Cyrrhus designed the Tower of the Winds. But very little is known about his life, not even whether he came from the Cyrrhus in Macedonia or the larger Seleucid city (named after it) on the Euphrates. From the style of the sculptures the tower is usually dated around 50 BC, not long before Varro and Vitruvius mention it. An alternative possibility is that it was part of the generosity of Attalus III of Pergamon (d. 131 BC) who built the Stoa of Attalus in the city. This would place it earlier than the rest of the Roman forum, and explain how such an expensive build was financed.
+If the usual dating is correct, it formed part of the reconstruction of Athens after it was mostly levelled by the Roman legions under Sulla in 86 BC following the Siege of Athens and Piraeus during the First Mithridatic War.
+
+From a cross on an inside wall, and traces of paintings, the building was probably used as a martyrium for an apostle, church or baptistry in late antiquity. By the time of Ottoman rule it was buried up to half its height, and traces of this can be observed in the interior, where Turkish inscriptions may be found on the walls. It was fully excavated in the 19th century by the Archaeological Society of Athens. The idea that there was an Athens Mevlevi Convent or its ritual hall in the Tower and that the other buildings belonging to the Convent were located around it is incorrect. The Tower, which was converted into a Qadirî tekke sometime between 1749 and 1751, was used by Qadirî dervishes to perform their religious rituals for 70 years between 1751 and 1821, and was evacuated after the Greek revolt of 1821.
+The building became better known outside Greece from 1762, when a description and several careful measured engraved illustrations were published in London in the first volume of The Antiquities of Athens. The tower was one of only five ancient Greek buildings given a full treatment in this important work. It had been surveyed by James "Athenian" Stuart and Nicholas Revett on an expedition in 1751–54. When it was seen by them the dervishes operated on a wooden floor built above the rubble of the ancient floor level, which Stuart and Revett were allowed to remove temporarily. They had cut out a mihrab in the wall, which starts just above the lower cornice, slightly above the level of their wooden floor.
+By this point depictions and early photographs show that the surrounding ground level had risen by several feet, and entry was by a sort of trench around part of the building. In the later 19th and 20th centuries the surrounding area was cleared of modern buildings and excavated, restoring the original ground level around most of the building.
+The Athens Ephorate of Antiquities performed restoration work, cleaning and conserving the structure, between 2014 and 2016.
+
+
+== Ancient octagonal buildings ==
+
+By far the most famous ancient octagonal building was the Pharos of Alexandria, one of the Seven Wonders of the Ancient World, which partly survived long enough to be described by Islamic writers. This began with a square plan, but had an octagonal middle section below a final circular one. The octagonal middle would have been considerably larger than the Athens tower, and the tower must have suggested the Pharos to ancient visitors. The Pharos was also decorated with statues of Tritons, usually shown at the top of the octagonal section on coins, and perhaps one on each of the eight sides, but it is not known whether it showed interest in the winds, or had sundials, a weather-vane or a clock.
+The Pharos dates to the 3rd century BC, perhaps around 270 BC, as does a much smaller mausoleum further along the coast at Abusir, which seems to be a scaled down version, as it also rises through square, octagonal and round sections, though with very different proportions between the heights of the sections.
+
+
+== Legacy ==
+
+Several buildings are based, often very loosely, on the design of the Towers of the Winds, often placing a version of the tower on top of a larger structure. These include:
+
+The 18th-century Tower of the Winds on top of the Radcliffe Observatory in Oxford, England.
+The Temple of the Winds, which stands in the grounds of Mount Stewart near Newtownards in Northern Ireland, designed by James "Athenian" Stuart who had studied and published the original.
+St Pancras Church (1822) designed by William Inwood and his son Henry William Inwood, located in Euston, London. This is a unique Greek-revival church, that features two sets of Caryatids and a tower that was based on the classical Tower of the Winds.
+The Daniel S. Schanck Observatory (1865) an early astronomical observatory at Rutgers University in New Brunswick, New Jersey.
+The mausoleum of the founder of the Greek National Library Panayis Vagliano at West Norwood Cemetery, London.
+The 15th-century Torre del Marzocco in Livorno.
+The tower on St Luke's Church, West Norwood, in London, designed by Francis Octavius Bedford after he visited Athens on a Society of Dilettanti scholarship circa 1810.
+A similar tower in Sevastopol, built in 1849.
+The Carnaby Temple near Carnaby, East Riding of Yorkshire, built in 1770.
+The Maitland Robinson building in Downing College, Cambridge, designed by Quinlan Terry in 1992.
+The "Storm Tower" in Bude, Cornwall (1835), by George Wightwick
+The upper part of the Tempio della Vittoria, a memorial in Milan to the fallen in WWI (adjacent to the Basilica of Sant'Ambrogio.
+The chapel of the Flanders Field American Cemetery built in 1930 in Waregem, Belgium, by Paul Cret.
+The "Four Winds" brick chimney of the former hydraulic power station beside Glasgow Harbour at Prince's Dock, Glasgow, designed by Burnet, Son and Campbell and built in 1894 for the Clyde Navigation Trust.
+The Temple of the Winds at West Wycombe Park in Buckinghamshire, dating from the late 18th century.
+A tower housing a bell on the grounds of the Tennessee State Capitol is inspired by the Tower of the Winds. The structure was designed by artist Paul Harmon, and contains eight angelic figures that represent the major genres of music of Tennessee.
+
+
+== See also ==
+Anemoi
+Classical compass winds
+History of timekeeping devices
+
+
+== References ==
+
+
+=== Citations ===
+
+
+=== Sources ===
+
+
+== Further reading ==
+Beresford, James (2015). "A Monument to the Winds". Navigation News. London: Royal Institute of Navigation. pp. 17–19. Retrieved May 20, 2021.
+Webb, Pamela A. (2017). "The Tower of the Winds in Athens: Greeks, Romans, Christians, and Muslims; Two Millennia of Continual Use". Memoirs of the American Philosophical Society. 270. Philadelphia: American Philosophical Society Press.
+Duru, Dr. Riza (2021). “The Tower of Winds was neither the Mevlevi Convent of Athens nor Its Rite Hall”
+
+
+== External links ==
+
+Tower of the Winds and characters sculpted on it

@@ -1,0 +1,59 @@
+SOURCE: https://en.wikipedia.org/wiki/Mamertine_Prison
+RETRIEVED: 2026-11-22T20:31:19.063Z
+STATUS: 200
+TITLE: Mamertine Prison
+
+The Mamertine Prison (Italian: Carcere Mamertino), in antiquity the Tullianum, was a prison (carcer) with a dungeon (oubliette) located in the Comitium in ancient Rome. It is said to have been built in the 7th century BC and was situated on the northeastern slope of the Capitoline Hill, facing the Curia and the imperial forums of Nerva, Vespasian, and Augustus. Located between it and the Tabularium (record house) were the Gemonian stairs leading to the Arx of the Capitoline.
+The church of San Giuseppe dei Falegnami now stands above the Mamertine.
+
+
+== Name and origin ==
+The origins of the prison's names are uncertain. The traditional derivation of "Tullianum" is from the name of one of the Roman kings Tullus Hostilius or Servius Tullius (the latter is found in Livy, Varro, and also Sallust); there is an alternative theory that it is from the archaic Latin tullius "a jet of water", in reference to the cistern. The name "Mamertine" is medieval in origin, and may be a reference to a nearby temple of Mars.
+According to tradition, the prison was constructed around 640–616 BC, by Ancus Marcius. It was originally created as a cistern for a spring in the floor of the second lower level. Prisoners were lowered through an opening into the lower oubliette, known as the Tullianum.
+
+
+== Use ==
+Imprisonment was not a sentence under Roman statutory law, though detention is mentioned in the Twelve Tables and throughout the Digest. "Detention", however, includes debt bondage in the early Republic; the wearing of chains (vincula publica), mainly for slaves; and during the Imperial era a sentence of hard labor at the mills, mines or quarries. Slaves or lower-status citizens sentenced to hard labor were held in prison camps.
+
+Incarceration (publica custodia) in facilities such as the Tullianum was intended to be a temporary measure prior to trial or execution; abuses of this principle occurred but were officially censured. Located near the law courts, the Tullianum was used as a jail or holding cell for short periods before executions and as a site for executions. In 63 BC, certain co-conspirators of Catiline, including Publius Cornelius Lentulus Sura, were held briefly in the Tullianum and executed there for their alleged plot to overthrow the government. In this case, the executions were conducted hastily, without due process of appeal, during the consulship of Cicero, who was later exiled for his actions. Sejanus was held in the Tullianum before his baroque execution, which involved the Gemonian stairs, and the conflicting accounts of the end of Pleminius include a timely death in jail during trial. Some Gracchan sympathizers ended up in the Carcer, where the haruspex Herennius Siculus hit his head on an architrave and died before he could be executed.
+There is no evidence that the Tullianum was used for long-term incarceration, and the lowest dungeon was unsuited for the purpose; the level above, however, in theory might have been. In general, long-term incarceration was more widely practiced in the later Empire, and from the 4th century, under Christian rule, Roman laws and occasional personal intervention on the part of an emperor indicate a growing need to crack down on abuses such as filthy conditions and torture.
+In some cases, it is unclear whether a source using the word carcer means "the" Carcer, or imprisonment in some other facility. High-status prisoners, whether Roman or foreign, were typically held in the custody of individual Romans, sometimes at their homes or country estates. The line between being a war captive and a hostage lawfully held by treaty was thin, and conditions of captivity could vary widely, from abject misery and humiliation to relative luxury. As a prisoner of war, Perseus of Macedon was placed in a foul, overcrowded dungeon at Alba Fucens; the son of Tigranes was kept at a praetor's house in Rome, where he could be trotted out as a dinner-party guest. The Tullianum only rarely played a role in these detentions. Captured foreign rulers or generals were paraded in a Roman conqueror's triumph, and on a few occasions the "most prominent, famous, or dastardly" were executed afterward at the Tullianum. These were "strikingly few" in number, and included the Samnite Gaius Pontius, the Gaul Vercingetorix, some "Cilician" pirates, and the Galatian Adiatorix. Jugurtha, king of Numidia, may have been executed at the conclusion of Marius's triumph, or he may have died in prison several days afterward. Most high-status war captives were neither executed nor held for any substantial length of time in the Tullianum.
+
+
+== Christian significance ==
+
+Although Saint Paul is said to have been held in Mamertine Prison, he awaited trial in a house in the southern Campus Martius that became the church San Paolo alla Regola. It is not known when the prison went out of service permanently, but the site has been used for Christian worship since medieval times, and is currently occupied by two superimposed churches: San Giuseppe dei Falegnami (upper) and San Pietro in Carcere (lower). The Cross on the altar in the lower chapel is upside down, since according to tradition Saint Peter was crucified that way.
+It has been long referenced that St. Peter was imprisoned at the Tullianum, and that the spring in the bottom of the pit came into existence miraculously to enable him to conduct baptisms, but the Catholic Encyclopedia points out that the spring had existed long before, and that there is little first hand account of  St. Peter's imprisonment there other than being the only single celled prison available for VIPs deemed threats to the state. Saint Paul was a Roman citizen tried and executed under Nero.
+
+
+== People imprisoned at the Tullianum ==
+
+Eumenes III of Pergamum, also known as Aristonicus. Rebelled against Rome in 132 BC, and defeated in 130 BC.
+Publius Cornelius Lentulus Sura, Catiline co-conspirator. Executed with conspirators.
+Herennius Siculus, Gracchan sympathizer, hit his head on an architrave in his cell and died before he could be executed.
+Quintus Pleminius, propraetor. Arrested then exiled after fall from power.
+Gaius Pontius, leader of the Samnites during the Second Samnite War. Arrested and executed.
+Vercingetorix, leader of the Gauls during the Gallic War. Executed at Caesar's Triumph in 46 BC.
+Adiatorix, tetrarch of Galatia. Imprisoned there for having put all Roman colonists to death at Heracleia.
+Jugurtha, King of Numidia. Died of starvation there in 104 BC.
+Saint Peter, imprisoned there before being crucified. Performed baptisms in a spring at the bottom of the pit.
+Paul the Apostle is believed to have been imprisoned there during his final imprisonment in Rome.
+Saints Martinian and Processus, guards from the same prison. After being baptized by St. Peter, both were imprisoned awaiting execution.
+Sejanus, soldier and confidant of the Emperor Tiberius. Fell from power, was imprisoned there and then executed.
+Simon bar Giora, Jewish revolutionary leader. Captured in Judea and brought to Rome to be displayed during the triumphal procession. Executed in 70 AD.
+
+
+== See also ==
+Lautumiae, quarries adjacent to or near the Tullianum also used as dungeons
+Tarpeian Rock
+
+
+== References ==
+
+
+== External links ==
+
+Carcer (Platner's Topographical Dictionary of Ancient Rome)
+Chapter Carcer in Hülsen's Foro Romano
+Catholic Encyclopedia on the prison and related Christian traditions
+Virtual tour to the prison and surroundings

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Kairoute</string>
+    <string name="title_activity_main">Kairoute</string>
+    <string name="package_name">com.kairoute.app</string>
+    <string name="custom_url_scheme">com.kairoute.app</string>
+</resources>

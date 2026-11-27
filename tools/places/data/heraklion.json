@@ -1,0 +1,1476 @@
+{
+ "key": "heraklion",
+ "name": "Heraklion",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "knossos": {
+   "wikidata": "Q9054457",
+   "editions": 5,
+   "types": [
+    "Q16560",
+    "Q839954"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q173527"
+   ],
+   "web": ""
+  },
+  "heramuseum": {
+   "wikidata": "Q636972",
+   "editions": 21,
+   "types": [
+    "Q3329412"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "http://heraklionmuseum.gr/",
+   "hours": "Apr-Oct: 08:00-20:00; Nov-Mar: 08:00-15:00",
+   "fee": "yes",
+   "osm": "node/250686961"
+  },
+  "lions": {
+   "wikidata": "Q6555912",
+   "editions": 3,
+   "types": [
+    "Q174782"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "",
+   "osm": "relation/12119943"
+  },
+  "minas": {
+   "wikidata": "Q2942217",
+   "editions": 21,
+   "types": [
+    "Q56242225"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "web": "",
+   "osm": "way/175344883"
+  }
+ },
+ "towns": {
+  "phaistos-far": {
+   "name": "Phaistos palace",
+   "wikidata": "Q249707",
+   "editions": 38,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "Ξενία Φαιστός",
+     "lat": 35.0518947,
+     "lng": 24.8134283,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/2390298101"
+    },
+    {
+     "name": "Taverna Lamb House",
+     "lat": 35.0469417,
+     "lng": 24.8104809,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "way/660261469"
+    },
+    {
+     "name": "Taverna Agios Ioannis",
+     "lat": 35.0464381,
+     "lng": 24.8108192,
+     "kind": "eat",
+     "amenity": "restaurant",
+     "cuisine": "greek",
+     "osm": "way/660261468"
+    }
+   ]
+  },
+  "fairhavens-far": {
+   "name": "Kali Limenes (Fair Havens)",
+   "wikidata": null,
+   "editions": 0,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": []
+  }
+ },
+ "ports": [
+  {
+   "name": "Heraklion",
+   "lat": 35.34253,
+   "lng": 25.14351,
+   "osm": "node/1187906551",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.17
+  },
+  {
+   "name": "Heraklion",
+   "lat": 35.34243,
+   "lng": 25.14232,
+   "osm": "node/1187906885",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.18
+  },
+  {
+   "name": "Ηράκλειο",
+   "lat": 35.3427,
+   "lng": 25.14444,
+   "osm": "node/1187907064",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.2
+  },
+  {
+   "name": "Worldchampion Jet  &  Champions League Jet 1",
+   "lat": 35.342,
+   "lng": 25.14112,
+   "osm": "node/267668226",
+   "kind": "ferry terminal",
+   "cruise": false,
+   "d": 0.28
+  }
+ ],
+ "dayTrips": [
+  "Rethymno",
+  "Chania",
+  "Agios Nikolaos",
+  "Samaria Gorge",
+  "Spinalonga",
+  "Anogia",
+  "Bali (Crete)",
+  "Chersonissos",
+  "Sitia"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier",
+  "public transport lines on the map"
+ ],
+ "portQuery": {
+  "name": "Heraklion cruise port",
+  "lat": 35.344,
+  "lng": 25.143,
+  "known": true,
+  "island": false
+ },
+ "centre": {
+  "lat": 35.333557142857146,
+  "lng": 25.138785714285717
+ },
+ "wikivoyage": "Heraklion",
+ "guideSights": [
+  {
+   "name": "Heraklion Archaeological Museum",
+   "lat": 35.33915,
+   "lng": 25.13741,
+   "wikidata": "Q636972",
+   "note": "Houses the most important and representative finds from Minoan civilisation and excavations across the island of Crete. Highlights include statues of the Snake Goddess, the Bull-Leaping Fresco, the Phaistos Disk, and Minoan seals and jewell",
+   "editions": 21,
+   "unesco": false,
+   "web": "http://heraklionmuseum.gr/"
+  },
+  {
+   "name": "Palace of Knossos",
+   "lat": 35.298056,
+   "lng": 25.163056,
+   "wikidata": "Q173527",
+   "note": "If you see just one ruin on Crete, see Knossos (in Greek it’s Κνωσός, stress is on the second syllable). The site is fairly compact, and much of it is accessible with restricted mobility. But 30 minutes will do it. It is one of six Minoan P",
+   "editions": 71,
+   "unesco": true,
+   "en": "Knossos"
+  },
+  {
+   "name": "Koules",
+   "lat": 35.344639,
+   "lng": 25.13685,
+   "wikidata": "Q603920",
+   "note": "Koules (Greek: Κούλες) was built by the Venetians in the 16th C. From the parapet, enjoy the view towards Dia Islet, where Jacques Cousteau found many sunken remains of Cretan sea trade.",
+   "editions": 20,
+   "unesco": false,
+   "web": "https://www.heraklion.gr/en/ourplace/koule/koule.html",
+   "en": "Rocca a Mare"
+  },
+  {
+   "name": "Fortifications of Heraklion",
+   "lat": 35.332707,
+   "lng": 25.130661,
+   "wikidata": "Q20127741",
+   "note": "The Fortifications of Heraklion are among the most impressive Venetian defensive works in the Mediterranean, encircling the old city of Heraklion. Built between the 15th and 17th centuries, their massive walls and bastions helped the city w",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Historical Museum of Crete",
+   "lat": 35.341806,
+   "lng": 25.131167,
+   "wikidata": "Q4204518",
+   "note": "Covers the story of Crete from the Byzantine era to the present day. It includes material on World War II and the German occupation, which was displayed in the “Museum of the Battle for Crete and National Resistance” until it closed.",
+   "editions": 12,
+   "unesco": false,
+   "web": "https://www.historical-museum.gr/"
+  },
+  {
+   "name": "Loggia",
+   "lat": 35.33983,
+   "lng": 25.134002,
+   "wikidata": "Q14175781",
+   "note": "An elegant city meeting place, built in 1628.",
+   "editions": 3,
+   "unesco": false,
+   "en": "Loggia of Heraklion"
+  },
+  {
+   "name": "Morosini Fountain",
+   "lat": 35.3391,
+   "lng": 25.1331,
+   "wikidata": "Q6555912",
+   "note": "",
+   "editions": 3,
+   "unesco": false,
+   "en": "Lions Square"
+  },
+  {
+   "name": "St Minas Cathedral",
+   "lat": 35.337634,
+   "lng": 25.130903,
+   "wikidata": "Q2942217",
+   "note": "(Greek: Άγιος Μηνάς)",
+   "editions": 21,
+   "unesco": false,
+   "en": "Agios Minas Cathedral"
+  },
+  {
+   "name": "St Titus Church",
+   "lat": 35.3401,
+   "lng": 25.13465,
+   "wikidata": "Q4426010",
+   "note": "(Greek: Άγιος Τίτος) Known for housing the skull of St. Titus.",
+   "editions": 13,
+   "unesco": false,
+   "web": "http://agiostitos.gr}}",
+   "posDoubt": true,
+   "en": "Hagios Titos church"
+  },
+  {
+   "name": "St Catherine of the Sinaites Church",
+   "lat": 35.33808,
+   "lng": 25.13134,
+   "wikidata": "Q4505145",
+   "note": "(Greek: Αγία Αικατερίνη Σιναϊτών).",
+   "editions": 4,
+   "unesco": false,
+   "en": "Agia Aikaterini"
+  },
+  {
+   "name": "St Mark's Basilica",
+   "lat": 35.3392,
+   "lng": 25.13369,
+   "wikidata": "Q4425986",
+   "note": "(Greek: Βασιλική Αγίου Μάρκου).",
+   "editions": 8,
+   "unesco": false,
+   "web": "http://www.heraklionvisualarts.gr",
+   "en": "Agios Marcos"
+  },
+  {
+   "name": "Dominican Church of St Peter",
+   "lat": 35.34244,
+   "lng": 25.131791,
+   "wikidata": "Q38285052",
+   "note": "(Greek: Άγιος Πέτρος Δομηνικανών).",
+   "editions": 4,
+   "unesco": false,
+   "en": "Saint Peter of the Dominicans, Heraklion"
+  },
+  {
+   "name": "Natural History Museum of Crete",
+   "lat": 35.34181,
+   "lng": 25.12668,
+   "wikidata": "Q6980521",
+   "note": "The Natural History Museum of Crete shows the natural environment of the Eastern Mediterranean area with a special emphasis on Greece and Crete.",
+   "editions": 9,
+   "unesco": false,
+   "web": "http://www.nhmc.uoc.gr"
+  }
+ ],
+ "lifts": [],
+ "transit": [],
+ "cityEats": [
+  {
+   "name": "The Little Garden",
+   "lat": 35.2981064,
+   "lng": 25.1614339,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/4456192693"
+  },
+  {
+   "name": "Rousakis",
+   "lat": 35.2987607,
+   "lng": 25.160684,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1793688434"
+  },
+  {
+   "name": "Minotavros",
+   "lat": 35.2989084,
+   "lng": 25.1606288,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4460170594"
+  },
+  {
+   "name": "Fast Vegan Food",
+   "lat": 35.3389888,
+   "lng": 25.1359047,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 12:30-22:00; Su 14:00-22:00",
+   "osm": "node/11002845764"
+  },
+  {
+   "name": "Οντάς",
+   "lat": 35.3390763,
+   "lng": 25.1354835,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/3617501665"
+  },
+  {
+   "name": "Adipodas",
+   "lat": 35.3388288,
+   "lng": 25.1354831,
+   "amenity": "restaurant",
+   "cuisine": "local;mediterranean;greek",
+   "hours": "Mo-Su 12:00-01:00",
+   "osm": "node/4303213989"
+  },
+  {
+   "name": "Minos",
+   "lat": 35.3383514,
+   "lng": 25.1356608,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4933013823"
+  },
+  {
+   "name": "Koukouvagia",
+   "lat": 35.3391776,
+   "lng": 25.1351747,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 12:00-00:00",
+   "osm": "node/5923927086"
+  },
+  {
+   "name": "Νότιο Σέλας",
+   "lat": 35.3398183,
+   "lng": 25.1354265,
+   "amenity": "restaurant",
+   "cuisine": "regional;mediterranean",
+   "hours": "Mo-Su 10:00-03:00",
+   "osm": "node/1057068138"
+  },
+  {
+   "name": "Hbapdia",
+   "lat": 35.3430985,
+   "lng": 25.1377634,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9932428408"
+  },
+  {
+   "name": "Herbs´Garden",
+   "lat": 35.3417347,
+   "lng": 25.1366522,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3741483464"
+  },
+  {
+   "name": "Avli Project Heraklion",
+   "lat": 35.3418344,
+   "lng": 25.1388426,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 09:00-00:04",
+   "osm": "way/1314359638"
+  },
+  {
+   "name": "Πλάνη",
+   "lat": 35.3413977,
+   "lng": 25.1364794,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "Mo-Su,PH 19:30-24:00",
+   "osm": "node/2751882341"
+  },
+  {
+   "name": "Veneto",
+   "lat": 35.3415331,
+   "lng": 25.135824,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/2751874528"
+  },
+  {
+   "name": "Τα ψάρια",
+   "lat": 35.3424295,
+   "lng": 25.1346338,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4363730100"
+  },
+  {
+   "name": "Gordian Knot",
+   "lat": 35.3394385,
+   "lng": 25.1334725,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3612931442"
+  },
+  {
+   "name": "Baltas",
+   "lat": 35.3392849,
+   "lng": 25.1330741,
+   "amenity": "restaurant",
+   "cuisine": "greek;italian",
+   "hours": "",
+   "osm": "node/5873218578"
+  },
+  {
+   "name": "Corner",
+   "lat": 35.3396332,
+   "lng": 25.1334425,
+   "amenity": "restaurant",
+   "cuisine": "greek;italian",
+   "hours": "",
+   "osm": "node/5630012322"
+  },
+  {
+   "name": "Veranda",
+   "lat": 35.3390485,
+   "lng": 25.1329577,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5873218501"
+  },
+  {
+   "name": "Veranda",
+   "lat": 35.3389229,
+   "lng": 25.1329926,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/6655726288"
+  },
+  {
+   "name": "Central",
+   "lat": 35.3398424,
+   "lng": 25.1335616,
+   "amenity": "restaurant",
+   "cuisine": "barbecue;greek;italian_pizza",
+   "hours": "Mo-Su 08:00-01:00",
+   "osm": "node/6724324696"
+  },
+  {
+   "name": "Umami",
+   "lat": 35.3396957,
+   "lng": 25.1350523,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "",
+   "osm": "node/9017471617"
+  },
+  {
+   "name": "Το Ροβύθι",
+   "lat": 35.3397692,
+   "lng": 25.1352254,
+   "amenity": "restaurant",
+   "cuisine": "mediterranean",
+   "hours": "Mo 10:00-21:00; Tu-Su 10:00-23:45; Dec 24,Dec 31 10:00-17:00; Jan 01-02,Aug 15-16,Nov 17,Dec 25-26 off",
+   "osm": "node/6507013786"
+  },
+  {
+   "name": "Macoo Eatery",
+   "lat": 35.3401098,
+   "lng": 25.1352969,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9610510117"
+  },
+  {
+   "name": "Kouzeineri. The Meat Lounge.",
+   "lat": 35.3403966,
+   "lng": 25.1354546,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14208456244"
+  },
+  {
+   "name": "Pagopoieion",
+   "lat": 35.340382,
+   "lng": 25.134514,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5323736664"
+  },
+  {
+   "name": "Hacienda",
+   "lat": 35.3379644,
+   "lng": 25.1304692,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11233214943"
+  },
+  {
+   "name": "Καγιαbee",
+   "lat": 35.338512,
+   "lng": 25.1314511,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9963400056"
+  },
+  {
+   "name": "Koto",
+   "lat": 35.3382633,
+   "lng": 25.1320024,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/9986825849"
+  },
+  {
+   "name": "Firi Firi",
+   "lat": 35.3385208,
+   "lng": 25.1315642,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9963400059"
+  },
+  {
+   "name": "Bar Paki",
+   "lat": 35.3383713,
+   "lng": 25.1319618,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10090069222"
+  },
+  {
+   "name": "Καγιαμπής",
+   "lat": 35.3361121,
+   "lng": 25.1313278,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/669418180"
+  },
+  {
+   "name": "Ο ΓΙΑΚΟΥΜΗΣ",
+   "lat": 35.3380015,
+   "lng": 25.1336018,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11909844069"
+  },
+  {
+   "name": "Ταβερνα Γιακουμις",
+   "lat": 35.3378983,
+   "lng": 25.1335639,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14359292603"
+  },
+  {
+   "name": "Kanatelias",
+   "lat": 35.3373232,
+   "lng": 25.1338359,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4363729956"
+  },
+  {
+   "name": "I Agora 1866",
+   "lat": 35.3379385,
+   "lng": 25.133253,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3741483465"
+  },
+  {
+   "name": "origine",
+   "lat": 35.3377157,
+   "lng": 25.1330983,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14270817684"
+  },
+  {
+   "name": "Hovoli",
+   "lat": 35.3376305,
+   "lng": 25.1355478,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 10:00-01:00",
+   "osm": "node/14242638757"
+  }
+ ],
+ "piers": [
+  {
+   "name": "Heraklion",
+   "lat": 35.34253,
+   "lng": 25.14351,
+   "osm": "node/1187906551"
+  },
+  {
+   "name": "Heraklion",
+   "lat": 35.34243,
+   "lng": 25.14232,
+   "osm": "node/1187906885"
+  },
+  {
+   "name": "Ηράκλειο",
+   "lat": 35.3427,
+   "lng": 25.14444,
+   "osm": "node/1187907064"
+  },
+  {
+   "name": "Worldchampion Jet  &  Champions League Jet 1",
+   "lat": 35.342,
+   "lng": 25.14112,
+   "osm": "node/267668226"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 34.92828,
+   "lng": 24.80101,
+   "osm": "node/4361887548"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 34.92832,
+   "lng": 24.80611,
+   "osm": "node/4361887549"
+  },
+  {
+   "name": "Blue Star Chios",
+   "lat": 35.34387,
+   "lng": 25.14278,
+   "osm": "node/9282711370"
+  }
+ ],
+ "roads": [
+  {
+   "a": {
+    "lat": 35.333557142857146,
+    "lng": 25.138785714285717
+   },
+   "b": {
+    "lat": 35.0513,
+    "lng": 24.8137
+   },
+   "min": 55,
+   "km": 55.3
+  },
+  {
+   "a": {
+    "lat": 35.333557142857146,
+    "lng": 25.138785714285717
+   },
+   "b": {
+    "lat": 34.933,
+    "lng": 24.815
+   },
+   "min": 76,
+   "km": 68.6
+  },
+  {
+   "a": {
+    "lat": 35.34253,
+    "lng": 25.14351
+   },
+   "b": {
+    "lat": 35.0513,
+    "lng": 24.8137
+   },
+   "min": 56,
+   "km": 55.1
+  },
+  {
+   "a": {
+    "lat": 35.34253,
+    "lng": 25.14351
+   },
+   "b": {
+    "lat": 34.933,
+    "lng": 24.815
+   },
+   "min": 77,
+   "km": 68.4
+  },
+  {
+   "a": {
+    "lat": 35.0513,
+    "lng": 24.8137
+   },
+   "b": {
+    "lat": 35.333557142857146,
+    "lng": 25.138785714285717
+   },
+   "min": 54,
+   "km": 54.3
+  },
+  {
+   "a": {
+    "lat": 35.0513,
+    "lng": 24.8137
+   },
+   "b": {
+    "lat": 35.34253,
+    "lng": 25.14351
+   },
+   "min": 55,
+   "km": 55.1
+  },
+  {
+   "a": {
+    "lat": 35.0513,
+    "lng": 24.8137
+   },
+   "b": {
+    "lat": 34.933,
+    "lng": 24.815
+   },
+   "min": 34,
+   "km": 26.6
+  },
+  {
+   "a": {
+    "lat": 34.933,
+    "lng": 24.815
+   },
+   "b": {
+    "lat": 35.333557142857146,
+    "lng": 25.138785714285717
+   },
+   "min": 75,
+   "km": 67.6
+  },
+  {
+   "a": {
+    "lat": 34.933,
+    "lng": 24.815
+   },
+   "b": {
+    "lat": 35.34253,
+    "lng": 25.14351
+   },
+   "min": 76,
+   "km": 68.4
+  },
+  {
+   "a": {
+    "lat": 34.933,
+    "lng": 24.815
+   },
+   "b": {
+    "lat": 35.0513,
+    "lng": 24.8137
+   },
+   "min": 34,
+   "km": 26.6
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "",
+   "a": {
+    "lat": 34.92828,
+    "lng": 24.80101
+   },
+   "b": {
+    "lat": 34.92832,
+    "lng": 24.80611
+   },
+   "osm": "way/438445084"
+  },
+  {
+   "name": "Rethymno - Heraklion",
+   "a": {
+    "lat": 35.37251,
+    "lng": 24.4852
+   },
+   "b": {
+    "lat": 35.342,
+    "lng": 25.14112
+   },
+   "osm": "way/692382996"
+  }
+ ],
+ "eatHours": [
+  [
+   "McDonalds",
+   35.3385,
+   25.14181,
+   "Mo-Th 08:00-03:00, Fr 08:00-24:00; Sa 00:00-24:00; Su 00:00-03:00",
+   "fast_food"
+  ],
+  [
+   "Νότιο Σέλας",
+   35.33982,
+   25.13543,
+   "Mo-Su 10:00-03:00",
+   "restaurant"
+  ],
+  [
+   "Πλάνη",
+   35.3414,
+   25.13648,
+   "Mo-Su,PH 19:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Λίγο κρασί, Λίγο Θάλασσα",
+   35.34265,
+   25.13434,
+   "Mo-Su 09:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Central Park",
+   35.34018,
+   25.1337,
+   "Mo-Su 08:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Beer o' clock",
+   35.33979,
+   25.13275,
+   "Mo-Su 11:00-02:00",
+   "pub"
+  ],
+  [
+   "Coffee Island",
+   35.33823,
+   25.12976,
+   "Mo-Sa 06:00-22:00",
+   "cafe"
+  ],
+  [
+   "Metro",
+   35.33357,
+   25.13568,
+   "Mo-Su 12:00-05:00",
+   "restaurant"
+  ],
+  [
+   "Ό, τι θες",
+   35.33401,
+   25.12902,
+   "Mo-Su 11:30-00:30",
+   "fast_food"
+  ],
+  [
+   "Πεσκέσι",
+   35.34016,
+   25.1325,
+   "Mo-Su 13:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Starbucks",
+   35.33917,
+   25.13423,
+   "Mo-Fr 09:00-22:00, Sa 08:30-22:30, Su 23:00-21:00",
+   "cafe"
+  ],
+  [
+   "Adipodas",
+   35.33883,
+   25.13548,
+   "Mo-Su 12:00-01:00",
+   "restaurant"
+  ],
+  [
+   "high hopes taproom",
+   35.34142,
+   25.13037,
+   "Mo-Fr 18:00-01:00; Sa 12:00-01:00",
+   "pub"
+  ],
+  [
+   "cafe rinokeros",
+   35.33714,
+   25.13174,
+   "Mo-Sa",
+   "cafe"
+  ],
+  [
+   "mavros katis",
+   35.33806,
+   25.12949,
+   "Mo-Sa 09:00-03:00",
+   "cafe"
+  ],
+  [
+   "Pukuvu",
+   35.33679,
+   25.13244,
+   "Tu-Sa 10:00-01:00",
+   "cafe"
+  ],
+  [
+   "Chagiati",
+   35.34109,
+   25.13289,
+   "Mo-Sa 18:00-24:00",
+   "restaurant"
+  ],
+  [
+   "ML Espresso Bar",
+   35.33754,
+   25.13577,
+   "Mo-Su 07:00-23:00",
+   "cafe"
+  ],
+  [
+   "IPPOKAMPOS",
+   35.343,
+   25.13369,
+   "12:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Paralia",
+   35.34298,
+   25.13345,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Beer o' clock 2",
+   35.33979,
+   25.1326,
+   "Mo-Su 11:00-02:00",
+   "pub"
+  ],
+  [
+   "Samaria Delizioso",
+   35.33949,
+   25.13279,
+   "Mo-Su 07:00-00:45",
+   "cafe"
+  ],
+  [
+   "Koukouvagia",
+   35.33918,
+   25.13517,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Το Ροβύθι",
+   35.33977,
+   25.13523,
+   "Mo 10:00-21:00; Tu-Su 10:00-23:45; Dec 24,Dec 31 10:00-17:00; Jan 01-02,Aug 15-16,Nov 17,Dec 25-26 off",
+   "restaurant"
+  ],
+  [
+   "Central",
+   35.33984,
+   25.13356,
+   "Mo-Su 08:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Ο Χοχλιός",
+   35.33849,
+   25.12856,
+   "Mo,We 09:00-16:00; Tu,Th,Fr 09:00-21:00; Sa 10:00-15:00",
+   "cafe"
+  ],
+  [
+   "Petousis Taverna",
+   35.34015,
+   25.1322,
+   "12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Veganato",
+   35.33947,
+   25.13179,
+   "Mo-Sa 13:30-22:00",
+   "fast_food"
+  ],
+  [
+   "Fast Vegan Food",
+   35.33899,
+   25.1359,
+   "Mo-Sa 12:30-22:00; Su 14:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Kafeneio O Tempelis",
+   35.33933,
+   25.13457,
+   "Mo-Su 12:00-03:00",
+   "restaurant"
+  ],
+  [
+   "Triaina",
+   35.34075,
+   25.12983,
+   "Mo off; Tu-Su 13:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Frankly",
+   35.33789,
+   25.13123,
+   "Mo-Su 08:00-23:30",
+   "cafe"
+  ],
+  [
+   "Tiny Rebels",
+   35.33986,
+   25.13172,
+   "Mo, We 08:30-17:00; Tu, Th-Fr 08:30-20:00; Sa 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Fabrica Espresso Bar & Food",
+   35.34253,
+   25.13345,
+   "Mo-Fr 06:30-23:00; Sa 06:30-22:00; Su 07:30-22:00",
+   "cafe"
+  ],
+  [
+   "Daily Chicken Diner",
+   35.33874,
+   25.13999,
+   "Mo-Th 12:00-24:00; Fr-Su,PH 12:00-03:00",
+   "fast_food"
+  ],
+  [
+   "Petousis Tavern",
+   35.34019,
+   25.13215,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Hermes",
+   35.33764,
+   25.12749,
+   "06:00-22:00",
+   "cafe"
+  ],
+  [
+   "Hovoli",
+   35.33763,
+   25.13555,
+   "Mo-Su 10:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Mare",
+   35.3423,
+   25.13022,
+   "Mo-Su 08:00-00:30",
+   "restaurant"
+  ],
+  [
+   "Avli Project Heraklion",
+   35.34183,
+   25.13884,
+   "Mo-Su 09:00-00:04",
+   "restaurant"
+  ]
+ ],
+ "heights": [
+  [
+   35.33915,
+   25.13741,
+   29
+  ],
+  [
+   35.29806,
+   25.16306,
+   100
+  ],
+  [
+   35.34464,
+   25.13685,
+   4
+  ],
+  [
+   35.33271,
+   25.13066,
+   50
+  ],
+  [
+   35.34181,
+   25.13117,
+   15
+  ],
+  [
+   35.33983,
+   25.134,
+   29
+  ],
+  [
+   35.3391,
+   25.1331,
+   30
+  ],
+  [
+   35.33763,
+   25.1309,
+   30
+  ],
+  [
+   35.3401,
+   25.13465,
+   28
+  ],
+  [
+   35.33808,
+   25.13134,
+   28
+  ],
+  [
+   35.3392,
+   25.13369,
+   30
+  ],
+  [
+   35.34244,
+   25.13179,
+   10
+  ],
+  [
+   35.34181,
+   25.12668,
+   8
+  ],
+  [
+   35.34253,
+   25.14351,
+   8
+  ],
+  [
+   35.34243,
+   25.14232,
+   8
+  ],
+  [
+   35.3427,
+   25.14444,
+   4
+  ],
+  [
+   35.342,
+   25.14112,
+   4
+  ],
+  [
+   34.92828,
+   24.80101,
+   13
+  ],
+  [
+   34.92832,
+   24.80611,
+   1
+  ],
+  [
+   35.34387,
+   25.14278,
+   2
+  ],
+  [
+   35.29811,
+   25.16143,
+   97
+  ],
+  [
+   35.29876,
+   25.16068,
+   102
+  ],
+  [
+   35.29891,
+   25.16063,
+   103
+  ],
+  [
+   35.33899,
+   25.1359,
+   34
+  ],
+  [
+   35.33908,
+   25.13548,
+   33
+  ],
+  [
+   35.33883,
+   25.13548,
+   35
+  ],
+  [
+   35.33835,
+   25.13566,
+   33
+  ],
+  [
+   35.33918,
+   25.13517,
+   32
+  ],
+  [
+   35.33982,
+   25.13543,
+   29
+  ],
+  [
+   35.3431,
+   25.13776,
+   1
+  ],
+  [
+   35.34173,
+   25.13665,
+   12
+  ],
+  [
+   35.34183,
+   25.13884,
+   3
+  ],
+  [
+   35.3414,
+   25.13648,
+   18
+  ],
+  [
+   35.34153,
+   25.13582,
+   22
+  ],
+  [
+   35.34243,
+   25.13463,
+   9
+  ],
+  [
+   35.33944,
+   25.13347,
+   29
+  ],
+  [
+   35.33928,
+   25.13307,
+   30
+  ],
+  [
+   35.33963,
+   25.13344,
+   28
+  ],
+  [
+   35.33905,
+   25.13296,
+   30
+  ],
+  [
+   35.33892,
+   25.13299,
+   30
+  ],
+  [
+   35.33984,
+   25.13356,
+   28
+  ],
+  [
+   35.3397,
+   25.13505,
+   28
+  ],
+  [
+   35.33977,
+   25.13523,
+   28
+  ],
+  [
+   35.34011,
+   25.1353,
+   27
+  ],
+  [
+   35.3404,
+   25.13545,
+   26
+  ],
+  [
+   35.34038,
+   25.13451,
+   27
+  ],
+  [
+   35.33796,
+   25.13047,
+   28
+  ],
+  [
+   35.33851,
+   25.13145,
+   27
+  ],
+  [
+   35.33826,
+   25.132,
+   31
+  ],
+  [
+   35.33852,
+   25.13156,
+   27
+  ],
+  [
+   35.33837,
+   25.13196,
+   31
+  ],
+  [
+   35.33611,
+   25.13133,
+   39
+  ],
+  [
+   35.338,
+   25.1336,
+   35
+  ],
+  [
+   35.3379,
+   25.13356,
+   35
+  ],
+  [
+   35.33732,
+   25.13384,
+   35
+  ],
+  [
+   35.33794,
+   25.13325,
+   33
+  ],
+  [
+   35.33772,
+   25.1331,
+   31
+  ],
+  [
+   35.33763,
+   25.13555,
+   36
+  ],
+  [
+   35.2979,
+   25.1631,
+   99
+  ],
+  [
+   35.339,
+   25.137,
+   31
+  ],
+  [
+   35.3436,
+   25.1376,
+   1
+  ],
+  [
+   35.3392,
+   25.1336,
+   30
+  ],
+  [
+   35.3399,
+   25.135,
+   27
+  ],
+  [
+   35.3375,
+   25.131,
+   32
+  ],
+  [
+   35.3378,
+   25.1342,
+   37
+  ],
+  [
+   35.0513,
+   24.8137,
+   98
+  ],
+  [
+   34.933,
+   24.815,
+   -31
+  ],
+  [
+   35.33356,
+   25.13879,
+   45
+  ]
+ ]
+}

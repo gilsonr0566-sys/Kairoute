@@ -1,0 +1,337 @@
+{
+ "fail": 0,
+ "warn": 0,
+ "report": [
+  {
+   "id": "acromuseum",
+   "title": "Acropolis Museum",
+   "claims": 18,
+   "minutes": {
+    "1": 0.7,
+    "2": 1.6,
+    "3": 1.9
+   },
+   "labels": {
+    "supported": 16,
+    "disputed": 2
+   }
+  },
+  {
+   "id": "acropolis",
+   "title": "The Acropolis and the Parthenon",
+   "claims": 28,
+   "minutes": {
+    "1": 1,
+    "2": 2.9,
+    "3": 4.7
+   },
+   "labels": {
+    "verified": 7,
+    "supported": 11,
+    "disputed": 8,
+    "legend": 2
+   }
+  },
+  {
+   "id": "agora",
+   "title": "Ancient Agora",
+   "claims": 18,
+   "minutes": {
+    "1": 0.8,
+    "2": 1.7,
+    "3": 2.1
+   },
+   "labels": {
+    "supported": 14,
+    "verified": 2,
+    "scripture": 1,
+    "disputed": 1
+   }
+  },
+  {
+   "id": "areopagus",
+   "title": "Areopagus (Mars Hill)",
+   "claims": 17,
+   "minutes": {
+    "1": 1,
+    "2": 2.2,
+    "3": 2.6
+   },
+   "labels": {
+    "supported": 5,
+    "disputed": 3,
+    "legend": 1,
+    "scripture": 8
+   }
+  },
+  {
+   "id": "byzantine-museum",
+   "title": "Byzantine and Christian Museum",
+   "claims": 6,
+   "minutes": {
+    "1": 0.5,
+    "2": 1.1,
+    "3": 1.1
+   },
+   "labels": {
+    "supported": 6
+   }
+  },
+  {
+   "id": "corinth-canal",
+   "title": "Corinth Canal",
+   "claims": 22,
+   "minutes": {
+    "1": 1.6,
+    "2": 3.3,
+    "3": 4.4
+   },
+   "labels": {
+    "supported": 17,
+    "estimate": 3,
+    "disputed": 1,
+    "legend": 1
+   }
+  },
+  {
+   "id": "corinth",
+   "title": "Ancient Corinth",
+   "claims": 40,
+   "minutes": {
+    "1": 1.8,
+    "2": 4,
+    "3": 7.7
+   },
+   "labels": {
+    "supported": 22,
+    "estimate": 1,
+    "legend": 3,
+    "scripture": 13,
+    "tradition": 1
+   }
+  },
+  {
+   "id": "delphi",
+   "title": "Delphi",
+   "claims": 42,
+   "minutes": {
+    "1": 1.9,
+    "2": 4.3,
+    "3": 7.8
+   },
+   "labels": {
+    "verified": 3,
+    "supported": 24,
+    "legend": 5,
+    "disputed": 5,
+    "estimate": 3,
+    "tradition": 1,
+    "scripture": 1
+   }
+  },
+  {
+   "id": "kapnikarea",
+   "title": "Panagia Kapnikarea",
+   "claims": 8,
+   "minutes": {
+    "1": 0.8,
+    "2": 1.4,
+    "3": 1.4
+   },
+   "labels": {
+    "supported": 5,
+    "estimate": 1,
+    "disputed": 2
+   }
+  },
+  {
+   "id": "lycabettus",
+   "title": "Lycabettus Hill",
+   "claims": 8,
+   "minutes": {
+    "1": 0.4,
+    "2": 0.7,
+    "3": 1.1
+   },
+   "labels": {
+    "supported": 6,
+    "disputed": 1,
+    "legend": 1
+   }
+  },
+  {
+   "id": "metropolis",
+   "title": "Athens Cathedral and the Little Metropolis",
+   "claims": 9,
+   "minutes": {
+    "1": 0.5,
+    "2": 1.2,
+    "3": 1.3
+   },
+   "labels": {
+    "supported": 9
+   }
+  },
+  {
+   "id": "monastiraki",
+   "title": "Monastiraki and the flea market",
+   "claims": 14,
+   "minutes": {
+    "1": 0.7,
+    "2": 1.8,
+    "3": 2.1
+   },
+   "labels": {
+    "supported": 11,
+    "tradition": 2,
+    "disputed": 1
+   }
+  },
+  {
+   "id": "nam",
+   "title": "National Archaeological Museum",
+   "claims": 36,
+   "minutes": {
+    "1": 1.9,
+    "2": 4,
+    "3": 5.7
+   },
+   "labels": {
+    "supported": 30,
+    "legend": 1,
+    "disputed": 4,
+    "estimate": 1
+   }
+  },
+  {
+   "id": "national-garden",
+   "title": "National Garden and Zappeion",
+   "claims": 21,
+   "minutes": {
+    "1": 1.4,
+    "2": 2.5,
+    "3": 3.3
+   },
+   "labels": {
+    "supported": 19,
+    "disputed": 2
+   }
+  },
+  {
+   "id": "olympieion",
+   "title": "Temple of Olympian Zeus and Hadrian's Arch",
+   "claims": 18,
+   "minutes": {
+    "1": 1.3,
+    "2": 1.9,
+    "3": 2.5
+   },
+   "labels": {
+    "supported": 14,
+    "disputed": 4
+   }
+  },
+  {
+   "id": "philopappos",
+   "title": "Philopappos Hill",
+   "claims": 21,
+   "minutes": {
+    "1": 1.3,
+    "2": 2.4,
+    "3": 3.7
+   },
+   "labels": {
+    "supported": 18,
+    "tradition": 1,
+    "estimate": 1,
+    "disputed": 1
+   }
+  },
+  {
+   "id": "plaka",
+   "title": "Plaka and Anafiotika",
+   "claims": 13,
+   "minutes": {
+    "1": 0.8,
+    "2": 1.2,
+    "3": 1.9
+   },
+   "labels": {
+    "supported": 12,
+    "disputed": 1
+   }
+  },
+  {
+   "id": "promenade",
+   "title": "Acropolis promenade",
+   "claims": 13,
+   "minutes": {
+    "1": 1.3,
+    "2": 2.4,
+    "3": 2.5
+   },
+   "labels": {
+    "supported": 12,
+    "scripture": 1
+   }
+  },
+  {
+   "id": "roman-agora",
+   "title": "Roman Agora and Tower of the Winds",
+   "claims": 21,
+   "minutes": {
+    "1": 1.2,
+    "2": 2.8,
+    "3": 3.9
+   },
+   "labels": {
+    "supported": 16,
+    "disputed": 5
+   }
+  },
+  {
+   "id": "sounion",
+   "title": "Temple of Poseidon at Sounion",
+   "claims": 19,
+   "minutes": {
+    "1": 1.6,
+    "2": 2.9,
+    "3": 4.1
+   },
+   "labels": {
+    "supported": 15,
+    "estimate": 1,
+    "disputed": 3
+   }
+  },
+  {
+   "id": "syntagma",
+   "title": "Syntagma Square and the changing of the guard",
+   "claims": 19,
+   "minutes": {
+    "1": 0.9,
+    "2": 1.7,
+    "3": 1.8
+   },
+   "labels": {
+    "supported": 18,
+    "tradition": 1
+   }
+  },
+  {
+   "id": "theatre-dionysus",
+   "title": "Theatre of Dionysus",
+   "claims": 23,
+   "minutes": {
+    "1": 1.2,
+    "2": 2.5,
+    "3": 3.6
+   },
+   "labels": {
+    "supported": 20,
+    "estimate": 1,
+    "disputed": 2
+   }
+  }
+ ]
+}

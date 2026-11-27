@@ -1,0 +1,122 @@
+// Beta 2 engine, part 9: the timed day. Walks a finished order through the clock: rides, waits for opening, time at
+// each stop, meals inside their hours, the fixed steps at both ends. It decides nothing: it only reports what the
+// order gives, including any stop reached after its last entry and whether the day ends in time. Used both to check a
+// candidate order (with stable estimates) and to write the shown plan (with live ride times when given).
+(function (E) {
+  // Extra time on the way back to a ship, train or plane for t minutes of riding: none under 10, then half of it up to 15,
+  // then 30% (at least 15). It only grows with the riding.
+  E.slackFor = t => t < 10 ? 0 : t < 30 ? Math.min(15, Math.ceil(t / 2 / 5) * 5) : Math.max(15, Math.round(t * 0.3 / 5) * 5);
+  E.MEAL_SEATED = 15; // minutes early at a place to eat that are no idle wait
+  // seq: stops and meals in order. win: the day's window. ride(a, b) -> leg { min, mode }. siteDay(id) -> today's hours facts.
+  // from: { r, k } resumes from an earlier walk r of the same day whose first k stops match seq (lunch tried in each
+  // gap re-walks only from that gap on); the answer is the same as walking seq from the start.
+  const farMemo = new WeakMap();
+  E.walkDay = (seq, win, ride, siteDay, from) => {
+    const O = win.head[0], Z = win.tail.length ? win.tail[win.tail.length - 1] : null, st = from && from.r && from.r.states && from.r.states[from.k];
+    const items = st ? from.r.items.slice(0, st.n) : [], states = [];
+    let clock = win.start, prev = O, late = 0, waits = 0, rideMin = 0;
+    if (st) ({ clock, prev, late, waits, rideMin } = st); else items.push({ t: "start", name: O && O.name, at: clock });
+    const go = (p, type) => {
+      let leg = ride(prev, p);
+      // A timetabled line with no departure near this time (E.runsAt) is never planned on: the taxi instead, said.
+      const deadlineRide = !!(p && (p.backToShip || p.deadline));
+      if (!E.runsAt(leg, clock, deadlineRide)) { const t = (leg.options || []).find(o => o.kind === "taxi"), nx = E.nextDepAfter(leg, clock);
+        // Times known only up to well before it is needed: the search didn't reach that hour, which is not the same as no
+        // train (Nov 22 live probe: trains known until 9:53 am, said as "no departure near 3:59 pm"). Said as not known.
+        // The same when the helper said its answer is incomplete (hours of the day it couldn't read): a missing hour is
+        // not a missing train.
+        const last = E.lastLeave(leg), part = !!(leg.ans && leg.ans.partial), short = nx == null && last != null && last < clock - E.DEP_GAP;
+        const hole = !part && !short ? E.depGap(leg, clock) : null;
+        if (hole) { const why = "The times found for " + (leg.how || "this line") + " jump from " + E.clock(hole.from) + " to " + E.clock(hole.to) + ", though it otherwise runs about every " + hole.every + " min, so the times in between are likely missing from the timetable, not trains that don't run. To be back in time it would need to leave about " + E.clock(clock) + (t ? ", so this ride is planned by taxi until those times are confirmed." : ": check the times at the station before you go.");
+          leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); }
+        else if (part && !short) { const why = "The train and bus times found so far for " + (leg.how || "this line") + " show none near " + E.clock(clock) + ", but some hours of the day couldn't be read yet" + (t ? ", so this ride is planned by taxi until they are." : ": check another way before you go.");
+          leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); } else {
+        const why = short ? "The train and bus times found so far for " + (leg.how || "this line") + " only reach " + E.clock(last) + "; the times near " + E.clock(clock) + " aren't known yet" + (t ? ", so this ride is planned by taxi until they are." : ": check another way before you go.")
+          : "The timetable found for " + (leg.how || "this line") + " shows no departure near " + E.clock(clock) + ", the time it would need to leave to be back in time" + (nx != null ? " (the next known is about " + E.clock(nx) + ")" : "") + (t ? ", so this ride is planned by taxi." : ": check another way before you go.");
+        leg = t ? E.legAs(leg, t, why) : Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, noRun: true }); } }
+      // On a day with a time to be back, a boat is planned only on a sailing a timetable confirms (E.boatUnsure): else a
+      // taxi when the road reaches, else the place across the water isn't planned today, with the reason (never an hour
+      // allowed at the pier for a boat that may not come).
+      let unsure = null;
+      // The traveler's own choice of the boat (the ride's choice, or a place across the water they picked) is planned all
+      // the same, said plainly, with an hour at the pier for the boat back (Richard, Nov 21: "Yes, your pick, with a
+      // warning"); the app never takes such a boat on its own. Lunch inside that visit is part of it: the boat back from
+      // the island's lunch place is the same boat (Nov 21 live check: Capri alone "could never fit" a 9 h 45 min day).
+      const isleStop = leg.isle === "back" ? prev : p, ownBoat = !!(leg.mine || (isleStop && !isleStop.guideWish && (isleStop.wish || isleStop.insideWish)));
+      if (win.hard && leg.kind === "ferry" && (unsure = E.boatUnsure(leg, clock, win.date))) {
+        if (ownBoat && leg.source !== "timetable" || ownBoat && /no sailing times are known/.test(unsure)) {
+          const why = "No sailing times are confirmed for this boat (" + unsure + "): it is planned because you chose it. " + (leg.isle === "back" ? "Up to an hour at the pier is allowed for the boat back; ask at the pier for the last boat back when you land, and leave for the ship by the time shown." : "Check the sailings at the pier, and the last boat back, before you go.");
+          leg = Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + why, ownBoat: unsure }); unsure = null;
+        } else { const t = (leg.options || []).find(o => o.kind === "taxi");
+          leg = t ? E.legAs(leg, t, "The boat isn't planned on its own on a day with a time to be back: " + unsure + ", so this ride is planned by taxi. Pick the boat yourself to take it anyway.") : Object.assign({}, leg, { unsure, noRun: true }); if (t) unsure = null; } }
+      // A stop whose spot isn't sure (the travel guide and the encyclopedia put it in different places and nothing told
+      // which is right, tools/places/where.cjs): the ride's time is said as not sure, never shown as a fact (Nov 22 outside
+      // test: a ride of 17 minutes by taxi between two places a 2-minute walk apart).
+      const dz = [prev, p].find(x => x && x.posDoubt);
+      if (dz) leg = Object.assign({}, leg, { note: (leg.note ? leg.note + " " : "") + "Where " + dz.name + " is isn't sure (the travel guide and the encyclopedia put it in different places), so this ride's time may be wrong: check the spot on a map before you set off.", posDoubt: dz.name });
+      const ri = E.rideItem(leg, leg.parts ? { parts: leg.parts } : null); items.push(ri); clock += leg.min; rideMin += leg.min;
+      if (leg.noRun) { late++; ri.noRun = true; }
+      // The way back on a timetable (to a ship, a train or a plane, or a boat on such a day) waits for its real departure:
+      // the ride's own time holds only the usual wait, so any longer wait until the next known departure is added (Nov 21:
+      // a sailing 55 minutes off was planned as if it left at once, eating the extra time kept for delays).
+      if (!leg.noRun && leg.ans && (deadlineRide || (win.hard && leg.kind === "ferry"))) { const nx = E.nextLeave(leg, clock - leg.min);
+        const extra = nx == null ? 0 : Math.max(0, nx - (clock - leg.min) - (+leg.ans.wait || 0));
+        if (extra > 0) { clock += extra; waits += extra; ri.wait = (ri.wait || 0) + extra; ri.depWait = extra; } }
+      // The place across the water is the stop the boat serves: the one it leaves from on the way back, else the one it reaches.
+      if (unsure && leg.isle === "back") { const s = items.slice().reverse().find(x => x.t === "stop"); if (s) s.noBoat = unsure; }
+      // A boat that doesn't sail before a set time (the guide's first boat): the wait at the pier is part of the day.
+      if (leg.first && clock < leg.first.at + leg.first.after) { const w = leg.first.at + leg.first.after - clock; clock += w; waits += w; ri.wait = w; ri.firstBoat = leg.first.at; }
+      const it = { t: type, id: p.id || null, name: p.name, min: p.minutes || 0 };
+      if (unsure && leg.isle !== "back" && type === "stop") it.noBoat = unsure;
+      if (type === "stop") { const sd = siteDay ? siteDay(p.id) : null, f = E.hoursFit(sd && sd.oh, clock, p.minutes);
+        if (f.wait) { clock += f.wait; waits += f.wait; it.wait = f.wait; } if (f.late > 0) { late++; it.late = f.late; }
+        if (p.bonus) it.bonus = true; if (p.along) it.along = true; }
+      // Early at a place to eat: seated with a drink and the menu, the first quarter hour is no idle wait (Nov 19: lunch
+      // 1.7 km out of the way, to save five minutes before the kitchen opened). Longer is still a wait.
+      // Twenty minutes or more before lunch starts is free time, named on the meal (Nov 20 review: the day jumped to lunch with
+      // nothing said).
+      if (type === "meal") { const m = p.mealOf; if (clock < m.from) { it.early = m.from - clock; if (m.from - clock > 20) it.freeBefore = m.from - clock; waits += Math.max(0, m.from - clock - E.MEAL_SEATED); clock = m.from; }
+        // The place's own hours that day, read and checked exactly as a sight's (E.hoursFit): wait for it to open (the first
+        // quarter hour seated is no idle wait), and a meal that can't finish before closing is late by the minutes it runs
+        // over (Nov 19 review: lunch was planned when the restaurant was shut).
+        // A wait for the place to open counts with the wait for lunchtime: twenty minutes or more of it is free time, named
+        // (Nov 21, Bahamas test trip: 1.5 h before a lunch place opened, with nothing said).
+        if (p.oh) { const len = p.len || m.len, f = E.hoursFit(p.oh, clock, len);
+          if (f.wait) { it.early = (it.early || 0) + f.wait; waits += Math.max(0, f.wait - E.MEAL_SEATED); clock += f.wait; const idle = (it.freeBefore || 0) + f.wait; if (idle > 20) it.freeBefore = idle; } if (f.late > 0) { it.shut = true; it.lateMeal = (it.lateMeal || 0) + f.late; } } it.meal = m.label; it.min = p.len || m.len; if (m.booked) it.booked = true; if (m.pinned) it.pinned = true; if (p.chosen) it.chosen = true; if (p.toGo) it.toGo = true; if (p.fromMap) it.fromMap = true; if (p.packed) it.packed = true; if (p.during != null) it.during = p.during; if (clock > m.to) it.lateMeal = (it.lateMeal || 0) + clock - m.to; }
+      it.at = clock; items.push(it); clock += it.min; prev = p;
+    };
+    const keep = () => states.push({ clock, prev, late, waits, rideMin, n: items.length });
+    if (st) { for (let i = 0; i <= from.k; i++) states.push(from.r.states[i]); }
+    else { win.head.slice(1).forEach(p => go(p, "fixed")); keep(); }
+    // from.cap: the caller only wants a day that runs no more than cap minutes past its time (a lunch tried where the day is
+    // already full, an order tried in a repair). Once the clock plus the visits still to come is past that, the rest of the walk
+    // can't change the answer: it stops there and says the day is over (planning time, Nov 23). The same for more stops late
+    // than from.lateCap, more than 45 minutes of waiting over from.waitFrom, more minutes riding than from.rideCap, or (from.noShut) a
+    // meal at a place that is shut: each only grows as the day goes on.
+    const cap = from && from.cap != null ? Math.max(from.cap, win.hard || win.strict ? 0 : 5) : null;
+    let rest = 0; if (cap != null) { for (const p of seq) rest += Math.max(0, p.mealOf ? p.len || p.mealOf.len || 0 : p.minutes || 0); for (const p of win.tail) rest += Math.max(0, p.fixed ? p.minutes || 0 : 0); }
+    for (let i = 0; i < seq.length; i++) { const p = seq[i];
+      if (cap != null) rest -= Math.max(0, p.mealOf ? p.len || p.mealOf.len || 0 : p.minutes || 0);
+      if (st && i < from.k) continue; go(p, p.mealOf ? "meal" : "stop"); keep();
+      if ((cap != null && clock + rest - win.endBy > cap) || (from && ((from.lateCap != null && late > from.lateCap) || (from.waitFrom != null && waits - from.waitFrom > 45)
+        || (from.rideCap != null && rideMin > from.rideCap) || (from.noShut && items[items.length - 1].shut)))) return { items, end: Infinity, late, waits, rideMin, over: Infinity, states, cut: true }; }
+    win.tail.forEach((p, i) => go(Object.assign({}, p, { minutes: p.fixed ? p.minutes : 0 }), i === win.tail.length - 1 ? "end" : "fixed"));
+    // The extra time for the ship, train or plane belongs to the whole way back (Nov 20 review: a stop beside the ship
+    // took the extra off the long taxi back from a far site). Every ride after the day's farthest place counts, and the
+    // extra slides with their time (E.slackFor), never less than what the rides already carry.
+    if (win.hard && Z && E.hasPos(Z)) {
+      // Each spot's distance from the end is kept between walks of the same day (planning time, Nov 23).
+      let far = -1, fd = -1, zm = farMemo.get(Z); if (!zm || zm.lat !== Z.lat || zm.lng !== Z.lng) farMemo.set(Z, zm = { lat: Z.lat, lng: Z.lng, m: new Map() });
+      seq.forEach((p, i) => { if (!E.hasPos(p)) return; let n = zm.m.get(p.lat); if (!n) zm.m.set(p.lat, n = new Map());
+        let dd = n.get(p.lng); if (dd === undefined) n.set(p.lng, dd = E.hav(Z, p)); if (dd > fd) { fd = dd; far = i; } });
+      const at = states[far + 1], back = items.slice(at.n).filter(x => x.t === "ride"), has = back.reduce((a, x) => a + (x.slack || 0), 0);
+      const base = back.reduce((a, x) => a + (x.mode === "walk" ? 0 : x.min || 0), 0) - has, need = E.slackFor(base) - has;
+      // It sits on the last ride, into the ship: the time to leave the last stop comes that much earlier.
+      const last = back[back.length - 1];
+      if (need > 0 && last) { last.min += need; last.slack = (last.slack || 0) + need; last.wayBack = need; rideMin += need; clock += need; const e = items[items.length - 1]; if (e.t === "end") e.at += need; }
+    }
+    if (!Z) items.push({ t: "end", name: "Day done", at: clock });
+    const end = clock, over = end - win.endBy;
+    return { items, end, late, waits, rideMin, over: over > (win.hard || win.strict ? 0 : 5) ? over : 0, states };
+  };
+})(KEngine);

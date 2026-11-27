@@ -1,0 +1,6670 @@
+{
+ "key": "kyoto japan",
+ "name": "Kyoto, Japan",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q221716": {
+   "wikidata": "Q221716",
+   "editions": 77,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q750721",
+    "Q11555252",
+    "Q10380674",
+    "Q10444949"
+   ],
+   "hours": "Mo-Su 06:00-18:00",
+   "fee": "yes",
+   "osm": "way/336641107"
+  },
+  "src-q270983": {
+   "wikidata": "Q270983",
+   "editions": 57,
+   "types": [
+    "Q15835",
+    "Q5393308"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q10444949"
+   ],
+   "hours": "Mo-Su 09:00-17:00",
+   "fee": "yes",
+   "osm": "way/98115917"
+  },
+  "src-q874027": {
+   "wikidata": "Q874027",
+   "editions": 41,
+   "types": [
+    "Q210272",
+    "Q18247357"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/8252871"
+  },
+  "src-q714828": {
+   "wikidata": "Q714828",
+   "editions": 41,
+   "types": [
+    "Q514480",
+    "Q11438310",
+    "Q134917286",
+    "Q845945",
+    "Q135009132",
+    "Q135419779"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q215320",
+    "Q10444949",
+    "Q11467693"
+   ],
+   "osm": "way/96291583",
+   "fee": "no"
+  },
+  "src-q257473": {
+   "wikidata": "Q257473",
+   "editions": 33,
+   "types": [
+    "Q15835",
+    "Q5393308"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q10444949"
+   ],
+   "osm": "way/105817561"
+  },
+  "src-q587371": {
+   "wikidata": "Q587371",
+   "editions": 32,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027"
+   ],
+   "hours": "Mo-Su 08:00-17:00",
+   "osm": "way/98103477"
+  },
+  "src-q1046403": {
+   "wikidata": "Q1046403",
+   "editions": 30,
+   "types": [
+    "Q5393308",
+    "Q11452101"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q10437732",
+    "Q11627440",
+    "Q10380674",
+    "Q11374875",
+    "Q10560192",
+    "Q10444949",
+    "Q30932906"
+   ],
+   "hours": "Mo-Su 05:00-17:00",
+   "fee": "yes",
+   "osm": "way/359896810"
+  },
+  "src-q1013399": {
+   "wikidata": "Q1013399",
+   "editions": 29,
+   "types": [
+    "Q92026",
+    "Q11482300"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q1139439"
+   ],
+   "hours": "Mo-Su 08:45-17:00",
+   "osm": "way/57111281"
+  },
+  "src-q385141": {
+   "wikidata": "Q385141",
+   "editions": 27,
+   "types": [
+    "Q120680118",
+    "Q175288",
+    "Q845945"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q10444949"
+   ],
+   "hours": "Mar 15-Sep 30 Mo-Su 06:00-18:00; Oct 01-Oct 31 Mo-Su 06:00-17:30; Nov 01-Feb 14 Mo-Su 06:00-17:00; Feb 15-Mar 14 Mo-Su 06:00-17:30",
+   "fee": "no",
+   "osm": "way/619903245"
+  },
+  "src-q147286": {
+   "wikidata": "Q147286",
+   "editions": 25,
+   "types": [
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "way/31843043"
+  },
+  "src-q1202871": {
+   "wikidata": "Q1202871",
+   "editions": 25,
+   "types": [
+    "Q5393308",
+    "Q114233444",
+    "Q10901138"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q10437732",
+    "Q11374875",
+    "Q11638581",
+    "Q10444949",
+    "Q10312216"
+   ],
+   "hours": "Mar-Nov Mo-Su 09:00-17:00; Dec-Feb Mo-Su 09:00-16:30",
+   "fee": "yes",
+   "osm": "way/98103060"
+  },
+  "src-q692714": {
+   "wikidata": "Q692714",
+   "editions": 23,
+   "types": [
+    "Q125324170",
+    "Q118304363",
+    "Q845945",
+    "Q11588442"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q215320",
+    "Q10444949"
+   ],
+   "hours": "24/7",
+   "fee": "no",
+   "osm": "way/328903218"
+  },
+  "src-q2166743": {
+   "wikidata": "Q2166743",
+   "editions": 23,
+   "types": [
+    "Q5393308",
+    "Q2385804"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q8193432"
+   ],
+   "hours": "Mo-Su 08:30-16:30",
+   "osm": "way/768987591"
+  },
+  "src-q701620": {
+   "wikidata": "Q701620",
+   "editions": 22,
+   "types": [
+    "Q845945",
+    "Q134917286",
+    "Q135009157",
+    "Q135419779",
+    "Q135100459",
+    "Q137640533"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027",
+    "Q215320",
+    "Q10444949",
+    "Q1306606",
+    "Q11467693"
+   ],
+   "hours": "Mo-Su 05:30-18:00",
+   "fee": "no",
+   "osm": "way/98106488"
+  },
+  "src-q1089767": {
+   "wikidata": "Q1089767",
+   "editions": 22,
+   "types": [
+    "Q5393308",
+    "Q10901138"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q8193432"
+   ],
+   "hours": "Mar-Nov Mo-Su 08:40-17:00; Dec-Feb Mo-Su 08:40-16:30; Dec 28-Dec 31 off",
+   "osm": "way/352013907"
+  },
+  "src-q653319": {
+   "wikidata": "Q653319",
+   "editions": 21,
+   "types": [
+    "Q5393308",
+    "Q17051413"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q10380674",
+    "Q10943054"
+   ],
+   "hours": "Apr 01-Nov 15 Mo-Su 08:30-17:00; Nov 16-Mar 31 Mo-Su 09:00-16:00",
+   "fee": "yes",
+   "osm": "way/31842037"
+  },
+  "src-q873645": {
+   "wikidata": "Q873645",
+   "editions": 20,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q11555252"
+   ],
+   "hours": "Mo-Su 09:00-16:00",
+   "osm": "way/456122965"
+  },
+  "src-q901256": {
+   "wikidata": "Q901256",
+   "editions": 20,
+   "types": [
+    "Q5393308",
+    "Q10901138"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/969457939"
+  },
+  "src-q1202239": {
+   "wikidata": "Q1202239",
+   "editions": 33,
+   "types": [
+    "Q11489051",
+    "Q53536964",
+    "Q134962447"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-21:00",
+   "fee": "yes",
+   "osm": "way/554879249"
+  },
+  "src-q662176": {
+   "wikidata": "Q662176",
+   "editions": 19,
+   "types": [
+    "Q798838",
+    "Q118304363",
+    "Q845945",
+    "Q135022918",
+    "Q135009132",
+    "Q135022904",
+    "Q135419779"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q215320",
+    "Q17209329",
+    "Q18054963",
+    "Q11507109",
+    "Q10444949"
+   ],
+   "hours": "Mo-Su 07:00-17:00",
+   "fee": "no",
+   "osm": "way/432120699"
+  },
+  "src-q376288": {
+   "wikidata": "Q376288",
+   "editions": 17,
+   "types": [
+    "Q5393308",
+    "Q10901138"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/558026803"
+  },
+  "src-q1146038": {
+   "wikidata": "Q1146038",
+   "editions": 17,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q874027"
+   ],
+   "hours": "Mo-Su 05:30-17:00",
+   "fee": "no",
+   "osm": "way/372460724"
+  },
+  "src-q783923": {
+   "wikidata": "Q783923",
+   "editions": 16,
+   "types": [
+    "Q11341528"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Th-Mo 10:00-17:00; We off",
+   "fee": "yes",
+   "osm": "way/314446153"
+  },
+  "src-q2702064": {
+   "wikidata": "Q2702064",
+   "editions": 15,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-17:30",
+   "fee": "yes",
+   "osm": "way/759391880"
+  },
+  "src-q713177": {
+   "wikidata": "Q713177",
+   "editions": 14,
+   "types": [
+    "Q845945",
+    "Q118469772",
+    "Q125316983"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q215320",
+    "Q10444949"
+   ],
+   "fee": "no",
+   "osm": "way/369017538"
+  },
+  "src-q1060966": {
+   "wikidata": "Q1060966",
+   "editions": 13,
+   "types": [
+    "Q5393308",
+    "Q17218816",
+    "Q10901138",
+    "Q134962447"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q10437732",
+    "Q10380674",
+    "Q11374875",
+    "Q10444949"
+   ],
+   "osm": "way/878535619"
+  },
+  "src-q1201304": {
+   "wikidata": "Q1201304",
+   "editions": 21,
+   "types": [
+    "Q1440300"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 10:00-21:00",
+   "fee": "yes",
+   "osm": "relation/5333011"
+  },
+  "src-q1440954": {
+   "wikidata": "Q1440954",
+   "editions": 13,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q8193432"
+   ],
+   "hours": "Mo-Su 10:00-17:00",
+   "fee": "yes",
+   "osm": "way/760889100"
+  },
+  "src-q1060771": {
+   "wikidata": "Q1060771",
+   "editions": 10,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q750721",
+    "Q10560192",
+    "Q10380674",
+    "Q10444949"
+   ],
+   "hours": "Mo-Su 08:00-17:00",
+   "osm": "node/4107702310"
+  },
+  "src-q3330657": {
+   "wikidata": "Q3330657",
+   "editions": 10,
+   "types": [
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/302283151"
+  },
+  "src-q1108695": {
+   "wikidata": "Q1108695",
+   "editions": 10,
+   "types": [
+    "Q22746"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q11506126"
+   ],
+   "osm": "way/54170783"
+  },
+  "src-q11555353": {
+   "wikidata": "Q11555353",
+   "editions": 10,
+   "types": [
+    "Q5393308",
+    "Q11372713"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q11374875"
+   ],
+   "osm": "way/371717423"
+  },
+  "src-q738971": {
+   "wikidata": "Q738971",
+   "editions": 10,
+   "types": [
+    "Q845945",
+    "Q134917286",
+    "Q135009132"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q215320",
+    "Q10444949",
+    "Q11467693"
+   ],
+   "hours": "Mo-Su 06:00-17:00",
+   "fee": "no",
+   "osm": "way/98106492"
+  },
+  "src-q377386": {
+   "wikidata": "Q377386",
+   "editions": 9,
+   "types": [
+    "Q5393308",
+    "Q114233444",
+    "Q11489051"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [
+    "Q11638581",
+    "Q10444949"
+   ],
+   "hours": "Mo-Su 09:00-17:00",
+   "fee": "yes",
+   "osm": "way/456124860"
+  },
+  "src-q3028486": {
+   "wikidata": "Q3028486",
+   "editions": 8,
+   "types": [
+    "Q5773747",
+    "Q3694",
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/503289189"
+  },
+  "src-q500955": {
+   "wikidata": "Q500955",
+   "editions": 6,
+   "types": [
+    "Q845945"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/1376744520"
+  },
+  "src-q11658945": {
+   "wikidata": "Q11658945",
+   "editions": 4,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-17:00",
+   "fee": "yes",
+   "osm": "way/1272459717"
+  },
+  "src-q11666843": {
+   "wikidata": "Q11666843",
+   "editions": 3,
+   "types": [
+    "Q5393308"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-16:00",
+   "osm": "node/1422972915"
+  },
+  "src-q11630696": {
+   "wikidata": "Q11630696",
+   "editions": 2,
+   "types": [
+    "Q11498448",
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Tu-Su 10:00-16:00",
+   "osm": "way/259136406"
+  }
+ },
+ "towns": {
+  "uji-far": {
+   "name": "Uji",
+   "wikidata": "Q326956",
+   "editions": 60,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Byōdō-in Temple",
+     "lat": 34.889444,
+     "lng": 135.807778,
+     "hours": "Mar-Nov: daily 08:30-17:30, Dec-Feb: daily 09:00-16:30",
+     "price": "Entrance to the temple grounds and museum is ¥600. Those who wish to enter the Phoenix Hall must pay an additional ¥300",
+     "wikidata": "Q61094",
+     "content": "The Byōdō-in was built by Fujiwara Yorimichi, the Chief Adviser to the Emperor, in 1053. It was built as a rural villa owned by his father. Yorimichi built the temple in response to the prevalent fear that a dark age was about to dawn, and ",
+     "editions": 37,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Ujigami Shrine",
+     "lat": 34.892067,
+     "lng": 135.811439,
+     "hours": "",
+     "price": "Free",
+     "wikidata": "Q583589",
+     "content": "This modest little shrine is another one of Uji's historic monuments recognized as a [[UNESCO",
+     "editions": 20,
+     "unesco": true
+    },
+    {
+     "kind": "see",
+     "name": "Uji Shrine",
+     "lat": 34.891047,
+     "lng": 135.8107,
+     "hours": "",
+     "price": "Free",
+     "wikidata": "Q12742788",
+     "content": "The Uji shrine and the Ujigami shrine next door used to be part of the same complex, then known as Rikyukamisha. An interesting feature is the rabbit sculpture, which is said to have prevented the deity from getting lost.",
+     "editions": 7
+    },
+    {
+     "kind": "see",
+     "name": "Kōshō-ji Temple",
+     "lat": 34.8901,
+     "lng": 135.813,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q11613456",
+     "content": "A Zen temple that features a long, justly-famous tree-covered approach from the river. It's a lovely walk in the autumn. Kosho-ji is a working temple, so while visitors can walk the grounds, the temple buildings themselves are frequently in",
+     "editions": 5
+    },
+    {
+     "kind": "see",
+     "name": "Mimuroto-ji Temple",
+     "lat": 34.900478,
+     "lng": 135.819194,
+     "hours": "",
+     "price": "Entrance is ¥500",
+     "wikidata": "Q11355140",
+     "content": "One of the settings of the Tale of Genji, as well as the 10th temple along the Saigoku 33 Kannon Temple Pilgrimage Route. This temple will be of high interest to those who love flowers and gardens. Around the temple, lotus flowers have been",
+     "editions": 5
+    },
+    {
+     "kind": "see",
+     "name": "Mampuku-ji Temple",
+     "lat": 34.913889,
+     "lng": 135.8075,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q576318",
+     "content": "This is the head temple of the Japanese Ōbaku Zen sect, which is considered to be more Chinese than the other two sects (Rinzai and Soto). You can see the Chinese influences in the architecture, as the roofs were built in the Ming Dynasty s",
+     "editions": 14,
+     "en": "Manpuku-ji Temple"
+    },
+    {
+     "kind": "see",
+     "name": "Nintendo Museum",
+     "lat": 34.8927,
+     "lng": 135.784,
+     "hours": "Daily except Tuesdays 10:00 - 18:00",
+     "price": "¥3300 for adult(18+),  ¥2200 for youth(12-17),¥1100 for children(6-11),free for preschooler(0-5)",
+     "wikidata": "Q123124346",
+     "content": "This video game giant converted their old plant into a museum for the company. Has many historical items in their collection, and interactive experiences for Nintendo products.",
+     "editions": 13
+    },
+    {
+     "kind": "see",
+     "name": "Amagase Dam",
+     "lat": 34.880833,
+     "lng": 135.828056,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q4739121",
+     "content": "This dam is south of the city. A scenic walkway leads there from Uji either shore of the river and the dam itself offers nice views.",
+     "editions": 5
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "drink",
+     "name": "Nakamura Tokichi Honten",
+     "lat": 34.891,
+     "lng": 135.806,
+     "hours": "Daily 10:00-17:00",
+     "price": "",
+     "wikidata": "",
+     "content": "Green tea and maccha desserts. This cafe is located at the river front. There is another bigger cafe and shop near the JR rail station."
+    }
+   ]
+  },
+  "koka-far": {
+   "name": "Koka",
+   "wikidata": "Q847584",
+   "editions": 38,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Ninja Village",
+     "lat": 34.919667,
+     "lng": 136.207417,
+     "hours": "09:00-17:00, closed Mondays and Dec 27-Jan 1",
+     "price": "¥1000 adults, ¥800 children ages 13-18, ¥700 ages 6-12, ¥500 ages 3-6",
+     "wikidata": "Q11577976",
+     "content": "Similar to the once hidden ninja villages that existed in the area, the Koka Ninja Village exhibits a number of transplanted ninja estates. With a plethora of contraptions and a throwing star training room, this is the place to go for a han",
+     "editions": 3,
+     "en": "Kōka Ninja Village"
+    },
+    {
+     "kind": "see",
+     "name": "Koka Ninja House",
+     "lat": 34.918444,
+     "lng": 136.167361,
+     "hours": "09:00-16:30, closed Dec 27-Jan 1",
+     "price": "¥600 adults, ¥300 children ages 6-12",
+     "wikidata": "Q11577998",
+     "content": "This estate was built over 300 years ago for the famous ninja leader Mochizuki Izumonokami. From the outside, this estate looks the same as the other homes in the area, however the inside clandestinely reveals the characteristics of a ninja",
+     "editions": 3
+    },
+    {
+     "kind": "see",
+     "name": "Minakuchi Castle",
+     "lat": 34.970446,
+     "lng": 136.164583,
+     "hours": "",
+     "price": "",
+     "wikidata": "Q2969895",
+     "content": "Minakuchi Castle was built in 1634 as a way-station for Tokugawa Iemitsu in his travels between Tokyo and Kyoto. The current reconstruction dates from 1991. Minakuchi Castle can be accessed by the Omi Tetsudo Line, a five minute walk from M",
+     "editions": 5
+    },
+    {
+     "kind": "see",
+     "name": "Miho Museum",
+     "lat": 34.915922,
+     "lng": 136.015822,
+     "hours": "Open from 10:00-17:00 daily except Monday; the museum is normally closed from mid-December to mid-March, as well as parts of June/July and August/Sept, so check the calendar first.",
+     "price": "¥1000, audio guide ¥500",
+     "wikidata": "Q1268542",
+     "content": "The Miho Museum, located in the heart of Shigaraki, is one of Kōka City's true gems. Exhibits in the expansive museum change every several months and generally include art and artifacts from the Silk Road area. The design of the museum is j",
+     "editions": 17
+    }
+   ],
+   "foodDrink": []
+  },
+  "osaka-far": {
+   "name": "Osaka",
+   "wikidata": "Q35765",
+   "editions": 197,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [],
+   "foodDrink": []
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Uji",
+  "Lake Biwa",
+  "Mount Hiei",
+  "Otsu",
+  "Koka",
+  "Nara",
+  "Osaka",
+  "Amanohashidate",
+  "Japan's Top 3",
+  "Matsushima",
+  "Miyagi prefecture",
+  "Miyajima",
+  "Hiroshima prefecture",
+  "Himeji",
+  "Sekigahara",
+  "Nagoya",
+  "Maibara",
+  "Tottori",
+  "Toyooka",
+  "Kobe",
+  "Ibaraki (Osaka)"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 35.009670512820506,
+  "lng": 135.76542358974356
+ },
+ "wikivoyage": "Kyoto",
+ "cityEats": [
+  {
+   "name": "Taki's house",
+   "lat": 34.9942689,
+   "lng": 135.7851643,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/102164637"
+  },
+  {
+   "name": "大のじ",
+   "lat": 35.0382014,
+   "lng": 135.7314118,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/344055398"
+  },
+  {
+   "name": "錦鶴",
+   "lat": 35.037888,
+   "lng": 135.7311854,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/344056094"
+  },
+  {
+   "name": "洋食の店 トロンボ",
+   "lat": 35.0384033,
+   "lng": 135.7316382,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/344049729"
+  },
+  {
+   "name": "ふうみん庵",
+   "lat": 35.0384848,
+   "lng": 135.7316875,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/344049721"
+  },
+  {
+   "name": "杓文字",
+   "lat": 35.0385147,
+   "lng": 135.7317297,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/344049726"
+  },
+  {
+   "name": "Kamigamo Kirin",
+   "lat": 35.0577289,
+   "lng": 135.7517428,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Mo, We-Sa 11:00-12:15, 12:30-13:45; \nSu 11:00-12:15, 12:30-13:45 , 14:00-15:15",
+   "osm": "node/13257100901"
+  },
+  {
+   "name": "五木茶屋",
+   "lat": 34.9682194,
+   "lng": 135.7737603,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/11829481442"
+  },
+  {
+   "name": "稲福",
+   "lat": 34.9678489,
+   "lng": 135.7719183,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Mo 09:00-16:30",
+   "osm": "node/2656063066"
+  },
+  {
+   "name": "はな家",
+   "lat": 34.9678988,
+   "lng": 135.7716102,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2656062944"
+  },
+  {
+   "name": "日野屋",
+   "lat": 34.9679253,
+   "lng": 135.7714549,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2656063050"
+  },
+  {
+   "name": "Sando Chaya",
+   "lat": 34.9679735,
+   "lng": 135.7713499,
+   "amenity": "restaurant",
+   "cuisine": "coffee_shop;ice_cream;tea",
+   "hours": "",
+   "osm": "node/12308812101"
+  },
+  {
+   "name": "SALMON NOODLE 京都",
+   "lat": 34.9666049,
+   "lng": 135.7710023,
+   "amenity": "restaurant",
+   "cuisine": "ramen",
+   "hours": "",
+   "osm": "node/12265804314"
+  },
+  {
+   "name": "世續茶屋",
+   "lat": 35.027055,
+   "lng": 135.7974057,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/352168404"
+  },
+  {
+   "name": "Fu-ka Ginkakuji",
+   "lat": 35.0276776,
+   "lng": 135.7968408,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6044678288"
+  },
+  {
+   "name": "御米司 ふみや",
+   "lat": 35.0272934,
+   "lng": 135.7964741,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "10:30-16:00",
+   "osm": "node/14156492385"
+  },
+  {
+   "name": "禁断果実kindankajitsu",
+   "lat": 35.0271031,
+   "lng": 135.7957343,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 08:00-17:00",
+   "osm": "node/14156373101"
+  },
+  {
+   "name": "松葉亭",
+   "lat": 35.0271179,
+   "lng": 135.7953878,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/3598159580"
+  },
+  {
+   "name": "に志田",
+   "lat": 35.0274023,
+   "lng": 135.7950305,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/351185902"
+  },
+  {
+   "name": "Seigen-in",
+   "lat": 35.0336334,
+   "lng": 135.717911,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "11:00-17:00",
+   "osm": "way/374567353"
+  },
+  {
+   "name": "バンブー",
+   "lat": 35.0327149,
+   "lng": 135.7189246,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/374624969"
+  },
+  {
+   "name": "菜の花",
+   "lat": 35.0328296,
+   "lng": 135.7197115,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "11:00-15:00",
+   "osm": "way/382726404"
+  },
+  {
+   "name": "東寺うどん",
+   "lat": 34.9824441,
+   "lng": 135.7491036,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/363554443"
+  },
+  {
+   "name": "さの",
+   "lat": 34.9795472,
+   "lng": 135.7504116,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/281313215"
+  },
+  {
+   "name": "すし成",
+   "lat": 34.9828977,
+   "lng": 135.7490995,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "way/363584752"
+  },
+  {
+   "name": "春の日",
+   "lat": 34.9789586,
+   "lng": 135.7449961,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/284835765"
+  },
+  {
+   "name": "洛南書房",
+   "lat": 34.978937,
+   "lng": 135.7449429,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/284835744"
+  },
+  {
+   "name": "うなぎ料理 美登利",
+   "lat": 34.9791405,
+   "lng": 135.7509137,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "11:00-24:00",
+   "osm": "node/5135296460"
+  },
+  {
+   "name": "Kounkei",
+   "lat": 35.0154168,
+   "lng": 135.7487942,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/7327234756"
+  },
+  {
+   "name": "ごはんcafe TUZURE",
+   "lat": 35.016436,
+   "lng": 135.780154,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/2959428333"
+  },
+  {
+   "name": "綴",
+   "lat": 35.016466,
+   "lng": 135.78011,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2959428233"
+  },
+  {
+   "name": "天ぷら圓堂 岡ざき邸",
+   "lat": 35.016137,
+   "lng": 135.7801968,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/10697639020"
+  },
+  {
+   "name": "グリル小宝",
+   "lat": 35.0159365,
+   "lng": 135.7847871,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/789396064"
+  },
+  {
+   "name": "Sitifukuya",
+   "lat": 35.0171157,
+   "lng": 135.7794046,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13977409511"
+  },
+  {
+   "name": "月と猫",
+   "lat": 35.0180294,
+   "lng": 135.779605,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/474632324"
+  },
+  {
+   "name": "里",
+   "lat": 34.9894168,
+   "lng": 135.7755487,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Mo 09:00-22:00",
+   "osm": "node/4531777289"
+  },
+  {
+   "name": "鰻料理 うぞふすい わらじや",
+   "lat": 34.9893754,
+   "lng": 135.7705377,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining;japanese",
+   "hours": "",
+   "osm": "node/13859929401"
+  },
+  {
+   "name": "CoCo ICHIBANYA",
+   "lat": 34.9894046,
+   "lng": 135.770124,
+   "amenity": "restaurant",
+   "cuisine": "curry;japanese",
+   "hours": "Mo-Su 11:00-24:00",
+   "osm": "node/3161816561"
+  },
+  {
+   "name": "坂",
+   "lat": 34.9893451,
+   "lng": 135.776232,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5017505238"
+  },
+  {
+   "name": "私房菜 すみよし",
+   "lat": 34.9924014,
+   "lng": 135.7747145,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/13073491525"
+  },
+  {
+   "name": "Kyonomiyako Burger",
+   "lat": 34.9871339,
+   "lng": 135.7744044,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "Mo-Su 11:30-21:00",
+   "osm": "node/13124266564"
+  },
+  {
+   "name": "Bon",
+   "lat": 35.0288829,
+   "lng": 135.7151698,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/3790308522"
+  },
+  {
+   "name": "ともしび",
+   "lat": 35.0280398,
+   "lng": 135.714707,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo 10:30-14:00,17:15-22:00; We-Su 10:30-14:00,17:30-22:00",
+   "osm": "way/373907539"
+  },
+  {
+   "name": "NAKAMURAROU",
+   "lat": 35.0028885,
+   "lng": 135.7788135,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9706475017"
+  },
+  {
+   "name": "京料理古都梅",
+   "lat": 35.002636,
+   "lng": 135.778328,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/10696154637"
+  },
+  {
+   "name": "GION わ",
+   "lat": 35.004348,
+   "lng": 135.7775892,
+   "amenity": "restaurant",
+   "cuisine": "barbecue",
+   "hours": "",
+   "osm": "node/14358240606"
+  },
+  {
+   "name": "Gyoza no Ohsho",
+   "lat": 35.003205,
+   "lng": 135.777282,
+   "amenity": "restaurant",
+   "cuisine": "chinese;gyoza",
+   "hours": "",
+   "osm": "node/2959342633"
+  },
+  {
+   "name": "儀兵衞",
+   "lat": 35.0041372,
+   "lng": 135.7772213,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2959343433"
+  },
+  {
+   "name": "いもぼう",
+   "lat": 35.0043929,
+   "lng": 135.779679,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/328903307"
+  },
+  {
+   "name": "東山本町 魚亀",
+   "lat": 34.9738521,
+   "lng": 135.7707261,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/14098214625"
+  },
+  {
+   "name": "Aoi",
+   "lat": 35.0396729,
+   "lng": 135.7710642,
+   "amenity": "restaurant",
+   "cuisine": "japanese;soba",
+   "hours": "12:00-19:00",
+   "osm": "node/13411807760"
+  },
+  {
+   "name": "浅井食堂",
+   "lat": 35.0393643,
+   "lng": 135.7698843,
+   "amenity": "restaurant",
+   "cuisine": "american",
+   "hours": "Mo-Sa 11:00-15:00,17:30-23:00",
+   "osm": "way/525380815"
+  },
+  {
+   "name": "洋食 Grill 生研會館",
+   "lat": 35.036853,
+   "lng": 135.7711833,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining",
+   "hours": "We, Fr-Mo 12:00-14:00, 17:00-20:00",
+   "osm": "node/7109159986"
+  },
+  {
+   "name": "奥丹",
+   "lat": 35.0124287,
+   "lng": 135.793058,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5177427921"
+  },
+  {
+   "name": "Okutan Nanzenji",
+   "lat": 35.0124359,
+   "lng": 135.7930656,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Fr-We 11:00-17:00",
+   "osm": "node/4846809879"
+  },
+  {
+   "name": "大力邸",
+   "lat": 35.012085,
+   "lng": 135.7913139,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11276128438"
+  },
+  {
+   "name": "鍋善",
+   "lat": 34.9868532,
+   "lng": 135.7691632,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/6648411485"
+  },
+  {
+   "name": "銭座庵",
+   "lat": 34.9880664,
+   "lng": 135.7688458,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13388241341"
+  },
+  {
+   "name": "くしまつ",
+   "lat": 34.989124,
+   "lng": 135.7687521,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3656452703"
+  },
+  {
+   "name": "料亭 左阿彌",
+   "lat": 35.0036934,
+   "lng": 135.7827778,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4771341422"
+  },
+  {
+   "name": "Tofu restaurant Rengetsu Chaya",
+   "lat": 35.0067546,
+   "lng": 135.7823222,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "",
+   "osm": "node/14321344201"
+  },
+  {
+   "name": "いもぼう",
+   "lat": 35.0042832,
+   "lng": 135.7805232,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/5263647386"
+  },
+  {
+   "name": "相撲茶屋 いころ",
+   "lat": 35.0044442,
+   "lng": 135.7800252,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/328903231"
+  },
+  {
+   "name": "いふじ",
+   "lat": 35.0042865,
+   "lng": 135.7799783,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/88108423"
+  },
+  {
+   "name": "zucca da vino",
+   "lat": 35.0045425,
+   "lng": 135.7798365,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "way/478615061"
+  },
+  {
+   "name": "Daitokuji",
+   "lat": 35.0421963,
+   "lng": 135.7441525,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5854983885"
+  },
+  {
+   "name": "中立売休憩所",
+   "lat": 35.0253282,
+   "lng": 135.7597719,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Mo-Su 08:00-18:00",
+   "osm": "node/13833669478"
+  },
+  {
+   "name": "京都北野 四恩",
+   "lat": 35.0286305,
+   "lng": 135.7361128,
+   "amenity": "restaurant",
+   "cuisine": "noodle",
+   "hours": "",
+   "osm": "node/4314541949"
+  },
+  {
+   "name": "古の花",
+   "lat": 35.0284548,
+   "lng": 135.7360659,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4314541950"
+  },
+  {
+   "name": "Toyoukeya",
+   "lat": 35.0278068,
+   "lng": 135.7355977,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Fr-We 11:00-15:00",
+   "osm": "node/7108679389"
+  },
+  {
+   "name": "たわらや",
+   "lat": 35.0276359,
+   "lng": 135.7358243,
+   "amenity": "restaurant",
+   "cuisine": "noodle;udon",
+   "hours": "",
+   "osm": "node/11591395551"
+  },
+  {
+   "name": "豊しげ",
+   "lat": 35.0274519,
+   "lng": 135.7358045,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "",
+   "osm": "way/605416523"
+  },
+  {
+   "name": "餃子の三宝",
+   "lat": 35.028842,
+   "lng": 135.73751,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2383267614"
+  },
+  {
+   "name": "Ajiro",
+   "lat": 35.0208542,
+   "lng": 135.7210998,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/1937517810"
+  },
+  {
+   "name": "京料理 矢尾定",
+   "lat": 34.9937223,
+   "lng": 135.7517147,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "07:00-09:00,11:00-14:00,17:30-21:00",
+   "osm": "node/3759897701"
+  },
+  {
+   "name": "ロイヤルホスト",
+   "lat": 34.9947317,
+   "lng": 135.7529025,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2991606033"
+  },
+  {
+   "name": "KITCHEN カンパネラ",
+   "lat": 34.9926477,
+   "lng": 135.7551029,
+   "amenity": "restaurant",
+   "cuisine": "curry",
+   "hours": "We-Mo 11:30-17:00; Tu 18:00-20:30",
+   "osm": "node/12119361774"
+  },
+  {
+   "name": "食と森",
+   "lat": 34.9914755,
+   "lng": 135.7553409,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13865936201"
+  },
+  {
+   "name": "大阪屋",
+   "lat": 34.9893455,
+   "lng": 135.7535015,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/8840777381"
+  },
+  {
+   "name": "La Fourchette",
+   "lat": 35.0123387,
+   "lng": 135.7587474,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5643109523"
+  },
+  {
+   "name": "えいたろう屋ビル",
+   "lat": 35.0110744,
+   "lng": 135.7585042,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/14324589851"
+  },
+  {
+   "name": "とり安",
+   "lat": 35.0123294,
+   "lng": 135.7598403,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/4716081689"
+  },
+  {
+   "name": "京季節料理 凛月",
+   "lat": 35.0116934,
+   "lng": 135.7580781,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/14322381290"
+  },
+  {
+   "name": "肉のひろ重",
+   "lat": 35.0111881,
+   "lng": 135.7581304,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/14324441698"
+  },
+  {
+   "name": "海鮮食堂 京りき屋",
+   "lat": 35.0125897,
+   "lng": 135.7598698,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "11:30-15:00,17:30-23:30",
+   "osm": "node/4716042390"
+  },
+  {
+   "name": "はぎ",
+   "lat": 35.000133,
+   "lng": 135.7796996,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/545016546"
+  },
+  {
+   "name": "高台寺茶寮 Kodaiji Saryo",
+   "lat": 35.0017583,
+   "lng": 135.7798559,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/258112631"
+  },
+  {
+   "name": "京大和",
+   "lat": 34.9992169,
+   "lng": 135.7813656,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/10696241803"
+  },
+  {
+   "name": "しぇりークラブ",
+   "lat": 35.000918,
+   "lng": 135.7789497,
+   "amenity": "restaurant",
+   "cuisine": "spanish",
+   "hours": "",
+   "osm": "node/10696154611"
+  },
+  {
+   "name": "鷲尾町 割烹ほたる",
+   "lat": 35.0017837,
+   "lng": 135.7791495,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/10696154625"
+  },
+  {
+   "name": "Wakana",
+   "lat": 35.0000638,
+   "lng": 135.7788901,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/13953602381"
+  },
+  {
+   "name": "大雅堂",
+   "lat": 35.0268772,
+   "lng": 135.7840107,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10694300772"
+  },
+  {
+   "name": "大忠",
+   "lat": 35.0271557,
+   "lng": 135.7841179,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/10694275203"
+  },
+  {
+   "name": "龍門",
+   "lat": 35.0284742,
+   "lng": 135.7845106,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "node/1774463568"
+  },
+  {
+   "name": "天下の焼肉 大将軍",
+   "lat": 34.9874692,
+   "lng": 135.7588868,
+   "amenity": "restaurant",
+   "cuisine": "barbecue",
+   "hours": "Mo-Su 17:00-23:00",
+   "osm": "node/6699718753"
+  },
+  {
+   "name": "Kyo Chabana",
+   "lat": 34.987744,
+   "lng": 135.7588908,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12076083352"
+  },
+  {
+   "name": "Sashisu",
+   "lat": 34.9877808,
+   "lng": 135.7588204,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14115009602"
+  },
+  {
+   "name": "YEBISU BAR",
+   "lat": 34.9880228,
+   "lng": 135.7591899,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-23:00",
+   "osm": "node/2188341615"
+  },
+  {
+   "name": "但馬屋",
+   "lat": 34.9880843,
+   "lng": 135.7592719,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4780211525"
+  },
+  {
+   "name": "Kyoto Wagyu Yaero",
+   "lat": 34.9874363,
+   "lng": 135.7583883,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "11:00-22:00",
+   "osm": "node/14253567996"
+  },
+  {
+   "name": "matakichi",
+   "lat": 35.001552,
+   "lng": 135.7742607,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/13955685512"
+  },
+  {
+   "name": "Gion kitazato",
+   "lat": 35.0018405,
+   "lng": 135.7742961,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13955685610"
+  },
+  {
+   "name": "Gion Karyo 'Kaiseki' (iK)",
+   "lat": 35.0017668,
+   "lng": 135.774578,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Th-Tu 11:30-15:30, 17:30-23:00",
+   "osm": "node/4129960899"
+  },
+  {
+   "name": "きんなべ",
+   "lat": 35.0012534,
+   "lng": 135.7727301,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/543520796"
+  },
+  {
+   "name": "ぎおん徳屋",
+   "lat": 35.0025005,
+   "lng": 135.7748881,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "We-Mo 12:00-18:00; Tu off",
+   "osm": "node/11811363130"
+  },
+  {
+   "name": "Gion Yorozuya",
+   "lat": 35.0027424,
+   "lng": 135.7739861,
+   "amenity": "restaurant",
+   "cuisine": "noodle",
+   "hours": "",
+   "osm": "node/4760386959"
+  },
+  {
+   "name": "Sagan",
+   "lat": 34.9977269,
+   "lng": 135.7738227,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4700821189"
+  },
+  {
+   "name": "貴匠桜",
+   "lat": 34.9976946,
+   "lng": 135.7740946,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4547567790"
+  },
+  {
+   "name": "Tempura Endo Yasaka (West)",
+   "lat": 34.9988863,
+   "lng": 135.7735415,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11283625809"
+  },
+  {
+   "name": "京都祇園天ぷら 八坂圓堂",
+   "lat": 34.9989664,
+   "lng": 135.7751293,
+   "amenity": "restaurant",
+   "cuisine": "friture;japanese",
+   "hours": "Mo-Su 11:30-15:00, 17:00-22:00",
+   "osm": "node/6390907686"
+  },
+  {
+   "name": "MIYAGAWA TONEMON - Tonkatsu",
+   "lat": 34.9984189,
+   "lng": 135.7708301,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/11938990869"
+  },
+  {
+   "name": "加藤商店",
+   "lat": 34.9975864,
+   "lng": 135.7763741,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4547470791"
+  },
+  {
+   "name": "旬菜食健 ひな野",
+   "lat": 35.0130543,
+   "lng": 135.784989,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4853158542"
+  },
+  {
+   "name": "Restaurant La Cigugne",
+   "lat": 35.0117222,
+   "lng": 135.7842444,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3112312492"
+  },
+  {
+   "name": "THE GARDEN OKAZAKI",
+   "lat": 35.0138034,
+   "lng": 135.7848982,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/288574437"
+  },
+  {
+   "name": "龍門",
+   "lat": 35.0140715,
+   "lng": 135.7848548,
+   "amenity": "restaurant",
+   "cuisine": "chinese",
+   "hours": "",
+   "osm": "way/289132169"
+  },
+  {
+   "name": "岡崎茶寮",
+   "lat": 35.0116385,
+   "lng": 135.7849827,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/228653802"
+  },
+  {
+   "name": "Yamamoto Menzou",
+   "lat": 35.0142726,
+   "lng": 135.7847923,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5010320834"
+  },
+  {
+   "name": "イル・ギィオットーネ",
+   "lat": 34.9988217,
+   "lng": 135.779175,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/14104418440"
+  },
+  {
+   "name": "The SODOH - ザ ソウドウ",
+   "lat": 34.9989683,
+   "lng": 135.7797126,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "",
+   "osm": "node/6601419504"
+  },
+  {
+   "name": "The Sodoh Higashiyama",
+   "lat": 34.9982779,
+   "lng": 135.7800115,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "Sa-Su 09:00-18:00; Mo, We-Fr 11:00-18:00",
+   "osm": "node/6604147985"
+  },
+  {
+   "name": "％アラビカ食堂",
+   "lat": 34.9985559,
+   "lng": 135.7782072,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/568614297"
+  },
+  {
+   "name": "Benoit",
+   "lat": 34.9976042,
+   "lng": 135.7790549,
+   "amenity": "restaurant",
+   "cuisine": "french",
+   "hours": "",
+   "osm": "way/1374867503"
+  },
+  {
+   "name": "東山荘",
+   "lat": 34.9972784,
+   "lng": 135.7790033,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/339061842"
+  },
+  {
+   "name": "Washoku Sato",
+   "lat": 35.0321999,
+   "lng": 135.7311673,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/102998595"
+  },
+  {
+   "name": "ポッサム",
+   "lat": 35.0316505,
+   "lng": 135.7312255,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "",
+   "osm": "node/4523314350"
+  },
+  {
+   "name": "京めん処　さくら庵",
+   "lat": 35.0334811,
+   "lng": 135.7312533,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/6329848321"
+  },
+  {
+   "name": "わからん",
+   "lat": 35.0318593,
+   "lng": 135.7303874,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/1542079417"
+  },
+  {
+   "name": "櫟",
+   "lat": 35.0342596,
+   "lng": 135.731658,
+   "amenity": "restaurant",
+   "cuisine": "japanese;soba",
+   "hours": "",
+   "osm": "node/6333335201"
+  },
+  {
+   "name": "かごの屋",
+   "lat": 35.0305697,
+   "lng": 135.7312207,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/943325108"
+  },
+  {
+   "name": "うどんそば お福",
+   "lat": 35.0091387,
+   "lng": 135.7828798,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "way/304957948"
+  },
+  {
+   "name": "和洋割烹　竹泉",
+   "lat": 35.0091857,
+   "lng": 135.7831112,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/12296553945"
+  },
+  {
+   "name": "Asuka 明日香",
+   "lat": 35.009387,
+   "lng": 135.7824093,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/3112107229"
+  },
+  {
+   "name": "花鏡",
+   "lat": 35.0093221,
+   "lng": 135.784524,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5382306133"
+  },
+  {
+   "name": "Raisin",
+   "lat": 35.0093297,
+   "lng": 135.7846133,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5382306134"
+  },
+  {
+   "name": "グリルにんじん",
+   "lat": 35.0419271,
+   "lng": 135.793153,
+   "amenity": "restaurant",
+   "cuisine": "western",
+   "hours": "",
+   "osm": "node/12880156318"
+  },
+  {
+   "name": "焼肉 百珍",
+   "lat": 34.9591408,
+   "lng": 135.8146686,
+   "amenity": "restaurant",
+   "cuisine": "barbecue",
+   "hours": "",
+   "osm": "way/1272608119"
+  },
+  {
+   "name": "ITTAN",
+   "lat": 34.9603738,
+   "lng": 135.8144528,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11839480487"
+  },
+  {
+   "name": "TAITO",
+   "lat": 34.9851639,
+   "lng": 135.773896,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Sa 11:00-15:00,18:30-22:00",
+   "osm": "node/12818725817"
+  },
+  {
+   "name": "Hanaguruma",
+   "lat": 34.9924676,
+   "lng": 135.7443287,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/2674314691"
+  },
+  {
+   "name": "割烹大関",
+   "lat": 34.992817,
+   "lng": 135.745396,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2674318024"
+  },
+  {
+   "name": "やきとりまん天",
+   "lat": 34.9927768,
+   "lng": 135.7458864,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2674320458"
+  },
+  {
+   "name": "UMEKOJI COLLABO",
+   "lat": 34.9895568,
+   "lng": 135.7432888,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Fr 11:00-15:00, 17:00-22:00; Sa, Su, PH 11:00-22:00",
+   "osm": "way/421596732"
+  },
+  {
+   "name": "Kyo-Suzaku Sushi-Ichiba",
+   "lat": 34.9896031,
+   "lng": 135.7415314,
+   "amenity": "restaurant",
+   "cuisine": "sushi",
+   "hours": "Mo-Su 10:30-14:30, 17:00-20:30",
+   "osm": "node/12440855501"
+  },
+  {
+   "name": "Kobushi Ramen",
+   "lat": 34.9892939,
+   "lng": 135.7437128,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Th-Tu 11:30-14:30, 18:00-22:00",
+   "osm": "node/4527861289"
+  }
+ ],
+ "piers": [
+  {
+   "name": "大阪城公園船着場",
+   "lat": 34.68966,
+   "lng": 135.53342,
+   "osm": "node/11458235099"
+  },
+  {
+   "name": "Minatomachi Pier",
+   "lat": 34.66906,
+   "lng": 135.49748,
+   "osm": "node/11471577003"
+  },
+  {
+   "name": "TUGBOAT TAISHO RIVER STATION",
+   "lat": 34.66738,
+   "lng": 135.47825,
+   "osm": "node/11471778319"
+  },
+  {
+   "name": "Minatomachi Pier",
+   "lat": 34.66905,
+   "lng": 135.49832,
+   "osm": "node/11496612772"
+  },
+  {
+   "name": "桜ノ宮港",
+   "lat": 34.69565,
+   "lng": 135.5234,
+   "osm": "node/11597185038"
+  },
+  {
+   "name": "堂島浜船着場",
+   "lat": 34.69515,
+   "lng": 135.50028,
+   "osm": "node/12399018871"
+  },
+  {
+   "name": "中之島ゲートターミナル",
+   "lat": 34.68256,
+   "lng": 135.47889,
+   "osm": "node/12816087284"
+  },
+  {
+   "name": "中之島ウエストピア 乗船口",
+   "lat": 34.68581,
+   "lng": 135.48297,
+   "osm": "node/13361582240"
+  },
+  {
+   "name": "十三船着場",
+   "lat": 34.71684,
+   "lng": 135.4865,
+   "osm": "node/13371053941"
+  },
+  {
+   "name": "大阪ドーム岩崎港",
+   "lat": 34.66766,
+   "lng": 135.47796,
+   "osm": "node/1631324674"
+  },
+  {
+   "name": "Osaka Dome-mae Chiyozaki Pier",
+   "lat": 34.66928,
+   "lng": 135.47956,
+   "osm": "node/1631462776"
+  },
+  {
+   "name": "中之島ローズポート",
+   "lat": 34.69212,
+   "lng": 135.50952,
+   "osm": "node/4022223493"
+  },
+  {
+   "name": "Fukushima Wharf (Hotarumachi Wharf)",
+   "lat": 34.69349,
+   "lng": 135.48933,
+   "osm": "node/4758881423"
+  },
+  {
+   "name": "Osaka Jo Pier",
+   "lat": 34.68974,
+   "lng": 135.5328,
+   "osm": "node/5052364472"
+  },
+  {
+   "name": "Osaka Central Fish Market",
+   "lat": 34.68491,
+   "lng": 135.48084,
+   "osm": "node/5506825810"
+  },
+  {
+   "name": "Osaka International Convention Center Pier",
+   "lat": 34.69046,
+   "lng": 135.48613,
+   "osm": "node/5731605638"
+  },
+  {
+   "name": "Hachikenyahama Pier",
+   "lat": 34.69062,
+   "lng": 135.51609,
+   "osm": "node/5731641929"
+  },
+  {
+   "name": "Hommachibashi Pier",
+   "lat": 34.68385,
+   "lng": 135.51004,
+   "osm": "node/5732806230"
+  },
+  {
+   "name": "Tazaemon Bridge Wharf",
+   "lat": 34.66912,
+   "lng": 135.50271,
+   "osm": "node/5735282173"
+  },
+  {
+   "name": "山科",
+   "lat": 34.99462,
+   "lng": 135.82635,
+   "osm": "node/6331330008"
+  },
+  {
+   "name": "Keage",
+   "lat": 35.00646,
+   "lng": 135.79165,
+   "osm": "node/6331330010"
+  },
+  {
+   "name": "Keage",
+   "lat": 35.00648,
+   "lng": 135.79167,
+   "osm": "node/6407875096"
+  },
+  {
+   "name": "Yamashina",
+   "lat": 34.99465,
+   "lng": 135.82635,
+   "osm": "node/6407875097"
+  },
+  {
+   "name": "Yamashina",
+   "lat": 34.9946,
+   "lng": 135.82635,
+   "osm": "node/6409384178"
+  },
+  {
+   "name": "Keage",
+   "lat": 35.00644,
+   "lng": 135.79162,
+   "osm": "node/6409384180"
+  },
+  {
+   "name": "乗下船場（四ノ宮舟溜）",
+   "lat": 34.99453,
+   "lng": 135.82653,
+   "osm": "node/6448946385"
+  },
+  {
+   "name": "Osaka Aqua-Liner Yodoyabashi pier",
+   "lat": 34.69266,
+   "lng": 135.50174,
+   "osm": "node/7993837502"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 34.71397,
+   "lng": 135.5211,
+   "osm": "node/9802763501"
+  },
+  {
+   "name": "Nippombash Pier",
+   "lat": 34.66898,
+   "lng": 135.50557,
+   "osm": "node/9805120126"
+  },
+  {
+   "name": "Yamashina",
+   "lat": 34.99462,
+   "lng": 135.82635,
+   "osm": "relation/9491918"
+  },
+  {
+   "name": "Keage",
+   "lat": 35.00646,
+   "lng": 135.79165,
+   "osm": "relation/9491919"
+  },
+  {
+   "name": "御座船のりば",
+   "lat": 34.68924,
+   "lng": 135.52602,
+   "osm": "way/1237719679"
+  },
+  {
+   "name": "OAP Pier",
+   "lat": 34.70057,
+   "lng": 135.52064,
+   "osm": "way/610362551"
+  }
+ ],
+ "roads": [
+  {
+   "a": {
+    "lat": 35.009670512820506,
+    "lng": 135.76542358974356
+   },
+   "b": {
+    "lat": 34.88444,
+    "lng": 135.79972
+   },
+   "min": 25,
+   "km": 17
+  },
+  {
+   "a": {
+    "lat": 35.009670512820506,
+    "lng": 135.76542358974356
+   },
+   "b": {
+    "lat": 34.9667,
+    "lng": 136.1667
+   },
+   "min": 47,
+   "km": 45.9
+  },
+  {
+   "a": {
+    "lat": 35.009670512820506,
+    "lng": 135.76542358974356
+   },
+   "b": {
+    "lat": 34.69389,
+    "lng": 135.50222
+   },
+   "min": 59,
+   "km": 49.6
+  },
+  {
+   "a": {
+    "lat": 34.88444,
+    "lng": 135.79972
+   },
+   "b": {
+    "lat": 35.009670512820506,
+    "lng": 135.76542358974356
+   },
+   "min": 26,
+   "km": 17.7
+  },
+  {
+   "a": {
+    "lat": 34.88444,
+    "lng": 135.79972
+   },
+   "b": {
+    "lat": 34.9667,
+    "lng": 136.1667
+   },
+   "min": 44,
+   "km": 45.7
+  },
+  {
+   "a": {
+    "lat": 34.88444,
+    "lng": 135.79972
+   },
+   "b": {
+    "lat": 34.69389,
+    "lng": 135.50222
+   },
+   "min": 50,
+   "km": 38.8
+  },
+  {
+   "a": {
+    "lat": 34.9667,
+    "lng": 136.1667
+   },
+   "b": {
+    "lat": 35.009670512820506,
+    "lng": 135.76542358974356
+   },
+   "min": 47,
+   "km": 46
+  },
+  {
+   "a": {
+    "lat": 34.9667,
+    "lng": 136.1667
+   },
+   "b": {
+    "lat": 34.88444,
+    "lng": 135.79972
+   },
+   "min": 43,
+   "km": 45.3
+  },
+  {
+   "a": {
+    "lat": 34.9667,
+    "lng": 136.1667
+   },
+   "b": {
+    "lat": 34.69389,
+    "lng": 135.50222
+   },
+   "min": 85,
+   "km": 83.8
+  },
+  {
+   "a": {
+    "lat": 34.69389,
+    "lng": 135.50222
+   },
+   "b": {
+    "lat": 35.009670512820506,
+    "lng": 135.76542358974356
+   },
+   "min": 59,
+   "km": 49.5
+  },
+  {
+   "a": {
+    "lat": 34.69389,
+    "lng": 135.50222
+   },
+   "b": {
+    "lat": 34.88444,
+    "lng": 135.79972
+   },
+   "min": 49,
+   "km": 38.9
+  },
+  {
+   "a": {
+    "lat": 34.69389,
+    "lng": 135.50222
+   },
+   "b": {
+    "lat": 34.9667,
+    "lng": 136.1667
+   },
+   "min": 86,
+   "km": 84.6
+  }
+ ],
+ "guideSights": [
+  {
+   "name": "Shinsen-en Garden",
+   "lat": 35.011382,
+   "lng": 135.748369,
+   "wikidata": "",
+   "note": "Although cherry blossom-viewing and festivals can be seen all over Japan today, Shinsen-en Garden is where the very first organized cherry blossom viewing festival took place."
+  },
+  {
+   "name": "Nijō Castle",
+   "lat": 35.014167,
+   "lng": 135.7475,
+   "wikidata": "Q1013399",
+   "note": "Certainly one of the highlights of Kyoto, with fine gardens and splendid centuries-old structures. The castle was built by the Tokugawa shoguns to serve as their residence in Kyoto. After the fall of the Tokugawa shogunate, the castle serve",
+   "editions": 29,
+   "unesco": true,
+   "web": "https://nijo-jocastle.city.kyoto.lg.jp/?lang=en",
+   "posDoubt": true
+  },
+  {
+   "name": "Nijō-Jinya",
+   "lat": 35.010282,
+   "lng": 135.748658,
+   "wikidata": "",
+   "note": "A private residence, Nijo-Jinya is a former samurai house. Tours discuss the roles of samurai and the dangers experienced during that time period. The house features unique trap doors and escape routes used by samurai and former residents t"
+  },
+  {
+   "name": "The Museum of Kyoto",
+   "lat": 35.009389,
+   "lng": 135.762333,
+   "wikidata": "Q11375592",
+   "note": "The museum features many ancient artifacts relating to Kyoto life and history. It has an expansive ancient ceramics collection.",
+   "editions": 8,
+   "unesco": false,
+   "web": "https://www.bunpaku.or.jp/en/",
+   "en": "Museum of Kyoto"
+  },
+  {
+   "name": "Kyoto International Manga Museum",
+   "lat": 35.010807,
+   "lng": 135.760009,
+   "wikidata": "",
+   "note": "Housed in an old elementary school building, the museum holds over 300,000 manga-related items ranging from rare Meiji-era publications to the works of contemporary artists. One of its main attractions is the so-called \"Wall of Manga\": a va"
+  },
+  {
+   "name": "Nishi Honganji",
+   "lat": 34.991778,
+   "lng": 135.751694,
+   "wikidata": "Q1146038",
+   "note": "One of many World Heritage Sites in Kyoto, Nishi Honganji is one of two temple complexes of the Buddhist sect, Jōdo Shinshū (the other being Higashi Honganji). It was founded in 1602, and has gates dating back to 1573.",
+   "editions": 17,
+   "unesco": true,
+   "web": "https://www.hongwanji.kyoto/",
+   "posDoubt": true,
+   "en": "Nishi Hongan-ji Temple"
+  },
+  {
+   "name": "Higashi Honganji",
+   "lat": 34.99143,
+   "lng": 135.75854,
+   "wikidata": "Q910281",
+   "note": "Higashi Honganji was established in 1602 by the Shogun Tokugawa Ieyasu when he split the Shin sect in two (Nishi Honganji being the other) in order to diminish its power. Today it is the headquarters of the Ōtani branch of Jōdo Shin-shū. Th",
+   "editions": 13,
+   "unesco": false,
+   "web": "https://www.higashihonganji.or.jp/",
+   "en": "Higashi Hongan-ji Temple"
+  },
+  {
+   "name": "Shōseien Garden",
+   "lat": 34.991395,
+   "lng": 135.763238,
+   "wikidata": "",
+   "note": "Shosei-en Garden was commissioned by Prince Minamoto no Tōru. He designed the Ingetsu Pond to resemble the Shiogama Coast in Miyagi Prefecture. During the Tokugawa Period the garden was given to Higashi Hongan-ji Temple, restoring the old s"
+  },
+  {
+   "name": "Tō-ji",
+   "lat": 34.980556,
+   "lng": 135.747778,
+   "wikidata": "Q1046403",
+   "note": "An impressive complex of Buddhist temple buildings, this site features the tallest pagoda in Japan. Bright colors decorate the interior of many buildings on the site, and Buddhist sculptures compliment the color choices. The grounds include",
+   "editions": 30,
+   "unesco": true,
+   "web": "https://toji.or.jp/",
+   "posDoubt": true,
+   "en": "Tō-ji Temple"
+  },
+  {
+   "name": "Kyoto Tower",
+   "lat": 34.9875,
+   "lng": 135.759167,
+   "wikidata": "Q1201304",
+   "note": "A source of bitterness of locals due to its futuristic feel, which counteracts the historic feel the city is known for, the Kyoto Tower is an overpriced viewing tower where you can observe Kyoto's urban sprawl at its finest. There is also a",
+   "editions": 21,
+   "unesco": false,
+   "web": "https://www.keihanhotels-resorts.co.jp/kyoto-tower/"
+  },
+  {
+   "name": "Mibu-dera",
+   "lat": 35.0016,
+   "lng": 135.743339,
+   "wikidata": "",
+   "note": "Founded in 991 CE, Mibu-dera is a Buddhist temple. The temple has Setsubun celebrations in February which draws large crowds. It's free to visit the grounds, however, a small museum and garden have an admission fee."
+  },
+  {
+   "name": "Kyoto Station",
+   "lat": 34.985458,
+   "lng": 135.757756,
+   "wikidata": "Q801046",
+   "note": "Even if you are not travelling by train, it is worth spending an hour or so wandering around the station, which is an outstanding example of modern architecture. The station, with its futurist architecture designed by Hiroshi Hara, opened i",
+   "editions": 34,
+   "unesco": false,
+   "en": "Kyōto Station"
+  },
+  {
+   "name": "Kyoto Railway Museum",
+   "lat": 34.987222,
+   "lng": 135.7425,
+   "wikidata": "",
+   "note": "An expansive and modern railway museum with over 50 historical Japanese rollingstock, primarily used in service by JR West and its predecessor, JNR. Three Shinkansen models are on display, along with an extensive collection of preserved ste"
+  },
+  {
+   "name": "Kyoto Aquarium",
+   "lat": 34.9876,
+   "lng": 135.74784,
+   "wikidata": "",
+   "note": "A modern aquarium with a wide variety of sea life such as small and large Fish, Garden Eels, Dolphins, Seals, and Giant Salamanders. The Aquarium also includes a small Japanese style garden, two cafes, and a gift shop. The whole facility is"
+  },
+  {
+   "name": "Kyoto City Archaeological Museum",
+   "lat": 35.029913,
+   "lng": 135.749637,
+   "wikidata": "Q11375124",
+   "note": "A museum devoted to the archaeology and early history of Kyoto, displaying around 1,000 artefacts recovered from excavations across the city. The collection covers the Palaeolithic period through the Jōmon, Yayoi, Kofun, Heian and later per",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.kyoto-arc.or.jp/museum/"
+  },
+  {
+   "name": "Kyoto Imperial Palace",
+   "lat": 35.024113,
+   "lng": 135.762163,
+   "wikidata": "Q1202239",
+   "note": "The palace is a reconstruction (dating from 1855), though the Emperor doesn't spend much time there, ''and'' the guided tour doesn't enter the palace buildings, only peeking at them from the outside, but nevertheless, it provides interestin",
+   "editions": 33,
+   "unesco": false,
+   "web": "https://sankan.kunaicho.go.jp/guide/kyoto.html"
+  },
+  {
+   "name": "Sentō Imperial Palace",
+   "lat": 35.021516,
+   "lng": 135.765262,
+   "wikidata": "Q909444",
+   "note": "This palace is one of the most competitive for reservations, because this is the palace where the Imperial family stays when in Kyoto.",
+   "editions": 12,
+   "unesco": false
+  },
+  {
+   "name": "Kyoto Gyoen National Garden",
+   "lat": 35.023289,
+   "lng": 135.763306,
+   "wikidata": "Q843854",
+   "note": "A large public park surrounding Kyoto Imperial Palace, covering approximately 1.3 km north–south and 700 m east–west. The grounds were formerly occupied by the residences of imperial family members and court nobles, many of which were demol",
+   "editions": 7,
+   "unesco": false,
+   "web": "https://fng.or.jp/kyoto/"
+  },
+  {
+   "name": "Bamboo Forest",
+   "lat": 35.016845,
+   "lng": 135.6716,
+   "wikidata": "Q23579173",
+   "note": "This is the reason why most people head into this area, all taking the same looking pictures. You should visit when the sun is at its highest point, because the forest is quite dark and will only let in a few sun rays — don't wait until the",
+   "editions": 22,
+   "unesco": false
+  },
+  {
+   "name": "Togetsukyō Bridge",
+   "lat": 35.012758,
+   "lng": 135.677741,
+   "wikidata": "",
+   "note": "This picturesque bridge spans the '''Hozu River''', which usually has a healthy and fast current of water in it. Please note that the sidewalks are one-way."
+  },
+  {
+   "name": "Tenryū-ji",
+   "lat": 35.015833,
+   "lng": 135.673693,
+   "wikidata": "",
+   "note": "One of the city's [[UNESCO World Heritage List"
+  },
+  {
+   "name": "Ōkōchi Sansō",
+   "lat": 35.017281,
+   "lng": 135.669355,
+   "wikidata": "",
+   "note": "A splendid mountain retreat, previously occupied by Japanese silent screen legend Ōkōchi Denjirō. The grounds have something beautiful to offer each season but are probably at their best during autumn, when the trees explode into fiery shad"
+  },
+  {
+   "name": "Nonomiya Shrine",
+   "lat": 35.017731,
+   "lng": 135.674184,
+   "wikidata": "",
+   "note": "A small shrine located amidst Arashiyama's famous bamboo forest. It was here that women were once trained prior to becoming shrine maidens at [[Ise"
+  },
+  {
+   "name": "Iwatayama Monkey Park",
+   "lat": 35.011061,
+   "lng": 135.676626,
+   "wikidata": "",
+   "note": "A great place for those looking to get away from the abundance of temples and shrines in the city, feeding the macaque monkeys atop the mountain is worth the entrance fee (and the demanding 20-minute climb!). Don't bring food up with you, t"
+  },
+  {
+   "name": "Otagi Nenbutsu-ji Temple",
+   "lat": 35.03135,
+   "lng": 135.661131,
+   "wikidata": "",
+   "note": "Despite being omitted from virtually all guidebooks, it's one of the true unknown gems of Kyoto. It was founded in the eighth century, and went through an unlucky patch for a millennium or so; by turns it was destroyed by flood, fire and ty"
+  },
+  {
+   "name": "Daikakuji Temple",
+   "lat": 35.028325,
+   "lng": 135.677803,
+   "wikidata": "",
+   "note": "While it is a temple today, originally, it was the villa of Emperor Saga. It is well-known by those who practice ''Ikebana'', the Japanese art of flower arranging, as it is the birthplace of Saga Goryu, a school of Ikebana. Often, there are"
+  },
+  {
+   "name": "Adashino Nenbutsu-ji",
+   "lat": 35.026817,
+   "lng": 135.664545,
+   "wikidata": "",
+   "note": "The famous Priest Kūkai established this temple for the purpose of saying prayers for Arashiyama's dead. The temple grounds are filled with approximately 8000 Buddhist statues, each representing an unknown or forgotten person. Although it i"
+  },
+  {
+   "name": "Giōji Temple",
+   "lat": 35.023363,
+   "lng": 135.666765,
+   "wikidata": "",
+   "note": "Mentioned in the Tales of Heike, this is the site where sisters Gio and Ginyo come to devote their lives to Buddhism. Although the temple itself is rather small, the visit is made worthwhile by its vivid bright green moss garden."
+  },
+  {
+   "name": "Takiguchi-dera Temple",
+   "lat": 35.023003,
+   "lng": 135.666583,
+   "wikidata": "",
+   "note": "A quiet, peaceful temple of less interest than nearby Gioji Temple."
+  },
+  {
+   "name": "Jōjakkōji Temple",
+   "lat": 35.019642,
+   "lng": 135.668673,
+   "wikidata": "",
+   "note": "This temple is quite beautiful in the autumn when the leaves are changing, and the view of the city from just above the pagoda is a truly spectacular."
+  },
+  {
+   "name": "Nison-in Temple",
+   "lat": 35.021218,
+   "lng": 135.667881,
+   "wikidata": "",
+   "note": "A large temple complex that houses two ancient sculptures of Buddha; one of Shakamuni Buddha and the other of Amida Buddha. It also houses the graves of some famous Japanese people. Unless you have interest in visiting one of the graves, th"
+  },
+  {
+   "name": "Hōkyō-in",
+   "lat": 35.022512,
+   "lng": 135.673534,
+   "wikidata": "",
+   "note": "Home to the graves of the court's former enemies, as well as a beautiful moss garden."
+  },
+  {
+   "name": "Seiryō-ji",
+   "lat": 35.023498,
+   "lng": 135.674289,
+   "wikidata": "",
+   "note": "This is the former home of Minamoto no Tōru who is believed to be the man that the famous Tale of Genji's protagonist Genji was inspired by."
+  },
+  {
+   "name": "Hōrinji Temple",
+   "lat": 35.010219,
+   "lng": 135.677001,
+   "wikidata": "Q3146371",
+   "note": "One of the five head Shingon temples in Kyoto. The Boddhisatva Akasagarbha is enshrined in this temple. The complex offers a nice view of Kyoto City. The lights here are quite beautiful during the autumn Kyoto Light-Up.",
+   "editions": 6,
+   "unesco": false,
+   "web": "https://www.kokuzohourinji.com/",
+   "en": "Hōrin-ji Temple"
+  },
+  {
+   "name": "Senkō-ji",
+   "lat": 35.015807,
+   "lng": 135.665579,
+   "wikidata": "",
+   "note": "This temple was built as a memorial temple for those who died while working on dams and other projects under Suminokura Ryōi. There are a variety of monuments and statues on the temple grounds, and a haiku from the famous poet Matsuo Bashō "
+  },
+  {
+   "name": "Kōryū-ji Temple",
+   "lat": 35.015502,
+   "lng": 135.70731,
+   "wikidata": "",
+   "note": "Of all the temples in Kyōto, Kōryū-ji is the oldest, dating back to the 12th century. It also houses the Miroku Bosatsu, the first item in the nation to be designated a National Treasure."
+  },
+  {
+   "name": "Toei Kyoto Studio Park",
+   "lat": 35.016271,
+   "lng": 135.708601,
+   "wikidata": "",
+   "note": "An active film studio built by the Toei Company, one of Japan's largest entertainment companies. The highlight is the backlot with recreated Edo-period streets, where many period dramas (時代劇 ''jidaigeki'') were filmed, and continues to be i"
+  },
+  {
+   "name": "Matsunoo Taisha",
+   "lat": 34.999967,
+   "lng": 135.68517,
+   "wikidata": "",
+   "note": "A shrine that's rarely visited by foreigners, Matsuo Taisha (as it's more commonly known) is a popular place for sake brewers to pray. The shrine existed prior to the establishment of Kyoto as Japan's capital and later received offerings fr"
+  },
+  {
+   "name": "Katsura Imperial Villa",
+   "lat": 34.983991,
+   "lng": 135.709572,
+   "wikidata": "",
+   "note": "A real cultural treasure, renowned for its magnificent gardens and fine classical architecture. You can obtain permission to join a tour of the property either through the Imperial Household Agency's official website (which also contains a "
+  },
+  {
+   "name": "Umenomiya Shrine",
+   "lat": 35.004172,
+   "lng": 135.694908,
+   "wikidata": "",
+   "note": "This shrine is oddly dedicated to gods of both easy delivery and sake, because it is believed that the goddess Saketokekono was so delighted at the birth of her son that she made and drank sake. In addition, the stone to the right (upon ent"
+  },
+  {
+   "name": "Suzumushi-dera",
+   "lat": 34.993624,
+   "lng": 135.684863,
+   "wikidata": "",
+   "note": "\"Suzumushi-dera\" means \"cricket temple\", and as you might guess, there is a large case of crickets all along the wall inside the temple. Ever since the temple was featured on the NHK, Japan's national television station, it has received qui"
+  },
+  {
+   "name": "Kokedera",
+   "lat": 34.991964,
+   "lng": 135.683309,
+   "wikidata": "",
+   "note": "Kokedera, also known as '''Saiho-ji''', is one of Kyoto's [[World Heritage Site"
+  },
+  {
+   "name": "Kiyomizu Temple",
+   "lat": 34.994831,
+   "lng": 135.785003,
+   "wikidata": "Q221716",
+   "note": "This temple complex, with its spectacular location overlooking the city, is a deservedly popular attraction, approached by either of two tourist-filled souvenir-shop-lined streets, Kiyomizu-zaka or Chawan-zaka.",
+   "editions": 77,
+   "unesco": true,
+   "web": "https://www.kiyomizudera.or.jp/",
+   "posDoubt": true,
+   "en": "Kiyomizu-dera"
+  },
+  {
+   "name": "Rokuharamitsu-ji",
+   "lat": 34.99711,
+   "lng": 135.773329,
+   "wikidata": "Q1060771",
+   "note": "While the temple may not seem so special, the trip is made worthwhile by the amazing Kamakura Period artwork housed in its museum. In particular, the statue of Kuya is quite a unique piece of artwork depicting Kuya Shonin reciting the nenbu",
+   "editions": 10,
+   "unesco": false,
+   "web": "https://www.rokuhara.or.jp/",
+   "en": "Rokuharamitsu-ji Temple"
+  },
+  {
+   "name": "Sanjusangen-do",
+   "lat": 34.987885,
+   "lng": 135.771713,
+   "wikidata": "Q653319",
+   "note": "Definitely worth a visit. It was founded in 1164 and became famous for its 1001 beautiful wooden and gold-leaf covered statues of Kannon, goddess of mercy, housed in thirty-three bays (sanjusan = thirty-three, gendo = bays) in the main hall",
+   "editions": 22,
+   "unesco": false,
+   "web": "https://www.sanjusangendo.jp/",
+   "en": "Sanjūsangen-dō Temple"
+  },
+  {
+   "name": "Kyoto National Museum",
+   "lat": 34.990022,
+   "lng": 135.772972,
+   "wikidata": "Q147286",
+   "note": "It is near Sanjusangen-do, and has a large collection of ancient Japanese sculpture, ceramics, metalwork, painting, and other artifacts. (It's quite similar to the Tokyo National Museum in Tokyo/Ueno.) The Museum building is fairly grand, b",
+   "editions": 25,
+   "unesco": false,
+   "web": "https://www.kyohaku.go.jp/",
+   "posDoubt": true
+  },
+  {
+   "name": "Yogen-in",
+   "lat": 34.987861,
+   "lng": 135.773639,
+   "wikidata": "Q11666843",
+   "note": "The original temple was built by one of Hideyoshi Toyotomi's concubines in honor of her father, but the temple was destroyed by a fire. When rebuilding the temple, the floorboards of Fushimi Castle in [[Kyoto/South",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://yougenin.jp/",
+   "en": "Yōgen-in Temple"
+  },
+  {
+   "name": "Chishaku-in Temple",
+   "lat": 34.988144,
+   "lng": 135.775931,
+   "wikidata": "",
+   "note": "Buddhist temple affiliated with Shingon-shū Chizan-ha Buddhism. The temple has a historic garden that was said to be a favourite of Sen no Rikyū."
+  },
+  {
+   "name": "Heian Shrine",
+   "lat": 35.016509,
+   "lng": 135.782454,
+   "wikidata": "Q385141",
+   "note": "Built in 1895 in commemoration of the 1100th anniversary of Kyoto, the shrine was designed as a scaled-down replica of the original Imperial Palace. The Shin'en Garden encircling the backside of the shrine is one of the city's most beautifu",
+   "editions": 28,
+   "unesco": false,
+   "web": "http://www.heianjingu.or.jp/",
+   "en": "Heian Jingū"
+  },
+  {
+   "name": "Kyoto Municipal Museum of Art",
+   "lat": 35.012836,
+   "lng": 135.783569,
+   "wikidata": "Q3330657",
+   "note": "This museum houses a wide variety of art with the permanent collections featuring artists that are from Kyoto. Special exhibits may feature Japanese art from other areas or foreign artwork.",
+   "editions": 10,
+   "unesco": false,
+   "web": "https://kyotocity-kyocera.museum/"
+  },
+  {
+   "name": "Kyoto National Museum of Modern Art",
+   "lat": 35.012389,
+   "lng": 135.781943,
+   "wikidata": "Q1055628",
+   "note": "An interesting museum featuring works from famous, as well as up-and-coming modern artists. Exhibits change frequently, so it's best to call or visit the website to see exactly what will featured during your visit. You may also want to make",
+   "editions": 17,
+   "unesco": false,
+   "web": "https://www.momak.go.jp/",
+   "en": "National Museum of Modern Art, Kyoto"
+  },
+  {
+   "name": "Yoshida Shrine",
+   "lat": 35.025377,
+   "lng": 135.784731,
+   "wikidata": "Q713177",
+   "note": "Most famous as the site of the Setsubun Festival held in February, this small shrine was very highly revered during the Heian Period, and the court made offerings here.",
+   "editions": 14,
+   "unesco": false,
+   "web": "https://www.yoshidajinja.com/"
+  },
+  {
+   "name": "Kyoto City Zoo",
+   "lat": 35.012853,
+   "lng": 135.786006,
+   "wikidata": "Q6452176",
+   "note": "Like most zoos, visitors will see lions, tigers, and monkeys. There is an aviary and reptile exhibit, as well. The zoo has some native Japanese animals, but there isn't much to set it apart from most other zoos in the world.",
+   "editions": 8,
+   "unesco": false,
+   "web": "https://www5.city.kyoto.jp/zoo/"
+  },
+  {
+   "name": "Hosomi Art Museum",
+   "lat": 35.013833,
+   "lng": 135.779639,
+   "wikidata": "Q11606115",
+   "note": "A museum that showcases Japanese religious art from all periods of history. Exhibits change each season but typically feature famous artwork from local temples and shrines.",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.emuseum.or.jp/eng/index.html",
+   "en": "Hosomi Museum"
+  },
+  {
+   "name": "Okazaki Shrine",
+   "lat": 35.017417,
+   "lng": 135.788778,
+   "wikidata": "Q11472971",
+   "note": "A Shinto shrine traditionally believed to have been established in 794, when Emperor Kanmu moved the capital to Heian-kyō. It was one of four shrines built to protect the new capital, and was known as Higashi-Tenno (Eastern Heavenly King) b",
+   "editions": 2,
+   "unesco": false,
+   "web": "https://okazakijinja.jp/"
+  },
+  {
+   "name": "Maruyama Park",
+   "lat": 35.003503,
+   "lng": 135.779519,
+   "wikidata": "Q1108695",
+   "note": "One of the most popular spot for cherry blossom viewing in Kyoto, and can get extremely crowded at that time of year. The park's star attraction is a weeping cherry tree (''shidarezakura''), which offers an ethereal vision lit up in the nig",
+   "editions": 10,
+   "unesco": false,
+   "web": "https://kyoto.travel/en/destinations/maruyama-park/"
+  },
+  {
+   "name": "Kōdai-ji Temple",
+   "lat": 35.000761,
+   "lng": 135.781114,
+   "wikidata": "Q2702064",
+   "note": "This temple was built for Toyotomi Hideyoshi's widow by Tokugawa Ieyasu and is located right next to the Ryōzen Kannon temple on the Higashiyama mountain. If you really like temples this is a very nice one. It's got a nice bamboo grove that",
+   "editions": 15,
+   "unesco": false,
+   "web": "https://www.kodaiji.com/"
+  },
+  {
+   "name": "Chion-in",
+   "lat": 35.006168,
+   "lng": 135.78328,
+   "wikidata": "Q873645",
+   "note": "The head temple of the Jodo sect of Buddhism. The Sanmon gate at the entrance to the temple is the largest of such gates in the nation. Visitors can walk freely around the complex and inside the buildings, except for those that house the te",
+   "editions": 20,
+   "unesco": false,
+   "web": "https://www.chion-in.or.jp/",
+   "en": "Chion-in Temple"
+  },
+  {
+   "name": "Shōren-in",
+   "lat": 35.007311,
+   "lng": 135.783197,
+   "wikidata": "Q377386",
+   "note": "Once associated with the head Tendai Buddhist sect temple, Enryaku-ji on Mount Hiei, Shōren-in is considered to be one of the top five Tendai sect temples. During the Tokugawa period, it served as temporary lodging for a retired emperor aft",
+   "editions": 9,
+   "unesco": false,
+   "web": "https://www.shorenin.com/english/",
+   "en": "Shōren-in Temple"
+  },
+  {
+   "name": "Higashi Ōtani Mausoleum",
+   "lat": 35.001474,
+   "lng": 135.782486,
+   "wikidata": "",
+   "note": "Located in a cemetery, tourists typically visit this site accidentally however, because some of the ashes of Shinran, the founder of Jōdo-Shin Buddhism, are contained inside the mausoleum, it is a popular place for Buddhists to come to pay "
+  },
+  {
+   "name": "Ryōzen Kannon Statue",
+   "lat": 34.999943,
+   "lng": 135.781861,
+   "wikidata": "Q7385349",
+   "note": "A memorial to the unknown Japanese soldiers who died in World War II, with a 24-meter-tall statue of Kannon.",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://www.ryozen-kwannon.jp/",
+   "en": "Ryōzen Kannon"
+  },
+  {
+   "name": "Ryozen History Museum",
+   "lat": 34.998944,
+   "lng": 135.782639,
+   "wikidata": "Q3329667",
+   "note": "A museum dedicated to displaying artifacts and information about the Meiji Period.",
+   "editions": 5,
+   "unesco": false,
+   "web": "http://www.ryozen-museum.or.jp/",
+   "en": "Ryozen Museum of History"
+  },
+  {
+   "name": "Ryozen Gokoku Shrine",
+   "lat": 34.99998,
+   "lng": 135.782915,
+   "wikidata": "",
+   "note": "This shrine was built to house the souls of all those who died in the Pacific War, from the Meiji Restoration uprisings and the Russo-Japanese War to the end of World War II. It is the first shrine in the nation to be officially recognized "
+  },
+  {
+   "name": "Yasaka Shrine",
+   "lat": 35.003645,
+   "lng": 135.778529,
+   "wikidata": "Q692714",
+   "note": "At the eastern end of Shijō-dōri, at the edge of Gion, is the shrine responsible for Kyoto's main festival - the Gion Matsuri, which takes place in July. The shrine is small in comparison with many in Kyoto, but it boasts an impressive disp",
+   "editions": 24,
+   "unesco": false,
+   "web": "https://www.yasaka-jinja.or.jp/"
+  },
+  {
+   "name": "Yasaka Pagoda",
+   "lat": 34.99855,
+   "lng": 135.779242,
+   "wikidata": "Q11555353",
+   "note": "The five-storey Yasaka Pagoda is traditionally said to have been founded in 589 by Prince Shōtoku, although the present pagoda dates from the 15th century. Standing approximately 46 metres tall, it is one of Kyoto’s most recognisable struct",
+   "editions": 10,
+   "unesco": false,
+   "en": "Hōkan-ji Temple"
+  },
+  {
+   "name": "Kenninji Temple",
+   "lat": 35.001187,
+   "lng": 135.773929,
+   "wikidata": "Q1440954",
+   "note": "Japan's oldest Zen temple, has handsome halls and sand and moss gardens, and is of particular interest to art lovers. Sōtatsu's famed Edo-period screens of the Wind and Thunder Gods are on display. And on the high ceiling of the Hatto Dharm",
+   "editions": 13,
+   "unesco": false,
+   "web": "https://www.kenninji.jp/english/",
+   "en": "Kennin-ji Temple"
+  },
+  {
+   "name": "Ginkakuji",
+   "lat": 35.026667,
+   "lng": 135.798333,
+   "wikidata": "Q257473",
+   "note": "This temple, known as the Silver Pavilion and restored between 2008 and 2010, is at the northern end of the Philosopher's Walk. Much like its golden counterpart Kinkakuji, the Silver Pavilion is often choked with tourists, shuffling past a ",
+   "editions": 33,
+   "unesco": true,
+   "web": "https://www.shokoku-ji.jp/ginkakuji/",
+   "posDoubt": true,
+   "en": "Ginkaku-ji Temple"
+  },
+  {
+   "name": "Hōnen-in",
+   "lat": 35.02356,
+   "lng": 135.79705,
+   "wikidata": "Q11555257",
+   "note": "A quiet temple with some interesting raised sand designs. It was built in honor of Hōnen, the founder of the Jōdo sect.",
+   "editions": 7,
+   "unesco": false,
+   "web": "http://www.honen-in.jp/",
+   "en": "Hōnen-in Temple"
+  },
+  {
+   "name": "Anraku-ji",
+   "lat": 35.021568,
+   "lng": 135.79664,
+   "wikidata": "",
+   "note": "A temple built to console the souls of Anraku and some concubines who were killed by order of the Imperial Court who did not approve of their Buddhist sect."
+  },
+  {
+   "name": "Kōun-ji",
+   "lat": 35.017012,
+   "lng": 135.795186,
+   "wikidata": "",
+   "note": "A temple designed around the borrowed scenery of the surrounding mountains, it was once owned by Empress Go-mizunoo. <!-- to check: Go-mizunoo was an emperor, so who owned the temple? -->"
+  },
+  {
+   "name": "Nyakuoji Shrine",
+   "lat": 35.015743,
+   "lng": 135.796308,
+   "wikidata": "",
+   "note": "Established in 1160, a nice shrine to visit in the autumn when the leaves are changing. It's a worthwhile stop for those travelling along the Philosopher's Path, but probably not worth making the trip just to see this shrine."
+  },
+  {
+   "name": "Eikandō Temple",
+   "lat": 35.01437,
+   "lng": 135.79557,
+   "wikidata": "",
+   "note": "A large temple said to have been constructed by Priest Kūkai. The temple features a unique statue of Amida Buddha, Mikaeri Amida, that looks to the right rather than facing forward; there's a charming legend attached to it. The temple groun"
+  },
+  {
+   "name": "Nanzenji Temple",
+   "lat": 35.01127,
+   "lng": 135.79308,
+   "wikidata": "Q1089767",
+   "note": "with its distinctive two-story entrance gate (''sanmon'') and aqueduct, is another popular temple in Kyoto, but its larger size means that it doesn't seem as crowded as many of the others. ''Nearest bus stop: Nanzenji, Eikando-michi. Neares",
+   "editions": 22,
+   "unesco": false,
+   "web": "https://nanzenji.or.jp/",
+   "en": "Nanzen-ji Temple"
+  },
+  {
+   "name": "Kinkaku-ji Temple",
+   "lat": 35.0395,
+   "lng": 135.7285,
+   "wikidata": "Q270983",
+   "note": "The '''Temple of the Golden Pavilion''', formally known as '''Rokuonji''' (鹿苑寺), is the most popular tourist attraction in Kyoto. The pavilion was built as a retirement villa for Shogun Ashikaga Yoshimitsu in the late 14th century, and conv",
+   "editions": 57,
+   "unesco": true,
+   "web": "https://www.shokoku-ji.jp/kinkakuji/"
+  },
+  {
+   "name": "Ryōan-ji",
+   "lat": 35.034444,
+   "lng": 135.718333,
+   "wikidata": "Q587371",
+   "note": "Famous for its Zen garden, which is considered to be one of the most notable examples of the \"dry-landscape\" style. Surrounded by low walls, an austere arrangement of fifteen rocks sits on a bed of white gravel. That's it: no trees, no hill",
+   "editions": 32,
+   "unesco": true,
+   "web": "http://www.ryoanji.jp/",
+   "posDoubt": true,
+   "en": "Ryōan-ji Temple"
+  },
+  {
+   "name": "Ninnaji Temple",
+   "lat": 35.031111,
+   "lng": 135.713889,
+   "wikidata": "Q1202871",
+   "note": "Another large temple complex which is often overlooked by tourists. Admission to the grounds is free, except during cherry blossom season, allowing visitors to view the 17th century five-story pagoda, and the plantation of dwarf cherry tree",
+   "editions": 25,
+   "unesco": true,
+   "web": "https://ninnaji.jp/",
+   "posDoubt": true,
+   "en": "Ninna-ji Temple"
+  },
+  {
+   "name": "Daitokuji Temple",
+   "lat": 35.043891,
+   "lng": 135.74603,
+   "wikidata": "Q901256",
+   "note": "A large temple complex, boasting many smaller sub-temples within its grounds. Daitokuji is the quietest of the temples in north-western Kyoto, and if you visit it at the start of the day, you could virtually have it to yourself. 8 of the 24",
+   "editions": 20,
+   "unesco": false,
+   "en": "Daitoku-ji Temple"
+  },
+  {
+   "name": "Imamiya Shrine",
+   "lat": 35.046008,
+   "lng": 135.742039,
+   "wikidata": "Q500955",
+   "note": "Although the current structure dates back to 1902, the original was built during the Heian Period. At the time, the city was being plagued by illness and disease, so Imamiya Shrine was built to appease the gods. Even today, many visitors co",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://www.imamiyajinja.org"
+  },
+  {
+   "name": "Saimyōji Temple",
+   "lat": 35.057214,
+   "lng": 135.674969,
+   "wikidata": "Q11628431",
+   "note": "A former sub-temple of Jingoji. While it is not worth making a special trip to see this temple, those touring the Takao area might as well visit, as it is located on the path connecting Jingo-ji to Kōzan-ji. The bridge leading to the temple",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.saimyoji.or.jp/",
+   "en": "Saimyō-ji Temple"
+  },
+  {
+   "name": "Kōzan-ji",
+   "lat": 35.060138,
+   "lng": 135.678561,
+   "wikidata": "Q986750",
+   "note": "Registered as one of Kyoto's 17 UNESCO World Heritage Sites, Kōzan-ji is a small temple dating all the way back to the Kamakura period. Inside the temple you'll find a famous painting of rabbits and monkeys acting as humans, considered to b",
+   "editions": 20,
+   "unesco": true,
+   "web": "https://kosanji.com/",
+   "posDoubt": true,
+   "en": "Kōzan-ji Temple"
+  },
+  {
+   "name": "Shimogamo Shrine",
+   "lat": 35.038759,
+   "lng": 135.773419,
+   "wikidata": "Q701620",
+   "note": "It was built prior to Kyoto becoming Japan's capital. Shimogamo is one of the first shrines built in Kyoto. Together with Kamigamo Shrine, they are known as the Kamo Shrines. These shrines were one of the most revered shrines by the Imperia",
+   "editions": 22,
+   "unesco": true,
+   "web": "https://www.shimogamo-jinja.or.jp/",
+   "posDoubt": true
+  },
+  {
+   "name": "Kamigamo Shrine",
+   "lat": 35.059281,
+   "lng": 135.75253,
+   "wikidata": "",
+   "note": "Collectively, Kamigamo Shrine and Shimogamo Shrine are known as the Kamo Shrines, and they were highly favored by the Imperial Court during the Heian Period. The shrine is most famous for the ''tatesuna'', the two large sand cones. Their or"
+  },
+  {
+   "name": "Kyoto Botanical Garden",
+   "lat": 35.048255,
+   "lng": 135.761074,
+   "wikidata": "",
+   "note": "Japan's first botanical garden since 1924, the Kyoto Prefectural Botanical Garden is quite large and houses a wide variety of plants. It is a popular place for plum blossom viewing in February and early March and cherry blossoms, which typi"
+  },
+  {
+   "name": "Shūgakuin Imperial Villa",
+   "lat": 35.053929,
+   "lng": 135.80365,
+   "wikidata": "",
+   "note": "A beautiful villa commissioned by Emperor Gomizuno-o in 1655 and completed four years later. The area is separated into three separate villas. In the lower villa, you'll find a lovely garden with a stream running through it and the Jugetsuk"
+  },
+  {
+   "name": "Entsū-ji",
+   "lat": 35.0645,
+   "lng": 135.768944,
+   "wikidata": "Q10927539",
+   "note": "A temple famous for its gardens. A particularly unique feature of this garden is incorporation of Mount Hiei, of which there is a great view from the temple, into the layout of the garden.",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.kyoto-entsuji-teien.com/",
+   "en": "Entsu-ji Temple"
+  },
+  {
+   "name": "Myoman-ji",
+   "lat": 35.067333,
+   "lng": 135.774972,
+   "wikidata": "Q10943057",
+   "note": "For anyone looking to see something slightly different from the standard Japanese temple, Myōman-ji offers a replica of Bodh Gaya's Mahabodhi Temple, where the Buddha obtained Enlightenment. The rest of the complex is quite Japanese, but st",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://myomanji.jp/",
+   "posDoubt": true,
+   "en": "Myōman-ji Temple"
+  },
+  {
+   "name": "Shisen-dō",
+   "lat": 35.043744,
+   "lng": 135.796241,
+   "wikidata": "Q3028486",
+   "note": "Built in 1641, this temple once housed the poet Jōzan Ishikawa. Inside the temple there are portraits of 36 influential Chinese poets. Outside there is a garden filled with many azaleas.",
+   "editions": 8,
+   "unesco": false,
+   "web": "https://kyoto-shisendo.net/",
+   "en": "Shisen-dō Temple"
+  },
+  {
+   "name": "Fushimi Inari Taisha",
+   "lat": 34.967222,
+   "lng": 135.772778,
+   "wikidata": "Q714828",
+   "note": "Another of Kyoto's jewels, located just south of Higashiyama in the Fushimi area. Dedicated to Inari, the Japanese fox goddess, Fushimi-Inari-taisha is the head shrine (''taisha'') for 40,000 Inari shrines across Japan. Stretching 230 meter",
+   "editions": 41,
+   "unesco": false,
+   "web": "https://inari.jp/",
+   "en": "Fushimi Inari-taisha"
+  },
+  {
+   "name": "Fushimi Momoyama Castle",
+   "lat": 34.939501,
+   "lng": 135.77686,
+   "wikidata": "Q1196273",
+   "note": "This castle was once a favorite of Toyotomi Hideyoshi. The original was dismantled in 1623, but a 1964 reconstruction went up in its memory with a small museum and gold-lined tea room.",
+   "editions": 26,
+   "unesco": false,
+   "en": "Fushimi Castle"
+  },
+  {
+   "name": "Teradaya",
+   "lat": 34.930406,
+   "lng": 135.759577,
+   "wikidata": "",
+   "note": "It was here at this inn where Ryōma Sakamoto, a famous samurai who wanted to overthrow the Tokugawa, was injured in an attack, although he escaped. Some pictures, his handgun, and other historical artifacts are viewable inside."
+  },
+  {
+   "name": "Tōfuku-ji",
+   "lat": 34.975707,
+   "lng": 135.773676,
+   "wikidata": "Q2166743",
+   "note": "A large temple complex with many small and beautiful gardens nearby. Hordes of Japanese tourists visit during the fall months, when the leaves show a dazzling array of colors, but it's not as well known to foreigners. A pleasant side path t",
+   "editions": 23,
+   "unesco": false,
+   "web": "https://tofukuji.jp/",
+   "en": "Tōfuku-ji Temple"
+  },
+  {
+   "name": "Jōnan-gū Shrine",
+   "lat": 34.951119,
+   "lng": 135.746556,
+   "wikidata": "Q11426034",
+   "note": "Although Jōnan-gū Shrine is rarely visited by foreign tourists, it is a beautiful shrine with extensive history. It was established by Emperor Kammu when Kyoto became the nation's capital. At the end of the Heian period, it became home to r",
+   "editions": 2,
+   "unesco": false,
+   "web": "https://www.jonangu.com/",
+   "en": "Jōnan-gū"
+  },
+  {
+   "name": "Daigo-ji",
+   "lat": 34.951111,
+   "lng": 135.819444,
+   "wikidata": "Q1157535",
+   "note": "Daigoji is a large temple complex consisting of the garan (main complex), Sanbōin Garden, and Reihōkan Museum. The size and position of the temple, slightly removed from the city, creates a more peaceful, serene setting. As a registered Wor",
+   "editions": 23,
+   "unesco": true,
+   "web": "https://www.daigoji.or.jp/",
+   "posDoubt": true,
+   "en": "Daigo-ji Temple"
+  },
+  {
+   "name": "Zuishin-in",
+   "lat": 34.959494,
+   "lng": 135.816286,
+   "wikidata": "Q11658945",
+   "note": "According to legend, this is where Ono no Komachi, one of Japan's famous femme fatales, resided. She made Prince Fukakusa agree to court her for 100 days before she would agree to marry him, but on the 99th day, he died, leaving her single ",
+   "editions": 4,
+   "unesco": false,
+   "web": "https://www.zuishinin.or.jp/",
+   "en": "Zuishin-in Temple"
+  },
+  {
+   "name": "Kajū-ji",
+   "lat": 34.961214,
+   "lng": 135.807558,
+   "wikidata": "Q772598",
+   "note": "A temple with a peaceful lily pond and a variety of cherry trees.",
+   "editions": 10,
+   "unesco": false,
+   "en": "Kajū-ji Temple"
+  },
+  {
+   "name": "Sennyū-ji Temple",
+   "lat": 34.978056,
+   "lng": 135.780556,
+   "wikidata": "Q1060966",
+   "note": "Sennyū-ji Temple is an important Buddhist temple complex in southeastern Kyoto, particularly notable for its close historical association with the Japanese imperial family. Its buildings, imperial tombs and artworks make it a more historica",
+   "editions": 13,
+   "unesco": false,
+   "web": "https://mitera.org/"
+  },
+  {
+   "name": "Oharano Shrine",
+   "lat": 34.960278,
+   "lng": 135.656111,
+   "wikidata": "Q3594020",
+   "note": "The shrine is believed to have been moved to Nagaokakyo at the bidding of Empress Kammu, who made it the shrine of the Fujiwara family's guardian god. The Imperial Court made annual offerings at this shrine. The pond within the shrine preci",
+   "editions": 8,
+   "unesco": false,
+   "web": "https://oharano-jinja.jp/",
+   "en": "Ōharano Shrine"
+  },
+  {
+   "name": "Shōbō-ji",
+   "lat": 34.956917,
+   "lng": 135.6555,
+   "wikidata": "Q11123495",
+   "note": "A Shingon sect temple featuring an impressive statue of the 3-faced thousand armed Kannon and a beautiful, well-kept Zen rock garden. Many of the rocks within the garden were chosen to resemble animals, like a rabbit and frog.",
+   "editions": 3,
+   "unesco": false,
+   "web": "https://www.kyoto-shoboji.com/",
+   "en": "Shōbō-ji Temple"
+  },
+  {
+   "name": "Shōji-ji",
+   "lat": 34.960694,
+   "lng": 135.651667,
+   "wikidata": "Q11400336",
+   "note": "Nicknamed Cherry Blossom Temple (''hana no tera''), it hosts a beautiful display of blossoms in the spring.",
+   "editions": 2,
+   "unesco": false,
+   "web": "http://www.shoujiji.jp/",
+   "en": "Shōji-ji Temple"
+  }
+ ],
+ "eatHours": [
+  [
+   "Tenkaippin",
+   35.0132,
+   135.74274,
+   "Mo-Su,PH 11:00-02:30",
+   "restaurant"
+  ],
+  [
+   "からふね屋珈琲店 熊野店",
+   35.01809,
+   135.77822,
+   "07:00-21:15",
+   "cafe"
+  ],
+  [
+   "Nizameya",
+   34.96784,
+   135.77087,
+   "Mo-Su 10:00-18:00",
+   "restaurant"
+  ],
+  [
+   "稲福",
+   34.96785,
+   135.77192,
+   "We-Mo 09:00-16:30",
+   "restaurant"
+  ],
+  [
+   "カフェ・キューブ",
+   35.01379,
+   135.77972,
+   "Tu-Su 10:30-18:00",
+   "cafe"
+  ],
+  [
+   "58DINER",
+   35.01376,
+   135.779,
+   "11:00-16:00,18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "椛",
+   35.01414,
+   135.78481,
+   "Tu-Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "CoCo ICHIBANYA",
+   34.9894,
+   135.77012,
+   "Mo-Su 11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Izuju Sushi",
+   35.00406,
+   135.77706,
+   "Th-Tu 10:30-19:00",
+   "restaurant"
+  ],
+  [
+   "Family Kitchen",
+   35.02682,
+   135.71395,
+   "Mo-Fr 11:00-17:00; Sa,Su 11:00-16:00",
+   "restaurant"
+  ],
+  [
+   "Starbucks",
+   35.01395,
+   135.78126,
+   "08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Sushi-kappo Nakaichi (iK)",
+   35.00233,
+   135.77646,
+   "Mo-Su 12:00-14:30, 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Senmonten 'guiosa' (iK)",
+   35.00531,
+   135.77532,
+   "Mo-Sa 18:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Gion Karyo 'Kaiseki' (iK)",
+   35.00177,
+   135.77458,
+   "Th-Tu 11:30-15:30, 17:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Karako (ramen)",
+   35.01392,
+   135.7782,
+   "We-Mo 11:30-14:30, 17:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Berry's kitchen studio",
+   34.97058,
+   135.77102,
+   "11:00-18:00",
+   "cafe"
+  ],
+  [
+   "Junsei Nanzenji",
+   35.01129,
+   135.79024,
+   "Mo-Su 11:00-21:30",
+   "restaurant"
+  ],
+  [
+   "里",
+   34.98942,
+   135.77555,
+   "We-Mo 09:00-22:00",
+   "restaurant"
+  ],
+  [
+   "牛禅",
+   35.00458,
+   135.77737,
+   "Su-Th 17:00-23:00,Fr-Sa 17:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Gion Tsujiri",
+   35.0037,
+   135.77448,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Okutan Nanzenji",
+   35.01244,
+   135.79307,
+   "Fr-We 11:00-17:00",
+   "restaurant"
+  ],
+  [
+   "うなぎ料理 美登利",
+   34.97914,
+   135.75091,
+   "11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "長楽館",
+   35.00308,
+   135.78012,
+   "Mo-Su 10:00-20:30",
+   "cafe"
+  ],
+  [
+   "茶寮 宝泉",
+   35.04319,
+   135.77427,
+   "Fr-Tu 10:00-16:45",
+   "cafe"
+  ],
+  [
+   "songbird coffee",
+   35.01621,
+   135.7522,
+   "Fr-Tu 12:00-19:30",
+   "restaurant"
+  ],
+  [
+   "京都生ショコラオーガニックティーハウス",
+   35.01601,
+   135.78626,
+   "We-Mo 12:00-18:00",
+   "cafe"
+  ],
+  [
+   "祇園きなな",
+   35.00229,
+   135.77432,
+   "Mo-Su 11:00-18:30",
+   "cafe"
+  ],
+  [
+   "甘泉堂",
+   35.00425,
+   135.77544,
+   "Mo-Sa 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Teppan Tavern Tenamonya",
+   35.00297,
+   135.7773,
+   "Fr-We 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "モンパン食堂",
+   35.02108,
+   135.78315,
+   "Th-Sa 10:00-22:00; Su 10:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Blue Bottle Coffee",
+   35.01139,
+   135.78949,
+   "Mo-Su 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "LITT UP KYOTO",
+   34.98888,
+   135.76932,
+   "Mo-Su 10:00-16:00",
+   "cafe"
+  ],
+  [
+   "Ichikawa-ya Coffee",
+   34.9932,
+   135.77417,
+   "We-Mo 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "天周",
+   35.00398,
+   135.7736,
+   "Th-Tu 11:00-14:00, 17:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Yuu",
+   35.00436,
+   135.775,
+   "Mo-Sa 18:00-03:00",
+   "restaurant"
+  ],
+  [
+   "Gion Hanasaki",
+   35.00201,
+   135.77618,
+   "Mo-Su 12:00-14:00, 17:30-21:30",
+   "restaurant"
+  ],
+  [
+   "洋食 Grill 生研會館",
+   35.03685,
+   135.77118,
+   "We, Fr-Mo 12:00-14:00, 17:00-20:00",
+   "restaurant"
+  ],
+  [
+   "清水 順正 おかべ家",
+   34.99566,
+   135.78096,
+   "Mo-Su 10:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Waraku-an Chabo Maeda",
+   35.01521,
+   135.74814,
+   "09:30-16:00",
+   "cafe"
+  ],
+  [
+   "Saka Maruyama",
+   35.00404,
+   135.7813,
+   "Mo,Th-Su 11:00-19:00",
+   "cafe"
+  ],
+  [
+   "Book and crepe mond",
+   34.98603,
+   135.77408,
+   "14:00-18:00",
+   "cafe"
+  ],
+  [
+   "About Us Coffee",
+   34.9663,
+   135.76872,
+   "08:00-17:00",
+   "cafe"
+  ],
+  [
+   "Canette",
+   35.00438,
+   135.77497,
+   "Mo-Tu,Th-Su 13:00-24:00; We off",
+   "bar"
+  ],
+  [
+   "ぎおん徳屋",
+   35.0025,
+   135.77489,
+   "We-Mo 12:00-18:00; Tu off",
+   "restaurant"
+  ],
+  [
+   "Yamada",
+   35.00583,
+   135.77463,
+   "12:00-15:00,18:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Kyoto Ramen Laboratory",
+   34.98426,
+   135.75039,
+   "Mo-Su 11:30-24:00; Mo 15:00-18:00 off; Tu-Su 15:00-17:30 off",
+   "restaurant"
+  ],
+  [
+   "Silver Back’s Cafe",
+   34.9927,
+   135.77531,
+   "Mo-Su 11:30-20:00",
+   "cafe"
+  ],
+  [
+   "Zirael Vegan Restaurant",
+   35.00508,
+   135.77799,
+   "Mo-Su 12:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Café Arrietty",
+   34.98939,
+   135.77587,
+   "Tu-Sa 10:30-17:30",
+   "cafe"
+  ],
+  [
+   "Waku",
+   35.0111,
+   135.74514,
+   "Mo off; Tu-Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Ramen Kairikiya",
+   35.01178,
+   135.743,
+   "Mo-Su,PH 11:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Ishiusubikinihachisoba Sobashiki Kiyomizuten",
+   34.99651,
+   135.78058,
+   "Mo-Su 11:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Sakanoue Shisuitei",
+   34.99638,
+   135.78124,
+   "Mo-Su 11:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Kyoto Chanoyu Akebonotei",
+   34.99652,
+   135.78102,
+   "Mo-Su 1F,10:00-18:00 2F,11:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Shisuitei Akebonobettei",
+   34.99638,
+   135.781,
+   "Mo-Su 11:00-19:00",
+   "restaurant"
+  ],
+  [
+   "チロル",
+   35.01106,
+   135.74744,
+   "Mo-Su,PH 08:00-16:00",
+   "cafe"
+  ],
+  [
+   "Kyonomiyako Burger",
+   34.98713,
+   135.7744,
+   "Mo-Su 11:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Hario Cafe",
+   35.00066,
+   135.77919,
+   "10:00-17:00",
+   "cafe"
+  ],
+  [
+   "Kamigamo Kirin",
+   35.05773,
+   135.75174,
+   "Mo, We-Sa 11:00-12:15, 12:30-13:45; \nSu 11:00-12:15, 12:30-13:45 , 14:00-15:15",
+   "restaurant"
+  ],
+  [
+   "Issan",
+   34.96739,
+   135.76851,
+   "Tu-Sa 19:00-23:58",
+   "restaurant"
+  ],
+  [
+   "Colorado coffee shop",
+   34.98118,
+   135.75239,
+   "Mo-Su 07:00-18:00",
+   "cafe"
+  ],
+  [
+   "Aoi",
+   35.03967,
+   135.77106,
+   "12:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Ramen no Bombo - Shichijo Main Shop",
+   34.98939,
+   135.76832,
+   "Mo-Su 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Kissa Kishin Kyoto",
+   34.99156,
+   135.77338,
+   "Th-Mo 07:30-13:30",
+   "cafe"
+  ],
+  [
+   "shisha bar BUZZ",
+   35.00447,
+   135.77455,
+   "Mo-Su 20:00-05:00",
+   "bar"
+  ],
+  [
+   "油そば専門店　ムジコ",
+   35.01584,
+   135.74276,
+   "Mo-We,Fr-Su 11:30-15:30,18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Tako to Kentaro (Takoyaki)",
+   35.02056,
+   135.78243,
+   "11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Suematsu",
+   35.02037,
+   135.78244,
+   "Mo-Fr 11:30-14:30,17:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Kitchen House Caravan",
+   35.01992,
+   135.78245,
+   "We-Fr,Su-Mo 17:30-23-00",
+   "restaurant"
+  ],
+  [
+   "Deep Space Rhymin'",
+   35.01998,
+   135.77862,
+   "10:30-21:00",
+   "cafe"
+  ],
+  [
+   "bientot",
+   35.01923,
+   135.7786,
+   "Su-Th 11:00-15:00,17:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Solkatt Coffee Kyoto",
+   34.97894,
+   135.74371,
+   "Tu-Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Madoi Cafe",
+   34.97917,
+   135.74972,
+   "Mo-Fr 07:00-12:00; Sa-Su 07:00-09:00; PH off",
+   "cafe"
+  ],
+  [
+   "You go Curry",
+   35.02742,
+   135.79487,
+   "Mo-Su 11:30-19:00",
+   "restaurant"
+  ],
+  [
+   "一会",
+   34.98217,
+   135.74911,
+   "11:00-17:00",
+   "cafe"
+  ],
+  [
+   "ともしび",
+   35.02804,
+   135.71471,
+   "Mo 10:30-14:00,17:15-22:00; We-Su 10:30-14:00,17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Seigen-in",
+   35.03363,
+   135.71791,
+   "11:00-17:00",
+   "restaurant"
+  ],
+  [
+   "菜の花",
+   35.03283,
+   135.71971,
+   "11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Rhymin",
+   35.02,
+   135.77865,
+   "10:30-22:00",
+   "cafe"
+  ],
+  [
+   "加茂みたらし茶屋",
+   35.03966,
+   135.77076,
+   "09:30-20:00, Su,Mo,Tu,Th,Fr,Sa",
+   "cafe"
+  ],
+  [
+   "浅井食堂",
+   35.03936,
+   135.76988,
+   "11:00-15:00,17：30-23:00,Mo-St",
+   "restaurant"
+  ],
+  [
+   "Gion Rikichi",
+   35.00485,
+   135.77399,
+   "Mo-Su 11:30-15:00,17:30-22:30; Dec 31-Jan 3 off",
+   "restaurant"
+  ],
+  [
+   "懐石カフェ 蛙吉（アキチ）",
+   34.96863,
+   135.76961,
+   "11:30-18:00",
+   "restaurant"
+  ],
+  [
+   "CAFE VELOCE",
+   34.98704,
+   135.75727,
+   "Mo-Su 06:30-22:45",
+   "cafe"
+  ],
+  [
+   "Nakau",
+   34.98383,
+   135.75955,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Honke Daiichiasahi",
+   34.98669,
+   135.76249,
+   "Fr-We,PH 06:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Miyamoto Munashi",
+   35.01073,
+   135.754,
+   "Mo-Su,PH 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Owariya",
+   34.98983,
+   135.76015,
+   "Mo-Su 11:00-19:00",
+   "restaurant"
+  ],
+  [
+   "Tenkaippin",
+   35.02738,
+   135.73318,
+   "Mo-Su,PH 10:30-24:00; We 10:30-15:00; Th[1],Th[3] off",
+   "restaurant"
+  ],
+  [
+   "Habour Cafe",
+   35.02863,
+   135.73121,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Sukiya",
+   35.00368,
+   135.77081,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "McDonald's",
+   35.00369,
+   135.77069,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Gojo Cafe",
+   34.99532,
+   135.77218,
+   "Fr-We 13:00-22:00",
+   "cafe"
+  ],
+  [
+   "SUKIYA",
+   35.01217,
+   135.75987,
+   "Mo-Su 04:00-03:00",
+   "fast_food"
+  ],
+  [
+   "Komeda's Coffee",
+   35.02887,
+   135.7592,
+   "PH,Mo-Su 07:00-23:00",
+   "cafe"
+  ],
+  [
+   "La Baraka",
+   35.00113,
+   135.76851,
+   "We-Mo 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "YEBISU BAR",
+   34.98802,
+   135.75919,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "CAFE FROSCH",
+   35.03118,
+   135.73893,
+   "Mo-We,Sa-Su 11:00-17:00",
+   "cafe"
+  ],
+  [
+   "Reina de Reina",
+   35.01212,
+   135.77974,
+   "11:45-15:00, 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "みなみ",
+   34.98379,
+   135.75663,
+   "Mo-Sa 16:00-23:00; Su,PH 16:00-22:00",
+   "restaurant"
+  ],
+  [
+   "京やさい料理 接方来 京都駅ビル店",
+   34.98603,
+   135.7606,
+   "11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "M Stand",
+   35.00391,
+   135.77033,
+   "Mo-Su,PH 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "Usagi no ippo",
+   35.01107,
+   135.78381,
+   "Fr-Tu 12:00-20:00",
+   "restaurant"
+  ],
+  [
+   "ミュージアムカフェ えむえむ",
+   35.01178,
+   135.75945,
+   "11:00-18:00",
+   "cafe"
+  ],
+  [
+   "ミュージアムカフェ えむえむ",
+   35.01192,
+   135.75946,
+   "11:00-18:00",
+   "cafe"
+  ],
+  [
+   "京料理 矢尾定",
+   34.99372,
+   135.75171,
+   "07:00-09:00,11:00-14:00,17:30-21:00",
+   "restaurant"
+  ],
+  [
+   "龍華",
+   34.99382,
+   135.75171,
+   "08:00-17:00",
+   "cafe"
+  ],
+  [
+   "Purple clouds",
+   34.99275,
+   135.75169,
+   "Mo-Su 08:30-16:30",
+   "cafe"
+  ],
+  [
+   "Chojiro 'sushi'",
+   35.00406,
+   135.77067,
+   "Mo-Su 11:30-15:00, 17:00-23:30",
+   "restaurant"
+  ],
+  [
+   "原子郭",
+   34.98456,
+   135.7597,
+   "Mo-Su,PH 11:00-21:00",
+   "restaurant"
+  ],
+  [
+   "PASTA MORE",
+   34.98453,
+   135.75993,
+   "Mo-Su,PH 07:00-23:00",
+   "restaurant"
+  ],
+  [
+   "くらま",
+   34.98456,
+   135.75984,
+   "Mo-Su,PH 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "京ダイニング八条",
+   34.98456,
+   135.76,
+   "Mo-Su,PH 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "むさし",
+   34.98456,
+   135.75957,
+   "Mo-Su 10:30-21:45",
+   "restaurant"
+  ],
+  [
+   "星乃珈琲",
+   34.9845,
+   135.75986,
+   "Mo-Su 07:00-22:15",
+   "cafe"
+  ],
+  [
+   "INODA'S COFFEE",
+   34.98449,
+   135.75945,
+   "08:00-20:00",
+   "cafe"
+  ],
+  [
+   "L'Escamoteur Elixirs & Mystery",
+   35.00182,
+   135.76999,
+   "Mo-Su 19:00-01:00",
+   "bar"
+  ],
+  [
+   "割烹 松長",
+   35.01119,
+   135.76236,
+   "Fr 11:30-14:00, 18:00-22:00; Tu-Th, Sa 18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "海鮮居酒屋 わたなべや",
+   35.01219,
+   135.76129,
+   "17:30-01:00",
+   "pub"
+  ],
+  [
+   "海鮮食堂 京りき屋",
+   35.01259,
+   135.75987,
+   "11:30-15:00,17:30-23:30",
+   "restaurant"
+  ],
+  [
+   "渡辺屋",
+   35.01229,
+   135.7603,
+   "18:00-23:00;Mo off;Tu[1,3] off",
+   "restaurant"
+  ],
+  [
+   "手打蕎麦とおる、酒BARよらむ",
+   35.01361,
+   135.76115,
+   "Mo,Th-Su 11:30-15:00 \"昼は蕎麦\"; We-Sa 18:00-24:00 \"夜はBAR\"",
+   "restaurant"
+  ],
+  [
+   "BISTROT　VAPEURS",
+   35.0122,
+   135.76121,
+   "Tu off;11:30-18:00,18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "INDIAN FOOD TADKA",
+   35.01231,
+   135.76208,
+   "Tu-Sa 12:00-15:00,18:00-22:30",
+   "restaurant"
+  ],
+  [
+   "SHOT BAR AMUSE",
+   35.01218,
+   135.76191,
+   "Mo-Sa 19:00+",
+   "pub"
+  ],
+  [
+   "蕎麦もうやん",
+   35.0122,
+   135.76037,
+   "11:00-14:00,17:30-20:30;We off",
+   "restaurant"
+  ],
+  [
+   "COFFEE BOOKS さんさか",
+   35.01163,
+   135.7618,
+   "09:00-18:00; Th off",
+   "cafe"
+  ],
+  [
+   "Nakamura Tokichi, Kyoto Station Store",
+   34.98523,
+   135.75803,
+   "Mo-Su 11:00-22:00",
+   "cafe"
+  ],
+  [
+   "Japanes Tea house Kitty Saryo",
+   34.99873,
+   135.78076,
+   "Mo-Su 10:30-18:30",
+   "cafe"
+  ],
+  [
+   "Hyakushokuya Sukiyakisenka",
+   35.00329,
+   135.77036,
+   "Fr-We 11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "麺家",
+   34.98523,
+   135.75917,
+   "Mo-Su 07:00-21:15",
+   "fast_food"
+  ],
+  [
+   "粟餅所 澤屋",
+   35.02766,
+   135.73517,
+   "Fr-We 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Lignum",
+   35.01173,
+   135.78071,
+   "09:00-18:00; Sa,Su,PH 08:00-18:00; Mo off",
+   "cafe"
+  ],
+  [
+   "Bar Alchemist",
+   35.00406,
+   135.771,
+   "Mo-Su 16:00-02:00",
+   "bar"
+  ],
+  [
+   "Man in the Moon",
+   34.9845,
+   135.75543,
+   "Fr-Sa 11:00-04:00; Su-Th 11:00-02:00",
+   "pub"
+  ],
+  [
+   "和久傳 おもたせ 大徳寺店",
+   35.04085,
+   135.7476,
+   "Fr-We 10:00-17:00",
+   "restaurant"
+  ],
+  [
+   "Colorado",
+   34.98415,
+   135.75687,
+   "08:00-21:00",
+   "cafe"
+  ],
+  [
+   "Nakayama",
+   34.98383,
+   135.75921,
+   "06:00-18:00",
+   "cafe"
+  ],
+  [
+   "麺屋 うどん・そば",
+   34.98548,
+   135.75931,
+   "Mo-Su 07:00-21:15",
+   "fast_food"
+  ],
+  [
+   "MoriMori Sushi",
+   35.00341,
+   135.76967,
+   "Mo-Fr 11:00-15:00,17:00-21:30; Sa,Su,PH 11:00-21:30",
+   "restaurant"
+  ],
+  [
+   "Saizeriya Ristorante e Caffè",
+   35.00306,
+   135.76953,
+   "11:00-24:00",
+   "restaurant"
+  ],
+  [
+   "MOS Burger",
+   35.01058,
+   135.75579,
+   "Mo-Su 09:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Baan Nim Naam",
+   35.00267,
+   135.77068,
+   "Tu-Su,PH 11:30-15:00,17:00-22:30; Mo off",
+   "restaurant"
+  ],
+  [
+   "Chakra",
+   34.99514,
+   135.77633,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "京都祇園天ぷら 八坂圓堂",
+   34.99897,
+   135.77513,
+   "Mo-Su 11:30-15:00, 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "GION KIMUTAKO",
+   35.00303,
+   135.77298,
+   "Tu-Su 08:00-13:00, 17:30-20:30",
+   "restaurant"
+  ],
+  [
+   "Gyoza Chao Chao",
+   35.00284,
+   135.76952,
+   "Mo-Fr 16:00-23:00; Sa-Su 14:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Issen Yoshoku",
+   35.00403,
+   135.77318,
+   "Mo-Th 11:00-01:00; Fr-Sa 11:00-03:00; Su,PH 10:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Veg Out",
+   34.98944,
+   135.76673,
+   "Tu-Su 08:00-18:00",
+   "restaurant"
+  ],
+  [
+   "The Sodoh Higashiyama",
+   34.99828,
+   135.78001,
+   "Sa-Su 09:00-18:00; Mo, We-Fr 11:00-18:00",
+   "restaurant"
+  ],
+  [
+   "Pâtisserie & Cafe Del’immo KYOTO",
+   34.98543,
+   135.75808,
+   "Mo-Fr 10:00-22:00, Sa-Su 08:00-22:00",
+   "cafe"
+  ],
+  [
+   "天下の焼肉 大将軍",
+   34.98747,
+   135.75889,
+   "Mo-Su 17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Kohikan",
+   34.98899,
+   135.75995,
+   "Mo-Su,PH 07:30-21:30",
+   "cafe"
+  ],
+  [
+   "Toyoukeya",
+   35.02781,
+   135.7356,
+   "Fr-We 11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "伊藤久右衛門",
+   34.98766,
+   135.75768,
+   "Mo-Su 10:00-18:30",
+   "cafe"
+  ],
+  [
+   "ブルームコーヒー",
+   34.9916,
+   135.75644,
+   "Mo-Su 07:30-11:00",
+   "cafe"
+  ],
+  [
+   "虎屋菓寮",
+   35.02644,
+   135.75852,
+   "Mo-Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Foodhall",
+   35.0035,
+   135.76962,
+   "Mo-Su,PH 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "スイートマロンカフェ",
+   34.98936,
+   135.75548,
+   "08:30-21:00; Su, PH off",
+   "cafe"
+  ],
+  [
+   "Onishi Yakitori Bar　大西",
+   34.98938,
+   135.75484,
+   "Th-Tu 18:00-24:00; We off",
+   "restaurant"
+  ],
+  [
+   "HOHI",
+   35.04404,
+   135.75149,
+   "Th-Mo 12:00-13:30,17:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Stumptown Coffee Roasters",
+   35.00973,
+   135.7601,
+   "Mo-Su 07:00-19:00",
+   "cafe"
+  ],
+  [
+   "すし善",
+   35.00866,
+   135.75689,
+   "Su-Fr 10:00-18:00",
+   "restaurant"
+  ],
+  [
+   "キエフ",
+   35.00429,
+   135.77281,
+   "Mo-Fr 12:00-15:30,17:00-21:00; Sa-Su,PH 12:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Taishoken",
+   34.98572,
+   135.75774,
+   "11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "(M)isostand",
+   35.00843,
+   135.75799,
+   "Mo-Su 17:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Sasaya Iori",
+   35.028,
+   135.76138,
+   "Mo-Su 10:00-16:30",
+   "cafe"
+  ],
+  [
+   "Starbucks",
+   34.99828,
+   135.78081,
+   "Mo-Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Lemon",
+   35.0127,
+   135.76385,
+   "Mo-Sa 11:30-14:30",
+   "restaurant"
+  ],
+  [
+   "Coyote",
+   34.98639,
+   135.7554,
+   "Tu-Su 08:30-17:00",
+   "cafe"
+  ],
+  [
+   "Good Time Coffee",
+   34.99248,
+   135.74846,
+   "10:00-17:00",
+   "cafe"
+  ],
+  [
+   "MANDARACHA",
+   34.99756,
+   135.77135,
+   "Sa-Su 10:00-18:00; Mo-Tu, Fr 13:00-18:00",
+   "cafe"
+  ],
+  [
+   "Cafe Ciao Presso",
+   34.98448,
+   135.75649,
+   "Mo-Su 07:00-20:00",
+   "cafe"
+  ],
+  [
+   "KITCHEN カンパネラ",
+   34.99265,
+   135.7551,
+   "We-Mo 11:30-17:00; Tu 18:00-20:30",
+   "restaurant"
+  ],
+  [
+   "TU CASA - Zero waste & Plant based トゥ・カサ",
+   34.99648,
+   135.76906,
+   "Mo-Su 17:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Cafe Ren - Sakyo",
+   35.0286,
+   135.78747,
+   "Mo-Su 07:30-19:00",
+   "restaurant"
+  ],
+  [
+   "Uno Yukiko - Gion Soy Milk Ramen",
+   35.00242,
+   135.77271,
+   "Mo-Su 11:00-20:30",
+   "restaurant"
+  ],
+  [
+   "Uno Yukiko Gion soymilk Ramen",
+   35.00241,
+   135.77269,
+   "Mo-Su 11:00-20:30",
+   "restaurant"
+  ],
+  [
+   "sen-ryo",
+   34.98385,
+   135.75812,
+   "Mo-Su,PH 11:00-15:00,17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Mugenya",
+   34.98383,
+   135.75906,
+   "Mo-Su,PH 10:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Caffetteria Imaya",
+   35.0116,
+   135.75578,
+   "Mo-Sa 06:00-20:00, Su 06:00-13:00",
+   "cafe"
+  ],
+  [
+   "Astarte",
+   35.00847,
+   135.75838,
+   "Tu-Su 07:30-17:00",
+   "cafe"
+  ],
+  [
+   "やたいや烏丸",
+   35.00993,
+   135.76122,
+   "12:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Alpine",
+   35.02872,
+   135.78127,
+   "Mo-Sa 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Collection",
+   35.02868,
+   135.78402,
+   "Fr-We 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Halina",
+   35.02913,
+   135.78563,
+   "Tu-Sa 11:30-14:30",
+   "restaurant"
+  ],
+  [
+   "Ronde",
+   34.98403,
+   135.75637,
+   "Mo-Fr 11:30-15:00,17:00-22:00; Sa-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Omofu",
+   34.9839,
+   135.75638,
+   "07:00-22:00",
+   "cafe"
+  ],
+  [
+   "西櫻亭 京都店",
+   34.98633,
+   135.75593,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Kyoto Yakiniku Suzuki",
+   35.00416,
+   135.771,
+   "Mo-Su 11:30-15:00,17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "TAITO",
+   34.98516,
+   135.7739,
+   "Mo-Sa 11:00-15:00,18:30-22:00",
+   "restaurant"
+  ],
+  [
+   "The Roots of all evil.",
+   34.98753,
+   135.7595,
+   "Mo-Su 11:00-23:00",
+   "bar"
+  ],
+  [
+   "Shubha Bihani - Marutamachi",
+   35.01462,
+   135.75943,
+   "Mo-Su 11:00-15:00, 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "bar HIGH CENTRAL whisky &cocktail",
+   34.98942,
+   135.76062,
+   "Tu, Th-Sa 19:30-02:00",
+   "bar"
+  ],
+  [
+   "Bar Rinto",
+   35.00418,
+   135.77111,
+   "Mo-Su 17:00-02:00",
+   "bar"
+  ],
+  [
+   "Mister Donut",
+   34.98448,
+   135.75575,
+   "Mo-Su,PH 09:00-22:00",
+   "fast_food"
+  ],
+  [
+   "セレーノ食堂",
+   34.98448,
+   135.75634,
+   "11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "京町家茶屋 抹茶亭",
+   34.9845,
+   135.75977,
+   "09:00-21:00",
+   "cafe"
+  ],
+  [
+   "みなみ",
+   34.98329,
+   135.76096,
+   "Th-Tu 07:45-18:30",
+   "cafe"
+  ],
+  [
+   "Komeda's Coffee",
+   34.98385,
+   135.75803,
+   "07:00-22:00",
+   "cafe"
+  ],
+  [
+   "Holly's Café",
+   35.00725,
+   135.75945,
+   "07:00-23:00",
+   "cafe"
+  ],
+  [
+   "Roast Chicken Dining Yoshida Chicken",
+   35.02853,
+   135.78506,
+   "Mo-Su 11:30-15:00,18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "curry & tempura koisus",
+   35.00026,
+   135.77116,
+   "Mo-Su 09:00-21:00",
+   "restaurant"
+  ],
+  [
+   "SANGO",
+   35.02892,
+   135.78576,
+   "Mo-Su 11:00-15:00,17:00-23:00",
+   "restaurant"
+  ],
+  [
+   "ほとり",
+   35.01019,
+   135.78129,
+   "We-Su 10:00-17:00",
+   "cafe"
+  ],
+  [
+   "Mimio",
+   35.02131,
+   135.78241,
+   "We-Su 12:00-14:00,18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "蕩 TORO",
+   35.02112,
+   135.78362,
+   "Fr 13:00-16:00,17:30-21:00; Sa-Mo 11:00-16:00,17:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Akoya Jaya",
+   34.99805,
+   135.78093,
+   "11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "なかう",
+   35.01481,
+   135.75974,
+   "Mo-Su 04:00-03:00",
+   "fast_food"
+  ],
+  [
+   "中立売休憩所",
+   35.02533,
+   135.75977,
+   "Mo-Su 08:00-18:00",
+   "restaurant"
+  ],
+  [
+   "shisha bar BUZZ",
+   35.00449,
+   135.77461,
+   "Mo-Sa 20:00-29:00, Su 20:00-26:00",
+   "bar"
+  ],
+  [
+   "ロイヤルホスト京都髙島屋S.C.店",
+   35.00303,
+   135.76905,
+   "Mo-Su,PH 11:00-21:30",
+   "restaurant"
+  ],
+  [
+   "Kyoto Wagyu Yaero",
+   34.98744,
+   135.75839,
+   "11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "xiangxiang malatang",
+   34.98943,
+   135.76053,
+   "Th-Tu 11:00-15:30, 17:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Gion Duck Rice",
+   35.00447,
+   135.77654,
+   "Mo-Su 10:00-21:00",
+   "restaurant"
+  ],
+  [
+   "Sushiro",
+   35.00369,
+   135.77418,
+   "Mo-Fr 11:00-23:00; Sa-Su, PH 10:30-23:00",
+   "fast_food"
+  ],
+  [
+   "Toh Ka Sai Kan",
+   35.00357,
+   135.77104,
+   "Mo-Fr 11:30-15:00,17:00-21:30; Sa,Su,PH 11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Kobe Beef Steak Mouriya Gion",
+   35.00335,
+   135.77275,
+   "Mo-Su 11:30-21:00",
+   "restaurant"
+  ],
+  [
+   "チェカ",
+   35.01366,
+   135.78723,
+   "We-Su 10:00-19:00",
+   "cafe"
+  ],
+  [
+   "Dragon Burger",
+   35.0112,
+   135.78797,
+   "Mo, Tu, Th-Su 11:00-20:00",
+   "restaurant"
+  ],
+  [
+   "Taku Sando Kiyomizu",
+   34.99774,
+   135.77787,
+   "Mo-Su 12:00-18:00",
+   "restaurant"
+  ],
+  [
+   "ラーメン百万石",
+   34.99584,
+   135.74091,
+   "Mo-Fr 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Matsuya",
+   34.69203,
+   135.5032,
+   "05:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Train Bar KODAMA",
+   34.69701,
+   135.50032,
+   "18:00-04:00",
+   "bar"
+  ],
+  [
+   "Kohikan",
+   34.69546,
+   135.5015,
+   "08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Cafetin de Buenos Aires",
+   34.69719,
+   135.50294,
+   "Mo, We, Th, Su 19:00-24:00; Fr, Sa 19:00+",
+   "bar"
+  ],
+  [
+   "Doutor Coffee Shop",
+   34.69009,
+   135.49941,
+   "Mo-Fr 07:00-19:00; Sa 09:00-15:00; PH off",
+   "cafe"
+  ],
+  [
+   "Unatoto",
+   34.69632,
+   135.50157,
+   "11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "つるとんたん",
+   34.69686,
+   135.4991,
+   "Mo-Sa 11:00-05:00; Su,PH 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "TEPPAN AKIRA",
+   34.69684,
+   135.50063,
+   "Mo-Su11:00-15:00",
+   "restaurant"
+  ],
+  [
+   "旬喰 桔梗",
+   34.69745,
+   135.49996,
+   "Mo-Fr11:30-13:30",
+   "restaurant"
+  ],
+  [
+   "ISTANBUL NazaR 北新地店",
+   34.69745,
+   135.50002,
+   "Mo-Sa11:30-14:30",
+   "restaurant"
+  ],
+  [
+   "Kobushi Ramen",
+   34.98929,
+   135.74371,
+   "Th-Tu 11:30-14:30, 18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Moto coffee",
+   34.69207,
+   135.50648,
+   "Mo-Su 12:00-19:00",
+   "cafe"
+  ],
+  [
+   "Honke Shibato Unagi",
+   34.69003,
+   135.50376,
+   "Tu-Sa 11:00-14:30, 17:00-21:00",
+   "restaurant"
+  ],
+  [
+   "よどやばし燁",
+   34.69163,
+   135.50277,
+   "17:00-23:00",
+   "bar"
+  ],
+  [
+   "Belgian Brasserie Court BARREL",
+   34.69143,
+   135.49828,
+   "11:30-14:30,17:00-22:00",
+   "pub"
+  ],
+  [
+   "Cafe R",
+   34.69718,
+   135.50381,
+   "Mo - Fr 10:00 - 17:00",
+   "cafe"
+  ],
+  [
+   "大喜 北新地店",
+   34.69632,
+   135.49982,
+   "Mo-Sa 11:30-13:30, 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Optimus Cafe",
+   34.6922,
+   135.50519,
+   "07:30-19:00",
+   "restaurant"
+  ],
+  [
+   "ミライザカ",
+   34.69219,
+   135.5019,
+   "Mo-Th 11:00-01:00; Fr 11:00-03:00; Sa 12:00-01:00; Su 12:00-24:00",
+   "pub"
+  ],
+  [
+   "かき広",
+   34.69279,
+   135.50133,
+   "17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Holly's Cafe",
+   34.69638,
+   135.50096,
+   "Mo-Fr 06:30-23:00; Sa 07:00-23:00; Su,PH 07:00-21:00",
+   "cafe"
+  ],
+  [
+   "Go!Go!Curry",
+   34.99643,
+   135.74168,
+   "Mo-Su,PH 10:55-21:55",
+   "fast_food"
+  ],
+  [
+   "京屋",
+   34.69211,
+   135.50183,
+   "Mo-Fr 07:30-14:30; Sa 10:00-13:30; Su,PH off",
+   "fast_food"
+  ],
+  [
+   "博多女",
+   34.69624,
+   135.50069,
+   "Mo-Fr 18:00-02:00; Sa 18:00-23:00; Su,PH off",
+   "restaurant"
+  ],
+  [
+   "Hanamarūdon",
+   34.69734,
+   135.5006,
+   "Mo-Su,PH 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Kyo-Suzaku Sushi-Ichiba",
+   34.9896,
+   135.74153,
+   "Mo-Su 10:30-14:30, 17:00-20:30",
+   "restaurant"
+  ],
+  [
+   "OTTONOVE",
+   34.69519,
+   135.49997,
+   "Mo,Tu,Th,Fr 11:30-14:00,18:00-23:00; We 18:00-23:00; Sa 18:00-22:00",
+   "restaurant"
+  ],
+  [
+   "UN treize",
+   34.69597,
+   135.49997,
+   "11:30-14:00,17:30-21:00",
+   "restaurant"
+  ],
+  [
+   "CHINESE BISTRO 明翔",
+   34.69637,
+   135.49777,
+   "11:30-14:00,17:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Kyonoya",
+   34.69604,
+   135.49971,
+   "17:00-04:30",
+   "restaurant"
+  ],
+  [
+   "Tully's Coffee",
+   34.69237,
+   135.50053,
+   "07:00-21:00",
+   "cafe"
+  ],
+  [
+   "ベトナム料理インドシナ",
+   34.69122,
+   135.50059,
+   "Mo-Fr 11:30-22:30; Sa-Su,PH 11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "MOUNT",
+   34.69222,
+   135.50481,
+   "Mo-Sa 11:00-18:00; Su 11:00-17:30",
+   "cafe"
+  ],
+  [
+   "GARB weeks",
+   34.6928,
+   135.5059,
+   "Mo-Su 11:30-15:00, 17:30-22:30",
+   "restaurant"
+  ],
+  [
+   "UMEKOJI COLLABO",
+   34.98956,
+   135.74329,
+   "Mo-Fr 11:00-15:00, 17:00-22:00; Sa, Su, PH 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "ELTRO KOBE",
+   34.6952,
+   135.4999,
+   "Mo-Fr 11:30-13:30,17:00-21:00",
+   "restaurant"
+  ]
+ ],
+ "heights": [
+  [
+   35.01138,
+   135.74837,
+   38
+  ],
+  [
+   35.01417,
+   135.7475,
+   45
+  ],
+  [
+   35.01028,
+   135.74866,
+   38
+  ],
+  [
+   35.00939,
+   135.76233,
+   49
+  ],
+  [
+   35.01081,
+   135.76001,
+   53
+  ],
+  [
+   34.99178,
+   135.75169,
+   36
+  ],
+  [
+   34.99143,
+   135.75854,
+   38
+  ],
+  [
+   34.99139,
+   135.76324,
+   36
+  ],
+  [
+   34.98056,
+   135.74778,
+   31
+  ],
+  [
+   34.9875,
+   135.75917,
+   40
+  ],
+  [
+   35.0016,
+   135.74334,
+   32
+  ],
+  [
+   34.98546,
+   135.75776,
+   50
+  ],
+  [
+   34.98722,
+   135.7425,
+   22
+  ],
+  [
+   34.9876,
+   135.74784,
+   24
+  ],
+  [
+   35.02991,
+   135.74964,
+   62
+  ],
+  [
+   35.02411,
+   135.76216,
+   52
+  ],
+  [
+   35.02152,
+   135.76526,
+   56
+  ],
+  [
+   35.02329,
+   135.76331,
+   52
+  ],
+  [
+   35.01685,
+   135.6716,
+   69
+  ],
+  [
+   35.01276,
+   135.67774,
+   29
+  ],
+  [
+   35.01583,
+   135.67369,
+   48
+  ],
+  [
+   35.01728,
+   135.66935,
+   84
+  ],
+  [
+   35.01773,
+   135.67418,
+   52
+  ],
+  [
+   35.01106,
+   135.67663,
+   66
+  ],
+  [
+   35.03135,
+   135.66113,
+   145
+  ],
+  [
+   35.02833,
+   135.6778,
+   59
+  ],
+  [
+   35.02682,
+   135.66455,
+   98
+  ],
+  [
+   35.02336,
+   135.66676,
+   92
+  ],
+  [
+   35.023,
+   135.66658,
+   104
+  ],
+  [
+   35.01964,
+   135.66867,
+   81
+  ],
+  [
+   35.02122,
+   135.66788,
+   84
+  ],
+  [
+   35.02251,
+   135.67353,
+   55
+  ],
+  [
+   35.0235,
+   135.67429,
+   55
+  ],
+  [
+   35.01022,
+   135.677,
+   67
+  ],
+  [
+   35.01581,
+   135.66558,
+   100
+  ],
+  [
+   35.0155,
+   135.70731,
+   48
+  ],
+  [
+   35.01627,
+   135.7086,
+   50
+  ],
+  [
+   34.99997,
+   135.68517,
+   42
+  ],
+  [
+   34.98399,
+   135.70957,
+   25
+  ],
+  [
+   35.00417,
+   135.69491,
+   32
+  ],
+  [
+   34.99362,
+   135.68486,
+   65
+  ],
+  [
+   34.99196,
+   135.68331,
+   48
+  ],
+  [
+   34.99483,
+   135.785,
+   113
+  ],
+  [
+   34.99711,
+   135.77333,
+   41
+  ],
+  [
+   34.98788,
+   135.77171,
+   43
+  ],
+  [
+   34.99002,
+   135.77297,
+   42
+  ],
+  [
+   34.98786,
+   135.77364,
+   47
+  ],
+  [
+   34.98814,
+   135.77593,
+   59
+  ],
+  [
+   35.01651,
+   135.78245,
+   60
+  ],
+  [
+   35.01284,
+   135.78357,
+   56
+  ],
+  [
+   35.01239,
+   135.78194,
+   53
+  ],
+  [
+   35.02538,
+   135.78473,
+   76
+  ],
+  [
+   35.01285,
+   135.78601,
+   49
+  ],
+  [
+   35.01383,
+   135.77964,
+   50
+  ],
+  [
+   35.01742,
+   135.78878,
+   67
+  ],
+  [
+   35.0035,
+   135.77952,
+   58
+  ],
+  [
+   35.00076,
+   135.78111,
+   73
+  ],
+  [
+   35.00617,
+   135.78328,
+   81
+  ],
+  [
+   35.00731,
+   135.7832,
+   66
+  ],
+  [
+   35.00147,
+   135.78249,
+   79
+  ],
+  [
+   34.99994,
+   135.78186,
+   74
+  ],
+  [
+   34.99894,
+   135.78264,
+   101
+  ],
+  [
+   34.99998,
+   135.78292,
+   99
+  ],
+  [
+   35.00364,
+   135.77853,
+   56
+  ],
+  [
+   34.99855,
+   135.77924,
+   64
+  ],
+  [
+   35.00119,
+   135.77393,
+   40
+  ],
+  [
+   35.02667,
+   135.79833,
+   94
+  ],
+  [
+   35.02356,
+   135.79705,
+   99
+  ],
+  [
+   35.02157,
+   135.79664,
+   97
+  ],
+  [
+   35.01701,
+   135.79519,
+   70
+  ],
+  [
+   35.01574,
+   135.79631,
+   84
+  ],
+  [
+   35.01437,
+   135.79557,
+   76
+  ],
+  [
+   35.01127,
+   135.79308,
+   69
+  ],
+  [
+   35.0395,
+   135.7285,
+   97
+  ],
+  [
+   35.03444,
+   135.71833,
+   102
+  ],
+  [
+   35.03111,
+   135.71389,
+   95
+  ],
+  [
+   35.04389,
+   135.74603,
+   81
+  ],
+  [
+   35.04601,
+   135.74204,
+   94
+  ],
+  [
+   35.05721,
+   135.67497,
+   138
+  ],
+  [
+   35.06014,
+   135.67856,
+   150
+  ],
+  [
+   35.03876,
+   135.77342,
+   65
+  ],
+  [
+   35.05928,
+   135.75253,
+   88
+  ],
+  [
+   35.04825,
+   135.76107,
+   74
+  ],
+  [
+   35.05393,
+   135.80365,
+   150
+  ],
+  [
+   35.0645,
+   135.76894,
+   106
+  ],
+  [
+   35.06733,
+   135.77497,
+   102
+  ],
+  [
+   35.04374,
+   135.79624,
+   110
+  ],
+  [
+   34.96722,
+   135.77278,
+   45
+  ],
+  [
+   34.9395,
+   135.77686,
+   100
+  ],
+  [
+   34.93041,
+   135.75958,
+   16
+  ],
+  [
+   34.97571,
+   135.77368,
+   60
+  ],
+  [
+   34.95112,
+   135.74656,
+   17
+  ],
+  [
+   34.95111,
+   135.81944,
+   47
+  ],
+  [
+   34.95949,
+   135.81629,
+   36
+  ],
+  [
+   34.96121,
+   135.80756,
+   32
+  ],
+  [
+   34.97806,
+   135.78056,
+   81
+  ],
+  [
+   34.96028,
+   135.65611,
+   143
+  ],
+  [
+   34.95692,
+   135.6555,
+   124
+  ],
+  [
+   34.96069,
+   135.65167,
+   176
+  ],
+  [
+   34.68966,
+   135.53342,
+   3
+  ],
+  [
+   34.66906,
+   135.49748,
+   7
+  ],
+  [
+   34.66738,
+   135.47825,
+   4
+  ],
+  [
+   34.66905,
+   135.49832,
+   6
+  ],
+  [
+   34.69565,
+   135.5234,
+   -1
+  ],
+  [
+   34.69515,
+   135.50028,
+   8
+  ],
+  [
+   34.68256,
+   135.47889,
+   -7
+  ],
+  [
+   34.68581,
+   135.48297,
+   4
+  ],
+  [
+   34.71684,
+   135.4865,
+   5
+  ],
+  [
+   34.66766,
+   135.47796,
+   11
+  ],
+  [
+   34.66928,
+   135.47956,
+   -5
+  ],
+  [
+   34.69212,
+   135.50952,
+   5
+  ],
+  [
+   34.69349,
+   135.48933,
+   2
+  ],
+  [
+   34.68974,
+   135.5328,
+   1
+  ],
+  [
+   34.68491,
+   135.48084,
+   -3
+  ],
+  [
+   34.69046,
+   135.48613,
+   10
+  ],
+  [
+   34.69062,
+   135.51609,
+   30
+  ],
+  [
+   34.68385,
+   135.51004,
+   19
+  ],
+  [
+   34.66912,
+   135.50271,
+   10
+  ],
+  [
+   34.99462,
+   135.82635,
+   93
+  ],
+  [
+   35.00646,
+   135.79165,
+   80
+  ],
+  [
+   34.99465,
+   135.82635,
+   94
+  ],
+  [
+   35.00644,
+   135.79162,
+   80
+  ],
+  [
+   34.99453,
+   135.82653,
+   86
+  ],
+  [
+   34.69266,
+   135.50174,
+   16
+  ],
+  [
+   34.71397,
+   135.5211,
+   5
+  ],
+  [
+   34.66898,
+   135.50557,
+   18
+  ],
+  [
+   34.68924,
+   135.52602,
+   5
+  ],
+  [
+   34.70057,
+   135.52064,
+   3
+  ],
+  [
+   34.99427,
+   135.78516,
+   104
+  ],
+  [
+   35.0382,
+   135.73141,
+   92
+  ],
+  [
+   35.03789,
+   135.73119,
+   91
+  ],
+  [
+   35.0384,
+   135.73164,
+   92
+  ],
+  [
+   35.03848,
+   135.73169,
+   92
+  ],
+  [
+   35.05773,
+   135.75174,
+   86
+  ],
+  [
+   34.96822,
+   135.77376,
+   47
+  ],
+  [
+   34.96785,
+   135.77192,
+   38
+  ],
+  [
+   34.9679,
+   135.77161,
+   36
+  ],
+  [
+   34.96793,
+   135.77145,
+   36
+  ],
+  [
+   34.96797,
+   135.77135,
+   36
+  ],
+  [
+   34.9666,
+   135.771,
+   34
+  ],
+  [
+   35.02705,
+   135.79741,
+   91
+  ],
+  [
+   35.02768,
+   135.79684,
+   90
+  ],
+  [
+   35.02729,
+   135.79647,
+   85
+  ],
+  [
+   35.0271,
+   135.79573,
+   78
+  ],
+  [
+   35.02712,
+   135.79539,
+   76
+  ],
+  [
+   35.0274,
+   135.79503,
+   76
+  ],
+  [
+   35.03363,
+   135.71791,
+   93
+  ],
+  [
+   35.03271,
+   135.71892,
+   84
+  ],
+  [
+   35.03283,
+   135.71971,
+   82
+  ],
+  [
+   34.98244,
+   135.7491,
+   27
+  ],
+  [
+   34.97955,
+   135.75041,
+   25
+  ],
+  [
+   34.9829,
+   135.7491,
+   26
+  ],
+  [
+   34.97896,
+   135.745,
+   25
+  ],
+  [
+   34.97894,
+   135.74494,
+   25
+  ],
+  [
+   34.97914,
+   135.75091,
+   24
+  ],
+  [
+   35.01542,
+   135.74879,
+   43
+  ],
+  [
+   35.01644,
+   135.78015,
+   50
+  ],
+  [
+   35.01647,
+   135.78011,
+   50
+  ],
+  [
+   35.01614,
+   135.7802,
+   50
+  ],
+  [
+   35.01594,
+   135.78479,
+   57
+  ],
+  [
+   35.01712,
+   135.7794,
+   52
+  ],
+  [
+   35.01803,
+   135.77961,
+   55
+  ],
+  [
+   34.98942,
+   135.77555,
+   58
+  ],
+  [
+   34.98938,
+   135.77054,
+   36
+  ],
+  [
+   34.9894,
+   135.77012,
+   36
+  ],
+  [
+   34.98935,
+   135.77623,
+   64
+  ],
+  [
+   34.9924,
+   135.77471,
+   51
+  ],
+  [
+   34.98713,
+   135.7744,
+   47
+  ],
+  [
+   35.02888,
+   135.71517,
+   78
+  ],
+  [
+   35.02804,
+   135.71471,
+   75
+  ],
+  [
+   35.00289,
+   135.77881,
+   57
+  ],
+  [
+   35.00264,
+   135.77833,
+   57
+  ],
+  [
+   35.00435,
+   135.77759,
+   48
+  ],
+  [
+   35.00321,
+   135.77728,
+   45
+  ],
+  [
+   35.00414,
+   135.77722,
+   47
+  ],
+  [
+   35.00439,
+   135.77968,
+   56
+  ],
+  [
+   34.97385,
+   135.77073,
+   35
+  ],
+  [
+   35.03967,
+   135.77106,
+   63
+  ],
+  [
+   35.03936,
+   135.76988,
+   61
+  ],
+  [
+   35.03685,
+   135.77118,
+   62
+  ],
+  [
+   35.01243,
+   135.79306,
+   60
+  ],
+  [
+   35.01208,
+   135.79131,
+   57
+  ],
+  [
+   34.98685,
+   135.76916,
+   32
+  ],
+  [
+   34.98807,
+   135.76885,
+   34
+  ],
+  [
+   34.98912,
+   135.76875,
+   35
+  ],
+  [
+   35.00369,
+   135.78278,
+   80
+  ],
+  [
+   35.00675,
+   135.78232,
+   59
+  ],
+  [
+   35.00428,
+   135.78052,
+   57
+  ],
+  [
+   35.00444,
+   135.78003,
+   57
+  ],
+  [
+   35.00429,
+   135.77998,
+   57
+  ],
+  [
+   35.00454,
+   135.77984,
+   56
+  ],
+  [
+   35.0422,
+   135.74415,
+   80
+  ],
+  [
+   35.02533,
+   135.75977,
+   56
+  ],
+  [
+   35.02863,
+   135.73611,
+   67
+  ],
+  [
+   35.02845,
+   135.73607,
+   66
+  ],
+  [
+   35.02781,
+   135.7356,
+   66
+  ],
+  [
+   35.02764,
+   135.73582,
+   66
+  ],
+  [
+   35.02745,
+   135.7358,
+   65
+  ],
+  [
+   35.02884,
+   135.73751,
+   67
+  ],
+  [
+   35.02085,
+   135.7211,
+   50
+  ],
+  [
+   34.99372,
+   135.75171,
+   35
+  ],
+  [
+   34.99473,
+   135.7529,
+   34
+  ],
+  [
+   34.99265,
+   135.7551,
+   31
+  ],
+  [
+   34.99148,
+   135.75534,
+   31
+  ],
+  [
+   34.98935,
+   135.7535,
+   31
+  ],
+  [
+   35.01234,
+   135.75875,
+   47
+  ],
+  [
+   35.01107,
+   135.7585,
+   48
+  ],
+  [
+   35.01233,
+   135.75984,
+   53
+  ],
+  [
+   35.01169,
+   135.75808,
+   47
+  ],
+  [
+   35.01119,
+   135.75813,
+   48
+  ],
+  [
+   35.01259,
+   135.75987,
+   54
+  ],
+  [
+   35.00013,
+   135.7797,
+   60
+  ],
+  [
+   35.00176,
+   135.77986,
+   66
+  ],
+  [
+   34.99922,
+   135.78137,
+   74
+  ],
+  [
+   35.00092,
+   135.77895,
+   61
+  ],
+  [
+   35.00178,
+   135.77915,
+   62
+  ],
+  [
+   35.00006,
+   135.77889,
+   56
+  ],
+  [
+   35.02688,
+   135.78401,
+   64
+  ],
+  [
+   35.02716,
+   135.78412,
+   65
+  ],
+  [
+   35.02847,
+   135.78451,
+   65
+  ],
+  [
+   34.98747,
+   135.75889,
+   42
+  ],
+  [
+   34.98774,
+   135.75889,
+   47
+  ],
+  [
+   34.98778,
+   135.75882,
+   48
+  ],
+  [
+   34.98802,
+   135.75919,
+   50
+  ],
+  [
+   34.98808,
+   135.75927,
+   50
+  ],
+  [
+   34.98744,
+   135.75839,
+   40
+  ],
+  [
+   35.00155,
+   135.77426,
+   41
+  ],
+  [
+   35.00184,
+   135.7743,
+   40
+  ],
+  [
+   35.00177,
+   135.77458,
+   42
+  ],
+  [
+   35.00125,
+   135.77273,
+   40
+  ],
+  [
+   35.0025,
+   135.77489,
+   43
+  ],
+  [
+   35.00274,
+   135.77399,
+   41
+  ],
+  [
+   34.99773,
+   135.77382,
+   42
+  ],
+  [
+   34.99769,
+   135.77409,
+   42
+  ],
+  [
+   34.99889,
+   135.77354,
+   39
+  ],
+  [
+   34.99897,
+   135.77513,
+   46
+  ],
+  [
+   34.99842,
+   135.77083,
+   38
+  ],
+  [
+   34.99759,
+   135.77637,
+   51
+  ],
+  [
+   35.01305,
+   135.78499,
+   48
+  ],
+  [
+   35.01172,
+   135.78424,
+   47
+  ],
+  [
+   35.0138,
+   135.7849,
+   50
+  ],
+  [
+   35.01407,
+   135.78485,
+   50
+  ],
+  [
+   35.01164,
+   135.78498,
+   49
+  ],
+  [
+   35.01427,
+   135.78479,
+   50
+  ],
+  [
+   34.99882,
+   135.77918,
+   63
+  ],
+  [
+   34.99897,
+   135.77971,
+   62
+  ],
+  [
+   34.99828,
+   135.78001,
+   66
+  ],
+  [
+   34.99856,
+   135.77821,
+   56
+  ],
+  [
+   34.9976,
+   135.77905,
+   66
+  ],
+  [
+   34.99728,
+   135.779,
+   66
+  ],
+  [
+   35.0322,
+   135.73117,
+   74
+  ],
+  [
+   35.03165,
+   135.73123,
+   76
+  ],
+  [
+   35.03348,
+   135.73125,
+   77
+  ],
+  [
+   35.03186,
+   135.73039,
+   72
+  ],
+  [
+   35.03426,
+   135.73166,
+   76
+  ],
+  [
+   35.03057,
+   135.73122,
+   74
+  ],
+  [
+   35.00914,
+   135.78288,
+   52
+  ],
+  [
+   35.00919,
+   135.78311,
+   52
+  ],
+  [
+   35.00939,
+   135.78241,
+   49
+  ],
+  [
+   35.00932,
+   135.78452,
+   54
+  ],
+  [
+   35.00933,
+   135.78461,
+   54
+  ],
+  [
+   35.04193,
+   135.79315,
+   78
+  ],
+  [
+   34.95914,
+   135.81467,
+   32
+  ],
+  [
+   34.96037,
+   135.81445,
+   32
+  ],
+  [
+   34.98516,
+   135.7739,
+   45
+  ],
+  [
+   34.99247,
+   135.74433,
+   30
+  ],
+  [
+   34.99282,
+   135.7454,
+   29
+  ],
+  [
+   34.99278,
+   135.74589,
+   30
+  ],
+  [
+   34.98956,
+   135.74329,
+   32
+  ],
+  [
+   34.9896,
+   135.74153,
+   28
+  ],
+  [
+   34.98929,
+   135.74371,
+   32
+  ],
+  [
+   35.06028,
+   135.75278,
+   96
+  ],
+  [
+   34.9672,
+   135.77339,
+   50
+  ],
+  [
+   35.01667,
+   135.78222,
+   59
+  ],
+  [
+   34.98999,
+   135.77312,
+   42
+  ],
+  [
+   35.03907,
+   135.77301,
+   63
+  ],
+  [
+   35.01111,
+   135.79417,
+   74
+  ],
+  [
+   35.00521,
+   135.7834,
+   87
+  ],
+  [
+   35.04389,
+   135.74611,
+   81
+  ],
+  [
+   35.02528,
+   135.76222,
+   59
+  ],
+  [
+   35.0292,
+   135.73501,
+   66
+  ],
+  [
+   35.02317,
+   135.72018,
+   62
+  ],
+  [
+   34.99205,
+   135.75161,
+   34
+  ],
+  [
+   35.01169,
+   135.75917,
+   44
+  ],
+  [
+   35.02535,
+   135.78463,
+   74
+  ],
+  [
+   35.03245,
+   135.73227,
+   79
+  ],
+  [
+   34.99211,
+   135.74314,
+   32
+  ],
+  [
+   34.88444,
+   135.79972,
+   55
+  ],
+  [
+   34.9667,
+   136.1667,
+   171
+  ],
+  [
+   34.69389,
+   135.50222,
+   18
+  ],
+  [
+   35.00967,
+   135.76542,
+   45
+  ]
+ ]
+}

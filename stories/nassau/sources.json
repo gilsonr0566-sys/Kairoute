@@ -1,0 +1,69 @@
+{
+ "retrieve": [
+  {
+   "key": "wp-paradise-island",
+   "wiki": "Paradise Island"
+  },
+  {
+   "key": "wp-atlantis-paradise-island",
+   "wiki": "Atlantis Paradise Island"
+  },
+  {
+   "key": "wp-huntington-hartford",
+   "wiki": "Huntington Hartford"
+  },
+  {
+   "key": "wv-nassau",
+   "wiki": "Nassau",
+   "site": "en.wikivoyage.org"
+  },
+  {
+   "key": "wp-fort-fincastle",
+   "wiki": "Fort Fincastle"
+  },
+  {
+   "key": "wp-queen-s-staircase",
+   "wiki": "Queen's Staircase"
+  },
+  {
+   "key": "wp-john-murray-4th-earl-dunmore",
+   "wiki": "John Murray, 4th Earl of Dunmore"
+  },
+  {
+   "key": "wp-nassau-bahamas",
+   "wiki": "Nassau, Bahamas"
+  },
+  {
+   "key": "wp-republic-pirates",
+   "wiki": "Republic of Pirates"
+  },
+  {
+   "key": "wp-blackbeard",
+   "wiki": "Blackbeard"
+  },
+  {
+   "key": "wp-woodes-rogers",
+   "wiki": "Woodes Rogers"
+  },
+  {
+   "key": "wp-golden-age-piracy",
+   "wiki": "Golden Age of Piracy"
+  },
+  {
+   "key": "wp-national-art-gallery-bahamas",
+   "wiki": "National Art Gallery of the Bahamas"
+  },
+  {
+   "key": "wp-ardastra-gardens-zoo-conserv",
+   "wiki": "Ardastra Gardens, Zoo and Conservation Centre"
+  },
+  {
+   "key": "wp-american-flamingo",
+   "wiki": "American flamingo"
+  },
+  {
+   "key": "wp-baha-mar",
+   "wiki": "Baha Mar"
+  }
+ ]
+}

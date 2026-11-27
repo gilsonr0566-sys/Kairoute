@@ -1,0 +1,1254 @@
+{
+ "key": "kotor montenegro",
+ "name": "Kotor, Montenegro",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q966429": {
+   "wikidata": "Q966429",
+   "editions": 23,
+   "types": [
+    "Q2977"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/165389709"
+  },
+  "src-q12907852": {
+   "wikidata": "Q12907852",
+   "editions": 21,
+   "types": [
+    "Q57821",
+    "Q41176",
+    "Q4989906"
+   ],
+   "unesco": true,
+   "closedForGood": false,
+   "partOf": [
+    "Q3511938",
+    "Q32797097"
+   ]
+  },
+  "src-q1008132": {
+   "wikidata": "Q1008132",
+   "editions": 26,
+   "types": [
+    "Q486972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/705026141"
+  },
+  "src-q2158623": {
+   "wikidata": "Q2158623",
+   "editions": 22,
+   "types": [
+    "Q486972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/705225047"
+  },
+  "src-q2548973": {
+   "wikidata": "Q2548973",
+   "editions": 22,
+   "types": [
+    "Q486972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/421706430"
+  },
+  "src-q3432448": {
+   "wikidata": "Q3432448",
+   "editions": 20,
+   "types": [
+    "Q486972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/2260119602"
+  },
+  "src-q2518380": {
+   "wikidata": "Q2518380",
+   "editions": 18,
+   "types": [
+    "Q532"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/2026761099"
+  },
+  "src-q1288177": {
+   "wikidata": "Q1288177",
+   "editions": 17,
+   "types": [
+    "Q46169",
+    "Q473972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "yes",
+   "osm": "relation/13997675"
+  },
+  "src-q4981066": {
+   "wikidata": "Q4981066",
+   "editions": 7,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/207434563"
+  },
+  "src-q3044092": {
+   "wikidata": "Q3044092",
+   "editions": 16,
+   "types": [
+    "Q486972"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/8561631885"
+  },
+  "src-q26696607": {
+   "wikidata": "Q26696607",
+   "editions": 6,
+   "types": [
+    "Q2031836"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "no",
+   "osm": "way/197926361"
+  },
+  "src-q3047561": {
+   "wikidata": "Q3047561",
+   "editions": 15,
+   "types": [
+    "Q532"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/2260119598"
+  },
+  "src-q16677924": {
+   "wikidata": "Q16677924",
+   "editions": 4,
+   "types": [
+    "Q1863818"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Fr 08:00-18:00; Sa,Su,PH 09:00-18:00",
+   "fee": "yes",
+   "osm": "node/3503321474"
+  }
+ },
+ "towns": {},
+ "ports": [],
+ "dayTrips": [
+  "Prčanj",
+  "Budva",
+  "Bar",
+  "Tivat",
+  "Herceg Novi",
+  "Cetinje",
+  "Lovćen National Park",
+  "Perast",
+  "Risan",
+  "Podgorica"
+ ],
+ "missing": [
+  "a mapped cruise terminal or pier"
+ ],
+ "centre": {
+  "lat": 42.42762599999999,
+  "lng": 18.768152666666666
+ },
+ "wikivoyage": "Kotor",
+ "portQuery": {
+  "name": "Port of Kotor",
+  "lat": 42.4260692,
+  "lng": 18.7682195,
+  "known": true,
+  "island": false
+ },
+ "guideSights": [
+  {
+   "name": "St Tryphon's Cathedral",
+   "lat": 42.4241,
+   "lng": 18.7719,
+   "wikidata": "Q966429",
+   "note": "It was built in the 11th century, and reconstructed after earthquakes. Romanesque-Gothic architecture. Chapel holds the remains of St. Tryphon, the patron saint of Kotor.",
+   "editions": 23,
+   "unesco": false,
+   "web": "https://www.kotorskabiskupija.me",
+   "en": "Kotor Cathedral"
+  },
+  {
+   "name": "St Nicolas Church",
+   "lat": 42.42575,
+   "lng": 18.770889,
+   "wikidata": "Q26696607",
+   "note": "The biggest Orthodox church in the Old Town.",
+   "editions": 6,
+   "unesco": false,
+   "en": "Serbian Orthodox church of St Nicolas in Kotor"
+  },
+  {
+   "name": "Maritime Museum",
+   "lat": 42.4252,
+   "lng": 18.771361,
+   "wikidata": "Q16677924",
+   "note": "3 floors of photographs, uniforms, weapons, paintings, and model ships.",
+   "editions": 4,
+   "unesco": false,
+   "web": "http://www.museummaritimum.com",
+   "en": "Maritime Museum of Montenegro in Kotor"
+  },
+  {
+   "name": "Castle of San Giovanni",
+   "lat": 42.422117,
+   "lng": 18.774816,
+   "wikidata": "",
+   "note": "Ruins of a castle at the top of the trail running along the fortifications of the town. Offers panoramic views of the walled town with the Bay of Kotor in the background."
+  },
+  {
+   "name": "Church of Our Lady of Remedy",
+   "lat": 42.424286,
+   "lng": 18.773204,
+   "wikidata": "Q4981066",
+   "note": "Church on the slopes of the mountain overlooking Kotor. Built in the 16th century by plague survivors to honor the Holy Mother. Accessed by climbing the trail up the fortifications from the old town.",
+   "editions": 7,
+   "unesco": false
+  },
+  {
+   "name": "Aquarium Boka",
+   "lat": 42.43616,
+   "lng": 18.76429,
+   "wikidata": "",
+   "note": "Small aquarium featuring entirely local marine species. Panel descriptions are in both Montenegrin and English."
+  }
+ ],
+ "piers": [
+  {
+   "name": "Lepetane",
+   "lat": 42.46573,
+   "lng": 18.68548,
+   "osm": "node/11944126590"
+  },
+  {
+   "name": "Lepetane",
+   "lat": 42.46586,
+   "lng": 18.68593,
+   "osm": "node/1590042500"
+  },
+  {
+   "name": "Lepetane",
+   "lat": 42.46579,
+   "lng": 18.68569,
+   "osm": "node/1590042506"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 42.42583,
+   "lng": 18.7669,
+   "osm": "node/834266065"
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Kamenari-Lepetane Ferry",
+   "a": {
+    "lat": 42.46579,
+    "lng": 18.68569
+   },
+   "b": {
+    "lat": 42.46662,
+    "lng": 18.67451
+   },
+   "osm": "way/145625712"
+  },
+  {
+   "name": "Kamenari-Lepetane Ferry",
+   "a": {
+    "lat": 42.46651,
+    "lng": 18.67434
+   },
+   "b": {
+    "lat": 42.46573,
+    "lng": 18.68548
+   },
+   "osm": "way/145625735"
+  },
+  {
+   "name": "Kamenari-Lepetane Ferry",
+   "a": {
+    "lat": 42.46586,
+    "lng": 18.68593
+   },
+   "b": {
+    "lat": 42.46693,
+    "lng": 18.6749
+   },
+   "osm": "way/145625750"
+  }
+ ],
+ "eatHours": [
+  [
+   "Konoba Scala Santa",
+   42.42364,
+   18.77152,
+   "Mo-Su 09:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Fortuna snack bar",
+   42.42736,
+   18.76988,
+   "Mo-Su 07:00-22:00",
+   "cafe"
+  ],
+  [
+   "Letrika",
+   42.42518,
+   18.77167,
+   "Mo-Su 09:00-01:00",
+   "bar"
+  ],
+  [
+   "Ladovina",
+   42.42144,
+   18.7683,
+   "Mo-Su 08:00-01:00",
+   "restaurant"
+  ],
+  [
+   "BBQ Tanjga",
+   42.42195,
+   18.77039,
+   "Mo-Fr 11:30-22:00; Sa 08:00-22:00; Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Konoba Roma",
+   42.42375,
+   18.77137,
+   "Mo-Su 08:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Tanjga",
+   42.42189,
+   18.77036,
+   "Mo-Su 08:30-22:00",
+   "cafe"
+  ],
+  [
+   "Sandrela fast food",
+   42.43536,
+   18.76623,
+   "Mo-Su,PH 07:00-22:00",
+   "fast_food"
+  ],
+  [
+   "BOKUN",
+   42.4259,
+   18.7715,
+   "Mo-Fr 08:30-23:00; Sa-Su 08:30-01:00",
+   "bar"
+  ],
+  [
+   "Authentic pub 'Bandiera'",
+   42.42304,
+   18.77176,
+   "Mo-Th 08:00-23:00; Fr-Sa 08:00-01:00; Su 08:00-23:00",
+   "pub"
+  ],
+  [
+   "Resto Bar Taraca",
+   42.42715,
+   18.77179,
+   "Mo-Su 08:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Caffe Brooklyn",
+   42.43401,
+   18.76719,
+   "Mo-Su 09:00-01:00",
+   "cafe"
+  ],
+  [
+   "Lav gastro bar",
+   42.42701,
+   18.76893,
+   "Mo-Su 07:00-01:00",
+   "cafe"
+  ],
+  [
+   "Hotel Cattaro",
+   42.42526,
+   18.76962,
+   "Fr-Sa 08:00-01:00; Su-Th 08:00-23:00",
+   "pub"
+  ],
+  [
+   "Forza",
+   42.42506,
+   18.76968,
+   "Mo-Su 07:00-00:00",
+   "cafe"
+  ],
+  [
+   "O'Clock Coffee",
+   42.42308,
+   18.77176,
+   "Mo-Sa 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Pržun",
+   42.42488,
+   18.77206,
+   "09:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Sulzer",
+   42.42737,
+   18.77085,
+   "Mo-Su 06:20-23:00",
+   "cafe"
+  ],
+  [
+   "Platanus",
+   42.43595,
+   18.76542,
+   "07:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Venezia",
+   42.43516,
+   18.76662,
+   "Mo-Fr 06:00-23:59",
+   "cafe"
+  ],
+  [
+   "Boka",
+   42.41958,
+   18.77009,
+   "24/7",
+   "restaurant"
+  ],
+  [
+   "Pepe Nero",
+   42.42557,
+   18.77179,
+   "08:00-24:00",
+   "restaurant"
+  ],
+  [
+   "La Ricetta",
+   42.45433,
+   18.76576,
+   "Mo-Su 15:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Mone",
+   42.43456,
+   18.76941,
+   "Mo-Su 09:00-20:00",
+   "cafe"
+  ],
+  [
+   "CAVE coffee",
+   42.42774,
+   18.7703,
+   "07:30-20:00",
+   "cafe"
+  ],
+  [
+   "Luža",
+   42.4242,
+   18.76999,
+   "11:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Pizza Primo",
+   42.42482,
+   18.77068,
+   "09:00-01:00",
+   "fast_food"
+  ],
+  [
+   "Patisserie",
+   42.42539,
+   18.77192,
+   "08:30-22:00",
+   "cafe"
+  ],
+  [
+   "The Nitrox",
+   42.42274,
+   18.77171,
+   "10:00-24:00",
+   "pub"
+  ],
+  [
+   "Laki",
+   42.41495,
+   18.71785,
+   "07:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Sandwich XL",
+   42.4229,
+   18.7717,
+   "Mo-Su 08:57-23:59",
+   "fast_food"
+  ],
+  [
+   "Dojmi",
+   42.42527,
+   18.76921,
+   "Mo-Su 08:00-01:00",
+   "cafe"
+  ]
+ ],
+ "islands": {
+  "centre": null,
+  "towns": {},
+  "sites": {
+   "src-q966429": {
+    "island": null,
+    "across": false
+   },
+   "src-q12907852": {
+    "island": null,
+    "across": false
+   },
+   "src-q1008132": {
+    "island": null,
+    "across": false
+   },
+   "src-q2158623": {
+    "island": null,
+    "across": false
+   },
+   "src-q2548973": {
+    "island": null,
+    "across": false
+   },
+   "src-q3432448": {
+    "island": null,
+    "across": false
+   },
+   "src-q2518380": {
+    "island": null,
+    "across": false
+   },
+   "src-q1288177": {
+    "island": null,
+    "across": false
+   },
+   "src-q4981066": {
+    "island": null,
+    "across": false
+   },
+   "src-q3044092": {
+    "island": null,
+    "across": false
+   },
+   "src-q26696607": {
+    "island": null,
+    "across": false
+   },
+   "src-q3047561": {
+    "island": null,
+    "across": false
+   },
+   "src-q16677924": {
+    "island": null,
+    "across": false
+   },
+   "src-castle-of-san-giovanni": {
+    "island": null,
+    "across": false
+   },
+   "src-aquarium-boka": {
+    "island": null,
+    "across": false
+   }
+  },
+  "shapes": [
+   {
+    "id": "w6022847",
+    "name": "Golubinj",
+    "rings": [
+     [
+      42.25219,
+      18.89312,
+      42.25176,
+      18.8935,
+      42.25249,
+      18.89354,
+      42.25279,
+      18.89303,
+      42.25219,
+      18.89312
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w35446698",
+    "name": "Saint George",
+    "rings": [
+     [
+      42.48584,
+      18.69039,
+      42.48544,
+      18.69053,
+      42.48549,
+      18.69117,
+      42.48584,
+      18.69039
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w35446735",
+    "name": "Our Lady of the Rocks",
+    "rings": [
+     [
+      42.48651,
+      18.68911,
+      42.48729,
+      18.68819,
+      42.48659,
+      18.68855,
+      42.48651,
+      18.68911
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w35904848",
+    "name": "Gospa od Milosrda",
+    "rings": [
+     [
+      42.41105,
+      18.67746,
+      42.41033,
+      18.67843,
+      42.41069,
+      18.67918,
+      42.41105,
+      18.67746
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w35904900",
+    "name": "Sveti Marko",
+    "rings": [
+     [
+      42.41109,
+      18.68273,
+      42.41052,
+      18.68445,
+      42.41099,
+      18.68594,
+      42.40898,
+      18.68976,
+      42.40931,
+      18.69041,
+      42.41007,
+      18.69025,
+      42.41024,
+      18.69102,
+      42.40936,
+      18.69362,
+      42.40813,
+      18.69328,
+      42.40888,
+      18.69525,
+      42.40748,
+      18.69681,
+      42.40745,
+      18.70121,
+      42.40853,
+      18.70024,
+      42.41076,
+      18.69452,
+      42.41147,
+      18.69326,
+      42.41211,
+      18.69322,
+      42.4134,
+      18.68986,
+      42.41345,
+      18.68923,
+      42.41292,
+      18.69052,
+      42.41231,
+      18.69022,
+      42.41196,
+      18.68859,
+      42.4126,
+      18.68446,
+      42.41197,
+      18.6844,
+      42.41109,
+      18.68273
+     ]
+    ],
+    "walk": false
+   },
+   {
+    "id": "w36337740",
+    "name": "Mamula",
+    "rings": [
+     [
+      42.39538,
+      18.55711,
+      42.39508,
+      18.55683,
+      42.39422,
+      18.55788,
+      42.39438,
+      18.55948,
+      42.39467,
+      18.55907,
+      42.39499,
+      18.55971,
+      42.39632,
+      18.55852,
+      42.39611,
+      18.55756,
+      42.39538,
+      18.55711
+     ]
+    ],
+    "walk": false
+   },
+   {
+    "id": "w93099780",
+    "name": "an island",
+    "rings": [
+     [
+      42.39387,
+      18.57178,
+      42.39336,
+      18.57164,
+      42.39328,
+      18.57219,
+      42.39376,
+      18.57236,
+      42.39387,
+      18.57178
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w258806148",
+    "name": "an island",
+    "rings": [
+     [
+      42.26257,
+      18.85027,
+      42.26257,
+      18.8505,
+      42.26281,
+      18.8505,
+      42.26281,
+      18.85027,
+      42.26257,
+      18.85027
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w444247196",
+    "name": "Miholjska prevlaka",
+    "rings": [
+     [
+      42.40589,
+      18.706,
+      42.40655,
+      18.70555,
+      42.40722,
+      18.70338,
+      42.40656,
+      18.70202,
+      42.4058,
+      18.70155,
+      42.40482,
+      18.70424,
+      42.40589,
+      18.706
+     ]
+    ],
+    "walk": true
+   },
+   {
+    "id": "w452738759",
+    "name": "an island",
+    "rings": [
+     [
+      42.26738,
+      18.89072,
+      42.26738,
+      18.89106,
+      42.26775,
+      18.89106,
+      42.26775,
+      18.89072,
+      42.26738,
+      18.89072
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w452738760",
+    "name": "an island",
+    "rings": [
+     [
+      42.26715,
+      18.89055,
+      42.26715,
+      18.89067,
+      42.26723,
+      18.89067,
+      42.26723,
+      18.89055,
+      42.26715,
+      18.89055
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w748830538",
+    "name": "Školjić",
+    "rings": [
+     [
+      42.26992,
+      18.84528,
+      42.27032,
+      18.84512,
+      42.26947,
+      18.84442,
+      42.26992,
+      18.84528
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w748833249",
+    "name": "Galije",
+    "rings": [
+     [
+      42.24564,
+      18.8947,
+      42.24564,
+      18.89507,
+      42.24578,
+      18.89507,
+      42.24578,
+      18.8947,
+      42.24564,
+      18.8947
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1083461230",
+    "name": "an island",
+    "rings": [
+     [
+      42.23464,
+      18.89905,
+      42.23464,
+      18.89915,
+      42.23475,
+      18.89915,
+      42.23475,
+      18.89905,
+      42.23464,
+      18.89905
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1295259123",
+    "name": "an island",
+    "rings": [
+     [
+      42.3545,
+      19.0345,
+      42.3545,
+      19.03569,
+      42.35498,
+      19.03569,
+      42.35498,
+      19.0345,
+      42.3545,
+      19.0345
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1431163284",
+    "name": "an island",
+    "rings": [
+     [
+      42.27339,
+      18.76959,
+      42.27339,
+      18.77024,
+      42.27391,
+      18.77024,
+      42.27391,
+      18.76959,
+      42.27339,
+      18.76959
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1548289275",
+    "name": "an island",
+    "rings": [
+     [
+      42.42324,
+      18.52988,
+      42.42324,
+      18.53002,
+      42.42335,
+      18.53002,
+      42.42335,
+      18.52988,
+      42.42324,
+      18.52988
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1550162887",
+    "name": "an island",
+    "rings": [
+     [
+      42.2667,
+      18.89065,
+      42.2667,
+      18.89074,
+      42.26674,
+      18.89074,
+      42.26674,
+      18.89065,
+      42.2667,
+      18.89065
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1550162888",
+    "name": "an island",
+    "rings": [
+     [
+      42.26652,
+      18.89065,
+      42.26652,
+      18.89072,
+      42.26655,
+      18.89072,
+      42.26655,
+      18.89065,
+      42.26652,
+      18.89065
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1550162889",
+    "name": "an island",
+    "rings": [
+     [
+      42.26655,
+      18.89056,
+      42.26655,
+      18.89069,
+      42.26665,
+      18.89069,
+      42.26665,
+      18.89056,
+      42.26655,
+      18.89056
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1550162890",
+    "name": "an island",
+    "rings": [
+     [
+      42.2663,
+      18.89051,
+      42.2663,
+      18.89062,
+      42.26638,
+      18.89062,
+      42.26638,
+      18.89051,
+      42.2663,
+      18.89051
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1550162891",
+    "name": "an island",
+    "rings": [
+     [
+      42.2671,
+      18.89083,
+      42.2671,
+      18.89089,
+      42.26716,
+      18.89089,
+      42.26716,
+      18.89083,
+      42.2671,
+      18.89083
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1550162892",
+    "name": "an island",
+    "rings": [
+     [
+      42.26698,
+      18.89079,
+      42.26698,
+      18.89087,
+      42.26704,
+      18.89087,
+      42.26704,
+      18.89079,
+      42.26698,
+      18.89079
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1550162893",
+    "name": "an island",
+    "rings": [
+     [
+      42.26694,
+      18.89059,
+      42.26694,
+      18.89079,
+      42.26708,
+      18.89079,
+      42.26708,
+      18.89059,
+      42.26694,
+      18.89059
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1550162894",
+    "name": "an island",
+    "rings": [
+     [
+      42.26933,
+      18.89165,
+      42.26933,
+      18.89176,
+      42.26945,
+      18.89176,
+      42.26945,
+      18.89165,
+      42.26933,
+      18.89165
+     ]
+    ],
+    "walk": null
+   },
+   {
+    "id": "w1550162901",
+    "name": "an island",
+    "rings": [
+     [
+      42.27612,
+      18.8812,
+      42.27612,
+      18.8813,
+      42.27624,
+      18.8813,
+      42.27624,
+      18.8812,
+      42.27612,
+      18.8812
+     ]
+    ],
+    "walk": null
+   }
+  ],
+  "centreShape": null,
+  "big": [],
+  "km": 25
+ },
+ "heights": [
+  [
+   42.4241,
+   18.7719,
+   19
+  ],
+  [
+   42.42575,
+   18.77089,
+   10
+  ],
+  [
+   42.4252,
+   18.77136,
+   11
+  ],
+  [
+   42.42212,
+   18.77482,
+   209
+  ],
+  [
+   42.42429,
+   18.7732,
+   86
+  ],
+  [
+   42.43616,
+   18.76429,
+   5
+  ],
+  [
+   42.46573,
+   18.68548,
+   1
+  ],
+  [
+   42.46586,
+   18.68593,
+   2
+  ],
+  [
+   42.46579,
+   18.68569,
+   1
+  ],
+  [
+   42.42583,
+   18.7669,
+   3
+  ],
+  [
+   42.42431,
+   18.77142,
+   9
+  ],
+  [
+   42.42489,
+   18.77104,
+   11
+  ],
+  [
+   42.45417,
+   18.76833,
+   68
+  ],
+  [
+   42.4575,
+   18.74222,
+   15
+  ],
+  [
+   42.43389,
+   18.81028,
+   901
+  ],
+  [
+   42.41861,
+   18.76639,
+   14
+  ],
+  [
+   42.43167,
+   18.7575,
+   9
+  ],
+  [
+   42.405,
+   18.81833,
+   1504
+  ],
+  [
+   42.41861,
+   18.7175,
+   16
+  ],
+  [
+   42.41222,
+   18.74472,
+   118
+  ],
+  [
+   42.42763,
+   18.76815,
+   2
+  ]
+ ]
+}

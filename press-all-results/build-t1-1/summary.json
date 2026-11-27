@@ -1,0 +1,350 @@
+{
+ "live": false,
+ "url": "http://localhost:41837/",
+ "presses": 11,
+ "screens": 1,
+ "failed": 9,
+ "classes": [
+  {
+   "rule": "COVERED",
+   "control": "act newtrip",
+   "label": "Plan a new trip",
+   "act": "newtrip",
+   "why": "a finger cannot reach it: div.sheet \"🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr\" lies over it",
+   "n": 1,
+   "sizes": [
+    "tablet"
+   ],
+   "trips": [
+    "first"
+   ],
+   "where": [
+    "First open"
+   ],
+   "path": []
+  },
+  {
+   "rule": "COVERED",
+   "control": "act film",
+   "label": "Watch the intro",
+   "act": "film",
+   "why": "a finger cannot reach it: div.sheet \"🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr\" lies over it",
+   "n": 1,
+   "sizes": [
+    "tablet"
+   ],
+   "trips": [
+    "first"
+   ],
+   "where": [
+    "First open"
+   ],
+   "path": []
+  },
+  {
+   "rule": "COVERED",
+   "control": "act settings",
+   "label": "Settings",
+   "act": "settings",
+   "why": "a finger cannot reach it: div.coach \"🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr\" lies over it",
+   "n": 1,
+   "sizes": [
+    "tablet"
+   ],
+   "trips": [
+    "first"
+   ],
+   "where": [
+    "First open"
+   ],
+   "path": []
+  },
+  {
+   "rule": "COVERED",
+   "control": "act syncfromlobby",
+   "label": "Sync with another device",
+   "act": "syncfromlobby",
+   "why": "a finger cannot reach it: div.row \"Skip Next\" lies over it",
+   "n": 1,
+   "sizes": [
+    "tablet"
+   ],
+   "trips": [
+    "first"
+   ],
+   "where": [
+    "First open"
+   ],
+   "path": []
+  },
+  {
+   "rule": "COVERED",
+   "control": "act continue",
+   "label": "Open the example trip",
+   "act": "continue",
+   "why": "a finger cannot reach it: div.coach \"🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr\" lies over it",
+   "n": 1,
+   "sizes": [
+    "tablet"
+   ],
+   "trips": [
+    "first"
+   ],
+   "where": [
+    "First open"
+   ],
+   "path": []
+  },
+  {
+   "rule": "COVERED",
+   "control": "data act2,goto tap \"Edit itinerary\"",
+   "label": "Edit itinerary",
+   "act": "",
+   "why": "a finger cannot reach it: div.coach \"🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr\" lies over it",
+   "n": 1,
+   "sizes": [
+    "tablet"
+   ],
+   "trips": [
+    "first"
+   ],
+   "where": [
+    "First open"
+   ],
+   "path": []
+  },
+  {
+   "rule": "COVERED",
+   "control": "fold \"More\"",
+   "label": "More",
+   "act": "",
+   "why": "a finger cannot reach it: div.coach \"🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr\" lies over it",
+   "n": 1,
+   "sizes": [
+    "tablet"
+   ],
+   "trips": [
+    "first"
+   ],
+   "where": [
+    "First open"
+   ],
+   "path": []
+  },
+  {
+   "rule": "COVERED",
+   "control": "act privacy",
+   "label": "Privacy",
+   "act": "privacy",
+   "why": "a finger cannot reach it: div.coach \"🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr\" lies over it",
+   "n": 1,
+   "sizes": [
+    "tablet"
+   ],
+   "trips": [
+    "first"
+   ],
+   "where": [
+    "First open"
+   ],
+   "path": []
+  },
+  {
+   "rule": "COVERED",
+   "control": "act terms",
+   "label": "Terms",
+   "act": "terms",
+   "why": "a finger cannot reach it: div.coach \"🧭 HOW KAIROUTE WORKS · 1 OF 4 Plan a tr\" lies over it",
+   "n": 1,
+   "sizes": [
+    "tablet"
+   ],
+   "trips": [
+    "first"
+   ],
+   "where": [
+    "First open"
+   ],
+   "path": []
+  }
+ ],
+ "acts": 171,
+ "actsPressed": 9,
+ "notPressed": [
+  "aboard",
+  "addday",
+  "addplace",
+  "addport",
+  "alarmopen",
+  "archive",
+  "ashore",
+  "asknoticeok",
+  "backack",
+  "boardcal",
+  "boardcancel",
+  "boardchange",
+  "boardsave",
+  "bonusadd",
+  "bonusskip",
+  "bookcancel",
+  "bookopen",
+  "bookremove",
+  "booksearch",
+  "bumpok",
+  "busyrow",
+  "camclose",
+  "camopen",
+  "campick",
+  "camplay",
+  "cdpreview",
+  "celclose",
+  "celebrate",
+  "celoffdl",
+  "changetrip",
+  "clearanchor",
+  "clearkey",
+  "closedalt",
+  "closedday",
+  "closedmove",
+  "closedswap",
+  "coachreplay",
+  "copytrip",
+  "cutkeep",
+  "cutok",
+  "daylen",
+  "dayready",
+  "daytitle",
+  "daytitleauto",
+  "daytitlecancel",
+  "daytitlesave",
+  "delask",
+  "delday",
+  "delno",
+  "deltrip",
+  "earlystart",
+  "esimback",
+  "esimbuy",
+  "esimclose",
+  "esimnext",
+  "esimopen",
+  "esimphones",
+  "esimpick",
+  "esimundo",
+  "filmclose",
+  "filmreplay",
+  "fitadd",
+  "fitask",
+  "fitcancel",
+  "fitday",
+  "fitfix",
+  "fitfixgo",
+  "fitleave",
+  "fitmove",
+  "fittime",
+  "fixstops",
+  "follow",
+  "freshpicks",
+  "gen",
+  "genall",
+  "geo",
+  "gotit",
+  "hrsdone",
+  "hrsopen",
+  "lateend",
+  "livealerts",
+  "livegps",
+  "livereplan",
+  "liveundo",
+  "loadsample",
+  "lobby",
+  "mealdone",
+  "mealopen",
+  "mealreset",
+  "mealskip",
+  "mealtime",
+  "mealunskip",
+  "memmake",
+  "memsave",
+  "memshare",
+  "moretrips",
+  "mytrips",
+  "nextday",
+  "nightdep",
+  "offback",
+  "offclear",
+  "offdl",
+  "offlater",
+  "offstop",
+  "opentrip",
+  "orderback",
+  "orderkeep",
+  "orderreset",
+  "parsetrip",
+  "picks",
+  "picksfold",
+  "piersearch",
+  "pointpick",
+  "prevday",
+  "printday",
+  "printtrip",
+  "raterow",
+  "readyorderno",
+  "readyorderyes",
+  "rename",
+  "renamecancel",
+  "renamesave",
+  "reset",
+  "resetno",
+  "resetyes",
+  "restore",
+  "ridechangeok",
+  "rideforce",
+  "rideundo",
+  "savekey",
+  "shipcheck",
+  "shiplater",
+  "shipok",
+  "shipset",
+  "shipsnap",
+  "shiptimes",
+  "shiptype",
+  "shipuseread",
+  "sortagain",
+  "suggestok",
+  "suggesttour",
+  "syncjoin",
+  "synclink",
+  "syncnow",
+  "syncoff",
+  "syncstart",
+  "tixdone",
+  "tlview",
+  "toplan",
+  "tourexit",
+  "tourhere",
+  "tournext",
+  "tourpart",
+  "tourstart",
+  "tourtomorrow",
+  "voicetry",
+  "wizback",
+  "wizcancel",
+  "wizmore",
+  "wxkeep",
+  "wxswap",
+  "wxundo"
+ ],
+ "cannot": [],
+ "missingTrips": [
+  "example",
+  "during",
+  "rail",
+  "port",
+  "ferry",
+  "group",
+  "odd"
+ ],
+ "cut": 0,
+ "harness": 0,
+ "ownRules": 0
+}

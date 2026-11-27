@@ -1,0 +1,34 @@
+name: Planner quality test
+on:
+  push:
+    paths: ["src/**", "!src/engine/**", "!src/engine-data/**", "tools/plan-test.cjs", "tools/fixtures/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bring back the test stand-in's kept answers (fewer asks to the live helper)
+        uses: actions/cache/restore@v4
+        with:
+          path: .helper-memo
+          key: helper-memo-${{ github.workflow }}-${{ github.run_id }}
+          restore-keys: helper-memo-${{ github.workflow }}-
+      - name: Build the app (the repository's index.html is only a placeholder)
+        run: sh build.sh && sh tools/test-helper.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i playwright@1.65.1 && npx playwright install chromium && node tools/plan-test.cjs && node tools/picks-e2e.cjs
+      - name: Stop the test stand-in (writes what it kept)
+        if: always()
+        run: sh tools/test-helper.sh stop
+      - name: Keep the stand-in's answers for the next run
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .helper-memo
+          key: helper-memo-${{ github.workflow }}-${{ github.run_id }}

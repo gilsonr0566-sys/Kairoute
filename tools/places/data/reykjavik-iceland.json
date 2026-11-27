@@ -1,0 +1,2317 @@
+{
+ "key": "reykjavik iceland",
+ "name": "Reykjavik, Iceland",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {
+  "src-q271466": {
+   "wikidata": "Q271466",
+   "editions": 43,
+   "types": [
+    "Q16970"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 09:00-20:00",
+   "osm": "relation/6184378"
+  },
+  "src-q177174": {
+   "wikidata": "Q177174",
+   "editions": 41,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "10:00-19:00",
+   "fee": "yes",
+   "osm": "node/1511563888"
+  },
+  "src-q945753": {
+   "wikidata": "Q945753",
+   "editions": 33,
+   "types": [
+    "Q23397"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/5820121"
+  },
+  "src-q116492": {
+   "wikidata": "Q116492",
+   "editions": 28,
+   "types": [
+    "Q23442"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "relation/8385552"
+  },
+  "src-q626963": {
+   "wikidata": "Q626963",
+   "editions": 25,
+   "types": [
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 10:00-17:00",
+   "osm": "relation/6180675"
+  },
+  "src-q116484": {
+   "wikidata": "Q116484",
+   "editions": 23,
+   "types": [
+    "Q5003624"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "node/1672263371"
+  },
+  "src-q451045": {
+   "wikidata": "Q451045",
+   "editions": 22,
+   "types": [
+    "Q7138926"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/110885345"
+  },
+  "src-q794242": {
+   "wikidata": "Q794242",
+   "editions": 21,
+   "types": [
+    "Q56242215",
+    "Q120560",
+    "Q136387176"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/93894747"
+  },
+  "src-q1367886": {
+   "wikidata": "Q1367886",
+   "editions": 21,
+   "types": [
+    "Q811979"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "09:00-21:00",
+   "osm": "way/25795245"
+  },
+  "src-q1783706": {
+   "wikidata": "Q1783706",
+   "editions": 21,
+   "types": [
+    "Q1060829"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/108335182"
+  },
+  "src-q1270853": {
+   "wikidata": "Q1270853",
+   "editions": 18,
+   "types": [
+    "Q56242235"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "osm": "way/87377712"
+  },
+  "src-q3358410": {
+   "wikidata": "Q3358410",
+   "editions": 15,
+   "types": [
+    "Q207694"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-We 10:00-17:00; Th 10:00-22:00; Fr-Su 10:00-17:00",
+   "fee": "yes",
+   "osm": "node/688998258"
+  },
+  "src-q3480309": {
+   "wikidata": "Q3480309",
+   "editions": 15,
+   "types": [
+    "Q17431399"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Su 10:00-17:00",
+   "osm": "node/688998282"
+  },
+  "src-q196471": {
+   "wikidata": "Q196471",
+   "editions": 13,
+   "types": [
+    "Q543654"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Mo-Fr 08:00-18:00; Sa 10:00-18:00; Su 12:00-18:00",
+   "osm": "way/89811581"
+  },
+  "src-q894659": {
+   "wikidata": "Q894659",
+   "editions": 13,
+   "types": [
+    "Q167346"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "fee": "no",
+   "osm": "relation/4663715"
+  },
+  "src-q3481984": {
+   "wikidata": "Q3481984",
+   "editions": 11,
+   "types": [
+    "Q33506"
+   ],
+   "unesco": false,
+   "closedForGood": false,
+   "partOf": [],
+   "hours": "Jun-Aug 10:00-17:00, Sep-May 13:00-17:00; Jan 1 off; easter -2 days off; easter off; Dec 25 off",
+   "fee": "yes",
+   "osm": "way/26992692"
+  }
+ },
+ "towns": {
+  "hafnarfjor-ur-far": {
+   "name": "Hafnarfjörður",
+   "wikidata": "Q103725",
+   "editions": 86,
+   "unesco": false,
+   "dayTripListed": true,
+   "sights": [
+    {
+     "kind": "see",
+     "name": "Hafnarborg",
+     "lat": 64.0678342,
+     "lng": -21.957975,
+     "hours": "Fri-Mon Wed 12:00-17:00, Thu 12:00-21:00",
+     "price": "Free",
+     "wikidata": "",
+     "content": "An art gallery and venue run by the town."
+    },
+    {
+     "kind": "see",
+     "name": "Hafnarfjörður Museum",
+     "lat": 64.0678455,
+     "lng": -21.9656998,
+     "hours": "Variable opening hours (different houses are open at different times)",
+     "price": "",
+     "wikidata": "",
+     "content": "A collection of old houses in the centre of town, some of them have simply been renovated and demonstrate their original use, others contain different exhibitions relating to the history of Hafnarfjörður."
+    },
+    {
+     "kind": "see",
+     "name": "Hafnarfjarðarkirkja",
+     "lat": 64.0666484,
+     "lng": -21.9568138,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "The oldest church in town. It was consecrated in 1914."
+    },
+    {
+     "kind": "see",
+     "name": "Sankti Jósefskirkja",
+     "lat": 64.060939,
+     "lng": -21.957589,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Founded in 1926, it is one of the few Roman Catholic churches located in Iceland."
+    },
+    {
+     "kind": "see",
+     "name": "Karmelklaustrið í Hafnarfirði",
+     "lat": 64.062083,
+     "lng": -21.953463,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "the only Catholic monastery located in Iceland."
+    },
+    {
+     "kind": "see",
+     "name": "Safnaðarheimili Fríkirkjunnar í Hafnarfirði",
+     "lat": 64.069317,
+     "lng": -21.958326,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "a Protestant church built in 1913."
+    },
+    {
+     "kind": "see",
+     "name": "Hellisgerði",
+     "lat": 64.071428,
+     "lng": -21.962957,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A small public park with lava rocks. Some people believe that elves and trolls live there."
+    },
+    {
+     "kind": "see",
+     "name": "Víðistaðatún",
+     "lat": 64.074721,
+     "lng": -21.967456,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A park well-known for its sculptures created by artists from Iceland and elsewhere."
+    },
+    {
+     "kind": "see",
+     "name": "Viti",
+     "lat": 64.068894,
+     "lng": -21.954021,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "A lighthouse built around 1900, sometimes considered a symbol of Hafnarfjörður itself."
+    }
+   ],
+   "foodDrink": [
+    {
+     "kind": "eat",
+     "name": "Tilveran",
+     "lat": 64.069169,
+     "lng": -21.9603527,
+     "hours": "Variable opening hours",
+     "price": "Meals in the range of 1,000 to 5,000 kr",
+     "wikidata": "",
+     "content": "Restaurant in downtown Hafnarfjörður with seafood, pizza, and meat."
+    },
+    {
+     "kind": "eat",
+     "name": "Viking village",
+     "lat": 64.06518,
+     "lng": -21.9571553,
+     "hours": "Variable opening hours",
+     "price": "",
+     "wikidata": "",
+     "content": "Restaurant with traditional Icelandic food, meat, and fish."
+    },
+    {
+     "kind": "eat",
+     "name": "Súfistinn",
+     "lat": 64.0697094,
+     "lng": -21.9598219,
+     "hours": "Variable opening hours",
+     "price": "Meals in the range between 1,000 to 2,000 kr",
+     "wikidata": "",
+     "content": "Café."
+    },
+    {
+     "kind": "drink",
+     "name": "Norðurbakkinn",
+     "lat": 64.069601,
+     "lng": -21.961961,
+     "hours": "",
+     "price": "",
+     "wikidata": "",
+     "content": "Coffee shop stocked with many books."
+    }
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [
+  "Þingvellir National Park",
+  "UNESCO World Heritage List",
+  "South Iceland",
+  "Hafnarfjörður",
+  "Blue Lagoon",
+  "Route 1-Ring Road",
+  "London",
+  "Paris",
+  "Glasgow",
+  "Oslo",
+  "Stockholm",
+  "Copenhagen",
+  "Amsterdam",
+  "Frankfurt",
+  "Washington, D.C.",
+  "Boston",
+  "Orlando",
+  "New York City",
+  "Minneapolis",
+  "San Francisco",
+  "Seattle",
+  "Akureyri",
+  "Borgarnes",
+  "Egilsstaðir",
+  "Hveragerði",
+  "Keflavík International Airport",
+  "Keflavík"
+ ],
+ "missing": [],
+ "centre": {
+  "lat": 64.14528374999999,
+  "lng": -21.915974375
+ },
+ "wikivoyage": "Reykjavík",
+ "guideSights": [
+  {
+   "name": "Tjörnin",
+   "lat": 64.1445,
+   "lng": -21.9422,
+   "wikidata": "Q945753",
+   "note": "A small lake in the centre of the city where young and old often gather to feed the ducks. The Icelandic name, Tjörnin, literally means \"The Pond\". Tjörnin is mostly surrounded by a park called Hljómskálagarðurinn (Music Pavilion Park) whic",
+   "editions": 33,
+   "unesco": false
+  },
+  {
+   "name": "Austurvöllur",
+   "lat": 64.14717,
+   "lng": -21.93971,
+   "wikidata": "Q783980",
+   "note": "A small park (or square, depending on definitions) in the heart of Reykjavík. It's many locals' favorite place to spend sunny days, either at one of the cafés lining the north of the square or simply having a picnic on the grass. The parlia",
+   "editions": 9,
+   "unesco": false
+  },
+  {
+   "name": "Klambratún",
+   "lat": 64.137,
+   "lng": -21.9134,
+   "wikidata": "Q27016265",
+   "note": "Klambratún is a park just east of the city centre on an area which remained farmland while the city was built up around it. The area was later converted into one of the largest public parks in the city and often hosts various events. One of",
+   "editions": 5,
+   "unesco": false
+  },
+  {
+   "name": "Reykjavík Botanical Gardens",
+   "lat": 64.1408,
+   "lng": -21.8694,
+   "wikidata": "Q894659",
+   "note": "The Reykjavík Botanical Gardens are not large, but they're nice for a short stroll and a good place to see some of the plants that grow in Iceland.",
+   "editions": 13,
+   "unesco": false,
+   "web": "http://www.grasagardur.is",
+   "en": "Reykjavík Botanic Garden"
+  },
+  {
+   "name": "Viðey",
+   "lat": 64.1651,
+   "lng": -21.8523,
+   "wikidata": "Q116492",
+   "note": "Viðey is a large island in Kollafjörður, the fjord to the north of Reykjavík. It used to be inhabited, and in the early 20th century it had a small fishing village. Nobody lives there anymore apart from the birds, but it's a popular way to ",
+   "editions": 28,
+   "unesco": false,
+   "web": "http://www.videy.com"
+  },
+  {
+   "name": "Grótta",
+   "lat": 64.1643,
+   "lng": -22.0218,
+   "wikidata": "Q3118633",
+   "note": "At the far western end of the peninsula on which Reykjavík sits there is a small island. This island, called Grótta, is connected to the mainland on low tides and open to the public most of the year (closed May 1-Jul 15). Just make sure you",
+   "editions": 10,
+   "unesco": false
+  },
+  {
+   "name": "Alþingi",
+   "lat": 64.146667,
+   "lng": -21.940278,
+   "wikidata": "Q451045",
+   "note": "On the southern edge of Austurvöllur is a small building of hewn stone, but don't let its size fool you. This is the building of the Icelandic parliament, known as Alþingi. The institution has in fact long since outgrown the building which ",
+   "editions": 22,
+   "unesco": false,
+   "en": "Alþingishúsið"
+  },
+  {
+   "name": "Reykjavík Cathedral",
+   "lat": 64.14666,
+   "lng": -21.93936,
+   "wikidata": "Q1270853",
+   "note": "The church beside the parliament is Reykjavík Cathedral, the mother church of the Church of Iceland, the country's national church and part of the Lutheran denomination. Similarly deceptive in size, it has been beautifully renovated both in",
+   "editions": 18,
+   "unesco": false,
+   "web": "http://domkirkjan.is/",
+   "posFrom": "wikidata"
+  },
+  {
+   "name": "City Hall",
+   "lat": 64.1461,
+   "lng": -21.94218,
+   "wikidata": "Q196471",
+   "note": "One of the best examples of late 20th-century architecture in Iceland, built into Tjörnin (The Pond). On the ground floor, which is open to the public, there is a large relief map of the whole country as well as a café and an exhibition hal",
+   "editions": 13,
+   "unesco": false,
+   "en": "Ráðhús Reykjavíkur"
+  },
+  {
+   "name": "Hallgrímskirkja",
+   "lat": 64.141944,
+   "lng": -21.9275,
+   "wikidata": "Q271466",
+   "note": "This can't miss attraction towers over the city on top of a hill. In front is a statue of Leif Ericsson (Leifur Eiríksson in Icelandic), the Norse explorer who sailed to North America in the 10th century. The United States gave this statue ",
+   "editions": 43,
+   "unesco": false,
+   "web": "http://www.hallgrimskirkja.is/"
+  },
+  {
+   "name": "Harpa",
+   "lat": 64.1504,
+   "lng": -21.9327,
+   "wikidata": "Q1783706",
+   "note": "Harpa is a new concert hall and conference centre at the heart of Reykjavík. It is the home of the Icelandic Symphony Orchestra and regularly host to other acts as well.",
+   "editions": 22,
+   "unesco": false,
+   "web": "https://www.harpa.is/"
+  },
+  {
+   "name": "Perlan",
+   "lat": 64.1292,
+   "lng": -21.9189,
+   "wikidata": "Q1367886",
+   "note": "An iconic building on top of a wooded hill called Öskjuhlíð, to the southeast of the city centre. Perlan is built on top of five hot water storage tanks and offers fantastic views of the entire city from a viewing platform open to the publi",
+   "editions": 21,
+   "unesco": false,
+   "web": "https://www.perlan.is/"
+  },
+  {
+   "name": "Imagine Peace Tower",
+   "lat": 64.16328,
+   "lng": -21.8593,
+   "wikidata": "Q116484",
+   "note": "Yoko Ono's memorial to John Lennon, projecting a \"tower of light\" into the air that can be seen from around Reykjavík. The tower is turned on October 9-December 8, December 21–28, December 31 and March 21–28.",
+   "editions": 23,
+   "unesco": false,
+   "web": "http://imaginepeacetower.com"
+  },
+  {
+   "name": "Christ the King Cathedral",
+   "lat": 64.1475,
+   "lng": -21.948889,
+   "wikidata": "Q794242",
+   "note": "The Catholic cathedral of Iceland.",
+   "editions": 21,
+   "unesco": false,
+   "web": "http://catholica.is/",
+   "en": "Landakotskirkja"
+  },
+  {
+   "name": "National Gallery of Iceland",
+   "lat": 64.14411,
+   "lng": -21.93921,
+   "wikidata": "Q3480309",
+   "note": "The National Gallery of Iceland is a national museum and the main emphasis of the collection is on 20th and 21st century Icelandic art, but international art is featured as well. The museum owns the most valuable collection of works by Icel",
+   "editions": 15,
+   "unesco": false,
+   "web": "http://www.listasafn.is"
+  },
+  {
+   "name": "Reykjavík Art Museum - Hafnarhús",
+   "lat": 64.14913,
+   "lng": -21.94086,
+   "wikidata": "Q3358410",
+   "note": "By the old harbour in Reykjavík, Hafnarhúsið hosts a rotating exhibitions of the work of Icelandic artist Erró and temporary exhibitions often showcase other local artists.",
+   "editions": 15,
+   "unesco": false,
+   "web": "http://www.artmuseum.is/",
+   "en": "Reykjavik Art Museum"
+  },
+  {
+   "name": "Reykjavík Art Museum - Kjarvalsstaðir",
+   "lat": 64.13788,
+   "lng": -21.91349,
+   "wikidata": "",
+   "note": "It is safe to say that Jóhannes Kjarval (1885-1972) is the single biggest name in Icelandic painting. Kjarvalsstaðir hosts a collection of his work, as well as hosting other temporary exhibitions."
+  },
+  {
+   "name": "Reykjavik Museum of Photography",
+   "lat": 64.14946,
+   "lng": -21.94139,
+   "wikidata": "Q16420866",
+   "note": "A very small museum with a nice library and reading room where you can find some older (but good) books about photography and current and past issues of photography magazines. It also has a huge collection of Icelandic photographs.",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://borgarsogusafn.is/is/ljosmyndasafn-reykjavikur/",
+   "en": "Reykjavík Museum of Photography"
+  },
+  {
+   "name": "National Museum of Iceland",
+   "lat": 64.14194,
+   "lng": -21.94805,
+   "wikidata": "Q626963",
+   "note": "This museum, by the University of Iceland campus, takes the visitor through the history of a nation from settlement to today. Includes a café and a museum shop.",
+   "editions": 25,
+   "unesco": false,
+   "web": "http://www.thjodminjasafn.is"
+  },
+  {
+   "name": "Reykjavík City Museum",
+   "lat": 64.1184,
+   "lng": -21.8185,
+   "wikidata": "Q3481984",
+   "note": "In the suburb of Árbær, and frequently called Árbæjarsafn (Árbær museum), this open air museum contains both the old farm of Árbær and many buildings from central Reykjavík that were moved there to make way for construction. The result is a",
+   "editions": 11,
+   "unesco": false,
+   "web": "https://reykjavikcitymuseum.is/arbaer-open-air-museum",
+   "en": "Árbæjarsafn"
+  },
+  {
+   "name": "871±2",
+   "lat": 64.14735,
+   "lng": -21.942814,
+   "wikidata": "Q7319496",
+   "note": "Run by the Reykjavík City Museum, this exhibition in central Reykjavík was built around the oldest archaeological ruins in Iceland. As the name indicates, these ruins date to around the year 870. This interactive exhibitions brings you the ",
+   "editions": 6,
+   "unesco": false,
+   "web": "http://www.minjasafnreykjavikur.is/english/desktopdefault.aspx/tabid-4206/",
+   "en": "the Settlement Exhibition"
+  },
+  {
+   "name": "The House of Collections",
+   "lat": 64.1473,
+   "lng": -21.93216,
+   "wikidata": "",
+   "note": "The House of Collections, built in 1906, has housed all the major Icelandic collections at some point. It houses the semi-permanent exhibition Resistance which is an interdisciplinary exhibition that bridges the gap between visual arts and "
+  },
+  {
+   "name": "Icelandic Punk Museum",
+   "lat": 64.147095,
+   "lng": -21.93608,
+   "wikidata": "Q123416199",
+   "note": "A small museum devoted to the history of punk music in Iceland, located in a former underground public toilet facility. In the final room you can listen to Icelandic punk music through headphones, and there are guitars and leather jackets t",
+   "editions": 1,
+   "unesco": false,
+   "web": "http://thepunkmuseum.is/"
+  }
+ ],
+ "cityEats": [
+  {
+   "name": "Rok",
+   "lat": 64.1429491,
+   "lng": -21.9271934,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 11:30-23:00; Sa-Su 12:00-23:00",
+   "osm": "node/4963930723"
+  },
+  {
+   "name": "Kol Kitchen & Bar",
+   "lat": 64.1429966,
+   "lng": -21.9286334,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Su 12:00-23:00",
+   "osm": "node/5009883057"
+  },
+  {
+   "name": "Reykjavík Pizzeria",
+   "lat": 64.1423285,
+   "lng": -21.9310521,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Mo-Su 11:30-22:00",
+   "osm": "node/13450993501"
+  },
+  {
+   "name": "Salka Valka",
+   "lat": 64.1441898,
+   "lng": -21.9297323,
+   "amenity": "restaurant",
+   "cuisine": "fish",
+   "hours": "",
+   "osm": "node/4740802122"
+  },
+  {
+   "name": "Reykjavik Fish",
+   "lat": 64.1444589,
+   "lng": -21.9256033,
+   "amenity": "restaurant",
+   "cuisine": "regional;fish_and_chips",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/5760811323"
+  },
+  {
+   "name": "Krua Thai",
+   "lat": 64.1443784,
+   "lng": -21.9301149,
+   "amenity": "restaurant",
+   "cuisine": "thai",
+   "hours": "Mo-Fr 11:30-21:30; Sa 12:00-21:30; Su 17:00-21:30",
+   "osm": "node/4421143474"
+  },
+  {
+   "name": "Neó",
+   "lat": 64.1491432,
+   "lng": -21.9364314,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Su-Th 11:30-21:00; Fr-Sa 11:30-22:00",
+   "osm": "node/13930921077"
+  },
+  {
+   "name": "Hornið",
+   "lat": 64.1480398,
+   "lng": -21.9381541,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/1016031075"
+  },
+  {
+   "name": "Tivoli",
+   "lat": 64.1481521,
+   "lng": -21.93838,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Su-Th 11:45-22:00, Fr,Sa 11:45-23:00",
+   "osm": "node/1324164494"
+  },
+  {
+   "name": "Enoteca",
+   "lat": 64.1476636,
+   "lng": -21.9379954,
+   "amenity": "restaurant",
+   "cuisine": "italian",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/11266685725"
+  },
+  {
+   "name": "Fuku Mama",
+   "lat": 64.1476379,
+   "lng": -21.9380075,
+   "amenity": "restaurant",
+   "cuisine": "korean",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/11266685726"
+  },
+  {
+   "name": "Mossley",
+   "lat": 64.1476999,
+   "lng": -21.938159,
+   "amenity": "restaurant",
+   "cuisine": "burger",
+   "hours": "Mo-Su 11:00-22:00",
+   "osm": "node/11266685727"
+  },
+  {
+   "name": "Iðnó",
+   "lat": 64.1458699,
+   "lng": -21.9401854,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/688998252"
+  },
+  {
+   "name": "La Barceloneta",
+   "lat": 64.1463101,
+   "lng": -21.9398907,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "We-Su 17:30-21:30",
+   "osm": "node/6795799685"
+  },
+  {
+   "name": "Kebab Grill",
+   "lat": 64.1463166,
+   "lng": -21.9382459,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3005947175"
+  },
+  {
+   "name": "Skólabrú",
+   "lat": 64.146555,
+   "lng": -21.9385892,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/3005750480"
+  },
+  {
+   "name": "Icelandic Street Food",
+   "lat": 64.1464497,
+   "lng": -21.9380388,
+   "amenity": "restaurant",
+   "cuisine": "local",
+   "hours": "",
+   "osm": "node/6485838852"
+  },
+  {
+   "name": "Shanghai",
+   "lat": 64.1467828,
+   "lng": -21.9386839,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9907447018"
+  },
+  {
+   "name": "Háma",
+   "lat": 64.1400117,
+   "lng": -21.9502109,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Fr 08:00-16:00",
+   "osm": "node/1404529504"
+  },
+  {
+   "name": "Borg Restaurant",
+   "lat": 64.1469411,
+   "lng": -21.9387911,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3005750473"
+  },
+  {
+   "name": "Fjalakötturinn",
+   "lat": 64.1474866,
+   "lng": -21.9424345,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/1264717775"
+  },
+  {
+   "name": "Fish Market",
+   "lat": 64.1477313,
+   "lng": -21.9422603,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Su-Th 18:00-22:30; Fr-Sa 18:00-23:35",
+   "osm": "node/1213739967"
+  },
+  {
+   "name": "Tapas barinn",
+   "lat": 64.1486545,
+   "lng": -21.942186,
+   "amenity": "restaurant",
+   "cuisine": "tapas",
+   "hours": "Su-Th 17:00-23:30; Fr,Sa 17:00-01:00",
+   "osm": "node/1433784491"
+  },
+  {
+   "name": "Vegan World Peace",
+   "lat": 64.1486314,
+   "lng": -21.9420647,
+   "amenity": "restaurant",
+   "cuisine": "international",
+   "hours": "Tu-Sa 11:00-21:00; Su 16:00-22:00",
+   "osm": "node/3009197137"
+  },
+  {
+   "name": "Food Cellar",
+   "lat": 64.1486344,
+   "lng": -21.9419312,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3009197139"
+  },
+  {
+   "name": "Perlan Restaurant",
+   "lat": 64.1292991,
+   "lng": -21.9187518,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:30-18:00",
+   "osm": "node/13791603357"
+  },
+  {
+   "name": "Smurstöðin",
+   "lat": 64.1503958,
+   "lng": -21.9333604,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3901938826"
+  },
+  {
+   "name": "TIDES",
+   "lat": 64.1500596,
+   "lng": -21.9353519,
+   "amenity": "restaurant",
+   "cuisine": "fine_dining",
+   "hours": "Mo-Su 07:00-10:30,12:00-14:30,17:30-22:00",
+   "osm": "node/9789265003"
+  },
+  {
+   "name": "Pho Vietnamese",
+   "lat": 64.1489038,
+   "lng": -21.9408098,
+   "amenity": "restaurant",
+   "cuisine": "vietnamese",
+   "hours": "Mo-Su 10:00-22:00",
+   "osm": "node/3008778031"
+  },
+  {
+   "name": "Bryggjuhúsið",
+   "lat": 64.148685,
+   "lng": -21.941029,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/91593492"
+  },
+  {
+   "name": "Fiskfélagið",
+   "lat": 64.1489232,
+   "lng": -21.9415366,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/1906835209"
+  },
+  {
+   "name": "B bar Iþta",
+   "lat": 64.1491281,
+   "lng": -21.9417772,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "way/102902640"
+  },
+  {
+   "name": "Napoli",
+   "lat": 64.148606,
+   "lng": -21.9396649,
+   "amenity": "restaurant",
+   "cuisine": "pizza",
+   "hours": "Su-Th 11:30-22:00; Fr,Sa 11:30-23:00",
+   "osm": "node/9907446840"
+  },
+  {
+   "name": "Fjallkonan",
+   "lat": 64.1484244,
+   "lng": -21.9408498,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su 11:30-23:00",
+   "osm": "node/8856354025"
+  },
+  {
+   "name": "Hannesarholt",
+   "lat": 64.1442763,
+   "lng": -21.9356448,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "Mo-Su,PH 11:30-16:00",
+   "osm": "node/3408671677"
+  }
+ ],
+ "piers": [
+  {
+   "name": "Viðey",
+   "lat": 64.16106,
+   "lng": -21.85537,
+   "osm": "node/4451609056"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 64.15277,
+   "lng": -21.94696,
+   "osm": "node/5151411228"
+  },
+  {
+   "name": "Reykjavík (Harpa)",
+   "lat": 64.1518,
+   "lng": -21.93408,
+   "osm": "node/5830610806"
+  },
+  {
+   "name": "Reykjavík Old Harbour",
+   "lat": 64.15167,
+   "lng": -21.9421,
+   "osm": "node/5830610821"
+  },
+  {
+   "name": "Reykjavík (Skarfabakki)",
+   "lat": 64.15643,
+   "lng": -21.86668,
+   "osm": "node/694173331"
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Viðeyjarferjan",
+   "a": {
+    "lat": 64.16106,
+    "lng": -21.85537
+   },
+   "b": {
+    "lat": 64.15643,
+    "lng": -21.86668
+   },
+   "osm": "way/28378938"
+  },
+  {
+   "name": "Reykjavík (Old Harbour) - Viðey",
+   "a": {
+    "lat": 64.16106,
+    "lng": -21.85537
+   },
+   "b": {
+    "lat": 64.15167,
+    "lng": -21.9421
+   },
+   "osm": "way/616765677"
+  }
+ ],
+ "eatHours": [
+  [
+   "The English Pub",
+   64.14756,
+   -21.93929,
+   "Mo-Th,Su 12:00-01:00; Fr-Sa 12:00-04:00",
+   "pub"
+  ],
+  [
+   "Neó",
+   64.14373,
+   -21.91873,
+   "Mo-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Shalimar",
+   64.14788,
+   -21.9406,
+   "Mo-Fr 11:30-22:30; Sa-Su 16:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Vitabar",
+   64.14278,
+   -21.92349,
+   "Mo-Su 11:30-23:00",
+   "fast_food"
+  ],
+  [
+   "Sólon",
+   64.14675,
+   -21.93371,
+   "Mo-Fr 07:30-21:00; Sa-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "ramen | momo",
+   64.14662,
+   -21.93398,
+   "Mo,We-Fr 11:30-21:00; Sa-Su 12:00-21:30",
+   "fast_food"
+  ],
+  [
+   "Tommi's Burger Joint",
+   64.1509,
+   -21.94501,
+   "Mo-Su 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Bastard",
+   64.14574,
+   -21.93075,
+   "Mo-Th 11:45-01:00; Fr 11:45-04:00; Sa 12:00-04:00; Su 12:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Subway",
+   64.14646,
+   -21.93333,
+   "Mo-Fr 10:00-21:00; Sa-Su 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Svarta Kaffið",
+   64.14449,
+   -21.92349,
+   "Mo-Sa 11:30-22:00; Su 12:00-22:00",
+   "pub"
+  ],
+  [
+   "Hereford Steikhús",
+   64.14472,
+   -21.92358,
+   "17:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Old Iceland",
+   64.14387,
+   -21.92035,
+   "Mo-Su 11:30-15:30, 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Fire and Ice",
+   64.14629,
+   -21.93313,
+   "Mo-Th 10:00-21:30; Fr,Sa 10:00-22:00; Su 12:00-18:00",
+   "cafe"
+  ],
+  [
+   "Hornið",
+   64.14804,
+   -21.93815,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Gandhi",
+   64.14463,
+   -21.93302,
+   "Su-Th 16:00-22:00, Fr-Sa 16:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Fish Market",
+   64.14773,
+   -21.94226,
+   "Su-Th 18:00-22:30; Fr-Sa 18:00-23:35",
+   "restaurant"
+  ],
+  [
+   "BakaBaka",
+   64.14691,
+   -21.93577,
+   "Mo-Su 07:30-17:00,17:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Drekinn",
+   64.1439,
+   -21.92617,
+   "Mo-Fr 09:30-23:30; Sa,Su 11:00-23:30",
+   "fast_food"
+  ],
+  [
+   "Þrír Frakkar",
+   64.14231,
+   -21.93368,
+   "Mo-Fr 11:30-14:00, Mo-Th 18:00-22:00, Fr-Su 18:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Café Loki",
+   64.14243,
+   -21.92885,
+   "Mo-Sa 09:00-21:00; Su 11:00-21:00",
+   "cafe"
+  ],
+  [
+   "The Icelandic Bar",
+   64.14692,
+   -21.93314,
+   "Mo-Th 11:30-01:00; Fr,Sa 12:15-03:00; Su 11:30-01:00",
+   "pub"
+  ],
+  [
+   "Reykjavík Roasters",
+   64.14356,
+   -21.92662,
+   "Mo-Fr 08:30-17:00; Sa 09:00-17:00; Su 10:00-17:00",
+   "cafe"
+  ],
+  [
+   "Kaffifélagið",
+   64.14577,
+   -21.93238,
+   "Mo-Fr 07:30-18:00; Sa 10:00-16:00",
+   "cafe"
+  ],
+  [
+   "Mokka",
+   64.14602,
+   -21.93235,
+   "Mo-Su 08:00-18:30",
+   "cafe"
+  ],
+  [
+   "Seabaron",
+   64.15081,
+   -21.94402,
+   "Mo-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Tivoli",
+   64.14815,
+   -21.93838,
+   "Su-Th 11:45-22:00, Fr,Sa 11:45-23:00",
+   "restaurant"
+  ],
+  [
+   "Vikivaki",
+   64.14312,
+   -21.91945,
+   "Mo-Fr 10:00-22:00; Sa 11:00-22:00; Su 12:30-22:00",
+   "fast_food"
+  ],
+  [
+   "Café Flóran",
+   64.14016,
+   -21.86865,
+   "Mo-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Mandi",
+   64.14776,
+   -21.94095,
+   "Mo-Fr 00:00-02:00,10:00-24:00; Sa 00:00-06:00,11:00-24:00; Su 00:00-06:00,11:00-24:00",
+   "fast_food"
+  ],
+  [
+   "Háma",
+   64.14001,
+   -21.95021,
+   "Mo-Fr 08:00-16:00",
+   "restaurant"
+  ],
+  [
+   "Tapas barinn",
+   64.14865,
+   -21.94219,
+   "Su-Th 17:00-23:30; Fr,Sa 17:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Slippbarinn",
+   64.15102,
+   -21.94612,
+   "Mo-Su 15:00-24:00,07:00-10:00",
+   "bar"
+  ],
+  [
+   "Forréttabarinn",
+   64.15079,
+   -21.94626,
+   "Mo-Su 16:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Lebowski Bar",
+   64.14569,
+   -21.92966,
+   "Su-Th 11:00-01:00; Fr-Sa 11:00-03:30",
+   "bar"
+  ],
+  [
+   "Iða",
+   64.14894,
+   -21.94147,
+   "Mo-Fr 08:00-18:00; Sa,Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "101 Bistro",
+   64.14801,
+   -21.94052,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "The Student Cellar",
+   64.14008,
+   -21.95005,
+   "Mo-Su 11:00-23:00, Th-Sa 23:00-01:00 open \"kitchen closed\"",
+   "pub"
+  ],
+  [
+   "Micro Bar",
+   64.14349,
+   -21.9183,
+   "Mo-Su 15:00-01:00",
+   "pub"
+  ],
+  [
+   "Kaffibrennslan",
+   64.14581,
+   -21.92939,
+   "Mo-Th 08:00-23:00; Fr 08:00-01:00; Sa 09:00-01:00; Su 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Jómfrúin",
+   64.14686,
+   -21.93736,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Dirty Burger & Ribs",
+   64.14771,
+   -21.9398,
+   "Mo,Tu,We,Th,Fr,Sa,Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Taj Mahal",
+   64.14848,
+   -21.93913,
+   "Mo-Fr 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Pho Vietnamese",
+   64.1489,
+   -21.94081,
+   "Mo-Su 10:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Vegan World Peace",
+   64.14863,
+   -21.94206,
+   "Tu-Sa 11:00-21:00; Su 16:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Steikhúsið",
+   64.15062,
+   -21.94415,
+   "Mo-Su 17:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Ramen Momo",
+   64.14991,
+   -21.94308,
+   "Mo-Fr 11:30-21:00; Sa-Su 12:00-21:30",
+   "restaurant"
+  ],
+  [
+   "lóla",
+   64.14995,
+   -21.94265,
+   "Tu-Sa 17:30-00:00",
+   "restaurant"
+  ],
+  [
+   "Forsetinn",
+   64.14473,
+   -21.92393,
+   "Mo-Su 11:00-22:00",
+   "pub"
+  ],
+  [
+   "Scandinavian Smørrebrød & brasserie",
+   64.14558,
+   -21.9289,
+   "Mo-Fr 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Mama Reykjavík",
+   64.14672,
+   -21.93573,
+   "Mo-Su 11:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Reykjavik Fish",
+   64.1504,
+   -21.94385,
+   "Mo-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Hannesarholt",
+   64.14428,
+   -21.93564,
+   "Mo-Su,PH 11:30-16:00",
+   "restaurant"
+  ],
+  [
+   "Skúli Craft",
+   64.14753,
+   -21.94163,
+   "Su-We 12:00-23:00, Th 12:00-24:00, Sa,Su 12:00-01:00",
+   "pub"
+  ],
+  [
+   "Uppsalir",
+   64.14745,
+   -21.94256,
+   "Mo-Su 12:00-23:00",
+   "bar"
+  ],
+  [
+   "Fish and Chips Vagninn",
+   64.15247,
+   -21.94686,
+   "Mo-Su 12:00-20:00",
+   "fast_food"
+  ],
+  [
+   "Gardurinn",
+   64.1448,
+   -21.92974,
+   "Mo-Tu,Th-Fr 11:00-20:30; We 11:00-17:00; Sa 12:00-17:00",
+   "cafe"
+  ],
+  [
+   "Kaldi Bar",
+   64.14552,
+   -21.92953,
+   "Mo-Th,Su 12:00-01:00; Fr-Sa 12:00-03:00",
+   "pub"
+  ],
+  [
+   "Tjarnarbarinn",
+   64.14615,
+   -21.94358,
+   "17:00-23:00",
+   "bar"
+  ],
+  [
+   "Austur Indíafélagið",
+   64.14566,
+   -21.92565,
+   "Su-Th 18:00-22:00; Fr,Sa 18:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Torfan veitingahús",
+   64.14646,
+   -21.93629,
+   "Mo off; Tu 17:00-22:00; We-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Snaps",
+   64.14405,
+   -21.93168,
+   "Mo-Su 11:30-16:00,16:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Plantan Bistro",
+   64.13823,
+   -21.94674,
+   "Tu-Su 10:00-17:00; Mo off",
+   "restaurant"
+  ],
+  [
+   "Seafood Grill",
+   64.14522,
+   -21.93159,
+   "Mo-Fr 11:30-14:30, 17:00-22:00; Sa-Su 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Sæta Svínið",
+   64.14847,
+   -21.9412,
+   "Mo-Su 11:30-23:30",
+   "restaurant"
+  ],
+  [
+   "Krua Thai",
+   64.14438,
+   -21.93011,
+   "Mo-Fr 11:30-21:30; Sa 12:00-21:30; Su 17:00-21:30",
+   "restaurant"
+  ],
+  [
+   "Tommi's Burger Joint",
+   64.14697,
+   -21.93423,
+   "Mo-Su 11:30-21:00",
+   "fast_food"
+  ],
+  [
+   "Te & Kaffi",
+   64.14397,
+   -21.91999,
+   "Mo-Fr 09:00-22:00; Sa-Su 10:00-22:00",
+   "cafe"
+  ],
+  [
+   "Te & Kaffi",
+   64.14554,
+   -21.92808,
+   "Mo-Fr 08:00-18:00; Sa,Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Te & Kaffi",
+   64.1477,
+   -21.9364,
+   "Mo-Fr 08:00-18:00; Sa-Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Veður",
+   64.14551,
+   -21.92926,
+   "Su-Th 12:00-01:00; Fr-Sa 12:00-03:00",
+   "bar"
+  ],
+  [
+   "Rok",
+   64.14295,
+   -21.92719,
+   "Mo-Fr 11:30-23:00; Sa-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Hard Rock Cafe",
+   64.14697,
+   -21.93717,
+   "Mo-Su 11:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Kol Kitchen & Bar",
+   64.143,
+   -21.92863,
+   "We-Su 12:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Indian Curry House",
+   64.14968,
+   -21.94335,
+   "Tu-Th, Su 17:00-21:00; Fr-Sa 17:00 - 22:00",
+   "restaurant"
+  ],
+  [
+   "Himalayan Spice Restaurant and Bar",
+   64.15094,
+   -21.94411,
+   "Mo-Su 16:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Reykjavik Fish",
+   64.14446,
+   -21.9256,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Biang Reykjavík",
+   64.14966,
+   -21.94201,
+   "Mo-Su 11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Cat Café",
+   64.14506,
+   -21.93291,
+   "Mo-Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Sumac",
+   64.14535,
+   -21.92774,
+   "Tu-Th 17:30-22:00; Fr,Sa 17:30-24:00",
+   "restaurant"
+  ],
+  [
+   "Eiriksson Brasserie",
+   64.14385,
+   -21.91923,
+   "Mo-Su 12:00-24:00+",
+   "restaurant"
+  ],
+  [
+   "Le Kock",
+   64.15012,
+   -21.94341,
+   "Mo-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Reykjavik Röst",
+   64.15097,
+   -21.94356,
+   "PH,Mo-Su 08:00-18:00",
+   "cafe"
+  ],
+  [
+   "Kaktus Esperssobar",
+   64.14389,
+   -21.92231,
+   "Mo-Fr 07:30-17:00; Sa-Su 09:00-17:00",
+   "cafe"
+  ],
+  [
+   "Chikin",
+   64.14644,
+   -21.93392,
+   "Mo-Su 11:00-21:00",
+   "fast_food"
+  ],
+  [
+   "La Barceloneta",
+   64.14631,
+   -21.93989,
+   "We-Su 17:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Aleppo Cafe",
+   64.14963,
+   -21.94191,
+   "Mo-Su 08:00-20:00",
+   "cafe"
+  ],
+  [
+   "Skor",
+   64.14879,
+   -21.93715,
+   "Mo-Su 11:00-01:00",
+   "cafe"
+  ],
+  [
+   "Chickpea",
+   64.1457,
+   -21.9341,
+   "Mo-Su 10:00-20:00",
+   "fast_food"
+  ],
+  [
+   "Rossopomodoro",
+   64.14489,
+   -21.92564,
+   "Mo-Sa 12:00-22:00; Su 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Food Cellar",
+   64.14853,
+   -21.94176,
+   "Mo-Th 11:30-14:30,17:00-22:00; Fr 11:30-14:30,17:00-22:30; Sa 17:00-22:30; Su 17:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Fjallkonan",
+   64.14842,
+   -21.94085,
+   "Mo-Su 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Reykjavík Street Food",
+   64.14588,
+   -21.93265,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Reykjavík Roasters",
+   64.14089,
+   -21.92832,
+   "Mo-Fr 08:30-17:00; Sa 09:00-17:00; Su 10:00-17:00",
+   "cafe"
+  ],
+  [
+   "Einstök Bar",
+   64.14611,
+   -21.93143,
+   "Su-Th 12:00-01:00, Fr,Sa 12:00-03:00",
+   "bar"
+  ],
+  [
+   "Gardurinn Klappastigur",
+   64.14641,
+   -21.92844,
+   "Mo,Tu,Th,Fr 11:00-18:30; We 11:00-17:00; Sa 12:00-17:00; Su off",
+   "restaurant"
+  ],
+  [
+   "Hressó",
+   64.14737,
+   -21.9378,
+   "Mo-Su 16:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Pablo Discobar",
+   64.14815,
+   -21.94053,
+   "Fr-Sa 16:00-03:00; Su-Th 16:00-01:00",
+   "bar"
+  ],
+  [
+   "TIDES",
+   64.15006,
+   -21.93535,
+   "Mo-Su 07:00-10:30,12:00-14:30,17:30-22:00",
+   "restaurant"
+  ],
+  [
+   "TIDES Café",
+   64.14983,
+   -21.93579,
+   "PH,Mo-Su 06:00-17:00",
+   "cafe"
+  ],
+  [
+   "Baboo Tea",
+   64.14602,
+   -21.93313,
+   "Mo-Sa 12:30-19:30",
+   "cafe"
+  ],
+  [
+   "Napoli",
+   64.14861,
+   -21.93966,
+   "Su-Th 11:30-22:00; Fr,Sa 11:30-23:00",
+   "restaurant"
+  ],
+  [
+   "Pósthús",
+   64.14768,
+   -21.93818,
+   "Mo-Su 11:00-22:00",
+   "food_court"
+  ],
+  [
+   "Reykjavík Fish",
+   64.14587,
+   -21.93257,
+   "11:30-21:30",
+   "restaurant"
+  ],
+  [
+   "Joe & The Juice",
+   64.1484,
+   -21.93757,
+   "Mo-Fr 08:00-20:00; Sa,Su 09:00-19:00",
+   "cafe"
+  ],
+  [
+   "Mál og Menning",
+   64.14583,
+   -21.93027,
+   "Mo-Su 16:00-06:00",
+   "cafe"
+  ],
+  [
+   "Dass Reykjavík",
+   64.14555,
+   -21.93055,
+   "Su-Th 17:00-22:00; Fr,Sa 17:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Enoteca",
+   64.14766,
+   -21.938,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Fuku Mama",
+   64.14764,
+   -21.93801,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Mossley",
+   64.1477,
+   -21.93816,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Pizza Popolare",
+   64.14771,
+   -21.93824,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Drykk",
+   64.14775,
+   -21.93815,
+   "Mo-Su 11:00-22:00",
+   "bar"
+  ],
+  [
+   "Funky Bhangra",
+   64.14775,
+   -21.93832,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Djúsi Sushi",
+   64.14765,
+   -21.93814,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Yuzu",
+   64.14762,
+   -21.93802,
+   "Mo-Su 11:00-22:00",
+   "fast_food"
+  ],
+  [
+   "Finsen",
+   64.14762,
+   -21.93816,
+   "Mo-Su 11:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Kemuri",
+   64.14482,
+   -21.92137,
+   "Mo-Th 12:00-20:00; Fr-Su 12:00-21:00",
+   "fast_food"
+  ],
+  [
+   "Kaffi Ó-le",
+   64.14819,
+   -21.93919,
+   "Mo-Su 08:00-15:00",
+   "cafe"
+  ],
+  [
+   "Arabian Taste",
+   64.14365,
+   -21.91817,
+   "Sa 11:00-02:00, Su 11:00-23:00, Fr 10:00-02:00, Mo-Th 10:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Plantan Kaffihús",
+   64.14254,
+   -21.92052,
+   "Mo-Fr 08:00-18:00; Sa-Su 10:00-18:00",
+   "cafe"
+  ],
+  [
+   "Mama Reykjavik",
+   64.14697,
+   -21.93567,
+   "Mo-Su 11:30-21:00",
+   "restaurant"
+  ],
+  [
+   "Skál!",
+   64.14469,
+   -21.92982,
+   "Su 12:00-15:00, 17:00-23:00; Mo-We 17:00-23:00; Th-Sa 12:00-15:00, 17:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Sbarro",
+   64.14759,
+   -21.93786,
+   "Su-Th 10:00-22:00; Fr-Sa 10:00-28:00",
+   "fast_food"
+  ],
+  [
+   "MAR Seafood",
+   64.14518,
+   -21.92487,
+   "Mo-Th 11:00-21:00; Fr-Sa 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Starbucks",
+   64.14401,
+   -21.92098,
+   "Mo-Fr 07:30-21:00; Sa 08:30-21:00; Su 09:30-20:00",
+   "cafe"
+  ],
+  [
+   "Just Wingin' It",
+   64.1406,
+   -21.91976,
+   "Mo-Su 11:30-21:00",
+   "fast_food"
+  ],
+  [
+   "Reykjavík Pizzeria",
+   64.14233,
+   -21.93105,
+   "Mo-Su 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Perlan Cafe",
+   64.12936,
+   -21.91906,
+   "Mo-Su 11:30-18:00",
+   "cafe"
+  ],
+  [
+   "Perlan Restaurant",
+   64.1293,
+   -21.91875,
+   "Mo-Su 11:30-18:00",
+   "restaurant"
+  ],
+  [
+   "Brass Kitchen & Bar",
+   64.14407,
+   -21.92133,
+   "Mo-Su 14:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Bæjarins Beztu Pylsur",
+   64.14759,
+   -21.93778,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Neó",
+   64.14914,
+   -21.93643,
+   "Su-Th 11:30-21:00; Fr-Sa 11:30-22:00",
+   "restaurant"
+  ],
+  [
+   "Starbucks",
+   64.1491,
+   -21.93695,
+   "Mo-Sa 08:30-20:00; Su 09:30-20:00",
+   "cafe"
+  ],
+  [
+   "Ristorante Caruso",
+   64.14727,
+   -21.93716,
+   "Mo - Th 11:30-22:30, Fr 11:30-23:30, Sa 12:00-22:30, Su 17:00-22:30",
+   "restaurant"
+  ],
+  [
+   "Bæjarins Beztu Pylsur",
+   64.14816,
+   -21.93784,
+   "Su-We 09:00-25:00; Th 09:00-26:00; Fr-Sa 09:00-30:00",
+   "fast_food"
+  ]
+ ],
+ "heights": [
+  [
+   64.1445,
+   -21.9422,
+   13
+  ],
+  [
+   64.14717,
+   -21.93971,
+   4
+  ],
+  [
+   64.137,
+   -21.9134,
+   22
+  ],
+  [
+   64.1408,
+   -21.8694,
+   27
+  ],
+  [
+   64.1651,
+   -21.8523,
+   5
+  ],
+  [
+   64.1643,
+   -22.0218,
+   -2
+  ],
+  [
+   64.14667,
+   -21.94028,
+   6
+  ],
+  [
+   64.14666,
+   -21.93936,
+   5
+  ],
+  [
+   64.1461,
+   -21.94218,
+   9
+  ],
+  [
+   64.14194,
+   -21.9275,
+   19
+  ],
+  [
+   64.1504,
+   -21.9327,
+   1
+  ],
+  [
+   64.1292,
+   -21.9189,
+   35
+  ],
+  [
+   64.16328,
+   -21.8593,
+   8
+  ],
+  [
+   64.1475,
+   -21.94889,
+   16
+  ],
+  [
+   64.14411,
+   -21.93921,
+   13
+  ],
+  [
+   64.14913,
+   -21.94086,
+   2
+  ],
+  [
+   64.13788,
+   -21.91349,
+   20
+  ],
+  [
+   64.14946,
+   -21.94139,
+   2
+  ],
+  [
+   64.14194,
+   -21.94805,
+   16
+  ],
+  [
+   64.1184,
+   -21.8185,
+   57
+  ],
+  [
+   64.14735,
+   -21.94281,
+   7
+  ],
+  [
+   64.1473,
+   -21.93216,
+   5
+  ],
+  [
+   64.14709,
+   -21.93608,
+   4
+  ],
+  [
+   64.16106,
+   -21.85537,
+   14
+  ],
+  [
+   64.15277,
+   -21.94696,
+   1
+  ],
+  [
+   64.1518,
+   -21.93408,
+   -4
+  ],
+  [
+   64.15167,
+   -21.9421,
+   1
+  ],
+  [
+   64.15643,
+   -21.86668,
+   -5
+  ],
+  [
+   64.14295,
+   -21.92719,
+   18
+  ],
+  [
+   64.143,
+   -21.92863,
+   18
+  ],
+  [
+   64.14233,
+   -21.93105,
+   19
+  ],
+  [
+   64.14419,
+   -21.92973,
+   16
+  ],
+  [
+   64.14446,
+   -21.9256,
+   12
+  ],
+  [
+   64.14438,
+   -21.93011,
+   15
+  ],
+  [
+   64.14914,
+   -21.93643,
+   -2
+  ],
+  [
+   64.14804,
+   -21.93815,
+   2
+  ],
+  [
+   64.14815,
+   -21.93838,
+   2
+  ],
+  [
+   64.14766,
+   -21.938,
+   3
+  ],
+  [
+   64.14764,
+   -21.93801,
+   3
+  ],
+  [
+   64.1477,
+   -21.93816,
+   3
+  ],
+  [
+   64.14587,
+   -21.94019,
+   8
+  ],
+  [
+   64.14631,
+   -21.93989,
+   6
+  ],
+  [
+   64.14632,
+   -21.93825,
+   5
+  ],
+  [
+   64.14656,
+   -21.93859,
+   4
+  ],
+  [
+   64.14645,
+   -21.93804,
+   5
+  ],
+  [
+   64.14678,
+   -21.93868,
+   4
+  ],
+  [
+   64.14001,
+   -21.95021,
+   14
+  ],
+  [
+   64.14694,
+   -21.93879,
+   4
+  ],
+  [
+   64.14749,
+   -21.94243,
+   6
+  ],
+  [
+   64.14773,
+   -21.94226,
+   5
+  ],
+  [
+   64.14865,
+   -21.94219,
+   4
+  ],
+  [
+   64.14863,
+   -21.94206,
+   4
+  ],
+  [
+   64.14863,
+   -21.94193,
+   4
+  ],
+  [
+   64.1293,
+   -21.91875,
+   35
+  ],
+  [
+   64.1504,
+   -21.93336,
+   1
+  ],
+  [
+   64.15006,
+   -21.93535,
+   -3
+  ],
+  [
+   64.1489,
+   -21.94081,
+   2
+  ],
+  [
+   64.14869,
+   -21.94103,
+   3
+  ],
+  [
+   64.14892,
+   -21.94154,
+   3
+  ],
+  [
+   64.14913,
+   -21.94178,
+   3
+  ],
+  [
+   64.14861,
+   -21.93966,
+   2
+  ],
+  [
+   64.14842,
+   -21.94085,
+   3
+  ],
+  [
+   64.14428,
+   -21.93564,
+   14
+  ],
+  [
+   64.14194,
+   -21.92694,
+   19
+  ],
+  [
+   64.1485,
+   -21.93578,
+   4
+  ],
+  [
+   64.14482,
+   -21.94222,
+   13
+  ],
+  [
+   64.16609,
+   -21.85378,
+   5
+  ],
+  [
+   64.1419,
+   -21.94811,
+   16
+  ],
+  [
+   64.16324,
+   -21.85947,
+   7
+  ],
+  [
+   64.14744,
+   -21.94855,
+   16
+  ],
+  [
+   64.12917,
+   -21.91917,
+   35
+  ],
+  [
+   64.15028,
+   -21.9325,
+   1
+  ],
+  [
+   64.149,
+   -21.9406,
+   2
+  ],
+  [
+   64.14417,
+   -21.93917,
+   13
+  ],
+  [
+   64.14583,
+   -21.94222,
+   10
+  ],
+  [
+   64.118,
+   -21.818,
+   58
+  ],
+  [
+   64.0667,
+   -21.95,
+   13
+  ],
+  [
+   64.14528,
+   -21.91597,
+   1
+  ]
+ ]
+}

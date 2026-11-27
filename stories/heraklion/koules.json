@@ -1,0 +1,345 @@
+{
+ "id": "koules",
+ "v": 1,
+ "city": "heraklion",
+ "title": "The Venetian Harbor and Koules Fortress",
+ "match": {
+  "ids": [
+   "koules"
+  ],
+  "names": [
+   "koules",
+   "castello a mare",
+   "rocca a mare"
+  ],
+  "wikidata": [
+   "Q603920"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "what": {
+   "label": "supported",
+   "says": "The Koules, or Castello a Mare ('Fort on the Sea'), stands at the entrance of Heraklion's old port; Venice built it in the early 16th century.",
+   "src": [
+    "wp-koules"
+   ],
+   "quote": [
+    "The Koules (Greek: Κούλες) or Castello a Mare (\"Fort on the Sea\" in Italian) is a fortress located at the entrance of the old port of Heraklion, Crete, Greece. It was built by the Republic of Venice in the early 16th century"
+   ]
+  },
+  "mole": {
+   "label": "supported",
+   "says": "The mole runs on almost 2 km; you may need to dash where waves break at its base.",
+   "src": [
+    "wv-heraklion"
+   ],
+   "quote": [
+    "the mole continues for almost 2 km, with views back over the city and the ferry port",
+    "you may need to dash where the waves are breaking at its base"
+   ]
+  },
+  "venice": {
+   "label": "supported",
+   "says": "Venice bought the city in 1204, renamed it Candia, and built a giant wall with seven bastions and a harbour fortress.",
+   "src": [
+    "wp-heraklion"
+   ],
+   "quote": [
+    "In 1204, the city was bought by the Republic of Venice",
+    "including a giant wall, in places up to 40 metres (130 ft) thick, with seven bastions, and a fortress in the harbour",
+    "Chandax was renamed Candia"
+   ]
+  },
+  "arabs": {
+   "label": "disputed",
+   "says": "The site was possibly first fortified by the Arabs; later a Byzantine tower stood here.",
+   "src": [
+    "wp-koules"
+   ],
+   "quote": [
+    "The site was possibly first fortified by the Arabs in the 9th or 10th centuries. By the second Byzantine period, a tower known as Castellum Comunis stood on the site."
+   ]
+  },
+  "build": {
+   "label": "supported",
+   "says": "The Byzantine tower was demolished in 1523; old ships filled with stone were sunk as a breakwater; the fortress was completed in 1540.",
+   "src": [
+    "wp-koules"
+   ],
+   "quote": [
+    "the Byzantine tower was demolished in 1523, and the Castello a Mare began to be built instead. Old ships were filled with stone, and were sunk to form a breakwater and increase the area of the platform on which the fortress was built. The fortress was completed in 1540."
+   ]
+  },
+  "layout": {
+   "label": "supported",
+   "says": "Two parts, a high rectangular section and a lower semi-elliptical one; walls up to 8.7 m thick.",
+   "src": [
+    "wp-koules"
+   ],
+   "quote": [
+    "The fortress is made up of two parts: a high rectangular section, and a slightly lower semi-elliptical section. Its walls are up to 8.7m thick at some places"
+   ]
+  },
+  "rooms": {
+   "label": "supported",
+   "says": "Two stories with 26 rooms: barracks, a prison, storerooms, a water reservoir, a church, a mill and a bakery.",
+   "src": [
+    "wp-koules"
+   ],
+   "quote": [
+    "The fort has two stories, with a total of 26 rooms, which were originally used as barracks, a prison, storage rooms, a water reservoir, a church, a mill and a bakery."
+   ]
+  },
+  "cannons": {
+   "label": "supported",
+   "says": "In 1630 the fort had 18 cannons on the ground floor and 25 on the pathway to the roof.",
+   "src": [
+    "wp-koules"
+   ],
+   "quote": [
+    "In 1630, the fort was armed with 18 cannons on the ground floor, and 25 cannons on the pathway leading to the roof."
+   ]
+  },
+  "view": {
+   "label": "supported",
+   "says": "From the parapet there is a view toward Dia Islet, where Jacques Cousteau found sunken remains of Cretan sea trade.",
+   "src": [
+    "wv-heraklion"
+   ],
+   "quote": [
+    "From the parapet, enjoy the view towards Dia Islet, where Jacques Cousteau found many sunken remains of Cretan sea trade."
+   ]
+  },
+  "light": {
+   "label": "supported",
+   "says": "A lighthouse tower stands on the northern part of the fort; the first was built during Egyptian rule, 1830-1840.",
+   "src": [
+    "wp-koules"
+   ],
+   "quote": [
+    "A lighthouse tower is located on the northern part of the fort.",
+    "During the period of Egyptian rule in Crete (1830–1840), a lighthouse was built on the north-eastern corner of Koule."
+   ]
+  },
+  "siege": {
+   "label": "supported",
+   "says": "The Ottomans besieged Candia from 1648 to 1669, 21 years, one of the longest sieges in history.",
+   "src": [
+    "wp-siege-candia"
+   ],
+   "quote": [
+    "It lasted from 1648 to 1669 (a total of 21 years) and is one of the longest sieges in history."
+   ]
+  },
+  "neutral": {
+   "label": "supported",
+   "says": "Ottoman batteries easily neutralised the fort's firepower.",
+   "src": [
+    "wp-koules"
+   ],
+   "quote": [
+    "Ottoman batteries easily neutralised the fort's firepower."
+   ]
+  },
+  "fall": {
+   "label": "supported",
+   "says": "Francesco Morosini, with only 3,600 fit men, accepted terms and surrendered on 27 September 1669.",
+   "src": [
+    "wp-siege-candia"
+   ],
+   "quote": [
+    "leaving Captain General Francesco Morosini, the commander of Venetian forces, with only 3,600 fit men and scant supplies to defend the fortress. He, therefore, accepted terms and surrendered to Ahmed Köprülü, the Grand Vizier of the Ottoman Empire on 27 September 1669."
+   ]
+  },
+  "toll": {
+   "label": "estimate",
+   "says": "In the final 22 months, 70,000 Turks, 38,000 Cretans and slaves and 29,088 Christian defenders died, by one account.",
+   "src": [
+    "wp-heraklion"
+   ],
+   "quote": [
+    "In its final phase, which lasted for 22 months, 70,000 Turks, 38,000 Cretans and slaves and 29,088 of the city's Christian defenders perished."
+   ]
+  },
+  "terms": {
+   "label": "supported",
+   "says": "Christians could leave with what they could carry; Morosini's surrender without Senate authorization made him controversial in Venice.",
+   "src": [
+    "wp-siege-candia"
+   ],
+   "quote": [
+    "all Christians were allowed to leave Candia with whatever they could carry",
+    "his surrender without first receiving authorization from the Venetian Senate made Morosini a controversial figure in Venice for some years afterward"
+   ]
+  },
+  "plague": {
+   "label": "supported",
+   "says": "Venetian archives describe a plan to infect Ottoman soldiers with plague; it was never carried out.",
+   "src": [
+    "wp-siege-candia"
+   ],
+   "quote": [
+    "a plan aimed at lifting the siege by infecting the Ottoman soldiers with plague",
+    "the attack was ultimately never carried out"
+   ]
+  },
+  "after": {
+   "label": "supported",
+   "says": "The Ottomans made no major alterations beyond some battlements; they built Little Koules on the landward side, demolished in 1936.",
+   "src": [
+    "wp-koules"
+   ],
+   "quote": [
+    "They did not make any major alterations to the fort, except for the additions of some battlements and embrasures. They built a small fort known as Little Koules on the landward side, but this was demolished in 1936 while the city was being \"modernized\"."
+   ]
+  },
+  "now": {
+   "label": "supported",
+   "says": "The fortress has been restored and is open to the public, with occasional exhibitions.",
+   "src": [
+    "wp-koules"
+   ],
+   "quote": [
+    "The fortress has been restored, and it is now open to the public. Art exhibitions and cultural activities are occasionally held at the fort."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Arrival",
+   "stand": "On the harbor breakwater, facing the fortress at the entrance of the old port.",
+   "paras": [
+    {
+     "t": "This is the Koules, the Venetians' Castello a Mare, the Fort on the Sea. It guards the entrance to the old port of Heraklion, and the Republic of Venice built it in the early 16th century.",
+     "c": [
+      "what"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Mind your footing out here. If waves are breaking over the breakwater, don't go out along it. Stay by the fortress.",
+     "c": [
+      "mole"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Venice bought its claim to this city in 1204 and called it Candia. To hold it, over the centuries that followed, the Venetians built a giant wall with seven bastions, and a fortress in the harbor. This one.",
+     "c": [
+      "venice"
+     ],
+     "level": 2
+    },
+    {
+     "t": "There may have been a fort here since Arab times, and later there was a Byzantine tower. The Venetians knocked it down in 1523. To make the platform bigger, they filled old ships with stone and sank them as a breakwater. The fortress was finished in 1540.",
+     "c": [
+      "arabs",
+      "build"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The fortress",
+   "stand": "At the fortress entrance, looking at the thickness of the walls.",
+   "paras": [
+    {
+     "t": "The fortress comes in two parts: a tall rectangular block and a lower, rounded section. In places, the walls are 8.7 meters thick.",
+     "c": [
+      "layout"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Inside, on two floors, there were 26 rooms: barracks, a prison, storerooms, a water reservoir, a church, a mill and a bakery. A small town, sealed in stone.",
+     "c": [
+      "rooms"
+     ],
+     "level": 2
+    },
+    {
+     "t": "In 1630 it carried 18 cannons on the ground floor, and 25 more along the way up to the roof.",
+     "c": [
+      "cannons"
+     ],
+     "level": 3
+    },
+    {
+     "t": "If you get up to the parapet, look out to sea toward the islet of Dia. Jacques Cousteau found many sunken remains of Cretan sea trade out there. On the northern part of the fort is a lighthouse tower; a lighthouse was built here under Egyptian rule, between 1830 and 1840.",
+     "c": [
+      "view",
+      "light"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The siege of Candia",
+   "stand": "On the breakwater, looking back toward the city.",
+   "paras": [
+    {
+     "t": "This fort's great test was the siege of Candia. The Ottomans besieged the city from 1648 to 1669. That's 21 years, one of the longest sieges in history.",
+     "c": [
+      "siege"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The fort didn't count for much in the siege. Ottoman guns easily put its firepower out of action. In the end, on 27 September 1669, the Venetian commander, Francesco Morosini, with only 3,600 fit men left, accepted terms and surrendered.",
+     "c": [
+      "neutral",
+      "fall"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The cost was terrible. By one account, in the final 22 months alone, some 70,000 Turks, 38,000 Cretans and slaves, and 29,088 of the city's Christian defenders died.",
+     "c": [
+      "toll"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Under the terms, all Christians could leave Candia with whatever they could carry. And Morosini? He'd surrendered without the Venetian Senate's permission, and for years he was a controversial figure back home. One more strange detail from the Venetian archives: a plan to break the siege by infecting the Ottoman soldiers with plague. It was never carried out.",
+     "c": [
+      "terms",
+      "plague"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "If the sea is calm, walk a little way out along the breakwater and look back; if not, stay where you are and look back at the fortress.",
+   "paras": [
+    {
+     "t": "The Ottomans changed little here, adding some battlements. They built a small fort on the land side, Little Koules, but it was torn down in 1936, when the city was being modernized. Today the fortress is restored and open to visitors.",
+     "c": [
+      "after",
+      "now"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The breakwater runs on for almost 2 kilometers, with views back over the city and the ferry port.",
+     "c": [
+      "mole"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Look at the fort against the city. For 21 years, it was part of a defense that people would not give up. Take a moment before you walk back.",
+     "c": [
+      "siege"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}

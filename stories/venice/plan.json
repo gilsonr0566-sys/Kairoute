@@ -1,0 +1,282 @@
+{
+ "sights": [
+  {
+   "id": "st-marks-basilica",
+   "title": "St Mark's Basilica and the Piazza",
+   "appIds": [
+    "src-q172988",
+    "src-q1470912"
+   ],
+   "wikidata": [
+    "Q172988",
+    "Q1470912"
+   ],
+   "editions": 65,
+   "folds": [
+    "Piazza San Marco",
+    "Campanile",
+    "Correr Museum"
+   ],
+   "sources": [
+    "wp-st-mark-s-basilica",
+    "wp-mark-evangelist",
+    "wp-horses-saint-mark",
+    "wp-piazza-san-marco",
+    "wp-st-mark-s-campanile",
+    "unesco-venice",
+    "wv-venice"
+   ]
+  },
+  {
+   "id": "doges-palace",
+   "title": "Doge's Palace and the Bridge of Sighs",
+   "appIds": [
+    "src-q189883"
+   ],
+   "wikidata": [
+    "Q189883"
+   ],
+   "editions": 60,
+   "folds": [
+    "Bridge of Sighs"
+   ],
+   "sources": [
+    "wp-doge-s-palace",
+    "wp-doge-venice",
+    "wp-bridge-sighs",
+    "wp-giacomo-casanova",
+    "unesco-venice"
+   ]
+  },
+  {
+   "id": "rialto",
+   "title": "The Rialto Bridge",
+   "appIds": [
+    "src-q52505",
+    "src-q922677"
+   ],
+   "wikidata": [
+    "Q52505",
+    "Q922677"
+   ],
+   "editions": 52,
+   "folds": [
+    "San Giacomo di Rialto",
+    "Rialto market"
+   ],
+   "sources": [
+    "wp-rialto-bridge",
+    "wp-antonio-da-ponte",
+    "wp-san-giacomo-rialto",
+    "wp-grand-canal"
+   ]
+  },
+  {
+   "id": "salute",
+   "title": "Santa Maria della Salute",
+   "appIds": [
+    "src-q52531",
+    "src-q2931413"
+   ],
+   "wikidata": [
+    "Q52531",
+    "Q2931413"
+   ],
+   "editions": 46,
+   "folds": [
+    "Punta della Dogana"
+   ],
+   "sources": [
+    "wp-santa-maria-salute",
+    "wp-baldassare-longhena",
+    "wp-italian-plague-16291631",
+    "wp-punta-dogana"
+   ]
+  },
+  {
+   "id": "accademia",
+   "title": "Gallerie dell'Accademia",
+   "appIds": [
+    "src-q338330"
+   ],
+   "wikidata": [
+    "Q338330"
+   ],
+   "editions": 42,
+   "folds": [],
+   "sources": [
+    "wp-gallerie-dell-accademia",
+    "wp-vitruvian-man",
+    "wp-tempest",
+    "wp-feast-in-house-levi"
+   ]
+  },
+  {
+   "id": "frari",
+   "title": "The Frari",
+   "appIds": [
+    "src-q224961"
+   ],
+   "wikidata": [
+    "Q224961"
+   ],
+   "editions": 32,
+   "folds": [],
+   "sources": [
+    "wp-santa-maria-gloriosa-frari",
+    "wp-assumption-virgin",
+    "wp-titian",
+    "wp-antonio-canova"
+   ]
+  },
+  {
+   "id": "redentore",
+   "title": "Il Redentore",
+   "appIds": [
+    "src-q830807"
+   ],
+   "wikidata": [
+    "Q830807"
+   ],
+   "editions": 32,
+   "folds": [],
+   "sources": [
+    "wp-il-redentore",
+    "wp-andrea-palladio",
+    "wp-festa-redentore",
+    "wp-giudecca"
+   ]
+  },
+  {
+   "id": "san-giorgio",
+   "title": "San Giorgio Maggiore",
+   "appIds": [
+    "src-q713558"
+   ],
+   "wikidata": [
+    "Q713558"
+   ],
+   "editions": 29,
+   "folds": [],
+   "sources": [
+    "wp-san-giorgio-maggiore",
+    "wp-andrea-palladio",
+    "wp-wedding-at-cana"
+   ]
+  },
+  {
+   "id": "zanipolo",
+   "title": "Santi Giovanni e Paolo",
+   "appIds": [
+    "src-q155225",
+    "src-q473237"
+   ],
+   "wikidata": [
+    "Q155225",
+    "Q473237"
+   ],
+   "editions": 28,
+   "folds": [
+    "Statue of Bartolomeo Colleoni",
+    "Scuola Grande di San Marco"
+   ],
+   "sources": [
+    "wp-santi-giovanni-e-paolo-venic",
+    "wp-equestrian-statue-bartolomeo",
+    "wp-andrea-verrocchio",
+    "wp-doge-venice"
+   ]
+  },
+  {
+   "id": "ca-pesaro",
+   "title": "Ca' Pesaro",
+   "appIds": [
+    "src-q756807"
+   ],
+   "wikidata": [
+    "Q756807"
+   ],
+   "editions": 27,
+   "folds": [],
+   "sources": [
+    "wp-ca-pesaro",
+    "wp-baldassare-longhena",
+    "wp-grand-canal"
+   ]
+  },
+  {
+   "id": "ghetto",
+   "title": "The Venetian Ghetto",
+   "appIds": [
+    "src-q649030"
+   ],
+   "wikidata": [
+    "Q649030"
+   ],
+   "editions": 27,
+   "folds": [],
+   "sources": [
+    "wp-venetian-ghetto",
+    "wp-history-jews-in-venice",
+    "wp-cannaregio"
+   ]
+  },
+  {
+   "id": "san-zaccaria",
+   "title": "San Zaccaria",
+   "appIds": [
+    "src-q794876"
+   ],
+   "wikidata": [
+    "Q794876"
+   ],
+   "editions": 27,
+   "folds": [],
+   "sources": [
+    "wp-san-zaccaria",
+    "wp-giovanni-bellini",
+    "wp-zechariah",
+    "kjv-luke1"
+   ]
+  },
+  {
+   "id": "padua",
+   "title": "Day trip: Padua",
+   "appIds": [
+    "padua-far"
+   ],
+   "wikidata": [
+    "Q617"
+   ],
+   "editions": 135,
+   "folds": [
+    "Scrovegni Chapel",
+    "Basilica of Saint Anthony"
+   ],
+   "sources": [
+    "wp-padua",
+    "wp-scrovegni-chapel",
+    "wp-giotto",
+    "wp-anthony-padua",
+    "wv-padua"
+   ]
+  },
+  {
+   "id": "mestre",
+   "title": "Mestre",
+   "appIds": [
+    "mestre-far"
+   ],
+   "wikidata": [
+    "Q541405"
+   ],
+   "editions": 40,
+   "folds": [],
+   "sources": [
+    "wp-mestre",
+    "wp-ponte-liberta",
+    "wv-mestre"
+   ]
+  }
+ ]
+}

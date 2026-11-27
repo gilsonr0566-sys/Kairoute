@@ -1,0 +1,35 @@
+name: List guide sights
+on:
+  workflow_dispatch:
+    inputs:
+      probe:
+        description: "picker = run the sights list probe instead"
+        default: ""
+      site:
+        description: "live or branch (picker probe only)"
+        default: "live"
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the app (the repository's index.html is only a placeholder)
+        run: sh build.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - if: ${{ inputs.probe != 'picker' }}
+        run: npm i playwright@1.65.1 && npx playwright install chromium && node tools/dump-sights.cjs
+      - if: ${{ inputs.probe == 'picker' }}
+        run: |
+          npm i playwright@1.65.1 && npx playwright install chromium
+          if [ "${{ inputs.site }}" = "branch" ]; then (python3 -m http.server 8765 >/dev/null 2>&1 &); sleep 1; export URL=http://localhost:8765/; fi
+          node tools/picker-probe.cjs
+      - if: ${{ always() && inputs.probe == 'picker' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: picker-shots
+          path: probe-shots

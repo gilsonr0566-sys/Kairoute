@@ -1,0 +1,14 @@
+{
+  "_about": "Public holidays checked against official sources (Nov 22 2026) that the open date-holidays rules miss. tools/places/holidays.cjs adds them to the app's holiday data. A date with ^HH is a half day: shops and offices close from that hour. Moon-set dates are only listed for the years an official source gave them.",
+  "add": {
+    "BS": { "src": "https://www.bahamas.gov.bs (Public Holidays Act Ch. 36)", "d": ["2026-10-12 National Heroes Day", "2027-10-11 National Heroes Day", "2028-10-09 National Heroes Day", "2027-12-27 Boxing Day (observed)"] },
+    "TC": { "src": "https://www.gov.tc public holidays; https://www.visittci.com", "d": ["2026-08-30 National Day of Prayer and Thanksgiving", "2026-08-31 Constitution Day", "2027-08-29 National Day of Prayer and Thanksgiving", "2027-08-30 Constitution Day", "2028-08-27 National Day of Prayer and Thanksgiving", "2028-08-28 Constitution Day"] },
+    "ME": { "src": "Montenegro Law on State and Other Holidays", "d": ["2026-11-13 Njegoš Day", "2026-11-14 Njegoš Day", "2027-11-13 Njegoš Day", "2027-11-14 Njegoš Day", "2027-11-15 Njegoš Day (day off in lieu)", "2028-11-13 Njegoš Day", "2028-11-14 Njegoš Day"] },
+    "ES": { "src": "https://www.boe.es (national holiday calendar)", "d": ["2026-04-02 Maundy Thursday", "2027-03-25 Maundy Thursday", "2028-04-13 Maundy Thursday"], "notIn": { "CT": ["2026-04-02", "2027-03-25", "2028-04-13"], "VC": ["2026-04-02", "2027-03-25", "2028-04-13"] } },
+    "PT": { "src": "https://www.portugal.gov.pt (Carnival: an optional day off, widely given)", "d": ["2026-02-17 Carnival", "2027-02-09 Carnival", "2028-02-29 Carnival"] },
+    "PT-AC": { "name": "Azores", "src": "https://portal.azores.gov.pt (Dia da Região Autónoma dos Açores)", "d": ["2026-05-25 Azores Day", "2027-05-17 Azores Day", "2028-06-05 Azores Day"] },
+    "IS": { "src": "https://www.stjornarradid.is (half days from 13:00)", "d": ["2026-12-24 ^13 Christmas", "2026-12-31 ^13 New Year", "2027-12-24 ^13 Christmas", "2027-12-31 ^13 New Year", "2028-12-24 ^13 Christmas", "2028-12-31 ^13 New Year"] },
+    "TR": { "src": "https://www.resmigazete.gov.tr (half days from 13:00)", "d": ["2027-03-08 ^13 Eid al-Fitr", "2027-05-15 ^13 Eid al-Adha", "2026-10-28 ^13 Republic Day", "2027-10-28 ^13 Republic Day", "2028-10-28 ^13 Republic Day"] },
+    "AE": { "src": "https://u.ae/en/information-and-services/public-holidays-and-religious-affairs/public-holidays", "d": ["2027-05-15 ~ Arafat Day", "2026-12-03 National Day", "2027-12-03 National Day", "2028-12-03 National Day"] }
+  }
+}

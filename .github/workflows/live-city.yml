@@ -1,0 +1,37 @@
+name: Test a new city on the live site
+on:
+  workflow_dispatch:
+    inputs:
+      city:
+        description: City to build
+        default: "Corpus Christi"
+      daytype:
+        description: First day type (land, arrival, port)
+        default: "land"
+      interests:
+        description: Interests, comma separated (e.g. churches,bible)
+        default: ""
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the app (the repository's index.html is only a placeholder)
+        run: sh build.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          CITY: ${{ inputs.city }}
+          INTERESTS: ${{ inputs.interests }}
+          DAYTYPE: ${{ inputs.daytype }}
+        run: npm i playwright@1.65.1 && npx playwright install chromium && node tools/live-city.cjs
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-city
+          path: live-city.json
+          if-no-files-found: ignore

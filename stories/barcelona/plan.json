@@ -1,0 +1,289 @@
+{
+ "sights": [
+  {
+   "id": "sagrada-familia",
+   "title": "Sagrada Família",
+   "appIds": [
+    "sagrada"
+   ],
+   "wikidata": [
+    "Q48435"
+   ],
+   "editions": 110,
+   "folds": [],
+   "sources": [
+    "wp-sagrada-familia",
+    "wp-antoni-gaudi",
+    "unesco-gaudi",
+    "wv-barcelona"
+   ]
+  },
+  {
+   "id": "camp-nou",
+   "title": "Camp Nou",
+   "appIds": [
+    "src-q159848"
+   ],
+   "wikidata": [
+    "Q159848"
+   ],
+   "editions": 89,
+   "folds": [
+    "FC Barcelona Museum"
+   ],
+   "sources": [
+    "wp-camp-nou",
+    "wp-fc-barcelona",
+    "wp-johan-cruyff"
+   ]
+  },
+  {
+   "id": "park-guell",
+   "title": "Park Güell",
+   "appIds": [
+    "parkguell"
+   ],
+   "wikidata": [
+    "Q212867"
+   ],
+   "editions": 55,
+   "folds": [],
+   "sources": [
+    "wp-park-guell",
+    "wp-eusebi-guell",
+    "wp-antoni-gaudi",
+    "unesco-gaudi"
+   ]
+  },
+  {
+   "id": "casa-mila",
+   "title": "Casa Milà (La Pedrera)",
+   "appIds": [
+    "pedrera"
+   ],
+   "wikidata": [
+    "Q207870"
+   ],
+   "editions": 52,
+   "folds": [
+    "Passeig de Gràcia"
+   ],
+   "sources": [
+    "wp-casa-mila",
+    "wp-antoni-gaudi",
+    "wp-passeig-gracia",
+    "unesco-gaudi"
+   ]
+  },
+  {
+   "id": "casa-batllo",
+   "title": "Casa Batlló",
+   "appIds": [
+    "batllo",
+    "amatller"
+   ],
+   "wikidata": [
+    "Q461371",
+    "Q506814"
+   ],
+   "editions": 51,
+   "folds": [
+    "Casa Amatller",
+    "Casa Lleó-Morera"
+   ],
+   "sources": [
+    "wp-casa-batllo",
+    "wp-casa-amatller",
+    "wp-saint-george-dragon",
+    "unesco-gaudi"
+   ]
+  },
+  {
+   "id": "palau-musica",
+   "title": "Palau de la Música Catalana",
+   "appIds": [
+    "palau"
+   ],
+   "wikidata": [
+    "Q327940"
+   ],
+   "editions": 44,
+   "folds": [],
+   "sources": [
+    "wp-palau-la-musica-catalana",
+    "wp-lluis-domenech-i-montaner",
+    "wp-orfeo-catala",
+    "unesco-palau-sant-pau"
+   ]
+  },
+  {
+   "id": "cathedral",
+   "title": "Barcelona Cathedral",
+   "appIds": [
+    "src-q17155"
+   ],
+   "wikidata": [
+    "Q17155"
+   ],
+   "editions": 44,
+   "folds": [
+    "Plaça del Rei",
+    "Gothic Quarter"
+   ],
+   "sources": [
+    "wp-barcelona-cathedral",
+    "wp-eulalia-barcelona",
+    "wp-gothic-quarter-barcelona"
+   ]
+  },
+  {
+   "id": "la-rambla",
+   "title": "La Rambla and Plaça de Catalunya",
+   "appIds": [
+    "rambla",
+    "catalunya"
+   ],
+   "wikidata": [
+    "Q850593",
+    "Q822881"
+   ],
+   "editions": 39,
+   "folds": [
+    "Plaça de Catalunya",
+    "Boqueria market",
+    "Plaça Reial"
+   ],
+   "sources": [
+    "wp-la-rambla-barcelona",
+    "wp-placa-catalunya",
+    "wp-gran-teatre-liceu",
+    "wp-placa-reial"
+   ]
+  },
+  {
+   "id": "sant-pau",
+   "title": "Hospital de Sant Pau",
+   "appIds": [
+    "santpau"
+   ],
+   "wikidata": [
+    "Q507282"
+   ],
+   "editions": 37,
+   "folds": [],
+   "sources": [
+    "wp-hospital-la-santa-creu-i-san",
+    "wp-lluis-domenech-i-montaner",
+    "unesco-palau-sant-pau"
+   ]
+  },
+  {
+   "id": "palau-guell",
+   "title": "Palau Güell",
+   "appIds": [
+    "palauguell"
+   ],
+   "wikidata": [
+    "Q597051"
+   ],
+   "editions": 33,
+   "folds": [],
+   "sources": [
+    "wp-palau-guell",
+    "wp-eusebi-guell",
+    "unesco-gaudi"
+   ]
+  },
+  {
+   "id": "casa-vicens",
+   "title": "Casa Vicens",
+   "appIds": [
+    "src-q746333"
+   ],
+   "wikidata": [
+    "Q746333"
+   ],
+   "editions": 33,
+   "folds": [],
+   "sources": [
+    "wp-casa-vicens",
+    "wp-antoni-gaudi",
+    "unesco-gaudi"
+   ]
+  },
+  {
+   "id": "mnac",
+   "title": "National Art Museum of Catalonia (Montjuïc)",
+   "appIds": [
+    "mnac",
+    "src-q861252"
+   ],
+   "wikidata": [
+    "Q861252"
+   ],
+   "editions": 31,
+   "folds": [
+    "Palau Nacional",
+    "Magic Fountain"
+   ],
+   "sources": [
+    "wp-museu-nacional-d-art-catalun",
+    "wp-palau-nacional",
+    "wp-1929-barcelona-international",
+    "wp-montjuic"
+   ]
+  },
+  {
+   "id": "girona",
+   "title": "Day trip: Girona",
+   "appIds": [
+    "girona"
+   ],
+   "wikidata": [
+    "Q7038"
+   ],
+   "editions": 104,
+   "folds": [],
+   "sources": [
+    "wp-girona",
+    "wp-girona-cathedral",
+    "wp-call-girona",
+    "wv-girona"
+   ]
+  },
+  {
+   "id": "sitges",
+   "title": "Day trip: Sitges",
+   "appIds": [
+    "sitges"
+   ],
+   "wikidata": [
+    "Q15551"
+   ],
+   "editions": 62,
+   "folds": [],
+   "sources": [
+    "wp-sitges",
+    "wp-santiago-rusinol",
+    "wv-sitges"
+   ]
+  },
+  {
+   "id": "tibidabo",
+   "title": "Tibidabo",
+   "appIds": [
+    "tibidabo"
+   ],
+   "wikidata": [
+    "Q658271"
+   ],
+   "editions": 31,
+   "folds": [],
+   "sources": [
+    "wp-tibidabo",
+    "wp-temple-expiatori-sagrat-cor",
+    "wp-tibidabo-amusement-park"
+   ]
+  }
+ ]
+}

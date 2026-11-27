@@ -1,0 +1,170 @@
+{
+ "name": "kusadasi-tr",
+ "label": "Kusadasi, Turkey",
+ "centre": {
+  "lat": 37.9395,
+  "lng": 27.341
+ },
+ "findings": [
+  {
+   "k": "NOID",
+   "t": "Ancient Ephesus: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "ephesus"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Basilica of Saint John: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "stjohn"
+   }
+  },
+  {
+   "k": "NOID",
+   "t": "Pigeon Island castle: built-in sight with no Wikidata id and nothing of the name on the map nearby",
+   "x": {
+    "id": "pigeon"
+   }
+  },
+  {
+   "k": "INFO",
+   "t": "5 sights, 0 day trips/towns; must-see: Ancient Ephesus, Basilica of Saint John; top by fame: Ancient Ephesus 0, Basilica of Saint John 0, House of the Virgin Mary 0, Temple of Artemis 0, Pigeon Island castle 0",
+   "x": {}
+  }
+ ],
+ "sights": [
+  {
+   "id": "ephesus",
+   "name": "Ancient Ephesus",
+   "local": "",
+   "lat": 37.9395,
+   "lng": 27.341,
+   "minutes": 150,
+   "category": "Bible site",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": true,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The great Roman city where Paul preached and the Ephesian church began."
+  },
+  {
+   "id": "stjohn",
+   "name": "Basilica of Saint John",
+   "local": "",
+   "lat": 37.953,
+   "lng": 27.368,
+   "minutes": 45,
+   "category": "Bible site",
+   "kind": "local",
+   "quick": false,
+   "mustSee": true,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "The great church built over the tomb of the Apostle John."
+  },
+  {
+   "id": "marydouse",
+   "name": "House of the Virgin Mary",
+   "local": "",
+   "lat": 37.9118,
+   "lng": 27.3333,
+   "minutes": 45,
+   "category": "Pilgrimage",
+   "kind": "touristy",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q135779",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A small stone chapel on a mountain, honored as Mary's last home.",
+   "wdByName": true
+  },
+  {
+   "id": "artemis",
+   "name": "Temple of Artemis",
+   "local": "",
+   "lat": 37.9497,
+   "lng": 27.3639,
+   "minutes": 15,
+   "category": "Ancient site",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "Q43018",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "One lone column left of one of the Seven Wonders of the world.",
+   "wdByName": true
+  },
+  {
+   "id": "pigeon",
+   "name": "Pigeon Island castle",
+   "local": "",
+   "lat": 37.862,
+   "lng": 27.249,
+   "minutes": 30,
+   "category": "Landmark",
+   "kind": "local",
+   "quick": false,
+   "mustSee": false,
+   "fame": 0,
+   "unesco": false,
+   "heritage": false,
+   "wd": "",
+   "src": [],
+   "srcOnly": false,
+   "builtin": true,
+   "famousFix": false,
+   "far": false,
+   "travel": "",
+   "parts": [],
+   "merged": [],
+   "posDoubt": false,
+   "summary": "A small fortress on an island linked to the town by a causeway."
+  }
+ ]
+}

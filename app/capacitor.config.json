@@ -1,0 +1,6 @@
+{
+  "appId": "com.kairoute.app",
+  "appName": "Kairoute",
+  "webDir": "www",
+  "android": { "backgroundColor": "#123C3A" }
+}

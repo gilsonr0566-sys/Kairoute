@@ -1,0 +1,63 @@
+name: Beta 2 live dry run
+# Beta 2 dry runs on places the app was never tuned for: the app runs with AI off against the real helper's free
+# lookups only (tools/beta2/live-trip.cjs). Never publishes anything.
+on:
+  workflow_dispatch:
+    inputs:
+      batch:
+        description: "Only this batch (empty = all)"
+        default: ""
+  push:
+    branches: ["claude/project-thread-xrdp7v"]
+    paths: ["tools/beta2/live-trip.cjs"]
+permissions:
+  contents: read
+jobs:
+  run:
+    strategy:
+      fail-fast: false
+      matrix:
+        batch: ${{ fromJSON(inputs.batch != '' && format('["{0}"]', inputs.batch) || '["0", "1", "2", "3", "4", "5", "6", "7"]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bring back the test stand-in's kept answers (fewer asks to the live helper)
+        uses: actions/cache/restore@v4
+        with:
+          path: .helper-memo
+          key: helper-memo-${{ github.workflow }}-${{ matrix.batch }}-${{ github.run_id }}
+          restore-keys: helper-memo-${{ github.workflow }}-${{ matrix.batch }}-
+      - name: Build the app, with the helper stand-in (repeat asks never reach the live helper)
+        run: sh build.sh && sh tools/test-helper.sh
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - env:
+          BATCH: ${{ matrix.batch }}
+          HELPER_WAIT: "150000"
+          GUIDE_WAIT: "480000"
+        run: node tools/beta2/live-trip.cjs
+      - name: Print the saved trips (so they can be replayed without the helper)
+        if: always()
+        run: |
+          node -e "const fs=require('fs'),z=require('zlib'),d='tools/beta2/snapshots';for(const f of fs.readdirSync(d).filter(f=>/^(live|[gf][0-9])/.test(f))){const b=z.gzipSync(fs.readFileSync(d+'/'+f)).toString('base64');console.log('SNAP-BEGIN '+f);for(let i=0;i<b.length;i+=4000)console.log('SNAP '+b.slice(i,i+4000));console.log('SNAP-END')}"
+      - name: Places files from free sources (Wikidata, OpenStreetMap, Wikivoyage)
+        if: always()
+        timeout-minutes: 75
+        env:
+          PLACES_EXTRA: ${{ matrix.batch == '5' && '1' || '' }}
+        run: node tools/places/build.cjs
+      - name: New engine side by side on these places
+        if: always()
+        run: SHOW=1 node tools/beta2/compare.cjs '^(live|g[0-9])' || true
+      - name: Stop the test stand-in (writes what it kept)
+        if: always()
+        run: sh tools/test-helper.sh stop
+      - name: Keep the stand-in's answers for the next run
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .helper-memo
+          key: helper-memo-${{ github.workflow }}-${{ matrix.batch }}-${{ github.run_id }}

@@ -1,0 +1,1068 @@
+{
+ "key": "chania",
+ "name": "Chania",
+ "built": "2026-11-18",
+ "sources": [
+  "Wikidata",
+  "OpenStreetMap",
+  "Wikivoyage"
+ ],
+ "sites": {},
+ "towns": {
+  "balos-far": {
+   "name": "Balos lagoon",
+   "wikidata": "Q805498",
+   "editions": 9,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": []
+  },
+  "souda-far": {
+   "name": "Souda Bay War Cemetery",
+   "wikidata": "Q22919952",
+   "editions": 5,
+   "unesco": false,
+   "dayTripListed": false,
+   "sights": [],
+   "foodDrink": [],
+   "mapEats": [
+    {
+     "name": "cafe kafe",
+     "lat": 35.48796,
+     "lng": 24.0738486,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "greek",
+     "osm": "node/1668526339"
+    },
+    {
+     "name": "Coffee Spot",
+     "lat": 35.4888388,
+     "lng": 24.0741479,
+     "kind": "eat",
+     "amenity": "cafe",
+     "cuisine": "",
+     "osm": "node/13451916001"
+    }
+   ]
+  }
+ },
+ "ports": [],
+ "dayTrips": [],
+ "missing": [
+  "travel guide page",
+  "a mapped cruise terminal or pier",
+  "public transport lines on the map"
+ ],
+ "portQuery": {
+  "name": "Souda Bay cruise port",
+  "lat": 35.4885,
+  "lng": 24.0745,
+  "known": true,
+  "island": false
+ },
+ "centre": {
+  "lat": 35.51688,
+  "lng": 24.0183
+ },
+ "lifts": [],
+ "transit": [],
+ "cityEats": [
+  {
+   "name": "Canale",
+   "lat": 35.5182029,
+   "lng": 24.0184694,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/14228140486"
+  },
+  {
+   "name": "Mixalis",
+   "lat": 35.5180364,
+   "lng": 24.0183509,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/6522255585"
+  },
+  {
+   "name": "ΜΑΡΑΜΠΟΥ",
+   "lat": 35.5181804,
+   "lng": 24.0185039,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/4296496428"
+  },
+  {
+   "name": "Monastiri",
+   "lat": 35.517983,
+   "lng": 24.018386,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3645165572"
+  },
+  {
+   "name": "Palazzo al mare",
+   "lat": 35.517907,
+   "lng": 24.018334,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/3645165583"
+  },
+  {
+   "name": "Pallas",
+   "lat": 35.5184672,
+   "lng": 24.0186988,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2171171561"
+  },
+  {
+   "name": "Μοθτοθπακι",
+   "lat": 35.5159726,
+   "lng": 24.0158524,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3802594355"
+  },
+  {
+   "name": "Raradosiako",
+   "lat": 35.517369,
+   "lng": 24.0153337,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9993045254"
+  },
+  {
+   "name": "Valari Androniki",
+   "lat": 35.5158112,
+   "lng": 24.0157774,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3802593589"
+  },
+  {
+   "name": "Strata Tavern",
+   "lat": 35.5158518,
+   "lng": 24.0158595,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "",
+   "osm": "node/3802593489"
+  },
+  {
+   "name": "Enetikon",
+   "lat": 35.5165721,
+   "lng": 24.0161708,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3605422938"
+  },
+  {
+   "name": "Tamam",
+   "lat": 35.5165224,
+   "lng": 24.0163034,
+   "amenity": "restaurant",
+   "cuisine": "greek;turkish",
+   "hours": "",
+   "osm": "node/1356387172"
+  },
+  {
+   "name": "Agora Foodie",
+   "lat": 35.5150977,
+   "lng": 24.0200333,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11069707405"
+  },
+  {
+   "name": "Οινοποιείο",
+   "lat": 35.5153337,
+   "lng": 24.0203699,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3802142207"
+  },
+  {
+   "name": "ΟΝΕΙΡΟΔΡΟΜΙΟ",
+   "lat": 35.5153991,
+   "lng": 24.0206111,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/3802137248"
+  },
+  {
+   "name": "Mesogeiako",
+   "lat": 35.5154154,
+   "lng": 24.0207317,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2171174795"
+  },
+  {
+   "name": "Tsita",
+   "lat": 35.5152953,
+   "lng": 24.0199163,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/2171174215"
+  },
+  {
+   "name": "στήξ Ανναξ",
+   "lat": 35.5153336,
+   "lng": 24.0210892,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/9117023917"
+  },
+  {
+   "name": "Bourbos",
+   "lat": 35.5154381,
+   "lng": 24.0226884,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/11075409405"
+  },
+  {
+   "name": "mirai",
+   "lat": 35.5153094,
+   "lng": 24.0213128,
+   "amenity": "restaurant",
+   "cuisine": "japanese",
+   "hours": "",
+   "osm": "node/2171183181"
+  },
+  {
+   "name": "Κουζινα Ε.Π.Ε.",
+   "lat": 35.5158051,
+   "lng": 24.0214885,
+   "amenity": "restaurant",
+   "cuisine": "greek",
+   "hours": "Mo-Su 12:00-19:30",
+   "osm": "node/5978418937"
+  },
+  {
+   "name": "To Maridaki",
+   "lat": 35.5159406,
+   "lng": 24.0214074,
+   "amenity": "restaurant",
+   "cuisine": "seafood",
+   "hours": "Mo-Su 12:00-00:00",
+   "osm": "node/5222191339"
+  },
+  {
+   "name": "BEPMOTEPIA",
+   "lat": 35.5162652,
+   "lng": 24.0216487,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/12253920571"
+  },
+  {
+   "name": "Oinoa",
+   "lat": 35.5183101,
+   "lng": 24.014871,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5773305657"
+  },
+  {
+   "name": "The Botanist",
+   "lat": 35.5182185,
+   "lng": 24.0149998,
+   "amenity": "restaurant",
+   "cuisine": "breakfast",
+   "hours": "",
+   "osm": "node/9884607418"
+  },
+  {
+   "name": "Folks",
+   "lat": 35.5180635,
+   "lng": 24.0149477,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/13243223101"
+  },
+  {
+   "name": "Kalderimi",
+   "lat": 35.5178559,
+   "lng": 24.0150283,
+   "amenity": "restaurant",
+   "cuisine": "regional",
+   "hours": "",
+   "osm": "node/4861278326"
+  },
+  {
+   "name": "La Bodega",
+   "lat": 35.5178453,
+   "lng": 24.0159816,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5795531476"
+  },
+  {
+   "name": "Arismari",
+   "lat": 35.5176616,
+   "lng": 24.015951,
+   "amenity": "restaurant",
+   "cuisine": "",
+   "hours": "",
+   "osm": "node/5239101521"
+  }
+ ],
+ "piers": [
+  {
+   "name": "Ferry pier",
+   "lat": 35.51737,
+   "lng": 24.01763,
+   "osm": "node/1323400082"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 35.60662,
+   "lng": 23.57855,
+   "osm": "node/255408500"
+  },
+  {
+   "name": "Ferry pier",
+   "lat": 35.58743,
+   "lng": 23.58647,
+   "osm": "node/304580106"
+  },
+  {
+   "name": "Souda",
+   "lat": 35.4892,
+   "lng": 24.07547,
+   "osm": "node/576432749"
+  },
+  {
+   "name": "Souda",
+   "lat": 35.48979,
+   "lng": 24.07291,
+   "osm": "node/576432754"
+  }
+ ],
+ "roads": [
+  {
+   "a": {
+    "lat": 35.51688,
+    "lng": 24.0183
+   },
+   "b": {
+    "lat": 35.585,
+    "lng": 23.589
+   },
+   "min": 84,
+   "km": 53.3
+  },
+  {
+   "a": {
+    "lat": 35.585,
+    "lng": 23.589
+   },
+   "b": {
+    "lat": 35.51688,
+    "lng": 24.0183
+   },
+   "min": 83,
+   "km": 53.9
+  },
+  {
+   "a": {
+    "lat": 35.585,
+    "lng": 23.589
+   },
+   "b": {
+    "lat": 35.4885,
+    "lng": 24.07
+   },
+   "min": 85,
+   "km": 58.4
+  },
+  {
+   "a": {
+    "lat": 35.4885,
+    "lng": 24.07
+   },
+   "b": {
+    "lat": 35.585,
+    "lng": 23.589
+   },
+   "min": 84,
+   "km": 58.2
+  }
+ ],
+ "guideSights": [
+  {
+   "name": "Etz Hayyim Synagogue",
+   "lat": 35.51595,
+   "lng": 24.01683,
+   "wikidata": "",
+   "note": "Until 1999 Etz Hayyim was a house of prayer that remained the sole Jewish monument on Crete after the destruction of Crete's Jewish community in 1944. Essentially it stood as a monument to the success of the Nazis in obliterating 2,300 year"
+  }
+ ],
+ "ferryLinks": [
+  {
+   "name": "Gramvousa Balos",
+   "a": {
+    "lat": 35.51758,
+    "lng": 23.6374
+   },
+   "b": {
+    "lat": 35.60662,
+    "lng": 23.57855
+   },
+   "osm": "way/27737147"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 35.5834,
+    "lng": 23.58552
+   },
+   "b": {
+    "lat": 35.51758,
+    "lng": 23.6374
+   },
+   "osm": "way/424954893"
+  },
+  {
+   "name": "",
+   "a": {
+    "lat": 35.60662,
+    "lng": 23.57855
+   },
+   "b": {
+    "lat": 35.5834,
+    "lng": 23.58552
+   },
+   "osm": "way/424954895"
+  },
+  {
+   "name": "Gramvousa Balos",
+   "a": {
+    "lat": 35.60662,
+    "lng": 23.57855
+   },
+   "b": {
+    "lat": 35.51758,
+    "lng": 23.6374
+   },
+   "osm": "way/57684788"
+  },
+  {
+   "name": "Antikythira - Kissamos",
+   "a": {
+    "lat": 35.51758,
+    "lng": 23.6374
+   },
+   "b": {
+    "lat": 35.8824,
+    "lng": 23.28997
+   },
+   "osm": "way/589593645"
+  }
+ ],
+ "eatHours": [
+  [
+   "Starbucks",
+   35.51626,
+   24.01782,
+   "Mo-Su 07:30-01:00",
+   "cafe"
+  ],
+  [
+   "Veneto",
+   35.51628,
+   24.01739,
+   "Mo-Sa 14:15-23:30; Su off",
+   "restaurant"
+  ],
+  [
+   "Κήπος Καφέ",
+   35.51249,
+   24.02445,
+   "Mo-Su 07:00-12:00",
+   "cafe"
+  ],
+  [
+   "Καφενείο Φιξ",
+   35.51628,
+   24.02176,
+   "12:00-00:00",
+   "cafe"
+  ],
+  [
+   "Karamela",
+   35.51736,
+   24.01607,
+   "24/7",
+   "bar"
+  ],
+  [
+   "Aroma",
+   35.51719,
+   24.01781,
+   "07:00-15:00",
+   "cafe"
+  ],
+  [
+   "To Stachi",
+   35.51825,
+   24.02373,
+   "Mo-Sa 13:00-22:00",
+   "restaurant"
+  ],
+  [
+   "Χρυσόστομος",
+   35.51867,
+   24.0235,
+   "We-Mo 13:00-23:45",
+   "restaurant"
+  ],
+  [
+   "Pulse",
+   35.51834,
+   24.01511,
+   "Mo-Sa 09:00-24:00; PH,Su 17:00-24:00",
+   "cafe"
+  ],
+  [
+   "M Zampetakis",
+   35.51777,
+   24.01348,
+   "Mo-Su 09:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Adespoto Music Taverna",
+   35.51637,
+   24.0201,
+   "Mo-Sa 12:00-24:00",
+   "restaurant"
+  ],
+  [
+   "Ο Κώστας",
+   35.51635,
+   24.02112,
+   "Mo-Su 10:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Καφε Θέα -Thea cafe",
+   35.51656,
+   24.01774,
+   "24/7",
+   "cafe"
+  ],
+  [
+   "Tholos",
+   35.51566,
+   24.0184,
+   "Mo-Su 16:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Grigoros Grill",
+   35.51254,
+   24.01803,
+   "Mo-Sa 11:00-00:00; Su 18:00-00:00",
+   "fast_food"
+  ],
+  [
+   "Ladi kai rigani",
+   35.51279,
+   24.02022,
+   "Mo-Su 09:00-03:00",
+   "fast_food"
+  ],
+  [
+   "#meetme",
+   35.51104,
+   24.02039,
+   "Mo-Su 07:00-22:00",
+   "cafe"
+  ],
+  [
+   "Oasis",
+   35.51324,
+   24.02106,
+   "Tu, Th-Fr 10:00-20:30; Sa 11:00-16:00; Mo, We 10:00-16:00",
+   "fast_food"
+  ],
+  [
+   "Atman kafe",
+   35.51541,
+   24.02216,
+   "Mo-Su 09:00-21:00",
+   "cafe"
+  ],
+  [
+   "Machalas",
+   35.51577,
+   24.02743,
+   "Mo-Su 10:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Ta chalkina",
+   35.51857,
+   24.01933,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Ippopotamos",
+   35.51846,
+   24.02247,
+   "Mo-Su 08:00-02:00",
+   "cafe"
+  ],
+  [
+   "Γλωσσίτσες",
+   35.51867,
+   24.02259,
+   "Mo-Su 12:00-01:00",
+   "restaurant"
+  ],
+  [
+   "Apokoronas",
+   35.51188,
+   24.02076,
+   "Mo-Su 09:00-01:00",
+   "fast_food"
+  ],
+  [
+   "Apwn",
+   35.51225,
+   24.02322,
+   "Mo-Su 22:30-06:00",
+   "bar"
+  ],
+  [
+   "To Maridaki",
+   35.51594,
+   24.02141,
+   "Mo-Su 12:00-00:00",
+   "restaurant"
+  ],
+  [
+   "Namaste",
+   35.51492,
+   24.01753,
+   "Nov 28 - Jan 19 off",
+   "restaurant"
+  ],
+  [
+   "Pork to Beef Wild",
+   35.51718,
+   24.0209,
+   "Mo-Fr,Su 12:00-01:30; Sa 12:00-03:00",
+   "fast_food"
+  ],
+  [
+   "1866 Breakfast & Coffee Spot",
+   35.51295,
+   24.01746,
+   "Mo-Fr 06:00-18:00; Sa 06:00-14:30; Su off",
+   "cafe"
+  ],
+  [
+   "Krio Vrisali",
+   35.51473,
+   24.01719,
+   "Mo-Sa 12:00-02:00; Su 16:00-02:00",
+   "restaurant"
+  ],
+  [
+   "Kormoranos Bakery Café",
+   35.51765,
+   24.01522,
+   "Mo-Sa 08:00-24:00",
+   "cafe"
+  ],
+  [
+   "Thraka",
+   35.51397,
+   24.01887,
+   "10:00-06:00",
+   "fast_food"
+  ],
+  [
+   "Monogram",
+   35.51552,
+   24.02166,
+   "Mo-Sa 08:00-21:00; Su 09:00-18:00",
+   "cafe"
+  ],
+  [
+   "Funky’s",
+   35.5139,
+   24.01765,
+   "24/7",
+   "fast_food"
+  ],
+  [
+   "Phyllo",
+   35.5155,
+   24.01693,
+   "Mo-Su 08:00-00:00",
+   "cafe"
+  ],
+  [
+   "Κουζινα Ε.Π.Ε.",
+   35.51581,
+   24.02149,
+   "Mo-Su 12:00-19:30",
+   "restaurant"
+  ],
+  [
+   "Boheme",
+   35.51591,
+   24.01745,
+   "Mo-Su 09:00-02:00",
+   "restaurant"
+  ],
+  [
+   "To Steno",
+   35.51565,
+   24.01864,
+   "Mo-Su 09:30-02:30",
+   "restaurant"
+  ],
+  [
+   "AlmyVita",
+   35.51855,
+   24.019,
+   "Mo-Su 08:00-01:00",
+   "bar"
+  ],
+  [
+   "Sinagogi cafe-bar",
+   35.51594,
+   24.01668,
+   "Mo-Su 12:00-06:00",
+   "bar"
+  ],
+  [
+   "Gyro Technio",
+   35.51462,
+   24.01921,
+   "Mo-Sa 12:00-00:00",
+   "fast_food"
+  ],
+  [
+   "Goody's Burger House",
+   35.51397,
+   24.01812,
+   "Mo-Su 10:30-01:00",
+   "restaurant"
+  ],
+  [
+   "Falavela",
+   35.51299,
+   24.01981,
+   "Mo-Sa 09:00-23:00",
+   "cafe"
+  ],
+  [
+   "Food City",
+   35.51245,
+   24.01606,
+   "Mo-Sa 17:00-00:00",
+   "fast_food"
+  ],
+  [
+   "drops Premium",
+   35.51544,
+   24.01886,
+   "Mo-Su 08:00-00:00",
+   "cafe"
+  ],
+  [
+   "Ψήσου",
+   35.513,
+   24.02377,
+   "Mo-Sa 12:00-02:00",
+   "fast_food"
+  ],
+  [
+   "Grain Café Chania",
+   35.51326,
+   24.01624,
+   "Mo,Sa 07:00-16:00, Tu-Fr 07:00-19:00, Su 08:00-14:00",
+   "cafe"
+  ],
+  [
+   "Fauve",
+   35.51624,
+   24.0199,
+   "Mo 20:00-02:00; Tu-Th 09:00-02:00; Fr-Sa 09:00-02:30",
+   "cafe"
+  ],
+  [
+   "Il Lupo",
+   35.51294,
+   24.01897,
+   "Mo-Sa 07:30-23:30",
+   "bar"
+  ],
+  [
+   "Kariatis",
+   35.51792,
+   24.02034,
+   "Mo-Sa 18:00-23:30",
+   "restaurant"
+  ],
+  [
+   "Gyrádiko (gyros, salads)",
+   35.51247,
+   24.01721,
+   "Mo-Su 11:00-23:00",
+   "fast_food"
+  ],
+  [
+   "Miras Cretan Cuisine",
+   35.51573,
+   24.02837,
+   "Mo-Su 08:00-23:00",
+   "restaurant"
+  ],
+  [
+   "Box Coffee And More",
+   35.51449,
+   24.02437,
+   "Mo-Sa 06:00-21:30",
+   "cafe"
+  ]
+ ],
+ "heights": [
+  [
+   35.51595,
+   24.01683,
+   5
+  ],
+  [
+   35.51737,
+   24.01763,
+   2
+  ],
+  [
+   35.60662,
+   23.57855,
+   3
+  ],
+  [
+   35.58743,
+   23.58647,
+   17
+  ],
+  [
+   35.4892,
+   24.07547,
+   2
+  ],
+  [
+   35.48979,
+   24.07291,
+   2
+  ],
+  [
+   35.5182,
+   24.01847,
+   6
+  ],
+  [
+   35.51804,
+   24.01835,
+   5
+  ],
+  [
+   35.51791,
+   24.01833,
+   5
+  ],
+  [
+   35.51847,
+   24.0187,
+   6
+  ],
+  [
+   35.51597,
+   24.01585,
+   11
+  ],
+  [
+   35.51737,
+   24.01533,
+   13
+  ],
+  [
+   35.51581,
+   24.01578,
+   11
+  ],
+  [
+   35.51585,
+   24.01586,
+   11
+  ],
+  [
+   35.51657,
+   24.01617,
+   11
+  ],
+  [
+   35.51652,
+   24.0163,
+   11
+  ],
+  [
+   35.5151,
+   24.02003,
+   9
+  ],
+  [
+   35.51533,
+   24.02037,
+   9
+  ],
+  [
+   35.5154,
+   24.02061,
+   10
+  ],
+  [
+   35.51542,
+   24.02073,
+   11
+  ],
+  [
+   35.5153,
+   24.01992,
+   9
+  ],
+  [
+   35.51533,
+   24.02109,
+   11
+  ],
+  [
+   35.51544,
+   24.02269,
+   17
+  ],
+  [
+   35.51531,
+   24.02131,
+   10
+  ],
+  [
+   35.51581,
+   24.02149,
+   13
+  ],
+  [
+   35.51594,
+   24.02141,
+   13
+  ],
+  [
+   35.51627,
+   24.02165,
+   14
+  ],
+  [
+   35.51831,
+   24.01487,
+   10
+  ],
+  [
+   35.51822,
+   24.015,
+   11
+  ],
+  [
+   35.51806,
+   24.01495,
+   12
+  ],
+  [
+   35.51786,
+   24.01503,
+   13
+  ],
+  [
+   35.51785,
+   24.01598,
+   10
+  ],
+  [
+   35.51766,
+   24.01595,
+   11
+  ],
+  [
+   35.5186,
+   24.0175,
+   6
+  ],
+  [
+   35.5165,
+   24.015,
+   8
+  ],
+  [
+   35.5148,
+   24.0205,
+   8
+  ],
+  [
+   35.515,
+   24.023,
+   14
+  ],
+  [
+   35.5195,
+   24.0155,
+   2
+  ],
+  [
+   35.585,
+   23.589,
+   1
+  ],
+  [
+   35.4885,
+   24.07,
+   3
+  ],
+  [
+   35.51688,
+   24.0183,
+   14
+  ]
+ ]
+}

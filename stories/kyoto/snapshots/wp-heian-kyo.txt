@@ -1,0 +1,60 @@
+SOURCE: https://en.wikipedia.org/wiki/Heian-ky%C5%8D
+RETRIEVED: 2026-11-22T21:08:16.878Z
+STATUS: 200
+TITLE: Heian-kyō
+
+Heian-kyō (平安京; lit. 'peaceful/tranquil capital') was the imperial capital of Japan established by Emperor Kanmu in 794 in what is now Kyoto. It remained the seat of the Imperial Court for most of the following millennium. Japanese historical reference works treat it as formally remaining the capital until the Imperial Court and central government moved to Tokyo in 1869.
+Heian-kyō was a planned rectangular city laid out on a grid based on the planning principles of Chinese imperial capitals, particularly Chang'an (modern Xi'an), the capital of Tang dynasty China. The Daidairi, containing the imperial palace and principal government offices, occupied the northern center of the city, while Suzaku-ōji formed its principal north–south axis.
+From the late 12th century, effective political authority increasingly shifted to warrior governments, especially the Kamakura shogunate, while Kyoto remained the residence of the emperor and the Imperial Court. The western part of the planned capital declined and the inhabited city expanded northward and eastward, gradually developing into medieval Kyoto. By around 1220, Kyoto had largely superseded Heian-kyō as the usual name of the city.
+
+
+== Description ==
+
+Heian-kyō was built across the Kadono District (葛野郡, Kadono-gun) and Otagi District (愛宕郡, Otagi-gun) of Yamashiro Province, in what is now central Kyoto. The planned city measured approximately 4.5 km from east to west and 5.2 km from north to south. Its area was less than one-third that of Tang-dynasty Chang'an.
+The Daidairi occupied the northern center of the capital and measured about 1.16 km from east to west and 1.39 km from north to south. From its southern entrance, Suzaku-ōji ran south through the center of the city to Rajōmon, dividing Heian-kyō into the Left Capital (左京, Sakyō) to the east and the Right Capital (右京, Ukyō) to the west, as viewed facing south from the palace.
+The city plan formed a rectangular grid. Unlike Chang'an, Heian-kyō was not enclosed by a continuous city wall. The palace was placed at the northern center of the city rather than at its geographical center. The site was also traditionally interpreted according to shijinsōō (四神相応), the correspondence of the surrounding landscape with the Four Symbols of East Asian cosmology.
+The planned city was bounded by Ichijō-ōji in the north, Kujō-ōji in the south, Higashi-kyōgoku-ōji in the east and Nishi-kyōgoku-ōji in the west. Elements of the ancient plan remain reflected in modern Kyoto. In particular, Kyoto City identifies the line of modern Senbon-dōri with the course of Suzaku-ōji.
+The city was divided by major streets called ōji (大路) and smaller streets called kōji (小路). A jō (丈) was a unit of length of approximately 3.03 m. A chō (町) was a square measuring 40 jō, or about 121 m, on each side. This unit of length should not be confused with jō (条), the numbered east–west divisions of the capital.
+The city was divided into nine jō, numbered from First to Ninth, and each of the Left and Right Capitals into four north–south bō (坊). Each bō was divided into 16 chō. Locations could therefore be expressed in forms such as "Right Capital, Fifth jō, Second bō, Fourteenth chō" (右京五条二坊十四町).
+In the later 9th century, the northern part of the capital was modified. The northern boundary was moved approximately two chō farther north, creating the hokuhen-bō (北辺坊), or northern half-division. The former Ichijō-ōji came to be called Tsuchimikado-ōji, while the new northern boundary road took the name Ichijō-ōji. The modification also enlarged the Daidairi and increased the number of its outer gates from twelve to fourteen.
+Minor streets were generally four jō, or about 12 m, wide. Major avenues were considerably broader, while Suzaku-ōji was exceptionally wide at 28 jō, approximately 85 m.
+Public facilities included the administrative offices of the Left and Right Capitals, government schools, prisons, gardens and the East and West Markets. The East Market lay in the Left Capital and the West Market in the Right Capital, both in the Seventh jō. Archaeological investigations have identified remains associated with the East Market in the Left Capital, Seventh jō, Second bō, and the West Market in the corresponding area of the Right Capital.
+Construction of Buddhist temples within the planned city was tightly restricted. Tō-ji and Sai-ji, positioned near its southern end, were the principal state temples permitted there. In 823, Emperor Saga entrusted Tō-ji to Kūkai, who developed it as a center of Shingon Buddhism.
+
+
+== Gates ==
+The Daidairi originally had twelve principal outer gates, with three on each side. In the later 9th century, Jōtō-mon on the east and Jōsai-mon on the west were added in connection with the northward modification of the palace precinct, bringing the total to fourteen. The original group of twelve was conventionally known as the "Twelve Gates of the Palace" (宮城十二門, Miyajō Jūnimon).
+The table gives the avenue associated with each gate. For the gates on the south, east and west sides, this is the avenue aligned with the gate and extending into the city; the three northern gates opened onto Ichijō-ōji.
+
+
+== History ==
+
+In 784, Emperor Kanmu moved the capital from Heijō-kyō to Nagaoka-kyō. Within less than a decade, however, plans were made for another relocation. According to a biographical notice preserved in the Nihon Kōki, Wake no Kiyomaro advised the emperor to abandon Nagaoka-kyō and investigate the Kadono area as a possible site for a new capital.
+In the first month of Enryaku 12 (793), senior officials including Fujiwara no Oguromaro and Ki no Kosami were sent to survey the Kadono area. Construction of the new capital began soon afterward, and residential plots were being distributed by the ninth month of the same year.
+In the seventh month of Enryaku 13 (794), the East and West Markets were transferred from Nagaoka-kyō to the new city. On the 22nd day of the tenth month of Enryaku 13, corresponding to 18 November 794 in the Julian calendar, Emperor Kanmu entered the new capital. Six days later, on the 28th day of the tenth month, an edict concerning the relocation was issued. On the eighth day of the following month, the new capital was named Heian-kyō and the written name of Yamashiro Province was changed from 山背国 to 山城国.
+Construction continued for more than a decade after the imperial relocation. The work largely came to an end in 805, when the office responsible for palace construction was abolished. The planned capital nevertheless developed unevenly, and substantial areas of the formal grid were never occupied or developed as originally envisaged.
+In 810, during the Kusuko Incident, former Emperor Heizei attempted to restore the capital to Heijō-kyō. The attempt failed, strengthening Heian-kyō's position as the imperial capital. An edict issued in the ninth month of that year referred to Heian-kyō as the "Eternal Capital" (万代宮, Yorozuyo no Miya).
+The two halves of the city did not develop equally. The Right Capital, particularly its lower-lying western areas near the Katsura River, gradually declined, while the Left Capital continued to develop. Settlement also expanded beyond the original northern and eastern boundaries, particularly north of Ichijō-ōji and toward the Kamo River. The mid-Heian-period Chiteiki described the deterioration of the Right Capital and the concentration of urban life in the northern Left Capital.
+In 980, Rajōmon collapsed in a storm and was never rebuilt. As the Right Capital declined and settlement expanded northward and eastward, the original symmetry and boundaries of Heian-kyō increasingly ceased to correspond to the inhabited city. The term Kyoto became increasingly common as a name for the capital during the later Heian period and had largely replaced Heian-kyō by around 1220.
+In 1180, Taira no Kiyomori transferred Emperor Antoku, the retired emperors and much of the court to Fukuhara-kyō, in present-day Kobe. The attempt to establish a capital there was short-lived, and the court returned to Heian-kyō later the same year.
+During and after the Genpei War, political authority increasingly shifted away from the Imperial Court, and the Kamakura shogunate emerged as the principal warrior government in the late 12th century. Kyoto nevertheless continued to house the emperor, the Imperial Court and important central institutions.
+Repeated fires increasingly disrupted the use of the Daidairi. Emperors came to reside for extended periods in aristocratic residences used as satodairi (里内裏), and by the 11th century residence outside the original palace precinct had become increasingly common. In 1227, a major fire destroyed the remaining Daidairi, including buildings that had survived from earlier periods, and the palace complex was not subsequently rebuilt.
+The loss of the Daidairi marked an important stage in the transformation from the ancient planned capital to medieval Kyoto. The present Kyoto Imperial Palace is not located on the site of the ancient Heian Palace; it developed from a later satodairi, the Tsuchimikado Higashinotōin residence, in the northeastern part of the medieval city.
+During the later medieval period, Kyoto suffered repeated warfare and fires. The Ōnin War (1467–1477) caused particularly extensive destruction, and urban settlement became concentrated principally in the northern Kamigyō and southern Shimogyō districts.
+In the late 16th century, Toyotomi Hideyoshi undertook a major reconstruction of Kyoto. He built the Jurakudai, reorganized the street system, concentrated temples in designated districts, and in 1591 constructed the Odoi, an extensive system of earthen ramparts and ditches surrounding much of the urban area. These projects linked Kamigyō and Shimogyō more closely and helped establish the basic form of early modern Kyoto.
+During the Meiji Restoration, Edo was renamed Tokyo in 1868. Emperor Meiji traveled to Tokyo that year and subsequently returned to Kyoto. On the 24th day of the second month of Meiji 2 (5 April 1869), the transfer of the Daijō-kan, the central government, to Tokyo was announced. Emperor Meiji left Kyoto again on 18 April 1869 (the seventh day of the third month of Meiji 2) and arrived in Tokyo on 9 May. Japanese historical reference works consequently treat 1869 as the end of Kyoto's formal status as the capital.
+At Emperor Meiji's direction, the Kyoto Imperial Palace was preserved. The Takamikura, the imperial throne used in enthronement ceremonies, is housed there, at the later palace site rather than at the site of the ancient Daidairi.
+
+
+== See also ==
+
+Heian Palace
+Chiteiki, a mid-Heian-period text describing social conditions within the capital
+Timeline of Kyoto
+Cosmology of Kyoto, a visual novel interactive computer game for Windows 3.1 set in 10th-century Heian-kyō
+
+
+== Notes ==
+
+
+== References ==

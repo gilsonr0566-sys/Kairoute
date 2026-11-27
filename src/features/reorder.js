@@ -1,0 +1,141 @@
+// ---------- Drag the day's stops into any order (Richard, Nov 16) ----------
+// Each stop on the Day plan has a handle: drag it up or down (finger or mouse), or focus it and use the arrow keys.
+// The day is planned again in the new order at once: times, rides and meals follow it (see ownOrd in the planner).
+// If the new order costs a stop the traveler picked (it would close before they get there, or the day would run
+// past the time back to the ship, train or flight), one notice names it, with "Put back" and "Keep new order". The
+// safety margin never gives: in an order that doesn't fit, the stop drops, never the time back.
+// A day marked ready asks first; changing it takes the heart off. "Use Kairoute's best order" goes back to the app's.
+const gripSVG = `<svg class="gripico" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><circle cx="9" cy="6" r="1.7"/><circle cx="15" cy="6" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="18" r="1.7"/><circle cx="15" cy="18" r="1.7"/></g></svg>`;
+const dragHandle = s => `<button type="button" class="draghandle" data-drag="${esc(s.id)}" aria-label="Move ${esc(s.name)}: drag, or use the up and down arrow keys" title="Drag to change the order">${gripSVG}</button>`;
+// Full details or Compact (Richard, Nov 17: "It's hard to drag the stops when it's fully open"). Compact shows each
+// row's name, time and length, and the rides as one short line, with the drag handles; Full details shows everything
+// and no handles. The choice is the viewer's own and is remembered on the device.
+const TLVIEW_KEY = "kairoute.tlview";
+let tlViewMem = null;
+function tlCompact() { if (tlViewMem == null) { try { tlViewMem = localStorage.getItem(TLVIEW_KEY) === "compact"; } catch (e) { tlViewMem = false; } } return tlViewMem; }
+function setTlCompact(on) { tlViewMem = !!on; try { localStorage.setItem(TLVIEW_KEY, on ? "compact" : "full"); } catch (e) {} }
+function orderLine(d, plan) {
+  const c = tlCompact(), own = (Array.isArray(d.order) && d.order.length > 1) || (d.mealAt && Object.keys(d.mealAt).length);
+  // Full details / Compact (drag to reorder) is one item in the Day plan's More menu, so the stops start right under
+  // the summary (outside review, Nov 20: on a phone the first screen showed no stops).
+  const seg = c ? `<p class="ordline hint"><span>Drag a stop or lunch by its handle to change the order. Lunch moves with your route by itself.</span> <button type="button" class="linkbtn" data-act="tlview" data-v="full">Done</button></p>` : "";
+  const line = own
+    ? `<p class="ordline">You set the order${d.mealAt && Object.keys(d.mealAt).length ? " and where you eat" : " of the stops"}; the times follow it.${plan && plan.orderExtra > 0 ? ` <b>This order adds about ${dur(plan.orderExtra)} of travel.</b>` : ""} <button type="button" class="linkbtn" data-act="orderreset">Use Kairoute's best order</button></p>`
+    : "";
+  return seg + line;
+}
+const pickedOut = (d, pl) => pl && !pl.error ? (pl.dropped || []).filter(x => (d.selected || []).includes(x.id)).map(x => x.name) : [];
+// The heads-up notice (shared with the shorter-day question: askNote).
+function orderNote(d, plan) {
+  if (d.askReady) return askNote("orderask readyask", "This day is marked ready. Change the order of its stops anyway? The heart comes off until you mark the day ready again.",
+    ["readyorderno", "Keep it as it was"], ["readyorderyes", "Change the order"]);
+  const p = d.pendingOrder; if (!p) return "";
+  const out = new Set(pickedOut(d, plan)), names = (p.names || []).filter(n => out.has(n));
+  if (!names.length) return "";
+  const one = names.length === 1;
+  const why = d.type === "port" && d.allAboard ? `before you have to head back to the ship (all aboard ${esc(d.allAboard)})` : hardEnd(d) ? "before you have to leave for your ship, train or flight" : "in today's time";
+  return askNote("orderask", `In this order, ${namesHTML(names)} no longer ${one ? "fits" : "fit"} ${why}, or would be closed by the time you get there. Put the stops back the way they were, or keep the new order without ${one ? "it" : "them"}?`,
+    ["orderback", "Put back"], ["orderkeep", "Keep new order"]);
+}
+// ids: the new order of the day's stops, or null for Kairoute's own order. meals: where the traveler put each meal
+// ({ Lunch: stop id it follows, or "^" before the first stop }); left out, the meals stay as they are.
+function reorderStops(d, ids, meals) {
+  if (!d) return;
+  if (meals === undefined) meals = d.mealAt || null;
+  if (d.ready && readyState(d)) { d.askReady = { order: ids, meals }; save(); render(); return; }
+  const lost0 = pickedOut(d, buildPlan(d)), prev = Array.isArray(d.order) ? d.order.slice() : null, prevMeals = d.mealAt ? Object.assign({}, d.mealAt) : null;
+  if (ids && ids.length > 1) d.order = ids.slice(); else delete d.order;
+  if (meals && Object.keys(meals).length) d.mealAt = Object.assign({}, meals); else delete d.mealAt;
+  delete d.pendingOrder;
+  const lost = pickedOut(d, buildPlan(d)).filter(n => !lost0.includes(n));
+  if (lost.length) d.pendingOrder = { prev, prevMeals, names: lost };
+  save(); render();
+}
+const stopIds = () => [...document.querySelectorAll(".timeline .tl[data-stop]")].map(r => r.dataset.stop);
+// Where a meal lands: right after the stop before it ("^" when it comes before every stop).
+const mealSpot = (label, at) => { const ids = stopIds(); return Object.assign({}, day().mealAt || {}, { [label]: at === 0 ? "^" : ids[at - 1] }); };
+// Keyboard: the arrow keys move the focused stop (or meal) one place, and focus stays on it.
+function moveBy(id, by) {
+  if (id.startsWith("meal:")) {
+    const label = id.slice(5), rows = [...document.querySelectorAll(".timeline .tl[data-stop], .timeline .tl[data-meal]")];
+    const mi = rows.findIndex(r => r.dataset.meal === label); if (mi < 0) return;
+    const before = rows.slice(0, mi).filter(r => r.dataset.stop).length, at = before + by;
+    if (at < 0 || at > stopIds().length) return;
+    reorderStops(day(), Array.isArray(day().order) ? day().order : null, mealSpot(label, at));
+  } else {
+    const ids = stopIds(), i = ids.indexOf(id), j = i + by; if (i < 0 || j < 0 || j >= ids.length) return;
+    ids.splice(j, 0, ids.splice(i, 1)[0]); reorderStops(day(), ids);
+  }
+  requestAnimationFrame(() => { const h = document.querySelector(`.draghandle[data-drag="${CSS.escape(id)}"]`); if (h) h.focus(); });
+}
+// Finger or mouse: the stop follows the pointer; a line shows where it will land; the list scrolls near the edges.
+let dragSt = null;
+function dragStart(e, h) {
+  const row = h.closest(".tl[data-stop], .tl[data-meal]"); if (!row || dragSt) return;
+  e.preventDefault(); try { h.setPointerCapture(e.pointerId); } catch (x) {}
+  const sc = row.closest(".pane") || null;
+  dragSt = { id: row.dataset.stop, meal: row.dataset.meal || null, row, h, y0: e.clientY, s0: sc ? sc.scrollTop : window.scrollY, sc, to: null, y: e.clientY, raf: 0 };
+  row.classList.add("dragging"); document.body.classList.add("dragging-on");
+}
+function dragTarget() {
+  const st = dragSt, rows = [...document.querySelectorAll(".timeline .tl[data-stop]")].filter(r => r !== st.row);
+  let at = rows.length; for (let i = 0; i < rows.length; i++) { const r = rows[i].getBoundingClientRect(); if (st.y < r.top + r.height / 2) { at = i; break; } }
+  document.querySelectorAll(".tl.dropat, .tl.dropend").forEach(r => r.classList.remove("dropat", "dropend"));
+  if (rows[at]) rows[at].classList.add("dropat"); else if (rows.length) rows[rows.length - 1].classList.add("dropend");
+  st.to = at;
+}
+function dragPaint() {
+  const st = dragSt; if (!st) return; st.raf = 0;
+  const scNow = st.sc ? st.sc.scrollTop : window.scrollY;
+  st.row.style.transform = `translateY(${st.y - st.y0 + scNow - st.s0}px)`;
+  dragTarget();
+  // Near the top or bottom edge, scroll so any stop can be reached in a long day.
+  const box = st.sc ? st.sc.getBoundingClientRect() : { top: 0, bottom: innerHeight };
+  const pinned = document.querySelector(".dayrow.pinned, #cdCard.pinned > summary"), top = Math.max(box.top, pinned ? pinned.getBoundingClientRect().bottom : 0);
+  const v = st.y < top + 70 ? -12 : st.y > box.bottom - 90 ? 12 : 0;
+  if (v) { if (st.sc) st.sc.scrollTop += v; else window.scrollBy(0, v); st.raf = requestAnimationFrame(dragPaint); }
+}
+function dragMove(e) { const st = dragSt; if (!st) return; e.preventDefault(); st.y = e.clientY; if (!st.raf) st.raf = requestAnimationFrame(dragPaint); }
+// The drop lands where the finger is let go (Nov 19, Richard: "not allowing you to drop it where you want it"): the spot
+// is worked out again from the last finger position at the moment of release, not left to the next screen paint (on a
+// busy phone the finger is often lifted before that paint, and the stop landed where it was a moment earlier, or nowhere).
+function dragEnd(cancel, e) {
+  const st = dragSt; if (!st) return;
+  if (!cancel) { if (e && KEngine.fin(e.clientY)) st.y = e.clientY; dragTarget(); }
+  dragSt = null;
+  if (st.raf) cancelAnimationFrame(st.raf);
+  st.row.classList.remove("dragging"); st.row.style.transform = ""; document.body.classList.remove("dragging-on");
+  document.querySelectorAll(".tl.dropat, .tl.dropend").forEach(r => r.classList.remove("dropat", "dropend"));
+  if (cancel || st.to == null) return;
+  if (st.meal) { const was = [...document.querySelectorAll(".timeline .tl[data-stop], .timeline .tl[data-meal]")], mi = was.indexOf(st.row), now = was.slice(0, mi).filter(r => r.dataset.stop).length;
+    if (st.to !== now) reorderStops(day(), Array.isArray(day().order) ? day().order : null, mealSpot(st.meal, st.to)); return; }
+  const ids = stopIds(), i = ids.indexOf(st.id); if (i < 0) return;
+  const rest = ids.filter(x => x !== st.id); rest.splice(st.to, 0, st.id);
+  if (rest.join("|") !== ids.join("|")) reorderStops(day(), rest);
+}
+if (typeof document !== "undefined") {
+  document.addEventListener("pointerdown", e => { const h = e.target.closest && e.target.closest(".draghandle"); if (h && (e.button === 0 || e.pointerType !== "mouse")) dragStart(e, h); });
+  document.addEventListener("pointermove", dragMove, { passive: false });
+  document.addEventListener("pointerup", e => dragEnd(false, e));
+  document.addEventListener("pointercancel", () => dragEnd(true));
+  document.addEventListener("keydown", e => {
+    if (dragSt && e.key === "Escape") { dragEnd(true); return; }
+    const h = e.target.closest && e.target.closest(".draghandle"); if (!h) return;
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") { e.preventDefault(); moveBy(h.dataset.drag, e.key === "ArrowUp" ? -1 : 1); }
+  });
+  document.addEventListener("click", e => {
+    const t = e.target.closest && e.target.closest("[data-act]"); if (!t) return;
+    const act = t.dataset.act, d = day(); if (!d) return;
+    if (act === "tlview") { // the switch stays where it was on screen, so the day doesn't jump away from the finger
+      const y0 = t.getBoundingClientRect().top; setTlCompact(t.dataset.v === "compact"); render();
+      const b = document.querySelector(`.tlview [data-v="${t.dataset.v}"]`); if (b) { window.scrollBy(0, b.getBoundingClientRect().top - y0); b.focus({ preventScroll: true }); }
+      return;
+    }
+    if (act === "orderreset") reorderStops(d, null, null);
+    else if (act === "orderkeep") { delete d.pendingOrder; d.orderOk = true; save(); render(); } // what no longer fits comes off the picks, with the usual note to fit it back in
+    else if (act === "orderback") { const p = d.pendingOrder; if (p && p.prev && p.prev.length > 1) d.order = p.prev; else delete d.order; if (p && p.prevMeals) d.mealAt = p.prevMeals; else delete d.mealAt; delete d.pendingOrder; save(); render(); }
+    else if (act === "readyorderno") { delete d.askReady; save(); render(); }
+    else if (act === "readyorderyes") { const a = d.askReady; delete d.askReady; delete d.ready; reorderStops(d, a ? a.order : null, a ? a.meals || null : null); readyCheckAll(); }
+  });
+}
+if (typeof window !== "undefined") window.__kairouteOrder = { meals: i => trip.days[i].mealAt || null, ids: stopIds, set: (i, ids) => { trip.active = i; reorderStops(trip.days[i], ids); }, get: i => trip.days[i].order || null, pending: i => trip.days[i].pendingOrder || null };

@@ -1,0 +1,34 @@
+{
+ "note": "Latest fault audit on a FRESH set of random planted bugs (tools/truth/fault-audit.cjs, .github/workflows/fault-audit.yml). Read by tools/truth/readiness-score.cjs. Update after each audit run: caught of planted, per area. 'caught' counts only bugs a rule check caught: a bug noticed ONLY by the plan ledger (tools/truth/plan-ledger.cjs, a changed plan someone could accept with --accept) is not counted, since the ledger says something changed, not that it is wrong.",
+ "run": "45526721276",
+ "seed": 49,
+ "build": "3aac6d63",
+ "date": "2026-11-24",
+ "target": 90,
+ "areas": {
+  "leave-by and deadlines": {
+   "planted": 20,
+   "caught": 12
+  },
+  "rides": {
+   "planted": 20,
+   "caught": 12
+  },
+  "opening hours": {
+   "planted": 20,
+   "caught": 13
+  },
+  "screen rules": {
+   "planted": 20,
+   "caught": 10
+  },
+  "day planning and lunch": {
+   "planted": 20,
+   "caught": 7
+  },
+  "names and places": {
+   "planted": 20,
+   "caught": 7
+  }
+ }
+}

@@ -1,0 +1,824 @@
+{
+ "id": "colosseum",
+ "v": 1,
+ "city": "rome",
+ "title": "Colosseum and Roman Forum",
+ "match": {
+  "ids": [
+   "colosseum"
+  ],
+  "names": [
+   "colosseum",
+   "colosseo",
+   "roman forum",
+   "foro romano",
+   "palatine",
+   "arch of titus",
+   "arch of constantine",
+   "mamertine"
+  ],
+  "wikidata": [
+   "Q10285",
+   "Q180212",
+   "Q200642",
+   "Q723887",
+   "Q5786",
+   "Q1035634"
+  ]
+ },
+ "checked": "2026-11-22",
+ "claims": {
+  "heat": {
+   "label": "supported",
+   "says": "Rome's summers are hot and sunny, and the heat makes long daytime walking hard; early mornings and late evenings are better.",
+   "src": [
+    "wv-rome"
+   ],
+   "quote": [
+    "Summer presents a pronounced aridity in which hot, sunny conditions prevail. The heat obstacles certain sightseeing activities which involve too much walking during the day, but early mornings and late nights can be wonderful."
+   ]
+  },
+  "water": {
+   "label": "supported",
+   "says": "Rome's street drinking fountains, the nasoni, give free fresh water that is safe to drink.",
+   "src": [
+    "wv-rome"
+   ],
+   "quote": [
+    "Water is free at designated water fountains, called \"nasone\" (big nose).",
+    "It's fresh spring water coming from the famous underground springs of Rome and is safe to drink."
+   ]
+  },
+  "built": {
+   "label": "supported",
+   "says": "The Colosseum was begun under the emperor Vespasian in 72 and completed in AD 80 under his son Titus.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "Construction began under Emperor Vespasian (r. 69–79 AD) in 72 and was completed in AD 80 under his successor and heir, Titus",
+    "The top level was finished by his son, Titus, in 80"
+   ]
+  },
+  "largest": {
+   "label": "supported",
+   "says": "It is the largest ancient amphitheatre ever built.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "It is the largest ancient amphitheatre ever built, and is the largest standing amphitheatre in the world."
+   ]
+  },
+  "crowd": {
+   "label": "estimate",
+   "says": "It could hold an estimated 50,000 to 80,000 spectators.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "It could hold an estimated 50,000 to 80,000 spectators at various points in its history"
+   ]
+  },
+  "shows": {
+   "label": "supported",
+   "says": "It was used for gladiator fights, animal hunts, executions, re-enacted battles and dramas from mythology.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "it was used for gladiatorial contests and public spectacles including animal hunts, executions, re-enactments of famous battles, dramas based on Roman mythology"
+   ]
+  },
+  "nero-lake": {
+   "label": "supported",
+   "says": "It stands where Nero had made a private lake for his palace, the Domus Aurea; Vespasian filled it in, which can be seen as giving the land back to the people.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "The lake was filled in and the land reused as the location for the new Flavian Amphitheatre.",
+    "Vespasian's decision to build the Colosseum on the site of Nero's lake can be seen as a populist gesture of returning to the people an area of the city which Nero had appropriated for his own use."
+   ]
+  },
+  "name": {
+   "label": "supported",
+   "says": "The name Colosseum is believed to come from a colossal bronze statue of Nero that stood beside it.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "The name Colosseum is believed to be derived from a colossal statue of Nero"
+   ]
+  },
+  "jerusalem": {
+   "label": "supported",
+   "says": "Building was funded by spoils taken from the Jewish Temple after the siege of Jerusalem in AD 70; a reconstructed inscription says Vespasian built it from his general's share of the booty.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "Construction was funded by the opulent spoils taken from the Jewish Temple after the First Jewish–Roman War in 70 AD led to the Siege of Jerusalem.",
+    "According to a reconstructed inscription found on the site, \"the emperor Vespasian ordered this new amphitheatre to be erected from his general's share of the booty.\""
+   ]
+  },
+  "north-wall": {
+   "label": "supported",
+   "says": "The north side of the outer wall still stands; the triangular brick wedges at each end are modern, from the early 1800s.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "The north side of the perimeter wall is still standing; the distinctive triangular brick wedges at each end are modern additions, having been constructed in the early 19th century"
+   ]
+  },
+  "holes": {
+   "label": "supported",
+   "says": "Medieval scavengers hacked out the iron clamps that held the stones, leaving the pockmarks still seen on the walls.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "The iron clamps which held the stonework together were pried or hacked out of the walls, leaving numerous pockmarks which still scar the building today."
+   ]
+  },
+  "quarry": {
+   "label": "supported",
+   "says": "The great earthquake of 1349 brought down the outer south side, and much of the fallen stone was reused for palaces and churches around Rome.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "Severe damage was inflicted on the Colosseum by the great earthquake in 1349, causing the outer south side, lying on a less stable alluvial terrain, to collapse. Much of the tumbled stone was reused to build palaces, churches, hospitals and other buildings elsewhere in Rome."
+   ]
+  },
+  "velarium": {
+   "label": "supported",
+   "says": "Sailors from the fleet at Misenum worked a huge retractable awning, the velarium, that kept sun and rain off the crowd.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "They originally supported a retractable awning, known as the velarium, that kept the sun and rain off spectators.",
+    "Sailors, specially enlisted from the Roman naval headquarters at Misenum and housed in the nearby Castra Misenatium, were used to work the velarium."
+   ]
+  },
+  "arena": {
+   "label": "supported",
+   "says": "The arena was a wooden floor covered in sand; arena is Latin for sand.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "It comprised a wooden floor covered by sand (the Latin word for sand is harena or arena)"
+   ]
+  },
+  "hypogeum": {
+   "label": "supported",
+   "says": "Domitian added the hypogeum, two levels of tunnels and cages under the floor where gladiators and animals waited; lifts and pulleys raised animals and scenery up into the arena.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "The hypogeum was not part of the original construction but was ordered to be built by Domitian.",
+    "It consisted of a two-level subterranean network of tunnels and cages beneath the arena where gladiators and animals were held before contests began.",
+    "Elevators and pulleys raised and lowered scenery and props, as well as lifting caged animals to the surface for release."
+   ]
+  },
+  "animals": {
+   "label": "supported",
+   "says": "Dio Cassius says over 9,000 wild animals were killed at the opening games.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "Dio Cassius recounts that over 9,000 wild animals were killed during the inaugural games of the amphitheatre."
+   ]
+  },
+  "sea": {
+   "label": "disputed",
+   "says": "Ancient writers say the arena was flooded for mock sea battles in its early days; historians debate how that could have worked.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "During the early days of the Colosseum, ancient writers recorded that the building was used for naumachiae (more properly known as navalia proelia) or simulated sea battles.",
+    "This has been the subject of some debate among historians"
+   ]
+  },
+  "end-games": {
+   "label": "supported",
+   "says": "Honorius banned gladiator fights in 399 and again in 404; they are last mentioned around 435.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "Honorius banned the practice of gladiator fights in 399 and again in 404. Gladiatorial fights are last mentioned around 435."
+   ]
+  },
+  "martyrs": {
+   "label": "disputed",
+   "says": "In 1749 Pope Benedict XIV declared the Colosseum sanctified by Christian martyrs and set up Stations of the Cross, but there is no historical evidence for the claim; some martyrs may plausibly have died here.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "In 1749, Pope Benedict XIV endorsed the view that the Colosseum was a sacred site where early Christians had been martyred. He forbade the use of the Colosseum as a quarry and consecrated the building to the Passion of Christ and installed Stations of the Cross",
+    "However, there is no historical evidence to support Benedict's claim",
+    "other than the reasonably plausible conjecture that some of the many martyrs may well have been martyred there."
+   ]
+  },
+  "good-friday": {
+   "label": "supported",
+   "says": "A cross stands in the Colosseum, and every Good Friday the pope leads a torchlit Way of the Cross here.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "A Christian cross stands in the Colosseum",
+    "each Good Friday the pope leads a torchlit Catholic \"Way of the Cross\" procession that starts in the area around the Colosseum"
+   ]
+  },
+  "gold": {
+   "label": "supported",
+   "says": "Rome lights the Colosseum gold instead of white whenever a death sentence anywhere is commuted or a place abolishes the death penalty.",
+   "src": [
+    "wp-colosseum"
+   ],
+   "quote": [
+    "the local authorities of Rome change the color of the Colosseum's night time illumination from white to gold whenever a person condemned to the death penalty anywhere in the world gets their sentence commuted or is released, or if a jurisdiction abolishes the death penalty."
+   ]
+  },
+  "constantine": {
+   "label": "supported",
+   "says": "The Arch of Constantine, between the Colosseum and the Palatine, was commissioned by the Senate for Constantine's victory over Maxentius at the Milvian Bridge in 312 and dedicated in 315; it is the largest Roman triumphal arch.",
+   "src": [
+    "wp-arch-constantine"
+   ],
+   "quote": [
+    "The arch was commissioned by the Roman Senate to commemorate Constantine's victory over Maxentius at the Battle of the Milvian Bridge in AD 312. Situated between the Colosseum and the Palatine Hill",
+    "Dedicated in 315, it is the largest Roman triumphal arch"
+   ]
+  },
+  "spolia": {
+   "label": "supported",
+   "says": "Much of its sculpture was taken from older monuments of Trajan, Hadrian and Marcus Aurelius, with the emperors' heads recut as Constantine.",
+   "src": [
+    "wp-arch-constantine"
+   ],
+   "quote": [
+    "much of the sculptural decoration consists of reliefs and statues removed from earlier triumphal monuments dedicated to Trajan (98–117), Hadrian (117–138) and Marcus Aurelius (161–180), with the portrait heads replaced with his own."
+   ]
+  },
+  "instinctu": {
+   "label": "disputed",
+   "says": "The inscription credits the victory to inspiration by the divine, a vague phrase usually read as a sign of Constantine's shifting religion; Christian writers tell of a vision during the campaign.",
+   "src": [
+    "wp-arch-constantine"
+   ],
+   "quote": [
+    "The words instinctu divinitatis (\"inspired by the divine\") have been greatly commented on. They are usually read as sign of Constantine's shifting religious affiliation: The Christian tradition, most notably Lactantius and Eusebius of Caesarea, relate the story of a vision of God to Constantine during the campaign",
+    "the vague wording of the inscription can be seen as the attempt to please all possible readers"
+   ]
+  },
+  "titus": {
+   "label": "supported",
+   "says": "The Arch of Titus, on the Via Sacra at the edge of the Forum, was built by Domitian around AD 81 after his brother Titus died, honoring Titus and the victory over the Jewish revolt in Judaea.",
+   "src": [
+    "wp-arch-titus"
+   ],
+   "quote": [
+    "located on the Via Sacra, Rome, just to the south-east of the Roman Forum. It was constructed in c. 81 AD by Emperor Domitian shortly after the death of his older brother Titus to commemorate Titus's official deification or consecratio and the victory of Titus together with their father, Vespasian, over the Jewish rebellion in Judaea."
+   ]
+  },
+  "titus-panel": {
+   "label": "supported",
+   "says": "The south inner panel shows the spoils of the Temple in Jerusalem carried in the triumph of AD 71: the golden menorah, the trumpets and the Table of Showbread.",
+   "src": [
+    "wp-arch-titus"
+   ],
+   "quote": [
+    "The south inner panel depicts the spoils taken from the Temple in Jerusalem. The golden candelabrum or Menorah is the main focus and is carved in deep relief. Other sacred objects being carried in the triumphal procession are the Gold Trumpets, the fire pans for removing the ashes from the altar, and the Table of Showbread.",
+    "The arch contains panels depicting the triumphal procession celebrated in 71 AD after the Roman victory culminating in the fall of Jerusalem"
+   ]
+  },
+  "titus-north": {
+   "label": "supported",
+   "says": "The north inner panel shows Titus in a four-horse chariot, crowned by a winged Victory.",
+   "src": [
+    "wp-arch-titus"
+   ],
+   "quote": [
+    "The north inner panel depicts Titus as triumphator",
+    "Winged Victory crowns him with a laurel wreath."
+   ]
+  },
+  "ochre": {
+   "label": "supported",
+   "says": "In 2012 traces of yellow ochre paint were found on the menorah; the spoils were probably once painted gold.",
+   "src": [
+    "wp-arch-titus"
+   ],
+   "quote": [
+    "These spoils were likely originally colored gold, with a blue background. In 2012 the Arch of Titus Digital Restoration Project discovered remains of yellow ochre paint on the menorah relief."
+   ]
+  },
+  "diaspora": {
+   "label": "supported",
+   "says": "The arch became a symbol of the Jewish diaspora, and its menorah was the model for the emblem of the State of Israel.",
+   "src": [
+    "wp-arch-titus"
+   ],
+   "quote": [
+    "It became a symbol of the Jewish diaspora, and the menorah depicted on the arch served as the model for the menorah used as the emblem of the State of Israel."
+   ]
+  },
+  "ban": {
+   "label": "supported",
+   "says": "Rome's Chief Rabbinate once banned Jews from walking under the arch; the ban was lifted after Israel's founding and made public at Hanukkah in 1997.",
+   "src": [
+    "wp-arch-titus"
+   ],
+   "quote": [
+    "a local ban on Jews walking under the arch was placed on the monument by Rome's Chief Rabbinate; this was rescinded on the foundation of the State of Israel in 1947, and at a Hanukkah event in 1997 the change was made public."
+   ]
+  },
+  "forum": {
+   "label": "supported",
+   "says": "The Forum, in the valley between the Palatine and Capitoline hills, was for centuries the center of daily life in Rome: processions, elections, speeches, trials and business.",
+   "src": [
+    "wp-forum"
+   ],
+   "quote": [
+    "For centuries, the Forum was the centre of day-to-day life in Rome: the site of triumphal processions and elections; the venue for public speeches, criminal trials and gladiatorial matches; and the nucleus of commercial and legal affairs.",
+    "Located in the small valley between the Palatine and Capitoline Hills"
+   ]
+  },
+  "marsh": {
+   "label": "supported",
+   "says": "The Forum was once a marshy lake, drained by the great sewer, the Cloaca Maxima.",
+   "src": [
+    "wp-forum"
+   ],
+   "quote": [
+    "Originally, the site of the Forum had been a marshy lake where waters from the surrounding hills drained. This was drained by the Tarquins with the Cloaca Maxima."
+   ]
+  },
+  "paving": {
+   "label": "supported",
+   "says": "The last travertine paving of the Forum, still visible, dates from Augustus.",
+   "src": [
+    "wp-forum"
+   ],
+   "quote": [
+    "Its final travertine paving, still visible, dates from the reign of Augustus."
+   ]
+  },
+  "triumph": {
+   "label": "supported",
+   "says": "Victorious generals came down the Via Sacra into the Forum in their triumphs.",
+   "src": [
+    "wp-forum"
+   ],
+   "quote": [
+    "proceeding from the Velian Hill down the Via Sacra and into the Forum"
+   ]
+  },
+  "caesar": {
+   "label": "supported",
+   "says": "In 44 BC Mark Antony gave his funeral speech for Julius Caesar from the Rostra, and Caesar's body was burned on a spot across from it, where Augustus later built the Temple of the Deified Caesar.",
+   "src": [
+    "wp-forum"
+   ],
+   "quote": [
+    "That year, two events were witnessed by the Forum, perhaps the most famous ever to transpire there: Marc Antony's funeral oration for Caesar (immortalized in Shakespeare's famous play) was delivered from the partially completed speaker's platform known as the New Rostra and the public burning of Caesar's body occurred on a site directly across from the Rostra around which the Temple to the Deified Caesar was subsequently built by his great-nephew Octavius (Augustus).",
+    "before his assassination in 44 BC"
+   ]
+  },
+  "saturn": {
+   "label": "supported",
+   "says": "Eight columns are all that remain of the Temple of Saturn, one of the oldest buildings in the Forum; it also worked as a bank.",
+   "src": [
+    "wp-forum"
+   ],
+   "quote": [
+    "The eight remaining columns are all that is left of the illustrious temple.",
+    "it stands as one of the oldest buildings in the Forum",
+    "Since the Temple of Saturn also functioned as a bank"
+   ]
+  },
+  "severus": {
+   "label": "supported",
+   "says": "The white marble Arch of Septimius Severus at the northwest end, by the Capitoline, was dedicated in 203.",
+   "src": [
+    "wp-forum"
+   ],
+   "quote": [
+    "The white marble Arch of Septimius Severus was added at the northwest end of the Forum close to the foot of the Capitoline Hill",
+    "It was dedicated in 203 AD"
+   ]
+  },
+  "stripped": {
+   "label": "supported",
+   "says": "Between 1540 and 1550 Pope Paul III stripped the Forum for building stone for the new St Peter's.",
+   "src": [
+    "wp-forum"
+   ],
+   "quote": [
+    "particularly in the decade between 1540 and 1550, when Pope Paul III exploited it intensively for material to build the new Saint Peter's Basilica."
+   ]
+  },
+  "palatine": {
+   "label": "supported",
+   "says": "The Palatine, the centremost of Rome's seven hills, is one of the oldest parts of the city; emperors from Augustus on built their palaces there, and the word palace comes from its name.",
+   "src": [
+    "wp-palatine"
+   ],
+   "quote": [
+    "which is the centremost of the seven hills of Rome, is one of the most ancient parts of the city",
+    "Imperial palaces were built there, starting with Augustus.",
+    "The name of the hill is the etymological origin of the word palace"
+   ]
+  },
+  "palatine-early": {
+   "label": "supported",
+   "says": "Excavations show people have lived on the Palatine since the 900s BC.",
+   "src": [
+    "wp-palatine"
+   ],
+   "quote": [
+    "Excavations show that people have lived in the area since the 10th century BC."
+   ]
+  },
+  "wolf": {
+   "label": "legend",
+   "says": "In Roman myth the she-wolf found Romulus and Remus in a cave on the Palatine, the Lupercal, and Romulus later founded the city on this hill.",
+   "src": [
+    "wp-palatine"
+   ],
+   "quote": [
+    "According to Roman mythology, the Palatine Hill was the location of the cave, known as the Lupercal, where Romulus and Remus were found by the she-wolf Lupa that kept them alive. This is also the hill on which the adult Romulus chose to found the city"
+   ]
+  },
+  "mamertine": {
+   "label": "supported",
+   "says": "The Mamertine Prison, the ancient Tullianum, lies on the northeastern slope of the Capitoline facing the Senate House; it was a holding cell before executions, and the Gaulish leader Vercingetorix was executed there.",
+   "src": [
+    "wp-mamertine"
+   ],
+   "quote": [
+    "was situated on the northeastern slope of the Capitoline Hill, facing the Curia",
+    "the Tullianum was used as a jail or holding cell for short periods before executions and as a site for executions.",
+    "Vercingetorix, leader of the Gauls during the Gallic War. Executed at Caesar's Triumph in 46 BC."
+   ]
+  },
+  "mamertine-peter": {
+   "label": "tradition",
+   "says": "Tradition says Peter was held in the Tullianum and that a spring appeared miraculously so he could baptize; the Catholic Encyclopedia notes the spring existed long before, and there is little first-hand account of Peter's imprisonment there.",
+   "src": [
+    "wp-mamertine"
+   ],
+   "quote": [
+    "It has been long referenced that St. Peter was imprisoned at the Tullianum, and that the spring in the bottom of the pit came into existence miraculously to enable him to conduct baptisms, but the Catholic Encyclopedia points out that the spring had existed long before, and that there is little first hand account of  St. Peter's imprisonment there"
+   ]
+  },
+  "mamertine-paul": {
+   "label": "tradition",
+   "says": "Paul is said to have been held here too, though he awaited trial in a house in the Campus Martius.",
+   "src": [
+    "wp-mamertine"
+   ],
+   "quote": [
+    "Although Saint Paul is said to have been held in Mamertine Prison, he awaited trial in a house in the southern Campus Martius"
+   ]
+  },
+  "acts-house": {
+   "label": "scripture",
+   "says": "Acts 28:30: Paul dwelt two whole years in his own hired house and received all who came to him.",
+   "src": [
+    "kjv-acts28c"
+   ],
+   "quote": [
+    "\"chapter\":28,\"verse\":30,\"text\":\"And Paul dwelt two whole years in his own hired house, and received all that came in unto him,"
+   ]
+  },
+  "churches-above": {
+   "label": "supported",
+   "says": "Two churches now stand over the prison, San Giuseppe dei Falegnami above and San Pietro in Carcere below.",
+   "src": [
+    "wp-mamertine"
+   ],
+   "quote": [
+    "is currently occupied by two superimposed churches: San Giuseppe dei Falegnami (upper) and San Pietro in Carcere (lower)."
+   ]
+  }
+ },
+ "parts": [
+  {
+   "name": "Outside the Colosseum",
+   "stand": "Stand on the north side of the Colosseum, where the outer wall still rises to its full height, and look up at it.",
+   "paras": [
+    {
+     "t": "Here it is, the Colosseum. Begun under the emperor Vespasian in 72, and finished in AD 80 under his son Titus, it's the largest amphitheatre the ancient world ever built.",
+     "c": [
+      "built",
+      "largest"
+     ],
+     "level": 1
+    },
+    {
+     "t": "A word before we start: expect lots of walking on uneven stone, often in full sun. Good shoes, slow steps, and water.",
+     "c": [
+      "heat"
+     ],
+     "level": 1
+    },
+    {
+     "t": "In summer especially, the heat makes long walks in the middle of the day hard going; early morning and evening are kinder. The old street fountains, the nasoni, give free spring water that's safe to drink, so fill a bottle.",
+     "c": [
+      "heat",
+      "water"
+     ],
+     "level": 2
+    },
+    {
+     "t": "This side, the north side, is the part of the outer wall still standing. The sloping brick wedges at each end aren't Roman; they were added in the early 1800s to hold it up.",
+     "c": [
+      "north-wall"
+     ],
+     "level": 3
+    },
+    {
+     "t": "And see all those holes pocking the stone? The blocks were once held together with iron clamps. In the Middle Ages people hacked the iron out, and these scars are what's left.",
+     "c": [
+      "holes"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Here's an uncomfortable fact. The building was paid for with spoils taken from the Temple in Jerusalem, after the city fell in AD 70. A reconstructed inscription found here says Vespasian built it from his general's share of the booty. Keep that in mind; we'll see the same story carved in stone later on.",
+     "c": [
+      "jerusalem"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The site itself made a point. Nero had taken this ground for a private lake beside his palace. Vespasian filled the lake in, which can be seen as handing the land back to the people. Even the name Colosseum is believed to come from a giant bronze statue of Nero that stood next to it.",
+     "c": [
+      "nero-lake",
+      "name"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Why is so much of it missing? The great earthquake of 1349 brought down the outer south side, and the fallen stone was carted off to build palaces and churches all over Rome.",
+     "c": [
+      "quarry"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "Inside the arena",
+   "stand": "Go inside and find a spot along the rail where you can look down into the maze of walls under the old arena floor.",
+   "paras": [
+    {
+     "t": "Imagine it full. An estimated 50,000 to 80,000 people sat around you, watching gladiators, animal hunts, executions, even re-enacted battles.",
+     "c": [
+      "crowd",
+      "shows"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Those walls below you were hidden under a wooden floor covered in sand. The Latin word for sand is arena. The emperor Domitian added this underground world: two levels of tunnels and cages where gladiators and animals waited. Lifts and pulleys hoisted animals and scenery up into the light.",
+     "c": [
+      "arena",
+      "hypogeum"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The scale of the killing is hard to take in. The historian Dio Cassius says over 9,000 wild animals died in the opening games alone.",
+     "c": [
+      "animals"
+     ],
+     "level": 3
+    },
+    {
+     "t": "On hot days there was shade. Sailors from the navy worked a vast awning, the velarium, to keep sun and rain off the crowd.",
+     "c": [
+      "velarium"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Ancient writers also say the arena was flooded for mock sea battles in the early years. Historians still debate how that could have worked.",
+     "c": [
+      "sea"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Now the cross you may see standing here. Were Christians martyred in this arena? In 1749 Pope Benedict XIV declared that they were, and set up the Stations of the Cross. But historians find no evidence for it, beyond the plausible idea that some martyrs may have died here. Every Good Friday the pope still leads a torchlit Way of the Cross at the Colosseum.",
+     "c": [
+      "martyrs",
+      "good-friday"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The gladiator fights did end. The emperor Honorius banned gladiator fights in 399 and again in 404, and the last mention of them is around 435.",
+     "c": [
+      "end-games"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Arch of Constantine",
+   "stand": "Come back out and walk to the great three-way arch that stands between the Colosseum and the Palatine Hill.",
+   "paras": [
+    {
+     "t": "This is the Arch of Constantine, the largest Roman triumphal arch. The Senate put it up for Constantine's victory over his rival Maxentius at the Milvian Bridge in 312, and dedicated it in 315.",
+     "c": [
+      "constantine"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Look closely at the carvings. Much of it is recycled: reliefs taken from monuments of Trajan, Hadrian and Marcus Aurelius, with the old emperors' heads recut to look like Constantine.",
+     "c": [
+      "spolia"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Up top, the inscription says he won inspired by the divine. Which divine? It doesn't say. Scholars read that vague phrase as a sign of his shifting faith, and it may have been worded to please every reader. Christian writers tell of a vision of God during the campaign.",
+     "c": [
+      "instinctu"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Arch of Titus",
+   "stand": "Walk up the Via Sacra to the single arch; if you can, step into its passage, otherwise look in from the side.",
+   "paras": [
+    {
+     "t": "This is the Arch of Titus, built by his brother Domitian around AD 81, to honor Titus and the crushing of the Jewish revolt in Judaea.",
+     "c": [
+      "titus"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Look at the carved panel on the south wall of this passage. A procession carries the treasures of the Temple in Jerusalem through Rome in triumph: the golden menorah, the trumpets, and the Table of Showbread. The procession took place in AD 71.",
+     "c": [
+      "titus-panel"
+     ],
+     "level": 1
+    },
+    {
+     "t": "On the opposite wall, the other panel shows Titus himself in his four-horse chariot, crowned by a winged Victory.",
+     "c": [
+      "titus-north"
+     ],
+     "level": 3
+    },
+    {
+     "t": "In 2012, researchers found traces of yellow ochre paint on the menorah. The treasures were probably once painted gold.",
+     "c": [
+      "ochre"
+     ],
+     "level": 3
+    },
+    {
+     "t": "For Jews, this arch became a symbol of exile, and its menorah became the model for the emblem of the State of Israel. Rome's Chief Rabbinate once forbade Jews to walk underneath it. That ban was lifted after Israel was founded, and made public at Hanukkah in 1997.",
+     "c": [
+      "diaspora",
+      "ban"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The Roman Forum",
+   "stand": "Walk on down the Via Sacra into the Forum and stop where you can see the long open valley of ruins ahead.",
+   "paras": [
+    {
+     "t": "This valley, between the Palatine and Capitoline hills, was the Forum, for centuries the center of daily life in Rome: elections, speeches, trials, markets.",
+     "c": [
+      "forum"
+     ],
+     "level": 1
+    },
+    {
+     "t": "The stone road under your feet is the Via Sacra, where victorious generals paraded into the Forum. Out in the open square of the Forum, the last travertine paving, still visible, dates from Augustus. The ground is uneven everywhere here, so watch your step.",
+     "c": [
+      "triumph",
+      "paving"
+     ],
+     "level": 2
+    },
+    {
+     "t": "Hard to believe, but this was once a marsh, drained by Rome's great sewer, the Cloaca Maxima.",
+     "c": [
+      "marsh"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Somewhere ahead of you, perhaps the most famous funeral in Rome's history took place. In 44 BC Mark Antony spoke over Julius Caesar's body from the speakers' platform, the Rostra, and Caesar was burned on a spot across from it. Augustus later built the Temple of the Deified Caesar there.",
+     "c": [
+      "caesar"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Look for the eight columns standing together: they're all that's left of the Temple of Saturn, one of the oldest buildings here. It doubled as a bank. And at the far end, by the Capitoline, is the white marble Arch of Septimius Severus, dedicated in 203.",
+     "c": [
+      "saturn",
+      "severus"
+     ],
+     "level": 3
+    },
+    {
+     "t": "Why is so little standing? The worst of it came between 1540 and 1550, when Pope Paul III mined the Forum for stone to build the new Saint Peter's.",
+     "c": [
+      "stripped"
+     ],
+     "level": 3
+    }
+   ]
+  },
+  {
+   "name": "The Palatine Hill",
+   "stand": "Find a spot where you can look up at the Palatine Hill rising above the Forum, or climb it if your ticket allows.",
+   "paras": [
+    {
+     "t": "Above you is the Palatine, the middle one of Rome's seven hills. The emperors built their palaces up there, starting with Augustus, and our word palace comes from its name.",
+     "c": [
+      "palatine"
+     ],
+     "level": 1
+    },
+    {
+     "t": "People have lived on it since the 900s BC. And in Roman myth, this is where the she-wolf found the twins Romulus and Remus in a cave, the Lupercal, and where Romulus later founded the city. It's legend, but it's the story Rome told about itself.",
+     "c": [
+      "palatine-early",
+      "wolf"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "The Mamertine Prison",
+   "stand": "At the far end of the Forum, look to the slope of the Capitoline Hill facing the old Senate House, where two churches stand over the ancient prison.",
+   "paras": [
+    {
+     "t": "Under those churches is the Mamertine Prison, the old Tullianum. It held prisoners briefly before execution; the Gaulish leader Vercingetorix was executed here.",
+     "c": [
+      "mamertine",
+      "churches-above"
+     ],
+     "level": 1
+    },
+    {
+     "t": "Tradition says Peter was held here, and that a spring rose miraculously so he could baptize. But, as the Catholic Encyclopedia points out, the spring was there long before, and there's little first-hand evidence for Peter's stay. Paul is said to have been held here too.",
+     "c": [
+      "mamertine-peter",
+      "mamertine-paul"
+     ],
+     "level": 2
+    },
+    {
+     "t": "The Bible tells only this of Paul's time in Rome. Acts says: Paul dwelt two whole years in his own hired house, and received all that came in unto him.",
+     "c": [
+      "acts-house"
+     ],
+     "level": 2
+    }
+   ]
+  },
+  {
+   "name": "Closing",
+   "stand": "Turn and look back down the Forum toward the Colosseum.",
+   "paras": [
+    {
+     "t": "Here's one last thing to carry home. When a death sentence anywhere in the world is lifted, or a country ends the death penalty, Rome lights the Colosseum gold instead of white. A building raised for killing now keeps watch for lives spared.",
+     "c": [
+      "gold"
+     ],
+     "level": 1
+    }
+   ]
+  }
+ ],
+ "practical": []
+}
