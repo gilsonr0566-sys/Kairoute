@@ -1333,7 +1333,7 @@ function lodgingFor(d, city) {
   const k = cityKeyFor(d) || keyOf(d.destination);
   const L = trip.lodging[k] || { idx: 0 };
   const real = v => v !== null && v !== "" && KEngine.fin(v) && +v !== 0;
-  if (L.idx === "custom" && L.ll && real(L.ll.lat) && real(L.ll.lng)) return { name: String(L.name || "").trim() || "Your hotel", lat: +L.ll.lat, lng: +L.ll.lng };
+  if (L.idx === "custom" && L.ll && real(L.ll.lat) && real(L.ll.lng)) return { name: L.how === "street" ? "your stay on " + String(L.name || "").trim() : String(L.name || "").trim() || "Your hotel", lat: +L.ll.lat, lng: +L.ll.lng };
   const list = pointList(city, "hotel");
   // A hotel typed in (or brought in with a trip) that the map hasn't placed yet never blanks the day (Richard's
   // boarding day, Nov 19: "Choose where you're staying" and nothing else). The day starts from the guide's first
@@ -4056,6 +4056,13 @@ async function buildAllGuides() {
   if (missed.length) aiError = notFoundMsg(missed, buildAgain(missed.length));
   busy = null; render();
 }
+// What the stay field says once the place is found (R-38): which place, and how sure: by its name, at its door, or
+// only its street (the number not on the map), never more than the map said.
+function stayFoundLine(L) {
+  if (L.how === "street") return "Found the street on the map, not number " + esc((L.nums || []).join(" ") || "you typed") + ": your days start from " + esc(L.name) + ". Add a nearby landmark for the exact door.";
+  if (L.how === "door") return "Found on the map: " + esc(L.name) + ".";
+  return "Found on the map: " + esc(L.name) + ".";
+}
 async function geocodeLodging(d) {
   const k = cityKeyFor(d) || keyOf(d.destination);
   const L = trip.lodging[k];
@@ -4063,8 +4070,10 @@ async function geocodeLodging(d) {
   if (!aiReady()) { // no AI: the map's own search finds the hotel by name
     if (!freeAI) return;
     busy = { text: "Finding " + L.name + "…" }; render();
-    const h = await findHotelNoAI(L.name, d); busy = null;
-    if (h) { L.ll = { lat: h.lat, lng: h.lng }; L.name = h.name; save(); } else aiError = "Couldn't find that place on the map. Try the hotel's full name, or add the street.";
+    const typed = L.name, h = await findHotelNoAI(typed, d); busy = null;
+    // R-38: found by name, at its door, or (a short street only) on its street, and the screen says which; else said plainly.
+    if (h && KEngine.fin(h.lat)) { delete L.miss; L.ll = { lat: h.lat, lng: h.lng }; L.typed = typed; L.name = h.name; L.how = h.how; L.nums = h.nums || []; aiError = ""; save(); }
+    else { L.ll = null; L.how = ""; L.typed = typed; aiError = ""; L.miss = h && h.failed ? "The map search didn't answer just now, so " + typed + " isn't placed yet. Tap Find it again in a minute." : "I couldn't find \u201c" + typed + "\u201d in " + bareName(d.destination) + " on the map. Try the name on your booking, or the street and house number. " + (() => { const f = lodgingFor(d, cityFor(d)); return f && f.name ? "Until then your days start from " + f.name + "." : ""; })(); }
     render(); return;
   }
   busy = { text: "Finding " + L.name + "…" }; render();
@@ -6155,8 +6164,8 @@ function renderTrip(d) {
         </div>
         ${needsLodging ? `<div class="field"><label for="f-lodging">Where you're staying in ${esc(d.destination || "this city")}</label>
           <select id="f-lodging">${opts(hotels, L.idx)}<option value="custom" ${L.idx === "custom" ? "selected" : ""}>My hotel or rental…</option></select>
-          ${L.idx === "custom" ? `<div class="ask"><input type="text" id="f-lname" value="${esc(L.name || "")}" placeholder="Hotel name or address"><button type="button" class="btn small" data-act="geo" ${aiReady() || freeAI ? "" : "disabled"}>Find it</button></div>
-          <span class="hint">${L.ll ? "Found on the map: " + esc(L.name) : aiReady() || freeAI ? "Type the name and tap Find it." : (typeof navigator !== "undefined" && navigator.onLine === false ? "Pick an area for now. Finding your exact hotel needs the internet." : "Pick an area for now. Finding your exact hotel isn't possible just now; try again in a few minutes.")}</span>` : `<span class="hint">Used for every day you're in ${esc(d.destination || "this city")}.</span>`}
+          ${L.idx === "custom" ? `<div class="ask"><input type="text" id="f-lname" value="${esc(L.typed || L.name || "")}" placeholder="Hotel name or address"><button type="button" class="btn small" data-act="geo" ${aiReady() || freeAI ? "" : "disabled"}>Find it</button></div>
+          <span class="hint" role="status" data-stay="${L.ll ? L.how || "place" : "none"}">${L.ll ? stayFoundLine(L) : L.miss ? esc(L.miss) : aiReady() || freeAI ? "Type the name and tap Find it." : (typeof navigator !== "undefined" && navigator.onLine === false ? "Pick an area for now. Finding your exact hotel needs the internet." : "Pick an area for now. Finding your exact hotel isn't possible just now; try again in a few minutes.")}</span>` : `<span class="hint">Used for every day you're in ${esc(d.destination || "this city")}.</span>`}
         </div>` : ""}
         <details class="more dayopts" ${d.event ? "open" : ""}><summary>More options for this day</summary>
         ${t === "port" ? `<label class="check"><input type="checkbox" id="f-stayaboard" ${d.aboard ? "checked" : ""}><span>Staying on board this day (not going ashore)</span></label>` : ""}
@@ -7652,7 +7661,8 @@ function readForm() {
     const sel = v("f-lodging"), cur = trip.lodging[lk] || {};
     if (sel === "custom") {
       const nm = g("f-lname") ? v("f-lname").trim() : (cur.name || "");
-      trip.lodging[lk] = { idx: "custom", name: nm, ll: cur.idx === "custom" && cur.name === nm ? cur.ll : null };
+      const same = cur.idx === "custom" && (cur.typed || cur.name) === nm;   // the found place stays while the words typed are unchanged
+      trip.lodging[lk] = same ? cur : { idx: "custom", name: nm, ll: null };
     } else trip.lodging[lk] = { idx: +sel };
   }
 }

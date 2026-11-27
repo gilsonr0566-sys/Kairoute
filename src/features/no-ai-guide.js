@@ -135,16 +135,84 @@ async function srcStarts(label, area, port, centre, d) {
   return starts;
 }
 if (typeof window !== "undefined") window.__kairouteSrcStarts = (label, centre, port) => srcStarts(label, label, port || label, centre, null);
-// The traveler's own hotel, found on the map by name (OpenStreetMap through the helper), with no AI.
+// ---- Where you're staying (rule R-38) ----
+// The traveler's own hotel or rental, found on the map (OpenStreetMap through the helper, no AI) by its name OR by
+// its street address, typed any way a booking shows it: with a house number, a flat or floor ("47/12", "2º Esq",
+// "Apartment 4"), a small typo, or in the local script. Nov 27 (Richard: "find an address for a rental does not
+// work"): the old check kept an answer only when its NAME matched what was typed, or when it was a hotel; a house
+// found by its street and number has no name, so every address was "Couldn't find". The rule, for every city:
+// 1. A place whose name (any of the names the map knows) is like what was typed: found ("place").
+// 2. A house with the house number typed, on a street like the one typed (a street typed in another script counts
+//    when the map answered it inside the city): found at that door ("door").
+// 3. Only the street, with no house of that number on the map: used only when the street is short (800 m end to end
+//    or less), and the screen says so: the street, not the number ("street"). A longer street is not used: a door
+//    somewhere on it is a guess.
+// 4. Anything else is not found, and the screen says so plainly, with the area the day starts from meanwhile. Never
+//    the first hotel the map happened to list.
+// What is shown is in the traveler's language (R-11): the place's English name, or its street and number in Latin
+// letters.
+const STAY_STREET_M = 800, STAY_UNIT = /\b(?:apt|apartment|apartamento|appartamento|appartement|wohnung|flat|unit|suite|ste|room|piso|planta|andar|etage|étage|stiege|stg|stock|tür|door|top|floor|fl)\b\.?\s*[\w\-º°ª]*/gi;
+// One word like another: the same, or a letter or two apart in a longer word (a typo), or the same stem.
+function stayWordLike(a, b) {
+  if (a === b) return true; if (a.length >= 5 && b.length >= 5 && (a.startsWith(b.slice(0, 5)) || b.startsWith(a.slice(0, 5)))) return true;
+  const lim = Math.min(a.length, b.length) >= 7 ? 2 : Math.min(a.length, b.length) >= 4 ? 1 : 0; if (!lim || Math.abs(a.length - b.length) > lim) return false;
+  let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) { const cur = [i]; for (let j = 1; j <= b.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = cur; }
+  return prev[b.length] <= lim;
+}
+// Most (three in four) of the words typed are in the name.
+function stayLike(want, got) {
+  const w = keyOf(String(want || "").replace(/\(.*?\)/g, " ")).split(" ").filter(t => t.length > 1 && !/^\d+[a-z]?$/.test(t) && !SMALL_WORDS.has(t)), g = keyOf(got).split(" ").filter(Boolean);
+  if (!w.length || !g.length) return false;
+  return w.filter(t => g.some(x => stayWordLike(t, x))).length / w.length >= 0.75;
+}
+// What was typed, without the flat, floor or door part (the map has houses, not flats).
+function stayStreetPart(q) {
+  let num = false;
+  return String(q || "").replace(/#\s*\w+/g, " ").replace(STAY_UNIT, " ").replace(/(\d+[a-z]?)\s*\/\s*\d+[a-z]?\b/gi, "$1").split(",").map(s => s.replace(/\s+/g, " ").trim())
+    .filter(s => { if (!s) return false; const unitOnly = /^(\d{1,3}\s*[º°ª]?\s*[a-z]{0,4}\.?|[a-z]{1,4}\.?\s*\d{1,3}[a-z]?|[º°ª]?\s*[a-z]{1,4}\.?)$/i.test(s); if (num && unitOnly) return false; if (/\d/.test(s)) num = true; return true; }).join(", ");
+}
+const stayNums = q => (stayStreetPart(q).match(/\d+[a-z]?/gi) || []).map(x => x.toLowerCase());
+const stayHouse = h => String(h || "").toLowerCase().split(/[;,]/).map(x => x.trim().replace(/\s+/g, "")).filter(Boolean);
+// Which answer the map gave is the traveler's place, and how sure: { p, how: "place" | "door" | "street" } or null.
+function stayPick(q, list) {
+  const ok = (list || []).filter(p => p && KEngine.fin(+p.lat) && KEngine.fin(+p.lng)), street = stayStreetPart(q), nums = stayNums(q), other = nonLatin(q);
+  if (window.__kairoutePlant === "stay-any-hotel") { const h = ok.find(p => /hotel|guest|hostel|apartment/.test((p.kind || "") + " " + (p.cat || ""))); if (h) return { p: h, how: "place" }; }
+  // A street, a boundary or a district is never "the place" by its name: with a house number typed it is at most the
+  // street (Nov 27 live: "Mariahilfer Straße 47/12" answered by the district boundaries named after the street).
+  const area = p => p.cat === "highway" || p.cat === "boundary" || /^(administrative|suburb|neighbourhood|quarter|city_block|city|town|village|hamlet|locality|district|borough|road|street|residential|pedestrian|footway|living_street|tertiary|secondary|primary|trunk|unclassified|service|path|steps)$/.test(p.kind || "");
+  // With a house number typed, a named answer must be at that number (or carry none), and a name that is only the
+  // street's ("Rua Augusta Store" for "Rua Augusta 100") is not the place.
+  const numOk = p => !nums.length || ((!p.house || stayHouse(p.house).some(x => nums.includes(x))) && ![p.name, ...(p.names || [])].some(n => n && p.road && stayLike(p.road, n)));
+  const named = ok.find(p => !area(p) && numOk(p) && [p.name, ...(p.names || [])].some(n => n && (stayLike(q, n) || stayLike(street, n) || (other && nonLatin(n) && String(q).replace(/\s+/g, "").includes(String(n).replace(/\s+/g, ""))))));
+  if (named) return { p: named, how: "place" };
+  if (window.__kairoutePlant === "stay-name-only") return null;   // the bug of Nov 27: an address is never found
+  const roadLike = p => !!p.road && (stayLike(street.replace(/\d+[a-z]?/gi, " "), p.road) || other);
+  if (window.__kairoutePlant === "stay-wrong-door") { const any = ok.find(p => p.house && roadLike(p)); if (any) return { p: any, how: "door" }; }
+  const door = ok.find(p => p.house && stayHouse(p.house).some(x => nums.includes(x)) && roadLike(p));
+  if (door) return { p: door, how: "door" };
+  const st = ok.find(p => !p.house && area(p) && roadLike({ road: p.road || p.name }));
+  if (st && (window.__kairoutePlant === "stay-long-street" || (+st.spanM > 0 && +st.spanM <= STAY_STREET_M))) return { p: Object.assign({}, st, { road: st.road || st.name }), how: "street" };
+  return null;
+}
+// How the place is named on screen, in the traveler's language.
+function stayLabel(hit, typed) {
+  const p = hit.p, addr = String(p.addr || "").trim(), nm = String(p.name || "").trim();
+  const say = t => typeof showName === "function" ? showName({ name: t }) : t;
+  if (hit.how === "place" && nm) return say(nm) + (addr && !nameMatch(nm, addr) ? ", " + say(addr) : "");
+  if (hit.how === "street") return say(p.road || nm || addr);
+  return say(addr || nm || typed);
+}
 async function findHotelNoAI(name, d) {
   if (!freeAI || !name) return null;
   try {
-    const r = await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(bareName(d.destination)) + "&q=" + encodeURIComponent(name)); if (!r.ok) return null;
-    const j = await r.json(), list = (j && j.places) || [];
-    const hit = list.find(p => KEngine.fin(p.lat) && (nameMatch(name, p.name) || (p.names || []).some(n => nameMatch(name, n)))) || list.find(p => KEngine.fin(p.lat) && /hotel|guest|hostel|apartment|motel|tourism/.test((p.kind || "") + " " + (p.cat || "")));
-    return hit ? { name: hit.name || name, lat: +hit.lat, lng: +hit.lng, addr: hit.addr || "" } : null;
-  } catch (e) { return null; }
+    const r = await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(bareName(d.destination)) + "&q=" + encodeURIComponent(name)); if (!r.ok) return { failed: true };
+    const j = await r.json(), list = (j && j.places) || [], hit = stayPick(name, list);
+    if (!hit) return { none: true };
+    return { name: stayLabel(hit, name), lat: +hit.p.lat, lng: +hit.p.lng, how: hit.how, addr: hit.p.addr || "", nums: stayNums(name) };
+  } catch (e) { return { failed: true }; }
 }
+if (typeof window !== "undefined") { window.__kairouteStayPick = (q, list) => { const h = stayPick(q, list); return h ? { how: h.how, name: stayLabel(h, q), lat: h.p.lat, lng: h.p.lng } : null; }; window.__kairouteStayStreet = stayStreetPart; }
 // ---- Classic day trips (rule R-37) ----
 // Every city's guide offers its well-known day trips, the ones reached by boat included, in every city, from free
 // sources alone (no AI, nothing invented). Nov 25: Hvar from Split, the Princes' Islands from Istanbul, Lantau from
@@ -371,4 +439,6 @@ if (typeof window !== "undefined") {
   // Test hook: build a city's guide from its sources alone (as with the AI switched off) for day i.
   window.__kairouteSourceGuide = async i => { const d = trip.days[i]; const c = await sourceGuide(d); return c ? { city: c.city, main: c.sites.filter(x => !x.quick).length, quick: c.sites.filter(x => x.quick).length, must: c.sites.filter(x => x.mustSee).map(x => x.name), eats: c.restaurants.length, starts: Object.fromEntries(Object.entries(c.starts).map(([k, v]) => [k, v.map(p => p.name + (p.unknown ? " (unknown)" : ""))])) } : null; };
 }
+if (typeof window !== "undefined") { window.__kairouteTripLodging = i => { const d = trip.days[i]; return d ? trip.lodging[cityKeyFor(d) || keyOf(d.destination)] || null : null; };
+  window.__kairouteStayAt = i => { const d = trip.days[i]; const L = d && lodgingFor(d, cityFor(d)); return L ? { name: L.name, lat: +L.lat, lng: +L.lng, approx: !!L.approx } : null; }; }
 if (typeof window !== "undefined") window.__kairouteCityOf = i => { const d = trip.days[i]; return d ? cityFor(d) || null : null; };
