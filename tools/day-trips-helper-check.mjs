@@ -57,6 +57,10 @@ const bad = await run(path.resolve("worker/islands.js"));
   W.farSaid(far, { title: "Sydney", links });
   const m = far.find(x => x.wd === "Q12"), h = far.find(x => x.wd === "Q10");
   ok("a part of the city's own guide is marked so, with how often the city's page links to it", m.part === true && m.said === 3 && h.said === 1 && !h.part, { m, h });
+  { const fr = [{ name: "Vaxholm", voy: "vaxholm", vt: "rural" }, { name: "Uppsala", voy: "Uppsala", vt: "city" }, { name: "Stockholm archipelago", voy: "Stockholm archipelago", vt: "region", said: 6 }, { name: "County", voy: "Stockholm County", vt: "region", said: 2 }, { name: "Sigtuna", voy: "Sigtuna", vt: "city", said: 7 }];
+    const regs = W.regionsOf(fr, [{ name: "Sodermanland", voy: "Södermanland", vt: "region" }, { name: "Sigtuna", voy: "Sigtuna", vt: "city" }]);
+    ok("the regions a city's guide sends readers to are its Go next regions first, then the ones its page links, never a town", regs.join("|") === "Södermanland|Stockholm archipelago|Stockholm County", regs);
+    ok("a place a region's own guide page names is marked as lying in it; one it does not name, and the region itself, are not", within(W.farWithin), fr.map(x => x.inVoy)); }
   const vk = c => W.voyKind(c.map(x => "Category:" + x));
   ok("the travel guide's own page kind is read from its status category: a city, a district, a park, a rural area", vk(["Has custom banner", "Usable cities"]) === "city" && vk(["Guide districts"]) === "district" && vk(["Outline parks"]) === "park" && vk(["Usable rural areas"]) === "rural" && vk(["Huge city articles"]) === "city", [vk(["Usable cities"]), vk(["Guide districts"])]);
   ok("a country, a region, an airport and an itinerary are told apart from places to go", vk(["Outline countries"]) === "country" && vk(["Usable regions"]) === "region" && vk(["Usable airports"]) === "airport" && vk(["Guide itineraries"]) === "itinerary");
@@ -73,6 +77,9 @@ bad.push(...await facts(W.factsReady));
 bad.forEach(b => console.log("FAIL " + b));
 // Planted copies of islands.js (each must be caught).
 const txt = fs.readFileSync("worker/islands.js", "utf8"), dir = fs.mkdtempSync(path.join(os.tmpdir(), "dth-"));
+// A region's places (rule R-37): what marks them, given as a function so a planted copy can stand in for it.
+function within(fw) { const fr = [{ name: "Vaxholm", voy: "vaxholm", vt: "rural" }, { name: "Uppsala", voy: "Uppsala", vt: "city" }, { name: "Stockholm archipelago", voy: "Stockholm archipelago", vt: "region", said: 6 }];
+  fw(fr, [{ title: "Stockholm archipelago", links: { Vaxholm: 3, "Stockholm archipelago": 1 } }]); return fr[0].inVoy === "Stockholm archipelago" && !fr[1].inVoy && !fr[2].inVoy; }
 const PLANT = [["piers only inside the coastline", "export const LAND_M = 400;", "export const LAND_M = 0;"], ["a drive's ferry step not looked at", 'ferry: (rt.legs || []).some(l => (l.steps || []).some(st => st.mode === "ferry")) }', "ferry: false }"],
   ["busy map servers kept as 'no piers'", 'if (!els) return { error: "Busy", status: 503 };\n  const shapes = [];', "const shapes = [];\n  if (!els) return { wd, outline: false, piers: [] };"]];
 let missed = 0;
@@ -82,5 +89,7 @@ for (const [name, from, to] of PLANT) { if (txt.split(from).length !== 2) { cons
   console.log(caught ? `planted copy caught: ${name}` : `FAIL planted copy not caught: ${name}`); if (!caught) missed++; }
 { const lost = (await facts((id, okIds) => okIds.has(id))).length + (await facts((id, okIds, direct, okClass) => [...(direct.get(id) || [])].every(c => okClass.has(c)))).length >= 2 && (await facts(() => true)).length;
   console.log(lost ? "planted copies caught: facts read from half an answer" : "FAIL planted copy not caught: facts read from half an answer"); if (!lost) missed++; }
-console.log(`day-trips-helper-check: ${bad.length || missed ? "failed" : "passed, " + (PLANT.length + 1) + " planted copies caught"}`);
+{ const lost = !within(f => f) && !within((far, regs) => far.forEach(f => { f.inVoy = regs[0].title; }));
+  console.log(lost ? "planted copies caught: a region's places never marked, or every place marked" : "FAIL planted copy not caught: a region's places"); if (!lost) missed++; }
+console.log(`day-trips-helper-check: ${bad.length || missed ? "failed" : "passed, " + (PLANT.length + 2) + " planted copies caught"}`);
 process.exit(bad.length || missed ? 1 : 0);

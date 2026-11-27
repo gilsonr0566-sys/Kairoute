@@ -908,6 +908,20 @@ export function farSaid(far, enV) { const links = (enV && enV.links) || {}, titl
   for (const f of far || []) { if (!f || !f.voy) continue; const t = f.voy.charAt(0).toUpperCase() + f.voy.slice(1);
     f.said = links[t] || 0; if (title && t.startsWith(title + "/")) f.part = true; }
   return far; }
+// A region the city's guide sends its readers to ("Stockholm archipelago", "Blue Mountains") is no one spot to go to: it
+// is visited at a place in it. The places that region's own guide page links to are marked as lying in it (inVoy), so
+// the app can offer the region at one of them (rule R-37; live check, Nov 27: Vaxholm missing from Stockholm, whose
+// guide sends readers to the archipelago and never names the town).
+export function farWithin(far, regions) {
+  for (const f of far || []) { if (!f || !f.voy || f.vt === "region") continue; const t = f.voy.charAt(0).toUpperCase() + f.voy.slice(1);
+    const r = (regions || []).find(r => r && r.links && r.title !== t && r.links[t]); if (r) f.inVoy = r.title; }
+  return far; }
+export function regionsOf(far, next) { const seen = new Set();
+  return (next || []).map(x => Object.assign({ said: 9 }, x)).concat((far || []).filter(x => x && x.said > 0)).filter(x => x && x.voy && x.vt === "region" && !seen.has(x.voy) && seen.add(x.voy)).sort((a, b) => (b.said || 0) - (a.said || 0)).slice(0, 3).map(x => x.voy); }
+async function voyRegions(titles, UA) { let missed = false;
+  const out = await Promise.all(titles.map(async t => { try { const r = await fetch("https://en.wikivoyage.org/w/api.php?action=parse&prop=wikitext&format=json&formatversion=2&redirects=1&page=" + encodeURIComponent(t), { headers: UA, signal: AbortSignal.timeout(9000) });
+    if (r.ok) { const j = await r.json(); if (j.parse && j.parse.wikitext) return { title: t, links: voyageLinks(j.parse.wikitext) }; if (j.error) return null; } } catch (e) {} missed = true; return null; }));
+  return { regions: out.filter(Boolean), missed }; }
 // What kind of page the travel guide itself files a place under (rule R-37): every Wikivoyage article sits in a status
 // category of its kind ("Usable cities", "Guide districts", "Outline regions", "Usable parks", "Outline countries",
 // "Usable airports", "Outline rural areas", "Usable itineraries") or "<Kind> articles". A country, an airport or an
@@ -1178,7 +1192,7 @@ function placeOf(listing, wd, map, wholes) {
   return out("listing", listing, true);
 }
 async function sourcesData(label, env, ctx) {
-  const key = (await codeKey("sr", [sourcesData, placeOf, SIGHT_KINDS, mapSights, MAP_SIGHT, parseListings, voyagePages, voyageNext, voyageNextPlaces, voyageLinks, farSaid, voyKind, voyTypes, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
+  const key = (await codeKey("sr", [sourcesData, placeOf, SIGHT_KINDS, mapSights, MAP_SIGHT, parseListings, voyagePages, voyageNext, voyageNextPlaces, voyageLinks, farSaid, farWithin, regionsOf, voyRegions, voyKind, voyTypes, sameName, LANG_NAME])) + (await sha(label.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return JSON.parse(hit);
   const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)" };
   // Every outside read here (Wikidata, its query service, the map server) is kept on its own as soon as it comes back
   // (R-34): a city nobody has opened takes 55 to 220 s to gather, longer than the app waits for one ask (60 s), and an
@@ -1349,12 +1363,14 @@ async function sourcesData(label, env, ctx) {
   // And what kind of page the travel guide files each under (a city, a district, a park; or a country, a region, an airport).
   next.forEach(x => { if (!x.voy) x.voy = x.title || x.name; });
   await voyTypes((fam.far || []).concat(next), UA);
+  // And which places lie in a region the guide sends its readers to (read from that region's own guide page).
+  const reg = await voyRegions(regionsOf(fam.far, next), UA); farWithin(fam.far, reg.regions);
   lap("next");
   const res = Object.assign({ area, lang, langName: LN, center, sources, stops, eats: eats.slice(0, 150), far: fam.far, next, ms: T }, factsMissed ? { factsMissed: true, factsWhy } : {});
   // Keep a full answer for 30 days; an answer missing a source that failed is kept only a day.
   // One whose places a day out could not be read (rule R-37) is asked again after 3 hours: a day without the city's
   // day trips is a long time (live check, Nov 26: Istanbul's guide links were missed on one run in two).
-  const ttl = { expirationTtl: fam.farMissed || factsMissed ? 3 * 3600 : (enV.pages && fam.main.length && !mapMissed ? 30 : 1) * 86400 };
+  const ttl = { expirationTtl: fam.farMissed || factsMissed || reg.missed ? 3 * 3600 : (enV.pages && fam.main.length && !mapMissed ? 30 : 1) * 86400 };
   ctx.waitUntil(Promise.all([env.USAGE.put(key, JSON.stringify(res), ttl), placeKey ? env.USAGE.put(placeKey, JSON.stringify(res), ttl) : null]));
   return res;
 }
