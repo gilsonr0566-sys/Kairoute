@@ -69,9 +69,9 @@ jobs:
           TRIPS=sample,g02-vienna,g09-kotor SIZES=${{ matrix.size }} DAYS=5 NO_PROOF=1 node tools/ui/steady-sights-check.cjs https://gilsonr0566-sys.github.io/Kairoute-Beta2/ 2>&1 | tee steady-live.txt
         shell: bash
       - if: always()
-        run: mkdir -p client-out && cp steady-live.txt client-out/ 2>/dev/null; grep -E "^FAIL|Steady sights" steady-live.txt >> "$GITHUB_STEP_SUMMARY" 2>/dev/null; true
+        run: mkdir -p client-out && cp steady-live.txt client-out/ 2>/dev/null; grep -E "^FAIL|Steady sights" steady-live.txt >> "$GITHUB_STEP_SUMMARY" 2>/dev/null; echo "--- Choose sights findings ---"; grep -E "^FAIL|Steady sights" steady-live.txt; true
       - if: always()
-        run: mkdir -p client-out && cp client-out-log.txt client-out/ 2>/dev/null; cat client-out/summary.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
+        run: mkdir -p client-out && { cp client-out-log.txt client-out/ 2>/dev/null || true; }; cat client-out/summary.md >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true
       - if: always()
         uses: actions/upload-artifact@v4
         with:

@@ -48,6 +48,15 @@ const orderOf = (o, other) => Object.keys(o).filter(k => k[0] !== '@' && k in ot
 // Cards above the one tapped that moved: a note or card above changing size. The app keeps the tapped card under the
 // finger by scrolling, so this is what the traveler sees jump (Nov 27 live: 50 px, a note above going away).
 const aboveMoved = (before, a, id) => Object.keys(before).filter(k => k[0] !== '@' && k !== id && k in a && before[k] < before[id] && before[k] > 0 && Math.abs(a[k] - before[k]) > 4).map(k => `${k} ${before[k]}→${a[k]}`);
+// What changed height on screen between two looks (cards, section headings, notes): named in a failure so a live run
+// says which piece grew or shrank, not only that something moved.
+const HEIGHTS = () => { const out = {}, seen = new Map();
+  for (const e of document.querySelectorAll('#view .sitesmain [data-card], #view .sitesmain > *, #view .sitesmain .picksfold > *, #view .sitesmain [data-card] > .body > *')) {
+    if (!e.offsetParent) continue; const b = e.getBoundingClientRect(); if (b.bottom <= 0 || b.top >= innerHeight) continue;
+    const base = e.dataset.card ? 'card ' + e.dataset.card : (e.closest('[data-card]') ? e.closest('[data-card]').dataset.card + ' .' : '') + (e.className || e.tagName).toString().split(' ')[0];
+    const n = (seen.get(base) || 0) + 1; seen.set(base, n); out[n > 1 ? base + '#' + n : base] = Math.round(b.height) + ' "' + (e.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40) + '"'; }
+  return out; };
+const grew = (a, b) => Object.keys(a).filter(k => k in b && parseInt(a[k]) !== parseInt(b[k])).map(k => `${k} ${a[k]} -> ${b[k]}`).slice(0, 4).join('; ');
 const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a[id] < 700).map(id => `${id} (was at ${a[id]})`); // vanished from mid-screen
 (async () => {
   const browser = await chromium.launch(); const srv = LIVE ? { url: FILE, close: () => {} } : await serve(FILE);
@@ -97,16 +106,16 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         await p.waitForTimeout(600);
         const pt = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`), b = x.getBoundingClientRect(), at = document.elementFromPoint(b.x + b.width / 2, b.y + b.height / 2); return at && x.closest('[data-card]').contains(at) ? { x: b.x + b.width / 2, y: b.y + b.height / 2 } : null; }, id);
         if (!pt) { check(`${tag}: ${id} can be tapped`, false, 'something covers its tick box'); continue; }
-        const before = await p.evaluate(SEEN); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y);
+        const before = await p.evaluate(SEEN), hb = await p.evaluate(HEIGHTS); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y);
         await p.waitForTimeout(300);
         if (await p.evaluate(() => !!document.querySelector('.fitbox, .closedbox'))) { await p.evaluate(() => { const c = document.querySelector('.fitbox [data-act="fitcancel"], .closedbox [data-act="fitcancel"]'); if (c) c.click(); }); await p.waitForTimeout(300); continue; }
         const on = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); return !!(x && x.checked); }, id); if (!on) continue; ticked.push(id);
-        const a = await p.evaluate(SEEN), scrs = await p.evaluate(() => (window.__scr || []).slice(0, 4).join(' | ')); await p.waitForTimeout(2700); await settle(); const b = await p.evaluate(SEEN);
+        const a = await p.evaluate(SEEN), ha = await p.evaluate(HEIGHTS), scrs = await p.evaluate(() => (window.__scr || []).slice(0, 4).join(' | ')); await p.waitForTimeout(2700); await settle(); const b = await p.evaluate(SEEN), hl = await p.evaluate(HEIGHTS);
         check(`${tag}: ticking ${id} keeps it under the finger`, id in a && Math.abs(a[id] - before[id]) <= 4, (id in a ? `moved ${before[id]}→${a[id]} px` : 'it left the screen') + (scrs ? ` (the app scrolled: ${scrs})` : '') + (process.env.DIAG ? ' DIAG ' + moves(before, a).slice(0, 30).join(' ; ') : ''));
-        { const up = aboveMoved(before, a, id); check(`${tag}: ticking ${id} keeps the cards above it in place`, !up.length, up.slice(0, 3).join(', ') + (scrs ? ` (the app scrolled: ${scrs})` : '')); }
+        { const up = aboveMoved(before, a, id); check(`${tag}: ticking ${id} keeps the cards above it in place`, !up.length, up.slice(0, 3).join(', ') + (scrs ? ` (the app scrolled: ${scrs})` : '') + ` [changed size: ${grew(hb, ha) || 'none'}]`); }
         check(`${tag}: ticking ${id} keeps the cards around it in their order`, orderOf(before, a) === orderOf(a, before) && !gone(before, a).length, orderOf(before, a) !== orderOf(a, before) ? `order on screen was ${orderOf(before, a)}, now ${orderOf(a, before)}` : 'gone from the screen: ' + gone(before, a).slice(0, 3).join(', '));
         const late = moves(a, b).concat(gone(a, b).map(x => 'gone ' + x));
-        check(`${tag}: after ticking ${id}, nothing jumps later`, !late.length, late.slice(0, 3).join(', '));
+        check(`${tag}: after ticking ${id}, nothing jumps later`, !late.length, late.slice(0, 3).join(', ') + ` [changed size: ${grew(ha, hl) || 'none'}]`);
       }
       check(`${tag}: at least one sight could be ticked`, ticked.length > 0, 'none of the tried sights ticked');
       // 2c. The "Needs ..." box (ways to fit it in): opening it and closing it ("Keep my day as is") moves nothing on the
@@ -143,10 +152,10 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         if (!pt) { check(`${tag}: ${id} can be unticked`, false, 'its tick box is missing or covered'); continue; }
         const SCR = () => [scrollY, ...[...document.querySelectorAll('#view .pane')].map(e => e.scrollTop + '/' + (e.scrollHeight - e.clientHeight))];
         const scr = [await p.evaluate(SCR)];
-        const before = await p.evaluate(SEEN); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(300);
-        const a = await p.evaluate(SEEN), scrs = await p.evaluate(() => (window.__scr || []).slice(0, 4).join(' | ')); scr.push(await p.evaluate(SCR)); await p.waitForTimeout(2700); await settle(); const b = await p.evaluate(SEEN);
+        const before = await p.evaluate(SEEN), hb = await p.evaluate(HEIGHTS); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(300);
+        const ha = await p.evaluate(HEIGHTS), a = await p.evaluate(SEEN), scrs = await p.evaluate(() => (window.__scr || []).slice(0, 4).join(' | ')); scr.push(await p.evaluate(SCR)); await p.waitForTimeout(2700); await settle(); const b = await p.evaluate(SEEN);
         check(`${tag}: unticking ${id} keeps it under the finger`, id in a && Math.abs(a[id] - before[id]) <= 4, (id in a ? `moved ${before[id]}→${a[id]} px` : 'it left the screen') + (scrs ? ` (the app scrolled: ${scrs})` : '') + (process.env.DIAG ? ' DIAG ' + moves(before, a).join(' ; ') + ' DIAGSCROLL ' + JSON.stringify(scr) : ''));
-        { const up = aboveMoved(before, a, id); check(`${tag}: unticking ${id} keeps the cards above it in place`, !up.length, up.slice(0, 3).join(', ') + (scrs ? ` (the app scrolled: ${scrs})` : '')); }
+        { const up = aboveMoved(before, a, id); check(`${tag}: unticking ${id} keeps the cards above it in place`, !up.length, up.slice(0, 3).join(', ') + (scrs ? ` (the app scrolled: ${scrs})` : '') + ` [changed size: ${grew(hb, ha) || 'none'}]`); }
         check(`${tag}: unticking ${id} keeps the cards around it in their order`, orderOf(before, a) === orderOf(a, before) && !gone(before, a).length, orderOf(before, a) !== orderOf(a, before) ? `order on screen was ${orderOf(before, a)}, now ${orderOf(a, before)}` : 'gone from the screen: ' + gone(before, a).slice(0, 3).join(', '));
         const late = moves(a, b).concat(gone(a, b).map(x => 'gone ' + x));
         check(`${tag}: after unticking ${id}, nothing jumps later`, !late.length, late.slice(0, 3).join(', '));
