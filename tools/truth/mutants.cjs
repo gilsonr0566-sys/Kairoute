@@ -23,6 +23,10 @@ const MUTANTS = [
     was: 'E8: a boat back with no sailing times planned with 15 min at the pier, not the hour between sailings' },
   { id: 'boat-guide-pick-as-mine', notMine: true, file: '90-timeline.js', from: 'ownBoat = !!(leg.mine || (isleStop && !isleStop.guideWish && (isleStop.wish || isleStop.insideWish)));', to: 'ownBoat = !!(leg.mine || (isleStop && (isleStop.wish || isleStop.insideWish)));',
     was: 'E8 / first-timer walk Nov 22: a boat with no timetable to a place only the guide suggested, planned as if the traveler had chosen it (Château d\'If)' },
+  // Nov 27 nightly (seed 20261127, odd558): a pick the app moved to a leaving day (closed the day it was ticked) reached by
+  // a boat with no sailing times, planned as the traveler's own boat. Saved as corpus odd558-venice-moved.
+  { id: 'boat-moved-pick-as-mine', corpus: true, file: '90-timeline.js', from: '!isleStop.guideWish && !isleStop.moved && (isleStop.wish', to: '!isleStop.guideWish && (isleStop.wish',
+    was: 'Nightly Nov 27: an island church moved by the app to a leaving day, its unconfirmed boat planned as "you chose it"' },
   // Nov 23 (rides thread review): a line with no timetable planned with half the gap between departures on the way back to
   // the ship, a train or a plane (and to the bags or the cable car on the way). Caught by the independent check's backwait.
   { id: 'back-ride-half-gap', nott: true, file: '10-travel.js', from: '.filter(o => o && E.fin(o.min))', to: '.filter(o => o && E.fin(o.min)).map(o => o.noTimetable && +o.every > 0 && isFinite(+o.wait) ? Object.assign({}, o, { wait: Math.round(Math.min(+o.every, 60) / 2) + 3, min: o.min - (+o.wait - Math.round(Math.min(+o.every, 60) / 2) - 3) }) : o)',
