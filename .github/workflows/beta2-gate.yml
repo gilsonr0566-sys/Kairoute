@@ -384,9 +384,52 @@ jobs:
           path: part
           if-no-files-found: ignore
 
+  press:
+    name: "12 Every button pressed: a real touch on every control of every screen, first open and the example trip on a phone, two presses deep; planted broken buttons all caught"
+    strategy:
+      fail-fast: false
+      matrix:
+        part: [1, 2, 3, 4, 5, 6, 7, 8] # the screens in eight shares, side by side (about 1.5 s a press)
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - run: sh build-beta2.sh
+      - name: Planted broken buttons (dead, error, jump on two screens, covered, too wide, broken text, untrue, never pressed) must all be caught
+        if: matrix.part == 1
+        run: node tools/client/press-proof.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Press every control (rule R-42)
+        if: always()
+        # The walk exits 1 when any press failed; whether that is a known failure (WARN) or a new one is the
+        # report's call in the next step. Only a walk that broke down (any other code) fails here.
+        run: |
+          set +e
+          TRIPS=first,example SIZES=phone MAXDEPTH=2 PART=${{ matrix.part }}/8 BUDGET_MIN=55 OUT=press-out node tools/client/press-all.cjs beta2-site/index.html 2>&1 | grep -vE "^   [·↻.]" | tee -a "$RUNNER_TEMP/out.log"
+          code=${PIPESTATUS[0]}; [ "$code" -le 1 ]
+      - name: Report by class (known failures with an owner and an end date are WARN; the action-name rule is judged in the full nightly run)
+        if: always()
+        run: COVERAGE=off node tools/client/press-report.cjs press-out beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Keep this part's failing lines for the release report
+        if: always()
+        run: |
+          mkdir -p part && touch "$RUNNER_TEMP/out.log"
+          # one line per class of failure (the report's lines), not one per press
+          grep -E "^(FAIL|MISSED|NOT TESTED|NOT PRESSED)|[0-9]+ failed|Error:|✗|not ok|exceeded" "$RUNNER_TEMP/out.log" | grep -vE "^ok |^FAIL [A-Z]+ \[" | head -60 > part/fails.txt || true
+          cp "$RUNNER_TEMP/out.log" part/log.txt
+          cp press-out/summary.md part/ 2>/dev/null || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: part-press-${{ matrix.part }}
+          path: part
+          if-no-files-found: ignore
+
   report:
     name: "Release report"
-    needs: [code, safety, engine, leaks, phone, screen, odd-screen, words, feel, steady, language]
+    needs: [code, safety, engine, leaks, phone, screen, odd-screen, words, feel, steady, language, press]
     if: always()
     runs-on: ubuntu-latest
     steps:

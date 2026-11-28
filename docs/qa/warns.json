@@ -23,6 +23,22 @@
       "owner": "Stop the select sites page jumping",
       "until": "2026-11-30",
       "why": "Choose sights: the list's fits badges arrive by redrawing the list up to 2.7 s after the page opens (live-hamburg-stay, tablet; steady-all, Nov 24). Same area as R-28, which that thread owns"
+    },
+    {
+      "rule": "JUMP",
+      "tool": "press",
+      "where": "untick yourself",
+      "owner": "Stop the select sites page jumping",
+      "until": "2026-12-04",
+      "why": "Choose sights, the fit box: 'Or choose what to untick yourself' moves the list 158 px (example trip, phone; press walk Nov 27). Fixed by that thread at 5ad2113c on its branch (the box grows downward only); this entry goes when that is on the Beta 2 branch"
+    },
+    {
+      "rule": "DEAD",
+      "tool": "press",
+      "where": "^Needs .*fitask|fitask \\|",
+      "owner": "Stop the select sites page jumping",
+      "until": "2026-12-04",
+      "why": "Choose sights: a 'Needs 1 h 32 min' badge tapped and nothing showed (gate run 46117902182, example trip, arrival by flight day, 1 of about 40 such taps; only with the helper answering). In fit-check.js the tap ends with no box when addPick's fitsWith says it does not fit and fitOpen's own trial says it does: two checks of one question. Handed to that thread Nov 28"
     }
   ]
 }

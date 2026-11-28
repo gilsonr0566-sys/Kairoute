@@ -159,7 +159,10 @@ function gtSheet() {
 }
 function gtType(q) { const d = gtDay(); if (!d || !gt) return; const city = cityFor(d); gt.q = q; gt.asked = false; gt.map = []; gt.mapMsg = ""; gt.list = city ? gtLocal(d, city, q) : []; gtSheet(); }
 async function gtAskMap() {
-  const d = gtDay(), city = d && cityFor(d); if (!gt || !city || !gt.q.trim()) return; const q = gt.q.trim();
+  const d = gtDay(), city = d && cityFor(d); if (!gt || !city) return;
+  // Search with nothing typed says what to type and puts the cursor in the box: a button never does nothing.
+  if (!gt.q.trim()) { gt.mapMsg = "Type where you want to go first: a sight, a station, a restaurant or an address."; gtSheet(); const box = document.getElementById("gtQ"); if (box) box.focus(); return; }
+  const q = gt.q.trim();
   gt.busy = true; gt.asked = true; gtSheet();
   const r = await gtMapSearch(d, city, q); if (!gt || gt.q.trim() !== q) return;
   gt.busy = false; const seen = gt.list || [];
@@ -200,7 +203,8 @@ if (typeof document !== "undefined") {
   document.addEventListener("keydown", e => { if (e.key === "Escape" && gt) { gt = null; gtSheet(); } });
   document.head.insertAdjacentHTML("beforeend", `<style id="gt-css">
 #gtSheet { position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.45); display: flex; align-items: flex-end; justify-content: center; }
-#gtSheet .sheet { background: var(--card); color: var(--ink); width: min(640px, 100%); max-height: 88vh; overflow: auto; padding: 18px; border-radius: 10px 10px 0 0; display: grid; gap: 10px; }
+/* One height whatever the list holds, so the box being typed in never moves as the list under it grows or empties (R-28). */
+#gtSheet .sheet { background: var(--card); color: var(--ink); width: min(640px, 100%); height: 88vh; max-height: 88vh; overflow: auto; padding: 18px; border-radius: 10px 10px 0 0; display: grid; gap: 10px; align-content: start; }
 #gtSheet .gttop { justify-content: space-between; align-items: center; margin: 0; }
 #gtSheet .gtask { display: flex; gap: 8px; } #gtSheet .gtask input { flex: 1; min-width: 0; min-height: 44px; font-size: 1rem; }
 #gtSheet .gtres { width: 100%; }

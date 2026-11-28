@@ -41,6 +41,10 @@
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5; }
+/* R-28: one keeper of the traveler's place, the app's own (render keeps what was touched where it was). The browser's own
+   keeping (scroll anchoring) is off: it picked a piece below an opening fold and threw the page up by the fold's height
+   (Nov 27, every button pressed: Trip page, "More options for this day", 367 px from under the finger). */
+body { overflow-anchor: none; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
 .wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.15; }
@@ -268,6 +272,9 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 /* Real street map (MapLibre). The route diagram underneath shows until the map has loaded. */
 .mapslot { position: relative; }
 .mapslot .kmap { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .25s; }
+/* Until the street map is shown its buttons are not there for anyone: not for a finger, a keyboard or a screen reader
+   (every button pressed, Nov 27: Zoom in, Zoom out and "Show where I am" sat unseen under the drawn map). */
+.mapslot:not(.live) .kmap { visibility: hidden; }
 .mapslot.live { aspect-ratio: 8 / 5; min-height: 260px; width: 100%; } /* width first: on a phone, the minimum height must not push the map wider than its card */
 .mapslot.live > svg { visibility: hidden; position: absolute; inset: 0; height: 100%; }
 .mapslot.live .kmap { opacity: 1; pointer-events: auto; }
