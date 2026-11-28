@@ -461,7 +461,10 @@ const HANDLER = {
         } catch (e) { tried.push("photon " + e.name); }
         if (enough()) break;
       }
-      const body = JSON.stringify({ places: out.slice(0, 8), box: bb, tried });
+      // Houses at a number first, then named places, then streets, then boundaries and districts: eight boundaries named
+      // after the street must never push the house found by the second search off the list (Nov 28 live check).
+      const rank = p => p.house ? 0 : p.cat === "boundary" || /^(administrative|suburb|neighbourhood|quarter|city_block)$/.test(p.kind) ? 3 : p.cat === "highway" ? 2 : 1;
+      const body = JSON.stringify({ places: out.map((p, i) => [rank(p), i, p]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map(x => x[2]).slice(0, 8), box: bb, tried });
       if (out.length) ctx.waitUntil(env.USAGE.put(key, body, { expirationTtl: 30 * 86400 }));
       return new Response(body, { headers: { ...h, "content-type": "application/json" } });
     }

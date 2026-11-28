@@ -21,6 +21,12 @@ const CASES = [
   { q: 'Apartment 4, Neubaugasse 25', map: [C(-0.002, 0.001, { name: '', kind: 'house', cat: 'building', road: 'Neubaugasse', house: '25', addr: 'Neubaugasse 25, Neubau', spanM: 18 })], want: 'door', shows: /Neubaugasse 25/ },
   { q: 'Rua Agusta 100', map: [C(0.002, 0.001, { name: '', kind: 'house', cat: 'building', road: 'Rua Augusta', house: '100', addr: 'Rua Augusta 100, Baixa', spanM: 20, src: 'photon' })], want: 'door', shows: /Rua Augusta 100/ },
   { q: 'Grand Test Hotel', map: [C(0.004, 0.003, { name: 'Grand Test Hotel', kind: 'hotel', cat: 'tourism', road: 'Main Street', house: '5', addr: 'Main Street 5', spanM: 40 })], want: 'place', shows: /Grand Test Hotel/ },
+  // A hotel typed with its kind word that the map lists without it (Nov 28 live: "Memmo Alfama Hotel", map "Memmo Alfama").
+  { q: 'Memmo Test Hotel', map: [C(0.003, 0.002, { name: 'Memmo Test', kind: 'hotel', cat: 'tourism', road: 'Travessa Test', house: '', addr: 'Travessa Test, Alfama', spanM: 14 })], want: 'place', shows: /Memmo Test/ },
+  // A district boundary named after the street is not the street, and the house the second search found comes through
+  // (Nov 28 live: "Mariahilfer Straße 47/12" said "found the street" at a boundary piece).
+  { q: 'Mariahilfer Straße 47/12', alt: 'boundaries only', map: [C(0.001, 0.001, { name: 'Mariahilfer Straße', kind: 'administrative', cat: 'boundary', road: '', house: '', addr: 'Mariahilf', spanM: 242 })], want: 'none' },
+  { q: 'Mariahilfer Straße 47', alt: 'shop at the door', map: [C(0.001, 0.001, { name: 'Mariahilfer Straße', kind: 'administrative', cat: 'boundary', road: '', house: '', addr: 'Mariahilf', spanM: 242 }), C(0.002, 0.001, { name: 'Test Würstel', kind: 'fast_food', cat: 'amenity', road: 'Mariahilfer Straße', house: '47', addr: 'Mariahilfer Straße 47, Mariahilf', spanM: 0, src: 'photon' })], want: 'door', at: 1, shows: /Mariahilfer Stra(ß|ss)e 47/ },
   // A name in the local script: shown in the traveler's language (R-11), never in the script typed.
   { q: 'Ξενοδοχείο Δοκιμή', map: [C(0.001, 0.001, { name: 'Ξενοδοχείο Δοκιμή', names: ['Ξενοδοχείο Δοκιμή'], kind: 'hotel', cat: 'tourism', road: '', house: '', addr: '', spanM: 30 })], want: 'place', latin: true },
   // Only the street: a short one is used and said to be the street; a long one is not used.
@@ -35,7 +41,7 @@ const CASES = [
   // Nothing typed: the box says what to type, never nothing at all.
   { q: '', alt: 'empty box', map: [], want: 'none', says: /Type your hotel/, focus: true },
 ];
-const PLANTS = { 'stay-down-as-none': 'a search not answered is said as not found', 'stay-empty-silent': 'Find it with an empty box says nothing', 'stay-name-only': 'an address is never found (the bug of Nov 27)', 'stay-any-hotel': 'the first hotel the map lists is taken', 'stay-long-street': 'a long street is used as the door', 'stay-wrong-door': "a neighbour's door is taken", 'stay-down-label': 'the trip\'s still-needed list says a search not answered was not found', 'stay-empty-nofocus': 'Find it with an empty box leaves the cursor out of the box' };
+const PLANTS = { 'stay-down-as-none': 'a search not answered is said as not found', 'stay-empty-silent': 'Find it with an empty box says nothing', 'stay-name-only': 'an address is never found (the bug of Nov 27)', 'stay-any-hotel': 'the first hotel the map lists is taken', 'stay-long-street': 'a long street is used as the door', 'stay-wrong-door': "a neighbour's door is taken", 'stay-down-label': 'the trip\'s still-needed list says a search not answered was not found', 'stay-empty-nofocus': 'Find it with an empty box leaves the cursor out of the box', 'stay-hotel-word': 'a hotel typed with the word Hotel is not found when the map lists it without', 'stay-boundary-street': 'a district boundary named after the street is said to be the street' };
 (async () => {
   const s = await serve(FILE); const b = await chromium.launch(), fails = [], caught = {};
   let answer = [];
@@ -57,6 +63,7 @@ const PLANTS = { 'stay-down-as-none': 'a search not answered is said as not foun
     const centre = await p.evaluate(i => { const c = window.__kairouteCityOf(i), x = (c.starts && c.starts.point && c.starts.point[0]) || c.sites[0]; return { lat: +x.lat, lng: +x.lng }; }, day);
     const cases = plant ? CASES : CASES.filter((c, k) => size === 'phone' || k % 3 === 0);
     for (const c of cases) {
+      if (plant && caught[plant]) break;   // a planted bug counts once caught: the rest of its cases add only time (gate part 8 ran past its limit, Nov 28)
       answer = c.down ? 'DOWN' : c.map.map((m, k) => Object.assign({ osm: 'N' + k, names: m.name ? [m.name] : [] }, m, { lat: centre.lat + m.lat, lng: centre.lng + m.lng }));
       await p.evaluate(i => window.__kairouteAt(i, 'trip'), day); await p.waitForTimeout(600);
       await p.selectOption('#f-lodging', 'custom'); await p.waitForTimeout(400);
@@ -80,7 +87,8 @@ const PLANTS = { 'stay-down-as-none': 'a search not answered is said as not foun
       else if (!plant) console.log('ok  ' + label + ' -> ' + st.how + ' | ' + said.replace(/\s+/g, ' ').trim().slice(0, 140));
       // The planner starts the day at the place found (or, with none, at the area, marked as not placed).
       if (!plant && c.want !== 'none') { const at = await p.evaluate(i => window.__kairouteStayAt ? window.__kairouteStayAt(i) : null, day);
-        if (!at || Math.abs(at.lat - answer[0].lat) > 1e-4 || Math.abs(at.lng - answer[0].lng) > 1e-4) fails.push(label + ': the day plan does not start at the place found: ' + JSON.stringify(at)); }
+        const want = answer[c.at || 0];   // the answer that is the traveler's place (c.at when it is not the first)
+        if (!at || Math.abs(at.lat - want.lat) > 1e-4 || Math.abs(at.lng - want.lng) > 1e-4) fails.push(label + ': the day plan does not start at the place found: ' + JSON.stringify(at)); }
     }
     if (errs.length) fails.push(`${plant || 'app'} ${size}: page errors: ${errs.slice(0, 3).join(' | ')}`);
     await ctx.close();
