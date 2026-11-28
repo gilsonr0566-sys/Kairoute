@@ -68,6 +68,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
   const prev = p.locator('#tsPrev summary'); if (await prev.first().isVisible().catch(() => false)) await tap(prev, 'Your days preview');
   await shot('wizard-filled'); R.entry = { taps: R.taps, keys: R.keys };
   await tap(p.getByRole('button', { name: /Build my trip/i }), 'Build my trip');
+  // R-41: if setup lists details still empty, the first-timer answers "I don't know these yet" (one more tap, counted)
+  await sleep(600); const nok = p.locator('[data-ts="needok"]'); if (await nok.first().isVisible().catch(() => false)) { await shot('still-needed'); await tap(nok.first(), "I don't know these yet"); }
   const t0 = Date.now(); let last = null, shots = 0;
   while (Date.now() - t0 < 30 * 60000) { const s = await p.evaluate(() => { const s = window.__kairouteState ? window.__kairouteState() : {}; return { busy: s.busy || null, err: s.err || null }; }).catch(() => ({}));
     const msg = JSON.stringify(s); if (msg !== last) { R.busyLog.push({ s: Math.round((Date.now() - t0) / 1000), ...s }); console.log(Math.round((Date.now() - t0) / 1000) + 's', msg); last = msg; }

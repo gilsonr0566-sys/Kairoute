@@ -158,6 +158,14 @@ input[type=text], input[type=date], input[type=time], input[type=number], select
 .tsleg { border: 1px solid var(--line); border-radius: var(--r, 14px); padding: 12px 14px; display: grid; gap: 10px; margin: 0 0 12px; background: var(--paper); }
 .tshead { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .tsport { border-left: 3px solid var(--route); padding: 2px 0 2px 12px; display: grid; gap: 6px; }
+/* R-41: a detail the plan needs, still empty once asked; the list of them (setup and the Trip page) */
+.field input[aria-invalid="true"], .seg[aria-invalid="true"] { border-color: var(--warn); box-shadow: 0 0 0 1px var(--warn); }
+.tsneed { border-left: 4px solid var(--warn); display: grid; gap: 8px; margin: 0 0 12px; }
+.tsneed h3 { margin: 0; }
+.tsneedlist { margin: 0; }
+.timeask .field { max-width: 280px; width: 100%; margin: 8px auto 0; text-align: left; }
+.timeask .actions { justify-content: center; }
+.tsneedlist .linkbtn { text-align: left; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .tsrow { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
 .tsprev ul { margin: 8px 0 0; }
 @media (max-width: 460px) { .row2 { grid-template-columns: 1fr; } }

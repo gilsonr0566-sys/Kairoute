@@ -404,32 +404,64 @@ const HANDLER = {
       const sd = await sourcesData(label, env, ctx); if (sd.error) return Response.json({ error: sd.error }, { status: sd.status || 500, headers: h });
       return Response.json(sd, { headers: h });
     }
-    // /findplace?city=&q=: a restaurant (or any place) the traveler booked, looked up on OpenStreetMap by name in
-    // that city, with every name the map knows it by (local script, English, Latin letters) and its street address.
+    // /findplace?city=&q=: a place the traveler booked (a restaurant, their hotel or rental), looked up on OpenStreetMap
+    // in that city, with every name the map knows it by (local script, English, Latin letters) and its street address.
+    // R-38: a street address is a place too. It is asked as typed, then without the flat or floor part ("/12", "2º Esq",
+    // "Apartment 4", "#3"), which the map never has; then Photon (the free map search that forgives typos) when
+    // OpenStreetMap's own search finds nothing. Each answer says what it is: the house number the map has, the street,
+    // and how long a street is (spanM), so the app can say "the street, not the number" and never guess a door.
     if (url.pathname === "/findplace") {
-      const city = String(url.searchParams.get("city") || "").slice(0, 120).replace(/\s*\(.*?\)\s*/g, " ").trim(), q = String(url.searchParams.get("q") || "").slice(0, 120).trim();
+      const city = String(url.searchParams.get("city") || "").slice(0, 120).replace(/\s*\(.*?\)\s*/g, " ").trim(), q = String(url.searchParams.get("q") || "").slice(0, 160).trim();
       if (!city || q.length < 2) return Response.json({ error: "Empty" }, { status: 400, headers: h });
       const key = (await codeKey("fp", HCODE())) + (await sha(city.toLowerCase() + "|" + q.toLowerCase())), hit = await env.USAGE.get(key); if (hit) return new Response(hit, { headers: { ...h, "content-type": "application/json" } });
       const UA = { "user-agent": "Kairoute/1.0 (travel guide; https://gilsonr0566-sys.github.io/Kairoute/)", "accept-language": "en" };
-      const nom = async u => { try { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(9000) }); return r.ok ? await r.json() : null; } catch (e) { return null; } };
+      const tried = [];
+      let lastNom = 0; // OpenStreetMap's search asks for one request a second: every call waits its turn
+      const nom = async u => { const w = lastNom + 1100 - Date.now(); if (w > 0) await new Promise(ok => setTimeout(ok, w)); lastNom = Date.now();
+        try { const r = await fetch(u, { headers: UA, signal: AbortSignal.timeout(9000) }); tried.push("nominatim " + r.status); return r.ok ? await r.json() : null; } catch (e) { tried.push("nominatim " + e.name); return null; } };
       const GR = { α: "a", β: "v", γ: "g", δ: "d", ε: "e", ζ: "z", η: "i", θ: "th", ι: "i", κ: "k", λ: "l", μ: "m", ν: "n", ξ: "x", ο: "o", π: "p", ρ: "r", σ: "s", ς: "s", τ: "t", υ: "y", φ: "f", χ: "ch", ψ: "ps", ω: "o", ά: "a", έ: "e", ή: "i", ί: "i", ό: "o", ύ: "y", ώ: "o", ϊ: "i", ϋ: "y", ΐ: "i", ΰ: "y" };
-      const latin = t => String(t || "").toLowerCase().replace(/ου/g, "ou").replace(/αι/g, "e").replace(/ει|οι/g, "i").replace(/μπ/g, "b").replace(/ντ/g, "d").replace(/[\u0370-\u03ff\u1f00-\u1fff]/g, c => GR[c] || GR[c.normalize("NFD")[0]] || "");
+      const latin = t => String(t || "").toLowerCase().replace(/ου/g, "ou").replace(/αι/g, "e").replace(/ει|οι/g, "i").replace(/μπ/g, "b").replace(/ντ/g, "d").replace(/[Ͱ-Ͽἀ-῿]/g, c => GR[c] || GR[c.normalize("NFD")[0]] || "");
+      const spanM = b => { if (!b || b.length < 4 || b.some(v => !isFinite(v))) return 0; const [s, n, w, e] = b, la = (s + n) / 2 * Math.PI / 180;
+        return Math.round(Math.hypot((n - s) * 111320, (e - w) * 111320 * Math.cos(la))); };
       // The city's own box, so a "Platanos" elsewhere in the world never answers.
       const cj = await nom("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=" + encodeURIComponent(city));
       const bb = cj && cj[0] && cj[0].boundingbox ? cj[0].boundingbox.map(Number) : null; // [south, north, west, east]
       const pad = 0.15, vb = bb ? "&bounded=1&viewbox=" + [bb[2] - pad, bb[1] + pad, bb[3] + pad, bb[0] - pad].join(",") : "";
       const generic = q.replace(/\b(taverna|tavern|restaurant|ristorante|trattoria|osteria|cafe|café|bistro|bar|the|mezedopolio|ouzeri|estiatorio)\b/gi, " ").replace(/\s+/g, " ").trim();
-      const out = [];
-      for (const term of [...new Set([q, generic].filter(t => t && t.length > 1))]) {
+      // The flat, floor or door part of an address is dropped; the street and house number stay.
+      const UNIT = /\b(?:apt|apartment|apartamento|appartamento|appartement|wohnung|flat|unit|suite|ste|room|piso|planta|andar|etage|étage|stiege|stg|stock|tür|door|top|floor|fl)\b\.?\s*[\w\-º°ª]*/gi;
+      const unitless = t => { let segs = String(t).replace(/#\s*\w+/g, " ").replace(UNIT, " ").replace(/(\d+[a-z]?)\s*\/\s*\d+[a-z]?\b/gi, "$1").split(","), num = false;
+        segs = segs.map(s => s.replace(/\s+/g, " ").trim()).filter(s => { if (!s) return false; const unitOnly = /^(\d{1,3}\s*[º°ª]?\s*[a-z]{0,4}\.?|[a-z]{1,4}\.?\s*\d{1,3}[a-z]?|[º°ª]?\s*[a-z]{1,4}\.?)$/i.test(s) && !/^\d{4,}/.test(s);
+          if (num && unitOnly) return false; if (/\d/.test(s)) num = true; return true; });
+        return segs.join(", ").trim(); };
+      const terms = [...new Set([q, unitless(q), generic].filter(t => t && t.length > 1))];
+      const wantsDoor = /\d/.test(unitless(q)), enough = () => wantsDoor ? out.some(p => p.house) : out.length > 0;
+      const out = [], seen = new Set(), add = p => { if (seen.has(p.osm)) return; seen.add(p.osm); out.push(p); };
+      for (const term of terms) {
         const j = await nom("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=8&namedetails=1&addressdetails=1" + vb + "&q=" + encodeURIComponent(term));
-        (j || []).forEach(f => { if (out.some(o => o.osm === f.osm_type + f.osm_id)) return; const nd = f.namedetails || {}, ad = f.address || {};
+        (j || []).forEach(f => { const nd = f.namedetails || {}, ad = f.address || {};
           const names = [...new Set([nd.name, nd["name:en"], nd["name:latin"], nd.int_name, nd.alt_name, nd.old_name, f.name].filter(Boolean))];
-          out.push({ name: nd["name:en"] || nd.name || f.name || "", names: names.concat(names.map(latin).filter(x => /[a-z]/.test(x))), lat: +f.lat, lng: +f.lon, kind: f.type || "", cat: f.category || "", osm: f.osm_type + f.osm_id,
-            addr: [ad.road && (ad.road + (ad.house_number ? " " + ad.house_number : "")), ad.suburb || ad.neighbourhood || ad.quarter].filter(Boolean).join(", ") }); });
-        if (out.length) break;
-        await new Promise(ok => setTimeout(ok, 1100)); // OpenStreetMap's search asks for one request a second
+          const road = ad.road || ad.pedestrian || ad.footway || ad.square || "";
+          add({ name: nd["name:en"] || nd.name || f.name || "", names: names.concat(names.map(latin).filter(x => /[a-z]/.test(x))), lat: +f.lat, lng: +f.lon, kind: f.type || "", cat: f.category || "", osm: f.osm_type + f.osm_id,
+            road, house: ad.house_number || "", spanM: spanM((f.boundingbox || []).map(Number)), src: "osm",
+            addr: [road && (road + (ad.house_number ? " " + ad.house_number : "")), ad.suburb || ad.neighbourhood || ad.quarter].filter(Boolean).join(", ") }); });
+        if (enough()) break;
       }
-      const body = JSON.stringify({ places: out.slice(0, 8), box: bb });
+      // Nothing from OpenStreetMap's own search (a typo, an unusual spelling), or a number typed and no house with a
+      // number found (Nov 27 live: "Mariahilfer Straße 47/12" answered only by the district boundaries named after the
+      // street): Photon, inside the same city box.
+      if (!enough()) for (const term of [...new Set([unitless(q), q])]) {
+        try { const box = bb ? "&bbox=" + [bb[2] - pad, bb[0] - pad, bb[3] + pad, bb[1] + pad].join(",") : "";
+          const r = await fetch("https://photon.komoot.io/api/?limit=6&lang=en" + box + "&q=" + encodeURIComponent(term), { headers: UA, signal: AbortSignal.timeout(8000) }); tried.push("photon " + r.status);
+          if (r.ok) ((await r.json()).features || []).forEach(f => { const p = f.properties || {}, c = (f.geometry || {}).coordinates || [], ex = p.extent; if (!isFinite(c[1])) return;
+            const road = p.street || (p.osm_key === "highway" ? p.name : "") || "";
+            add({ name: p.osm_key === "highway" ? "" : p.name || "", names: [p.name].filter(Boolean), lat: +c[1], lng: +c[0], kind: p.osm_value || p.type || "", cat: p.osm_key || "", osm: (p.osm_type || "") + (p.osm_id || ""),
+              road, house: p.housenumber || "", spanM: ex ? spanM([ex[3], ex[1], ex[0], ex[2]]) : 0, src: "photon",
+              addr: [road && (road + (p.housenumber ? " " + p.housenumber : "")), p.district || p.locality].filter(Boolean).join(", ") }); });
+        } catch (e) { tried.push("photon " + e.name); }
+        if (enough()) break;
+      }
+      const body = JSON.stringify({ places: out.slice(0, 8), box: bb, tried });
       if (out.length) ctx.waitUntil(env.USAGE.put(key, body, { expirationTtl: 30 * 86400 }));
       return new Response(body, { headers: { ...h, "content-type": "application/json" } });
     }

@@ -83,6 +83,12 @@ ok(E.latin('Ζευγολατιό') === 'Zevgolatio' && E.latin('Ευαγγελι
 { const g = E.dayWindow(day({ type: 'embark', allAboard: 930, boardAt: null, thru: { mode: 'flight', time: '10:30', point: air, guess: true } }), tr);
   const a = E.dayWindow(day({ type: 'arrival', mode: 'flight', time: '10:30', timeGuess: true }), tr);
   ok(g.error && g.askArrive && a.error && a.askArrive && /When does your flight arrive/.test(a.error), 'an arrival time the traveler never gave is asked, never planned on'); }
+// R-41: a leaving time the traveler never gave is asked the same way; the same day with the time given plans a leave-by.
+{ const g = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '15:00', leaveGuess: true, point: air }), tr);
+  const t = E.dayWindow(day({ type: 'departure', mode: 'train', time: '12:00', leaveGuess: true, point: air }), tr);
+  const real = E.dayWindow(day({ type: 'departure', mode: 'flight', time: '15:00', point: air }), tr);
+  ok(g.error && g.askLeaveTime && /When does your flight leave/.test(g.error) && t.error && /When does your train leave/.test(t.error) && !real.error && Number.isFinite(real.endBy),
+    'a leaving time the traveler never gave is asked, never planned on (R-41)'); }
 { const b = JSON.parse(fs.readFileSync(path.join(dir, 'sample-cruise.json'))), i = b.days.findIndex(d => d.type === 'embark');
   if (i >= 0) { const st = JSON.parse(JSON.stringify(b)); const air0 = Object.assign({}, st.days[i].point || st.days[i].lodging, { name: 'Airport' });
     st.days[i] = Object.assign({}, st.days[i], { thru: { mode: 'flight', time: (m => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'))((st.days[i].allAboard || 930) - 200), point: air0 }, boardAt: null });
