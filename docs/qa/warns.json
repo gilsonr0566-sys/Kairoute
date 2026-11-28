@@ -43,10 +43,10 @@
     {
       "rule": "JUMP",
       "tool": "press",
-      "where": "fitask|untick yourself",
+      "where": "untick yourself",
       "owner": "Stop the select sites page jumping",
       "until": "2026-12-04",
-      "why": "Choose sights, the fit box (example trip, phone; press walk Nov 27): 'Or choose what to untick yourself' moves the list 158 px (fixed by that thread at 5ad2113c on its branch, the box grows downward only); and after going to another day through a fit note's day link, the 'Needs ...' button moves the list 174 px, also when the walk waits for the fit checks to finish first. This entry goes when both are on the Beta 2 branch"
+      "why": "Choose sights, the fit box: 'Or choose what to untick yourself' moves the list 158 px (example trip, phone; press walk Nov 27). Fixed by that thread at 5ad2113c on its branch (the box grows downward only); this entry goes when that is on the Beta 2 branch"
     }
   ]
 }
