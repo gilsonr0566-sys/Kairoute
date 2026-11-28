@@ -42,7 +42,7 @@
       // the same, said plainly, with an hour at the pier for the boat back (Richard, Nov 21: "Yes, your pick, with a
       // warning"); the app never takes such a boat on its own. Lunch inside that visit is part of it: the boat back from
       // the island's lunch place is the same boat (Nov 21 live check: Capri alone "could never fit" a 9 h 45 min day).
-      const isleStop = leg.isle === "back" ? prev : p, ownBoat = !!(leg.mine || (isleStop && !isleStop.guideWish && !isleStop.moved && (isleStop.wish || isleStop.insideWish)));
+      const isleStop = leg.isle === "back" ? prev : p, ownBoat = !!(leg.mine || (leg.isle && isleStop && !isleStop.guideWish && !isleStop.moved && (isleStop.wish || isleStop.insideWish))); // a picked place counts as choosing its boat only when a boat is the only way there (across the water); a town the road reaches too keeps the boat a choice (live check Nov 27, Sorrento: the app took the boat itself and said "you chose it")
       // R-06 (E65, Nov 27, Richard: his own ferry to a town along the coast refused again): a boat the traveler chose is refused only
       // when real sailing times say it can't work (it doesn't run that month, or no sailing near the time needed). A boat
       // whose answer has no sailing times at all (a ferry known from the map, its answer carrying no departures) is the
