@@ -6164,6 +6164,7 @@ function renderTrip(d) {
       ${busyBlock()}${errBlock()}
       <form class="card" id="dayForm" autocomplete="off">
         <div class="eyebrow">${esc(fmtDow(d.date))} ${esc(fmtDate(d.date))}</div>
+        ${typeof dayMovesHTML === "function" ? dayMovesHTML(d) : ""}
         <div class="row2">
           <div class="field"><label for="f-dest">${t === "port" ? "Port" : "City"}</label><input type="text" id="f-dest" value="${esc(d.destination)}" placeholder="e.g. Rome, Nashville, Juneau"></div>
           <div class="field"><label for="f-date">Date</label><input type="date" id="f-date" value="${esc(d.date)}"></div>
@@ -7870,6 +7871,7 @@ document.addEventListener("click", e => {
   if (act === "gen") { generateCity(day()); return; }
   if (act === "closedmove") { moveClosed(t.dataset.id, +t.dataset.to); return; }
   if (act === "closedswap") { swapClosed(t.dataset.id, t.dataset.alt); return; }
+  if (typeof dayMoveAct === "function" && dayMoveAct(act, t)) return; // swap two days, remove a day (features/day-moves.js, R-39)
   if (liveAct(act, t)) return;
   if (tixAct(act, t)) return;
   if (shipClick(t)) return;
