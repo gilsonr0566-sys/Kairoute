@@ -766,10 +766,11 @@ function transitFor(a, b) {
 // answer that came back with no lines is an answer: nothing is said then.
 function transitAsking(a, b) {
   if (!a || !b || !KEngine.fin(a.lat) || !KEngine.fin(b.lat) || hav(a, b) < 1.5) return "";
-  if (typeof freeAI === "undefined" || !freeAI) return "";
   const k = pairKey(a, b) + "|" + dayKind(planDow());
   if (transitMem[k] || transitMem[pairKey(a, b)]) return "";
-  return typeof navigator !== "undefined" && navigator.onLine === false ? "offline" : "waiting";
+  // No helper address (it couldn't be reached at start-up): the lines can't be asked for at all, and the day says so
+  // too (the gate's runners have no helper: the ride was silent there).
+  return typeof navigator !== "undefined" && navigator.onLine === false ? "offline" : typeof freeAI === "undefined" || !freeAI ? "unreached" : "waiting";
 }
 function transitDue(exact, hit) {
   if (typeof navigator !== "undefined" && navigator.onLine === false) return false;
@@ -958,7 +959,7 @@ function rideExtra(leg) {
   // Each sentence once a day: the ride out and the ride back carry the same guide's words (UI check, Nov 20).
   const said = leg.note ? String(leg.note).split(/(?<=[.!?])\s+(?=[A-Z])/).map(rideOnce).filter(Boolean).join(" ") : "";
   const note = said ? `<span class="sub ridesub ridenoteguide">${esc(said)}</span>` : "";
-  const wait = leg.asking ? `<span class="sub ridesub ridewait">${leg.asking === "offline" ? "With no signal, trains, buses and boats for this ride can't be looked up, so for now it's planned by road. The day updates when you're back online." : "Trains, buses and boats for this ride haven't come in yet, so for now it's planned by road. The day updates on its own when they do."}</span>` : "";
+  const wait = leg.asking ? `<span class="sub ridesub ridewait">${leg.asking === "offline" ? "With no signal, trains, buses and boats for this ride can't be looked up, so for now it's planned by road. The day updates when you're back online." : leg.asking === "unreached" ? "Kairoute can't reach its ride lookup right now, so trains, buses and boats for this ride aren't known and it's planned by road. Check other ways to go before you set out." : "Trains, buses and boats for this ride haven't come in yet, so for now it's planned by road. The day updates on its own when they do."}</span>` : "";
   return steps + lost + note + wait;
 }
 // The same general line under every ride ("By road, with time for traffic.") is said once a day, on the first ride
