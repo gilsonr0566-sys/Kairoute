@@ -5203,9 +5203,14 @@ function render() {
   // Choose sights redrawn on the same visit by anything (a plan or fit answer arriving, the clock): the card last
   // ticked, else the first card in view, stays where it was on screen (R-28; Nov 24 gate, Vienna: a badge above grew
   // to two lines 1-2 s after a tick and pushed the ticked card down 12 px).
+  if (paneMemo.key !== pkey) spotRef = null; // the card kept in place belongs to one visit of one day (Nov 28: a card ticked on day 4 was "kept" on day 5)
   const spot = view === "sites" && paneMemo.key === pkey ? viewSpot() : null;
   renderView();
-  if (sideMin) { const sd = document.querySelector("#view .sitesside"); if (sd) sd.style.minHeight = sideMin + "px"; }
+  if (sideMin) { const sd = document.querySelector("#view .sitesside"); if (sd) sd.style.minHeight = sideMin + "px";
+    // Side panel above the list (upright tablet): it doesn't grow either, so a note appearing there ("moved here", a
+    // suggestion) can't push the list down (Nov 28, live answers: 58 px). The panel scrolls to show the note instead.
+    const mn = document.querySelector("#view .sitesmain");
+    if (sd && mn && sd.getBoundingClientRect().bottom <= mn.getBoundingClientRect().top + 1) { sd.style.maxHeight = sideMin + "px"; const nt = sd.querySelector("#movedNote, #suggestNote"); if (nt) { const below = nt.getBoundingClientRect().bottom - sd.getBoundingClientRect().bottom; if (below > 0) sd.scrollTop += below + 8; } } }
   if (view === "sites") { if (listRoomKey !== pkey || !sideMin) { listRoom = 0; listRoomKey = pkey; } else if (listRoom) placeRoom(); }
   { const v = document.getElementById("view"), app = !FULL_VIEWS[view] || /^(settings|privacy|terms)$/.test(view);
     document.documentElement.classList.toggle("appview", app);
@@ -6392,7 +6397,7 @@ function toggleCard(el) {
   if (Math.abs(keep()) > 2) { prev.forEach(x => { if (x !== el) x.classList.add("open"); }); keep(); }
 }
 // Keeps what's on screen in place across a redraw: the first card in view stays where it was.
-const cardShown = x => !!(x && x.offsetParent && !x.closest("details:not([open]), .picksfold:not(.open) .anchorlist")); // closed folds still lay out in Chrome
+const cardShown = x => !!(x && x.offsetParent && !x.closest("details:not([open]), .picksfold:not(.open) .anchorlist, .sorthold")); // closed folds still lay out in Chrome; so does the list held back while it is sorted (R-28, Nov 28: a held card was kept "in place", and the shown ones flew off)
 let spotRef = null; // the card kept in place after the last tick, kept in place by later redraws too
 function viewSpot() {
   const vis = x => cardShown(x) && x.getBoundingClientRect().top > 0 && x.getBoundingClientRect().top < innerHeight;

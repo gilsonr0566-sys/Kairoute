@@ -170,8 +170,11 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
       await p.evaluate(() => { const b = document.querySelector('[data-act="picksfold"][aria-expanded="false"]'); if (b) b.click(); }); await p.waitForTimeout(300);
       for (const id of ticked) {
         await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); if (x) x.closest('[data-card]').scrollIntoView({ block: 'center' }); }, id); await p.waitForTimeout(600);
-        const pt = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); if (!x) return null; const b = x.getBoundingClientRect(), at = document.elementFromPoint(b.x + b.width / 2, b.y + b.height / 2); return at && x.closest('[data-card]').contains(at) ? { x: b.x + b.width / 2, y: b.y + b.height / 2 } : null; }, id);
-        if (!pt) { check(`${tag}: ${id} can be unticked`, false, 'its tick box is missing or covered'); continue; }
+        const pt = await p.evaluate(id => { const all = document.querySelectorAll(`input[data-site="${id}"]`), x = all[0]; if (!x) return { why: 'no tick box for it on the page' }; const b = x.getBoundingClientRect(), at = document.elementFromPoint(b.x + b.width / 2, b.y + b.height / 2);
+          if (at && x.closest('[data-card]').contains(at)) return { x: b.x + b.width / 2, y: b.y + b.height / 2 };
+          const up = []; for (let a = x.parentElement; a && a.id !== 'view' && up.length < 5; a = a.parentElement) up.push(a.tagName.toLowerCase() + '.' + String(a.className).split(' ').filter(Boolean).slice(0, 2).join('.') + (a.hidden ? '[hidden]' : '') + (a.tagName === 'DETAILS' && !a.open ? '[closed]' : ''));
+          return { why: `${all.length} tick box(es); box at ${Math.round(b.top)} of ${innerHeight}, ${Math.round(b.width)}x${Math.round(b.height)}, checked ${x.checked}; at that point: ${at ? at.tagName.toLowerCase() + '.' + String(at.className).split(' ').join('.') : 'nothing'}; in ${up.join(' < ')}` }; }, id);
+        if (!pt || pt.why) { check(`${tag}: ${id} can be unticked`, false, 'its tick box is missing or covered: ' + (pt ? pt.why : '')); continue; }
         const SCR = () => [scrollY, ...[...document.querySelectorAll('#view .pane')].map(e => e.scrollTop + '/' + (e.scrollHeight - e.clientHeight))];
         const scr = [await p.evaluate(SCR)];
         const before = await seenOf(p), hb = await p.evaluate(HEIGHTS); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(300);
