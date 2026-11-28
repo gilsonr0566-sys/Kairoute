@@ -5150,15 +5150,19 @@ let renderSpotted = false;
 // (Nov 27, every button pressed: the example trip's note went away on the first change to any day and every control
 // below it moved up 106 to 189 px from under the finger). A note at the top of a screen stays until the traveler
 // closes it or leaves the screen (tripNote): it never goes away as a side effect of a tap elsewhere.
-let touchEl = null, touchRef = null, touchText = "", touchListy = false, touchNear = [], holdOn = "", tripNote = false, holdRoom = { key: "", pane: "", top: 0, end: 0 }, holdOff = -1;
+let touchEl = null, touchRef = null, touchWas = null, touchText = "", touchListy = false, touchNear = [], holdOn = "", tripNote = false, holdRoom = { key: "", pane: "", top: 0, end: 0 }, holdOff = -1;
 const holdKeyOf = el => { const ds = Object.keys(el.dataset).filter(k => !/^press/.test(k)).sort().map(k => k + "=" + el.dataset[k]).join(","); return el.tagName + "|" + (el.id || "") + "|" + ds + "|" + (el.getAttribute("name") || "") + (el.id || ds ? "" : "|" + (el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 40)); };
 const holdAll = key => [...document.querySelectorAll("#view " + key.split("|")[0])].filter(o => holdKeyOf(o) === key);
+const holdScroller = nx => { let p = nx.parentElement; while (p && p !== document.body && !(p.scrollHeight > p.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(p).overflowY))) p = p.parentElement; return p && p !== document.body && p !== document.documentElement ? p : null; };
+const holdAt = p => (p ? p.scrollTop : window.scrollY);
 function touchMark(t, press) {
   if (!t || !t.closest || !t.closest("#view")) return;
   const el = t.closest("button, a, input, select, textarea, summary, label, [data-act], [role=button]") || t;
   if (press || el !== touchEl) touchNear = touchNearOf(el);
   { const names = o => Object.keys(o.dataset).filter(k => !/^press/.test(k)).sort().join(","), mine = names(el); touchListy = false;
     if (mine) for (const o of document.querySelectorAll("#view " + el.tagName)) if (o !== el && names(o) === mine && holdKeyOf(o) !== holdKeyOf(el)) { touchListy = true; break; } }
+  // Where it was under the finger, for a press that changes the page before the redraw (text size, a setting).
+  try { touchWas = { top: el.getBoundingClientRect().top, at: holdAt(holdScroller(el)), t: performance.now() }; } catch (e) { touchWas = null; }
   touchEl = el; touchRef = null; touchText = (el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80);
   try { const chain = []; for (let a = el; a && a.id !== "view" && chain.length < 5; a = a.parentElement) if (a === el || a.id || Object.keys(a.dataset).some(k => !/^press/.test(k))) { const key = holdKeyOf(a); chain.push([key, holdAll(key).indexOf(a)]); } touchRef = chain; } catch (e) {}
 }
@@ -5187,6 +5191,7 @@ function touchSpot(pkey) {
   touchRef.forEach(([key, n], i) => { const a = i === 0 && touchEl && touchEl.isConnected ? touchEl : holdAll(key)[n]; if (shown(a)) chain.push([key, n, a.getBoundingClientRect().top, a, 0, i === 0 ? touchText : ""]); });
   // A pinned thing does not scroll. A bar pinned to the page that is still there after the redraw needs nothing; an
   // open menu floats over the page, and the page behind it stays put through the things next to the finger.
+  if (chain.length && chain[0][0] === touchRef[0][0] && touchWas && performance.now() - touchWas.t < 1500 && Math.abs(holdAt(holdScroller(chain[0][3])) - touchWas.at) < 1) chain[0][2] = touchWas.top;
   const floatKey = chain.length && chain[0][0] === touchRef[0][0] && pinnedAt(chain[0][3]) ? chain[0] : null;
   const floatOver = !!floatKey && (() => { for (let a = floatKey[3]; a && a.id !== "view"; a = a.parentElement) if (getComputedStyle(a).position === "fixed") return true; return false; })();
   if (floatKey) chain.length = 0;
@@ -5201,8 +5206,7 @@ function touchSpot(pkey) {
   if (!chain.length) return null;
   const no = renderNo;
   let pre = null, after = null;
-  const scroller = nx => { let p = nx.parentElement; while (p && p !== document.body && !(p.scrollHeight > p.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(p).overflowY))) p = p.parentElement; return p && p !== document.body && p !== document.documentElement ? p : null; };
-  const at = p => (p ? p.scrollTop : window.scrollY);
+  const scroller = holdScroller, at = holdAt;
   const run = again => {
     if (holdOff === no) return 0; // the app has since scrolled on purpose (to the top, to what the tap opened)
     if (floatKey && !floatOver && shown(holdAll(floatKey[0])[floatKey[1]])) return 0;
