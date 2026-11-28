@@ -17,6 +17,7 @@ const PLANTING = new Set(['tools/beta2/own-boat-check.cjs' /* plants a chosen bo
   'tools/truth/report-check.cjs', 'tools/truth/rules-check.cjs', 'tools/truth/mutants.cjs', 'tools/truth/sight-mutants.cjs',
   'tools/beta2/day-trips-check.cjs' /* plants 35 day-trip bugs on every run (R-37) */, 'tools/day-trips-helper-check.mjs' /* plants 7 helper bugs on every run (R-37) */,
   'tools/ui/steady-sights-check.cjs' /* plants a re-sort after a tap on every run (R-28) */,
+  'tools/steps-e2e.cjs' /* takes each of 15 trip details out in turn on every run and must find each asked by its own field (R-41) */,
   'tools/ui/pinned-band-check.cjs' /* plants "no band behind pinned pieces" on every run (R-32) */,
   'tools/ui/day-moves-check.cjs' /* plants 7 swap and removal bugs in the built page on every run (R-39) */,
   'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */,

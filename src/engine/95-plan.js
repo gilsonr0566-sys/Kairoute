@@ -305,7 +305,7 @@
       const d = days[i];
       if (d.noShore || d.type === "sea") return { plan: { i, error: "At sea or staying aboard: no time ashore." } };
       const win = wins[i], tr = win && win.hard ? trHard() : trAll;
-      if (win.error) return { plan: Object.assign({ i, error: win.error }, win.askNight ? { askNight: true, depAt: win.depAt } : {}) };
+      if (win.error) return { plan: Object.assign({ i, error: win.error }, win.askNight ? { askNight: true, depAt: win.depAt } : {}, win.askArrive ? { askArrive: true } : {}, win.askLeaveTime ? { askLeaveTime: true } : {}) };
       const city = guides[d.city];
       if (!city) return { plan: { i, error: "no guide" } };
       const listed = (city.sites || []).map((s, k) => Object.assign({}, s, { rank: k })).concat((city.farther || []).map(s => Object.assign({}, s, { far: true })));
