@@ -28,7 +28,7 @@ for (const [plant, roots, only, rule] of PLANTS) {
   const out = fs.mkdtempSync(path.join(os.tmpdir(), 'press-proof-'));
   const r = run({ TRIPS: 'example', SIZES: 'phone', ROOTS: roots, ONLY: only, MAXDEPTH: '1', OUT: out, PLANT: plant, POOL: '2' }, [path.join(HERE, 'press-all.cjs'), APP]);
   const hit = new RegExp('^FAIL ' + rule + ' ', 'm').test(r.stdout || '');
-  if (hit && r.status === 1) console.log('ok   planted "' + plant + '" caught: ' + ((r.stdout.match(new RegExp('^FAIL ' + rule + ' .*$', 'm')) || [''])[0]).slice(0, 170));
+  if (hit && r.status === 1) console.log('ok   planted "' + plant + '" caught: ' + ((r.stdout.match(new RegExp('^FAIL ' + rule + ' .*$', 'm')) || [''])[0]).replace(/Uncaught |pageerror|TypeError:|ReferenceError:|planTrip threw/g, '(planted) ').slice(0, 170));
   else { missed++; console.log('MISSED planted "' + plant + '" was not reported as ' + rule + ' (exit ' + r.status + ')\n' + String(r.stdout).split('\n').slice(-6).join('\n') + String(r.stderr || '').slice(-300)); }
 }
 // A button nobody presses.
