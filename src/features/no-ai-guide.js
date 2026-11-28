@@ -166,6 +166,12 @@ function stayLike(want, got) {
   if (!w.length || !g.length) return false;
   return w.filter(t => g.some(x => stayWordLike(t, x))).length / w.length >= 0.75;
 }
+// A lodging's own kind word ("Hotel", "Hostel", "Apartments", "Guesthouse"...) is not part of its name when the map
+// lists a lodging: the map has "Memmo Alfama" for "Memmo Alfama Hotel" (Nov 28 live check). Only the words that are
+// left are compared, so "Hotel Real Other" is still not "Hotel Imaginary Palace".
+const STAY_KIND = /\b(?:hotel|hotels|hôtel|hotell|otel|hostel|hostal|inn|guesthouse|guest house|b&b|bnb|bed and breakfast|apartments|apartamentos|appartamenti|suites|residence|residenza|pension|pensione|pensão|boutique|resort|lodge|motel|ryokan)\b/gi;
+const stayLodging = p => /^(hotel|guest_house|hostel|motel|apartment|apartments|chalet|resort)$/.test(String(p.kind || ""));
+const stayNoKind = t => { const r = String(t || "").replace(STAY_KIND, " ").replace(/\s+/g, " ").trim(); return window.__kairoutePlant === "stay-hotel-word" ? String(t || "") : (r || String(t || "")); };
 // What was typed, without the flat, floor or door part (the map has houses, not flats).
 function stayStreetPart(q) {
   let num = false;
@@ -184,14 +190,17 @@ function stayPick(q, list) {
   // With a house number typed, a named answer must be at that number (or carry none), and a name that is only the
   // street's ("Rua Augusta Store" for "Rua Augusta 100") is not the place.
   const numOk = p => !nums.length || ((!p.house || stayHouse(p.house).some(x => nums.includes(x))) && ![p.name, ...(p.names || [])].some(n => n && p.road && stayLike(p.road, n)));
-  const named = ok.find(p => !area(p) && numOk(p) && [p.name, ...(p.names || [])].some(n => n && (stayLike(q, n) || stayLike(street, n) || (other && nonLatin(n) && String(q).replace(/\s+/g, "").includes(String(n).replace(/\s+/g, ""))))));
+  const named = ok.find(p => !area(p) && numOk(p) && [p.name, ...(p.names || [])].some(n => n && (stayLike(q, n) || stayLike(street, n) || (stayLodging(p) && stayLike(stayNoKind(q), stayNoKind(n))) || (other && nonLatin(n) && String(q).replace(/\s+/g, "").includes(String(n).replace(/\s+/g, ""))))));
   if (named) return { p: named, how: "place" };
   if (window.__kairoutePlant === "stay-name-only") return null;   // the bug of Nov 27: an address is never found
   const roadLike = p => !!p.road && (stayLike(street.replace(/\d+[a-z]?/gi, " "), p.road) || other);
   if (window.__kairoutePlant === "stay-wrong-door") { const any = ok.find(p => p.house && roadLike(p)); if (any) return { p: any, how: "door" }; }
   const door = ok.find(p => p.house && stayHouse(p.house).some(x => nums.includes(x)) && roadLike(p));
   if (door) return { p: door, how: "door" };
-  const st = ok.find(p => !p.house && area(p) && roadLike({ road: p.road || p.name }));
+  // The street itself, never a boundary or district named after it (Nov 28 live: "Mariahilfer Straße 47/12" was
+  // "found the street" at a 242 m piece of a district boundary).
+  const roadOnly = p => window.__kairoutePlant === "stay-boundary-street" ? area(p) : p.cat === "highway" || /^(road|street|residential|pedestrian|footway|living_street|tertiary|secondary|primary|unclassified|service|steps|path)$/.test(String(p.kind || ""));
+  const st = ok.find(p => !p.house && (window.__kairoutePlant === "stay-boundary-street" || p.cat !== "boundary") && roadOnly(p) && roadLike({ road: p.road || p.name }));
   if (st && (window.__kairoutePlant === "stay-long-street" || (+st.spanM > 0 && +st.spanM <= STAY_STREET_M))) return { p: Object.assign({}, st, { road: st.road || st.name }), how: "street" };
   return null;
 }
