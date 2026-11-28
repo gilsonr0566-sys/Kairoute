@@ -15,12 +15,16 @@
 //                  scrolls (the day strip, the back-to-the-ship countdown) leaves its whole box behind. (Escaped Nov 24: the
 //                  pinned countdown left no width, the buttons beside it moved up a line and the page jumped 50 px on
 //                  Choose sights, the Guide and every day page with a countdown, at phone size.)
+//   RIDE-SAID      (R-18) With the ride lookup refused or hanging, every ride of 3 km or more planned by road with no other
+//                  way offered says on the Day plan that trains, buses and boats haven't come in yet: a road estimate is
+//                  never shown as if it were every way to go; and that line is never on a ride that offers a line.
+//                  (Escaped Nov 27: with the helper answering "too many requests", the Sorrento ferry vanished silently.)
 //   RESUME-LEFT    (R-25) Reopening the app after Exit tour opens the Day plan, never the tour the traveler left. (Escaped
 //                  Nov 23.)
 //
 // Data sources: built-in places, places from sources, helper answers (refused or hanging), no internet. No AI, no spend.
 // Usage: node tools/client/steady-all.cjs [beta2-site/index.html]   TRIPS=g01,g04 (name prefixes)  SIZES=phone,tablet
-// Exit 1 on any failure. PLANT=redraw|settle|wait|pinbox plants a known defect in the page to prove the check fires.
+// Exit 1 on any failure. PLANT=redraw|settle|wait|pinbox|ridesaid plants a known defect in the page to prove the check fires.
 const { chromium } = require('playwright'); const path = require('path'), http = require('http'), fs = require('fs');
 const ROOT = path.join(__dirname, '..', '..'), FILE = path.resolve(process.argv[2] || path.join(ROOT, 'beta2-site', 'index.html'));
 const CORPUS = process.env.CORPUS || path.join(ROOT, 'tools', 'beta2', 'corpus');
@@ -56,6 +60,7 @@ const PROBE = ([seed, plant]) => {
     // Planted defects (each a way this class has gone wrong before): the check must catch every one.
     if (plant === 'pinbox') window.__kairoutePlant = 'pinbox'; /* the app's own plant switch: the pinned countdown keeps its height but not its width (the Nov 24 bug) */
     if (plant === 'redraw') { const v = document.getElementById('view'); new MutationObserver(() => { if (!window.__pl) { window.__pl = 1; v.style.paddingTop = '57px'; requestAnimationFrame(() => requestAnimationFrame(() => { v.style.paddingTop = ''; window.__pl = 0; })); } }).observe(v, { attributes: true, attributeFilter: ['class'] }); } /* the Nov 23 tablet bug: each redraw reset the view's classes and the screen dropped for a frame */
+    if (plant === 'ridesaid') new MutationObserver(() => document.querySelectorAll('#view .ridewait').forEach(e => e.remove())).observe(document.body, { subtree: true, childList: true }); /* the waiting line dropped (the Nov 27 bug) */
     if (plant === 'settle') { let k = 0; const id = setInterval(() => { const v = document.querySelector('#view .dayhead, #view h2'); if (v) v.setAttribute('data-tick', String(k++)); if (k > 40) clearInterval(id); }, 150); }
     if (plant === 'wait') { const v = document.getElementById('view'); new MutationObserver(() => { const c = document.querySelector('#view details .card, #view details > :not(summary), #view .card'); if (c && !c.querySelector('.planted')) c.insertAdjacentHTML('beforeend', '<p class="ai-note planted"><span class="spinner"></span> Looking that up…</p>'); }).observe(v, { childList: true }); }
   });
@@ -133,6 +138,19 @@ const SPINNERS = () => [...document.querySelectorAll('.spinner, [aria-busy="true
             if (sp.length) fail('WAIT-ENDS', where, `${sp.length} spinner(s) still turning with no answer coming: "${sp.slice(0, 2).join('" / "')}"`);
           }
         }
+        // RIDE-SAID: with the ride lookup refused, every Day plan of the trip; each long road-only ride says its lines
+        // haven't come in yet, and no ride that offers a line says so.
+        if (net === 'refused' && size === PICK[0]) for (const d of days) {
+          const where = `${tag} plan day ${d.i + 1}`;
+          const rs = await p.evaluate(async i => { window.__kairouteGo('plan', i); await new Promise(r => setTimeout(r, 150));
+            return [...document.querySelectorAll('#view .tl.leg')].map(e => { const kinds = [...e.querySelectorAll('.ridechip')].map(c => (/\bk-(\w+)/.exec(c.className) || [])[1]);
+              const t = [...((e.querySelector('.what > span') || e).childNodes)].map(n => n.textContent).join(' ').replace(/\s+/g, ' '), m = /· ([\d.]+) (km|mi)\b/.exec(t), km = m ? +m[1] * (m[2] === 'mi' ? 1.609 : 1) : 0;
+              return { road: /^\s*Taxi or car\b/.test(t) && kinds.every(k => k === 'car' || k === 'walk'), km, said: !!e.querySelector('.ridewait'), what: t.slice(0, 50) }; }); }, d.i).catch(() => []);
+          if (process.env.DEBUG_RIDES) console.log('RIDES', where, JSON.stringify(rs.filter(r => r.km >= 3)));
+          counts.rides = (counts.rides || 0) + rs.filter(r => r.road && r.km >= 3).length;
+          rs.filter(r => r.road && r.km >= 3 && !r.said).slice(0, 2).forEach(r => fail('RIDE-SAID', where, `a ${r.km.toFixed(1)} km ride is planned by road with the ride lookup not answering, and the day doesn't say trains, buses and boats haven't come in yet: "${r.what}"`));
+          rs.filter(r => r.said && !r.road).slice(0, 2).forEach(r => fail('RIDE-SAID', where, `a ride that offers a line says its lines haven't come in: "${r.what}"`));
+        }
         // RESUME-LEFT: on the day Continue opens, start the tour and close the app: reopening goes back into the tour (the
         // control: the check can see a tour). Then Exit tour and reopen: the Day plan, never the tour the traveler left.
         if (net === 'refused' && size === PICK[0] && shore.length) {
@@ -164,14 +182,14 @@ const SPINNERS = () => [...document.querySelectorAll('.spinner, [aria-busy="true
   for (let k = fails.length - 1; k >= 0; k--) { const x = fails[k], w = W.find(w => w.rule === x.rule && !NEVER.has(w.rule) && w.until >= today && w.until <= week && (!w.where || new RegExp(w.where).test(x.where || '')));
     if (w) { fails.splice(k, 1); console.log(`WARN ${x.rule} 1 (known: ${w.owner} until ${w.until}) [${x.where}] ${x.why}`); } }
   const by = {}; fails.forEach(x => { by[x.rule] = (by[x.rule] || 0) + 1; });
-  console.log(`\nSteady screens: ${counts.trips} trips, ${counts.screens} screens opened, ${counts.redraws} redraws, ${counts.hung} screens with hanging services, ${counts.resumes} tours reopened, ${counts.scrolled || 0} screens scrolled (${counts.pins || 0} with something pinning)`);
+  console.log(`\nSteady screens: ${counts.trips} trips, ${counts.screens} screens opened, ${counts.redraws} redraws, ${counts.hung} screens with hanging services, ${counts.rides || 0} long road-only rides checked for their waiting line, ${counts.resumes} tours reopened, ${counts.scrolled || 0} screens scrolled (${counts.pins || 0} with something pinning)`);
   if (counts.trips && !counts.pins && PICK.includes('phone')) { fails.push({ rule: 'NOT TESTED' }); console.log('FAIL NOT TESTED [PIN-STEADY] no screen pinned anything while scrolling at phone size'); by['NOT TESTED'] = (by['NOT TESTED'] || 0) + 1; }
   if (counts.trips && !counts.resumes) { fails.push({ rule: 'NOT TESTED' }); console.log('FAIL NOT TESTED [RESUME-LEFT] no trip could start and exit a tour'); by['NOT TESTED'] = (by['NOT TESTED'] || 0) + 1; }
   for (const [k, n] of Object.entries(by)) console.log(`FAIL ${k} ${n}`);
   // Proof, every run: each planted defect (a way this class has gone wrong before) must be caught by its rule.
   if (!PLANT && !process.env.NO_PROOF && !/^[1-9]\d*\//.test(process.env.PART || '')) { // the proof runs once, in part 0 of a split run
     const { spawnSync } = require('child_process');
-    for (const [plant, rule] of [['redraw', 'STEADY-REDRAW'], ['settle', 'SETTLES'], ['wait', 'WAIT-ENDS'], ['pinbox', 'PIN-STEADY']]) {
+    for (const [plant, rule] of [['redraw', 'STEADY-REDRAW'], ['settle', 'SETTLES'], ['wait', 'WAIT-ENDS'], ['pinbox', 'PIN-STEADY'], ['ridesaid', 'RIDE-SAID']]) {
       const r = spawnSync(process.execPath, [__filename, FILE], { env: Object.assign({}, process.env, { PLANT: plant, TRIPS: plant === 'pinbox' ? 'example' : 'g01', SIZES: 'phone', NO_PROOF: '1', PART: '' }), encoding: 'utf8', timeout: 900000 });
       const caught = r.status === 1 && new RegExp('^FAIL ' + rule + ' [0-9]', 'm').test(r.stdout || '');
       console.log(`${caught ? 'ok  ' : 'FAIL'} planted ${plant}: ${caught ? 'caught by ' + rule : 'NOT caught by ' + rule + ' (the check is blind)'}`);
