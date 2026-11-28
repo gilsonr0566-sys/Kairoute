@@ -46,6 +46,7 @@ const seed = { trip: JSON.stringify({ id: 'live-' + TRIP, name: c.name || TRIP, 
     console.log('RIDE TAPPED ' + JSON.stringify(tapped)); await p.waitForTimeout(8000);
     await p.evaluate(() => document.querySelectorAll('#view details').forEach(d => { d.open = true; })).catch(() => {});
     console.log('\n===== after tapping ' + re + ' =====\n' + await p.evaluate(() => (document.querySelector('main') || document.body).innerText)); }
+  if (process.env.DUMP) console.log('RIDE LEGS ' + JSON.stringify(await p.evaluate(i => window.__kairouteLegs ? window.__kairouteLegs(i) : null, DAY).catch(e => 'ERR ' + e.message))); // each ride's way and its choices, as planned
   if (process.env.DUMP) { const b = await p.evaluate(() => JSON.stringify(window.__kairouteBucket ? window.__kairouteBucket() : null)).catch(e => 'null'); console.log('BUCKET_GZ ' + require('zlib').gzipSync(String(b)).toString('base64')); } // DUMP=1: the day's bucket as the live app planned it (its helper answers), to replan offline
   if (process.env.ROUTES) console.log('ROUTE TIMES ' + JSON.stringify(await p.evaluate(() => window.__kairouteRouteTimes ? window.__kairouteRouteTimes() : null))); // ROUTES=1: the street routes the app holds
   await b.close(); })();
