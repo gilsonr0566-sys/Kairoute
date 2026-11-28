@@ -383,7 +383,12 @@
           // A list that is only the guide's suggestions (the traveler ticked nothing: wantsOnly) is planned first all the
           // same, but its sights are never the traveler's choice: an unconfirmed boat to one is not "planned because you
           // chose it" (first-timer walk, Nov 22: a Château d'If boat nobody picked).
-          wishes.push(Object.assign({}, s, { wish: true }, d.wantsOnly && !d.own ? { guideWish: true } : {}));
+          // A pick the app moved here from the day it was ticked on (closed that day, or inside an area planned here) is still
+          // the traveler's sight, but this day is the app's choice: a boat with no sailing times to it on a day with a time
+          // to be back is never "planned because you chose it" (nightly Nov 27, a leaving day: an island church moved from a
+          // Monday it was closed, reached by an unconfirmed boat; R-06).
+          const mv = movedTo.get(String(s.id)), moved = !!(mv && mv.to === i && mv.from !== i);
+          wishes.push(Object.assign({}, s, { wish: true }, d.wantsOnly && !d.own ? { guideWish: true } : {}, moved ? { moved: true } : {}));
         }
         // A day the traveler has made their own (they ticked or unticked its sights) is planned from their list only:
         // the app never picks in their place there, and a list they emptied is a free day. Spare time may still take an
