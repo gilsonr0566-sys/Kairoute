@@ -690,7 +690,7 @@ const transitNextBatch = (cur, full, sent) => full ? Math.min(12, cur + 1) : Mat
 if (typeof window !== "undefined") window.__kairouteTransitNextBatch = transitNextBatch;
 // The earlier-start offer for a day, and the plan it would make (flow-check: never a start that only waits at the door).
 if (typeof window !== "undefined") window.__kairouteEarlierStart = i => { const d = trip.days[i], p = buildPlan(d); if (!p || p.error) return null; const e = earlierStart(d, p); if (!e) return null;
-  const keep = { startTime: d.startTime, hours: d.hours }; try { d.startTime = e.start; d.hours = e.hours; bonusMemo.delete(d); mealMemo.delete(d); const q = buildPlan(d); return { start: e.start, waits: q.items.filter(x => x.type === "stop" && (x.wait || 0) >= 15).map(x => x.place.name) }; }
+  const keep = { startTime: d.startTime, hours: d.hours }; try { d.startTime = e.start; d.hours = e.hours; bonusMemo.delete(d); mealMemo.delete(d); const q = trying(() => buildPlan(d)); return { start: e.start, waits: q.items.filter(x => x.type === "stop" && (x.wait || 0) >= 15).map(x => x.place.name) }; }
   finally { Object.assign(d, keep); bonusMemo.delete(d); mealMemo.delete(d); } };
 const transitFail = new Map(), transitQ = new Map(), transitPins = new Set(); let transitTimer = 0, transitBusy = false; // pins: rides of the trip being kept for offline
 // Speed: asked hundreds of thousands of times while planning, so each place's half of the key is kept with it.
@@ -1180,6 +1180,11 @@ function bumpedNote(d) {
   return `<div class="banner warn bumped"><span>${b.length === 1 ? (b[0].why ? `<b>${esc(b[0].name)}</b> is off your list: it ${esc(b[0].why)}.` : `<b>${esc(b[0].name)}</b> no longer fits today's time, so it's off your list.`) : `These are off your list: ${b.map(x => `<b>${esc(x.name)}</b>${x.why ? " (it " + esc(x.why) + ")" : ""}`).join(", ")}.`}${estShip(d) ? ` The ship times here are estimated; your booking's real times may leave room.` : ""}</span>
     <span class="actions">${b.map(x => `<button type="button" class="btn small" data-act="fitask" data-id="${esc(x.id)}">${b.length === 1 ? "Ways to fit it in" : "Fit in " + esc(x.name)}</button>`).join("")}<button type="button" class="btn ghost small" data-act="bumpok">OK</button></span></div>` + backNote;
 }
+// R-28: a plan made to try something ("what if this sight were added", "what if the day started earlier") is only
+// looked at. While it is made, nothing of the trip is written: the engine's picks for the app's own days are written
+// only from a real plan (Nov 28: trying one sight on Choose sights rewrote the app's picks on two other days, so the
+// cards there changed under the traveler's eyes and every plan already made was made again).
+let tryDepth = 0; function trying(fn) { tryDepth++; try { return fn(); } finally { tryDepth--; } }
 function forget0(o) { bonusMemo.delete(o); mealMemo.delete(o); keptMemo.delete(o); eveMemo.delete(o); }
 function dayWindowSafe(d, city) { try { return dayWindow(d, city); } catch (e) { return null; } }
 function suggestTour(d0) {
@@ -4461,6 +4466,7 @@ if (typeof window !== "undefined") {
   window.__kairouteUnpickPoint = i => { const d = trip.days[i]; if (!d) return false; delete d.pointPicked; d.pointIdx = 0; edited(); render(); return true; }; // phone check: a day whose station isn't chosen
   window.__kairouteEdit = (i, patch) => { if (i === "all") trip.days.forEach(d => Object.assign(d, typeof patch === "function" ? patch(d) : patch)); else Object.assign(trip.days[i], patch); save(); render(); return true; };
   window.__kairouteSettled = () => !seedTimer && !fillPending && !seedNext(); // background seeding of other days is done
+  window.__kairoutePicksAll = () => trip.days.map(d => Array.isArray(d.selected) ? d.selected.join("|") : "-"); // R-28 check: trying a sight changes no day's picks
   window.__kairouteDays = () => trip.days.map((d, i) => ({ i, date: d.date, type: d.type, dest: d.destination, city: cityFor(d) ? keyOf(cityFor(d).city) : "", mode: d.mode, time: d.time || "", nightDep: d.nightDep || "" }));
   window.__kairouteTruth = i => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const d = trip.days[i], city = cityFor(d); if (!city) return { none: true }; refillIfNeeded(d, city); if (!d.selected) seedPicks(d, city); const pl = buildPlan(d); if (!pl || pl.error) return { error: pl ? pl.error : "none" };
     const sites = new Map([...(city.sites || []), ...(city.farther || [])].map(x => [x.id, x])), eats = new Set((city.restaurants || []).map(r => keyOf(r.name)));
@@ -6431,7 +6437,7 @@ function meterCalc(plan, d) {
   let base = plan;
   if ((plan.bonus || []).length) {
     const keep = d.fillTime, clear = () => { bonusMemo.delete(d); mealMemo.delete(d); keptMemo.delete(d); eveMemo.delete(d); };
-    try { d.fillTime = false; clear(); base = buildPlan(d) || plan; if (base.error) base = plan; } finally { d.fillTime = keep; clear(); }
+    try { d.fillTime = false; clear(); base = trying(() => buildPlan(d)) || plan; if (base.error) base = plan; } finally { d.fillTime = keep; clear(); }
   }
   const its = base.items, fx = its.filter(x => x.type === "fixed" && base.w.head.some(h => h.name === x.place.name)).pop();
   const settle = fx ? fx.time + (fx.place.minutes || 0) - base.start : 0;
@@ -7113,7 +7119,7 @@ function earlierStart(d, plan) {
   try {
     for (let st = s0 - 30; st >= 6 * 60 + 30; st -= 30) {
       d.startTime = fmt(st); d.hours = (end0 - st) / 60; bonusMemo.delete(d); mealMemo.delete(d);
-      const p = buildPlan(d); if (!p || p.error) continue;
+      const p = trying(() => buildPlan(d)); if (!p || p.error) continue;
       // Never a start that only means waiting at the door: a stop planned before its hours (written or assumed, the
       // engine's wait) rules that start out (Round 1 part 3: "Leave at 6:30 am" beside "assumed open 9 to 5").
       const early = p.items.some(i => i.type === "stop" && ((opensAt(i.place) != null && i.time < opensAt(i.place) - 5) || (i.wait || 0) >= 15));
@@ -7134,7 +7140,7 @@ function laterEnd(d, plan) {
   try {
     for (let h = d.hours + 0.5; h <= 14; h += 0.5) {
       d.hours = h; bonusMemo.delete(d); mealMemo.delete(d); keptMemo.delete(d);
-      const p = buildPlan(d); if (!p || p.error) continue;
+      const p = trying(() => buildPlan(d)); if (!p || p.error) continue;
       if (p.endBy > cap) break;
       const fits = left(plan).filter(x => !left(p).some(y => y.id === x.id)).map(x => x.name);
       if (fits.length || (plan.over && !p.over)) { best = { hours: h, end: fmt(p.endBy), fits, all: !left(p).length && !p.over }; if (best.all) break; }

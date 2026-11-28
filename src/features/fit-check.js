@@ -16,7 +16,7 @@ function fitTrial(d, sel, t, fast) {
   // warning): Nov 21 outside check, Capri's box said it could never fit a 9 h 45 min day it fits in 6 h 44 min.
   const added = (sel || []).filter(id => !(keep.selected || []).includes(id)); if (added.length) d.mine = [...new Set((d.mine || []).concat(added))];
   d.selected = sel; if (fast) d.fillTime = false; if (t && t.hours != null) d.hours = t.hours; if (t && t.startTime) d.startTime = t.startTime; forget0(d);
-  try { const p = fast && window.__kairouteAlone ? window.__kairouteAlone(d, () => buildPlanRaw(d)) : buildPlan(d), m = meterCalc(p, d); return { p, m }; }
+  try { const p = fast && window.__kairouteAlone ? window.__kairouteAlone(d, () => buildPlanRaw(d)) : trying(() => buildPlan(d)), m = meterCalc(p, d); return { p, m }; }
   finally { Object.assign(d, keep); if (keep.fillTime === undefined) delete d.fillTime; if (keep.mine === undefined) delete d.mine; forget0(d); }
 }
 // The same test as the planner's (E.roomFor): a day left with no time for lunch has no room for this sight either.
@@ -91,7 +91,9 @@ function addPick(d, id, ask) {
   // One answer to "does it fit": the quick check (without the stops that fill spare time) can say no where the full
   // plan says yes. When the traveler asked, the full plan decides: the box opens, or the sight is added; never a tap
   // that does neither (Nov 28 press check: "Needs 1 h 32 min" tapped, no box and no pick).
-  if (!fitsWith(d, [id], base0) && !(ask && fitOpen(d, id))) { d.mine = mine0; if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; }
+  // The box weighs the day as it is on screen (the traveler's own picks as they were), so its first plans are the ones
+  // already made for the screen, not made again (press check, Nov 28: the tap took 2.5 s on a busy runner).
+  if (!fitsWith(d, [id], base0)) { d.mine = mine0; if (!(ask && fitOpen(d, id))) { if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; } markMine(d, id, true); }
   const was = selKey(d); d.selected = [...d.selected, id]; if (!ask && typeof d.seedSig === "string" && d.seedSig === was) d.seedSig = selKey(d); // a sight the app adds keeps the list the app's (a hearted day's mark is left alone)
   delete d.autoEmpty; delete d.cleared; if (d.bumped) d.bumped = d.bumped.filter(b => b.id !== id); rememberPick(d, sx);
   if (from) { movedNote = (sx ? sx.name : "That sight") + " moved here from " + fmtDow(from.date) + " " + fmtDate(from.date) + "."; d.movedIn = { ...(d.movedIn || {}), [id]: from.date }; } // remembered so it can go back if it stops fitting here

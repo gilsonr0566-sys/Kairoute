@@ -127,12 +127,18 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
       { const nid = await p.evaluate(() => { const b = [...document.querySelectorAll('#view .sitesmain [data-act="fitask"]')].find(x => !x.closest('details:not([open]), .picksfold:not(.open), .sorthold') && x.closest('[data-card]')); if (!b) return null; b.closest('[data-card]').scrollIntoView({ block: 'center' }); return b.closest('[data-card]').dataset.card; });
         if (nid) { await p.waitForTimeout(600);
           const pt = await p.evaluate(id => { const b = document.querySelector(`[data-card="${id}"] [data-act="fitask"]`).getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; }, nid);
+          const picks0 = await p.evaluate(() => window.__kairoutePicksAll ? window.__kairoutePicksAll() : null);
           const before = await seenOf(p); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y);
           const added = () => p.evaluate(id => { const i = document.querySelector(`input[data-site="${id}"]`); return !!(i && i.checked); }, nid);
           let box = false, got = false; for (let w = 0; w < 50 && !box && !got; w++) { await p.waitForTimeout(100); box = await p.evaluate(() => !!document.querySelector('.fitbox')); if (!box) got = await added(); }
           // One answer (R-28, Nov 28 press check): a "Needs ..." tap either opens the ways to fit it in, or the full plan
           // finds it fits and the sight is added. A tap that does neither is a dead button.
           const nowB = box || got ? '' : await p.evaluate(id => { const c = document.querySelectorAll(`[data-card="${id}"]`), b = document.querySelector(`[data-card="${id}"] [data-act="fitask"]`), i = document.querySelector(`input[data-site="${id}"]`); return `${c.length} card(s), badge ${b ? '"' + b.textContent + '"' + (b.dataset.checking ? ' checking' : '') : 'gone'}, tick box ${i ? (i.checked ? 'on' : 'off') : 'none'}, card ${c[0] ? c[0].className : '-'}`; }, nid);
+          // Trying a sight is only a look (R-28, Nov 28): while the box weighs it, no day's picks change, here or on any
+          // other day (trying one sight rewrote the app's picks on two other days, so their cards changed and every
+          // plan was made again: a slow tap and a list that moved).
+          if (box && picks0) { const picks1 = await p.evaluate(() => window.__kairoutePicksAll()), ch = picks0.map((x, i) => x === picks1[i] ? null : `day ${i + 1}: ${x} -> ${picks1[i]}`).filter(Boolean);
+            check(`${tag}: trying a sight changes no day's picks`, !ch.length, ch.slice(0, 2).join('; ')); }
           check(`${tag}: tapping "Needs ..." opens the box or adds the sight`, box || got, `nothing happened within 5 s: no box, and the sight was not added (${nid}: ${nowB}; tapped at ${Math.round(pt.y)})`);
           await p.waitForTimeout(1500); const a = await seenOf(p), s1 = await p.evaluate(() => (window.__scr || []).join(' | '));
           const m1 = moves(before, a, 4); if (box) check(`${tag}: the "Needs" box opening moves nothing under it`, !m1.length, m1.slice(0, 3).join(', ') + (s1 ? ` (the app scrolled: ${s1})` : ''));

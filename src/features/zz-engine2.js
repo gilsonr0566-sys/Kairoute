@@ -113,10 +113,10 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     if (alone && trip.days.includes(alone)) return alonePlans();
     stat.calls++; let t0 = performance.now();
     const k = keyNow(); stat.keyMs += performance.now() - t0;
-    if (memo.k === k && memo.plans) return memo;
+    if (memo.k === k && memo.plans) return syncSeeded(memo);
     // The last few states are kept too: the Sights list tries a sight (a different selection), then the day as it is
     // again, then the next sight; going back to a state planned a moment ago is a lookup, not a new bucket and plan.
-    { const m = recent.get(k); if (m && m.plans) { recent.delete(k); recent.set(k, m); memo = m; stat.recent = (stat.recent || 0) + 1; return memo; } }
+    { const m = recent.get(k); if (m && m.plans) { recent.delete(k); recent.set(k, m); memo = m; stat.recent = (stat.recent || 0) + 1; return syncSeeded(memo); } }
     // The plans depend only on what the engine is given (the bucket) and the ride answers known so far. Most changes
     // to the trip or answers arriving (weather, a photo, the day being looked at) leave both as they were: then the
     // plans stand and nothing is planned again. Only a real change of the engine's inputs replans.
@@ -126,7 +126,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     // plans never take, arriving all the time while the traveler looks around, change nothing).
     stat.bucketMs += performance.now() - t0; t0 = performance.now();
     const same = memo.ik === ik && memo.plans && [...memo.used.values()].every(u => (u.route ? routeSig(u.a, u.b) : answerSig(u.a, u.b)) === u.sig); stat.checkMs += performance.now() - t0;
-    if (same) { memo.k = k; return memo; }
+    if (same) { memo.k = k; return syncSeeded(memo); }
     stat.planned++;
     if (window.PLACES2) { bucket = E.applyPlaces(bucket, placesWithIsles(bucket)); guideFromPlaces(bucket); }
     // The app's own public transport answers for each ride (asked for any ride not known yet, as in the app).
@@ -137,9 +137,16 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     if (typeof routeKnown === "function") bucket.routes.known = routeKnown;
     let plans; try { plans = E.planTrip(bucket); } catch (e) { console.warn("Beta 2 engine", e); plans = []; }
     askRoutes(plans);
-    // A day still on the app's own seeding (the traveler hasn't ticked or unticked anything there) shows what the
-    // engine planned: its ticks become the engine's stops, so the picker, the counts and the plan always agree.
-    let synced = false;
+    // The bucket is the same after the sync (a seeded day sends only the traveler's own picks), so the plans stand.
+    memo = { k, ik, used, plans, bucket, unsynced: true }; recent.set(k, memo); if (recent.size > 8) recent.delete(recent.keys().next().value); return syncSeeded(memo);
+  }
+  // A day still on the app's own seeding (the traveler hasn't ticked or unticked anything there) shows what the
+  // engine planned: its ticks become the engine's stops, so the picker, the counts and the plan always agree.
+  // R-28: never from a plan made only to try something (tryDepth): such plans are kept marked unsynced, and the
+  // first real look at the same state writes them.
+  function syncSeeded(m) {
+    if (!m || !m.unsynced || (typeof tryDepth === "number" && tryDepth > 0)) return m;
+    m.unsynced = false; const plans = m.plans; let synced = false;
     trip.days.forEach((d, i) => {
       const ep = plans[i], fresh = !Array.isArray(d.selected);
       // An empty list with no seeding mark is the app's too (nothing of the traveler's to lose); a non-empty one without
@@ -152,8 +159,8 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
       else if (ids.map(String).sort().join("|") === d.selected.map(String).sort().join("|")) return;
       d.selected = ids; d.seedSig = seedSigOf(d); d.autoEmpty = !ids.length; synced = true;
     });
-    // The bucket is the same after the sync (a seeded day sends only the traveler's own picks), so the plans stand.
-    memo = { k: synced ? keyNow() : k, ik, used, plans, bucket }; recent.set(memo.k, memo); if (recent.size > 8) recent.delete(recent.keys().next().value); return memo;
+    if (synced) { const k2 = keyNow(); if (k2 !== m.k) { recent.delete(m.k); m.k = k2; recent.set(k2, m); } }
+    return m;
   }
   window.__kairouteEngine2 = () => JSON.parse(JSON.stringify(tripPlans().plans));
   // R-40 (Get there): the ways from any point to any point on day i, from the plans' own ride layer: the same walks
