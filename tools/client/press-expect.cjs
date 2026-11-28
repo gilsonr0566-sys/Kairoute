@@ -19,7 +19,8 @@ exports.expect = (c, r, rec, ctx) => { if (!r || !r.after || (rec.fails || []).s
 const SCROLLS = [
   [c => /(^|,)ts=(addstay|addcruise)/.test(c.data), 'a new stop is added and its first field is brought to the middle of the screen', 'opens'],
   [(c, x) => (c.act === 'wizmore' || /^Build my trip$/.test(c.label)), 'the new-trip form says what is missing at its top and the page goes there', 'opens'],
-  [(c, x) => x && x.view === 'trip' && /(^|,)day=\d+/.test(c.data) && !c.act, 'on the Trip page a day tapped in the list is opened in the form below it'],
+  [c => c.act === 'needgo', 'a Still needed line goes to the field it names and puts the cursor there'],
+  [(c, x, r) => (x && x.view === 'trip' || r && r.after && r.after.view === 'trip') && /(^|,)day=\d+/.test(c.data) && !c.act, 'on the Trip page a day tapped in the list is opened in the form below it'],
   [c => c.act === 'mealopen' || c.act === 'bookopen', 'the card to change a meal, or to enter a reservation, opens above the day\'s list and the page goes to it', 'opens'],
   [c => /(^|,)jump=/.test(c.data), 'in the Guide, Next and the stop list open that stop\'s chapter from its top', 'opens'],
   [c => c.act === 'suggesttour', 'Suggest my tour answers in a note and the page goes to the note (the pinned leave-by strip gives way to the full card there)', 'opens'],

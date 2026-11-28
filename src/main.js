@@ -5306,6 +5306,7 @@ function render() {
   // Every other screen: what the traveler last touched stays where it was (R-28).
   // The Trip page is one screen whichever day is open in it.
   const hkey = view === "trip" ? "trip" : pkey, hold = view !== "sites" && holdOn === hkey ? touchSpot(hkey) : null; if (hold) hold.before(); holdOn = hkey;
+  touchWas = null; // the place at the touch counts for the first redraw after it only
   if (holdRoom.key !== hkey) holdRoom = { key: "", pane: "", top: 0, end: 0 };
   // A note about one day's picks belongs to that day's screen: it is gone on any other.
   if (movedNote && movedAt && movedAt !== pkey) movedNote = ""; movedAt = movedNote ? pkey : "";

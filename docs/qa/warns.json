@@ -31,6 +31,22 @@
       "owner": "Stop the select sites page jumping",
       "until": "2026-12-04",
       "why": "Choose sights, the fit box: 'Or choose what to untick yourself' moves the list 158 px (example trip, phone; press walk Nov 27). Fixed by that thread at 5ad2113c on its branch (the box grows downward only); this entry goes when that is on the Beta 2 branch"
+    },
+    {
+      "rule": "UNTRUE",
+      "tool": "press",
+      "where": "not found on the map yet",
+      "owner": "Fix finding a rental's address",
+      "until": "2026-12-04",
+      "why": "Trip page, Find it with the map search unreachable: the message now says the search did not answer, but the line above it still reads 'Where Ermou 12 is in Athens (not found on the map yet)'. Not answered is not the same as not found (press walk, Nov 28)"
+    },
+    {
+      "rule": "DEAD",
+      "tool": "press",
+      "where": "Find it",
+      "owner": "Fix finding a rental's address",
+      "until": "2026-12-04",
+      "why": "Find it pressed with the box empty changes nothing on the screen (the hint 'Type the name and tap Find it.' is already there); it could put the cursor in the box (press walk, Nov 28)"
     }
   ]
 }
