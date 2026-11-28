@@ -21,6 +21,7 @@ const PLANTING = new Set(['tools/beta2/own-boat-check.cjs' /* plants a chosen bo
   'tools/ui/steady-sights-check.cjs' /* plants a re-sort after a tap on every run (R-28) */,
   'tools/steps-e2e.cjs' /* takes each of 15 trip details out in turn on every run and must find each asked by its own field (R-41) */,
   'tools/ui/pinned-band-check.cjs' /* plants "no band behind pinned pieces" on every run (R-32) */,
+  'tools/ui/day-moves-check.cjs' /* plants 7 swap and removal bugs in the built page on every run (R-39) */,
   'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */,
   'tools/ui/net-words-check.cjs' /* plants an unguarded "when you're online" message on every run (R-18) */,
   'tools/ui/saved-recheck.cjs' /* runs the build with the saved-content re-check switched off and must find problems (R-30) */,
@@ -73,7 +74,7 @@ function checkCommits(rules, commits, links) {
   const ids = new Set(rules.map(r => r.id)), linked = [...links.matchAll(/^\| *([0-9a-f]{8,}) *\| *([^|]*R-\d+[^|]*)\|/gm)].map(m => [m[1], m[2]]), bad = [];
   for (const c of commits) {
     const named = [...c.msg.matchAll(/^Rule: *(.+)$/gm)].flatMap(m => m[1].match(/R-\d+/g) || []), l = linked.find(([s]) => c.sha.startsWith(s));
-    const all = named.concat(l ? l[1].match(/R-\d+/g) || [] : []);
+    const all = l ? l[1].match(/R-\d+/g) || [] : named; // a rule-links row corrects the commit's own Rule line
     if (!all.length) bad.push(`${c.sha.slice(0, 8)} "${c.msg.split('\n')[0].slice(0, 60)}": changes the app but names no rule (add "Rule: R-xx", or link it in docs/qa/rule-links.md)`);
     else all.filter(x => !ids.has(x)).forEach(x => bad.push(`${c.sha.slice(0, 8)}: names ${x}, which is not in docs/qa/RULES.md`));
   }

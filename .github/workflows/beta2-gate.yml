@@ -177,6 +177,8 @@ jobs:
         run: node tools/steps-e2e.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always() # R-30: nothing pinned ever covers content (every day of the sample cruise, phone and upright tablet)
         run: SIZES=phone,upright DAYS=all node tools/ui/pinned-band-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always() # R-39: swap two days, remove a day, with real taps on a phone and a tablet (plants 7 bugs every run)
+        run: node tools/ui/day-moves-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Keep this part's failing lines for the release report
         if: always()
         run: |
