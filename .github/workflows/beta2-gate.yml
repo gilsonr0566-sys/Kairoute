@@ -173,6 +173,8 @@ jobs:
         run: node tools/ui/steady-sights-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
         run: TRIPS=g09-kotor,g02-vienna,noai-port SIZES=phone DAYS=all node tools/ui/steady-sights-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always() # R-41: every detail a day's plan depends on is asked when the trip is made (phone and tablet, real screens; plants 15 missing details every run)
+        run: node tools/steps-e2e.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always() # R-30: nothing pinned ever covers content (every day of the sample cruise, phone and upright tablet)
         run: SIZES=phone,upright DAYS=all node tools/ui/pinned-band-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Keep this part's failing lines for the release report
@@ -262,6 +264,12 @@ jobs:
         run: node tools/ui/no-signal-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
         run: node tools/ui/gate-ask-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Where you're staying is found by name or street address, or said plainly not found; 4 planted bugs caught (R-38)
+        if: always()
+        run: node tools/ui/stay-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - name: Get there finds any place and every way there from the plans' own ride layer, with the time to be back on ship days; 4 planted bugs caught (R-40)
+        if: always()
+        run: node tools/ui/getthere-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
         run: node tools/ui/first-run-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
@@ -391,7 +399,7 @@ jobs:
       - name: Planted broken buttons (dead, error, jump on two screens, covered, too wide, broken text, untrue, never pressed) must all be caught
         if: matrix.part == 1
         run: node tools/client/press-proof.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
-      - name: Press every control (rule R-40)
+      - name: Press every control (rule R-42)
         if: always()
         # The walk exits 1 when any press failed; whether that is a known failure (WARN) or a new one is the
         # report's call in the next step. Only a walk that broke down (any other code) fails here.

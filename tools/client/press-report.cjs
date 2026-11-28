@@ -1,4 +1,4 @@
-// The report of "every button pressed" (rule R-40): reads what press-all.cjs wrote (OUT/*.json, one file per trip, size
+// The report of "every button pressed" (rule R-42): reads what press-all.cjs wrote (OUT/*.json, one file per trip, size
 // and part) and writes OUT/summary.md and OUT/summary.json:
 //   - how many controls were pressed, on which trips, sizes and screens;
 //   - every failure, grouped by rule and by control (one class of failure = one line, with where it was seen);

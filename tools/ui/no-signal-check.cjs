@@ -21,6 +21,8 @@ async function run(b, url, mode) { serve.addr = mode !== 'noaddr';
   await p.getByRole('button', { name: /Plan a new trip/i }).click(); await p.waitForTimeout(800);
   await p.fill('#ts-0-place', 'Lisbon'); await p.fill('#ts-0-date', '2027-05-09'); await p.fill('#ts-0-nights', '3'); await p.press('#ts-0-nights', 'Tab');
   await p.getByRole('button', { name: /Build my trip/i }).click();
+  // R-41: setup lists the trip details still empty; this check's trip leaves them out on purpose, so it answers "I don't know these yet"
+  await p.waitForTimeout(600); if (await p.locator('[data-ts="needok"]').first().isVisible().catch(() => false)) await p.locator('[data-ts="needok"]').first().click();
   let msg = ''; for (let k = 0; k < 60; k++) { await p.waitForTimeout(1000); const s = await p.evaluate(() => window.__kairouteState()); if (!s.busy && k > 3) { msg = s.err || ''; break; } }
   const text = await p.evaluate(() => document.body.innerText);
   if (mode === 'slow') { if (/when you're online|no internet|couldn't reach/i.test(msg)) fails.push('helper slow while online: the words blame the connection or say it was unreachable: ' + msg); if (!/taking longer than usual/i.test(msg)) fails.push('helper slow: no "taking longer than usual" message: ' + msg); }

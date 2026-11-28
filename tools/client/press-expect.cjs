@@ -1,4 +1,4 @@
-// What each kind of control should do when pressed (rule R-40, "every button pressed"). One line per kind of control,
+// What each kind of control should do when pressed (rule R-42, "every button pressed"). One line per kind of control,
 // keyed by its action name or its label; the press check (press-all.cjs) calls expect() after every press and reports
 // EXPECT when the control did something else. Filled in as presses are reviewed: a control with no line here is held
 // to the general rules only (it must do something a traveler can see, with no error, jump, cover or stuck wait).

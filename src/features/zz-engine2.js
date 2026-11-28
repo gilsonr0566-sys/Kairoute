@@ -30,6 +30,9 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     const was = planDate; let r = null; transitPeek = true;
     try { for (const dt of tripDates().concat([null])) { planDate = dt; r = transitFor(a, b); if (r && r.length) break; } } finally { transitPeek = false; planDate = was; }
     if (peekMemo.size > 50000) peekMemo.clear(); peekMemo.set(k, r); return r; };
+  // No answer at all yet for this ride on any of the trip's dates (an answer with no lines counts as an answer).
+  const noAnswer = (a, b) => { const was = planDate; let r = null; transitPeek = true;
+    try { for (const dt of tripDates().concat([null])) { planDate = dt; r = transitFor(a, b); if (r) break; } } finally { transitPeek = false; planDate = was; } return !r; };
   const answerOf = (a, b) => { const r = peek(a, b); return r && r.map(o => Object.assign({}, o, { id: rideId(o), kind: rideKind(o) })); };
   const askRides = ep => { (ep && ep.items || []).forEach(x => { if (x.t === "ride" && x.from && x.to && x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift") { try { transitFor(x.from, x.to); } catch (e) {} } }); };
   // R-33: every walk and taxi the plans take is asked for its real route once (see askRouteTimes in main.js).
@@ -153,6 +156,23 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     memo = { k: synced ? keyNow() : k, ik, used, plans, bucket }; recent.set(memo.k, memo); if (recent.size > 8) recent.delete(recent.keys().next().value); return memo;
   }
   window.__kairouteEngine2 = () => JSON.parse(JSON.stringify(tripPlans().plans));
+  // R-40 (Get there): the ways from any point to any point on day i, from the plans' own ride layer: the same walks
+  // (street routes, climbs), lines, timetables, piers and island outlines the plans use, with no ride choice of the
+  // traveler's (a choice belongs to a planned ride). A place on an island the map's paths don't reach is across the water,
+  // as in the plans (R-06); a guide sight is read as the plans read it (its travel note, its island).
+  window.__kairouteRideNow = (i, a, b) => {
+    const d = trip.days[i]; if (!d || !a || !b || !E.hasPos(a) || !E.hasPos(b)) return null;
+    const bucket = tripPlans().bucket || {}, city = cityFor(d), key = city ? keyOf(city.city) : "", bc = (bucket.cities || {})[key] || {};
+    const P = (placesWithIsles(bucket) || {})[key], I = P && P.islands;
+    const asPlanned = p => { const x = p.id != null ? (bc.sites || []).concat(bc.farther || []).find(s => String(s.id) === String(p.id)) : null;
+      const q = Object.assign({}, x || {}, { lat: +p.lat, lng: +p.lng, name: p.name }, p.backToShip ? { backToShip: true } : {}, p.deadline ? { deadline: true } : {});
+      if (!q.acrossWater && I && Array.isArray(I.shapes)) { const sh = E.islandAt(I.shapes, q); if (sh && sh.id !== I.centreShape && sh.walk === false) q.acrossWater = sh.name || true; }
+      return q; };
+    const answers = (x, y) => { const was = planDate; planDate = d.date || null; try { const r = transitFor(x, y); return r && r.map(o => Object.assign({}, o, { id: rideId(o), kind: rideKind(o) })); } finally { planDate = was; } };
+    const routes = (x, y) => typeof routeTimeOf === "function" ? routeTimeOf(x, y) : null; if (typeof routeKnown === "function") routes.known = routeKnown;
+    const tr = E.makeTravel(bucket.prefs || {}, null, bucket.legs, bucket.transit, answers, E.piersOf(bucket), routes);
+    return tr.estimate(asPlanned(a), asPlanned(b));
+  };
   window.__kairoutePackedBuy = packedBuy; window.__kairoutePackedWords = r => packedWords(r);
   // For the phone test: every pier a boat may leave from, and whether a place is reached only by boat.
   window.__kairoutePiers = () => E.piersOf(tripPlans().bucket || {});
@@ -178,7 +198,7 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
   function toApp(d, city, ep) {
     const w = dayWindow(d, city); if (w.error) return w;
     if (!ep) return { error: "The new engine has no plan for this day." };
-    if (ep.error) return Object.assign({ error: ep.error }, ep.askNight ? { askNight: true } : {});
+    if (ep.error) return Object.assign({ error: ep.error }, ep.askNight ? { askNight: true } : {}, ep.askArrive ? { askArrive: true } : {}, ep.askLeaveTime ? { askLeaveTime: true } : {});
     const sites = (city.sites || []).concat(city.farther || []), byId = new Map(sites.map(s => [String(s.id), s]));
     const items = [], stops = [], meals = [], evening = [];
     const at = (x, name, extra) => Object.assign({ name: name || x.name || "", lat: x.lat, lng: x.lng }, extra || {});
@@ -189,6 +209,8 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         const leg = { mode: MODE[x.mode] || "ride", kind: UIKIND[x.kind] || (x.mode === "walk" ? "walk" : "car"), how: x.how || (x.mode === "walk" ? "Walk" : "Taxi or car"), km: x.km || 0, min: x.min || 0 };
         if (x.pierName) leg.pier = x.pierName; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to; if (x.options) leg.options = x.options;
         if (x.ans) leg.transit = x.ans; if (x.steps) leg.steps = x.steps; if (x.note) leg.note = x.note; if (x.lost) leg.lost = x.lost; if (x.slack) leg.slack = x.slack; if (x.swapWhy) leg.swapWhy = x.swapWhy; if (x.ownBoat) leg.ownBoat = x.ownBoat;
+        // R-18: a ride by road because no lines have come in yet (the lookup not answered, the helper busy, no signal) says so.
+        if (leg.kind === "car" && x.from && x.to && !x.ans && (x.options || []).every(o => !o.ans && ["car", "walk"].includes(UIKIND[o.kind] || "car"))) { const s = transitAsking(x.from, x.to); if (s && noAnswer(x.from, x.to)) leg.asking = s; }
         // Every way for this ride is a choice on the plan (the ride chips): a tap saves it as the traveler's own choice for
         // this ride, and the engine plans with it.
         if (x.from && x.to && x.options && x.options.length > 1) {

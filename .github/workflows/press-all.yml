@@ -1,5 +1,5 @@
 name: Every button pressed
-# Rule R-40 (Richard, Nov 27 2026: "Can we have Fable push all buttons"). A real touch on every control of every screen,
+# Rule R-42 (Richard, Nov 27 2026: "Can we have Fable push all buttons"). A real touch on every control of every screen,
 # on several trips (first open, the example cruise and train trip before and during the trip, a rail trip, a port day,
 # a boat day, a group trip, odd and empty input), at phone and tablet size. See tools/client/press-all.cjs.
 #   - on the LIVE Beta 2 site (the default when run by hand or on a schedule): real answers from the helper's free
