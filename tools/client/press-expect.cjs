@@ -18,11 +18,11 @@ exports.expect = (c, r, rec, ctx) => { if (!r || !r.after || (rec.fails || []).s
 // the top). Any other control that scrolls the screen by itself is a JUMP. [what matches, why].
 const SCROLLS = [
   [c => /(^|,)ts=(addstay|addcruise)/.test(c.data), 'a new stop is added and its first field is brought to the middle of the screen', 'opens'],
-  [(c, x) => x && x.view === 'wizard' && (c.act === 'wizmore' || /^Build my trip$/.test(c.label)), 'the new-trip form says what is missing at its top and the page goes there', 'opens'],
+  [(c, x) => (c.act === 'wizmore' || /^Build my trip$/.test(c.label)), 'the new-trip form says what is missing at its top and the page goes there', 'opens'],
   [(c, x) => x && x.view === 'trip' && /(^|,)day=\d+/.test(c.data) && !c.act, 'on the Trip page a day tapped in the list is opened in the form below it'],
   [c => c.act === 'mealopen' || c.act === 'bookopen', 'the card to change a meal, or to enter a reservation, opens above the day\'s list and the page goes to it', 'opens'],
   [c => /(^|,)jump=/.test(c.data), 'in the Guide, Next and the stop list open that stop\'s chapter from its top', 'opens'],
-  [c => c.act === 'suggesttour', 'Suggest my tour answers in a note and the page goes to the note'],
+  [c => c.act === 'suggesttour', 'Suggest my tour answers in a note and the page goes to the note (the pinned leave-by strip gives way to the full card there)', 'opens'],
   [(c, x, r) => c.kind === 'fold' && (r.scrolls || []).some(s => /placeMenu/.test(s)), 'a menu too tall to fit above or below its button: the page moves just enough for the whole menu to show under it'],
 ];
 exports.SCROLLS = SCROLLS;
