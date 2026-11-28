@@ -442,7 +442,7 @@ function syncMerge(data, preferRemote) {
     if (!trip.prefs) trip.prefs = defaultPrefs();
     applyingSync = true; save(); applyingSync = false;
     bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map();
-    if (!wiz && view !== "tour" && !(document.activeElement && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))) { const y = window.scrollY; render(); window.scrollTo(0, y); }
+    if (!wiz && view !== "tour" && !(document.activeElement && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))) { redrawStill(); }
   }
   return changed;
 }
@@ -3423,7 +3423,7 @@ Return ONLY JSON: {"places":[{"n":number,"minutes","travel","category","summary"
       city.farther.push(st); added++;
     }
     city.farFillV = FARFILL_V;
-    if (added) { keepFills(city); console.info("Kairoute added famous day trips the guide had left out in " + city.city); try { leadLate(city); } catch (e) {} save(); if (["plan", "sites", "guide"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
+    if (added) { keepFills(city); console.info("Kairoute added famous day trips the guide had left out in " + city.city); try { leadLate(city); } catch (e) {} save(); if (["plan", "sites", "guide"].includes(view)) { redrawStill(); } }
   } catch (e) {} finally { farFilling[k] = false; }
 }
 if (typeof window !== "undefined") window.__kairouteFarGaps = (city, src) => farGaps(city, src).map(x => x.name);
@@ -3444,7 +3444,7 @@ Return ONLY JSON: {"places":[{"n":number,"minutes","category","summary","guide",
       city.sites.push(st); added++; if (st.mustSee) tickOnOneDay(city, st);
     }
     if (added) keepFills(city);
-    if (added) { city.famousMissing = (city.famousMissing || []).filter(n => !city.sites.some(s => s.name === n)); console.info("Kairoute wrote in famous places the guide had left out in " + city.city); save(); if (["plan", "sites", "guide"].includes(view)) { const y = window.scrollY; render(); window.scrollTo(0, y); } }
+    if (added) { city.famousMissing = (city.famousMissing || []).filter(n => !city.sites.some(s => s.name === n)); console.info("Kairoute wrote in famous places the guide had left out in " + city.city); save(); if (["plan", "sites", "guide"].includes(view)) { redrawStill(); } }
   } catch (e) { famousFilling[k] = false; }
 }
 // ---------- Big stops, part by part ----------
@@ -5161,19 +5161,23 @@ function drRun() {
   // A page that is drawn and right stays still: an answer that changed nothing the screen shows (another city's
   // guide, a ride on another day) doesn't redraw it. News that can't change a plan (events) always does.
   if (!k && viewFp() === shownFp) return;
-  const y = window.scrollY;
   // Answers are tracked by each plan's fingerprint (dayFp), so a redraw for them never throws away plans that
   // didn't use them.
-  renderKeep();
-  window.scrollTo(0, y);
+  redrawStill(true);
 }
 let planKeep = false;
 function renderKeep() { const was = planKeep; planKeep = true; try { render(); } finally { planKeep = was; } }
+// R-28, one rule for every redraw that isn't a tap (late answers, guides, classic day trips, the clock): the screen
+// stays put. On Choose sights, render() already keeps the card in view where it was on screen; putting the old page
+// position back afterwards undid that whenever something above the card had changed size, and the cards jumped
+// (Nov 27, Richard: "jumping again" once classic day trips and faster answers arrived while the page was open).
+let renderSpotted = false;
+function redrawStill(keep) { const y = window.scrollY; if (keep) renderKeep(); else render(); if (!renderSpotted && Math.abs(window.scrollY - y) > 1) window.scrollTo(0, y); }
 function render() {
   renderNo++; if (!planKeep) planGen++;
   // A won't-fit or closed box belongs to the day it was opened on: going to another day closes it,
   // never leaving it over that day's list (Nov 20 sweep: El Escorial's box from one Madrid day covered the next day).
-  { const box = document.querySelector(".fitbox"); if (box && box.dataset.day !== String(trip.active)) { box.remove(); if (typeof fitState !== "undefined") fitState = null; } }
+  { const box = document.querySelector(".fitbox"); if (box && (box.dataset.day !== String(trip.active) || (box.dataset.view && box.dataset.view !== view))) { box.remove(); if (typeof fitState !== "undefined") fitState = null; if (typeof closedState !== "undefined") closedState = null; } } // ...and to the screen it was opened on: going to another screen closes it (Nov 28 feel check: a box left open covered the journal and settings)
   if (trip.unopened && /^(plan|sites|trip|guide|tour|journal)$/.test(view)) { delete trip.unopened; save(); } // the traveler has opened it now
   if (view !== "sites") pickFrozen = null; // coming back to the sights list sorts it afresh
   if (faithPrefsTidy()) save();
@@ -5221,6 +5225,7 @@ function render() {
   centerChip(); shownFp = viewFp(); pinChip();
   // After the pinned strip has its spacer back, and once more just before the screen is drawn: pieces filled in right
   // after the redraw (answers already at hand, delivered a moment later) can still change what is above the card.
+  renderSpotted = !!spot;
   if (spot) { spot(); requestAnimationFrame(spot); }
   seedSoon();
 }
@@ -5243,7 +5248,7 @@ function seedStep() {
   save();
   if (seedNext()) seedSoon();
   // Every day has its picks: draw them once (never under the traveler's fingers while they type in a form).
-  else if (!FULL_VIEWS[view] && view !== "trip" && !(document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName))) { const y = window.scrollY; render(); window.scrollTo(0, y); }
+  else if (!FULL_VIEWS[view] && view !== "trip" && !(document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName))) { redrawStill(); }
 }
 let chipCenter = false;
 function centerChip() {
@@ -5891,7 +5896,7 @@ function memCard() {
     : `<div class="actions"><button class="btn small" data-act="memmake">Try again</button></div>`}
     ${mem.err ? `<p class="banner warn" role="alert">${esc(mem.err)}</p>` : ""}</div>`;
 }
-function memRefresh() { if (view === "journal") { const y = window.scrollY; render(); window.scrollTo(0, y); } else if (view === "tour") render(); }
+function memRefresh() { if (view === "journal") { redrawStill(); } else if (view === "tour") render(); }
 const memImgCache = new Map();
 function loadImg(src) {
   return new Promise(res => { if (!src) return res(null); const im = new Image(); if (!/^data:/.test(src)) im.crossOrigin = "anonymous";
@@ -6373,9 +6378,12 @@ function siteCard(s, d, plan, nr) {
 // Tapping a card (anywhere but its tick box or a button) opens it and closes the one open before.
 function toggleCard(el) {
   const id = el.dataset.card, was = el.classList.contains("open"), keep = cardSpotOf(id, true); // the tapped card stays under the finger
-  document.querySelectorAll("#view .site.open").forEach(x => x.classList.remove("open"));
+  const prev = [...document.querySelectorAll("#view .site.open")]; prev.forEach(x => x.classList.remove("open"));
   if (!was) el.classList.add("open"); openCard = was ? null : id;
-  keep(); // a card above it closing would otherwise pull it up (Nov 23 feel check: 270 px)
+  // A card above it closing would otherwise pull it up (Nov 23 feel check: 270 px). Near the top of the list there is
+  // no room to scroll back up to make up for it: then the card open before stays open, and nothing moves (Nov 27, Kotor
+  // on a tablet: 37 px).
+  if (Math.abs(keep()) > 2) { prev.forEach(x => { if (x !== el) x.classList.add("open"); }); keep(); }
 }
 // Keeps what's on screen in place across a redraw: the first card in view stays where it was.
 const cardShown = x => !!(x && x.offsetParent && !x.closest("details:not([open]), .picksfold:not(.open) .anchorlist")); // closed folds still lay out in Chrome
@@ -6393,9 +6401,9 @@ function cardSpotOf(id, self) {
   const cards = [...document.querySelectorAll("#view .sitesmain [data-card]")].filter(cardShown), k = cards.indexOf(el);
   const ref = self ? el : cards[k + 1] || cards[k - 1] || el, rid = ref.dataset.card, top = ref.getBoundingClientRect().top;
   if (!self) spotRef = rid;
-  return () => {
-    const nx = [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(rid)}"]`)].find(cardShown); if (!nx) return;
-    const dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) < 1) return;
+  return () => { // returns how far the card is still off its place (0 when kept)
+    const nx = [...document.querySelectorAll(`#view .sitesmain [data-card="${CSS.escape(rid)}"]`)].find(cardShown); if (!nx) return 0;
+    const dy = nx.getBoundingClientRect().top - top; if (Math.abs(dy) < 1) return 0;
     // The panel the card really scrolls in (on tablets the list's own pane); the page only when no panel scrolls.
     let pane = nx.parentElement; while (pane && pane !== document.body && !(pane.scrollHeight > pane.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(pane).overflowY))) pane = pane.parentElement;
     const scrollIt = d => { if (pane && pane !== document.body) pane.scrollTop += d; else window.scrollBy(0, d); };
@@ -6404,6 +6412,7 @@ function cardSpotOf(id, self) {
     // room at its end for the rest of the visit, so the card still stays under the finger (Nov 23, Nassau, 25 px).
     const left = nx.getBoundingClientRect().top - top;
     if (left > 1) { listRoom += Math.ceil(left); placeRoom(); scrollIt(nx.getBoundingClientRect().top - top); }
+    return nx.getBoundingClientRect().top - top;
   };
 }
 // Room kept at the end of Choose sights for this visit (see cardSpotOf); a new visit starts without it.
@@ -6532,7 +6541,18 @@ function nestMap(city) {
 // into its walk when both are planned (area-visit.js); in the list they stay their own cards.
 const DISTRICT = /old town|historic (centre|center|district)|quarter|district|neighbo|\bbarrio|\blanes\b|city centre|downtown|centro storico|altstadt/i;
 // The list uses the nesting as it was when the page opened (pickFrozen.nest), so it never changes under the traveler.
-const nestNow = city => (pickFrozen && pickFrozen.nest && pickFrozen.city === city ? pickFrozen.nest : nestMap(city));
+// It holds for the whole visit even when late data (a fuller guide, a town's own sights) hands the page a new copy
+// of the city: a sight already in the list keeps its place, inside or apart; only a sight new to the page takes the
+// nesting from the new data (Nov 27 live check, Athens: ticking a day trip folded Delphi's own sights into its card
+// and two cards vanished from mid-screen, because the frozen nesting was dropped for the new city copy).
+const nestNow = city => {
+  if (!pickFrozen || !pickFrozen.nest || !pickFrozen.city || keyOf(pickFrozen.city.city) !== keyOf(city.city)) return nestMap(city);
+  const F = pickFrozen.nest; if (pickFrozen.city === city) return F;
+  const L = nestMap(city); if (pickFrozen.mixOf === L) return pickFrozen.mix;
+  const ids = pickFrozen.nestIds, mix = { sig: F.sig, par: new Map(F.par), kids: new Map([...F.kids].map(([k, v]) => [k, v.slice()])) };
+  for (const [id, T] of L.par) if (!ids.has(id) && !mix.par.has(id)) { mix.par.set(id, T); if (!mix.kids.has(T.id)) mix.kids.set(T.id, []); mix.kids.get(T.id).push((L.kids.get(T.id) || []).find(k => k.id === id) || { id }); }
+  pickFrozen.mixOf = L; pickFrozen.mix = mix; return mix;
+};
 const parentOf = (x, city) => city ? nestNow(city).par.get(x.id) || null : null;
 const kidsOf = (x, city) => city ? nestNow(city).kids.get(x.id) || [] : [];
 if (typeof window !== "undefined") window.__kairoutePickerNest = i => { const c = cityFor(trip.days[i]); if (!c) return null; const m = nestMap(c); const all = allSites(c); return { withWd: all.filter(x => x.wd).length, n: all.length, partKnown: all.filter(x => x.wd && x.wd in partMem).length, nest: [...m.kids].map(([id, ks]) => ({ parent: (all.find(x => x.id === id) || {}).name, kids: ks.map(k => k.name) })) }; };
@@ -6561,7 +6581,7 @@ function renderSites(d) {
   const laterIds = new Set(cityBooked(city) ? laterList(city).map(x => x.id) : []); // shown once, in "If you come back"
   const nearbyOnly = x => x.quick || (my.size > 0 && !famousTrue(x, city) && !siteInts(x).some(k => my.has(k)));
   partScan(city);
-  if (!pickFrozen || pickFrozen.key !== frozenKey(d, city)) pickFrozen = { key: frozenKey(d, city), sec: new Map(), ord: new Map(), n: 0, city, nest: nestMap(city), fresh: true, secs: new Map(), settled: false, t0: Date.now() };
+  if (!pickFrozen || pickFrozen.key !== frozenKey(d, city)) pickFrozen = { key: frozenKey(d, city), sec: new Map(), ord: new Map(), n: 0, city, nest: nestMap(city), nestIds: new Set(allSites(city).map(x => x.id)), fresh: true, secs: new Map(), settled: false, t0: Date.now() };
   const kept = pickFrozen.fresh ? null : pickFrozen.sec; pickFrozen.fresh = false; // a sight already in the list stays in its place (one that stops fitting this visit too)
   const all = allSites(city).filter(x => (!laterIds.has(x.id) || (kept && kept.has(x.id))) && !parentOf(x, city) && (pass(x) || on(x)));
   const st = startOf(d, city), dist = x => st && KEngine.fin(x.lat) && KEngine.fin(x.lng) ? hav(st, x) : 1e9;
@@ -6588,7 +6608,7 @@ function renderSites(d) {
   if (!pickFrozen.settled) {
     const waiting = plan && !plan.error && all.some(x => ["main", "must", "more", "far"].includes(secLive.get(x.id)) && fsMap.get(x.id) === undefined);
     if (!waiting || Date.now() - pickFrozen.t0 >= SORT_HOLD_MS) { pickFrozen.settled = true; secLive.forEach((k, id) => pickFrozen.secs.set(id, k)); }
-    else if (!pickFrozen.timer) { const pf = pickFrozen; pf.timer = setTimeout(() => { if (pickFrozen === pf && !pf.settled && view === "sites") { const y = window.scrollY; renderKeep(); window.scrollTo(0, y); } }, SORT_HOLD_MS + 20); }
+    else if (!pickFrozen.timer) { const pf = pickFrozen; pf.timer = setTimeout(() => { if (pickFrozen === pf && !pf.settled && view === "sites") { redrawStill(true); } }, SORT_HOLD_MS + 20); }
   }
   // A sight that arrives later (a fuller guide) takes its section when it first shows, then keeps it like the rest.
   const secNow = new Map(all.map(x => { let k = pickFrozen.settled ? pickFrozen.secs.get(x.id) : secLive.get(x.id); if (pickFrozen.settled && !k) { k = secLive.get(x.id); pickFrozen.secs.set(x.id, k); } return [x.id, k]; }));
@@ -7657,7 +7677,7 @@ function followBar() {
     <span class="lede">${geoState === "on" ? `The story starts by itself when you arrive. <b id="geoDist"></b>` : esc(geoMsg || "Turn on to start each story automatically when you arrive.")}</span></div>`;
 }
 function startTourTimer() { if (tourTimer) clearInterval(tourTimer); tickTour(); tourTimer = setInterval(tickTour, 15000); }
-function renderGuideOnly() { if (view === "guide" || view === "tour") { const y = window.scrollY; render(); window.scrollTo(0, y); } }
+function renderGuideOnly() { if (view === "guide" || view === "tour") { redrawStill(); } }
 
 // ---------- Events ----------
 function readForm() {
@@ -7754,10 +7774,10 @@ document.addEventListener("click", e => {
   if (t.dataset.playAns) { const pa = allSites(cityFor(day())).find(x => x.id === t.dataset.playAns); if (pa && quietOn(pa) && speakingId !== "ans:" + t.dataset.playAns && Date.now() > earbudsOkUntil) { if (!window.confirm("Quiet place: earbuds in?")) return; earbudsOkUntil = Date.now() + 45 * 60000; }
     const a = answers[t.dataset.playAns]; if (a && a.text) speakText("ans:" + t.dataset.playAns, a.text); renderGuideOnly(); return; }
   if (t.dataset.act === "asknoticeok") { askNotice = ""; render(); return; }
-  if (t.dataset.ridekey) { if (!t.classList.contains("on")) switchRide(t.dataset.ridekey, t.dataset.rideval); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
-  if (t.dataset.act === "rideforce" && rideNotice && rideNotice.force) { switchRide(rideNotice.key, rideNotice.force, true); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
-  if (t.dataset.act === "ridechangeok") { const d = day(); if (d) { delete d.rideChange; save(); } const y = window.scrollY; render(); window.scrollTo(0, y); return; }
-  if (t.dataset.act === "rideundo" && rideNotice) { if (rideNotice.undo === "") delete trip.legModes[rideNotice.key]; else trip.legModes[rideNotice.key] = rideNotice.undo; rideNotice = null; save(); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
+  if (t.dataset.ridekey) { if (!t.classList.contains("on")) switchRide(t.dataset.ridekey, t.dataset.rideval); redrawStill(); return; }
+  if (t.dataset.act === "rideforce" && rideNotice && rideNotice.force) { switchRide(rideNotice.key, rideNotice.force, true); redrawStill(); return; }
+  if (t.dataset.act === "ridechangeok") { const d = day(); if (d) { delete d.rideChange; save(); } redrawStill(); return; }
+  if (t.dataset.act === "rideundo" && rideNotice) { if (rideNotice.undo === "") delete trip.legModes[rideNotice.key]; else trip.legModes[rideNotice.key] = rideNotice.undo; rideNotice = null; save(); redrawStill(); return; }
   if (t.dataset.act === "coachnext") { coachStep++; if (coachStep >= coachSlides().length) coachDone(); render(); return; }
   if (t.dataset.act === "coachskip") { coachDone(); render(); return; }
   if (t.dataset.act === "coachreplay") { coachStep = 0; view = "lobby"; render(); return; }
@@ -7948,7 +7968,7 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("change", e => {
   const t = e.target;
-  if (t.dataset && t.dataset.guidepick !== undefined) { stopAudio(); appSet.guide = t.value; saveAppSet(); const y = window.scrollY; render(); window.scrollTo(0, y); return; }
+  if (t.dataset && t.dataset.guidepick !== undefined) { stopAudio(); appSet.guide = t.value; saveAppSet(); redrawStill(); return; }
   if (t.dataset && t.dataset.site) {
     const d = day(), id = t.dataset.site;
     d.selected = d.selected || []; movedNote = "";

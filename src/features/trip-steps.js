@@ -373,7 +373,7 @@ document.addEventListener("click", e => {
   if (a === "set" && L[i]) L[i][b.dataset.key] = b.dataset.v;
   if (a === "addport" && L[i]) { const ps = L[i].ports, lastD = ps.length ? ps[ps.length - 1].date : L[i].date; ps.push(tsPort({ date: lastD ? addDays(lastD, 1) : "" })); if (L[i].endDate && lastD && addDays(lastD, 1) >= L[i].endDate) L[i].endDate = addDays(lastD, 2); }
   if (a === "delport" && L[i]) L[i].ports.splice(+b.dataset.j, 1);
-  const y = window.scrollY; render(); window.scrollTo(0, y);
+  redrawStill();
   if (a === "addstay" || a === "addcruise") { const el = document.querySelector(`[data-leg="${L.length - 1}"] input[type=text]`); if (el) { el.focus({ preventScroll: true }); el.scrollIntoView({ block: "center" }); } }
 });
 // Typing keeps the trip (a redraw never loses it); a finished field updates the day list below the form.
