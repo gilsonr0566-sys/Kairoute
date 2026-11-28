@@ -23,7 +23,7 @@ function run(E) {
   const bad = [], t = (c, m) => { if (!c) bad.push(m); };
   const PD = path.join(ROOT, 'tools', 'places', 'data'), places = {};
   for (const f of fs.readdirSync(PD).filter(f => f.endsWith('.json'))) { const p = JSON.parse(fs.readFileSync(path.join(PD, f))); places[p.key] = p; }
-  const dir = path.join(ROOT, 'tools', 'beta2', 'corpus'); let days = 0, boats = 0, refused = 0;
+  const dir = path.join(ROOT, 'tools', 'beta2', 'corpus'); let days = 0, boats = 0, refused = 0, fastAuto = 0;
   const seen = new Set();
   for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json')).sort()) {
     const trip = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
@@ -38,13 +38,19 @@ function run(E) {
           const B = E.applyPlaces(b, places), asked = [];
           B.answers = (a, z) => { if (!touches(a, z)) return null; asked.push([a, z]); const km = E.hav(a, z);
             const off = deps === 'month' ? [1 + (new Date(Date.parse(String(b.days[i].date) + 'T12:00:00Z')).getUTCMonth() + 6) % 12] : null; // six months away
-            return [Object.assign({ id: 'boat-test', mode: 'ferry', label: 'Ferry (test)', min: Math.round(km / 25 * 60) + 60, wait: 60, every: 60, km: +(km * 1.2).toFixed(1), steps: ['Ferry (test)'], access: { min: 2 } }, Array.isArray(deps) ? { deps } : {}, off ? { months: off } : {})]; };
+            return [Object.assign({ id: 'boat-test', mode: 'ferry', label: 'Ferry (test)', min: deps === 'fast' ? Math.round(km / 45 * 60) + 5 : Math.round(km / 25 * 60) + 60, wait: deps === 'fast' ? 5 : 60, every: 60, km: +(km * 1.2).toFixed(1), steps: ['Ferry (test)'], access: { min: 2 } }, Array.isArray(deps) ? { deps } : {}, off ? { months: off } : {})]; };
           if (picks) B.legModes = picks;
           return { p: E.planTrip(B)[i], asked }; };
         let first; try { first = plan(null, null); } catch (e) { t(false, `${f} day ${i + 1} ${s.name}: does not plan (${e.message})`); continue; }
         const picks = {}; for (const [a, z] of first.asked) picks[E.pairKey(a, z)] = 'ferry';
         if (!Object.keys(picks).length) continue;
         days++;
+        // The app's own choice: a quick boat with no sailing times to a place the road reaches too (not across the water) is
+        // never taken on its own and said as "you chose it" on a day with a time to be back; it stays a choice (live check
+        // Nov 27, Sorrento). Across the water, a picked place counts as choosing its boat (Richard, Nov 21).
+        { let r; try { r = plan('fast', null); } catch (e) { r = null; }
+          if (r && r.p && r.p.items) r.p.items.forEach((x, k) => { if (x.t !== 'ride' || x.kind !== 'ferry' || x.isle) return; fastAuto++;
+            t(!/planned because you chose it/.test(x.note || ''), `${f} day ${i + 1} ${s.name}: the app took a boat with no sailing times on its own, to a place the road reaches, and said "you chose it"`); }); }
         for (const deps of [null, [6, 7, 8, 20, 21].map(h => ({ t: h * 60 })), 'month']) { // no sailing times; real sailings, mornings and evenings, none near midday; a boat that doesn't run in the trip's month
           let r; try { r = plan(deps, picks); } catch (e) { t(false, `${f} day ${i + 1} ${s.name}: does not plan with the boat chosen (${e.message})`); continue; }
           const p = r.p; if (!p || !p.items) continue;
@@ -81,6 +87,7 @@ if (require.main === module) {
   const E = require('./engine.cjs'), real = run(E);
   real.bad.slice(0, 30).forEach(m => console.log('FAIL ' + m));
   const PLANTS = [
+    ['a picked place reached by road too taken as choosing its boat', '90-timeline.js', 'ownBoat = !!(leg.mine || (leg.isle && isleStop', 'ownBoat = !!(leg.mine || (isleStop'],
     ['a chosen boat with no sailing times refused unless its words say "no sailing times are known" (E65)', '90-timeline.js', 'if (ownBoat && E.boatNoTimes(leg, win.date)) {', 'if (ownBoat && leg.source !== "timetable" || ownBoat && /no sailing times are known/.test(unsure)) {'],
     ['a refused chosen boat told to "pick the boat yourself"', '90-timeline.js', 'ownBoat ? "You chose the boat, but " + unsure + ", so this ride is planned by taxi to be back in time." : ', ''],
     ['the chosen boat back with no taxi fallback', '90-timeline.js', 'const tx = backBoat ? (leg.options || []).find(o => o.kind === "taxi") : null', 'const tx = null'],
