@@ -252,7 +252,7 @@ jobs:
   words:
     name: "8 The app says only what is true: first run, day plan, places it can't reach, no paid AI, trip copy, outside text"
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35  # the stay check (R-38) adds about 6 min (Nov 28: 26 min against 25)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

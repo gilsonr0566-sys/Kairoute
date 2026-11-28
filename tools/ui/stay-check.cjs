@@ -63,6 +63,7 @@ const PLANTS = { 'stay-down-as-none': 'a search not answered is said as not foun
     const centre = await p.evaluate(i => { const c = window.__kairouteCityOf(i), x = (c.starts && c.starts.point && c.starts.point[0]) || c.sites[0]; return { lat: +x.lat, lng: +x.lng }; }, day);
     const cases = plant ? CASES : CASES.filter((c, k) => size === 'phone' || k % 3 === 0);
     for (const c of cases) {
+      if (plant && caught[plant]) break;   // a planted bug counts once caught: the rest of its cases add only time (gate part 8 ran past its limit, Nov 28)
       answer = c.down ? 'DOWN' : c.map.map((m, k) => Object.assign({ osm: 'N' + k, names: m.name ? [m.name] : [] }, m, { lat: centre.lat + m.lat, lng: centre.lng + m.lng }));
       await p.evaluate(i => window.__kairouteAt(i, 'trip'), day); await p.waitForTimeout(600);
       await p.selectOption('#f-lodging', 'custom'); await p.waitForTimeout(400);
