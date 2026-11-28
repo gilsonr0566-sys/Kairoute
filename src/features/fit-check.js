@@ -191,7 +191,7 @@ function closedOpen(d, s) {
   let w = null; try { w = dayWindow(d, city); } catch (e) {}
   closedState = { d, s, others, alt, why: closedForDayWhy(s, d, w) };
   const old = document.querySelector(".fitbox"); if (old) old.remove();
-  document.body.insertAdjacentHTML("beforeend", `<div class="fitbox" data-day="${trip.active}" role="dialog" aria-modal="true" aria-labelledby="fitTitle"><div class="sheet" id="fitSheet">
+  document.body.insertAdjacentHTML("beforeend", `<div class="fitbox" data-day="${trip.active}" data-view="${view}" role="dialog" aria-modal="true" aria-labelledby="fitTitle"><div class="sheet" id="fitSheet">
     <h3 id="fitTitle">${esc(s.name)} is closed on ${esc(fmtDow(d.date))}</h3>
     <p>${closedState.why ? esc(closedState.why.replace(/\.$/, "")) + ". " : ""}Kairoute never plans a sight for a day it can't be visited.</p>
     ${others.length || alt ? `<div class="fitfixes"><p class="lbl">One tap</p>${others.map((o, k) => `<button type="button" class="btn ${k ? "ghost " : ""}fixbtn" data-act="closedday" data-to="${trip.days.indexOf(o)}">Add it to ${esc(fmtDow(o.date))} ${esc(fmtDate(o.date))}, when it's open</button>`).join("")}${alt ? `<button type="button" class="btn ${others.length ? "ghost " : ""}fixbtn" data-act="closedalt">Add ${esc(alt.name)} today instead (open today)</button>` : ""}</div>` : `<p class="mparts"><b>It isn't open on any day you're here.</b></p>`}
@@ -208,7 +208,7 @@ function closedGo(kind, to) {
 function fitShow() {
   const old = document.querySelector(".fitbox"); if (old) old.remove();
   if (!fitState) return;
-  document.body.insertAdjacentHTML("beforeend", `<div class="fitbox" data-day="${trip.active}" role="dialog" aria-modal="true" aria-labelledby="fitTitle"><div class="sheet" id="fitSheet">${fitHTML()}</div></div>`);
+  document.body.insertAdjacentHTML("beforeend", `<div class="fitbox" data-day="${trip.active}" data-view="${view}" role="dialog" aria-modal="true" aria-labelledby="fitTitle"><div class="sheet" id="fitSheet">${fitHTML()}</div></div>`);
   const b = document.querySelector('.fitbox [data-fitdrop], .fitbox [data-act="fitcancel"]'); if (b) b.focus({ preventScroll: true });
 }
 function fitHTML() {

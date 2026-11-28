@@ -5158,7 +5158,7 @@ function render() {
   renderNo++; if (!planKeep) planGen++;
   // A won't-fit or closed box belongs to the day it was opened on: going to another day closes it,
   // never leaving it over that day's list (Nov 20 sweep: El Escorial's box from one Madrid day covered the next day).
-  { const box = document.querySelector(".fitbox"); if (box && box.dataset.day !== String(trip.active)) { box.remove(); if (typeof fitState !== "undefined") fitState = null; } }
+  { const box = document.querySelector(".fitbox"); if (box && (box.dataset.day !== String(trip.active) || (box.dataset.view && box.dataset.view !== view))) { box.remove(); if (typeof fitState !== "undefined") fitState = null; if (typeof closedState !== "undefined") closedState = null; } } // ...and to the screen it was opened on: going to another screen closes it (Nov 28 feel check: a box left open covered the journal and settings)
   if (trip.unopened && /^(plan|sites|trip|guide|tour|journal)$/.test(view)) { delete trip.unopened; save(); } // the traveler has opened it now
   if (view !== "sites") pickFrozen = null; // coming back to the sights list sorts it afresh
   if (faithPrefsTidy()) save();
