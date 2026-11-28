@@ -17,6 +17,8 @@ async function newTrip(b, city) { const { ctx, p } = await open(b);
   await p.getByRole('button', { name: /Plan a new trip/i }).first().click(); await p.waitForTimeout(800);
   await p.fill('#ts-0-place', city); await p.fill('#ts-0-date', '2027-05-09'); await p.fill('#ts-0-nights', '2'); await p.press('#ts-0-nights', 'Tab');
   await p.getByRole('button', { name: /Build my trip/i }).click();
+  // R-41: setup lists the trip details still empty; this check's trip leaves them out on purpose, so it answers "I don't know these yet"
+  await p.waitForTimeout(600); if (await p.locator('[data-ts="needok"]').first().isVisible().catch(() => false)) await p.locator('[data-ts="needok"]').first().click();
   for (let k = 0; k < 60; k++) { await p.waitForTimeout(1500); const s = await p.evaluate(() => window.__kairouteState && window.__kairouteState()); if (s && !s.busy && k > 3) break; }
   const r = await sights(p, 1); r.state = JSON.stringify(await p.evaluate(() => window.__kairouteState && window.__kairouteState())).slice(0, 600); await ctx.close(); return r; }
 (async () => {

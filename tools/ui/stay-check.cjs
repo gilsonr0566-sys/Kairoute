@@ -31,11 +31,11 @@ const CASES = [
   { q: 'Hotel Imaginary Palace', map: [C(0.004, 0.003, { name: 'Hotel Real Other', kind: 'hotel', cat: 'tourism', road: 'Side Street', house: '3', addr: 'Side Street 3', spanM: 40 })], want: 'none' },
   { q: 'Qwzxv Street 9999', map: [], want: 'none' },
   // The search can't be reached: said as not answered, never as "couldn't find" (press-every-button thread, Nov 28).
-  { q: 'Rua Augusta 100', alt: 'search down', down: true, map: [], want: 'none', says: /didn.t answer/, notSays: /couldn.t find/i },
+  { q: 'Rua Augusta 100', alt: 'search down', down: true, map: [], want: 'none', says: /didn.t answer/, notSays: /couldn.t find|not found/i, page: true },
   // Nothing typed: the box says what to type, never nothing at all.
-  { q: '', alt: 'empty box', map: [], want: 'none', says: /Type your hotel/ },
+  { q: '', alt: 'empty box', map: [], want: 'none', says: /Type your hotel/, focus: true },
 ];
-const PLANTS = { 'stay-down-as-none': 'a search not answered is said as not found', 'stay-empty-silent': 'Find it with an empty box says nothing', 'stay-name-only': 'an address is never found (the bug of Nov 27)', 'stay-any-hotel': 'the first hotel the map lists is taken', 'stay-long-street': 'a long street is used as the door', 'stay-wrong-door': "a neighbour's door is taken" };
+const PLANTS = { 'stay-down-as-none': 'a search not answered is said as not found', 'stay-empty-silent': 'Find it with an empty box says nothing', 'stay-name-only': 'an address is never found (the bug of Nov 27)', 'stay-any-hotel': 'the first hotel the map lists is taken', 'stay-long-street': 'a long street is used as the door', 'stay-wrong-door': "a neighbour's door is taken", 'stay-down-label': 'the trip\'s still-needed list says a search not answered was not found', 'stay-empty-nofocus': 'Find it with an empty box leaves the cursor out of the box' };
 (async () => {
   const s = await serve(FILE); const b = await chromium.launch(), fails = [], caught = {};
   let answer = [];
@@ -63,14 +63,15 @@ const PLANTS = { 'stay-down-as-none': 'a search not answered is said as not foun
       await p.fill('#f-lname', c.q); await p.locator('[data-act="geo"]').scrollIntoViewIfNeeded(); await p.locator('[data-act="geo"]').tap();
       await p.waitForTimeout(1200);
       const st = await p.evaluate(i => { const h = document.querySelector('[data-stay]'), f = document.getElementById('f-lname'), st = window.__kairouteState();
-        const L = (window.__kairouteTripLodging ? window.__kairouteTripLodging(i) : null); return { how: h ? h.dataset.stay : 'missing', hint: h ? h.innerText : '', err: st.err || '', typed: f ? f.value : '', L }; }, day);
-      const said = st.hint + ' ' + st.err, label = `${plant || 'app'} ${size} "${c.q}"${c.alt ? ' (' + c.alt + ')' : ''}`;
+        const L = (window.__kairouteTripLodging ? window.__kairouteTripLodging(i) : null); return { how: h ? h.dataset.stay : 'missing', hint: h ? h.innerText : '', err: st.err || '', typed: f ? f.value : '', L, page: document.body.innerText, focus: document.activeElement ? document.activeElement.id : '' }; }, day);
+      const said = st.hint + ' ' + st.err + (c.page ? ' ' + st.page : ''), label = `${plant || 'app'} ${size} "${c.q}"${c.alt ? ' (' + c.alt + ')' : ''}`;
       const bad = [];
       if (st.how !== c.want) bad.push(`found as "${st.how}", should be "${c.want}"`);
       if (c.shows && !c.shows.test(said)) bad.push('the screen does not say ' + c.shows);
       if (c.want === "none" && !c.says && !/couldn.t find .* on the map/i.test(st.hint)) bad.push('nothing found, and the screen does not say so plainly');
       if (c.says && !c.says.test(st.hint)) bad.push('the screen beside the box does not say ' + c.says + ': "' + st.hint + '"');
       if (c.notSays && c.notSays.test(said)) bad.push('the screen says ' + c.notSays + ' when the search was not answered');
+      if (c.focus && st.focus !== 'f-lname') bad.push('Find it with an empty box does not put the cursor in the box (focus on "' + st.focus + '")');
       if (c.want === 'none' && st.L && st.L.ll) bad.push('nothing found, yet a place is kept for the plan: ' + JSON.stringify(st.L));
       if (/[Ͱ-ϿЀ-ӿ぀-ヿ一-鿿]/.test(st.hint)) bad.push('the screen shows a name in another script (R-11): ' + st.hint);
       if (st.typed !== c.q) bad.push(`the box no longer shows what was typed ("${st.typed}")`);
