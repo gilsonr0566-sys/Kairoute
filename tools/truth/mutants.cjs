@@ -21,7 +21,7 @@ const MUTANTS = [
   // independent check's boat rule (saved trips, and the same trips with every list read as the guide's suggestions only).
   { id: 'boat-back-quarter-hour', corpus: true, file: '10-travel.js', from: 'E.PIER_BACK = 60;', to: 'E.PIER_BACK = 15;',
     was: 'E8: a boat back with no sailing times planned with 15 min at the pier, not the hour between sailings' },
-  { id: 'boat-guide-pick-as-mine', notMine: true, file: '90-timeline.js', from: 'ownBoat = !!(leg.mine || (isleStop && !isleStop.guideWish && !isleStop.moved && (isleStop.wish || isleStop.insideWish)));', to: 'ownBoat = !!(leg.mine || (isleStop && !isleStop.moved && (isleStop.wish || isleStop.insideWish)));',
+  { id: 'boat-guide-pick-as-mine', notMine: true, file: '90-timeline.js', from: 'ownBoat = !!(leg.mine || (leg.isle && isleStop && !isleStop.guideWish && !isleStop.moved && (isleStop.wish || isleStop.insideWish)));', to: 'ownBoat = !!(leg.mine || (leg.isle && isleStop && !isleStop.moved && (isleStop.wish || isleStop.insideWish)));',
     was: 'E8 / first-timer walk Nov 22: a boat with no timetable to a place only the guide suggested, planned as if the traveler had chosen it (Château d\'If)' },
   // Nov 27 nightly (seed 20261127, odd558): a pick the app moved to a leaving day (closed the day it was ticked) reached by
   // a boat with no sailing times, planned as the traveler's own boat. Kept in tools/truth/cases/safety-cases.json (the gate's part 2 runs the independent check on it).
