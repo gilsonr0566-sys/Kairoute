@@ -29,6 +29,10 @@ const CASES = [
   { q: 'Mariahilfer Straße 47', alt: 'shop at the door', map: [C(0.001, 0.001, { name: 'Mariahilfer Straße', kind: 'administrative', cat: 'boundary', road: '', house: '', addr: 'Mariahilf', spanM: 242 }), C(0.002, 0.001, { name: 'Test Würstel', kind: 'fast_food', cat: 'amenity', road: 'Mariahilfer Straße', house: '47', addr: 'Mariahilfer Straße 47, Mariahilf', spanM: 0, src: 'photon' })], want: 'door', at: 1, shows: /Mariahilfer Stra(ß|ss)e 47/ },
   // A name in the local script: shown in the traveler's language (R-11), never in the script typed.
   { q: 'Ξενοδοχείο Δοκιμή', map: [C(0.001, 0.001, { name: 'Ξενοδοχείο Δοκιμή', names: ['Ξενοδοχείο Δοκιμή'], kind: 'hotel', cat: 'tourism', road: '', house: '', addr: '', spanM: 30 })], want: 'place', latin: true },
+  // An address in another script that the map can't find: said as "that address", never as letters made up from it (Nov 28 live: "Ru901").
+  { q: '京都市下京区烏丸通塩小路下る東塩小路町901', map: [], want: 'none', says: /couldn.t find that address/ },
+  // A building listed with several numbers is shown at the number typed (Nov 28 live: "Rua dos Remédios 68,70,72,74,76,78").
+  { q: 'Rua dos Remédios 70', alt: 'several numbers', map: [C(0.001, 0.004, { name: '', kind: 'apartments', cat: 'building', road: 'Rua dos Remédios', house: '68,70,72', addr: 'Rua dos Remédios 68,70,72, Alfama', spanM: 31 })], want: 'door', shows: /Rem(é|e)dios 70, Alfama/ },
   // Only the street: a short one is used and said to be the street; a long one is not used.
   { q: 'Kurze Gasse 9', map: [C(0.002, 0.002, { name: 'Kurze Gasse', kind: 'residential', cat: 'highway', road: 'Kurze Gasse', house: '', addr: 'Kurze Gasse, Altstadt', spanM: 300 })], want: 'street', shows: /street.*not number 9/i },
   { q: 'Long Avenue 1200', map: [C(0.02, 0.02, { name: 'Long Avenue', kind: 'primary', cat: 'highway', road: 'Long Avenue', house: '', addr: 'Long Avenue', spanM: 6500 })], want: 'none' },
@@ -41,7 +45,7 @@ const CASES = [
   // Nothing typed: the box says what to type, never nothing at all.
   { q: '', alt: 'empty box', map: [], want: 'none', says: /Type your hotel/, focus: true },
 ];
-const PLANTS = { 'stay-down-as-none': 'a search not answered is said as not found', 'stay-empty-silent': 'Find it with an empty box says nothing', 'stay-name-only': 'an address is never found (the bug of Nov 27)', 'stay-any-hotel': 'the first hotel the map lists is taken', 'stay-long-street': 'a long street is used as the door', 'stay-wrong-door': "a neighbour's door is taken", 'stay-down-label': 'the trip\'s still-needed list says a search not answered was not found', 'stay-empty-nofocus': 'Find it with an empty box leaves the cursor out of the box', 'stay-hotel-word': 'a hotel typed with the word Hotel is not found when the map lists it without', 'stay-boundary-street': 'a district boundary named after the street is said to be the street' };
+const PLANTS = { 'stay-down-as-none': 'a search not answered is said as not found', 'stay-empty-silent': 'Find it with an empty box says nothing', 'stay-name-only': 'an address is never found (the bug of Nov 27)', 'stay-any-hotel': 'the first hotel the map lists is taken', 'stay-long-street': 'a long street is used as the door', 'stay-wrong-door': "a neighbour's door is taken", 'stay-down-label': 'the trip\'s still-needed list says a search not answered was not found', 'stay-empty-nofocus': 'Find it with an empty box leaves the cursor out of the box', 'stay-hotel-word': 'a hotel typed with the word Hotel is not found when the map lists it without', 'stay-boundary-street': 'a district boundary named after the street is said to be the street', 'stay-script-garble': 'an address in another script not found is shown as letters made up from it', 'stay-many-numbers': 'a building listed with several numbers is shown with all of them' };
 (async () => {
   const s = await serve(FILE); const b = await chromium.launch(), fails = [], caught = {};
   let answer = [];
