@@ -23,6 +23,7 @@ const SCROLLS = [
   [(c, x, r) => (x && x.view === 'trip' || r && r.after && r.after.view === 'trip') && /(^|,)day=\d+/.test(c.data) && !c.act, 'on the Trip page a day tapped in the list is opened in the form below it'],
   [c => c.act === 'mealopen' || c.act === 'bookopen', 'the card to change a meal, or to enter a reservation, opens above the day\'s list and the page goes to it', 'opens'],
   [c => /(^|,)jump=/.test(c.data), 'in the Guide, Next and the stop list open that stop\'s chapter from its top', 'opens'],
+  [(c, x) => !c.act && c.tag === 'button' && /^(Build the guide|Save)$/.test(c.label) && x.view === 'trip', "a day's Build the guide shows its progress and its answer at the top of the page and the page goes there", 'opens'],
   [c => c.act === 'suggesttour', 'Suggest my tour answers in a note and the page goes to the note (the pinned leave-by strip gives way to the full card there)', 'opens'],
   [(c, x, r) => c.kind === 'fold' && (r.scrolls || []).some(s => /placeMenu/.test(s)), 'a menu too tall to fit above or below its button: the page moves just enough for the whole menu to show under it'],
 ];
