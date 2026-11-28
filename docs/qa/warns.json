@@ -25,22 +25,6 @@
       "why": "Choose sights: the list's fits badges arrive by redrawing the list up to 2.7 s after the page opens (live-hamburg-stay, tablet; steady-all, Nov 24). Same area as R-28, which that thread owns"
     },
     {
-      "rule": "UNTRUE",
-      "tool": "press",
-      "where": "couldn't find",
-      "owner": "Fix finding a rental's address",
-      "until": "2026-12-04",
-      "why": "when the map search cannot be reached at all, the app says it could not find the place (Trip page Find it, and the new-trip form's stay). That thread's PR #251 changes the wording to say the search did not answer; found by the press walk Nov 27"
-    },
-    {
-      "rule": "DEAD",
-      "tool": "press",
-      "where": "Find it",
-      "owner": "Fix finding a rental's address",
-      "until": "2026-12-04",
-      "why": "Find it shows nothing when the map search cannot be reached and a message is already on the screen; same lookup, same PR #251"
-    },
-    {
       "rule": "JUMP",
       "tool": "press",
       "where": "untick yourself",
