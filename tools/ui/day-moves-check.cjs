@@ -143,8 +143,9 @@ async function scenario(browser, url, size, shots) {
   } catch (e) { bad.push(`${size.width}px: the check could not run to the end: ${String(e.message || e).split('\n')[0]}`); }
   await ctx.close(); return { bad, checks };
 }
-async function runAll(file, shots) { const srv = await serve(file), b = await chromium.launch(); const out = { bad: [], checks: 0 };
-  try { for (const size of [{ width: 412, height: 915 }, { width: 1280, height: 800 }]) { const r = await scenario(b, srv.url, size, shots); out.bad.push(...r.bad); out.checks += r.checks; } }
+const PHONE = { width: 412, height: 915 }, TABLET = { width: 1280, height: 800 };
+async function runAll(file, shots, sizes = [PHONE, TABLET]) { const srv = await serve(file), b = await chromium.launch(); const out = { bad: [], checks: 0 };
+  try { for (const size of sizes) { const r = await scenario(b, srv.url, size, shots); out.bad.push(...r.bad); out.checks += r.checks; } }
   finally { await b.close(); srv.close(); } return out; }
 // Planted copies: one bug of this class each, in the built page. Each must be seen.
 const PLANTS = [
@@ -161,11 +162,16 @@ const PLANTS = [
   const real = await runAll(FILE, SHOTS && (fs.mkdirSync(SHOTS, { recursive: true }), SHOTS));
   for (const m of real.bad) console.log('FAIL ' + m);
   let blind = 0; const html = fs.readFileSync(FILE, 'utf8');
-  if (!SHOTS && !process.env.NO_PLANTS) for (const [name, want, to] of PLANTS) {
-    if (!html.includes(want)) { console.log(`FAIL the planted copy "${name}" could not be made: the code it changes is gone`); blind++; continue; }
+  // Planted copies run at phone size, two at a time (the gate's part 5 has 45 minutes for everything; Nov 28 the
+  // one-by-one run at two sizes took 25 of them). Every plant is a phone-visible bug, so the phone alone must see it.
+  const one = async ([name, want, to]) => {
+    if (!html.includes(want)) return `FAIL the planted copy "${name}" could not be made: the code it changes is gone`;
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'day-moves-plant-')), f = path.join(dir, 'index.html'); fs.writeFileSync(f, html.split(want).join(to));
-    const r = await runAll(f, null); fs.rmSync(dir, { recursive: true, force: true });
-    console.log(`planted (${name}): ${r.bad.length} finding(s)${r.bad.length ? '' : ' - BLIND'}${r.bad.length ? ' e.g. ' + r.bad[0].slice(0, 140) : ''}`); if (!r.bad.length) blind++;
+    const r = await runAll(f, null, [PHONE]); fs.rmSync(dir, { recursive: true, force: true });
+    return `planted (${name}): ${r.bad.length} finding(s)${r.bad.length ? '' : ' - BLIND'}${r.bad.length ? ' e.g. ' + r.bad[0].slice(0, 140) : ''}`;
+  };
+  if (!SHOTS && !process.env.NO_PLANTS) for (let i = 0; i < PLANTS.length; i += 2) {
+    for (const line of await Promise.all(PLANTS.slice(i, i + 2).map(one))) { console.log(line); if (/BLIND$|^FAIL/.test(line)) blind++; }
   }
   console.log(`day-moves-check: ${real.checks} checks on a phone and a tablet, ${real.bad.length ? real.bad.length + ' failed' : 'all passed'}${SHOTS || process.env.NO_PLANTS ? ' (planted copies not run)' : blind ? `, but ${blind} planted copies went unseen` : `; planted ${PLANTS.length} of ${PLANTS.length} caught`}`);
   process.exit(real.bad.length || blind ? 1 : 0);
