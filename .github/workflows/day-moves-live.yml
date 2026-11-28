@@ -1,0 +1,29 @@
+name: Live check of swap and remove days (Beta 2, R-39)
+# Downloads the page the live site serves, checks its version stamp, and runs the R-39 check (real taps, phone and
+# tablet, planted copies) on those exact bytes, with screenshots. Nov 28 2026.
+on:
+  workflow_dispatch:
+    inputs:
+      want: { description: "build stamp the live page must report", required: true }
+permissions:
+  contents: read
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
+      - name: Live page and its stamp
+        run: |
+          mkdir -p live && curl -sSfL "https://gilsonr0566-sys.github.io/Kairoute-Beta2/?v=$RANDOM" -o live/index.html
+          V=$(grep -o 'var B="[^"]*"' live/index.html | head -1 | cut -d'"' -f2); echo "live stamp: $V"
+          curl -sSfL "https://gilsonr0566-sys.github.io/Kairoute-Beta2/version.txt?v=$RANDOM" | head -1
+          [ "$V" = "${{ inputs.want }}" ] || { echo "FAIL live stamp $V is not ${{ inputs.want }}"; exit 1; }
+      - name: Swap and remove days on the live page
+        run: node tools/ui/day-moves-check.cjs live/index.html && node tools/ui/day-moves-check.cjs live/index.html --shots shots
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: day-moves-live, path: shots }
