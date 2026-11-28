@@ -204,7 +204,8 @@ function stayLabel(hit, typed) {
   return say(addr || nm || typed);
 }
 async function findHotelNoAI(name, d) {
-  if (!freeAI || !name) return null;
+  if (!name) return { none: true };
+  if (!freeAI) return { failed: true };   // the map search can't be reached: never said as "not found"
   try {
     const r = await fetch(freeAI.url + "/findplace?city=" + encodeURIComponent(bareName(d.destination)) + "&q=" + encodeURIComponent(name)); if (!r.ok) return { failed: true };
     const j = await r.json(), list = (j && j.places) || [], hit = stayPick(name, list);

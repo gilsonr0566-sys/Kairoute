@@ -16,7 +16,7 @@ const PLANTING = new Set(['tools/client/press-proof.cjs' /* plants a dead button
   'tools/truth/plan-ledger.cjs' /* plants two edits no rule check notices on every run (R-35) */, 'tools/truth/gtfs-times-test.mjs' /* plants 5 timetable readers on every run (R-33) */,
   'tools/truth/report-check.cjs', 'tools/truth/rules-check.cjs', 'tools/truth/mutants.cjs', 'tools/truth/sight-mutants.cjs',
   'tools/beta2/day-trips-check.cjs' /* plants 35 day-trip bugs on every run (R-37) */, 'tools/day-trips-helper-check.mjs' /* plants 7 helper bugs on every run (R-37) */,
-  'tools/ui/stay-check.cjs' /* plants 4 where-you're-staying bugs on every run (R-38) */,
+  'tools/ui/stay-check.cjs' /* plants 8 where-you're-staying bugs on every run (R-38) */,
   'tools/ui/getthere-check.cjs' /* plants 4 get-there bugs on every run (R-40) */,
   'tools/ui/steady-sights-check.cjs' /* plants a re-sort after a tap on every run (R-28) */,
   'tools/steps-e2e.cjs' /* takes each of 15 trip details out in turn on every run and must find each asked by its own field (R-41) */,
