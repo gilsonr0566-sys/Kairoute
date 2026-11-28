@@ -19,6 +19,7 @@ const PLANTING = new Set(['tools/beta2/own-boat-check.cjs' /* plants a chosen bo
   'tools/ui/stay-check.cjs' /* plants 4 where-you're-staying bugs on every run (R-38) */,
   'tools/ui/getthere-check.cjs' /* plants 4 get-there bugs on every run (R-40) */,
   'tools/ui/steady-sights-check.cjs' /* plants a re-sort after a tap on every run (R-28) */,
+  'tools/steps-e2e.cjs' /* takes each of 15 trip details out in turn on every run and must find each asked by its own field (R-41) */,
   'tools/ui/pinned-band-check.cjs' /* plants "no band behind pinned pieces" on every run (R-32) */,
   'tools/worker-cache-check.mjs' /* plants a hand-numbered helper key on every run (R-29) */,
   'tools/ui/net-words-check.cjs' /* plants an unguarded "when you're online" message on every run (R-18) */,

@@ -45,7 +45,7 @@ function voyChecks(o, plan) {
   if (plan.over) out.push(`This plan runs ${dur(plan.end - plan.endBy)} past ${fmt(plan.endBy)}. Take out a stop.`);
   if ((plan.dropped || []).length) out.push(`Didn't fit: ${plan.dropped.map(s => s.name).join(", ")}.`);
   if ((plan.closedToday || []).length) out.push(`Closed that day: ${plan.closedToday.map(s => s.name).join(", ")}.`);
-  if (o.estimated) out.push("These port times are estimated. Check them against your cruise documents.");
+  if (estLine(o)) out.push(estLine(o));
   return out;
 }
 // The back-by time is the day's own (dayFacts), the one its Day plan, countdown and timeline say: never the time the
