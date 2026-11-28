@@ -53,7 +53,7 @@ jobs:
         with: { node-version: 22 }
       - run: npm i --no-save playwright@1.65.1 && npx playwright install --with-deps chromium
       - name: Walk the live app with a finger
-        if: github.event.inputs.url != 'sites'
+        if: github.event.inputs.url != 'sites' && github.event.inputs.url != 'sites-build'
         env:
           SIZES: ${{ matrix.size }}
           OUT: client-out
@@ -63,10 +63,19 @@ jobs:
       # check, all offline, passed). Answers keep arriving while the page is open; ticks and unticks must still never move
       # what is under the finger (R-28). Run alone with the url input "sites".
       - name: Choose sights never moves by itself, live app, real internet
-        if: always()
+        if: always() && github.event.inputs.url != 'sites-build'
         run: |
           set -o pipefail
           TRIPS=sample,g02-vienna,g09-kotor SIZES=${{ matrix.size }} DAYS=5 NO_PROOF=1 node tools/ui/steady-sights-check.cjs https://gilsonr0566-sys.github.io/Kairoute-Beta2/ 2>&1 | tee steady-live.txt
+        shell: bash
+      # url "sites-build": the same check on THIS branch's build, served here, with the real internet (the helper allows
+      # localhost), so a fix for the live app is proved on live answers before it is published (Nov 28).
+      - name: Choose sights never moves by itself, this branch's build, real internet
+        if: always() && github.event.inputs.url == 'sites-build'
+        run: |
+          set -o pipefail
+          sh build-beta2.sh
+          REALNET=1 TRIPS=sample,g02-vienna,g09-kotor SIZES=${{ matrix.size }} DAYS=5 NO_PROOF=1 node tools/ui/steady-sights-check.cjs beta2-site/index.html 2>&1 | tee steady-live.txt
         shell: bash
       - if: always()
         run: mkdir -p client-out && cp steady-live.txt client-out/ 2>/dev/null; grep -E "^FAIL|Steady sights" steady-live.txt >> "$GITHUB_STEP_SUMMARY" 2>/dev/null; echo "--- Choose sights findings ---"; grep -E "^FAIL|Steady sights" steady-live.txt; true

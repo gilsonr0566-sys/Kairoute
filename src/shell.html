@@ -119,7 +119,7 @@ main .wrap { padding-block: 20px 64px; display: grid; gap: 18px; }
 .schedline::before, .schedline::after { content: ""; flex: 1; border-top: 2px solid var(--line, #ccc); }
 .site.nofitcard .cdet [data-act="fitask"] { margin-top: 8px; } /* the "Ways to fit it in" button only, never the badge (it made a card grow 8 px when its check came back) */
 /* Sights list (Nov 16): three-line cards that open on tap, pinned time-left bar, folded picks */
-.site .nrow { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; min-width: 0; }
+.site .nrow { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; min-width: 0; } /* top-aligned: a status that wraps differently never moves the name's line (Nov 28 live: rows 53 -> 50 px) */
 .site .nrow .name { min-width: 0; overflow-wrap: anywhere; }
 .site .fitbadge { flex: none; white-space: nowrap; }
 .site .fitbadge.pending { visibility: hidden; }

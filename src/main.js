@@ -6347,7 +6347,8 @@ function siteCard(s, d, plan, nr) {
   const l2 = [dur(s.minutes), (pr => pr == null ? "" : pr > 0 ? sym + pr : "Free")(priceOf(s, city)), s.far ? "Day trip" : "", near != null ? (near < 0.05 ? "At " + nearTo.name : distTxt(near, true) + " from " + nearTo.name) : ""].filter(Boolean).map(esc).join(" · ");
   const incl = (inclKids.length ? `<div class="incl"><b>Included:</b> ${inclKids.map(k => esc(showName(k) || k.name)).join(" · ")}</div>` : "")
     + (townKids.length ? `<div class="partpick townpick"><span class="eyebrow">Sights in ${esc(nm)}</span>${townKids.map(k => { const kn = showName(k) || k.name; return `<label class="partchk"><input type="checkbox" data-site="${esc(k.id)}" ${sel.includes(k.id) ? "checked" : ""} aria-label="Pick ${esc(kn)}"><span>${esc(kn)} <small>${dur(k.minutes)}</small></span></label>`; }).join("")}</div>` : "");
-  const l3 = `<div class="tags ints">${cardLabels(s, city, nr && nr.my).map(x => `<span class="tag int${x.mine ? " mine" : " kind"}">${esc(x.t)}</span>`).join("")}</div>`;
+  const l3x = []; // filled below: "Planned Thu 3" rides in this row, never a row of its own that comes and goes
+  const l3 = () => `<div class="tags ints">${l3x.join("")}${cardLabels(s, city, nr && nr.my).map(x => `<span class="tag int${x.mine ? " mine" : " kind"}">${esc(x.t)}</span>`).join("")}</div>`;
   const ex = ((plan && plan.elsewhere) || []).find(x => x.s.id === s.id);
   const seen = other ? `<span class="tag seen">${!on ? "Planned " + esc(schedWhen(other)) : ex && ex.earlier ? "Seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) + " · not repeated" : ex && ex.later ? "No room today · seen " + esc(fmtDow(ex.on.date)) + " " + esc(fmtDate(ex.on.date)) : "Today · not repeated " + esc(fmtDow(other.date)) + " " + esc(fmtDate(other.date))}</span>` : "";
   const hrs = txt(s.hours) ? txt(hoursText(s.hours)) : "", cl = txt(s.closed);
@@ -6362,7 +6363,10 @@ function siteCard(s, d, plan, nr) {
       ${srcNote(s)}${fs === false ? `<button type="button" class="btn ghost small" data-act="fitask" data-id="${esc(s.id)}">Ways to fit it in</button>` : ""}
     </div>`;
   const open = openCard === s.id ? " open" : "";
-  const head = `<div class="nrow"><div class="name">${esc(nm)}</div>${badge}</div><div class="l2">${l2}</div>${incl}${seen && !on ? `<div class="tags">${seen}</div>` : ""}${l3}`;
+  // A card keeps its rows whatever the plan says (R-28, Nov 28 live check: ticking one sight put "Planned Thu" on two
+  // cards above it as a new row, 28 px each, and the list under the finger moved).
+  if (seen && !on) l3x.push(seen);
+  const head = `<div class="nrow"><div class="name">${esc(nm)}</div>${badge}</div><div class="l2">${l2}</div>${incl}${l3()}`;
   if (fs === false) return `<div class="site nofitcard${open}" data-card="${esc(s.id)}" aria-disabled="true">
     <span class="nobox" aria-hidden="true"></span>
     <div class="body">${head}${det}</div></div>`;
