@@ -1,7 +1,7 @@
 # Rule links for commits made without a `Rule:` line
 
 Every commit that changes `src/` or `worker/` after 2026-11-23 23:30 UTC names its rule in docs/qa/RULES.md with a
-line `Rule: R-xx`. When a commit went in without one, link it here instead (checked by tools/truth/rules-check.cjs).
+line `Rule: R-xx`. When a commit went in without one, or named the wrong rule, link it here instead (a row here replaces the commit's own line) (checked by tools/truth/rules-check.cjs).
 One line per commit: the start of its sha (8 or more characters), the rule(s), and why.
 
 | Commit | Rule | Why |
@@ -15,6 +15,7 @@ One line per commit: the start of its sha (8 or more characters), the rule(s), a
 | c1634e76 | R-15, R-16 | Day trips: no objects, one outing per place, prices only from a source (rule named in the subject line only) |
 | 97c80b30 | R-32 | Nothing pinned ever covers content (its commit line says R-30, the number it had before the registry gave R-30 to saved content) |
 | 622451db | R-06 | Live day check tool only (ASK prints the helper's ride answers for chosen pairs): used to find E65; no app change |
+| 30d789da | R-39 | Swap two days and remove a day (its commit line says R-38; R-38 went to the hotel address rule in PR #251) |
 | 2a51ecc1 | R-41 | Ask every trip detail up front: its commit line says R-40, the number another thread had already taken; the rule is R-41 |
 | 7037714d | R-28, R-42 | The page stays put when the thing pressed goes away; Fresh sights says when nothing changed: its commit line says R-40, the press rule's number before Get there took R-40 on the Beta 2 branch; the press rule is R-42 |
 | 2922b2da | R-28, R-42 | Picking a lunch or dinner place no longer moves the page; Fresh sights note decided after the redraw: its commit line says R-40 for the same reason; the press rule is R-42 |

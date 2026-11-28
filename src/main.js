@@ -959,7 +959,8 @@ function rideExtra(leg) {
   // Each sentence once a day: the ride out and the ride back carry the same guide's words (UI check, Nov 20).
   const said = leg.note ? String(leg.note).split(/(?<=[.!?])\s+(?=[A-Z])/).map(rideOnce).filter(Boolean).join(" ") : "";
   const note = said ? `<span class="sub ridesub ridenoteguide">${esc(said)}</span>` : "";
-  const wait = leg.asking ? `<span class="sub ridesub ridewait">${leg.asking === "offline" ? "With no signal, trains, buses and boats for this ride can't be looked up, so for now it's planned by road. The day updates when you're back online." : leg.asking === "unreached" ? "Kairoute can't reach its ride lookup right now, so trains, buses and boats for this ride aren't known and it's planned by road. Check other ways to go before you set out." : "Trains, buses and boats for this ride haven't come in yet, so for now it's planned by road. The day updates on its own when they do."}</span>` : "";
+  const wait = leg.asking && leg.askingLines ? `<span class="sub ridesub ridewait">${leg.asking === "offline" ? "With no signal, timetables for this ride can't be looked up: other ways to go, a boat among them, may not be shown." : leg.asking === "unreached" ? "Kairoute can't reach its ride lookup right now: other ways to go, a boat among them, may not be shown. Check before you set out." : "Timetables for this ride haven't come in yet: more ways to go, a boat among them, may appear. The day updates on its own."}</span>`
+    : leg.asking ? `<span class="sub ridesub ridewait">${leg.asking === "offline" ? "With no signal, trains, buses and boats for this ride can't be looked up, so for now it's planned by road. The day updates when you're back online." : leg.asking === "unreached" ? "Kairoute can't reach its ride lookup right now, so trains, buses and boats for this ride aren't known and it's planned by road. Check other ways to go before you set out." : "Trains, buses and boats for this ride haven't come in yet, so for now it's planned by road. The day updates on its own when they do."}</span>` : "";
   return steps + lost + note + wait;
 }
 // The same general line under every ride ("By road, with time for traffic.") is said once a day, on the first ride
@@ -5292,7 +5293,7 @@ function render() {
   renderNo++; if (!planKeep) planGen++;
   // A won't-fit or closed box belongs to the day it was opened on: going to another day closes it,
   // never leaving it over that day's list (Nov 20 sweep: El Escorial's box from one Madrid day covered the next day).
-  { const box = document.querySelector(".fitbox"); if (box && box.dataset.day !== String(trip.active)) { box.remove(); if (typeof fitState !== "undefined") fitState = null; } }
+  { const box = document.querySelector(".fitbox"); if (box && (box.dataset.day !== String(trip.active) || (box.dataset.view && box.dataset.view !== view))) { box.remove(); if (typeof fitState !== "undefined") fitState = null; if (typeof closedState !== "undefined") closedState = null; } } // ...and to the screen it was opened on: going to another screen closes it (Nov 28 feel check: a box left open covered the journal and settings)
   if (trip.unopened && /^(plan|sites|trip|guide|tour|journal)$/.test(view)) { delete trip.unopened; save(); } // the traveler has opened it now
   if (view !== "sites") pickFrozen = null; // coming back to the sights list sorts it afresh
   if (faithPrefsTidy()) save();
@@ -6295,6 +6296,7 @@ function renderTrip(d) {
       ${busyBlock()}${errBlock()}
       <form class="card" id="dayForm" autocomplete="off">
         <div class="eyebrow">${esc(fmtDow(d.date))} ${esc(fmtDate(d.date))}</div>
+        ${typeof dayMovesHTML === "function" ? dayMovesHTML(d) : ""}
         <div class="row2">
           <div class="field"><label for="f-dest">${t === "port" ? "Port" : "City"}</label><input type="text" id="f-dest" value="${esc(d.destination)}" placeholder="e.g. Rome, Nashville, Juneau"></div>
           <div class="field"><label for="f-date">Date</label><input type="date" id="f-date" value="${esc(d.date)}"></div>
@@ -8018,6 +8020,7 @@ document.addEventListener("click", e => {
   if (act === "gen") { generateCity(day()); return; }
   if (act === "closedmove") { moveClosed(t.dataset.id, +t.dataset.to); return; }
   if (act === "closedswap") { swapClosed(t.dataset.id, t.dataset.alt); return; }
+  if (typeof dayMoveAct === "function" && dayMoveAct(act, t)) return; // swap two days, remove a day (features/day-moves.js, R-39)
   if (liveAct(act, t)) return;
   if (tixAct(act, t)) return;
   if (shipClick(t)) return;

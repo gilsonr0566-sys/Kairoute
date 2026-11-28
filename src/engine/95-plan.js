@@ -718,7 +718,7 @@
       if (k >= 0 && other >= 0) { p.explain[k] = m.inside ? m.name + " is inside " + m.inside + ": seen on " + dayWord(other) + "." : m.name + " is closed on " + dayWord(m.from) + ", and it's planned on " + dayWord(other) + "."; continue; }
       // With the numbers the other day's planner gave (what it needs and what was left there), never a bare "didn't fit".
       const qw = q && q.dropWhy && q.dropWhy[id], num = qw && /\d/.test(qw) ? " (it " + qw + ")" : "";
-      if (k >= 0) p.explain[k] = m.inside ? m.name + " is inside " + m.inside + ", planned on " + dayWord(m.to) + ", but it didn't fit that day" + num + "." : m.name + " is closed on " + dayWord(m.from) + ", and it didn't fit on " + dayWord(m.to) + ", the day it's open" + num + "."; }
+      if (k >= 0) p.explain[k] = m.inside ? m.name + " is inside " + m.inside + ", planned on " + dayWord(m.to) + ", but it didn't fit that day" + num + "." : m.name + " is closed on " + dayWord(m.from) + ", and it didn't fit on " + dayWord(m.to) + ", one of the days it's open" + num + "."; }
     // Every tick is answered on its own day (R-21): a sight ticked on two days and taken by the other one is named here
     // with that day, never left unsaid (odd trips, Nov 25: two churches ticked on Friday and Sunday were explained
     // only on Sunday, and Friday's screen said nothing of them).

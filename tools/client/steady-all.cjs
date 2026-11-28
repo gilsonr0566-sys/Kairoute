@@ -145,11 +145,12 @@ const SPINNERS = () => [...document.querySelectorAll('.spinner, [aria-busy="true
           const rs = await p.evaluate(async i => { window.__kairouteGo('plan', i); await new Promise(r => setTimeout(r, 150));
             return [...document.querySelectorAll('#view .tl.leg')].map(e => { const kinds = [...e.querySelectorAll('.ridechip')].map(c => (/\bk-(\w+)/.exec(c.className) || [])[1]);
               const t = [...((e.querySelector('.what > span') || e).childNodes)].map(n => n.textContent).join(' ').replace(/\s+/g, ' '), m = /· ([\d.]+) (km|mi)\b/.exec(t), km = m ? +m[1] * (m[2] === 'mi' ? 1.609 : 1) : 0;
-              return { road: /^\s*Taxi or car\b/.test(t) && kinds.every(k => k === 'car' || k === 'walk'), km, said: !!e.querySelector('.ridewait'), what: t.slice(0, 50) }; }); }, d.i).catch(() => []);
+              return { road: /^\s*Taxi or car\b/.test(t) && kinds.every(k => k === 'car' || k === 'walk'), ride: !/\b(walk|ferry|boat|lift)\b/.test(e.className), km, said: !!e.querySelector('.ridewait'), what: t.slice(0, 50) + (e.querySelector('.ridewait') ? ' | ' + e.querySelector('.ridewait').textContent : '') }; }); }, d.i).catch(() => []);
           if (process.env.DEBUG_RIDES) console.log('RIDES', where, JSON.stringify(rs.filter(r => r.km >= 3)));
-          counts.rides = (counts.rides || 0) + rs.filter(r => r.road && r.km >= 3).length;
-          rs.filter(r => r.road && r.km >= 3 && !r.said).slice(0, 2).forEach(r => fail('RIDE-SAID', where, `a ${r.km.toFixed(1)} km ride is planned by road with the ride lookup not answering, and the day doesn't say trains, buses and boats haven't come in yet: "${r.what}"`));
-          rs.filter(r => r.said && !r.road).slice(0, 2).forEach(r => fail('RIDE-SAID', where, `a ride that offers a line says its lines haven't come in: "${r.what}"`));
+          counts.rides = (counts.rides || 0) + rs.filter(r => r.ride && r.km >= 3).length;
+          rs.filter(r => r.ride && r.km >= 3 && !r.said).slice(0, 2).forEach(r => fail('RIDE-SAID', where, `a ${r.km.toFixed(1)} km ride is planned with the ride lookup not answering, and the day doesn't say its timetables haven't come in yet: "${r.what}"`));
+          // A ride that offers a line may say more ways may come, never that it is planned by road.
+          rs.filter(r => r.said && !r.road && /planned by road/.test(r.what)).slice(0, 2).forEach(r => fail('RIDE-SAID', where, `a ride that offers a line says it is planned by road: "${r.what}"`));
         }
         // RESUME-LEFT: on the day Continue opens, start the tour and close the app: reopening goes back into the tour (the
         // control: the check can see a tour). Then Exit tour and reopen: the Day plan, never the tour the traveler left.
@@ -182,7 +183,7 @@ const SPINNERS = () => [...document.querySelectorAll('.spinner, [aria-busy="true
   for (let k = fails.length - 1; k >= 0; k--) { const x = fails[k], w = W.find(w => w.rule === x.rule && !NEVER.has(w.rule) && w.until >= today && w.until <= week && (!w.where || new RegExp(w.where).test(x.where || '')));
     if (w) { fails.splice(k, 1); console.log(`WARN ${x.rule} 1 (known: ${w.owner} until ${w.until}) [${x.where}] ${x.why}`); } }
   const by = {}; fails.forEach(x => { by[x.rule] = (by[x.rule] || 0) + 1; });
-  console.log(`\nSteady screens: ${counts.trips} trips, ${counts.screens} screens opened, ${counts.redraws} redraws, ${counts.hung} screens with hanging services, ${counts.rides || 0} long road-only rides checked for their waiting line, ${counts.resumes} tours reopened, ${counts.scrolled || 0} screens scrolled (${counts.pins || 0} with something pinning)`);
+  console.log(`\nSteady screens: ${counts.trips} trips, ${counts.screens} screens opened, ${counts.redraws} redraws, ${counts.hung} screens with hanging services, ${counts.rides || 0} long rides checked for their waiting line, ${counts.resumes} tours reopened, ${counts.scrolled || 0} screens scrolled (${counts.pins || 0} with something pinning)`);
   if (counts.trips && !counts.pins && PICK.includes('phone')) { fails.push({ rule: 'NOT TESTED' }); console.log('FAIL NOT TESTED [PIN-STEADY] no screen pinned anything while scrolling at phone size'); by['NOT TESTED'] = (by['NOT TESTED'] || 0) + 1; }
   if (counts.trips && !counts.resumes) { fails.push({ rule: 'NOT TESTED' }); console.log('FAIL NOT TESTED [RESUME-LEFT] no trip could start and exit a tour'); by['NOT TESTED'] = (by['NOT TESTED'] || 0) + 1; }
   for (const [k, n] of Object.entries(by)) console.log(`FAIL ${k} ${n}`);

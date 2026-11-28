@@ -53,10 +53,10 @@ const aboveMoved = (before, a, id) => Object.keys(before).filter(k => k[0] !== '
 const HEIGHTS = () => { const out = {}, seen = new Map();
   for (const e of document.querySelectorAll('#view .sitesmain [data-card], #view .sitesmain > *, #view .sitesmain .picksfold > *, #view .sitesmain [data-card] > .body > *')) {
     if (!e.offsetParent) continue; const b = e.getBoundingClientRect(); if (b.bottom <= 0 || b.top >= innerHeight) continue;
-    const base = e.dataset.card ? 'card ' + e.dataset.card : (e.closest('[data-card]') ? e.closest('[data-card]').dataset.card + ' .' : '') + (e.className || e.tagName).toString().split(' ')[0];
+    const base = e.dataset.card ? 'card ' + e.dataset.card + ' (' + String(e.className).replace(/\s+/g, '.') + ')' : (e.closest('[data-card]') ? e.closest('[data-card]').dataset.card + ' .' : '') + (e.className || e.tagName).toString().split(' ')[0];
     const n = (seen.get(base) || 0) + 1; seen.set(base, n); out[n > 1 ? base + '#' + n : base] = Math.round(b.height) + ' "' + (e.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40) + '"'; }
   return out; };
-const grew = (a, b) => Object.keys(a).filter(k => k in b && parseInt(a[k]) !== parseInt(b[k])).map(k => `${k} ${a[k]} -> ${b[k]}`).slice(0, 4).join('; ');
+const grew = (a, b) => Object.keys(a).filter(k => k in b && parseInt(a[k]) !== parseInt(b[k])).map(k => `${k} ${a[k]} -> ${b[k]}`).slice(0, 8).join('; ') + (Object.keys(a).filter(k => !(k in b)).length ? ' | gone: ' + Object.keys(a).filter(k => !(k in b)).slice(0, 4).join(', ') : '') + (Object.keys(b).filter(k => !(k in a)).length ? ' | new: ' + Object.keys(b).filter(k => !(k in a)).slice(0, 4).join(', ') : '');
 const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a[id] < 700).map(id => `${id} (was at ${a[id]})`); // vanished from mid-screen
 (async () => {
   const browser = await chromium.launch(); const srv = LIVE ? { url: FILE, close: () => {} } : await serve(FILE);
@@ -127,6 +127,13 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
           let box = false; for (let w = 0; w < 50 && !box; w++) { await p.waitForTimeout(100); box = await p.evaluate(() => !!document.querySelector('.fitbox')); }
           await p.waitForTimeout(1500); const a = await p.evaluate(SEEN), s1 = await p.evaluate(() => (window.__scr || []).join(' | '));
           const m1 = moves(before, a, 4); check(`${tag}: the "Needs" box opening moves nothing under it`, box && !m1.length, !box ? 'no box opened within 5 s' : m1.slice(0, 3).join(', ') + (s1 ? ` (the app scrolled: ${s1})` : ''));
+          // Inside the box: opening "Or choose what to untick yourself" keeps that line under the finger (the box grows
+          // downward; Nov 27 press check: a centred box grew both ways and the line moved 158 px).
+          if (box) { await p.waitForTimeout(1500); const sm = await p.evaluate(() => { const x = document.querySelector('.fitbox details.fitown:not([open]) > summary'); if (!x) return null; x.scrollIntoView({ block: 'center' }); /* a person scrolls the box to reach it */ const b = x.getBoundingClientRect(), sh = x.closest('.sheet').getBoundingClientRect(); const pt = { x: b.x + Math.min(40, b.width / 2), y: b.y + b.height / 2, top: b.top }; const h = document.elementFromPoint(pt.x, pt.y); return h && x.contains(h) ? pt : { hidden: true }; });
+            if (sm && sm.hidden) check(`${tag}: "choose what to untick yourself" can be reached inside the box`, false, 'it is hidden behind something even with the box scrolled to it');
+            else if (sm) { await p.touchscreen.tap(sm.x, sm.y); await p.waitForTimeout(500);
+              const t2 = await p.evaluate(() => { const x = document.querySelector('.fitbox details.fitown > summary'); return x ? x.getBoundingClientRect().top : null; });
+              check(`${tag}: opening "choose what to untick yourself" keeps it under the finger`, t2 != null && Math.abs(t2 - sm.top) <= 4, t2 == null ? 'it went away' : `moved ${Math.round(sm.top)}→${Math.round(t2)} px`); } }
           if (box) { await p.evaluate(() => { window.__scr = []; const c = document.querySelector('.fitbox [data-act="fitcancel"]'); if (c) c.click(); else { const f = document.querySelector('.fitbox'); if (f) f.click(); } });
             await p.waitForTimeout(2500); const c = await p.evaluate(SEEN), s2 = await p.evaluate(() => (window.__scr || []).join(' | '));
             const m2 = moves(before, c, 4); check(`${tag}: closing the "Needs" box leaves the page where it was`, !m2.length, m2.slice(0, 3).join(', ') + (s2 ? ` (the app scrolled: ${s2})` : '')); } } }
