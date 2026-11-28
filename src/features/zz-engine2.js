@@ -30,6 +30,9 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     const was = planDate; let r = null; transitPeek = true;
     try { for (const dt of tripDates().concat([null])) { planDate = dt; r = transitFor(a, b); if (r && r.length) break; } } finally { transitPeek = false; planDate = was; }
     if (peekMemo.size > 50000) peekMemo.clear(); peekMemo.set(k, r); return r; };
+  // No answer at all yet for this ride on any of the trip's dates (an answer with no lines counts as an answer).
+  const noAnswer = (a, b) => { const was = planDate; let r = null; transitPeek = true;
+    try { for (const dt of tripDates().concat([null])) { planDate = dt; r = transitFor(a, b); if (r) break; } } finally { transitPeek = false; planDate = was; } return !r; };
   const answerOf = (a, b) => { const r = peek(a, b); return r && r.map(o => Object.assign({}, o, { id: rideId(o), kind: rideKind(o) })); };
   const askRides = ep => { (ep && ep.items || []).forEach(x => { if (x.t === "ride" && x.from && x.to && x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift") { try { transitFor(x.from, x.to); } catch (e) {} } }); };
   // R-33: every walk and taxi the plans take is asked for its real route once (see askRouteTimes in main.js).
@@ -189,6 +192,8 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         const leg = { mode: MODE[x.mode] || "ride", kind: UIKIND[x.kind] || (x.mode === "walk" ? "walk" : "car"), how: x.how || (x.mode === "walk" ? "Walk" : "Taxi or car"), km: x.km || 0, min: x.min || 0 };
         if (x.pierName) leg.pier = x.pierName; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to; if (x.options) leg.options = x.options;
         if (x.ans) leg.transit = x.ans; if (x.steps) leg.steps = x.steps; if (x.note) leg.note = x.note; if (x.lost) leg.lost = x.lost; if (x.slack) leg.slack = x.slack; if (x.swapWhy) leg.swapWhy = x.swapWhy; if (x.ownBoat) leg.ownBoat = x.ownBoat;
+        // R-18: a ride by road because no lines have come in yet (the lookup not answered, the helper busy, no signal) says so.
+        if (leg.kind === "car" && x.from && x.to && !x.ans && (x.options || []).every(o => !o.ans && ["car", "walk"].includes(UIKIND[o.kind] || "car"))) { const s = transitAsking(x.from, x.to); if (s && noAnswer(x.from, x.to)) leg.asking = s; }
         // Every way for this ride is a choice on the plan (the ride chips): a tap saves it as the traveler's own choice for
         // this ride, and the engine plans with it.
         if (x.from && x.to && x.options && x.options.length > 1) {

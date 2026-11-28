@@ -760,6 +760,17 @@ function transitFor(a, b) {
   if (typeof freeAI !== "undefined" && freeAI && !transitQ.has(k) && !(transitFail.get(k) > Date.now() - 120000)) { transitQ.set(k, { a: [+a.lat, +a.lng], b: [+b.lat, +b.lng], dow, date: typeof planDate !== "undefined" && planDate ? planDate : undefined, pri: typeof trip !== "undefined" && trip.days && trip.days[trip.active] && typeof planDate !== "undefined" && trip.days[trip.active].date === planDate }); clearTimeout(transitTimer); transitTimer = setTimeout(askTransit, 300); }
   return hit ? part(borrowGap(a, b, hit, exact, hit.opts.filter(runsThen).map(tidyRide))) : null;
 }
+// A ride with no answer at all yet from the ride lookup (not asked yet, asked and waiting, or the helper busy or out of
+// reach): the day says so on the ride, so a road estimate is never shown as if it were every way to go (R-18; Nov 27
+// live check: with the helper answering "too many requests" the Sorrento ferry choice vanished without a word). An
+// answer that came back with no lines is an answer: nothing is said then.
+function transitAsking(a, b) {
+  if (!a || !b || !KEngine.fin(a.lat) || !KEngine.fin(b.lat) || hav(a, b) < 1.5) return "";
+  if (typeof freeAI === "undefined" || !freeAI) return "";
+  const k = pairKey(a, b) + "|" + dayKind(planDow());
+  if (transitMem[k] || transitMem[pairKey(a, b)]) return "";
+  return typeof navigator !== "undefined" && navigator.onLine === false ? "offline" : "waiting";
+}
 function transitDue(exact, hit) {
   if (typeof navigator !== "undefined" && navigator.onLine === false) return false;
   if (!exact) return true;
@@ -947,7 +958,8 @@ function rideExtra(leg) {
   // Each sentence once a day: the ride out and the ride back carry the same guide's words (UI check, Nov 20).
   const said = leg.note ? String(leg.note).split(/(?<=[.!?])\s+(?=[A-Z])/).map(rideOnce).filter(Boolean).join(" ") : "";
   const note = said ? `<span class="sub ridesub ridenoteguide">${esc(said)}</span>` : "";
-  return steps + lost + note;
+  const wait = leg.asking ? `<span class="sub ridesub ridewait">${leg.asking === "offline" ? "With no signal, trains, buses and boats for this ride can't be looked up, so for now it's planned by road. The day updates when you're back online." : "Trains, buses and boats for this ride haven't come in yet, so for now it's planned by road. The day updates on its own when they do."}</span>` : "";
+  return steps + lost + note + wait;
 }
 // The same general line under every ride ("By road, with time for traffic.") is said once a day, on the first ride
 // it applies to (UI check, Nov 20: it repeated under every taxi of the day). renderPlan starts each day afresh.
@@ -998,7 +1010,7 @@ function rideLeg(a, b, road, lastMile, walkMin) {
   let opts = transitFor(a, b);
   // No line found: the ride is a taxi, and says so (not "Taxi, bus or metro", not "Train or car": the label never names
   // a way to go that has no button, Richard Nov 17); a short one can be walked instead.
-  if (!opts || !opts.length) return Object.assign({}, road, { how: "Taxi or car", key: pairKey(a, b), choice: "taxi", road: road.min, lastMile, choices: [...walk, { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }] });
+  if (!opts || !opts.length) { const asking = transitAsking(a, b); return Object.assign({}, road, { how: "Taxi or car", key: pairKey(a, b), choice: "taxi", road: road.min, lastMile, choices: [...walk, { id: "taxi", label: "Taxi or car", min: road.min, kind: "car" }] }, asking ? { asking } : {}); }
   // Leaving the ship for the first ride you go when the boat or train goes: with no timetable, plan on half the gap
   // between sailings plus boarding rather than a full gap (a full gap stays on every ride that must catch one later,
   // and on the ride back to the ship).
@@ -4383,7 +4395,7 @@ function toLines(parts) {
   return lines;
 }
 // Quality check for every day of a trip (used by the automated planner test).
-if (typeof window !== "undefined") window.__kairouteLegs = i => { const pl = buildPlan(trip.days[i]); if (!pl || pl.error || !pl.items) return null; return pl.items.filter(x => x.type === "travel").map(x => ({ mode: x.leg.mode, how: x.leg.how, km: x.leg.km, min: x.leg.min, note: x.leg.note || "", choices: (x.leg.choices || []).map(c => c.label + " " + c.min) })); };
+if (typeof window !== "undefined") window.__kairouteLegs = i => { const pl = buildPlan(trip.days[i]); if (!pl || pl.error || !pl.items) return null; return pl.items.filter(x => x.type === "travel").map(x => ({ mode: x.leg.mode, how: x.leg.how, km: x.leg.km, min: x.leg.min, note: x.leg.note || "", asking: x.leg.asking || "", choices: (x.leg.choices || []).map(c => c.label + " " + c.min) })); };
 if (typeof window !== "undefined") window.__kairouteCrossings = () => trip.days.map((d, i) => { let r = window.__kairouteRoute(i); if (!r) return 0; r = r.filter(x => x.type !== "evening"); const h = r.findIndex(x => x.type === "stop" || x.type === "meal"); if (h > 0) r = r.slice(h - 1); if (r.length < 4) return 0; return crossCount(r[0], r.slice(1, -1), r[r.length - 1]); }); // the part the planner orders: from where the day's sights begin (after a bag drop) to the end point, without the evening dinner
 if (typeof window !== "undefined") window.__kairouteRoute = i => { bonusMemo = new Map(); mealMemo = new Map(); keptMemo = new Map(); eveMemo = new Map(); avoidMeals = new Set(); const pl = buildPlan(trip.days[i]); if (!pl || pl.error || !pl.items) return null;
   return pl.items.filter(x => x.place && x.type !== "travel").map(x => ({ type: x.type, name: x.place.name, lat: +x.place.lat, lng: +x.place.lng, time: x.time, min: x.place.minutes || 0, hours: x.place.hours || "", leg: x.leg ? (x.leg.how || x.leg.mode) : "" })); };
