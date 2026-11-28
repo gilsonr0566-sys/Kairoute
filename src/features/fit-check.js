@@ -88,7 +88,10 @@ function addPick(d, id, ask) {
   // here can bump picks off it).
   const base0 = ask ? fitTrial(d, (d.selected || []).slice(), null, true).p : null;
   const mine0 = (d.mine || []).slice(); if (ask) markMine(d, id, true);
-  if (!fitsWith(d, [id], base0)) { if (ask) fitOpen(d, id); d.mine = mine0; if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; }
+  // One answer to "does it fit": the quick check (without the stops that fill spare time) can say no where the full
+  // plan says yes. When the traveler asked, the full plan decides: the box opens, or the sight is added; never a tap
+  // that does neither (Nov 28 press check: "Needs 1 h 32 min" tapped, no box and no pick).
+  if (!fitsWith(d, [id], base0) && !(ask && fitOpen(d, id))) { d.mine = mine0; if (from) { from.selected = back.sel; from.mine = back.mine; from.anchor = back.anchor; } return false; }
   const was = selKey(d); d.selected = [...d.selected, id]; if (!ask && typeof d.seedSig === "string" && d.seedSig === was) d.seedSig = selKey(d); // a sight the app adds keeps the list the app's (a hearted day's mark is left alone)
   delete d.autoEmpty; delete d.cleared; if (d.bumped) d.bumped = d.bumped.filter(b => b.id !== id); rememberPick(d, sx);
   if (from) { movedNote = (sx ? sx.name : "That sight") + " moved here from " + fmtDow(from.date) + " " + fmtDate(from.date) + "."; d.movedIn = { ...(d.movedIn || {}), [id]: from.date }; } // remembered so it can go back if it stops fitting here

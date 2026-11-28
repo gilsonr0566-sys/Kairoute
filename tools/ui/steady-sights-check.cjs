@@ -124,9 +124,13 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
         if (nid) { await p.waitForTimeout(600);
           const pt = await p.evaluate(id => { const b = document.querySelector(`[data-card="${id}"] [data-act="fitask"]`).getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; }, nid);
           const before = await p.evaluate(SEEN); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y);
-          let box = false; for (let w = 0; w < 50 && !box; w++) { await p.waitForTimeout(100); box = await p.evaluate(() => !!document.querySelector('.fitbox')); }
+          const added = () => p.evaluate(id => { const i = document.querySelector(`input[data-site="${id}"]`); return !!(i && i.checked); }, nid);
+          let box = false, got = false; for (let w = 0; w < 50 && !box && !got; w++) { await p.waitForTimeout(100); box = await p.evaluate(() => !!document.querySelector('.fitbox')); if (!box) got = await added(); }
+          // One answer (R-28, Nov 28 press check): a "Needs ..." tap either opens the ways to fit it in, or the full plan
+          // finds it fits and the sight is added. A tap that does neither is a dead button.
+          check(`${tag}: tapping "Needs ..." opens the box or adds the sight`, box || got, 'nothing happened within 5 s: no box, and the sight was not added');
           await p.waitForTimeout(1500); const a = await p.evaluate(SEEN), s1 = await p.evaluate(() => (window.__scr || []).join(' | '));
-          const m1 = moves(before, a, 4); check(`${tag}: the "Needs" box opening moves nothing under it`, box && !m1.length, !box ? 'no box opened within 5 s' : m1.slice(0, 3).join(', ') + (s1 ? ` (the app scrolled: ${s1})` : ''));
+          const m1 = moves(before, a, 4); if (box) check(`${tag}: the "Needs" box opening moves nothing under it`, !m1.length, m1.slice(0, 3).join(', ') + (s1 ? ` (the app scrolled: ${s1})` : ''));
           // Inside the box: opening "Or choose what to untick yourself" keeps that line under the finger (the box grows
           // downward; Nov 27 press check: a centred box grew both ways and the line moved 158 px).
           if (box) { await p.waitForTimeout(1500); const sm = await p.evaluate(() => { const x = document.querySelector('.fitbox details.fitown:not([open]) > summary'); if (!x) return null; x.scrollIntoView({ block: 'center' }); /* a person scrolls the box to reach it */ const b = x.getBoundingClientRect(), sh = x.closest('.sheet').getBoundingClientRect(); const pt = { x: b.x + Math.min(40, b.width / 2), y: b.y + b.height / 2, top: b.top }; const h = document.elementFromPoint(pt.x, pt.y); return h && x.contains(h) ? pt : { hidden: true }; });
