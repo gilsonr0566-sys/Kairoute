@@ -127,6 +127,12 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
           let box = false; for (let w = 0; w < 50 && !box; w++) { await p.waitForTimeout(100); box = await p.evaluate(() => !!document.querySelector('.fitbox')); }
           await p.waitForTimeout(1500); const a = await p.evaluate(SEEN), s1 = await p.evaluate(() => (window.__scr || []).join(' | '));
           const m1 = moves(before, a, 4); check(`${tag}: the "Needs" box opening moves nothing under it`, box && !m1.length, !box ? 'no box opened within 5 s' : m1.slice(0, 3).join(', ') + (s1 ? ` (the app scrolled: ${s1})` : ''));
+          // Inside the box: opening "Or choose what to untick yourself" keeps that line under the finger (the box grows
+          // downward; Nov 27 press check: a centred box grew both ways and the line moved 158 px).
+          if (box) { await p.waitForTimeout(1500); const sm = await p.evaluate(() => { const x = document.querySelector('.fitbox details.fitown:not([open]) > summary'); if (!x) return null; const b = x.getBoundingClientRect(); return { x: b.x + Math.min(40, b.width / 2), y: b.y + b.height / 2, top: b.top }; });
+            if (sm && sm.y < (await p.evaluate(() => innerHeight))) { await p.touchscreen.tap(sm.x, sm.y); await p.waitForTimeout(500);
+              const t2 = await p.evaluate(() => { const x = document.querySelector('.fitbox details.fitown > summary'); return x ? x.getBoundingClientRect().top : null; });
+              check(`${tag}: opening "choose what to untick yourself" keeps it under the finger`, t2 != null && Math.abs(t2 - sm.top) <= 4, t2 == null ? 'it went away' : `moved ${Math.round(sm.top)}→${Math.round(t2)} px`); } }
           if (box) { await p.evaluate(() => { window.__scr = []; const c = document.querySelector('.fitbox [data-act="fitcancel"]'); if (c) c.click(); else { const f = document.querySelector('.fitbox'); if (f) f.click(); } });
             await p.waitForTimeout(2500); const c = await p.evaluate(SEEN), s2 = await p.evaluate(() => (window.__scr || []).join(' | '));
             const m2 = moves(before, c, 4); check(`${tag}: closing the "Needs" box leaves the page where it was`, !m2.length, m2.slice(0, 3).join(', ') + (s2 ? ` (the app scrolled: ${s2})` : '')); } } }
