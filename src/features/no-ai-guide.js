@@ -210,7 +210,10 @@ function stayLabel(hit, typed) {
   const say = t => typeof showName === "function" ? showName({ name: t }) : t;
   if (hit.how === "place" && nm) return say(nm) + (addr && !nameMatch(nm, addr) ? ", " + say(addr) : "");
   if (hit.how === "street") return say(p.road || nm || addr);
-  return say(addr || nm || typed);
+  // A building the map lists with several numbers ("68,70,72") is shown at the number typed (Nov 28 live check).
+  const many = String(p.house || ""), hit1 = stayHouse(many).find(x => stayNums(typed).includes(x));
+  const door = many && /[;,]/.test(many) && hit1 && window.__kairoutePlant !== "stay-many-numbers" ? addr.replace(many, hit1) : addr;
+  return say(door || nm || typed);
 }
 async function findHotelNoAI(name, d) {
   if (!name) return { none: true };

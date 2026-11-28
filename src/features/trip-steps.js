@@ -177,7 +177,7 @@ function tripNeeds() {
     const stay = d.type === "land" || (d.type === "arrival" && !throughTo(d) && !(d.mode === "ship" && i === trip.days.length - 1)) || (d.type === "departure" && !throughFrom(d));
     const k = cityKeyFor(d) || keyOf(d.destination || "");
     if (stay && k && !seenHotel[k]) { seenHotel[k] = 1; const L = trip.lodging && trip.lodging[k];
-      if (!L || (L.idx === "custom" && !(L.ll && KEngine.fin(L.ll.lat)))) out.push({ i, f: "f-lodging", what: L && L.idx === "custom" && (L.typed || L.name) ? `Where ${L.typed || L.name} is in ${place} (${L.failed && window.__kairoutePlant !== "stay-down-label" ? "not placed on the map yet: the map search didn't answer" : L.miss ? "not found on the map" : "not placed on the map yet"})` : `Your hotel in ${place}` }); }
+      if (!L || (L.idx === "custom" && !(L.ll && KEngine.fin(L.ll.lat)))) out.push({ i, f: "f-lodging", what: L && L.idx === "custom" && (L.typed || L.name) ? `Where ${KEngine.otherScript(L.typed || L.name) ? "your address" : L.typed || L.name} is in ${place} (${L.failed && window.__kairoutePlant !== "stay-down-label" ? "not placed on the map yet: the map search didn't answer" : L.miss ? "not found on the map" : "not placed on the map yet"})` : `Your hotel in ${place}` }); }
   });
   return out;
 }
