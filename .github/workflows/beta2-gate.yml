@@ -393,7 +393,12 @@ jobs:
         run: node tools/client/press-proof.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Press every control (rule R-40)
         if: always()
-        run: TRIPS=first,example SIZES=phone MAXDEPTH=2 PART=${{ matrix.part }}/8 BUDGET_MIN=55 OUT=press-out node tools/client/press-all.cjs beta2-site/index.html 2>&1 | grep -vE "^   [·↻.]" | tee -a "$RUNNER_TEMP/out.log"
+        # The walk exits 1 when any press failed; whether that is a known failure (WARN) or a new one is the
+        # report's call in the next step. Only a walk that broke down (any other code) fails here.
+        run: |
+          set +e
+          TRIPS=first,example SIZES=phone MAXDEPTH=2 PART=${{ matrix.part }}/8 BUDGET_MIN=55 OUT=press-out node tools/client/press-all.cjs beta2-site/index.html 2>&1 | grep -vE "^   [·↻.]" | tee -a "$RUNNER_TEMP/out.log"
+          code=${PIPESTATUS[0]}; [ "$code" -le 1 ]
       - name: Report by class (known failures with an owner and an end date are WARN; the action-name rule is judged in the full nightly run)
         if: always()
         run: COVERAGE=off node tools/client/press-report.cjs press-out beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"

@@ -296,8 +296,9 @@ const VALUES = (c, ctx) => { // what a traveler would type, nothing at all, and 
   if (/price|cost|amount|budget|\$|€/.test(id)) return ['25', '', '-1', 'abc'];
   return ['Acropolis', '', odd]; };
 
+// A screen that says it is still working (the list held back while the fits are checked) is waited for, as a traveler does.
 async function settle(p, max) { const end = Date.now() + max; await sleep(250);
-  while (Date.now() < end) { const s = await p.evaluate(() => ({ now: performance.now(), last: window.__press ? window.__press.lastMut : 0 })).catch(() => null); if (!s) { await sleep(300); continue; } if (s.now - s.last > 450) return; await sleep(120); } }
+  while (Date.now() < end) { const s = await p.evaluate(() => ({ now: performance.now(), last: window.__press ? window.__press.lastMut : 0, busy: [...document.querySelectorAll('.sorthold, [aria-busy=true]')].some(e => e.getClientRects().length) || !!(window.__kairouteFitPending && window.__kairouteFitPending()) })).catch(() => null); if (!s) { await sleep(300); continue; } if (s.now - s.last > 450 && !s.busy) return; await sleep(120); } }
 
 // The steps of one press: [control, value?]. Returns the record.
 async function doPress(lane, c, value, quietMax, enter, fill) { const p = lane.p; let filled = null;

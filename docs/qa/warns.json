@@ -39,6 +39,14 @@
       "owner": "Fix finding a rental's address",
       "until": "2026-12-04",
       "why": "Find it shows nothing when the map search cannot be reached and a message is already on the screen; same lookup, same PR #251"
+    },
+    {
+      "rule": "JUMP",
+      "tool": "press",
+      "where": "fitask|untick yourself",
+      "owner": "Stop the select sites page jumping",
+      "until": "2026-12-04",
+      "why": "Choose sights, the fit box (example trip, phone; press walk Nov 27): 'Or choose what to untick yourself' moves the list 158 px (fixed by that thread at 5ad2113c on its branch, the box grows downward only); and after going to another day through a fit note's day link, the 'Needs ...' button moves the list 174 px, also when the walk waits for the fit checks to finish first. This entry goes when both are on the Beta 2 branch"
     }
   ]
 }

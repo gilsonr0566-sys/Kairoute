@@ -1055,7 +1055,7 @@ function suggestNow(d) {
   const c = cityFor(d); if (!suggestMsg || !suggestFor || !c || suggestFor.c !== c || suggestFor.sig !== citySig(c)) return "";
   return suggestMsg;
 }
-let movedNote = ""; // "Sorrento moved here from Mon Jul 12." after picking a sight planned on another day
+let movedNote = "", movedAt = ""; // "Sorrento moved here from Mon Jul 12." after picking a sight planned on another day
 // A pick that doesn't fit the day never stays ticked (Richard, Nov 14). When a pick stops fitting (the day's
 // hours, rides or opening times changed), it comes off, and the list and the Day plan say why, with a one-tap
 // way to fit it back in (swap it for a stop, or see it on another day).
@@ -5150,19 +5150,22 @@ let renderSpotted = false;
 // (Nov 27, every button pressed: the example trip's note went away on the first change to any day and every control
 // below it moved up 106 to 189 px from under the finger). A note at the top of a screen stays until the traveler
 // closes it or leaves the screen (tripNote): it never goes away as a side effect of a tap elsewhere.
-let touchEl = null, touchRef = null, touchNear = [], holdOn = "", tripNote = false, holdRoom = { key: "", pane: "", top: 0, end: 0 }, holdOff = -1;
+let touchEl = null, touchRef = null, touchText = "", touchListy = false, touchNear = [], holdOn = "", tripNote = false, holdRoom = { key: "", pane: "", top: 0, end: 0 }, holdOff = -1;
 const holdKeyOf = el => { const ds = Object.keys(el.dataset).filter(k => !/^press/.test(k)).sort().map(k => k + "=" + el.dataset[k]).join(","); return el.tagName + "|" + (el.id || "") + "|" + ds + "|" + (el.getAttribute("name") || "") + (el.id || ds ? "" : "|" + (el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 40)); };
 const holdAll = key => [...document.querySelectorAll("#view " + key.split("|")[0])].filter(o => holdKeyOf(o) === key);
 function touchMark(t, press) {
   if (!t || !t.closest || !t.closest("#view")) return;
   const el = t.closest("button, a, input, select, textarea, summary, label, [data-act], [role=button]") || t;
   if (press || el !== touchEl) touchNear = touchNearOf(el);
-  touchEl = el; touchRef = null;
+  { const names = o => Object.keys(o.dataset).filter(k => !/^press/.test(k)).sort().join(","), mine = names(el); touchListy = false;
+    if (mine) for (const o of document.querySelectorAll("#view " + el.tagName)) if (o !== el && names(o) === mine && holdKeyOf(o) !== holdKeyOf(el)) { touchListy = true; break; } }
+  touchEl = el; touchRef = null; touchText = (el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80);
   try { const chain = []; for (let a = el; a && a.id !== "view" && chain.length < 5; a = a.parentElement) if (a === el || a.id || Object.keys(a.dataset).some(k => !/^press/.test(k))) { const key = holdKeyOf(a); chain.push([key, holdAll(key).indexOf(a)]); } touchRef = chain; } catch (e) {}
 }
 // When the thing touched is gone after the redraw (a menu that closes, a choice that is taken, a card that shuts),
 // what was on the screen next to the finger stays where it was instead: the named things in sight, nearest first,
-// each the only one of its kind on the page.
+// each the only one of its kind on the page. Things above the finger come first: when the thing pressed goes away,
+// what is below it closes up and what is above it stays.
 function touchNearOf(el) {
   try {
     const c0 = el.getBoundingClientRect(), mid = (c0.top + c0.bottom) / 2, cand = [], count = new Map();
@@ -5171,7 +5174,7 @@ function touchNearOf(el) {
       const key = holdKeyOf(a); count.set(key, (count.get(key) || 0) + 1);
       if (a.contains(el) || el.contains(a)) continue;
       const r = a.getBoundingClientRect(); if (!r.height || r.height > innerHeight * 0.4 || r.bottom < 0 || r.top > innerHeight) continue;
-      cand.push([key, Math.abs((r.top < mid && r.bottom > mid ? mid : r.top) - mid) + r.height / 1000, a]);
+      cand.push([key, Math.abs((r.top < mid && r.bottom > mid ? mid : r.top) - mid) + r.height / 1000 + (r.top > mid ? 1e5 : 0), a]);
     }
     const pinned = a => { for (; a && a.id !== "view"; a = a.parentElement) if (/sticky|fixed/.test(getComputedStyle(a).position)) return true; return false; };
     return cand.filter(c => count.get(c[0]) === 1).sort((a, b) => a[1] - b[1]).slice(0, 60).filter(c => !pinned(c[2])).slice(0, 16).map(c => c[0]);
@@ -5181,16 +5184,17 @@ function touchSpot(pkey) {
   if (!touchRef || !touchRef.length) return null;
   const chain = [];
   const shown = a => !!(a && a.getClientRects().length), pinnedAt = a => { for (; a && a.id !== "view"; a = a.parentElement) if (/sticky|fixed/.test(getComputedStyle(a).position)) return true; return false; };
-  touchRef.forEach(([key, n], i) => { const a = i === 0 && touchEl && touchEl.isConnected ? touchEl : holdAll(key)[n]; if (shown(a)) chain.push([key, n, a.getBoundingClientRect().top, a]); });
+  touchRef.forEach(([key, n], i) => { const a = i === 0 && touchEl && touchEl.isConnected ? touchEl : holdAll(key)[n]; if (shown(a)) chain.push([key, n, a.getBoundingClientRect().top, a, 0, i === 0 ? touchText : ""]); });
   // A pinned thing does not scroll. A bar pinned to the page that is still there after the redraw needs nothing; an
   // open menu floats over the page, and the page behind it stays put through the things next to the finger.
   const floatKey = chain.length && chain[0][0] === touchRef[0][0] && pinnedAt(chain[0][3]) ? chain[0] : null;
   const floatOver = !!floatKey && (() => { for (let a = floatKey[3]; a && a.id !== "view"; a = a.parentElement) if (getComputedStyle(a).position === "fixed") return true; return false; })();
   if (floatKey) chain.length = 0;
   else if (chain.length) { const r = chain[0][3].getBoundingClientRect(); if (!r.height || r.bottom < 0 || r.top > innerHeight) return null; } // scrolled out of sight: nothing to keep under the finger
-  // A big box around the finger says little about what is under it (its top can stay while its inside moves):
-  // such boxes come last, after the named things next to the finger.
-  const big = chain.filter((c, i) => i > 0 && c[3].getBoundingClientRect().height > innerHeight * 0.4);
+  // A box much taller than the screen says little about what is under the finger (its top can stay while its
+  // inside moves): such boxes come last, after the named things next to the finger. The card the finger is in
+  // comes before them.
+  const big = chain.filter((c, i) => i > 0 && c[3].getBoundingClientRect().height > innerHeight * 1.2);
   big.forEach(c => chain.splice(chain.indexOf(c), 1));
   touchNear.forEach(key => { const same = holdAll(key), a = same[0]; if (same.length !== 1 || !shown(a)) return; const r = a.getBoundingClientRect(); if (r.height && r.height <= innerHeight * 0.4 && r.bottom > 0 && r.top < innerHeight) chain.push([key, 0, r.top, a, 1]); });
   chain.push(...big);
@@ -5202,8 +5206,11 @@ function touchSpot(pkey) {
   const run = again => {
     if (holdOff === no) return 0; // the app has since scrolled on purpose (to the top, to what the tap opened)
     if (floatKey && !floatOver && shown(holdAll(floatKey[0])[floatKey[1]])) return 0;
-    for (const [key, n, top, , near] of chain) {
-      const same = holdAll(key), nx = same[n]; if (!shown(nx)) continue;
+    for (const [key, n, top, , near, text] of chain) {
+      // The thing touched, in a list that was put in a new order: the one that says the same, not the one in the same place.
+      const same = holdAll(key), said = text && same.length > 1 ? same.filter(o => (o.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80) === text) : [], nx = said.length === 1 ? said[0] : same[n]; if (!shown(nx)) continue;
+      // One of a list of alike things (choices, rows) that now says something else is another thing in its place.
+      if (text && touchListy && said.length !== 1 && (nx.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80) !== text) continue;
       if (near && same.length !== 1) continue;
       const p = scroller(nx);
       // Later in the same frame: only when the page is where this left it, or where it was before the redraw (a
@@ -5268,6 +5275,8 @@ function render() {
   // The Trip page is one screen whichever day is open in it.
   const hkey = view === "trip" ? "trip" : pkey, hold = view !== "sites" && holdOn === hkey ? touchSpot(hkey) : null; if (hold) hold.before(); holdOn = hkey;
   if (holdRoom.key !== hkey) holdRoom = { key: "", pane: "", top: 0, end: 0 };
+  // A note about one day's picks belongs to that day's screen: it is gone on any other.
+  if (movedNote && movedAt && movedAt !== pkey) movedNote = ""; movedAt = movedNote ? pkey : "";
   if (view !== "trip") tripNote = false;
   renderView();
   if (holdRoom.key === hkey) placeHoldRoom();
@@ -7949,7 +7958,9 @@ document.addEventListener("click", e => {
     }, 40);
     return;
   }
-  if (act === "freshpicks") { const d = day(), city = cityFor(d); if (city) { const a = siteAnchor(d, city), was = [...(d.selected || [])].sort().join("|"); d.selected = []; d.selected = defaultSelection(city, trip.style, d); if (a && !d.selected.includes(a.id)) d.selected.unshift(a.id); fitTrim(d, a ? [a.id] : []); movedNote = [...d.selected].sort().join("|") === was ? "These are already the fresh picks for this day; nothing changed." : ""; save(); render(); } return; }
+  if (act === "freshpicks") { const d = day(), city = cityFor(d); if (city) { const a = siteAnchor(d, city), was = [...(d.selected || [])].sort().join("|"); d.selected = []; d.selected = defaultSelection(city, trip.style, d); if (a && !d.selected.includes(a.id)) d.selected.unshift(a.id); fitTrim(d, a ? [a.id] : []); movedNote = ""; save(); render();
+      // Said after the redraw, which takes off again what does not fit: the same picks as before means nothing changed on screen.
+      if ([...(d.selected || [])].sort().join("|") === was) { movedNote = "These are already the fresh picks for this day; nothing changed."; render(); } } return; }
   if (act === "clearanchor") { day().anchor = null; save(); render(); jumpToAnchor(); return; }
   if (act === "addplace") { const v = (document.getElementById("addPlace") || {}).value || ""; if (v.trim()) addPlaces(day(), v.trim()); return; }
   if (act === "moretrips") { addPlaces(day(), ""); return; }
