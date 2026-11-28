@@ -217,9 +217,12 @@ async function runSize(browser, size, base) {
     if (await nameBtn.isVisible().catch(() => false)) { await tap(nameBtn, '"Needs ..." (ways to fit it in)', { nav: true }); await screen(`fit-box-day${di}`); const cl = p.locator('.fitbox [data-act=fitcancel]').or(p.locator('[data-act=close], [aria-label=Close], button').filter({ hasText: /^(×|✕|Close|Done|‹ Back|Back)$/ })); /* the box's own "Not now" / "Keep my day as is" (missing it left the box open and the rest of the walk tapped its backdrop) */ if (await cl.first().isVisible().catch(() => false)) await tap(cl, 'close the box', { nav: true }); await screen(`after-close-fit-box-day${di}`); if (await p.locator('.fitbox').count().catch(() => 0)) fail('STUCK', 'the "ways to fit it in" box could not be closed'); }
     await tap(p.locator('button, a').filter({ hasText: /Day plan/ }).filter({ hasNotText: /Lock/ }), 'Back to my day plan', { nav: true }); await screen(`day${di}-after-choose`);
     // A sight on the day plan opened and closed.
-    const stop = p.locator('main button').filter({ hasNotText: /Walk|Taxi|bus|Change|See what|Choose|Lock|Rename|Start|Zoom|Show where|What's this|‹|:/ });
+    const stop = p.locator('main button').filter({ hasNotText: /Walk|Taxi|bus|Change|See what|Choose|Lock|Rename|Start|Zoom|Show where|What's this|Get there|‹|:/ });
     const st = await stop.allInnerTexts().catch(() => []); const sname = st.find(x => x.length > 6 && x.length < 60);
     if (sname) { await tap(p.locator('main button').filter({ hasText: sname }), 'open stop ' + sname.slice(0, 30), { stay: false }); await screen(`stop-open-day${di}`); }
+    // Get there (R-40): the search sheet opens from the day plan and its Close gives the screen back.
+    const gtb = p.locator('main [data-act=gtopen]').first();
+    if (await gtb.isVisible().catch(() => false)) { await tap(gtb, 'Get there', { nav: true }); await screen(`get-there-day${di}`); await tap(p.locator('#gtSheet [data-act=gtclose]'), 'close Get there', { nav: true }); await screen(`get-there-closed-day${di}`); }
   }
   // Guide and a story.
   await tap(navBtn('Guide'), 'Guide tab', { nav: true }); await screen('guide'); await scrollThrough('guide');

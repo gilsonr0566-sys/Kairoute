@@ -1,0 +1,44 @@
+name: Where-you're-staying live check
+# R-38: a hotel name or a street address typed as "My hotel or rental" is found on the map, or the app says plainly it
+# wasn't; checked on the live app at phone and tablet sizes, with the helper's own answers printed beside it.
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        default: "https://gilsonr0566-sys.github.io/Kairoute-Beta2/"
+      raw:
+        description: "1 = also print the free map searches' own answers"
+        default: "1"
+      tag:
+        description: "Name for this run's screenshots (kept in docs/qa/shots/lodging/<tag>/ on the branch it ran on)"
+        default: ""
+  push:
+    branches: [claude/project-thread-jqwtnd]
+    paths: [tools/lodging/**, .github/workflows/lodging-live.yml]
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - env:
+          URL: ${{ inputs.url || 'https://gilsonr0566-sys.github.io/Kairoute-Beta2/' }}
+          RAW: ${{ inputs.raw || '1' }}
+          OUT: lodging-shots
+        run: npm i playwright@1.65.1 && npx playwright install chromium && node tools/lodging/lodging-live.cjs
+      - name: Keep the screenshots on the branch (for before/after reports)
+        if: always() && inputs.tag != ''
+        run: |
+          mkdir -p docs/qa/shots/lodging/${{ inputs.tag }} && cp lodging-shots/*.png docs/qa/shots/lodging/${{ inputs.tag }}/ || true
+          git config user.name "github-actions[bot]"; git config user.email "41898+github-actions[bot]@users.noreply.github.com"
+          git add docs/qa/shots/lodging && git commit -qm "Where-you're-staying live screenshots: ${{ inputs.tag }} [skip ci]" && git push origin HEAD:${{ github.ref_name }} || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lodging-shots
+          path: lodging-shots

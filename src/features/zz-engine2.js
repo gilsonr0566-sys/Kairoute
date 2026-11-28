@@ -156,6 +156,23 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
     memo = { k: synced ? keyNow() : k, ik, used, plans, bucket }; recent.set(memo.k, memo); if (recent.size > 8) recent.delete(recent.keys().next().value); return memo;
   }
   window.__kairouteEngine2 = () => JSON.parse(JSON.stringify(tripPlans().plans));
+  // R-40 (Get there): the ways from any point to any point on day i, from the plans' own ride layer: the same walks
+  // (street routes, climbs), lines, timetables, piers and island outlines the plans use, with no ride choice of the
+  // traveler's (a choice belongs to a planned ride). A place on an island the map's paths don't reach is across the water,
+  // as in the plans (R-06); a guide sight is read as the plans read it (its travel note, its island).
+  window.__kairouteRideNow = (i, a, b) => {
+    const d = trip.days[i]; if (!d || !a || !b || !E.hasPos(a) || !E.hasPos(b)) return null;
+    const bucket = tripPlans().bucket || {}, city = cityFor(d), key = city ? keyOf(city.city) : "", bc = (bucket.cities || {})[key] || {};
+    const P = (placesWithIsles(bucket) || {})[key], I = P && P.islands;
+    const asPlanned = p => { const x = p.id != null ? (bc.sites || []).concat(bc.farther || []).find(s => String(s.id) === String(p.id)) : null;
+      const q = Object.assign({}, x || {}, { lat: +p.lat, lng: +p.lng, name: p.name }, p.backToShip ? { backToShip: true } : {}, p.deadline ? { deadline: true } : {});
+      if (!q.acrossWater && I && Array.isArray(I.shapes)) { const sh = E.islandAt(I.shapes, q); if (sh && sh.id !== I.centreShape && sh.walk === false) q.acrossWater = sh.name || true; }
+      return q; };
+    const answers = (x, y) => { const was = planDate; planDate = d.date || null; try { const r = transitFor(x, y); return r && r.map(o => Object.assign({}, o, { id: rideId(o), kind: rideKind(o) })); } finally { planDate = was; } };
+    const routes = (x, y) => typeof routeTimeOf === "function" ? routeTimeOf(x, y) : null; if (typeof routeKnown === "function") routes.known = routeKnown;
+    const tr = E.makeTravel(bucket.prefs || {}, null, bucket.legs, bucket.transit, answers, E.piersOf(bucket), routes);
+    return tr.estimate(asPlanned(a), asPlanned(b));
+  };
   window.__kairoutePackedBuy = packedBuy; window.__kairoutePackedWords = r => packedWords(r);
   // For the phone test: every pier a boat may leave from, and whether a place is reached only by boat.
   window.__kairoutePiers = () => E.piersOf(tripPlans().bucket || {});

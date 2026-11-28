@@ -334,7 +334,7 @@ let sitesCtx = null, fitMemo = { key: "", res: new Map(), add: new Map(), boat: 
 const fitKey = d => { try { return JSON.stringify([trip.days.indexOf(d), d, trip.lodging, trip.prefs, trip.style, fitEpoch]); } catch (e) { return String(Math.random()); } };
 function fitCostOf(plan, s) { if (fitMemo.add.has(s.id)) return { min: fitMemo.add.get(s.id), spare: 0, exact: true }; try { const c = stopCost(plan, s); return { min: c.min, spare: Math.max(0, c.spare) }; } catch (e) { return { min: s.minutes || 45, spare: 0 }; } }
 function timeLeft(plan, d) { const m = meterCalc(plan, d); return m ? { left: Math.max(0, m.avail - m.used), m } : null; }
-const fitWet = s => !!s && (!!s.acrossWater || (typeof KEngine !== "undefined" && (KEngine.byBoat(s.travelNote || s.travel || "") || KEngine.waterOnly(s))));
+const fitWet = s => !!s && (!!s.acrossWater || (typeof KEngine !== "undefined" && typeof KEngine.byBoat === "function" && (KEngine.byBoat(s.travelNote || s.travel || "") || KEngine.waterOnly(s))));
 // A stop reached by boat gets its own check, whatever the fit: does a timetable confirm its boat (fitRefine)? Asked by
 // every card drawn for a sight not picked (the list's own fit marks may come from elsewhere, so not from siteFits).
 function boatAsk(d, s) {
