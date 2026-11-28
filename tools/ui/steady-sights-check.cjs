@@ -42,7 +42,7 @@ const SEEN = () => { const out = {}; window.__why = {}; for (const c of document
     if (!c.offsetParent || hold) { W[c.dataset.card] = !c.offsetParent ? 'hidden (' + (c.closest('[hidden], .nest, details') || c.parentElement || {}).className + ')' : 'inside a closed ' + String(hold.className || hold.tagName).split(' ')[0]; continue; }
     const st = getComputedStyle(c); if (st.visibility === 'hidden') { W[c.dataset.card] = 'invisible'; continue; } const b = c.getBoundingClientRect();
     if (b.bottom <= 0 || b.top >= innerHeight || b.height < 4) { W[c.dataset.card] = b.height < 4 ? 'squashed to ' + Math.round(b.height) + ' px' : 'off screen at ' + Math.round(b.top); continue; } out[c.dataset.card] = Math.round(b.top); delete W[c.dataset.card]; }
-  for (const id of Object.keys(window.__why || {})) if (!document.querySelector(`#view [data-card="${CSS.escape(id)}"]`)) window.__why[id] = 'no longer in the list';
+  for (const id of Object.keys(window.__why || {})) { const all = document.querySelectorAll(`#view [data-card="${CSS.escape(id)}"]`); if (!all.length) window.__why[id] = 'no longer in the list'; else { const e = all[all.length - 1], up = []; for (let a = e.parentElement; a && a.id !== 'view' && up.length < 4; a = a.parentElement) up.push((a.tagName.toLowerCase()) + (a.className ? '.' + String(a.className).split(' ')[0] : '')); window.__why[id] += ` [${all.length} cop${all.length > 1 ? 'ies' : 'y'}; in ${up.join(' < ')}]`; } }
   if (window.__steadyDiag) for (const e of document.querySelectorAll('#view .sitesmain [data-card], #view .sitesmain > *, #view .sitesside, header.top, #dayRowSpace, #view > *')) { const b = e.getBoundingClientRect(); if (b.height) out['@ ' + (e.dataset.card || e.id || e.className.slice(0, 24))] = Math.round(b.top) + '/' + Math.round(b.height); }
   return out; };
 const moves = (a, b, tol = 2) => Object.keys(a).filter(id => id in b && (Math.abs(a[id] - b[id]) > tol || (id[0] === '@' && a[id] !== b[id]))).map(id => `${id} ${a[id]}→${b[id]}`);
@@ -108,8 +108,8 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
       for (const id of [free[Math.floor(free.length / 2)], free[free.length - 1], free[1]].filter((x, k, a) => x && a.indexOf(x) === k)) {
         const r = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`); if (!x || x.checked) return null; x.closest('[data-card]').scrollIntoView({ block: 'center' }); return true; }, id); if (!r) continue;
         await p.waitForTimeout(600);
-        const pt = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`), b = x.getBoundingClientRect(), at = document.elementFromPoint(b.x + b.width / 2, b.y + b.height / 2); return at && x.closest('[data-card]').contains(at) ? { x: b.x + b.width / 2, y: b.y + b.height / 2 } : null; }, id);
-        if (!pt) { check(`${tag}: ${id} can be tapped`, false, 'something covers its tick box'); continue; }
+        const pt = await p.evaluate(id => { const x = document.querySelector(`input[data-site="${id}"]`), b = x.getBoundingClientRect(), at = document.elementFromPoint(b.x + b.width / 2, b.y + b.height / 2); return at && x.closest('[data-card]').contains(at) ? { x: b.x + b.width / 2, y: b.y + b.height / 2 } : { cover: at ? at.tagName.toLowerCase() + '.' + String(at.className).split(' ').join('.') + ' in ' + String((at.closest('[data-card], .fitbox, .pickbar, header, [class]') || {}).className || '') : 'nothing', at: Math.round(b.top), h: innerHeight }; }, id);
+        if (pt.cover) { check(`${tag}: ${id} can be tapped`, false, `something covers its tick box: ${pt.cover} (box at ${pt.at} of ${pt.h})`); continue; }
         const before = await seenOf(p), hb = await p.evaluate(HEIGHTS); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y);
         await p.waitForTimeout(300);
         if (await p.evaluate(() => !!document.querySelector('.fitbox, .closedbox'))) { await p.evaluate(() => { const c = document.querySelector('.fitbox [data-act="fitcancel"], .closedbox [data-act="fitcancel"]'); if (c) c.click(); }); await p.waitForTimeout(300); continue; }
@@ -132,7 +132,8 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
           let box = false, got = false; for (let w = 0; w < 50 && !box && !got; w++) { await p.waitForTimeout(100); box = await p.evaluate(() => !!document.querySelector('.fitbox')); if (!box) got = await added(); }
           // One answer (R-28, Nov 28 press check): a "Needs ..." tap either opens the ways to fit it in, or the full plan
           // finds it fits and the sight is added. A tap that does neither is a dead button.
-          check(`${tag}: tapping "Needs ..." opens the box or adds the sight`, box || got, 'nothing happened within 5 s: no box, and the sight was not added');
+          const nowB = box || got ? '' : await p.evaluate(id => { const c = document.querySelectorAll(`[data-card="${id}"]`), b = document.querySelector(`[data-card="${id}"] [data-act="fitask"]`), i = document.querySelector(`input[data-site="${id}"]`); return `${c.length} card(s), badge ${b ? '"' + b.textContent + '"' + (b.dataset.checking ? ' checking' : '') : 'gone'}, tick box ${i ? (i.checked ? 'on' : 'off') : 'none'}, card ${c[0] ? c[0].className : '-'}`; }, nid);
+          check(`${tag}: tapping "Needs ..." opens the box or adds the sight`, box || got, `nothing happened within 5 s: no box, and the sight was not added (${nid}: ${nowB}; tapped at ${Math.round(pt.y)})`);
           await p.waitForTimeout(1500); const a = await seenOf(p), s1 = await p.evaluate(() => (window.__scr || []).join(' | '));
           const m1 = moves(before, a, 4); if (box) check(`${tag}: the "Needs" box opening moves nothing under it`, !m1.length, m1.slice(0, 3).join(', ') + (s1 ? ` (the app scrolled: ${s1})` : ''));
           // Inside the box: opening "Or choose what to untick yourself" keeps that line under the finger (the box grows
@@ -153,7 +154,7 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
             const pt = await p.evaluate(id => { const n = document.querySelector(`[data-card="${id}"] .l2`); if (!n) return null; const b = n.getBoundingClientRect(); return { x: b.x + Math.min(b.width - 4, 60), y: b.y + b.height / 2 }; }, id); if (!pt) return null;
             const before = await seenOf(p); await p.evaluate(() => { window.__scr = []; }); await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(400); const after = await seenOf(p); return [before[id], after[id]]; };
           await tapBody(A); const r = await tapBody(B);
-          if (r) check(`${tag}: opening a second card keeps it under the finger`, r[1] != null && Math.abs(r[1] - r[0]) <= 4, r[1] == null ? 'it left the screen' : `moved ${r[0]}→${r[1]} px`);
+          if (r) check(`${tag}: opening a second card keeps it under the finger`, r[1] != null && Math.abs(r[1] - r[0]) <= 4, r[1] == null ? `it left the screen (${B}: ${lastWhy[B] || 'no reason seen'}; the app scrolled: ${(await p.evaluate(() => (window.__scr || []).join(' | '))) || 'no'})` : `moved ${r[0]}→${r[1]} px`);
           await tapBody(B); } }
       // 4. Next visit: what was ticked is sorted into "Your sights".
       await p.evaluate(() => window.__kairouteGo('plan')); await p.waitForTimeout(300); await p.evaluate(() => window.__kairouteGo('sites')); await settle();
