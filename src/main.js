@@ -5180,7 +5180,7 @@ let renderSpotted = false;
 // (Nov 27, every button pressed: the example trip's note went away on the first change to any day and every control
 // below it moved up 106 to 189 px from under the finger). A note at the top of a screen stays until the traveler
 // closes it or leaves the screen (tripNote): it never goes away as a side effect of a tap elsewhere.
-let touchEl = null, touchRef = null, touchWas = null, touchText = "", touchListy = false, touchNear = [], holdOn = "", tripNote = false, holdRoom = { key: "", pane: "", top: 0, end: 0 }, holdOff = -1;
+let touchEl = null, touchRef = null, touchWas = null, touchText = "", touchListy = false, touchNear = [], touchNearUp = 0, holdOn = "", tripNote = false, holdRoom = { key: "", pane: "", top: 0, end: 0 }, holdOff = -1;
 const holdKeyOf = el => { const ds = Object.keys(el.dataset).filter(k => !/^press/.test(k)).sort().map(k => k + "=" + el.dataset[k]).join(","); return el.tagName + "|" + (el.id || "") + "|" + ds + "|" + (el.getAttribute("name") || "") + (el.id || ds ? "" : "|" + (el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 40)); };
 const holdAll = key => [...document.querySelectorAll("#view " + key.split("|")[0])].filter(o => holdKeyOf(o) === key);
 const holdScroller = nx => { let p = nx.parentElement; while (p && p !== document.body && !(p.scrollHeight > p.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(p).overflowY))) p = p.parentElement; return p && p !== document.body && p !== document.documentElement ? p : null; };
@@ -5211,14 +5211,15 @@ function touchNearOf(el) {
       cand.push([key, Math.abs((r.top < mid && r.bottom > mid ? mid : r.top) - mid) + r.height / 1000 + (r.top > mid ? 1e5 : 0), a]);
     }
     const pinned = a => { for (; a && a.id !== "view"; a = a.parentElement) if (/sticky|fixed/.test(getComputedStyle(a).position)) return true; return false; };
-    return cand.filter(c => count.get(c[0]) === 1).sort((a, b) => a[1] - b[1]).slice(0, 60).filter(c => !pinned(c[2])).slice(0, 16).map(c => c[0]);
+    const near = cand.filter(c => count.get(c[0]) === 1).sort((a, b) => a[1] - b[1]).slice(0, 60).filter(c => !pinned(c[2])).slice(0, 16);
+    touchNearUp = near.filter(c => c[1] < 1e5).length; return near.map(c => c[0]);
   } catch (e) { return []; }
 }
 function touchSpot(pkey) {
   if (!touchRef || !touchRef.length) return null;
   const chain = [];
   const shown = a => !!(a && a.getClientRects().length), pinnedAt = a => { for (; a && a.id !== "view"; a = a.parentElement) if (/sticky|fixed/.test(getComputedStyle(a).position)) return true; return false; };
-  touchRef.forEach(([key, n], i) => { const a = i === 0 && touchEl && touchEl.isConnected ? touchEl : holdAll(key)[n]; if (shown(a)) chain.push([key, n, a.getBoundingClientRect().top, a, 0, i === 0 ? touchText : ""]); });
+  touchRef.forEach(([key, n], i) => { const a = i === 0 && touchEl && touchEl.isConnected ? touchEl : holdAll(key)[n]; if (shown(a)) chain.push([key, n, a.getBoundingClientRect().top, a, 0, i === 0 ? touchText : "", i > 0]); });
   // A pinned thing does not scroll. A bar pinned to the page that is still there after the redraw needs nothing; an
   // open menu floats over the page, and the page behind it stays put through the things next to the finger.
   if (chain.length && chain[0][0] === touchRef[0][0] && touchWas && performance.now() - touchWas.t < 1500 && Math.abs(holdAt(holdScroller(chain[0][3])) - touchWas.at) < 1) chain[0][2] = touchWas.top;
@@ -5231,7 +5232,7 @@ function touchSpot(pkey) {
   // comes before them.
   const big = chain.filter((c, i) => i > 0 && c[3].getBoundingClientRect().height > innerHeight * 1.2);
   big.forEach(c => chain.splice(chain.indexOf(c), 1));
-  touchNear.forEach(key => { const same = holdAll(key), a = same[0]; if (same.length !== 1 || !shown(a)) return; const r = a.getBoundingClientRect(); if (r.height && r.height <= innerHeight * 0.4 && r.bottom > 0 && r.top < innerHeight) chain.push([key, 0, r.top, a, 1]); });
+  touchNear.forEach((key, i) => { const same = holdAll(key), a = same[0]; if (same.length !== 1 || !shown(a)) return; const r = a.getBoundingClientRect(); if (r.height && r.height <= innerHeight * 0.4 && r.bottom > 0 && r.top < innerHeight) chain.push([key, 0, r.top, a, 1, "", false, i < touchNearUp]); });
   chain.push(...big);
   if (!chain.length) return null;
   const no = renderNo;
@@ -5240,12 +5241,22 @@ function touchSpot(pkey) {
   const run = again => {
     if (holdOff === no) return 0; // the app has since scrolled on purpose (to the top, to what the tap opened)
     if (floatKey && !floatOver && shown(holdAll(floatKey[0])[floatKey[1]])) return 0;
-    for (const [key, n, top, , near, text] of chain) {
+    // The named things next to the finger, after a redraw that put the page in a new order (a ride changed, the
+    // stops re-sorted): one of them may have moved with its card while the page around it stayed. The move most of
+    // them agree on is the page's; things above the finger are asked first, the nearest wins a tie.
+    if (!again) { const seen = up => chain.filter(c => c[4] && (!up || c[7])).map(c => { const o = holdAll(c[0]); return o.length === 1 && shown(o[0]) ? [c, o[0].getBoundingClientRect().top - c[2]] : null; }).filter(Boolean);
+      let v = seen(true); if (v.length < 2) v = seen(false);
+      let best = null, bn = 1; for (const [c, d] of v) { const k = v.filter(x => Math.abs(x[1] - d) <= 4).length; if (k > bn) { bn = k; best = c; } }
+      if (best) { const i = chain.indexOf(best), j = chain.findIndex(c => c[4]); if (i > j) { chain.splice(i, 1); chain.splice(j, 0, best); } } }
+    for (const [key, n, top, , near, text, box] of chain) {
       // The thing touched, in a list that was put in a new order: the one that says the same, not the one in the same place.
       const same = holdAll(key), said = text && same.length > 1 ? same.filter(o => (o.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80) === text) : [], nx = said.length === 1 ? said[0] : same[n]; if (!shown(nx)) continue;
       // One of a list of alike things (choices, rows) that now says something else is another thing in its place.
       if (text && touchListy && said.length !== 1 && (nx.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80) !== text) continue;
       if (near && same.length !== 1) continue;
+      // A box around the thing touched that is one of several alike (a ride row among ride rows) is told apart only
+      // by its place in the line, and the redraw may have changed the line (a ride that became a walk): not used.
+      if (box && same.length !== 1) continue;
       const p = scroller(nx);
       // Later in the same frame: only when the page is where this left it, or where it was before the redraw (a
       // caller that put the old position back); anywhere else, the app scrolled on purpose and that stands.
