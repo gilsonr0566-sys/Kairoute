@@ -210,7 +210,11 @@ if (typeof window !== "undefined" && window.ENGINE2 && window.KEngine) (function
         if (x.pierName) leg.pier = x.pierName; if (x.from) leg.from = x.from; if (x.to) leg.to = x.to; if (x.options) leg.options = x.options;
         if (x.ans) leg.transit = x.ans; if (x.steps) leg.steps = x.steps; if (x.note) leg.note = x.note; if (x.lost) leg.lost = x.lost; if (x.slack) leg.slack = x.slack; if (x.swapWhy) leg.swapWhy = x.swapWhy; if (x.ownBoat) leg.ownBoat = x.ownBoat;
         // R-18: a ride by road because no lines have come in yet (the lookup not answered, the helper busy, no signal) says so.
-        if (leg.kind === "car" && x.from && x.to && !x.ans && (x.options || []).every(o => !o.ans && ["car", "walk"].includes(UIKIND[o.kind] || "car"))) { const s = transitAsking(x.from, x.to); if (s && noAnswer(x.from, x.to)) leg.asking = s; }
+        // A ride that offers only the map's own lines (a train line from the places file) with no timetable answer yet says
+        // so too: more ways, a boat among them, may come (Nov 28 live check: Naples to Sorrento showed the train and taxi,
+        // no ferry, and said nothing while the helper answered "too many requests").
+        if (x.mode !== "walk" && x.mode !== "boat" && x.mode !== "lift" && x.from && x.to && !x.ans && (x.options || []).every(o => !o.ans)) { const s = transitAsking(x.from, x.to);
+          if (s && noAnswer(x.from, x.to)) { leg.asking = s; if (leg.kind !== "car" || (x.options || []).some(o => !["car", "walk"].includes(UIKIND[o.kind] || "car"))) leg.askingLines = true; } }
         // Every way for this ride is a choice on the plan (the ride chips): a tap saves it as the traveler's own choice for
         // this ride, and the engine plans with it.
         if (x.from && x.to && x.options && x.options.length > 1) {
