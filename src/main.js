@@ -4066,14 +4066,16 @@ function stayFoundLine(L) {
 async function geocodeLodging(d) {
   const k = cityKeyFor(d) || keyOf(d.destination);
   const L = trip.lodging[k];
-  if (!L || !L.name) return;
+  if (!L) return;
+  // R-38: an empty box says what to type; a search that can't be reached says so (never "couldn't find").
+  if (!String(L.name || "").trim()) { if (window.__kairoutePlant === "stay-empty-silent") return; L.miss = "Type your hotel's name, or its street and house number, then tap Find it."; L.failed = false; render(); return; }
   if (!aiReady()) { // no AI: the map's own search finds the hotel by name
-    if (!freeAI) return;
     busy = { text: "Finding " + L.name + "…" }; render();
     const typed = L.name, h = await findHotelNoAI(typed, d); busy = null;
     // R-38: found by name, at its door, or (a short street only) on its street, and the screen says which; else said plainly.
+    L.failed = !!(!h || h.failed) && window.__kairoutePlant !== "stay-down-as-none";
     if (h && KEngine.fin(h.lat)) { delete L.miss; L.ll = { lat: h.lat, lng: h.lng }; L.typed = typed; L.name = h.name; L.how = h.how; L.nums = h.nums || []; aiError = ""; save(); }
-    else { L.ll = null; L.how = ""; L.typed = typed; aiError = ""; L.miss = h && h.failed ? "The map search didn't answer just now, so " + typed + " isn't placed yet. Tap Find it again in a minute." : "I couldn't find \u201c" + typed + "\u201d in " + bareName(d.destination) + " on the map. Try the name on your booking, or the street and house number. " + (() => { const f = lodgingFor(d, cityFor(d)); return f && f.name ? "Until then your days start from " + f.name + "." : ""; })(); }
+    else { L.ll = null; L.how = ""; L.typed = typed; aiError = ""; L.miss = L.failed ? "The map search didn't answer" + (navigator.onLine === false ? " (no internet connection)" : " just now") + ", so \u201c" + typed + "\u201d isn't placed on the map yet. Tap Find it again in a minute." : "I couldn't find \u201c" + typed + "\u201d in " + bareName(d.destination) + " on the map. Try the name on your booking, or the street and house number. " + (() => { const f = lodgingFor(d, cityFor(d)); return f && f.name ? "Until then your days start from " + f.name + "." : ""; })(); }
     render(); return;
   }
   busy = { text: "Finding " + L.name + "…" }; render();

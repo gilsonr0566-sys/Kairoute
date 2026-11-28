@@ -192,7 +192,7 @@ function tsBuild() {
       const k = cityKeyFor(d) || keyOf(d.destination), was = trip.lodging[k];
       trip.lodging[k] = { idx: "custom", name: h.name, ll: null };
       await geocodeLodging(d);
-      if (!trip.lodging[k].ll) { trip.lodging[k] = was || { idx: 0 }; aiError = `I couldn't find "${h.name}" on the map, so ${bareName(h.place)} days start from the city centre. Tap a ${bareName(h.place)} day to try the full name or street.`; save(); render(); }
+      if (!trip.lodging[k].ll) { aiError = trip.lodging[k].failed ? `The map search didn't answer, so "${h.name}" isn't placed yet and ${bareName(h.place)} days start from the city centre. Tap a ${bareName(h.place)} day and Find it to try again.` : `I couldn't find "${h.name}" on the map, so ${bareName(h.place)} days start from the city centre. Tap a ${bareName(h.place)} day to try the full name or street.`; trip.lodging[k] = was || { idx: 0 };  save(); render(); }
     }
   })();
 }
