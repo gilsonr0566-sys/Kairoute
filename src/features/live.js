@@ -262,6 +262,7 @@ function rateRow(it, d) {
     ${today ? `<span class="sub">How busy?</span>${[[1, "Quiet"], [2, "Busy"], [3, "Packed"]].map(([n, l]) => `<button class="busy" data-act="busyrow" data-sid="${esc(s.id)}" data-n="${n}" aria-pressed="${b === n}">${l}</button>`).join("")}` : ""}</div></div>`;
 }
 function liveAct(act, t) {
+  if (gtAct(act, t)) return true;
   const d = day();
   if (act === "wxswap") { d.rain = t.dataset.why === "heat" ? "heat" : true; d.wxKeep = false; save(); render(); return true; }
   if (act === "wxkeep") { d.wxKeep = true; save(); render(); return true; }
@@ -711,7 +712,7 @@ function camSheet() {
     <p class="ai-note">Matched only against real places near you (the guide and OpenStreetMap). Nothing is made up.</p></div>`;
 }
 if (typeof document !== "undefined") document.addEventListener("change", e => { if (e.target && e.target.id === "camFile" && e.target.files && e.target.files[0]) camLookup(e.target.files[0]); });
-function liveAfterRender() { try { camButton(); alarmTick(); shipMount(); } catch (e) { console.warn("live", e); } }
+function liveAfterRender() { try { camButton(); alarmTick(); shipMount(); if (gt && !document.getElementById("gtSheet")) gtSheet(); } catch (e) { console.warn("live", e); } }
 // Test hooks for the safety net (tools/live-check.cjs): point the app at a stand-in server, load a forecast,
 // read what each day's plan did with hours, weather and crowds, and count the alerts raised.
 if (typeof window !== "undefined") window.__kairouteLiveTest = {
