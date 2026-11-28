@@ -173,6 +173,8 @@ jobs:
         run: node tools/ui/steady-sights-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always()
         run: TRIPS=g09-kotor,g02-vienna,noai-port SIZES=phone DAYS=all node tools/ui/steady-sights-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
+      - if: always() # R-41: every detail a day's plan depends on is asked when the trip is made (phone and tablet, real screens; plants 15 missing details every run)
+        run: node tools/steps-e2e.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - if: always() # R-30: nothing pinned ever covers content (every day of the sample cruise, phone and upright tablet)
         run: SIZES=phone,upright DAYS=all node tools/ui/pinned-band-check.cjs beta2-site/index.html 2>&1 | tee -a "$RUNNER_TEMP/out.log"
       - name: Keep this part's failing lines for the release report
