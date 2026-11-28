@@ -6360,7 +6360,7 @@ function siteCard(s, d, plan, nr) {
       ${s.far && txt(s.travel) ? (/^Not confirmed: /.test(s.travel) ? `<p class="travelnote">Getting there, not confirmed (an earlier AI guide's words, not a timetable): ${esc(unitText(s.travel.replace(/^Not confirmed: /, "")))}</p>` : s.classic && s.travelSrc ? `<p class="travelnote tripway" data-way="${esc(s.travelSrc)}">Getting there: ${esc(unitText(s.travel))}</p>` : `<p class="travelnote">Getting there, as the travel guide says (not a checked timetable): ${esc(unitText(s.travel))}</p>`) : ""}
       ${hrs ? `<p class="travelnote">${esc(hrs)}${cl ? " · " + esc(cl) : ""}</p>` : ""}
       ${P().access !== "none" && txt(s.access) ? `<p class="travelnote"><b>Access:</b> ${esc(s.access)}</p>` : ""}
-      ${srcNote(s)}${fs === false ? `<button type="button" class="btn ghost small" data-act="fitask" data-id="${esc(s.id)}">Ways to fit it in</button>` : ""}
+      ${srcNote(s)}${fs === false ? `<button type="button" class="btn ghost small fitways" data-act="fitask" data-id="${esc(s.id)}">Ways to fit it in</button>` : !on ? `<span class="btn ghost small fitways fitslot" aria-hidden="true">Ways to fit it in</span>` : ""}
     </div>`;
   const open = openCard === s.id ? " open" : "";
   // A card keeps its rows whatever the plan says (R-28, Nov 28 live check: ticking one sight put "Planned Thu" on two
@@ -6547,8 +6547,9 @@ const DISTRICT = /old town|historic (centre|center|district)|quarter|district|ne
 // and two cards vanished from mid-screen, because the frozen nesting was dropped for the new city copy).
 const nestNow = city => {
   if (!pickFrozen || !pickFrozen.nest || !pickFrozen.city || keyOf(pickFrozen.city.city) !== keyOf(city.city)) return nestMap(city);
-  const F = pickFrozen.nest; if (pickFrozen.city === city) return F;
-  const L = nestMap(city); if (pickFrozen.mixOf === L) return pickFrozen.mix;
+  // Never by the city object alone: late data (a town's own sights) is added to the SAME city copy, and those new
+  // sights must take their nesting too (Nov 28 live check: Delphi's own sights showed as cards of their own, then folded).
+  const F = pickFrozen.nest, L = nestMap(city); if (L === F) return F; if (pickFrozen.mixOf === L) return pickFrozen.mix;
   const ids = pickFrozen.nestIds, mix = { sig: F.sig, par: new Map(F.par), kids: new Map([...F.kids].map(([k, v]) => [k, v.slice()])) };
   for (const [id, T] of L.par) if (!ids.has(id) && !mix.par.has(id)) { mix.par.set(id, T); if (!mix.kids.has(T.id)) mix.kids.set(T.id, []); mix.kids.get(T.id).push((L.kids.get(T.id) || []).find(k => k.id === id) || { id }); }
   pickFrozen.mixOf = L; pickFrozen.mix = mix; return mix;

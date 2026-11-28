@@ -54,7 +54,7 @@ const aboveMoved = (before, a, id) => Object.keys(before).filter(k => k[0] !== '
 // What changed height on screen between two looks (cards, section headings, notes): named in a failure so a live run
 // says which piece grew or shrank, not only that something moved.
 const HEIGHTS = () => { const out = {}, seen = new Map();
-  for (const e of document.querySelectorAll('#view .sitesmain [data-card], #view .sitesmain > *, #view .sitesmain .picksfold > *, #view .sitesmain [data-card] > .body > *')) {
+  for (const e of document.querySelectorAll('#view .sitesmain [data-card], #view .sitesmain > *, #view .sitesmain .picksfold > *, #view .sitesmain [data-card] > .body > *, #view .sitesside > *, #view > *, header.top, header.top > *')) { // the side pane and the header too: on one-column screens they sit above the list
     if (!e.offsetParent) continue; const b = e.getBoundingClientRect(); if (b.bottom <= 0 || b.top >= innerHeight) continue;
     const base = e.dataset.card ? 'card ' + e.dataset.card + ' (' + String(e.className).replace(/\s+/g, '.') + ')' : (e.closest('[data-card]') ? e.closest('[data-card]').dataset.card + ' .' : '') + (e.className || e.tagName).toString().split(' ')[0];
     const n = (seen.get(base) || 0) + 1; seen.set(base, n); out[n > 1 ? base + '#' + n : base] = Math.round(b.height) + ' "' + (e.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40) + '"'; }
@@ -94,10 +94,10 @@ const gone = (a, b) => Object.keys(a).filter(id => !(id in b) && a[id] > 60 && a
     for (const d of days) { if (tried >= NDAYS) break;
       const tag = `${size}${tripName === 'sample' ? '' : ' ' + tripName} day ${d.i + 1} ${d.dest}`;
       // 1. Opening: sample every 100 ms for 4 s (10 s on the live app, where answers keep arriving); from the first shown card on, nothing shown moves or vanishes by itself.
-      await open(d.i); let prev = null, first = -1; const bad1 = [];
-      for (let t = 0; t < (LIVE || process.env.REALNET === '1' ? 100 : 40); t++) { const now = await seenOf(p);
-        if (prev && Object.keys(prev).length) { const m = moves(prev, now), g = gone(prev, now); if (m.length || g.length) bad1.push(`at ${t * 100} ms: ${m.concat(g.map(x => 'gone ' + x)).slice(0, 3).join(', ')}`); }
-        if (first < 0 && Object.keys(now).length) first = t * 100; prev = now; await p.waitForTimeout(100); }
+      await open(d.i); let prev = null, prevH = null, first = -1; const bad1 = [];
+      for (let t = 0; t < (LIVE || process.env.REALNET === '1' ? 100 : 40); t++) { const now = await seenOf(p), nowH = await p.evaluate(HEIGHTS), sy = await p.evaluate(() => Math.round(scrollY));
+        if (prev && Object.keys(prev).length) { const m = moves(prev, now), g = gone(prev, now); if (m.length || g.length) bad1.push(`at ${t * 100} ms (page at ${sy}): ${m.concat(g.map(x => 'gone ' + x)).slice(0, 3).join(', ')} [changed size: ${grew(prevH, nowH)}]`); }
+        if (first < 0 && Object.keys(now).length) first = t * 100; prev = now; prevH = nowH; await p.waitForTimeout(100); }
       await settle();
       const free = await p.evaluate(() => [...document.querySelectorAll('#view .sitesmain label.site input[data-site]:not(:checked)')].filter(x => !x.closest('details:not([open]), .picksfold, .sorthold') && x.dataset.site === (x.closest('[data-card]') || {dataset:{}}).dataset.card).map(x => x.dataset.site));
       if (free.length < 2) continue; tried++;

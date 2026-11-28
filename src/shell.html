@@ -117,6 +117,7 @@ main .wrap { padding-block: 20px 64px; display: grid; gap: 18px; }
 .offlog .offin { color: var(--muted); font-size: 0.85rem; white-space: nowrap; } .offlog .offclear { margin: 4px 0 12px; }
 .schedline { display: flex; align-items: center; gap: 12px; margin: 22px 0 6px; font-weight: 700; font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
 .schedline::before, .schedline::after { content: ""; flex: 1; border-top: 2px solid var(--line, #ccc); }
+.site .cdet .fitways { margin-top: 8px; } .site .cdet .fitslot { visibility: hidden; } /* an open card keeps the button's room when its sight stops or starts fitting (Nov 28 live: an open card grew 53 px after a tick above it) */
 .site.nofitcard .cdet [data-act="fitask"] { margin-top: 8px; } /* the "Ways to fit it in" button only, never the badge (it made a card grow 8 px when its check came back) */
 /* Sights list (Nov 16): three-line cards that open on tap, pinned time-left bar, folded picks */
 .site .nrow { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; min-width: 0; } /* top-aligned: a status that wraps differently never moves the name's line (Nov 28 live: rows 53 -> 50 px) */
