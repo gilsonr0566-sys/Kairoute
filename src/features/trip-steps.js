@@ -177,7 +177,7 @@ function tripNeeds() {
     const stay = d.type === "land" || (d.type === "arrival" && !throughTo(d) && !(d.mode === "ship" && i === trip.days.length - 1)) || (d.type === "departure" && !throughFrom(d));
     const k = cityKeyFor(d) || keyOf(d.destination || "");
     if (stay && k && !seenHotel[k]) { seenHotel[k] = 1; const L = trip.lodging && trip.lodging[k];
-      if (!L || (L.idx === "custom" && !(L.ll && KEngine.fin(L.ll.lat)))) out.push({ i, f: "f-lodging", what: L && L.idx === "custom" && L.name ? `Where ${L.name} is in ${place} (not found on the map yet)` : `Your hotel in ${place}` }); }
+      if (!L || (L.idx === "custom" && !(L.ll && KEngine.fin(L.ll.lat)))) out.push({ i, f: "f-lodging", what: L && L.idx === "custom" && (L.typed || L.name) ? `Where ${L.typed || L.name} is in ${place} (${L.failed && window.__kairoutePlant !== "stay-down-label" ? "not placed on the map yet: the map search didn't answer" : L.miss ? "not found on the map" : "not placed on the map yet"})` : `Your hotel in ${place}` }); }
   });
   return out;
 }
@@ -353,7 +353,7 @@ function tsBuild() {
       const k = cityKeyFor(d) || keyOf(d.destination), was = trip.lodging[k];
       trip.lodging[k] = { idx: "custom", name: h.name, ll: null };
       await geocodeLodging(d);
-      if (!trip.lodging[k].ll) { trip.lodging[k] = was || { idx: 0 }; aiError = `I couldn't find "${h.name}" on the map, so ${bareName(h.place)} days start from the city centre. Tap a ${bareName(h.place)} day to try the full name or street.`; save(); render(); }
+      if (!trip.lodging[k].ll) { aiError = trip.lodging[k].failed ? `The map search didn't answer, so "${h.name}" isn't placed yet and ${bareName(h.place)} days start from the city centre. Tap a ${bareName(h.place)} day and Find it to try again.` : `I couldn't find "${h.name}" on the map, so ${bareName(h.place)} days start from the city centre. Tap a ${bareName(h.place)} day to try the full name or street.`; trip.lodging[k] = was || { idx: 0 };  save(); render(); }
     }
   })();
 }
